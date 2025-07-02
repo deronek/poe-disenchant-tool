@@ -75,7 +75,7 @@ export const columns: ColumnDef<Item>[] = [
       );
     },
     meta: {
-      className: "bg-card",
+      className: "bg-accent",
     },
   },
 ];
