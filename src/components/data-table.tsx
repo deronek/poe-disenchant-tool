@@ -2,8 +2,10 @@
 
 import {
   ColumnDef,
+  ColumnFiltersState,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   RowData,
@@ -43,6 +45,12 @@ export function DataTable<TData, TValue>({
       desc: true,
     },
   ]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([
+    {
+      id: "chaos",
+      value: [0, 100],
+    },
+  ]);
 
   const table = useReactTable({
     data,
@@ -51,8 +59,11 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
+      columnFilters,
     },
   });
 
