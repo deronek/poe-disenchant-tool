@@ -101,11 +101,11 @@ const dedupeRelics = (lines: Line[]): Line[] => {
         (line) => !(line.variant && /, Relic/i.test(line.variant)),
       );
       // Log removed relic variants
-      sameNameLines.forEach((line) => {
-        if (line.variant && /, Relic/i.test(line.variant)) {
-          console.warn(`Removed relic variant due to base existing:`, line);
-        }
-      });
+      // sameNameLines.forEach((line) => {
+      //   if (line.variant && /, Relic/i.test(line.variant)) {
+      //     console.warn(`Removed relic variant due to base existing:`, line);
+      //   }
+      // });
       filtered.push(...baseLines);
     } else {
       filtered.push(...sameNameLines);

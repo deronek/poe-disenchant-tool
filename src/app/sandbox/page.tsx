@@ -1,41 +1,35 @@
-import { getPriceData } from "@/lib/prices";
-import { getDustData } from "@/lib/dust";
+import { getItems } from "@/lib/itemData";
 
 export default async function SandboxPage() {
-  const lines = await getPriceData();
-  const dustItems = getDustData();
-
-  // Create a map for quick lookup
-  const dustMap = new Map(dustItems.map((item) => [item.name, item]));
+  const items = await getItems();
 
   return (
     <div className="p-8">
       <h1 className="text-2xl font-bold mb-4">Unique Item Lines</h1>
       <ul className="space-y-2">
-        {lines.map((line, idx) => {
-          const dust = dustMap.get(line.name);
+        {items.map((item, idx) => {
           return (
             <li key={idx} className="border rounded p-4">
               <div>
-                <strong>Name:</strong> {line.name}
+                <strong>Name:</strong> {item.name}
               </div>
-              {line.variant && (
+              {item.variant && (
                 <div>
-                  <strong>Variant:</strong> {line.variant}
+                  <strong>Variant:</strong> {item.variant}
                 </div>
               )}
               <div>
-                <strong>Chaos:</strong> {line.chaos}
+                <strong>Chaos:</strong> {item.chaos}
               </div>
               <div>
                 <strong>Graph:</strong>{" "}
-                {line.graph && line.graph.length > 0
-                  ? line.graph.join(", ")
+                {item.graph && item.graph.length > 0
+                  ? item.graph.join(", ")
                   : "No data"}
               </div>
               <div>
                 <strong>Dust Value:</strong>{" "}
-                {dust ? dust.dustVal : "No dust data"}
+                {item ? item.dustVal : "No dust data"}
               </div>
             </li>
           );
