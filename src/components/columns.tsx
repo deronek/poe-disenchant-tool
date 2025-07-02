@@ -1,15 +1,27 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, SortDirection } from "@tanstack/react-table";
 import { Button } from "./ui/button";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUp01, ArrowDown10, ArrowUpDown } from "lucide-react";
 
 export type Item = {
   id: number;
   name: string;
   variant?: string;
   chaos: number;
-  dustVal: number;
+  dustValIlvl84Q20: number;
+  dustPerChaos: number;
+};
+
+const getSortedIcon = (isSorted: false | SortDirection) => {
+  if (isSorted === false) {
+    return <ArrowUpDown className="ml-2 h-4 w-4" />;
+  }
+  if (isSorted === "asc") {
+    return <ArrowUp01 className="ml-2 h-4 w-4" />;
+  }
+  // desc
+  return <ArrowDown10 className="ml-2 h-4 w-4" />;
 };
 
 export const columns: ColumnDef<Item>[] = [
@@ -30,23 +42,40 @@ export const columns: ColumnDef<Item>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Chaos
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {getSortedIcon(column.getIsSorted())}
         </Button>
       );
     },
   },
   {
-    accessorKey: "dustVal",
+    accessorKey: "dustValIlvl84Q20",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Dust Value
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          Dust Value (ilvl 84, Q20)
+          {getSortedIcon(column.getIsSorted())}
         </Button>
       );
+    },
+  },
+  {
+    accessorKey: "dustPerChaos",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Dust per Chaos
+          {getSortedIcon(column.getIsSorted())}
+        </Button>
+      );
+    },
+    meta: {
+      className: "bg-card",
     },
   },
 ];

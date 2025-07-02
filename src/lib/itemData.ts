@@ -6,6 +6,7 @@ export type Item = DustItem & {
   chaos: number;
   graph: (number | null)[];
   variant?: string;
+  dustPerChaos: number;
 };
 
 export const getItems = async (): Promise<Item[]> => {
@@ -25,6 +26,7 @@ export const getItems = async (): Promise<Item[]> => {
         chaos: priceItem.chaos,
         graph: priceItem.graph,
         variant: priceItem.variant,
+        dustPerChaos: Math.round(dustItem.dustValIlvl84Q20 / priceItem.chaos),
       });
     } else {
       // TODO: need to display this in the UI, as an information that something will be missing
