@@ -2,6 +2,7 @@ import { getDustData, Item as DustItem } from "./dust";
 import { getPriceData } from "./prices";
 
 export type Item = DustItem & {
+  id: number;
   chaos: number;
   graph: (number | null)[];
   variant?: string;
@@ -12,12 +13,14 @@ export const getItems = async (): Promise<Item[]> => {
   const priceData = await getPriceData();
 
   const merged: Item[] = [];
+  let id = 0;
 
   for (const priceItem of priceData) {
     const dustItem = dustData.find((d) => d.name === priceItem.name);
 
     if (dustItem) {
       merged.push({
+        id: id++,
         ...dustItem,
         chaos: priceItem.chaos,
         graph: priceItem.graph,
@@ -25,7 +28,7 @@ export const getItems = async (): Promise<Item[]> => {
       });
     } else {
       // TODO: need to display this in the UI, as an information that something will be missing
-      console.warn(`No dust data found for ${priceItem.name}`);
+      // console.warn(`No dust data found for ${priceItem.name}`);
     }
   }
 

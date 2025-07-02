@@ -1,40 +1,24 @@
 import { getItems } from "@/lib/itemData";
+import { columns } from "@/components/columns";
+import { DataTable } from "@/components/data-table";
 
 export default async function SandboxPage() {
   const items = await getItems();
 
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold mb-4">Unique Item Lines</h1>
-      <ul className="space-y-2">
-        {items.map((item, idx) => {
-          return (
-            <li key={idx} className="border rounded p-4">
-              <div>
-                <strong>Name:</strong> {item.name}
-              </div>
-              {item.variant && (
-                <div>
-                  <strong>Variant:</strong> {item.variant}
-                </div>
-              )}
-              <div>
-                <strong>Chaos:</strong> {item.chaos}
-              </div>
-              <div>
-                <strong>Graph:</strong>{" "}
-                {item.graph && item.graph.length > 0
-                  ? item.graph.join(", ")
-                  : "No data"}
-              </div>
-              <div>
-                <strong>Dust Value:</strong>{" "}
-                {item ? item.dustVal : "No dust data"}
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+      <h1 className="text-2xl font-bold mb-4">PoE Unique Disenchanting Tool</h1>
+      <h3 className="text-lg mb-2">
+        Calculate the efficiency of disenchanting unique items for Thaumaturgic
+        Dust in Kingsmarch
+      </h3>
+      <h4 className="text-sm font-italic">
+        Last updated: {new Date().toLocaleString()}
+      </h4>
+      <div className="container mx-auto py-10">
+        <DataTable columns={columns} data={items} />
+      </div>
+      ;
     </div>
   );
 }
