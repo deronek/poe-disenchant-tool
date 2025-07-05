@@ -46,10 +46,6 @@ export function DataTable<TData, TValue>({
     },
   ]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([
-    {
-      id: "chaos",
-      value: [0, 100],
-    },
   ]);
 
   const table = useReactTable({
