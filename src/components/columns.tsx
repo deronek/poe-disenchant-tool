@@ -6,10 +6,22 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Slider } from "@/components/ui/slider";
+import { createTradeLink } from "@/lib/tradeLink";
 import { cn } from "@/lib/utils";
 import { ColumnDef, SortDirection } from "@tanstack/react-table";
-import { ArrowDown10, ArrowUp01, ArrowUpDown, Settings2 } from "lucide-react";
+import {
+  ArrowDown10,
+  ArrowUp01,
+  ArrowUpDown,
+  Info,
+  Settings2,
+} from "lucide-react";
 
 export type Item = {
   id: number;
@@ -122,6 +134,36 @@ export const columns: ColumnDef<Item>[] = [
     },
     meta: {
       className: "bg-accent",
+    },
+  },
+  {
+    accessorKey: "tradeLink",
+    header: () => {
+      return (
+        <div className="flex items-center">
+          <p>Trade Link</p>
+          <Tooltip>
+            <TooltipTrigger className="pl-4">
+              <Info />
+            </TooltipTrigger>
+            <TooltipContent>
+              Search for this item on Path of Exile trade website, displaying
+              only listing from last 3 days.
+            </TooltipContent>
+          </Tooltip>
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      const name = row.getValue("name") as string;
+      const link = createTradeLink(name);
+      return (
+        <Button asChild variant="link">
+          <a href={link} target="_blank" rel="noreferrer">
+            Trade
+          </a>
+        </Button>
+      );
     },
   },
 ];
