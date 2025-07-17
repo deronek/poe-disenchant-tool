@@ -2,26 +2,14 @@
 
 import { Button } from "@/components/ui/button";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Slider } from "@/components/ui/slider";
 import { createTradeLink } from "@/lib/tradeLink";
-import { cn } from "@/lib/utils";
 import { ColumnDef, SortDirection } from "@tanstack/react-table";
-import {
-  ArrowDown10,
-  ArrowUp01,
-  ArrowUpDown,
-  Info,
-  Settings2,
-} from "lucide-react";
+import { ArrowDown10, ArrowUp01, ArrowUpDown, Info } from "lucide-react";
+import { RangeFilter } from "./range-filter";
 
 export type Item = {
   id: number;
@@ -64,46 +52,21 @@ export const columns: ColumnDef<Item>[] = [
             Chaos
             {getSortedIcon(column.getIsSorted())}
           </Button>
-          <Popover>
-            <PopoverTrigger
-              className={cn(
-                column.getIsFiltered()
-                  ? "bg-primary text-primary-foreground hover:bg-primary/80"
-                  : "hover:bg-accent",
-                "flex-none rounded-md px-2",
-              )}
-            >
-              <Settings2 className="size-5" />
-            </PopoverTrigger>
-            <PopoverContent className="flex flex-col gap-8 p-6">
-              <div className="grid gap-1.5">
-                <div className="leading-none font-semibold">Filtering</div>
-                <div className="text-muted-foreground text-sm">
-                  Filter by minimum and maximum price in chaos.
-                </div>
-              </div>
-
-              {/* TODO: add a reset button, and ability to turn off filtering */}
-              <div className="grid gap-4">
-                <Slider
-                  max={100}
-                  step={1}
-                  value={column.getFilterValue() as number[]}
-                  onValueChange={(value) => column.setFilterValue(value)}
-                  minStepsBetweenThumbs={1}
-                />
-                <div className="flex justify-between pt-1 text-sm">
-                  {(column.getFilterValue() as number[]).map((value, index) => (
-                    <span key={index}>{value}</span>
-                  ))}
-                </div>
-              </div>
-            </PopoverContent>
-          </Popover>
+          <RangeFilter
+            column={column}
+            title="Price Range"
+            description="Filter products by price range."
+            min={0}
+            max={600}
+          />
         </div>
       );
     },
-    filterFn: "inNumberRange",
+    filterFn: (row, columnId, filterValue) => {
+      console.log(filterValue);
+      const value = row.getValue(columnId) as number;
+      return value >= filterValue.min && value <= filterValue.max;
+    },
   },
   {
     accessorKey: "dustValIlvl84Q20",
