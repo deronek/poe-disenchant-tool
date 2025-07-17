@@ -1,9 +1,15 @@
 import fs from "fs";
+import { unstable_cache } from "next/cache";
+import { json } from "stream/consumers";
 
 import { z } from "zod";
 
-const data = fs.readFileSync("src/lib/prices/prices.json", "utf-8");
-const json = JSON.parse(data);
+// data is:
+// const a = await fetch('https://poe.ninja/api/data/denseoverviews?league=Mercenaries')
+// const b = await a.json()
+
+const dataHardcoded = fs.readFileSync("src/lib/prices/prices.json", "utf-8");
+const jsonHardcoded = JSON.parse(dataHardcoded);
 
 const LineSchema = z.object({
   name: z.string(),
@@ -26,6 +32,27 @@ type ApiResponse = z.infer<typeof ApiResponseSchema>;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 type Overview = z.infer<typeof OverviewSchema>;
 export type Line = z.infer<typeof LineSchema>;
+
+// TODO: cache using ISR
+const getPriceDataApi = async (): Promise<ApiResponse> => {
+  try {
+    // TODO: add league param
+    const response = await fetch(
+      "https://poe.ninja/api/data/denseoverviews?league=Mercenaries",
+    );
+    const json = await response.json();
+    const data = await parseResponse(json);
+    console.log("Successfully fetched price data");
+    return data;
+  } catch (error) {
+    console.error(
+      "Error fetching price data:",
+      error,
+      "Falling back to hardcoded data",
+    );
+    return jsonHardcoded;
+  }
+};
 
 const parseResponse = async (json: unknown): Promise<ApiResponse> => {
   return ApiResponseSchema.parse(json);
@@ -145,7 +172,16 @@ const getUniqueItemLines = async (json: unknown): Promise<Line[]> => {
   return filtered;
 };
 
-export const getPriceData = async (): Promise<Line[]> => {
-  const lines = await getUniqueItemLines(json);
+const uncached__getPriceData = async (): Promise<Line[]> => {
+  const data = await getPriceDataApi();
+  const lines = await getUniqueItemLines(data);
   return lines;
 };
+
+export const getPriceData = unstable_cache(
+  uncached__getPriceData,
+  ["poe.ninja"],
+  {
+    revalidate: 300, // 5 minutes
+  },
+);
