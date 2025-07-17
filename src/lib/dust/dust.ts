@@ -1,7 +1,11 @@
 import { z } from "zod";
 import * as fs from "fs";
+import path from "path";
 
-const raw = fs.readFileSync("src/lib/dust/poe-dust.json", "utf-8");
+const raw = fs.readFileSync(
+  path.join(process.cwd(), "src/lib/dust/poe-dust.json"),
+  "utf-8",
+);
 
 const ItemSchema = z.object({
   name: z.string(),

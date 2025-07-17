@@ -7,8 +7,11 @@ import { z } from "zod";
 // const a = await fetch('https://poe.ninja/api/data/denseoverviews?league=Mercenaries')
 // const b = await a.json()
 
-const filePath = path.join(process.cwd(), "src/lib/prices/prices.json");
-const dataHardcoded = fs.readFileSync(filePath, "utf-8");
+const dataHardcoded = fs.readFileSync(
+  path.join(process.cwd(), "src/lib/prices/prices.json"),
+  "utf-8",
+);
+
 const jsonHardcoded = JSON.parse(dataHardcoded);
 
 const LineSchema = z.object({
@@ -45,6 +48,7 @@ const getPriceDataApi = async (): Promise<ApiResponse> => {
     console.log("Successfully fetched price data");
     return data;
   } catch (error) {
+    // TODO: need to show this info on page
     console.error(
       "Error fetching price data:",
       error,
