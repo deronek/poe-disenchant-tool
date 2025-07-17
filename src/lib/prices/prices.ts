@@ -1,5 +1,5 @@
 import fs from "fs";
-import { unstable_cache } from "next/cache";
+import path from "path";
 
 import { z } from "zod";
 
@@ -7,7 +7,8 @@ import { z } from "zod";
 // const a = await fetch('https://poe.ninja/api/data/denseoverviews?league=Mercenaries')
 // const b = await a.json()
 
-const dataHardcoded = fs.readFileSync("src/lib/prices/prices.json", "utf-8");
+const filePath = path.join(process.cwd(), "src/lib/prices/prices.json");
+const dataHardcoded = fs.readFileSync(filePath, "utf-8");
 const jsonHardcoded = JSON.parse(dataHardcoded);
 
 const LineSchema = z.object({
@@ -177,10 +178,12 @@ const uncached__getPriceData = async (): Promise<Line[]> => {
   return lines;
 };
 
-export const getPriceData = unstable_cache(
-  uncached__getPriceData,
-  ["poe.ninja"],
-  {
-    revalidate: 300, // 5 minutes
-  },
-);
+// export const getPriceData = unstable_cache(
+//   uncached__getPriceData,
+//   ["poe.ninja"],
+//   {
+//     revalidate: 300, // 5 minutes
+//   },
+// );
+
+export const getPriceData = uncached__getPriceData;
