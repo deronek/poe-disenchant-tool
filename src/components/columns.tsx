@@ -38,11 +38,26 @@ export const columns: ColumnDef<Item>[] = [
     accessorKey: "name",
     header: "Name",
     size: 180,
+    // Make the Name column filter match both name and variant when a filter value is provided.
+    filterFn: (row, _columnId, filterValue) => {
+      const query = String(filterValue ?? "")
+        .trim()
+        .toLowerCase();
+      if (query === "") return true;
+      const nameVal = String(row.getValue("name") ?? "").toLowerCase();
+      const variantVal = String(
+        (row.original as Item).variant ?? "",
+      ).toLowerCase();
+      return nameVal.includes(query) || variantVal.includes(query);
+    },
     cell: ({ row }) => {
       const name = row.getValue("name") as string;
       const variant = row.original.variant;
       return (
-        <div className="truncate">
+        <div
+          className="truncate"
+          title={name + (variant ? ` — ${variant}` : "")}
+        >
           <p className="truncate">{name}</p>
           {variant && (
             <p className="text-muted-foreground truncate">{variant}</p>
@@ -55,30 +70,18 @@ export const columns: ColumnDef<Item>[] = [
     accessorKey: "chaos",
     header: ({ column }) => {
       return (
-        <div className="flex items-center">
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Price
-            {getSortedIcon(column.getIsSorted())}
-          </Button>
-          <div className="ml-auto">
-            <RangeFilter
-              column={column}
-              title="Range Filter"
-              description="Filter products by price range."
-              min={0}
-              max={600}
-            />
-          </div>
-        </div>
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Price
+          {getSortedIcon(column.getIsSorted())}
+        </Button>
       );
     },
     size: 210,
     meta: { className: "text-right tabular-nums" },
     filterFn: (row, columnId, filterValue) => {
-      console.log(filterValue);
       const value = row.getValue(columnId) as number;
       return value >= filterValue.min && value <= filterValue.max;
     },

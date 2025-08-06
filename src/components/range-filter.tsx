@@ -42,24 +42,40 @@ export function RangeFilter<TData>({
     ? [filterValue.min, filterValue.max]
     : [min, max];
 
+  // Active if filter exists and differs from defaults
   const hasActiveFilter =
     filterValue !== undefined &&
     (filterValue.min !== min || filterValue.max !== max);
+
+  // Normalize: when range equals defaults, clear filter in table state
+  const normalizeAndSet = (lower: number, upper: number) => {
+    if (lower === min && upper === max) {
+      column.setFilterValue(undefined);
+    } else {
+      column.setFilterValue({ min: lower, max: upper });
+    }
+  };
 
   const handleRangeChange = (newRange: number[], isLowerBound: boolean) => {
     const [lower, upper] = isLowerBound
       ? [newRange[0], currentRange[1]]
       : [currentRange[0], newRange[0]];
 
-    // Update TanStack Table filter
-    column.setFilterValue({ min: lower, max: upper });
+    // Update TanStack Table filter (auto-clear when equal to defaults)
+    normalizeAndSet(lower, upper);
   };
 
   const handleReset = () => {
     column.setFilterValue(undefined);
+    setIsOpen(false);
   };
 
   const handleApply = () => {
+    // Ensure default-range equals cleared state
+    const v = column.getFilterValue() as RangeFilterValue | undefined;
+    if (v && v.min === min && v.max === max) {
+      column.setFilterValue(undefined);
+    }
     setIsOpen(false);
   };
 
@@ -68,7 +84,7 @@ export function RangeFilter<TData>({
       <PopoverTrigger asChild>
         <Button variant="outline" size="sm" className="relative bg-transparent">
           <Filter className="mr-2 h-4 w-4" />
-          <span className="hidden md:block">{title}</span>
+          <span className="">{title}</span>
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80" align="start">
@@ -76,17 +92,6 @@ export function RangeFilter<TData>({
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <h4 className="font-semibold">{title}</h4>
-              {hasActiveFilter && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleReset}
-                  className="text-muted-foreground hover:text-foreground h-auto p-1 text-xs"
-                >
-                  <X className="mr-1 h-3 w-3" />
-                  Reset
-                </Button>
-              )}
             </div>
             <p className="text-muted-foreground text-sm">{description}</p>
           </div>
@@ -145,16 +150,6 @@ export function RangeFilter<TData>({
 
           <div className="space-y-3 border-t pt-2">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">Current Range:</span>
-              <span className="inline-flex items-center gap-1 font-medium">
-                <span className="leading-none">{currentRange[0]}</span>
-                <ChaosOrbIcon />
-                <span className="px-1 leading-none">-</span>
-                <span className="leading-none">{currentRange[1]}</span>
-                <ChaosOrbIcon />
-              </span>
-            </div>
-            <div className="flex items-center justify-between text-sm">
               <span className="text-muted-foreground">Filter Status:</span>
               <Badge
                 variant={hasActiveFilter ? "default" : "secondary"}
@@ -162,12 +157,6 @@ export function RangeFilter<TData>({
               >
                 {hasActiveFilter ? "Active" : "Inactive"}
               </Badge>
-            </div>
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">Filtered Rows:</span>
-              <span className="font-medium">
-                {column.getFacetedUniqueValues().size}
-              </span>
             </div>
             {hasActiveFilter && (
               <div className="text-muted-foreground text-xs">
@@ -189,13 +178,13 @@ export function RangeFilter<TData>({
             <Button
               variant="outline"
               size="sm"
-              onClick={() => setIsOpen(false)}
+              onClick={handleReset}
               className="flex-1"
             >
-              Cancel
+              Reset
             </Button>
             <Button size="sm" onClick={handleApply} className="flex-1">
-              Apply Filter
+              Close
             </Button>
           </div>
         </div>
