@@ -9,7 +9,6 @@ import {
 import { createTradeLink } from "@/lib/tradeLink";
 import { ColumnDef, SortDirection } from "@tanstack/react-table";
 import { ArrowDown10, ArrowUp01, ArrowUpDown, Info } from "lucide-react";
-import { RangeFilter } from "./range-filter";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
 

@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/popover";
 import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
-import { Filter, X } from "lucide-react";
+import { Filter } from "lucide-react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 
 export type RangeFilterValue = {

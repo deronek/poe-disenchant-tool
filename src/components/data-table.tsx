@@ -25,11 +25,7 @@ import {
 } from "@/components/ui/table";
 import * as React from "react";
 import { DataTablePagination } from "./data-table-pagination";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { RangeFilter } from "./range-filter";
-import { ChaosOrbIcon } from "./chaos-orb-icon";
+import { DataTableToolbar } from "@/components/toolbar";
 
 declare module "@tanstack/react-table" {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -88,106 +84,7 @@ export function DataTable<TData, TValue>({
   return (
     <div className="mx-auto w-full max-w-screen-xl rounded-md border">
       {/* Toolbar */}
-      <div className="flex flex-col gap-3 border-b p-3">
-        <div className="flex flex-col gap-3 md:flex-row md:items-center">
-          {/* Name + variant quick filter */}
-          <div className="relative w-full md:max-w-xs">
-            <Input
-              placeholder="Filter by name or variant..."
-              value={
-                (table.getColumn("name")?.getFilterValue() as string) ?? ""
-              }
-              onChange={(e) => {
-                // Store only in the name column filter; variant matching is handled in the Name column filterFn.
-                table.getColumn("name")?.setFilterValue(e.target.value);
-              }}
-              aria-label="Filter by name or variant"
-            />
-            {((table.getColumn("name")?.getFilterValue() as string) ?? "")
-              .length > 0 && (
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                aria-label="Clear name filter"
-                className="text-muted-foreground hover:text-foreground hover:bg-accent/60 focus-visible:ring-ring/50 focus-visible:border-ring absolute top-1/2 right-1.5 h-7 w-7 -translate-y-1/2 cursor-pointer rounded-md p-0 focus-visible:ring-[3px]"
-                onClick={() => table.getColumn("name")?.setFilterValue("")}
-              >
-                ×
-              </Button>
-            )}
-          </div>
-
-          {/* Price range filter moved here */}
-          <div className="md:ml-2">
-            <RangeFilter
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              column={table.getColumn("chaos") as any}
-              title="Price Filter"
-              description="Filter items by chaos price range."
-              min={0}
-              max={600}
-            />
-          </div>
-
-          {/* Right spacer */}
-          <div className="md:ml-auto" />
-        </div>
-
-        {/* Active filter chips */}
-        <div className="flex flex-wrap gap-2">
-          {(() => {
-            const v =
-              (table.getColumn("name")?.getFilterValue() as string) ?? "";
-            return v !== "" ? (
-              <Badge variant="outline">
-                Name: {v}
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="ml-1 h-5 cursor-pointer px-1"
-                  onClick={() => {
-                    table.getColumn("name")?.setFilterValue("");
-                    table
-                      .getColumn("variant")
-                      ?.setFilterValue?.(undefined as unknown);
-                  }}
-                  aria-label="Clear name filter"
-                >
-                  ×
-                </Button>
-              </Badge>
-            ) : null;
-          })()}
-          {(() => {
-            const rng = table.getColumn("chaos")?.getFilterValue() as
-              | { min: number; max: number }
-              | undefined;
-            return rng ? (
-              <Badge
-                variant="outline"
-                className="inline-flex items-center gap-1"
-              >
-                <span className="inline-flex items-center gap-1">
-                  Price: {`${rng.min}–${rng.max}`}
-                  <ChaosOrbIcon />
-                </span>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="ml-1 h-5 cursor-pointer px-1"
-                  onClick={() =>
-                    table.getColumn("chaos")?.setFilterValue(undefined)
-                  }
-                  aria-label="Clear price filter"
-                >
-                  ×
-                </Button>
-              </Badge>
-            ) : null;
-          })()}
-        </div>
-      </div>
+      <DataTableToolbar table={table} />
 
       <div className="overflow-x-auto">
         <Table className="w-full table-fixed text-sm">
