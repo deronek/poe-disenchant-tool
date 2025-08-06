@@ -10,6 +10,7 @@ import { createTradeLink } from "@/lib/tradeLink";
 import { ColumnDef, SortDirection } from "@tanstack/react-table";
 import { ArrowDown10, ArrowUp01, ArrowUpDown, Info } from "lucide-react";
 import { RangeFilter } from "./range-filter";
+import { ChaosOrbIcon } from "./chaos-orb-icon";
 
 export type Item = {
   id: number;
@@ -82,7 +83,14 @@ export const columns: ColumnDef<Item>[] = [
     },
     cell: ({ row }) => {
       const value = row.getValue("chaos") as number;
-      return <span className="block w-full text-right">{value}</span>;
+      return (
+        <span className="block w-full">
+          <span className="float-right inline-flex items-center gap-1">
+            <span>{value}</span>
+            <ChaosOrbIcon />
+          </span>
+        </span>
+      );
     },
   },
   {

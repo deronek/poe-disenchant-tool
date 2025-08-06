@@ -12,6 +12,7 @@ import {
 import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
 import { Filter, X } from "lucide-react";
+import { ChaosOrbIcon } from "./chaos-orb-icon";
 
 export type RangeFilterValue = {
   min: number;
@@ -105,9 +106,13 @@ export function RangeFilter<TData>({
                 />
               </div>
               <div className="text-muted-foreground flex justify-between text-xs">
-                <span>${min}</span>
-                <span className="text-foreground font-medium">
-                  ${currentRange[0]}
+                <span className="inline-flex items-center gap-1">
+                  <span className="leading-none">{min}</span>
+                  <ChaosOrbIcon />
+                </span>
+                <span className="text-foreground inline-flex items-center gap-1 font-medium">
+                  <span className="leading-none">{currentRange[0]}</span>
+                  <ChaosOrbIcon />
                 </span>
               </div>
             </div>
@@ -126,10 +131,14 @@ export function RangeFilter<TData>({
                 />
               </div>
               <div className="text-muted-foreground flex justify-between text-xs">
-                <span className="text-foreground font-medium">
-                  ${currentRange[1]}
+                <span className="text-foreground inline-flex items-center gap-1 font-medium">
+                  <span className="leading-none">{currentRange[1]}</span>
+                  <ChaosOrbIcon />
                 </span>
-                <span>${max}</span>
+                <span className="inline-flex items-center gap-1 align-middle">
+                  <span className="leading-none">{max}</span>
+                  <ChaosOrbIcon />
+                </span>
               </div>
             </div>
           </div>
@@ -137,8 +146,12 @@ export function RangeFilter<TData>({
           <div className="space-y-3 border-t pt-2">
             <div className="flex items-center justify-between text-sm">
               <span className="text-muted-foreground">Current Range:</span>
-              <span className="font-medium">
-                ${currentRange[0]} - ${currentRange[1]}
+              <span className="inline-flex items-center gap-1 font-medium">
+                <span className="leading-none">{currentRange[0]}</span>
+                <ChaosOrbIcon />
+                <span className="px-1 leading-none">-</span>
+                <span className="leading-none">{currentRange[1]}</span>
+                <ChaosOrbIcon />
               </span>
             </div>
             <div className="flex items-center justify-between text-sm">
@@ -158,7 +171,16 @@ export function RangeFilter<TData>({
             </div>
             {hasActiveFilter && (
               <div className="text-muted-foreground text-xs">
-                Showing items between ${currentRange[0]} and ${currentRange[1]}
+                Showing items between{" "}
+                <span className="inline-flex items-center gap-1">
+                  <span className="leading-none">{currentRange[0]}</span>
+                  <ChaosOrbIcon />
+                </span>{" "}
+                and{" "}
+                <span className="inline-flex items-center gap-1">
+                  <span className="leading-none">{currentRange[1]}</span>
+                  <ChaosOrbIcon />
+                </span>
               </div>
             )}
           </div>
