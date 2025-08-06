@@ -35,10 +35,16 @@ export const columns: ColumnDef<Item>[] = [
   {
     accessorKey: "name",
     header: "Name",
-  },
-  {
-    accessorKey: "variant",
-    header: "Variant",
+    cell: ({ row }) => {
+      const name = row.getValue("name") as string;
+      const variant = row.original.variant;
+      return (
+        <div className="">
+          <p>{name}</p>
+          {variant && <p className="text-muted-foreground">{variant}</p>}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "chaos",
