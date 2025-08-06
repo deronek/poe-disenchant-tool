@@ -91,7 +91,7 @@ export function DataTable<TData, TValue>({
         <Table className="w-full table-fixed text-sm">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="hover:bg-transparent">
                 {headerGroup.headers.map((header) => {
                   const width = header.getSize();
                   const isSorted = header.column.getIsSorted();
@@ -112,7 +112,7 @@ export function DataTable<TData, TValue>({
                       key={header.id}
                       style={{ width }}
                       aria-sort={ariaSort as React.AriaAttributes["aria-sort"]}
-                      className={`select-none ${isSorted ? "text-primary" : "text-foreground"} font-normal`}
+                      className={`hover:bg-accent/60 font-normal transition-colors select-none ${isSorted ? "text-primary" : "text-foreground"} `}
                     >
                       {header.isPlaceholder ? null : (
                         <div
@@ -161,11 +161,11 @@ export function DataTable<TData, TValue>({
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row, idx) => (
+              table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className={`${idx % 2 === 0 ? "bg-muted/10" : ""} hover:bg-accent/40 h-11`}
+                  className="even:bg-muted/10 hover:bg-accent/40 h-11"
                 >
                   {row.getVisibleCells().map((cell) => {
                     const width = cell.column.getSize();
