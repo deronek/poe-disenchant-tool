@@ -25,7 +25,7 @@ export const columns: ColumnDef<Item>[] = [
   {
     accessorKey: "name",
     header: "Name",
-    size: 180,
+    size: 210,
     // Make the Name column filter match both name and variant when a filter value is provided.
     filterFn: (row, _columnId, filterValue) => {
       const query = String(filterValue ?? "")
@@ -59,7 +59,7 @@ export const columns: ColumnDef<Item>[] = [
     header: ({}) => {
       return <span>Price</span>;
     },
-    size: 210,
+    size: 120,
     meta: { className: "text-right tabular-nums" },
     filterFn: (row, columnId, filterValue) => {
       const value = row.getValue(columnId) as number;
@@ -82,7 +82,7 @@ export const columns: ColumnDef<Item>[] = [
     header: ({}) => {
       return <span>Dust Value (ilvl 84, Q20)</span>;
     },
-    size: 200,
+    size: 140,
     meta: { className: "text-right tabular-nums" },
     cell: ({ row }) => {
       const value = row.getValue("dustValIlvl84Q20") as number;
