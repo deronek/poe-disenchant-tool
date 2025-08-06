@@ -103,13 +103,18 @@ export const columns: ColumnDef<Item>[] = [
     },
     size: 160,
     meta: {
-      className: "bg-accent text-right tabular-nums",
+      className:
+        "text-right tabular-nums sticky left-0 z-10 " +
+        "bg-primary/3 dark:bg-primary/5 " +
+        "shadow-[inset_10px_0_12px_-14px_rgba(0,0,0,0.12)] " +
+        "dark:shadow-[inset_10px_0_12px_-12px_rgba(0,0,0,0.8)] " +
+        "after:content-[''] after:absolute after:inset-y-0 after:right-0 after:w-px after:bg-border",
     },
     cell: ({ row }) => {
       const value = row.getValue("dustPerChaos") as number;
       return (
         <span className="block w-full">
-          <span className="float-right inline-flex items-center gap-1">
+          <span className="float-right inline-flex items-center gap-1 align-baseline">
             <span>{value}</span>
             <DustIcon />
             <span className="text-muted-foreground">/</span>
