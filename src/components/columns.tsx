@@ -123,11 +123,11 @@ export const columns: ColumnDef<Item>[] = [
     accessorKey: "tradeLink",
     header: () => {
       return (
-        <div className="flex items-center">
+        <div className="flex w-full flex-1 items-center">
           <p>Trade Link</p>
           <Tooltip>
-            <TooltipTrigger className="pl-4">
-              <Info />
+            <TooltipTrigger className="ml-auto">
+              <Info className="size-5" />
             </TooltipTrigger>
             <TooltipContent>
               Search for this item on Path of Exile trade website, displaying

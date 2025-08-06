@@ -137,13 +137,11 @@ export function DataTable<TData, TValue>({
                           }
                           aria-disabled={canSort ? undefined : true}
                         >
-                          <div className="flex min-w-0 items-center gap-2">
-                            <span className="truncate">
-                              {flexRender(
-                                header.column.columnDef.header,
-                                header.getContext(),
-                              )}
-                            </span>
+                          <div className="flex w-full min-w-0 flex-1 items-center gap-2 truncate">
+                            {flexRender(
+                              header.column.columnDef.header,
+                              header.getContext(),
+                            )}
                           </div>
                           {canSort ? (
                             <span

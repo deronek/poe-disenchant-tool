@@ -39,7 +39,7 @@ export function DataTableToolbar<TData>({ table }: { table: Table<TData> }) {
             <Button
               variant="ghost"
               size="sm"
-              className="ml-1 h-5 cursor-pointer px-1"
+              className="h-5 cursor-pointer px-1"
               onClick={() => table.getColumn("name")?.setFilterValue("")}
               aria-label="Clear name filter"
             >
@@ -56,7 +56,7 @@ export function DataTableToolbar<TData>({ table }: { table: Table<TData> }) {
             <Button
               variant="ghost"
               size="sm"
-              className="ml-1 h-5 cursor-pointer px-1"
+              className="h-5 cursor-pointer px-1"
               onClick={() =>
                 table.getColumn("chaos")?.setFilterValue(undefined)
               }
