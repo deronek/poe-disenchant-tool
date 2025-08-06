@@ -38,7 +38,7 @@ export function NameFilter<TData>({ table }: { table: Table<TData> }) {
           variant="ghost"
           size="sm"
           aria-label="Clear name filter"
-          className="text-muted-foreground hover:bg-accent/60 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute top-1/2 right-1.5 h-7 w-7 -translate-y-1/2 cursor-pointer rounded-md p-0 focus-visible:ring-[3px]"
+          className="text-muted-foreground absolute top-1/2 right-1.5 h-7 w-7 -translate-y-1/2 cursor-pointer rounded-md p-0"
           onClick={() => {
             column?.setFilterValue("");
             setValue("");
