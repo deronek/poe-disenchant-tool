@@ -26,6 +26,7 @@ import {
 import * as React from "react";
 import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "@/components/toolbar";
+import { ChevronUp } from "lucide-react";
 
 declare module "@tanstack/react-table" {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -94,24 +95,66 @@ export function DataTable<TData, TValue>({
                 {headerGroup.headers.map((header) => {
                   const width = header.getSize();
                   const isSorted = header.column.getIsSorted();
+                  const ariaSort =
+                    isSorted === "asc"
+                      ? "ascending"
+                      : isSorted === "desc"
+                        ? "descending"
+                        : "none";
+
+                  const canSort = header.column.getCanSort?.() ?? true;
+                  const toggleSort = canSort
+                    ? header.column.getToggleSortingHandler()
+                    : undefined;
+
                   return (
                     <TableHead
                       key={header.id}
                       style={{ width }}
-                      aria-sort={
-                        isSorted === "asc"
-                          ? "ascending"
-                          : isSorted === "desc"
-                            ? "descending"
-                            : "none"
-                      }
+                      aria-sort={ariaSort as React.AriaAttributes["aria-sort"]}
+                      className={`select-none ${isSorted ? "text-primary" : "text-foreground"} `}
                     >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
+                      {header.isPlaceholder ? null : (
+                        <div
+                          role={canSort ? "button" : undefined}
+                          tabIndex={canSort ? 0 : -1}
+                          className={`flex w-full items-center justify-between gap-2 rounded-sm px-1 py-1 outline-none ${canSort ? "focus-visible:ring-ring focus-visible:ring-offset-background cursor-pointer focus-visible:ring-2 focus-visible:ring-offset-2" : ""}`}
+                          onClick={toggleSort}
+                          onKeyDown={(e) => {
+                            if (!canSort) return;
+                            if (e.key === "Enter" || e.key === " ") {
+                              e.preventDefault();
+                              toggleSort?.(e);
+                            }
+                          }}
+                          aria-label={
+                            canSort
+                              ? typeof header.column.columnDef.header ===
+                                "string"
+                                ? `Sort by ${header.column.columnDef.header}`
+                                : "Sort column"
+                              : undefined
+                          }
+                          aria-disabled={canSort ? undefined : true}
+                        >
+                          <div className="flex min-w-0 items-center gap-2">
+                            <span className="truncate">
+                              {flexRender(
+                                header.column.columnDef.header,
+                                header.getContext(),
+                              )}
+                            </span>
+                          </div>
+                          {canSort ? (
+                            <span
+                              aria-hidden="true"
+                              className={`ml-1 inline-flex h-4 w-4 items-center justify-center transition-all ${isSorted ? "text-primary" : "text-muted-foreground"} ${isSorted === "desc" ? "rotate-180" : ""} ${isSorted === false ? "opacity-80" : ""}`}
+                            >
+                              <ChevronUp className="h-4 w-4" />
+                            </span>
+                          ) : null}
+                        </div>
+                      )}
                     </TableHead>
                   );
                 })}

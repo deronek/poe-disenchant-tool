@@ -7,8 +7,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { createTradeLink } from "@/lib/tradeLink";
-import { ColumnDef, SortDirection } from "@tanstack/react-table";
-import { ArrowDown10, ArrowUp01, ArrowUpDown, Info } from "lucide-react";
+import { ColumnDef } from "@tanstack/react-table";
+import { Info } from "lucide-react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
 
@@ -19,17 +19,6 @@ export type Item = {
   chaos: number;
   dustValIlvl84Q20: number;
   dustPerChaos: number;
-};
-
-const getSortedIcon = (isSorted: false | SortDirection) => {
-  if (isSorted === false) {
-    return <ArrowUpDown className="ml-2 h-4 w-4" />;
-  }
-  if (isSorted === "asc") {
-    return <ArrowUp01 className="ml-2 h-4 w-4" />;
-  }
-  // desc
-  return <ArrowDown10 className="ml-2 h-4 w-4" />;
 };
 
 export const columns: ColumnDef<Item>[] = [
@@ -67,16 +56,8 @@ export const columns: ColumnDef<Item>[] = [
   },
   {
     accessorKey: "chaos",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Price
-          {getSortedIcon(column.getIsSorted())}
-        </Button>
-      );
+    header: ({}) => {
+      return <span>Price</span>;
     },
     size: 210,
     meta: { className: "text-right tabular-nums" },
@@ -98,16 +79,8 @@ export const columns: ColumnDef<Item>[] = [
   },
   {
     accessorKey: "dustValIlvl84Q20",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Dust Value (ilvl 84, Q20)
-          {getSortedIcon(column.getIsSorted())}
-        </Button>
-      );
+    header: ({}) => {
+      return <span>Dust Value (ilvl 84, Q20)</span>;
     },
     size: 200,
     meta: { className: "text-right tabular-nums" },
@@ -125,16 +98,8 @@ export const columns: ColumnDef<Item>[] = [
   },
   {
     accessorKey: "dustPerChaos",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Dust per Chaos
-          {getSortedIcon(column.getIsSorted())}
-        </Button>
-      );
+    header: ({}) => {
+      return <span>Dust per Chaos</span>;
     },
     size: 160,
     meta: {
@@ -184,5 +149,6 @@ export const columns: ColumnDef<Item>[] = [
         </Button>
       );
     },
+    enableSorting: false,
   },
 ];
