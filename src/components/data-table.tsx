@@ -86,7 +86,7 @@ export function DataTable<TData, TValue>({
       {/* Toolbar */}
       <DataTableToolbar table={table} />
 
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto px-1">
         <Table className="w-full table-fixed text-sm">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
