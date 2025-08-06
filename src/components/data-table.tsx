@@ -81,21 +81,16 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="rounded-md border">
-      {/* Apply fixed layout to prevent content-based reflow */}
+    <div className="mx-auto w-full max-w-screen-xl rounded-md border">
       <div className="overflow-x-auto">
         <Table className="w-full table-fixed">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
-                  // Read computed width from TanStack
                   const width = header.getSize();
                   return (
-                    <TableHead
-                      key={header.id}
-                      style={{ width, maxWidth: width, minWidth: width }}
-                    >
+                    <TableHead key={header.id} style={{ width }}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -121,7 +116,7 @@ export function DataTable<TData, TValue>({
                       <TableCell
                         key={cell.id}
                         className={cell.column.columnDef.meta?.className}
-                        style={{ width, maxWidth: width, minWidth: width }}
+                        style={{ width }}
                       >
                         {flexRender(
                           cell.column.columnDef.cell,

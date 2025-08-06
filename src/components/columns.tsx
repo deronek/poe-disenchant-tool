@@ -11,6 +11,7 @@ import { ColumnDef, SortDirection } from "@tanstack/react-table";
 import { ArrowDown10, ArrowUp01, ArrowUpDown, Info } from "lucide-react";
 import { RangeFilter } from "./range-filter";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
+import { DustIcon } from "./dust-icon";
 
 export type Item = {
   id: number;
@@ -74,7 +75,7 @@ export const columns: ColumnDef<Item>[] = [
         </div>
       );
     },
-    size: 200,
+    size: 210,
     meta: { className: "text-right tabular-nums" },
     filterFn: (row, columnId, filterValue) => {
       console.log(filterValue);
@@ -110,7 +111,14 @@ export const columns: ColumnDef<Item>[] = [
     meta: { className: "text-right tabular-nums" },
     cell: ({ row }) => {
       const value = row.getValue("dustValIlvl84Q20") as number;
-      return <span className="block w-full text-right">{value}</span>;
+      return (
+        <span className="block w-full">
+          <span className="float-right inline-flex items-center gap-1">
+            <span>{value}</span>
+            <DustIcon />
+          </span>
+        </span>
+      );
     },
   },
   {
@@ -132,7 +140,16 @@ export const columns: ColumnDef<Item>[] = [
     },
     cell: ({ row }) => {
       const value = row.getValue("dustPerChaos") as number;
-      return <span className="block w-full text-right">{value}</span>;
+      return (
+        <span className="block w-full">
+          <span className="float-right inline-flex items-center gap-1">
+            <span>{value}</span>
+            <DustIcon />
+            <span className="text-muted-foreground">/</span>
+            <ChaosOrbIcon />
+          </span>
+        </span>
+      );
     },
   },
   {

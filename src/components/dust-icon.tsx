@@ -8,13 +8,13 @@ type Props = {
   alt?: string;
 };
 
-const CHAOS_ORB_URL =
-  "https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyRerollRare.png";
+const DUST_URL =
+  "https://web.poecdn.com/image/Art/2DItems/Currency/Settlers/DisenchantedMagicDust.png";
 
-function ChaosOrbIcon({ className, size = 18, alt = "Chaos Orb" }: Props) {
+function DustIcon({ className, size = 18, alt = "Thaumaturgic Dust" }: Props) {
   return (
     <Icon
-      src={CHAOS_ORB_URL}
+      src={DUST_URL}
       title={alt}
       alt={alt}
       size={size}
@@ -23,4 +23,4 @@ function ChaosOrbIcon({ className, size = 18, alt = "Chaos Orb" }: Props) {
   );
 }
 
-export { ChaosOrbIcon };
+export { DustIcon };
