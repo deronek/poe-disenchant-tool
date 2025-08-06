@@ -10,6 +10,8 @@ import {
   getSortedRowModel,
   RowData,
   SortingState,
+  Updater,
+  ColumnSizingState,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -45,8 +47,11 @@ export function DataTable<TData, TValue>({
       desc: true,
     },
   ]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([
-  ]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    [],
+  );
+  // Keep column sizes in state to make widths stable
+  const [columnSizing, setColumnSizing] = React.useState<ColumnSizingState>({});
 
   const table = useReactTable({
     data,
@@ -57,59 +62,89 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    onColumnSizingChange: setColumnSizing as (
+      updater: Updater<ColumnSizingState>,
+    ) => void,
+    columnResizeMode: "onChange",
+    enableColumnResizing: true,
     state: {
       sorting,
       columnFilters,
+      columnSizing,
+    },
+    // Provide sensible defaults in case columns do not specify size
+    defaultColumn: {
+      minSize: 60,
+      size: 150,
+      maxSize: 500,
     },
   });
 
   return (
     <div className="rounded-md border">
-      <Table>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
-                  </TableHead>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell
-                    key={cell.id}
-                    className={cell.column.columnDef.meta?.className}
-                  >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
+      {/* Apply fixed layout to prevent content-based reflow */}
+      <div className="overflow-x-auto">
+        <Table className="w-full table-fixed">
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  // Read computed width from TanStack
+                  const width = header.getSize();
+                  return (
+                    <TableHead
+                      key={header.id}
+                      style={{ width, maxWidth: width, minWidth: width }}
+                    >
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
+                    </TableHead>
+                  );
+                })}
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => {
+                    const width = cell.column.getSize();
+                    return (
+                      <TableCell
+                        key={cell.id}
+                        className={cell.column.columnDef.meta?.className}
+                        style={{ width, maxWidth: width, minWidth: width }}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  No results.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
       <DataTablePagination table={table} />
     </div>
   );

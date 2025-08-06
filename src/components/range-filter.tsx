@@ -68,11 +68,6 @@ export function RangeFilter<TData>({
         <Button variant="outline" size="sm" className="relative bg-transparent">
           <Filter className="mr-2 h-4 w-4" />
           <span className="hidden md:block">{title}</span>
-          {hasActiveFilter && (
-            <Badge variant="secondary" className="ml-2 h-5 px-1.5 text-xs">
-              1
-            </Badge>
-          )}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80" align="start">

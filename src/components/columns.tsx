@@ -35,13 +35,16 @@ export const columns: ColumnDef<Item>[] = [
   {
     accessorKey: "name",
     header: "Name",
+    size: 180,
     cell: ({ row }) => {
       const name = row.getValue("name") as string;
       const variant = row.original.variant;
       return (
-        <div className="">
-          <p>{name}</p>
-          {variant && <p className="text-muted-foreground">{variant}</p>}
+        <div className="truncate">
+          <p className="truncate">{name}</p>
+          {variant && (
+            <p className="text-muted-foreground truncate">{variant}</p>
+          )}
         </div>
       );
     },
@@ -50,28 +53,36 @@ export const columns: ColumnDef<Item>[] = [
     accessorKey: "chaos",
     header: ({ column }) => {
       return (
-        <div className="flex justify-between">
+        <div className="flex items-center">
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Chaos
+            Price
             {getSortedIcon(column.getIsSorted())}
           </Button>
-          <RangeFilter
-            column={column}
-            title="Price Range"
-            description="Filter products by price range."
-            min={0}
-            max={600}
-          />
+          <div className="ml-auto">
+            <RangeFilter
+              column={column}
+              title="Range Filter"
+              description="Filter products by price range."
+              min={0}
+              max={600}
+            />
+          </div>
         </div>
       );
     },
+    size: 200,
+    meta: { className: "text-right tabular-nums" },
     filterFn: (row, columnId, filterValue) => {
       console.log(filterValue);
       const value = row.getValue(columnId) as number;
       return value >= filterValue.min && value <= filterValue.max;
+    },
+    cell: ({ row }) => {
+      const value = row.getValue("chaos") as number;
+      return <span className="block w-full text-right">{value}</span>;
     },
   },
   {
@@ -87,6 +98,12 @@ export const columns: ColumnDef<Item>[] = [
         </Button>
       );
     },
+    size: 200,
+    meta: { className: "text-right tabular-nums" },
+    cell: ({ row }) => {
+      const value = row.getValue("dustValIlvl84Q20") as number;
+      return <span className="block w-full text-right">{value}</span>;
+    },
   },
   {
     accessorKey: "dustPerChaos",
@@ -101,8 +118,13 @@ export const columns: ColumnDef<Item>[] = [
         </Button>
       );
     },
+    size: 160,
     meta: {
-      className: "bg-accent",
+      className: "bg-accent text-right tabular-nums",
+    },
+    cell: ({ row }) => {
+      const value = row.getValue("dustPerChaos") as number;
+      return <span className="block w-full text-right">{value}</span>;
     },
   },
   {
@@ -123,6 +145,7 @@ export const columns: ColumnDef<Item>[] = [
         </div>
       );
     },
+    size: 140,
     cell: ({ row }) => {
       const name = row.getValue("name") as string;
       const link = createTradeLink(name);
