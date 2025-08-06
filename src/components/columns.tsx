@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/tooltip";
 import { createTradeLink } from "@/lib/tradeLink";
 import { ColumnDef } from "@tanstack/react-table";
-import { Info } from "lucide-react";
+import { Info, ExternalLink } from "lucide-react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
 
@@ -142,9 +142,23 @@ export const columns: ColumnDef<Item>[] = [
       const name = row.getValue("name") as string;
       const link = createTradeLink(name);
       return (
-        <Button asChild variant="link">
-          <a href={link} target="_blank" rel="noreferrer">
-            Trade
+        <Button
+          asChild
+          variant="ghost"
+          className="text-primary hover:text-primary focus:text-primary hover:border-primary/70 focus:border-primary/70 hover:bg-primary/5 focus:bg-primary/10 aspect-square border border-transparent transition-colors"
+        >
+          <a
+            href={link}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`Open trade search for ${name} in new tab`}
+            title={`Open trade search for ${name}`}
+            className="inline-flex items-center"
+          >
+            <ExternalLink
+              className="size-4 align-baseline"
+              aria-hidden="true"
+            />
           </a>
         </Button>
       );
