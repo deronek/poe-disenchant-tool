@@ -2,28 +2,23 @@
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { createTradeLink } from "@/lib/tradeLink";
-import { ExternalLink, Info } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
 import type { Item } from "@/lib/itemData";
 import { Row } from "@tanstack/react-table";
 
-interface MobileCardProps {
-  row: Row<Item>;
+interface MobileCardProps<TData> {
+  row: Row<TData>;
 }
 
-export function MobileCard({ row }: MobileCardProps) {
-  const name = row.getValue("name") as string;
-  const variant = row.original.variant;
-  const chaos = row.getValue("chaos") as number;
-  const dustValIlvl84Q20 = row.getValue("dustValIlvl84Q20") as number;
-  const dustPerChaos = row.getValue("dustPerChaos") as number;
+export function MobileCard<TData>({ row }: MobileCardProps<TData>) {
+  const name = row.getValue<string>("name");
+  const variant = (row.original as Item).variant;
+  const chaos = row.getValue<number>("chaos");
+  const dustValIlvl84Q20 = row.getValue<number>("dustValIlvl84Q20");
+  const dustPerChaos = row.getValue<number>("dustPerChaos");
   const isSelected = row.getIsSelected();
   const tradeLink = createTradeLink(name);
 
@@ -41,7 +36,7 @@ export function MobileCard({ row }: MobileCardProps) {
           <Checkbox
             className="mt-0.5 size-5"
             checked={isSelected}
-            onCheckedChange={(v) => row.toggleSelected(Boolean(v))}
+            onCheckedChange={(v) => row.toggleSelected(!!v)}
             aria-label={`Mark ${name} as completed`}
           />
           <div className="min-w-0 flex-1">
