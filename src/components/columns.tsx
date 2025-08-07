@@ -11,6 +11,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Info, ExternalLink } from "lucide-react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export type Item = {
   id: number;
@@ -46,9 +47,9 @@ export const columns: ColumnDef<Item>[] = [
           className="truncate"
           title={name + (variant ? ` — ${variant}` : "")}
         >
-          <p className="truncate font-medium tracking-[0.015em]">{name}</p>
+          <p className={`truncate font-medium tracking-[0.015em]`}>{name}</p>
           {variant && (
-            <p className="text-muted-foreground truncate">{variant}</p>
+            <p className={`text-muted-foreground truncate`}>{variant}</p>
           )}
         </div>
       );
@@ -136,38 +137,75 @@ export const columns: ColumnDef<Item>[] = [
             </TooltipTrigger>
             <TooltipContent>
               Search for this item on Path of Exile trade website, displaying
-              only listing from last 3 days.
+              only listings from the last 3 days.
             </TooltipContent>
           </Tooltip>
         </div>
       );
     },
-    size: 140,
+    size: 100,
     cell: ({ row }) => {
       const name = row.getValue("name") as string;
       const link = createTradeLink(name);
       return (
-        <Button
-          asChild
-          variant="ghost"
-          className="text-primary hover:text-primary focus:text-primary hover:border-primary/70 focus:border-primary/70 hover:bg-primary/5 focus:bg-primary/10 aspect-square border border-transparent transition-colors"
-        >
-          <a
-            href={link}
-            target="_blank"
-            rel="noreferrer"
-            aria-label={`Open trade search for ${name} in new tab`}
-            title={`Open trade search for ${name}`}
-            className="inline-flex items-center"
+        <div className="flex w-full flex-1 items-center">
+          <Button
+            asChild
+            variant="ghost"
+            className="text-primary hover:text-primary focus:text-primary hover:border-primary/70 focus:border-primary/70 hover:bg-primary/5 focus:bg-primary/10 mx-auto aspect-square border border-transparent transition-colors"
           >
-            <ExternalLink
-              className="size-4 align-baseline"
-              aria-hidden="true"
-            />
-          </a>
-        </Button>
+            <a
+              href={link}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Open trade search for ${name} in new tab`}
+              title={`Open trade search for ${name}`}
+              className="inline-flex items-center"
+            >
+              <ExternalLink
+                className="size-4 align-baseline"
+                aria-hidden="true"
+              />
+            </a>
+          </Button>
+        </div>
       );
     },
     enableSorting: false,
+  },
+  {
+    id: "select",
+    header: () => {
+      return (
+        <div className="flex w-full items-center">
+          <p>Mark</p>
+          <Tooltip>
+            <TooltipTrigger className="ml-auto">
+              <Info className="size-5" />
+            </TooltipTrigger>
+            <TooltipContent>
+              Use this checkbox to mark items you have already traded recently.
+              Marks are visual-only and saved to this device. Use “Clear marks”
+              in the toolbar to remove all marks.
+            </TooltipContent>
+          </Tooltip>
+        </div>
+      );
+    },
+    size: 80,
+    enableSorting: false,
+    enableHiding: false,
+    cell: ({ row }) => {
+      return (
+        <div className="flex items-center justify-center">
+          <Checkbox
+            className="size-5"
+            checked={row.getIsSelected()}
+            onCheckedChange={(v) => row.toggleSelected(Boolean(v))}
+            aria-label={`Mark ${row.getValue("name") as string} as completed`}
+          />
+        </div>
+      );
+    },
   },
 ];

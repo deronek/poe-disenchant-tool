@@ -3,18 +3,20 @@
 import {
   ColumnDef,
   ColumnFiltersState,
+  ColumnSizingState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   RowData,
+  RowSelectionState,
   SortingState,
   Updater,
-  ColumnSizingState,
   useReactTable,
 } from "@tanstack/react-table";
 
+import { DataTableToolbar } from "@/components/toolbar";
 import {
   Table,
   TableBody,
@@ -23,10 +25,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { ChevronUp } from "lucide-react";
 import * as React from "react";
 import { DataTablePagination } from "./data-table-pagination";
-import { DataTableToolbar } from "@/components/toolbar";
-import { ChevronUp } from "lucide-react";
+import { usePersistentRowSelection } from "./usePersistentRowSelection";
 
 declare module "@tanstack/react-table" {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -39,7 +41,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends { uniqueId?: string }, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -55,6 +57,10 @@ export function DataTable<TData, TValue>({
   // Keep column sizes in state to make widths stable
   const [columnSizing, setColumnSizing] = React.useState<ColumnSizingState>({});
 
+  // Persistent row selection
+  const { rowSelection, setRowSelection, clearSelection } =
+    usePersistentRowSelection("poe-udt:selected:v1");
+
   const table = useReactTable({
     data,
     columns,
@@ -69,10 +75,19 @@ export function DataTable<TData, TValue>({
     ) => void,
     columnResizeMode: "onChange",
     enableColumnResizing: true,
+    getRowId: (row, _index) =>
+      // Fall back to array index string if uniqueId not present
+      row.uniqueId ?? String(_index ?? 0),
+    onRowSelectionChange: setRowSelection as unknown as (
+      updater:
+        | RowSelectionState
+        | ((old: RowSelectionState) => RowSelectionState),
+    ) => void,
     state: {
       sorting,
       columnFilters,
       columnSizing,
+      rowSelection,
     },
     // Provide sensible defaults in case columns do not specify size
     defaultColumn: {
@@ -85,7 +100,7 @@ export function DataTable<TData, TValue>({
   return (
     <div className="mx-auto w-full max-w-screen-xl rounded-md border">
       {/* Toolbar */}
-      <DataTableToolbar table={table} />
+      <DataTableToolbar table={table} onClearMarks={clearSelection} />
 
       <div className="overflow-x-auto px-1">
         <Table className="w-full table-fixed text-sm">
@@ -165,7 +180,9 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className="even:bg-muted/10 hover:bg-accent/40 h-11"
+                  className={
+                    "even:bg-muted/10 hover:bg-accent/40 data-[state=selected]:bg-muted/60 h-11 data-[state=selected]:opacity-95"
+                  }
                 >
                   {row.getVisibleCells().map((cell) => {
                     const width = cell.column.getSize();

@@ -7,7 +7,15 @@ import { ChaosOrbIcon } from "@/components/chaos-orb-icon";
 import { NameFilter } from "@/components/name-filter";
 import { Table } from "@tanstack/react-table";
 
-export function DataTableToolbar<TData>({ table }: { table: Table<TData> }) {
+type ToolbarProps<TData> = {
+  table: Table<TData>;
+  onClearMarks?: () => void;
+};
+
+export function DataTableToolbar<TData>({
+  table,
+  onClearMarks,
+}: ToolbarProps<TData>) {
   const nameFilter =
     (table.getColumn("name")?.getFilterValue() as string) ?? "";
   const chaosRange = table.getColumn("chaos")?.getFilterValue() as
@@ -28,7 +36,18 @@ export function DataTableToolbar<TData>({ table }: { table: Table<TData> }) {
             max={600}
           />
         </div>
-        <div className="md:ml-auto" />
+        <div className="flex items-center gap-2 md:ml-auto">
+          {onClearMarks ? (
+            <Button
+              variant="outline"
+              onClick={onClearMarks}
+              title="Clear all marked rows"
+              aria-label="Clear all marked rows"
+            >
+              Clear marks
+            </Button>
+          ) : null}
+        </div>
       </div>
 
       {/* Active chips */}
