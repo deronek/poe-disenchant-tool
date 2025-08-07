@@ -29,6 +29,7 @@ import { ChevronUp } from "lucide-react";
 import * as React from "react";
 import { DataTablePagination } from "./data-table-pagination";
 import { usePersistentRowSelection } from "./usePersistentRowSelection";
+import { MobileCardLayout } from "./mobile-card-layout";
 
 declare module "@tanstack/react-table" {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -102,7 +103,13 @@ export function DataTable<TData extends { uniqueId?: string }, TValue>({
       {/* Toolbar */}
       <DataTableToolbar table={table} onClearMarks={clearSelection} />
 
-      <div className="overflow-x-auto px-1">
+      {/* Mobile Card Layout */}
+      <div className="p-4 md:hidden">
+        <MobileCardLayout table={table} />
+      </div>
+
+      {/* Desktop Table Layout */}
+      <div className="hidden overflow-x-auto px-1 md:block">
         <Table className="w-full table-fixed text-sm">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -214,7 +221,11 @@ export function DataTable<TData extends { uniqueId?: string }, TValue>({
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination table={table} />
+
+      {/* Pagination - Show below both layouts */}
+      <div className="border-t p-4">
+        <DataTablePagination table={table} />
+      </div>
     </div>
   );
 }

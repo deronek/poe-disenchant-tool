@@ -181,13 +181,14 @@ export const columns: ColumnDef<Item>[] = [
     enableSorting: false,
     enableHiding: false,
     cell: ({ row }) => {
+      const name = row.getValue("name") as string;
       return (
         <div className="flex items-center justify-center">
           <Checkbox
             className="size-5"
             checked={row.getIsSelected()}
             onCheckedChange={(v) => row.toggleSelected(Boolean(v))}
-            aria-label={`Mark ${row.getValue("name") as string} as completed`}
+            aria-label={`Mark ${name} as completed`}
           />
         </div>
       );

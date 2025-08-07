@@ -6,6 +6,14 @@ import { RangeFilter } from "@/components/range-filter";
 import { ChaosOrbIcon } from "@/components/chaos-orb-icon";
 import { NameFilter } from "@/components/name-filter";
 import { Table } from "@tanstack/react-table";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { DustIcon } from "@/components/dust-icon";
+import { ArrowUpDown, ArrowUp, ArrowDown, X } from "lucide-react";
 
 type ToolbarProps<TData> = {
   table: Table<TData>;
@@ -22,6 +30,58 @@ export function DataTableToolbar<TData>({
     | { min: number; max: number }
     | undefined;
 
+  // Get current sorting information
+  const sorting = table.getState().sorting;
+  const currentSort = sorting[0]; // Get the first (and currently only) sort
+
+  // Get column information for display
+  const getSortLabel = (columnId: string) => {
+    switch (columnId) {
+      case "dustPerChaos":
+        return "Dust per Chaos";
+      case "name":
+        return "Name";
+      case "chaos":
+        return "Price";
+      case "dustValIlvl84Q20":
+        return "Dust Value";
+      default:
+        return columnId;
+    }
+  };
+
+  // Handle sorting with tri-state toggle (desc -> asc -> none)
+  const handleSort = (columnId: string) => {
+    const column = table.getColumn(columnId);
+    if (!column) return;
+
+    const currentSort = sorting.find((sort) => sort.id === columnId);
+
+    if (currentSort) {
+      // Cycle: desc -> asc -> none
+      if (currentSort.desc) {
+        // Currently descending, change to ascending
+        table.setSorting([
+          ...sorting.filter((sort) => sort.id !== columnId),
+          { id: columnId, desc: false },
+        ]);
+      } else {
+        // Currently ascending, remove sorting
+        table.setSorting(sorting.filter((sort) => sort.id !== columnId));
+      }
+    } else {
+      // No sorting, add descending (most common use case)
+      table.setSorting([...sorting, { id: columnId, desc: true }]);
+    }
+  };
+
+  // Get sort state for a column
+  const getSortState = (columnId: string) => {
+    const sort = sorting.find((sort) => sort.id === columnId);
+    if (!sort) return "none";
+    return sort.desc ? "desc" : "asc";
+  };
+
   return (
     <div className="flex flex-col gap-3 border-b p-3">
       <div className="flex flex-col gap-3 md:flex-row md:items-center">
@@ -36,6 +96,105 @@ export function DataTableToolbar<TData>({
             max={600}
           />
         </div>
+
+        {/* Sorting Controls - Mobile Only */}
+        <div className="md:ml-2 md:hidden">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm" className="gap-2">
+                <ArrowUpDown className="h-4 w-4" />
+                Sort
+                {currentSort && (
+                  <span className="text-muted-foreground inline-flex items-center">
+                    {getSortLabel(currentSort.id)}
+                    <span className="ml-1">
+                      {currentSort.desc ? (
+                        <ArrowDown className="h-4 w-4" />
+                      ) : (
+                        <ArrowUp className="h-4 w-4" />
+                      )}
+                    </span>
+                  </span>
+                )}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="min-w-[200px]">
+              <DropdownMenuItem
+                onClick={() => handleSort("dustPerChaos")}
+                className="flex items-center justify-between"
+              >
+                <div className="flex items-center gap-3">
+                  <DustIcon className="h-4 w-4" />
+                  <ChaosOrbIcon className="h-4 w-4" />
+                  <span>Dust per Chaos</span>
+                </div>
+                {getSortState("dustPerChaos") !== "none" && (
+                  <span className="text-muted-foreground">
+                    {getSortState("dustPerChaos") === "desc" ? (
+                      <ArrowDown className="h-4 w-4" />
+                    ) : (
+                      <ArrowUp className="h-4 w-4" />
+                    )}
+                  </span>
+                )}
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => handleSort("name")}
+                className="flex items-center justify-between"
+              >
+                <div className="flex items-center gap-3">
+                  <span>Name</span>
+                </div>
+                {getSortState("name") !== "none" && (
+                  <span className="text-muted-foreground">
+                    {getSortState("name") === "desc" ? (
+                      <ArrowDown className="h-4 w-4" />
+                    ) : (
+                      <ArrowUp className="h-4 w-4" />
+                    )}
+                  </span>
+                )}
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => handleSort("chaos")}
+                className="flex items-center justify-between"
+              >
+                <div className="flex items-center gap-3">
+                  <ChaosOrbIcon className="h-4 w-4" />
+                  <span>Price</span>
+                </div>
+                {getSortState("chaos") !== "none" && (
+                  <span className="text-muted-foreground">
+                    {getSortState("chaos") === "desc" ? (
+                      <ArrowDown className="h-4 w-4" />
+                    ) : (
+                      <ArrowUp className="h-4 w-4" />
+                    )}
+                  </span>
+                )}
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => handleSort("dustValIlvl84Q20")}
+                className="flex items-center justify-between"
+              >
+                <div className="flex items-center gap-3">
+                  <DustIcon className="h-4 w-4" />
+                  <span>Dust Value</span>
+                </div>
+                {getSortState("dustValIlvl84Q20") !== "none" && (
+                  <span className="text-muted-foreground">
+                    {getSortState("dustValIlvl84Q20") === "desc" ? (
+                      <ArrowDown className="h-4 w-4" />
+                    ) : (
+                      <ArrowUp className="h-4 w-4" />
+                    )}
+                  </span>
+                )}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
         <div className="flex items-center gap-2 md:ml-auto">
           {onClearMarks ? (
             <Button
@@ -62,7 +221,7 @@ export function DataTableToolbar<TData>({
               onClick={() => table.getColumn("name")?.setFilterValue("")}
               aria-label="Clear name filter"
             >
-              ×
+              <X className="h-3 w-3" />
             </Button>
           </Badge>
         ) : null}
@@ -81,7 +240,7 @@ export function DataTableToolbar<TData>({
               }
               aria-label="Clear price filter"
             >
-              ×
+              <X className="h-3 w-3" />
             </Button>
           </Badge>
         ) : null}
