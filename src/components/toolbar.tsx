@@ -14,7 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DustIcon } from "@/components/dust-icon";
-import { ArrowUpDown, ArrowUp, ArrowDown, X } from "lucide-react";
+import { ArrowUpDown, ArrowUp, ArrowDown, X, Type } from "lucide-react";
 
 type ToolbarProps<TData extends Item> = {
   table: Table<TData>;
@@ -103,11 +103,11 @@ export function DataTableToolbar<TData extends Item>({
         <div className="md:ml-2 md:hidden">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className="gap-2">
+              <Button variant="outline" className="gap-2">
                 <ArrowUpDown className="h-4 w-4" />
                 Sort
                 {currentSort && (
-                  <span className="text-muted-foreground inline-flex items-center">
+                  <span className="text-muted-foreground inline-flex items-center font-normal">
                     {getSortLabel(currentSort.id)}
                     <span className="ml-1">
                       {currentSort.desc ? (
@@ -123,12 +123,14 @@ export function DataTableToolbar<TData extends Item>({
             <DropdownMenuContent align="end" className="min-w-[200px]">
               <DropdownMenuItem
                 onClick={() => handleSort("dustPerChaos")}
-                className="flex items-center justify-between"
+                className="flex items-center justify-between gap-0"
               >
-                <div className="flex items-center gap-3">
-                  <DustIcon className="h-4 w-4" />
-                  <ChaosOrbIcon className="h-4 w-4" />
-                  <span>Dust per Chaos</span>
+                <div className="flex items-start gap-6">
+                  <div className="flex items-center gap-1">
+                    <DustIcon className="h-4 w-4" />
+                    <ChaosOrbIcon className="h-4 w-4" />
+                  </div>
+                  <span className="text-left">Dust per Chaos</span>
                 </div>
                 {getSortState("dustPerChaos") !== "none" && (
                   <span className="text-muted-foreground">
@@ -144,8 +146,12 @@ export function DataTableToolbar<TData extends Item>({
                 onClick={() => handleSort("name")}
                 className="flex items-center justify-between"
               >
-                <div className="flex items-center gap-3">
-                  <span>Name</span>
+                <div className="flex items-start gap-6">
+                  <div className="flex items-center gap-1">
+                    <Type className="h-4 w-4" />
+                    <span className="w-4"></span>
+                  </div>
+                  <span className="text-left">Name</span>
                 </div>
                 {getSortState("name") !== "none" && (
                   <span className="text-muted-foreground">
@@ -161,9 +167,11 @@ export function DataTableToolbar<TData extends Item>({
                 onClick={() => handleSort("chaos")}
                 className="flex items-center justify-between"
               >
-                <div className="flex items-center gap-3">
-                  <ChaosOrbIcon className="h-4 w-4" />
-                  <span>Price</span>
+                <div className="flex items-start gap-6">
+                  <div className="mr-5 flex items-center gap-1">
+                    <ChaosOrbIcon className="h-4 w-4" />
+                  </div>
+                  <span className="text-left">Price</span>
                 </div>
                 {getSortState("chaos") !== "none" && (
                   <span className="text-muted-foreground">
@@ -179,9 +187,11 @@ export function DataTableToolbar<TData extends Item>({
                 onClick={() => handleSort("dustValIlvl84Q20")}
                 className="flex items-center justify-between"
               >
-                <div className="flex items-center gap-3">
-                  <DustIcon className="h-4 w-4" />
-                  <span>Dust Value</span>
+                <div className="flex items-start gap-6">
+                  <div className="mr-5 flex items-center gap-1">
+                    <DustIcon className="h-4 w-4" />
+                  </div>
+                  <span className="text-left">Dust Value</span>
                 </div>
                 {getSortState("dustValIlvl84Q20") !== "none" && (
                   <span className="text-muted-foreground">
