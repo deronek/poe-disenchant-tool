@@ -9,6 +9,13 @@ export type Item = DustItem & {
   dustPerChaos: number;
 };
 
+const ITEMS_TO_IGNORE = [
+  "Curio of Consumption",
+  "Curio of Absorption",
+  "Curio of Potential",
+  "Curio of Decay",
+];
+
 export const getItems = async (): Promise<Item[]> => {
   const dustData = getDustData();
   const priceData = await getPriceData();
@@ -17,6 +24,7 @@ export const getItems = async (): Promise<Item[]> => {
   let id = 0;
 
   for (const priceItem of priceData) {
+    if (ITEMS_TO_IGNORE.includes(priceItem.name)) continue;
     const dustItem = dustData.find((d) => d.name === priceItem.name);
 
     if (dustItem) {
@@ -30,7 +38,7 @@ export const getItems = async (): Promise<Item[]> => {
       });
     } else {
       // TODO: need to display this in the UI, as an information that something will be missing
-      // console.warn(`No dust data found for ${priceItem.name}`);
+      console.warn(`No dust data found for ${priceItem.name}`);
     }
   }
 

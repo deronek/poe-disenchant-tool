@@ -13,7 +13,7 @@ const ItemSchema = z.object({
   dustVal: z.number(),
   dustValIlvl84: z.number(),
   dustValIlvl84Q20: z.number(),
-  dustPerSlot: z.number(),
+  dustPerSlot: z.number().optional(),
   w: z.number(),
   h: z.number(),
   slots: z.number(),
