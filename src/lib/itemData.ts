@@ -3,6 +3,7 @@ import { AllowedUnique, getPriceData } from "./prices";
 
 export type Item = DustItem & {
   id: number;
+  uniqueId: string;
   chaos: number;
   graph: (number | null)[];
   variant?: string;
@@ -16,6 +17,9 @@ const ITEMS_TO_IGNORE = [
   "Curio of Potential",
   "Curio of Decay",
 ];
+
+const createUniqueId = (name: string, variant?: string) =>
+  `${name}${variant ? `-${variant}` : ""}`;
 
 export const getItems = async (): Promise<Item[]> => {
   const dustData = getDustData();
@@ -31,6 +35,7 @@ export const getItems = async (): Promise<Item[]> => {
     if (dustItem) {
       merged.push({
         id: id++,
+        uniqueId: createUniqueId(priceItem.name, priceItem.variant),
         ...dustItem,
         chaos: priceItem.chaos,
         graph: priceItem.graph,
