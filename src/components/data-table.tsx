@@ -17,6 +17,7 @@ import {
 } from "@tanstack/react-table";
 
 import { DataTableToolbar } from "@/components/toolbar";
+import type { Item } from "@/lib/itemData";
 import {
   Table,
   TableBody,
@@ -42,7 +43,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
-export function DataTable<TData extends { uniqueId?: string }, TValue>({
+export function DataTable<TData extends Item, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {

@@ -2,12 +2,13 @@
 
 import { MobileCard } from "./mobile-card";
 import { Table } from "@tanstack/react-table";
+import type { Item } from "@/lib/itemData";
 
-interface MobileCardLayoutProps<TData> {
+interface MobileCardLayoutProps<TData extends Item> {
   table: Table<TData>;
 }
 
-export function MobileCardLayout<TData>({
+export function MobileCardLayout<TData extends Item>({
   table,
 }: MobileCardLayoutProps<TData>) {
   return (

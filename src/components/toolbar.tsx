@@ -6,6 +6,7 @@ import { RangeFilter } from "@/components/range-filter";
 import { ChaosOrbIcon } from "@/components/chaos-orb-icon";
 import { NameFilter } from "@/components/name-filter";
 import { Table } from "@tanstack/react-table";
+import type { Item } from "@/lib/itemData";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,12 +16,12 @@ import {
 import { DustIcon } from "@/components/dust-icon";
 import { ArrowUpDown, ArrowUp, ArrowDown, X } from "lucide-react";
 
-type ToolbarProps<TData> = {
+type ToolbarProps<TData extends Item> = {
   table: Table<TData>;
   onClearMarks?: () => void;
 };
 
-export function DataTableToolbar<TData>({
+export function DataTableToolbar<TData extends Item>({
   table,
   onClearMarks,
 }: ToolbarProps<TData>) {
@@ -87,14 +88,15 @@ export function DataTableToolbar<TData>({
       <div className="flex flex-col gap-3 md:flex-row md:items-center">
         <NameFilter table={table} />
         <div className="md:ml-2">
-          <RangeFilter
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            column={table.getColumn("chaos") as any}
-            title="Price Filter"
-            description="Filter items by chaos price range."
-            min={0}
-            max={600}
-          />
+          {table.getColumn("chaos") && (
+            <RangeFilter
+              column={table.getColumn("chaos")}
+              title="Price Filter"
+              description="Filter items by chaos price range."
+              min={0}
+              max={600}
+            />
+          )}
         </div>
 
         {/* Sorting Controls - Mobile Only */}

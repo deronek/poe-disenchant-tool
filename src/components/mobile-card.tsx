@@ -9,13 +9,15 @@ import { DustIcon } from "./dust-icon";
 import type { Item } from "@/lib/itemData";
 import { Row } from "@tanstack/react-table";
 
-interface MobileCardProps<TData> {
+interface MobileCardProps<TData extends Item> {
   row: Row<TData>;
 }
 
-export function MobileCard<TData>({ row }: MobileCardProps<TData>) {
+export function MobileCard<TData extends Item>({
+  row,
+}: MobileCardProps<TData>) {
   const name = row.getValue<string>("name");
-  const variant = (row.original as Item).variant;
+  const variant = row.original.variant;
   const chaos = row.getValue<number>("chaos");
   const dustValIlvl84Q20 = row.getValue<number>("dustValIlvl84Q20");
   const dustPerChaos = row.getValue<number>("dustPerChaos");
