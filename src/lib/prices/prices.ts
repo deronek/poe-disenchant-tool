@@ -43,7 +43,7 @@ const allowedUniqueTypes = [
   "UniqueAccessory",
 ] as const;
 
-type AllowedUnique = (typeof allowedUniqueTypes)[number];
+export type AllowedUnique = (typeof allowedUniqueTypes)[number];
 
 const isAllowedUnique = (t: string): t is AllowedUnique =>
   (allowedUniqueTypes as readonly string[]).includes(t);

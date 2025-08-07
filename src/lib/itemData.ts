@@ -1,5 +1,5 @@
 import { getDustData, Item as DustItem } from "./dust";
-import { getPriceData } from "./prices";
+import { AllowedUnique, getPriceData } from "./prices";
 
 export type Item = DustItem & {
   id: number;
@@ -7,6 +7,7 @@ export type Item = DustItem & {
   graph: (number | null)[];
   variant?: string;
   dustPerChaos: number;
+  type: AllowedUnique;
 };
 
 const ITEMS_TO_IGNORE = [
@@ -35,6 +36,7 @@ export const getItems = async (): Promise<Item[]> => {
         graph: priceItem.graph,
         variant: priceItem.variant,
         dustPerChaos: Math.round(dustItem.dustValIlvl84Q20 / priceItem.chaos),
+        type: priceItem.type,
       });
     } else {
       // TODO: need to display this in the UI, as an information that something will be missing

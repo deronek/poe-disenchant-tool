@@ -1,3 +1,3 @@
-import { getPriceData, type Line } from "./prices";
+import { getPriceData, type Item, type AllowedUnique } from "./prices";
 
-export { getPriceData, type Line };
+export { getPriceData, type Item, type AllowedUnique };
