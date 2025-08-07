@@ -34,7 +34,27 @@ const ApiResponseSchema = z.object({
 type ApiResponse = z.infer<typeof ApiResponseSchema>;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 type Overview = z.infer<typeof OverviewSchema>;
-export type Line = z.infer<typeof LineSchema>;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type Line = z.infer<typeof LineSchema>;
+
+const allowedUniqueTypes = [
+  "UniqueWeapon",
+  "UniqueArmor",
+  "UniqueAccessory",
+] as const;
+
+type AllowedUnique = (typeof allowedUniqueTypes)[number];
+
+const isAllowedUnique = (t: string): t is AllowedUnique =>
+  (allowedUniqueTypes as readonly string[]).includes(t);
+
+export type Item = {
+  type: AllowedUnique;
+  name: string;
+  chaos: number;
+  graph: (number | null)[];
+  variant?: string;
+};
 
 // TODO: cache using ISR
 const getPriceDataApi = async (): Promise<ApiResponse> => {
@@ -62,25 +82,15 @@ const parseResponse = async (json: unknown): Promise<ApiResponse> => {
   return ApiResponseSchema.parse(json);
 };
 
-// const getUniqueItemLines = async (json: unknown): Promise<Line[]> => {
-//   const data = await parseResponse(json);
-
-//   return data.itemOverviews
-//     .filter((item) =>
-//       ["UniqueWeapon", "UniqueArmor", "UniqueAccessory"].includes(item.type),
-//     )
-//     .flatMap((item) => item.lines);
-// };
-
 // If we get a line with a variant containing 5L or 6L, we need to keep the base version only
-const dedupeLinkedVariants = (lines: Line[]): Line[] => {
-  const grouped = new Map<string, Line[]>();
+const dedupeLinkedVariants = (lines: Item[]) => {
+  const grouped = new Map<string, Item[]>();
 
   for (const line of lines) {
     grouped.set(line.name, [...(grouped.get(line.name) ?? []), line]);
   }
 
-  const filtered: Line[] = [];
+  const filtered: Item[] = [];
 
   for (const [, sameNameLines] of grouped.entries()) {
     const hasLinked = sameNameLines.some((line) =>
@@ -110,14 +120,14 @@ const dedupeLinkedVariants = (lines: Line[]): Line[] => {
 };
 
 // If we get a line with a relic, keep only the base variant
-const dedupeRelics = (lines: Line[]): Line[] => {
-  const grouped = new Map<string, Line[]>();
+const dedupeRelics = (lines: Item[]) => {
+  const grouped = new Map<string, Item[]>();
 
   for (const line of lines) {
     grouped.set(line.name, [...(grouped.get(line.name) ?? []), line]);
   }
 
-  const filtered: Line[] = [];
+  const filtered: Item[] = [];
 
   for (const [, sameNameLines] of grouped.entries()) {
     const hasRelic = sameNameLines.some((line) =>
@@ -146,16 +156,19 @@ const dedupeRelics = (lines: Line[]): Line[] => {
   return filtered;
 };
 
-const getUniqueItemLines = async (json: unknown): Promise<Line[]> => {
+const getUniqueItemLines = async (json: unknown): Promise<Item[]> => {
   const data = await parseResponse(json);
 
-  const lines = data.itemOverviews
-    .filter((item) =>
-      ["UniqueWeapon", "UniqueArmor", "UniqueAccessory"].includes(item.type),
-    )
-    .flatMap((item) => item.lines);
+  const items: Item[] = data.itemOverviews
+    .filter((item) => isAllowedUnique(item.type))
+    .flatMap((item) =>
+      item.lines.map((line) => ({
+        type: item.type as AllowedUnique,
+        ...line,
+      })),
+    );
 
-  const noLinked = dedupeLinkedVariants(lines);
+  const noLinked = dedupeLinkedVariants(items);
   const noRelic = dedupeRelics(noLinked);
 
   const filtered = noRelic;
@@ -176,7 +189,7 @@ const getUniqueItemLines = async (json: unknown): Promise<Line[]> => {
   return filtered;
 };
 
-const uncached__getPriceData = async (): Promise<Line[]> => {
+const uncached__getPriceData = async (): Promise<Item[]> => {
   const data = await getPriceDataApi();
   const lines = await getUniqueItemLines(data);
   return lines;
