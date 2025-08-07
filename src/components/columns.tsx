@@ -12,22 +12,13 @@ import { Info, ExternalLink } from "lucide-react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
 import { Checkbox } from "@/components/ui/checkbox";
-
-export type Item = {
-  id: number;
-  name: string;
-  variant?: string;
-  chaos: number;
-  dustValIlvl84Q20: number;
-  dustPerChaos: number;
-};
+import type { Item } from "@/lib/itemData";
 
 export const columns: ColumnDef<Item>[] = [
   {
     accessorKey: "name",
     header: "Name",
     size: 210,
-    // Make the Name column filter match both name and variant when a filter value is provided.
     filterFn: (row, _columnId, filterValue) => {
       const query = String(filterValue ?? "")
         .trim()
@@ -57,9 +48,7 @@ export const columns: ColumnDef<Item>[] = [
   },
   {
     accessorKey: "chaos",
-    header: ({}) => {
-      return <span>Price</span>;
-    },
+    header: () => <span>Price</span>,
     size: 120,
     meta: { className: "text-right tabular-nums" },
     filterFn: (row, columnId, filterValue) => {
@@ -80,9 +69,7 @@ export const columns: ColumnDef<Item>[] = [
   },
   {
     accessorKey: "dustValIlvl84Q20",
-    header: ({}) => {
-      return <span>Dust Value (ilvl 84, Q20)</span>;
-    },
+    header: () => <span>Dust Value (ilvl 84, Q20)</span>,
     size: 140,
     meta: { className: "text-right tabular-nums" },
     cell: ({ row }) => {
@@ -99,9 +86,7 @@ export const columns: ColumnDef<Item>[] = [
   },
   {
     accessorKey: "dustPerChaos",
-    header: ({}) => {
-      return <span>Dust per Chaos</span>;
-    },
+    header: () => <span>Dust per Chaos</span>,
     size: 160,
     meta: {
       className:
@@ -144,6 +129,7 @@ export const columns: ColumnDef<Item>[] = [
       );
     },
     size: 100,
+    enableSorting: false,
     cell: ({ row }) => {
       const name = row.getValue("name") as string;
       const link = createTradeLink(name);
@@ -171,7 +157,6 @@ export const columns: ColumnDef<Item>[] = [
         </div>
       );
     },
-    enableSorting: false,
   },
   {
     id: "select",
