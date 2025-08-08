@@ -280,41 +280,43 @@ export function DataTableToolbar<TData extends Item>({
       </div>
 
       {/* Active chips */}
-      <div className="flex flex-wrap gap-2">
-        {nameFilter !== "" ? (
-          <Badge variant="outline">
-            Name: {nameFilter}
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-5 cursor-pointer px-1"
-              onClick={() => table.getColumn("name")?.setFilterValue("")}
-              aria-label="Clear name filter"
-            >
-              <X className="h-3 w-3" />
-            </Button>
-          </Badge>
-        ) : null}
-        {chaosRange ? (
-          <Badge variant="outline" className="inline-flex items-center gap-1">
-            <span className="inline-flex items-center gap-1">
-              Price: {`${chaosRange.min}–${chaosRange.max}`}
-              <ChaosOrbIcon />
-            </span>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-5 cursor-pointer px-1"
-              onClick={() =>
-                table.getColumn("chaos")?.setFilterValue(undefined)
-              }
-              aria-label="Clear price filter"
-            >
-              <X className="h-3 w-3" />
-            </Button>
-          </Badge>
-        ) : null}
-      </div>
+      {nameFilter || chaosRange ? (
+        <div className="flex flex-wrap gap-2">
+          {nameFilter !== "" ? (
+            <Badge variant="outline">
+              Name: {nameFilter}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-5 cursor-pointer px-1"
+                onClick={() => table.getColumn("name")?.setFilterValue("")}
+                aria-label="Clear name filter"
+              >
+                <X className="h-3 w-3" />
+              </Button>
+            </Badge>
+          ) : null}
+          {chaosRange ? (
+            <Badge variant="outline" className="inline-flex items-center gap-1">
+              <span className="inline-flex items-center gap-1">
+                Price: {`${chaosRange.min}–${chaosRange.max}`}
+                <ChaosOrbIcon />
+              </span>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-5 cursor-pointer px-1"
+                onClick={() =>
+                  table.getColumn("chaos")?.setFilterValue(undefined)
+                }
+                aria-label="Clear price filter"
+              >
+                <X className="h-3 w-3" />
+              </Button>
+            </Badge>
+          ) : null}
+        </div>
+      ) : null}
     </div>
   );
 }

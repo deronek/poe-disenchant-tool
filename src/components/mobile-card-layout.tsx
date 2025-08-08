@@ -12,7 +12,7 @@ export function MobileCardLayout<TData extends Item>({
   table,
 }: MobileCardLayoutProps<TData>) {
   return (
-    <div className="space-y-4 p-4">
+    <div className="space-y-3 px-3 py-4">
       {table.getRowModel().rows?.length ? (
         table
           .getRowModel()
