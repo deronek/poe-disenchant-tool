@@ -40,64 +40,60 @@ export function MobileCard<TData extends Item>({
     >
       {/* Header with selection and name */}
       <div className="flex items-start justify-between gap-3">
-        <div className="flex min-w-0 flex-1 items-center gap-2">
-          <div className="flex items-center gap-2">
-            <Checkbox
-              className="mt-0.5 size-5"
-              checked={isSelected}
-              onCheckedChange={(v) => row.toggleSelected(!!v)}
-              aria-label={`Mark ${name} as completed`}
-            />
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-6 w-6 p-0 text-blue-500 dark:text-blue-400"
-                  aria-label={`Learn more about marking ${name}`}
-                >
-                  <Info className="h-3 w-3" />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent
-                className="max-w-[280px] text-sm"
-                side="bottom"
-                align="start"
+        <div className="min-w-0 flex-1">
+          <h3 className="truncate font-medium tracking-[0.015em]">{name}</h3>
+          {variant && (
+            <p className="text-muted-foreground truncate text-sm">{variant}</p>
+          )}
+        </div>
+        <div className="flex items-center gap-2">
+          <Checkbox
+            className="mt-0.5 size-5"
+            checked={isSelected}
+            onCheckedChange={(v) => row.toggleSelected(!!v)}
+            aria-label={`Mark ${name} as completed`}
+          />
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-6 w-6 p-0 text-blue-500 dark:text-blue-400"
+                aria-label={`Learn more about marking ${name}`}
               >
-                <div className="flex flex-col gap-3">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 dark:text-green-400" />
-                    <h4 className="text-sm font-medium">Item Marking</h4>
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <p className="leading-relaxed">
-                      Mark items you&apos;ve already traded recently.
-                    </p>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="secondary" className="text-xs">
-                        Local Storage
-                      </Badge>
-                      <Badge variant="outline" className="text-xs">
-                        Visual Only
-                      </Badge>
-                    </div>
-                    <p className="text-muted-foreground text-xs leading-relaxed">
-                      Use &quot;Clear marks&quot; in the toolbar to remove marks
-                      from all items.
-                    </p>
-                  </div>
+                <Info className="h-3 w-3" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent
+              className="max-w-[280px] text-sm"
+              side="bottom"
+              align="start"
+            >
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-500 dark:text-green-400" />
+                  <h4 className="text-sm font-medium">Item Marking</h4>
                 </div>
-              </PopoverContent>
-            </Popover>
-          </div>
-          <div className="min-w-0 flex-1">
-            <h3 className="truncate font-medium tracking-[0.015em]">{name}</h3>
-            {variant && (
-              <p className="text-muted-foreground truncate text-sm">
-                {variant}
-              </p>
-            )}
-          </div>
+                <div className="flex flex-col gap-2">
+                  <p className="leading-relaxed">
+                    Mark items you&apos;ve already traded recently.
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <Badge variant="secondary" className="text-xs">
+                      Local Storage
+                    </Badge>
+                    <Badge variant="outline" className="text-xs">
+                      Visual Only
+                    </Badge>
+                  </div>
+                  <p className="text-muted-foreground text-xs leading-relaxed">
+                    Use &quot;Clear marks&quot; in the toolbar to remove marks
+                    from all items.
+                  </p>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
         </div>
       </div>
 
