@@ -138,8 +138,9 @@ export const columns: ColumnDef<Item>[] = [
         <div className="flex w-full flex-1 items-center">
           <Button
             asChild
-            variant="ghost"
-            className="text-primary hover:text-primary focus:text-primary hover:border-primary/70 focus:border-primary/70 hover:bg-primary/5 focus:bg-primary/10 mx-auto aspect-square border border-transparent transition-colors"
+            variant="default"
+            size="icon"
+            className="text-primary bg-primary/10 hover:bg-primary/20 hover:outline-primary mx-auto size-10 outline-1 hover:outline-solid"
           >
             <a
               href={link}
@@ -149,10 +150,7 @@ export const columns: ColumnDef<Item>[] = [
               title={`Open trade search for ${name}`}
               className="inline-flex items-center"
             >
-              <ExternalLink
-                className="size-4 align-baseline"
-                aria-hidden="true"
-              />
+              <ExternalLink className="size-5" aria-hidden="true" />
             </a>
           </Button>
         </div>
