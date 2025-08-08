@@ -2,18 +2,19 @@
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Badge } from "@/components/ui/badge";
-import { createTradeLink } from "@/lib/tradeLink";
-import { ExternalLink, Info, CheckCircle, Search } from "lucide-react";
-import { ChaosOrbIcon } from "./chaos-orb-icon";
-import { DustIcon } from "./dust-icon";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
 import type { Item } from "@/lib/itemData";
+import { createTradeLink } from "@/lib/tradeLink";
 import { Row } from "@tanstack/react-table";
+import { ExternalLink, Info } from "lucide-react";
+import { ChaosOrbIcon } from "./chaos-orb-icon";
+import { DustIcon } from "./dust-icon";
+import { ItemMarkingInfo } from "./item-marking-info";
+import { TradeSearchInfo } from "./trade-search-info";
 
 interface MobileCardProps<TData extends Item> {
   row: Row<TData>;
@@ -69,29 +70,7 @@ export function MobileCard<TData extends Item>({
               side="bottom"
               align="start"
             >
-              <div className="flex flex-col gap-3">
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-500 dark:text-green-400" />
-                  <h4 className="text-sm font-medium">Item Marking</h4>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <p className="leading-relaxed">
-                    Mark items you&apos;ve already traded recently.
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <Badge variant="secondary" className="text-xs">
-                      Local Storage
-                    </Badge>
-                    <Badge variant="outline" className="text-xs">
-                      Visual Only
-                    </Badge>
-                  </div>
-                  <p className="text-muted-foreground text-xs leading-relaxed">
-                    Use &quot;Clear marks&quot; in the toolbar to remove marks
-                    from all items.
-                  </p>
-                </div>
-              </div>
+              <ItemMarkingInfo itemName={name} />
             </PopoverContent>
           </Popover>
         </div>
@@ -146,28 +125,7 @@ export function MobileCard<TData extends Item>({
               side="bottom"
               align="start"
             >
-              <div className="flex flex-col gap-3">
-                <div className="flex items-center gap-2">
-                  <Search className="h-4 w-4 text-green-500 dark:text-green-400" />
-                  <h4 className="text-sm font-medium">Trade Search</h4>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <p className="leading-relaxed">
-                    Search for this item on Path of Exile trade website.
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <Badge variant="secondary" className="text-xs">
-                      Last 3 Days
-                    </Badge>
-                    <Badge variant="outline" className="text-xs">
-                      Live Data
-                    </Badge>
-                  </div>
-                  <p className="text-muted-foreground text-xs leading-relaxed">
-                    Does not filter by item level.
-                  </p>
-                </div>
-              </div>
+              <TradeSearchInfo itemName={name} />
             </PopoverContent>
           </Popover>
         </div>

@@ -1,18 +1,20 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import type { Item } from "@/lib/itemData";
 import { createTradeLink } from "@/lib/tradeLink";
 import { ColumnDef } from "@tanstack/react-table";
-import { Info, ExternalLink } from "lucide-react";
+import { ExternalLink, Info } from "lucide-react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
-import { Checkbox } from "@/components/ui/checkbox";
-import type { Item } from "@/lib/itemData";
+import { ItemMarkingInfo } from "./item-marking-info";
+import { TradeSearchInfo } from "./trade-search-info";
 
 export const columns: ColumnDef<Item>[] = [
   {
@@ -118,11 +120,10 @@ export const columns: ColumnDef<Item>[] = [
           <p>Trade Link</p>
           <Tooltip>
             <TooltipTrigger className="ml-auto">
-              <Info className="size-5" />
+              <Info className="size-5 text-blue-500 dark:text-blue-400" />
             </TooltipTrigger>
-            <TooltipContent>
-              Search for this item on Path of Exile trade website, displaying
-              only listings from the last 3 days.
+            <TooltipContent className="max-w-[280px] text-sm" variant="popover">
+              <TradeSearchInfo />
             </TooltipContent>
           </Tooltip>
         </div>
@@ -166,12 +167,10 @@ export const columns: ColumnDef<Item>[] = [
           <p>Mark</p>
           <Tooltip>
             <TooltipTrigger className="ml-auto">
-              <Info className="size-5" />
+              <Info className="size-5 text-blue-500 dark:text-blue-400" />
             </TooltipTrigger>
-            <TooltipContent>
-              Use this checkbox to mark items you have already traded recently.
-              Marks are visual-only and saved to this device. Use “Clear marks”
-              in the toolbar to remove all marks.
+            <TooltipContent className="max-w-[280px] text-sm" variant="popover">
+              <ItemMarkingInfo />
             </TooltipContent>
           </Tooltip>
         </div>
