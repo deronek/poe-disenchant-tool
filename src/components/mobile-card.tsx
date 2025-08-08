@@ -58,10 +58,10 @@ export function MobileCard<TData extends Item>({
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-6 w-6 p-0 text-blue-500 dark:text-blue-400"
+                className="size-5 p-0 text-blue-500 dark:text-blue-400"
                 aria-label={`Learn more about marking ${name}`}
               >
-                <Info className="h-3 w-3" />
+                <Info className="size-5" />
               </Button>
             </PopoverTrigger>
             <PopoverContent
@@ -135,10 +135,10 @@ export function MobileCard<TData extends Item>({
               <Button
                 variant="ghost"
                 size="sm"
-                className="hover:text-foreground h-6 w-6 p-0 text-blue-500 dark:text-blue-400"
+                className="hover:text-foreground size-5 p-0 text-blue-500 dark:text-blue-400"
                 aria-label={`Learn more about trade search for ${name}`}
               >
-                <Info className="h-3 w-3" />
+                <Info className="size-5" />
               </Button>
             </PopoverTrigger>
             <PopoverContent
