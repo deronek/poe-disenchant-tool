@@ -49,7 +49,7 @@ export const columns: ColumnDef<Item>[] = [
   {
     accessorKey: "chaos",
     header: () => <span>Price</span>,
-    size: 120,
+    size: 110,
     meta: { className: "text-right tabular-nums" },
     filterFn: (row, columnId, filterValue) => {
       const value = row.getValue(columnId) as number;
@@ -87,7 +87,7 @@ export const columns: ColumnDef<Item>[] = [
   {
     accessorKey: "dustPerChaos",
     header: () => <span>Dust per Chaos</span>,
-    size: 160,
+    size: 140,
     meta: {
       className:
         "text-right tabular-nums sticky left-0 z-10 " +
@@ -128,7 +128,7 @@ export const columns: ColumnDef<Item>[] = [
         </div>
       );
     },
-    size: 100,
+    size: 110,
     enableSorting: false,
     cell: ({ row }) => {
       const name = row.getValue("name") as string;

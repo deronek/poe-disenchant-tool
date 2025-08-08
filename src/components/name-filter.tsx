@@ -36,6 +36,7 @@ export function NameFilter<TData extends Item>({
           column?.setFilterValue(v);
         }}
         aria-label="Filter by name or variant"
+        className="text-sm"
       />
       {value.length > 0 && (
         <Button

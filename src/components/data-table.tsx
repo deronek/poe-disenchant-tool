@@ -105,7 +105,7 @@ export function DataTable<TData extends Item, TValue>({
       <DataTableToolbar table={table} onClearMarks={clearSelection} />
 
       {/* Mobile Card Layout */}
-      <div className="p-4 md:hidden">
+      <div className="md:hidden">
         <MobileCardLayout table={table} />
       </div>
 
