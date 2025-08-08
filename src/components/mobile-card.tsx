@@ -3,9 +3,14 @@
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { createTradeLink } from "@/lib/tradeLink";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Info } from "lucide-react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import type { Item } from "@/lib/itemData";
 import { Row } from "@tanstack/react-table";
 
@@ -28,19 +33,47 @@ export function MobileCard<TData extends Item>({
     <div
       className={`space-y-3 rounded-lg border p-4 ${
         isSelected
-          ? "bg-muted/60 border-primary/30"
-          : "bg-card hover:bg-muted/50"
+          ? "bg-muted/60 border-primary/30 opacity-95"
+          : "bg-card hover:bg-muted/40"
       } transition-colors`}
     >
       {/* Header with selection and name */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex min-w-0 flex-1 items-center gap-2">
-          <Checkbox
-            className="mt-0.5 size-5"
-            checked={isSelected}
-            onCheckedChange={(v) => row.toggleSelected(!!v)}
-            aria-label={`Mark ${name} as completed`}
-          />
+          <div className="flex items-center gap-2">
+            <Checkbox
+              className="mt-0.5 size-5"
+              checked={isSelected}
+              onCheckedChange={(v) => row.toggleSelected(!!v)}
+              aria-label={`Mark ${name} as completed`}
+            />
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-muted-foreground hover:text-foreground h-6 w-6 p-0"
+                  aria-label={`Learn more about marking ${name}`}
+                >
+                  <Info className="h-3 w-3" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent
+                className="max-w-[280px] text-sm"
+                side="bottom"
+                align="start"
+              >
+                <p>
+                  Mark items you&apos;ve already traded recently. Marks are
+                  visual-only and saved to this device.
+                </p>
+                <p className="mt-1 text-neutral-100">
+                  Use &quot;Clear marks&quot; in the toolbar to remove all
+                  marks.
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
           <div className="min-w-0 flex-1">
             <h3 className="truncate font-medium tracking-[0.015em]">{name}</h3>
             {variant && (
@@ -83,6 +116,31 @@ export function MobileCard<TData extends Item>({
 
       {/* Trade Link */}
       <div className="pt-2">
+        <div className="mb-2 flex items-center justify-between">
+          <p className="text-muted-foreground text-sm">Trade Search</p>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-muted-foreground hover:text-foreground h-6 w-6 p-0"
+                aria-label={`Learn more about trade search for ${name}`}
+              >
+                <Info className="h-3 w-3" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent
+              className="text-foreground bg-primary dark:bg-primary max-w-[280px] text-sm"
+              side="bottom"
+              align="start"
+            >
+              <p>Search for this item on Path of Exile trade website.</p>
+              <p className="mt-1 text-neutral-100">
+                Displays only listings from the last 3 days.
+              </p>
+            </TooltipContent>
+          </Tooltip>
+        </div>
         <Button
           asChild
           variant="outline"

@@ -14,7 +14,20 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DustIcon } from "@/components/dust-icon";
-import { ArrowUpDown, ArrowUp, ArrowDown, X, Type } from "lucide-react";
+import {
+  ArrowUpDown,
+  ArrowUp,
+  ArrowDown,
+  X,
+  Type,
+  HelpCircle,
+  Info,
+} from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 type ToolbarProps<TData extends Item> = {
   table: Table<TData>;
@@ -218,6 +231,51 @@ export function DataTableToolbar<TData extends Item>({
               Clear marks
             </Button>
           ) : null}
+
+          {/* Mobile Help Section */}
+          <div className="md:hidden">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="gap-2"
+                  aria-label="Get help using this app"
+                >
+                  <HelpCircle className="h-4 w-4" />
+                  Help
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent
+                className="text-foreground bg-primary dark:bg-primary max-w-[320px] text-sm"
+                side="bottom"
+                align="end"
+              >
+                <div className="space-y-2">
+                  <div className="flex items-start gap-2">
+                    <Info className="mt-0.5 h-4 w-4 flex-shrink-0" />
+                    <div>
+                      <p className="font-medium">Mark Items</p>
+                      <p className="text-neutral-100">
+                        Check the box to mark items you&apos;ve traded. Marks
+                        are saved locally and can be cleared anytime.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <Info className="mt-0.5 h-4 w-4 flex-shrink-0" />
+                    <div>
+                      <p className="font-medium">Trade Search</p>
+                      <p className="text-neutral-100">
+                        Opens Path of Exile trade site with filters for the last
+                        3 days of listings.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </TooltipContent>
+            </Tooltip>
+          </div>
         </div>
       </div>
 
