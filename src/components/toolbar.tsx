@@ -251,9 +251,9 @@ export function DataTableToolbar<TData extends Item>({
                 side="bottom"
                 align="end"
               >
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <div className="flex items-start gap-2">
-                    <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-blue-400 dark:text-blue-500" />
+                    <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-blue-500 dark:text-blue-400" />
                     <div>
                       <p className="font-medium">Mark Items</p>
                       <p className="text-neutral-900 dark:text-neutral-100">
@@ -263,7 +263,7 @@ export function DataTableToolbar<TData extends Item>({
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
-                    <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-blue-400 dark:text-blue-500" />
+                    <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-blue-500 dark:text-blue-400" />
                     <div>
                       <p className="font-medium">Trade Search</p>
                       <p className="text-neutral-900 dark:text-neutral-100">
