@@ -84,8 +84,8 @@ export function DataTableToolbar<TData extends Item>({
         table.setSorting(sorting.filter((sort) => sort.id !== columnId));
       }
     } else {
-      // No sorting, add descending (most common use case)
-      table.setSorting([...sorting, { id: columnId, desc: true }]);
+      // No sorting, add descending (most common use case) - remove other sorts first
+      table.setSorting([{ id: columnId, desc: true }]);
     }
   };
 
