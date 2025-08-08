@@ -24,10 +24,10 @@ import {
   Info,
 } from "lucide-react";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 type ToolbarProps<TData extends Item> = {
   table: Table<TData>;
@@ -234,8 +234,8 @@ export function DataTableToolbar<TData extends Item>({
 
           {/* Mobile Help Section */}
           <div className="md:hidden">
-            <Tooltip>
-              <TooltipTrigger asChild>
+            <Popover>
+              <PopoverTrigger asChild>
                 <Button
                   variant="ghost"
                   size="sm"
@@ -245,36 +245,36 @@ export function DataTableToolbar<TData extends Item>({
                   <HelpCircle className="h-4 w-4" />
                   Help
                 </Button>
-              </TooltipTrigger>
-              <TooltipContent
-                className="text-foreground bg-primary dark:bg-primary max-w-[320px] text-sm"
+              </PopoverTrigger>
+              <PopoverContent
+                className="max-w-[320px] text-sm"
                 side="bottom"
                 align="end"
               >
                 <div className="space-y-2">
                   <div className="flex items-start gap-2">
-                    <Info className="mt-0.5 h-4 w-4 flex-shrink-0" />
+                    <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-blue-400 dark:text-blue-500" />
                     <div>
                       <p className="font-medium">Mark Items</p>
-                      <p className="text-neutral-100">
-                        Check the box to mark items you&apos;ve traded. Marks
-                        are saved locally and can be cleared anytime.
+                      <p className="text-neutral-900 dark:text-neutral-100">
+                        Check the box to mark items you&apos;ve traded recently.
+                        Marks are saved locally and can be cleared anytime.
                       </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
-                    <Info className="mt-0.5 h-4 w-4 flex-shrink-0" />
+                    <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-blue-400 dark:text-blue-500" />
                     <div>
                       <p className="font-medium">Trade Search</p>
-                      <p className="text-neutral-100">
+                      <p className="text-neutral-900 dark:text-neutral-100">
                         Opens Path of Exile trade site with filters for the last
                         3 days of listings.
                       </p>
                     </div>
                   </div>
                 </div>
-              </TooltipContent>
-            </Tooltip>
+              </PopoverContent>
+            </Popover>
           </div>
         </div>
       </div>
