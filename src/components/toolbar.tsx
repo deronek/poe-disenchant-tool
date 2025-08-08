@@ -116,7 +116,7 @@ export function DataTableToolbar<TData extends Item>({
         <div className="md:ml-2 md:hidden">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="gap-2">
+              <Button variant="outline" className="gap-3">
                 <ArrowUpDown className="h-4 w-4" />
                 Sort
                 {currentSort && (
@@ -133,7 +133,7 @@ export function DataTableToolbar<TData extends Item>({
                 )}
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="min-w-[200px]">
+            <DropdownMenuContent align="end" className="min-w-[207px]">
               <DropdownMenuItem
                 onClick={() => handleSort("dustPerChaos")}
                 className="flex items-center justify-between gap-0"
