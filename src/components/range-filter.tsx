@@ -13,6 +13,7 @@ import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
 import { Filter } from "lucide-react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
+import type { Item } from "@/lib/itemData";
 
 export type RangeFilterValue = {
   min: number;
@@ -20,14 +21,14 @@ export type RangeFilterValue = {
 };
 
 interface RangeFilterProps<TData> {
-  column: Column<TData, unknown>;
+  column: Column<TData, unknown> | undefined;
   title: string;
   description: string;
   min: number;
   max: number;
 }
 
-export function RangeFilter<TData>({
+export function RangeFilter<TData extends Item>({
   column,
   title,
   description,
@@ -37,7 +38,7 @@ export function RangeFilter<TData>({
   const [isOpen, setIsOpen] = useState(false);
 
   // Get current filter value from TanStack Table
-  const filterValue = column.getFilterValue() as RangeFilterValue | undefined;
+  const filterValue = column?.getFilterValue() as RangeFilterValue | undefined;
   const currentRange = filterValue
     ? [filterValue.min, filterValue.max]
     : [min, max];
@@ -49,10 +50,12 @@ export function RangeFilter<TData>({
 
   // Normalize: when range equals defaults, clear filter in table state
   const normalizeAndSet = (lower: number, upper: number) => {
-    if (lower === min && upper === max) {
-      column.setFilterValue(undefined);
-    } else {
-      column.setFilterValue({ min: lower, max: upper });
+    if (column) {
+      if (lower === min && upper === max) {
+        column.setFilterValue(undefined);
+      } else {
+        column.setFilterValue({ min: lower, max: upper });
+      }
     }
   };
 
@@ -66,14 +69,14 @@ export function RangeFilter<TData>({
   };
 
   const handleReset = () => {
-    column.setFilterValue(undefined);
+    column?.setFilterValue(undefined);
     setIsOpen(false);
   };
 
   const handleApply = () => {
     // Ensure default-range equals cleared state
-    const v = column.getFilterValue() as RangeFilterValue | undefined;
-    if (v && v.min === min && v.max === max) {
+    const v = column?.getFilterValue() as RangeFilterValue | undefined;
+    if (column && v && v.min === min && v.max === max) {
       column.setFilterValue(undefined);
     }
     setIsOpen(false);

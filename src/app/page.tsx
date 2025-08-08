@@ -11,7 +11,7 @@ export default async function SandboxPage() {
   const lastUpdated = new Date().toISOString();
 
   return (
-    <div className="p-8">
+    <div className="p-6 md:p-8">
       <div className="flex justify-between">
         <h1 className="mb-4 text-2xl font-bold">
           PoE Unique Disenchanting Tool

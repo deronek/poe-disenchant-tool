@@ -4,8 +4,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { Table } from "@tanstack/react-table";
+import type { Item } from "@/lib/itemData";
 
-export function NameFilter<TData>({ table }: { table: Table<TData> }) {
+export function NameFilter<TData extends Item>({
+  table,
+}: {
+  table: Table<TData>;
+}) {
   const column = table.getColumn("name");
 
   // Local controlled state to avoid stale refs from table.getColumn()
