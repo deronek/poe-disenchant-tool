@@ -110,7 +110,7 @@ export function RangeFilter<TData extends Item>({
                   step={10}
                   value={[currentRange[0]]}
                   onValueChange={(value) => handleRangeChange(value, true)}
-                  className="w-full"
+                  className="w-full py-1"
                 />
               </div>
               <div className="text-muted-foreground flex justify-between text-xs">
@@ -135,7 +135,7 @@ export function RangeFilter<TData extends Item>({
                   step={10}
                   value={[currentRange[1]]}
                   onValueChange={(value) => handleRangeChange(value, false)}
-                  className="w-full"
+                  className="w-full py-1"
                 />
               </div>
               <div className="text-muted-foreground flex justify-between text-xs">
