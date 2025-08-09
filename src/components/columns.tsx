@@ -92,7 +92,7 @@ export const columns: ColumnDef<Item>[] = [
     size: 140,
     meta: {
       className:
-        "text-right tabular-nums sticky left-0 z-10 " +
+        "text-right tabular-nums relative " +
         "bg-primary/3 dark:bg-primary/5 " +
         "shadow-[inset_10px_0_12px_-14px_rgba(0,0,0,0.12)] " +
         "dark:shadow-[inset_10px_0_12px_-12px_rgba(0,0,0,0.8)] " +
