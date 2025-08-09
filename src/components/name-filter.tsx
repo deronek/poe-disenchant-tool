@@ -1,11 +1,11 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState, useCallback, useRef } from "react";
-import { Table } from "@tanstack/react-table";
+import { Input } from "@/components/ui/input";
 import type { Item } from "@/lib/itemData";
-import { debounce } from "@/lib/utils";
+import { Table } from "@tanstack/react-table";
+import { useEffect, useState } from "react";
+import { useDebouncedCallback } from "use-debounce";
 
 export function NameFilter<TData extends Item>({
   table,
@@ -19,11 +19,10 @@ export function NameFilter<TData extends Item>({
     (column?.getFilterValue() as string) ?? "",
   );
 
-  const debouncedSetFilter = useRef(
-    debounce((newValue: string) => {
-      column?.setFilterValue(newValue);
-    }, 250),
-  ).current;
+  // Debounced filter setter
+  const debouncedSetFilter = useDebouncedCallback((newValue: string) => {
+    column?.setFilterValue(newValue);
+  }, 250);
 
   // Keep local state in sync if external table state changes (e.g., clear from chip)
   useEffect(() => {
