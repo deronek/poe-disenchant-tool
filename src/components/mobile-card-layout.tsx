@@ -16,7 +16,13 @@ export function MobileCardLayout<TData extends Item>({
       {table.getRowModel().rows?.length ? (
         table
           .getRowModel()
-          .rows.map((row) => <MobileCard key={row.id} row={row} />)
+          .rows.map((row) => (
+            <MobileCard
+              key={row.id}
+              row={row}
+              isSelected={row.getIsSelected()}
+            />
+          ))
       ) : (
         <div className="py-8 text-center">
           <p className="text-muted-foreground">No results.</p>
