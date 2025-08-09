@@ -1,7 +1,8 @@
 "use client";
 
-import * as React from "react";
 import type { RowSelectionState } from "@tanstack/react-table";
+import * as React from "react";
+import { useDebouncedCallback } from "use-debounce";
 
 /**
  * Persist TanStack Table rowSelection to localStorage.
@@ -11,7 +12,6 @@ import type { RowSelectionState } from "@tanstack/react-table";
  */
 export function usePersistentRowSelection(storageKey = "poe-udt:selected:v1") {
   const isClient = typeof window !== "undefined";
-
   const [rowSelection, setRowSelection] = React.useState<RowSelectionState>({});
 
   // Load on mount
@@ -31,25 +31,29 @@ export function usePersistentRowSelection(storageKey = "poe-udt:selected:v1") {
     }
   }, [isClient, storageKey]);
 
-  // Debounced persist
-  const saveRef = React.useRef<number | null>(null);
+  // Debounced save to localStorage
+  const debouncedSave = useDebouncedCallback(() => {
+    const ids = Object.entries(rowSelection)
+      .filter(([, v]) => Boolean(v))
+      .map(([k]) => k);
+    try {
+      window.localStorage.setItem(storageKey, JSON.stringify(ids));
+    } catch {
+      // ignore storage errors
+    }
+  }, 300);
+
   React.useEffect(() => {
     if (!isClient) return;
-    if (saveRef.current) window.clearTimeout(saveRef.current);
-    saveRef.current = window.setTimeout(() => {
-      const ids = Object.entries(rowSelection)
-        .filter(([, v]) => Boolean(v))
-        .map(([k]) => k);
-      try {
-        window.localStorage.setItem(storageKey, JSON.stringify(ids));
-      } catch {
-        // quota or other storage error – ignore
-      }
-    }, 150);
+    debouncedSave(); // triggers debounced save
+  }, [isClient, rowSelection, storageKey, debouncedSave]);
+
+  // Cleanup on unmount
+  React.useEffect(() => {
     return () => {
-      if (saveRef.current) window.clearTimeout(saveRef.current);
+      debouncedSave.flush?.();
     };
-  }, [isClient, rowSelection, storageKey]);
+  }, [debouncedSave]);
 
   const clearSelection = React.useCallback(() => {
     setRowSelection({});
