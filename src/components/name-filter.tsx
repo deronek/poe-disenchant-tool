@@ -2,9 +2,10 @@
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { Table } from "@tanstack/react-table";
 import type { Item } from "@/lib/itemData";
+import { debounce } from "@/lib/utils";
 
 export function NameFilter<TData extends Item>({
   table,
@@ -17,6 +18,12 @@ export function NameFilter<TData extends Item>({
   const [value, setValue] = useState<string>(
     (column?.getFilterValue() as string) ?? "",
   );
+
+  const debouncedSetFilter = useRef(
+    debounce((newValue: string) => {
+      column?.setFilterValue(newValue);
+    }, 250),
+  ).current;
 
   // Keep local state in sync if external table state changes (e.g., clear from chip)
   useEffect(() => {
@@ -33,7 +40,7 @@ export function NameFilter<TData extends Item>({
         onChange={(e) => {
           const v = e.target.value;
           setValue(v);
-          column?.setFilterValue(v);
+          debouncedSetFilter(v);
         }}
         aria-label="Filter by name or variant"
       />
