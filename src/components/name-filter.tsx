@@ -1,11 +1,11 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { Item } from "@/lib/itemData";
 import { Table } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
+import { XButton } from "./ui/x-button";
 
 export function NameFilter<TData extends Item>({
   table,
@@ -44,19 +44,16 @@ export function NameFilter<TData extends Item>({
         aria-label="Filter by name or variant"
       />
       {value.length > 0 && (
-        <Button
-          type="button"
-          variant="ghost"
-          size="sm"
+        <XButton
           aria-label="Clear name filter"
-          className="text-muted-foreground absolute top-1/2 right-1.5 h-7 w-7 -translate-y-1/2 cursor-pointer rounded-md p-0"
+          className="absolute top-1/2 right-1.5 h-7 w-7 -translate-y-1/2"
           onClick={() => {
             column?.setFilterValue("");
             setValue("");
           }}
         >
           ×
-        </Button>
+        </XButton>
       )}
     </div>
   );

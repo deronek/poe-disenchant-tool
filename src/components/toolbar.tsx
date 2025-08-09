@@ -1,33 +1,33 @@
 "use client";
 
+import { ChaosOrbIcon } from "@/components/chaos-orb-icon";
+import { DustIcon } from "@/components/dust-icon";
+import { NameFilter } from "@/components/name-filter";
+import { RangeFilter } from "@/components/range-filter";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { RangeFilter } from "@/components/range-filter";
-import { ChaosOrbIcon } from "@/components/chaos-orb-icon";
-import { NameFilter } from "@/components/name-filter";
-import { Table } from "@tanstack/react-table";
-import type { Item } from "@/lib/itemData";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { DustIcon } from "@/components/dust-icon";
-import {
-  ArrowUpDown,
-  ArrowUp,
-  ArrowDown,
-  X,
-  Type,
-  HelpCircle,
-  Info,
-} from "lucide-react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { XButton } from "@/components/ui/x-button";
+import type { Item } from "@/lib/itemData";
+import { Table } from "@tanstack/react-table";
+import {
+  ArrowDown,
+  ArrowUp,
+  ArrowUpDown,
+  HelpCircle,
+  Info,
+  Type,
+} from "lucide-react";
 
 type ToolbarProps<TData extends Item> = {
   table: Table<TData>;
@@ -285,15 +285,11 @@ export function DataTableToolbar<TData extends Item>({
           {nameFilter !== "" ? (
             <Badge variant="outline">
               Name: {nameFilter}
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-5 cursor-pointer px-1"
+              <XButton
                 onClick={() => table.getColumn("name")?.setFilterValue("")}
                 aria-label="Clear name filter"
-              >
-                <X className="h-3 w-3" />
-              </Button>
+                className="text-foreground/90"
+              />
             </Badge>
           ) : null}
           {chaosRange ? (
@@ -302,17 +298,13 @@ export function DataTableToolbar<TData extends Item>({
                 Price: {`${chaosRange.min}–${chaosRange.max}`}
                 <ChaosOrbIcon />
               </span>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-5 cursor-pointer px-1"
+              <XButton
                 onClick={() =>
                   table.getColumn("chaos")?.setFilterValue(undefined)
                 }
                 aria-label="Clear price filter"
-              >
-                <X className="h-3 w-3" />
-              </Button>
+                className="text-foreground/90"
+              />
             </Badge>
           ) : null}
         </div>
