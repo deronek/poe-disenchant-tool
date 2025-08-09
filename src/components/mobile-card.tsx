@@ -15,20 +15,22 @@ import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
 import { ItemMarkingInfo } from "./item-marking-info";
 import { TradeSearchInfo } from "./trade-search-info";
+import * as React from "react";
 
 interface MobileCardProps<TData extends Item> {
   row: Row<TData>;
+  isSelected: boolean;
 }
 
-export function MobileCard<TData extends Item>({
+function MobileCardComponent<TData extends Item>({
   row,
+  isSelected,
 }: MobileCardProps<TData>) {
   const name = row.getValue<string>("name");
   const variant = row.original.variant;
   const chaos = row.getValue<number>("chaos");
   const dustValIlvl84Q20 = row.getValue<number>("dustValIlvl84Q20");
   const dustPerChaos = row.getValue<number>("dustPerChaos");
-  const isSelected = row.getIsSelected();
   const tradeLink = createTradeLink(name);
 
   return (
@@ -150,3 +152,13 @@ export function MobileCard<TData extends Item>({
     </div>
   );
 }
+
+export const MobileCard = React.memo(
+  MobileCardComponent,
+  (prevProps, nextProps) => {
+    return (
+      prevProps.row.id === nextProps.row.id &&
+      prevProps.isSelected === nextProps.isSelected
+    );
+  },
+) as typeof MobileCardComponent;
