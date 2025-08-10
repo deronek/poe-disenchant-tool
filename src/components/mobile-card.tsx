@@ -7,21 +7,16 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import type { Item } from "@/lib/itemData";
 import { createTradeLink } from "@/lib/tradeLink";
 import { Row } from "@tanstack/react-table";
 import { ExternalLink, Info } from "lucide-react";
+import * as React from "react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
 import { DustInfo } from "./dust-info";
 import { ItemMarkingInfo } from "./item-marking-info";
 import { TradeSearchInfo } from "./trade-search-info";
-import * as React from "react";
 
 interface MobileCardProps<TData extends Item> {
   row: Row<TData>;
@@ -35,14 +30,9 @@ function MobileCardComponent<TData extends Item>({
   const name = row.getValue<string>("name");
   const variant = row.original.variant;
   const chaos = row.getValue<number>("chaos");
-  const dustValIlvl84Q20 = row.getValue<number>("dustValIlvl84Q20");
   const dustPerChaos = row.getValue<number>("dustPerChaos");
   const tradeLink = createTradeLink(name);
   const calculatedDustValue = row.original.calculatedDustValue;
-  const dustConfigString =
-    row.original.type === "UniqueAccessory"
-      ? "Dust value calculated at ilvl84, quality0"
-      : "Dust value calculated at ilvl84, quality20";
 
   return (
     <div
@@ -116,11 +106,7 @@ function MobileCardComponent<TData extends Item>({
                   <Info className="size-5" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent
-                className="max-w-[400px] text-sm"
-                side="bottom"
-                align="start"
-              >
+              <PopoverContent className="text-sm" side="left">
                 <DustInfo />
               </PopoverContent>
             </Popover>
