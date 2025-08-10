@@ -106,7 +106,7 @@ function MobileCardComponent<TData extends Item>({
                   <Info className="size-5" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="text-sm" side="left">
+              <PopoverContent className="w-82 text-sm" side="left">
                 <DustInfo />
               </PopoverContent>
             </Popover>
