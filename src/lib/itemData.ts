@@ -1,6 +1,20 @@
 import { getDustData, Item as DustItem } from "./dust";
 import { AllowedUnique, getPriceData } from "./prices";
 
+export function getCorrectDustValue(item: Item): number {
+  if (item.type === "UniqueAccessory") {
+    return item.dustValIlvl84;
+  }
+  return item.dustValIlvl84Q20;
+}
+
+export function getDustConfigurationString(item: Item): string {
+  if (item.type === "UniqueAccessory") {
+    return "Dust value calculated at ilvl84, quality0";
+  }
+  return "Dust value calculated at ilvl84, quality20";
+}
+
 export type Item = DustItem & {
   id: number;
   uniqueId: string;
@@ -9,6 +23,7 @@ export type Item = DustItem & {
   variant?: string;
   dustPerChaos: number;
   type: AllowedUnique;
+  calculatedDustValue: number;
 };
 
 const ITEMS_TO_IGNORE = [
@@ -33,6 +48,11 @@ export const getItems = async (): Promise<Item[]> => {
     const dustItem = dustData.find((d) => d.name === priceItem.name);
 
     if (dustItem) {
+      const calculatedDustValue =
+        priceItem.type === "UniqueAccessory"
+          ? dustItem.dustValIlvl84
+          : dustItem.dustValIlvl84Q20;
+
       merged.push({
         id: id++,
         uniqueId: createUniqueId(priceItem.name, priceItem.variant),
@@ -40,7 +60,8 @@ export const getItems = async (): Promise<Item[]> => {
         chaos: priceItem.chaos,
         graph: priceItem.graph,
         variant: priceItem.variant,
-        dustPerChaos: Math.round(dustItem.dustValIlvl84Q20 / priceItem.chaos),
+        calculatedDustValue,
+        dustPerChaos: Math.round(calculatedDustValue / priceItem.chaos),
         type: priceItem.type,
       });
     } else {

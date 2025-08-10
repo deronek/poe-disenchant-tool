@@ -7,12 +7,18 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import type { Item } from "@/lib/itemData";
 import { createTradeLink } from "@/lib/tradeLink";
 import { Row } from "@tanstack/react-table";
 import { ExternalLink, Info } from "lucide-react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
+import { DustInfo } from "./dust-info";
 import { ItemMarkingInfo } from "./item-marking-info";
 import { TradeSearchInfo } from "./trade-search-info";
 import * as React from "react";
@@ -32,6 +38,11 @@ function MobileCardComponent<TData extends Item>({
   const dustValIlvl84Q20 = row.getValue<number>("dustValIlvl84Q20");
   const dustPerChaos = row.getValue<number>("dustPerChaos");
   const tradeLink = createTradeLink(name);
+  const calculatedDustValue = row.original.calculatedDustValue;
+  const dustConfigString =
+    row.original.type === "UniqueAccessory"
+      ? "Dust value calculated at ilvl84, quality0"
+      : "Dust value calculated at ilvl84, quality20";
 
   return (
     <div
@@ -89,9 +100,30 @@ function MobileCardComponent<TData extends Item>({
         </div>
         <div className="space-y-1">
           <p className="text-muted-foreground text-sm">Dust Value</p>
-          <div className="flex items-center gap-1 text-sm font-medium">
-            <span>{dustValIlvl84Q20}</span>
-            <DustIcon className="h-4 w-4" />
+          <div className="flex items-start justify-between gap-2">
+            <div className="flex items-center gap-1 text-sm font-medium">
+              <span>{calculatedDustValue}</span>
+              <DustIcon className="h-4 w-4" />
+            </div>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="hover:text-foreground size-5 p-0 text-blue-500 dark:text-blue-400"
+                  aria-label={`Learn more about dust value calculation`}
+                >
+                  <Info className="size-5" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent
+                className="max-w-[400px] text-sm"
+                side="bottom"
+                align="start"
+              >
+                <DustInfo />
+              </PopoverContent>
+            </Popover>
           </div>
         </div>
       </div>

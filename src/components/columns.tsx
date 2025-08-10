@@ -13,6 +13,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ExternalLink, Info } from "lucide-react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
+import { DustInfo } from "./dust-info";
 import { ItemMarkingInfo } from "./item-marking-info";
 import { TradeSearchInfo } from "./trade-search-info";
 
@@ -71,11 +72,26 @@ export const columns: ColumnDef<Item>[] = [
   },
   {
     accessorKey: "dustValIlvl84Q20",
-    header: () => <span>Dust Value (ilvl 84, Q20)</span>,
+    header: () => {
+      return (
+        <div className="flex w-full flex-1 items-center">
+          <p>Dust Value</p>
+          <Tooltip>
+            <TooltipTrigger className="ml-auto">
+              <Info className="size-5 text-blue-500 dark:text-blue-400" />
+            </TooltipTrigger>
+            <TooltipContent className="max-w-[400px] text-sm" variant="popover">
+              <DustInfo />
+            </TooltipContent>
+          </Tooltip>
+        </div>
+      );
+    },
     size: 140,
     meta: { className: "text-right tabular-nums" },
     cell: ({ row }) => {
-      const value = row.getValue("dustValIlvl84Q20") as number;
+      const item = row.original;
+      const value = item.calculatedDustValue;
       return (
         <span className="block w-full">
           <span className="float-right inline-flex items-center gap-1">
