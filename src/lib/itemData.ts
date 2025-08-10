@@ -1,20 +1,6 @@
 import { getDustData, Item as DustItem } from "./dust";
 import { AllowedUnique, getPriceData } from "./prices";
 
-export function getCorrectDustValue(item: Item): number {
-  if (item.type === "UniqueAccessory") {
-    return item.dustValIlvl84;
-  }
-  return item.dustValIlvl84Q20;
-}
-
-export function getDustConfigurationString(item: Item): string {
-  if (item.type === "UniqueAccessory") {
-    return "Dust value calculated at ilvl84, quality0";
-  }
-  return "Dust value calculated at ilvl84, quality20";
-}
-
 export type Item = DustItem & {
   id: number;
   uniqueId: string;
