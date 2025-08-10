@@ -80,7 +80,7 @@ export const columns: ColumnDef<Item>[] = [
             <TooltipTrigger className="ml-auto">
               <Info className="size-5 text-blue-500 dark:text-blue-400" />
             </TooltipTrigger>
-            <TooltipContent className="max-w-[400px] text-sm" variant="popover">
+            <TooltipContent className="text-sm" variant="popover">
               <DustInfo />
             </TooltipContent>
           </Tooltip>
