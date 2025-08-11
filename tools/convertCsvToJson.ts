@@ -1,12 +1,12 @@
-const fs = require('fs');
-const parse = require('csv-parse/sync').parse;
+const fs = require("fs");
+const parse = require("csv-parse/sync").parse;
 
-const dustDir = 'src/lib/dust';
+const dustDir = "src/lib/dust";
 
 const inputCsvPath = `${dustDir}/poe-dust.csv`;
 const outputJsonPath = `${dustDir}/poe-dust.json`;
 
-const csvContent = fs.readFileSync(inputCsvPath, 'utf-8');
+const csvContent = fs.readFileSync(inputCsvPath, "utf-8");
 
 const records = parse(csvContent, {
   columns: true,
