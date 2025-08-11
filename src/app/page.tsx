@@ -25,7 +25,7 @@ export default async function SandboxPage() {
       <h4 className="font-italic text-muted-foreground text-sm">
         <LastUpdated timestamp={lastUpdated} />
       </h4>
-      <div className="container mx-auto pt-10">
+      <div className="container mx-auto pt-6 pb-4">
         <DataTable columns={columns} data={items} />
       </div>
     </div>
