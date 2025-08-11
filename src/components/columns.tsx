@@ -71,7 +71,7 @@ export const columns: ColumnDef<Item>[] = [
     },
   },
   {
-    accessorKey: "dustValIlvl84Q20",
+    accessorKey: "calculatedDustValue",
     header: () => {
       return (
         <div className="flex w-full flex-1 items-center">
@@ -90,8 +90,7 @@ export const columns: ColumnDef<Item>[] = [
     size: 140,
     meta: { className: "text-right tabular-nums" },
     cell: ({ row }) => {
-      const item = row.original;
-      const value = item.calculatedDustValue;
+      const value = row.getValue("calculatedDustValue") as number;
       return (
         <span className="block w-full">
           <span className="float-right inline-flex items-center gap-1">
@@ -129,7 +128,7 @@ export const columns: ColumnDef<Item>[] = [
     },
   },
   {
-    accessorKey: "tradeLink",
+    id: "tradeLink",
     header: () => {
       return (
         <div className="flex w-full flex-1 items-center">
