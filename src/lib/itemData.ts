@@ -48,7 +48,7 @@ export const getItems = async (): Promise<Item[]> => {
         baseType: dustItem.baseType,
         chaos: priceItem.chaos,
         graph: priceItem.graph,
-        variant: priceItem.variant,
+        variant: dustItem.baseType,
         calculatedDustValue,
         dustPerChaos: Math.round(calculatedDustValue / priceItem.chaos),
         type: priceItem.type,
