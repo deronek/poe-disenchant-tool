@@ -1,6 +1,7 @@
 # poe-disenchant-tool
 
-**Live at**: https://poe-disenchant-tool.vercel.app/
+![Vercel Deploy](https://deploy-badge.vercel.app/vercel/poe-disenchant-tool)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
 Path of Exile tool for calculating unique item disenchanting efficiency in Kingsmarch. Compares item market prices with Thaumaturgic Dust values.
 
