@@ -68,11 +68,7 @@ function MobileCardComponent<TData extends Item>({
                 <Info className="size-5" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent
-              className="max-w-[280px] text-sm"
-              side="bottom"
-              align="start"
-            >
+            <PopoverContent className="max-w-[280px] text-sm" side="left">
               <ItemMarkingInfo itemName={name} />
             </PopoverContent>
           </Popover>
@@ -143,11 +139,7 @@ function MobileCardComponent<TData extends Item>({
                 <Info className="size-5" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent
-              className="max-w-[280px] text-sm"
-              side="bottom"
-              align="start"
-            >
+            <PopoverContent className="max-w-[280px] text-sm" side="left">
               <TradeSearchInfo itemName={name} />
             </PopoverContent>
           </Popover>
