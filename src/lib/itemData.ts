@@ -1,15 +1,17 @@
-import { getDustData, Item as DustItem } from "./dust";
+import { getDustData } from "./dust";
 import { AllowedUnique, getPriceData } from "./prices";
 
-export type Item = DustItem & {
+export type Item = {
+  name: string;
+  baseType: string;
   id: number;
   uniqueId: string;
   chaos: number;
   graph: (number | null)[];
   variant?: string;
+  calculatedDustValue: number;
   dustPerChaos: number;
   type: AllowedUnique;
-  calculatedDustValue: number;
 };
 
 const ITEMS_TO_IGNORE = [
@@ -42,7 +44,8 @@ export const getItems = async (): Promise<Item[]> => {
       merged.push({
         id: id++,
         uniqueId: createUniqueId(priceItem.name, priceItem.variant),
-        ...dustItem,
+        name: priceItem.name,
+        baseType: dustItem.baseType,
         chaos: priceItem.chaos,
         graph: priceItem.graph,
         variant: priceItem.variant,
