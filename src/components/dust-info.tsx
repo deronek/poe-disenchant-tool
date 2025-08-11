@@ -17,7 +17,7 @@ export function DustInfo() {
         </p>
 
         {/* Mobile: 2 cols × 3 rows. Desktop (md+): 3 auto-width cols × 2 rows */}
-        <div className="grid grid-cols-[auto_min-content_auto] grid-rows-3 items-start justify-items-start gap-x-6 gap-y-2 md:grid-cols-[auto_auto_auto] md:grid-rows-2 md:gap-x-0 md:gap-y-2">
+        <div className="grid grid-cols-[auto_auto_min-content] grid-rows-3 items-start justify-items-start gap-x-3 gap-y-2 md:grid-cols-[auto_auto_auto] md:grid-rows-2 md:gap-x-0 md:gap-y-2">
           {/* Left column (mobile): Weapons/Armors, ilvl84 q20, Cheap Quality */}
           <div className="col-start-1 row-start-1 md:col-start-1 md:row-start-1">
             <Badge variant="secondary">Weapons/Armors</Badge>
