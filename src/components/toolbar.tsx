@@ -272,6 +272,16 @@ export function DataTableToolbar<TData extends Item>({
                       </p>
                     </div>
                   </div>
+                  <div className="flex items-start gap-2">
+                    <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-amber-600 dark:text-amber-400" />
+                    <div>
+                      <p className="font-medium">Corrupted Items</p>
+                      <p className="text-neutral-900 dark:text-neutral-100">
+                        Corrupted items cannot have quality applied and often
+                        have higher value due to crafting utility.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </PopoverContent>
             </Popover>
