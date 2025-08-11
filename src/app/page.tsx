@@ -11,7 +11,7 @@ export default async function SandboxPage() {
   const lastUpdated = new Date().toISOString();
 
   return (
-    <div className="p-6 md:p-8">
+    <div className="p-6 pb-4 md:px-8 md:pt-8">
       <div className="flex justify-between">
         <h1 className="mb-4 text-2xl font-bold">
           PoE Unique Disenchanting Tool
@@ -25,7 +25,7 @@ export default async function SandboxPage() {
       <h4 className="font-italic text-muted-foreground text-sm">
         <LastUpdated timestamp={lastUpdated} />
       </h4>
-      <div className="container mx-auto py-10">
+      <div className="container mx-auto pt-6 pb-4">
         <DataTable columns={columns} data={items} />
       </div>
     </div>
