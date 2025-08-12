@@ -96,6 +96,10 @@ export function DataTableToolbar<TData extends Item>({
     return sort.desc ? "desc" : "asc";
   };
 
+  const numberOfSelectedrows = Object.keys(
+    table.getState().rowSelection,
+  ).length;
+
   return (
     <div className="flex flex-col gap-3 border-b p-3">
       <div className="flex flex-col gap-3 md:flex-row md:items-center">
@@ -227,8 +231,11 @@ export function DataTableToolbar<TData extends Item>({
               onClick={onClearMarks}
               title="Clear all marked rows"
               aria-label="Clear all marked rows"
+              disabled={numberOfSelectedrows === 0}
+              className="gap-1"
             >
-              Clear marks
+              Clear marks{" "}
+              <span className="tabular-nums">({numberOfSelectedrows})</span>
             </Button>
           ) : null}
 
