@@ -13,7 +13,7 @@ interface SharedDataViewProps {
 
 export function SharedDataView({ items }: SharedDataViewProps) {
   const [advancedSettings, setAdvancedSettings] = useState<AdvancedSettings>({
-    minItemLevel: 80,
+    minItemLevel: 78,
     includeCorrupted: true,
   });
 
