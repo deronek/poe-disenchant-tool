@@ -176,7 +176,7 @@ export function AdvancedSettingsPanel({
               size="sm"
               onClick={() => {
                 onSettingsChange({
-                  minItemLevel: 80,
+                  minItemLevel: 78,
                   includeCorrupted: true,
                 });
               }}

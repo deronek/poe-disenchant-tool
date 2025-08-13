@@ -63,7 +63,7 @@ export function DataTable<TData extends Item, TValue>({
   // Advanced settings state
   const [advancedSettings, setAdvancedSettings] =
     React.useState<AdvancedSettings>({
-      minItemLevel: 80,
+      minItemLevel: 78,
       includeCorrupted: true,
     });
 

@@ -46,7 +46,7 @@ interface TradePayload {
 }
 
 export const createTradeLink = (name: string, settings?: TradeLinkSettings) => {
-  const payload: TradePayload = {
+  const payload = {
     query: {
       status: {
         option: "online",
@@ -66,43 +66,26 @@ export const createTradeLink = (name: string, settings?: TradeLinkSettings) => {
             },
           },
         },
+        misc_filters: {
+          filters: {
+            ...(settings?.minItemLevel !== undefined && {
+              ilvl: {
+                min: settings.minItemLevel,
+              },
+            }),
+            ...(settings?.includeCorrupted === false && {
+              corrupted: {
+                option: false,
+              },
+            }),
+          },
+        },
       },
     },
     sort: {
       price: "asc",
     },
   };
-
-  // Add item level filter if minItemLevel is specified and greater than 1
-  if (settings?.minItemLevel && settings.minItemLevel > 1) {
-    if (!payload.query.filters) {
-      payload.query.filters = {};
-    }
-    if (!payload.query.filters.type_filters) {
-      payload.query.filters.type_filters = {
-        filters: {},
-      };
-    }
-    payload.query.filters.type_filters.filters.ilvl = {
-      min: settings.minItemLevel,
-      max: 84,
-    };
-  }
-
-  // Add corrupted filter if specified
-  if (settings?.includeCorrupted !== undefined) {
-    if (!payload.query.filters) {
-      payload.query.filters = {};
-    }
-    if (!payload.query.filters.type_filters) {
-      payload.query.filters.type_filters = {
-        filters: {},
-      };
-    }
-    payload.query.filters.type_filters.filters.corrupted = {
-      option: settings.includeCorrupted ? "true" : "false",
-    };
-  }
 
   const baseLink = `https://www.pathofexile.com/trade/search/Mercenaries?q=`;
   return baseLink + encodeURIComponent(JSON.stringify(payload));
