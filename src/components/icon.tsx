@@ -20,7 +20,7 @@ function Icon({
   loading = "lazy",
 }: IconProps) {
   return (
-    <Image
+    <img
       src={src}
       title={title ?? alt}
       alt={alt}
