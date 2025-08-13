@@ -1,8 +1,7 @@
-import { getItems } from "@/lib/itemData";
-import { columns } from "@/components/columns";
-import { DataTable } from "@/components/data-table";
-import { ModeToggle } from "@/components/ui/mode-toggle";
 import LastUpdated from "@/components/last-updated";
+import { SharedDataView } from "@/components/shared-data-view";
+import { ModeToggle } from "@/components/ui/mode-toggle";
+import { getItems } from "@/lib/itemData";
 
 export const revalidate = 300; // 5 minutes
 
@@ -26,7 +25,7 @@ export default async function SandboxPage() {
         <LastUpdated timestamp={lastUpdated} />
       </h4>
       <div className="container mx-auto pt-6 pb-4">
-        <DataTable columns={columns} data={items} />
+        <SharedDataView items={items} />
       </div>
     </div>
   );

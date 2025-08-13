@@ -15,9 +15,12 @@ import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
 import { DustInfo } from "./dust-info";
 import { ItemMarkingInfo } from "./item-marking-info";
-import { TradeSearchInfo } from "./trade-search-info";
 
-export const columns: ColumnDef<Item>[] = [
+import type { AdvancedSettings } from "./advanced-settings-panel";
+
+export const createColumns = (
+  advancedSettings: AdvancedSettings,
+): ColumnDef<Item>[] => [
   {
     accessorKey: "name",
     header: "Name",
@@ -129,26 +132,12 @@ export const columns: ColumnDef<Item>[] = [
   },
   {
     id: "tradeLink",
-    header: () => {
-      return (
-        <div className="flex w-full flex-1 items-center">
-          <p>Trade Link</p>
-          <Tooltip>
-            <TooltipTrigger className="ml-auto">
-              <Info className="size-5 text-blue-500 dark:text-blue-400" />
-            </TooltipTrigger>
-            <TooltipContent className="max-w-[280px] text-sm" variant="popover">
-              <TradeSearchInfo />
-            </TooltipContent>
-          </Tooltip>
-        </div>
-      );
-    },
+    header: "Trade Link",
     size: 110,
     enableSorting: false,
     cell: ({ row }) => {
       const name = row.getValue("name") as string;
-      const link = createTradeLink(name);
+      const link = createTradeLink(name, advancedSettings);
       return (
         <div className="flex w-full flex-1 items-center">
           <Button

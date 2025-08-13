@@ -59,6 +59,10 @@ export type Item = {
 // TODO: cache using ISR
 const getPriceDataApi = async (): Promise<ApiResponse> => {
   try {
+    if (process.env.NODE_ENV === "development") {
+      // hardcoded data for dev
+      return jsonHardcoded;
+    }
     // TODO: add league param
     const response = await fetch(
       "https://poe.ninja/api/data/denseoverviews?league=Mercenaries",

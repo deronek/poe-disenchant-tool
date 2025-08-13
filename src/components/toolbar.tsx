@@ -4,6 +4,10 @@ import { ChaosOrbIcon } from "@/components/chaos-orb-icon";
 import { DustIcon } from "@/components/dust-icon";
 import { NameFilter } from "@/components/name-filter";
 import { RangeFilter } from "@/components/range-filter";
+import {
+  AdvancedSettingsPanel,
+  type AdvancedSettings,
+} from "@/components/advanced-settings-panel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,11 +36,15 @@ import {
 type ToolbarProps<TData extends Item> = {
   table: Table<TData>;
   onClearMarks?: () => void;
+  advancedSettings: AdvancedSettings;
+  onAdvancedSettingsChange: (settings: AdvancedSettings) => void;
 };
 
 export function DataTableToolbar<TData extends Item>({
   table,
   onClearMarks,
+  advancedSettings,
+  onAdvancedSettingsChange,
 }: ToolbarProps<TData>) {
   const nameFilter =
     (table.getColumn("name")?.getFilterValue() as string) ?? "";
@@ -225,6 +233,12 @@ export function DataTableToolbar<TData extends Item>({
         </div>
 
         <div className="flex items-center gap-2 md:ml-auto">
+          {/* Advanced Settings */}
+          <AdvancedSettingsPanel
+            settings={advancedSettings}
+            onSettingsChange={onAdvancedSettingsChange}
+          />
+
           {onClearMarks ? (
             <Button
               variant="outline"
@@ -272,20 +286,11 @@ export function DataTableToolbar<TData extends Item>({
                   <div className="flex items-start gap-2">
                     <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-blue-500 dark:text-blue-400" />
                     <div>
-                      <p className="font-medium">Trade Search</p>
+                      <p className="font-medium">Trade Settings</p>
                       <p className="text-neutral-900 dark:text-neutral-100">
-                        Opens Path of Exile trade site with filters for the last
-                        3 days of listings.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-amber-600 dark:text-amber-400" />
-                    <div>
-                      <p className="font-medium">Corrupted Items</p>
-                      <p className="text-neutral-900 dark:text-neutral-100">
-                        Corrupted items cannot have quality applied and often
-                        have higher value due to crafting utility.
+                        Advanced trade settings and search information are
+                        available in the Trade button dropdown. Configure
+                        filters and learn about trade search behavior.
                       </p>
                     </div>
                   </div>

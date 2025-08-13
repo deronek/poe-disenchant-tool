@@ -17,6 +17,7 @@ import {
 } from "@tanstack/react-table";
 
 import { DataTableToolbar } from "@/components/toolbar";
+import { type AdvancedSettings } from "@/components/advanced-settings-panel";
 import type { Item } from "@/lib/itemData";
 import {
   Table,
@@ -41,11 +42,15 @@ declare module "@tanstack/react-table" {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  advancedSettings: AdvancedSettings;
+  onAdvancedSettingsChange: (settings: AdvancedSettings) => void;
 }
 
 export function DataTable<TData extends Item, TValue>({
   columns,
   data,
+  advancedSettings,
+  onAdvancedSettingsChange,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([
     {
@@ -102,11 +107,16 @@ export function DataTable<TData extends Item, TValue>({
   return (
     <div className="mx-auto w-full max-w-screen-xl rounded-md border">
       {/* Toolbar */}
-      <DataTableToolbar table={table} onClearMarks={clearSelection} />
+      <DataTableToolbar
+        table={table}
+        onClearMarks={clearSelection}
+        advancedSettings={advancedSettings}
+        onAdvancedSettingsChange={onAdvancedSettingsChange}
+      />
 
       {/* Mobile Card Layout */}
       <div className="md:hidden">
-        <MobileCardLayout table={table} />
+        <MobileCardLayout table={table} advancedSettings={advancedSettings} />
       </div>
 
       {/* Desktop Table Layout */}

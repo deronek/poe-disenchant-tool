@@ -16,22 +16,24 @@ import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
 import { DustInfo } from "./dust-info";
 import { ItemMarkingInfo } from "./item-marking-info";
-import { TradeSearchInfo } from "./trade-search-info";
+import { AdvancedSettings } from "./advanced-settings-panel";
 
 interface MobileCardProps<TData extends Item> {
   row: Row<TData>;
   isSelected: boolean;
+  advancedSettings?: AdvancedSettings;
 }
 
 function MobileCardComponent<TData extends Item>({
   row,
   isSelected,
+  advancedSettings,
 }: MobileCardProps<TData>) {
   const name = row.getValue<string>("name");
   const variant = row.original.variant;
   const chaos = row.getValue<number>("chaos");
   const dustPerChaos = row.getValue<number>("dustPerChaos");
-  const tradeLink = createTradeLink(name);
+  const tradeLink = createTradeLink(name, advancedSettings);
   const calculatedDustValue = row.original.calculatedDustValue;
 
   return (
@@ -128,27 +130,11 @@ function MobileCardComponent<TData extends Item>({
       <div className="pt-2">
         <div className="mb-2 flex items-center justify-between">
           <p className="text-muted-foreground text-sm">Trade Search</p>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="hover:text-foreground size-5 p-0 text-blue-500 dark:text-blue-400"
-                aria-label={`Learn more about trade search for ${name}`}
-              >
-                <Info className="size-5" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="max-w-[280px] text-sm" side="left">
-              <TradeSearchInfo itemName={name} />
-            </PopoverContent>
-          </Popover>
         </div>
         <Button
           asChild
-          variant="outline"
-          size="sm"
-          className="w-full justify-center gap-2"
+          variant="default"
+          className="bg-primary/10 hover:bg-primary/20 text-foreground border-input w-full justify-center gap-2 border border-solid"
         >
           <a
             href={tradeLink}
@@ -171,7 +157,9 @@ export const MobileCard = React.memo(
   (prevProps, nextProps) => {
     return (
       prevProps.row.id === nextProps.row.id &&
-      prevProps.isSelected === nextProps.isSelected
+      prevProps.isSelected === nextProps.isSelected &&
+      JSON.stringify(prevProps.advancedSettings) ===
+        JSON.stringify(nextProps.advancedSettings)
     );
   },
 ) as typeof MobileCardComponent;
