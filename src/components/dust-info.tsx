@@ -51,7 +51,7 @@ export function DustInfo() {
         </div>
 
         <p className="text-muted-foreground text-xs leading-relaxed">
-          Quality affects dust value one-for-one — e.g., 20% quality → +20%
+          Quality affects the dust value one-for-one — e.g., 20% quality → +20%
           dust.
         </p>
       </div>
@@ -63,8 +63,8 @@ export function DustInfo() {
         </div>
         <div className="flex flex-col gap-3">
           <p className="leading-relaxed">
-            Calculations use ilvl 84, however actual item level significantly
-            impacts dust value.
+            Calculations use ilvl 84, however the actual item level
+            significantly impacts the dust value.
           </p>
 
           <div className="grid grid-cols-[auto_auto_auto] grid-rows-3 items-start justify-items-start gap-x-3 gap-y-2 md:grid-cols-[auto_auto_auto] md:grid-rows-2 md:gap-x-0 md:gap-y-2">
