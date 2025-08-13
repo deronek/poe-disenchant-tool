@@ -13,7 +13,6 @@ import { Badge } from "@/components/ui/badge";
 import {
   Settings,
   ChevronDown,
-  Search,
   Zap,
   Tally1,
   Tally2,
