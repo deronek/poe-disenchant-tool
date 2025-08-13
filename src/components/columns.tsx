@@ -23,40 +23,42 @@ import * as React from "react";
 
 import type { AdvancedSettings } from "./advanced-settings-panel";
 
-// Dust Value header as memo
 const DustValueHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
   React.memo(
-    () => (
-      <div className="flex w-full flex-1 items-center">
-        <p>Dust Value</p>
+    function DustValueHeaderComponent() {
+      return (
+        <div className="flex w-full flex-1 items-center">
+          <p>Dust Value</p>
+          <Tooltip>
+            <TooltipTrigger className="ml-auto">
+              <Info className="size-5 text-blue-500 dark:text-blue-400" />
+            </TooltipTrigger>
+            <TooltipContent className="text-sm" variant="popover">
+              <DustInfo />
+            </TooltipContent>
+          </Tooltip>
+        </div>
+      );
+    },
+    () => true,
+  );
+
+const MarkHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> = React.memo(
+  function MarkHeaderComponent() {
+    return (
+      <div className="flex w-full items-center">
+        <p>Mark</p>
         <Tooltip>
           <TooltipTrigger className="ml-auto">
             <Info className="size-5 text-blue-500 dark:text-blue-400" />
           </TooltipTrigger>
-          <TooltipContent className="text-sm" variant="popover">
-            <DustInfo />
+          <TooltipContent className="max-w-[280px] text-sm" variant="popover">
+            <ItemMarkingInfo />
           </TooltipContent>
         </Tooltip>
       </div>
-    ),
-    () => true,
-  );
-
-// Mark header as memo
-const MarkHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> = React.memo(
-  () => (
-    <div className="flex w-full items-center">
-      <p>Mark</p>
-      <Tooltip>
-        <TooltipTrigger className="ml-auto">
-          <Info className="size-5 text-blue-500 dark:text-blue-400" />
-        </TooltipTrigger>
-        <TooltipContent className="max-w-[280px] text-sm" variant="popover">
-          <ItemMarkingInfo />
-        </TooltipContent>
-      </Tooltip>
-    </div>
-  ),
+    );
+  },
   () => true,
 );
 

@@ -1,3 +1,4 @@
+// @ts-nocheck
 const path = require("path");
 
 /** @typedef {Parameters<import('next').NextConfig['webpack']>[1]} WebpackConfigContext */

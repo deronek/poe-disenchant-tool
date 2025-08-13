@@ -1,7 +1,3 @@
-"use client";
-
-import Image from "next/image";
-
 type IconProps = {
   src: string;
   className?: string;
@@ -20,6 +16,7 @@ function Icon({
   loading = "lazy",
 }: IconProps) {
   return (
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       src={src}
       title={title ?? alt}

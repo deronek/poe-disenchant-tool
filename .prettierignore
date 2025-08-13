@@ -5,3 +5,6 @@ coverage
 # Big JSON files
 /src/lib/prices/prices.json
 /src/lib/dust/poe-dust.json
+
+# Lock file
+pnpm-lock.yaml
