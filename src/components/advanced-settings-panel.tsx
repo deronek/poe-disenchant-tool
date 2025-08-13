@@ -27,6 +27,11 @@ export interface AdvancedSettings {
   includeCorrupted: boolean;
 }
 
+export const DEFAULT_ADVANCED_SETTINGS: AdvancedSettings = {
+  minItemLevel: 78,
+  includeCorrupted: true,
+};
+
 interface AdvancedSettingsPanelProps {
   settings: AdvancedSettings;
   onSettingsChange: (settings: AdvancedSettings) => void;
@@ -175,10 +180,7 @@ export function AdvancedSettingsPanel({
               variant="outline"
               size="sm"
               onClick={() => {
-                onSettingsChange({
-                  minItemLevel: 78,
-                  includeCorrupted: true,
-                });
+                onSettingsChange(DEFAULT_ADVANCED_SETTINGS);
               }}
               className="flex-1"
             >
