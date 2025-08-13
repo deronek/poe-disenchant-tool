@@ -70,7 +70,6 @@ export function RangeFilter<TData extends Item>({
 
   const handleReset = () => {
     column?.setFilterValue(undefined);
-    setIsOpen(false);
   };
 
   const handleApply = () => {

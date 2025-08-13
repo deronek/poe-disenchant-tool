@@ -6,10 +6,15 @@ import type { Item } from "@/lib/itemData";
 
 interface MobileCardLayoutProps<TData extends Item> {
   table: Table<TData>;
+  advancedSettings?: {
+    minItemLevel: number;
+    includeCorrupted: boolean;
+  };
 }
 
 export function MobileCardLayout<TData extends Item>({
   table,
+  advancedSettings,
 }: MobileCardLayoutProps<TData>) {
   return (
     <div className="space-y-3 px-3 py-4">
@@ -21,6 +26,7 @@ export function MobileCardLayout<TData extends Item>({
               key={row.id}
               row={row}
               isSelected={row.getIsSelected()}
+              advancedSettings={advancedSettings}
             />
           ))
       ) : (

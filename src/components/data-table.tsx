@@ -17,6 +17,7 @@ import {
 } from "@tanstack/react-table";
 
 import { DataTableToolbar } from "@/components/toolbar";
+import { type AdvancedSettings } from "@/components/advanced-settings-panel";
 import type { Item } from "@/lib/itemData";
 import {
   Table,
@@ -58,6 +59,13 @@ export function DataTable<TData extends Item, TValue>({
   );
   // Keep column sizes in state to make widths stable
   const [columnSizing, setColumnSizing] = React.useState<ColumnSizingState>({});
+
+  // Advanced settings state
+  const [advancedSettings, setAdvancedSettings] =
+    React.useState<AdvancedSettings>({
+      minItemLevel: 80,
+      includeCorrupted: true,
+    });
 
   // Persistent row selection
   const { rowSelection, setRowSelection, clearSelection } =
@@ -102,11 +110,16 @@ export function DataTable<TData extends Item, TValue>({
   return (
     <div className="mx-auto w-full max-w-screen-xl rounded-md border">
       {/* Toolbar */}
-      <DataTableToolbar table={table} onClearMarks={clearSelection} />
+      <DataTableToolbar
+        table={table}
+        onClearMarks={clearSelection}
+        advancedSettings={advancedSettings}
+        onAdvancedSettingsChange={setAdvancedSettings}
+      />
 
       {/* Mobile Card Layout */}
       <div className="md:hidden">
-        <MobileCardLayout table={table} />
+        <MobileCardLayout table={table} advancedSettings={advancedSettings} />
       </div>
 
       {/* Desktop Table Layout */}
