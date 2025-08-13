@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+const injectWhyDidYouRender = require("./scripts/why-did-you-render");
 
 const nextConfig: NextConfig = {
   images: {
@@ -8,6 +9,11 @@ const nextConfig: NextConfig = {
         hostname: "web.poecdn.com",
       },
     ],
+  },
+  webpack: (config, context) => {
+    // injectWhyDidYouRender(config, context);
+
+    return config;
   },
 };
 
