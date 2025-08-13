@@ -16,14 +16,12 @@ import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
 import { DustInfo } from "./dust-info";
 import { ItemMarkingInfo } from "./item-marking-info";
+import { AdvancedSettings } from "./advanced-settings-panel";
 
 interface MobileCardProps<TData extends Item> {
   row: Row<TData>;
   isSelected: boolean;
-  advancedSettings?: {
-    minItemLevel: number;
-    includeCorrupted: boolean;
-  };
+  advancedSettings?: AdvancedSettings;
 }
 
 function MobileCardComponent<TData extends Item>({
