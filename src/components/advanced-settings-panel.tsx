@@ -179,7 +179,6 @@ export function AdvancedSettingsPanel({
                   minItemLevel: 80,
                   includeCorrupted: true,
                 });
-                setIsOpen(false);
               }}
               className="flex-1"
             >
