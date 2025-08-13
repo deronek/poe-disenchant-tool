@@ -97,6 +97,7 @@ export function AdvancedSettingsPanel({
             </div>
             <p className="text-muted-foreground text-sm">
               Configure trade search filters for Path of Exile trade website.
+              Saved locally.
             </p>
           </div>
 
