@@ -16,7 +16,11 @@ import { DustIcon } from "./dust-icon";
 import { DustInfo } from "./dust-info";
 import { ItemMarkingInfo } from "./item-marking-info";
 
-export const columns: ColumnDef<Item>[] = [
+import type { AdvancedSettings } from "./advanced-settings-panel";
+
+export const createColumns = (
+  advancedSettings: AdvancedSettings,
+): ColumnDef<Item>[] => [
   {
     accessorKey: "name",
     header: "Name",
@@ -133,7 +137,7 @@ export const columns: ColumnDef<Item>[] = [
     enableSorting: false,
     cell: ({ row }) => {
       const name = row.getValue("name") as string;
-      const link = createTradeLink(name);
+      const link = createTradeLink(name, advancedSettings);
       return (
         <div className="flex w-full flex-1 items-center">
           <Button

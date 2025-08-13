@@ -42,11 +42,15 @@ declare module "@tanstack/react-table" {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  advancedSettings: AdvancedSettings;
+  onAdvancedSettingsChange: (settings: AdvancedSettings) => void;
 }
 
 export function DataTable<TData extends Item, TValue>({
   columns,
   data,
+  advancedSettings,
+  onAdvancedSettingsChange,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([
     {
@@ -59,13 +63,6 @@ export function DataTable<TData extends Item, TValue>({
   );
   // Keep column sizes in state to make widths stable
   const [columnSizing, setColumnSizing] = React.useState<ColumnSizingState>({});
-
-  // Advanced settings state
-  const [advancedSettings, setAdvancedSettings] =
-    React.useState<AdvancedSettings>({
-      minItemLevel: 78,
-      includeCorrupted: true,
-    });
 
   // Persistent row selection
   const { rowSelection, setRowSelection, clearSelection } =
@@ -114,7 +111,7 @@ export function DataTable<TData extends Item, TValue>({
         table={table}
         onClearMarks={clearSelection}
         advancedSettings={advancedSettings}
-        onAdvancedSettingsChange={setAdvancedSettings}
+        onAdvancedSettingsChange={onAdvancedSettingsChange}
       />
 
       {/* Mobile Card Layout */}
