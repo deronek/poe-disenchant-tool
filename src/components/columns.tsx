@@ -9,14 +9,58 @@ import {
 } from "@/components/ui/tooltip";
 import type { Item } from "@/lib/itemData";
 import { createTradeLink } from "@/lib/tradeLink";
-import { ColumnDef } from "@tanstack/react-table";
+import {
+  ColumnDef,
+  ColumnDefTemplate,
+  HeaderContext,
+} from "@tanstack/react-table";
 import { ExternalLink, Info } from "lucide-react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
 import { DustInfo } from "./dust-info";
 import { ItemMarkingInfo } from "./item-marking-info";
+import * as React from "react";
 
 import type { AdvancedSettings } from "./advanced-settings-panel";
+
+const DustValueHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
+  React.memo(
+    function DustValueHeaderComponent() {
+      return (
+        <div className="flex w-full flex-1 items-center">
+          <p>Dust Value</p>
+          <Tooltip>
+            <TooltipTrigger className="ml-auto">
+              <Info className="size-5 text-blue-500 dark:text-blue-400" />
+            </TooltipTrigger>
+            <TooltipContent className="text-sm" variant="popover">
+              <DustInfo />
+            </TooltipContent>
+          </Tooltip>
+        </div>
+      );
+    },
+    () => true,
+  );
+
+const MarkHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> = React.memo(
+  function MarkHeaderComponent() {
+    return (
+      <div className="flex w-full items-center">
+        <p>Mark</p>
+        <Tooltip>
+          <TooltipTrigger className="ml-auto">
+            <Info className="size-5 text-blue-500 dark:text-blue-400" />
+          </TooltipTrigger>
+          <TooltipContent className="max-w-[280px] text-sm" variant="popover">
+            <ItemMarkingInfo />
+          </TooltipContent>
+        </Tooltip>
+      </div>
+    );
+  },
+  () => true,
+);
 
 export const createColumns = (
   advancedSettings: AdvancedSettings,
@@ -75,21 +119,7 @@ export const createColumns = (
   },
   {
     accessorKey: "calculatedDustValue",
-    header: () => {
-      return (
-        <div className="flex w-full flex-1 items-center">
-          <p>Dust Value</p>
-          <Tooltip>
-            <TooltipTrigger className="ml-auto">
-              <Info className="size-5 text-blue-500 dark:text-blue-400" />
-            </TooltipTrigger>
-            <TooltipContent className="text-sm" variant="popover">
-              <DustInfo />
-            </TooltipContent>
-          </Tooltip>
-        </div>
-      );
-    },
+    header: DustValueHeader,
     size: 140,
     meta: { className: "text-right tabular-nums" },
     cell: ({ row }) => {
@@ -163,21 +193,7 @@ export const createColumns = (
   },
   {
     id: "select",
-    header: () => {
-      return (
-        <div className="flex w-full items-center">
-          <p>Mark</p>
-          <Tooltip>
-            <TooltipTrigger className="ml-auto">
-              <Info className="size-5 text-blue-500 dark:text-blue-400" />
-            </TooltipTrigger>
-            <TooltipContent className="max-w-[280px] text-sm" variant="popover">
-              <ItemMarkingInfo />
-            </TooltipContent>
-          </Tooltip>
-        </div>
-      );
-    },
+    header: MarkHeader,
     size: 80,
     enableSorting: false,
     enableHiding: false,

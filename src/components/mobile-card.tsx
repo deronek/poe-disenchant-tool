@@ -17,6 +17,74 @@ import { DustIcon } from "./dust-icon";
 import { DustInfo } from "./dust-info";
 import { ItemMarkingInfo } from "./item-marking-info";
 import { AdvancedSettings } from "./advanced-settings-panel";
+// Checkbox with memo
+const SelectionCheckbox = React.memo(function SelectionCheckbox({
+  checked,
+  onChange,
+  label,
+}: {
+  checked: boolean;
+  onChange: (v: boolean) => void;
+  label: string;
+}) {
+  return (
+    <Checkbox
+      className="mt-0.5 size-5"
+      checked={checked}
+      onCheckedChange={onChange}
+      aria-label={label}
+    />
+  );
+});
+
+// Info button + popover as memo
+const MarkInfoPopover = React.memo(function InfoPopover({
+  name,
+}: {
+  name: string;
+}) {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="size-5 p-0 text-blue-500 dark:text-blue-400"
+          aria-label={`Learn more about marking ${name}`}
+        >
+          <Info className="size-5" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="max-w-[280px] text-sm" side="left">
+        <ItemMarkingInfo itemName={name} />
+      </PopoverContent>
+    </Popover>
+  );
+});
+
+// Dust info button + popover as memo
+const DustInfoPopover = React.memo(function DustInfoPopover() {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="hover:text-foreground size-5 p-0 text-blue-500 dark:text-blue-400"
+          aria-label="Learn more about dust value calculation"
+        >
+          <Info className="size-5" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent
+        className="w-[min(var(--radix-popover-content-available-width,9999px),calc(var(--spacing)*84))] min-w-77 text-sm"
+        side="left"
+      >
+        <DustInfo />
+      </PopoverContent>
+    </Popover>
+  );
+});
 
 interface MobileCardProps<TData extends Item> {
   row: Row<TData>;
@@ -36,6 +104,11 @@ function MobileCardComponent<TData extends Item>({
   const tradeLink = createTradeLink(name, advancedSettings);
   const calculatedDustValue = row.original.calculatedDustValue;
 
+  const handleSelect = React.useCallback(
+    (v: boolean) => row.toggleSelected(!!v),
+    [row],
+  );
+
   return (
     <div
       className={`space-y-3 rounded-lg border p-4 ${
@@ -53,27 +126,12 @@ function MobileCardComponent<TData extends Item>({
           )}
         </div>
         <div className="flex items-center gap-2">
-          <Checkbox
-            className="mt-0.5 size-5"
+          <SelectionCheckbox
             checked={isSelected}
-            onCheckedChange={(v) => row.toggleSelected(!!v)}
-            aria-label={`Mark ${name} as completed`}
+            onChange={handleSelect}
+            label={`Mark ${name} as completed`}
           />
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="size-5 p-0 text-blue-500 dark:text-blue-400"
-                aria-label={`Learn more about marking ${name}`}
-              >
-                <Info className="size-5" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="max-w-[280px] text-sm" side="left">
-              <ItemMarkingInfo itemName={name} />
-            </PopoverContent>
-          </Popover>
+          <MarkInfoPopover name={name}></MarkInfoPopover>
         </div>
       </div>
 
@@ -93,24 +151,7 @@ function MobileCardComponent<TData extends Item>({
               <span>{calculatedDustValue}</span>
               <DustIcon className="h-4 w-4" />
             </div>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="hover:text-foreground size-5 p-0 text-blue-500 dark:text-blue-400"
-                  aria-label={`Learn more about dust value calculation`}
-                >
-                  <Info className="size-5" />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent
-                className="w-[min(var(--radix-popover-content-available-width,9999px),calc(var(--spacing)*84))] min-w-77 text-sm"
-                side="left"
-              >
-                <DustInfo />
-              </PopoverContent>
-            </Popover>
+            <DustInfoPopover />
           </div>
         </div>
       </div>

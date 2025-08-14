@@ -5,6 +5,7 @@ import {
   ChevronsLeft,
   ChevronsRight,
 } from "lucide-react";
+import * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,6 +15,35 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+// Rows per page select as memo
+const RowsPerPageSelect = React.memo(function RowsPerPageSelect({
+  pageSize,
+  onPageSizeChange,
+}: {
+  pageSize: number;
+  onPageSizeChange: (value: number) => void;
+}) {
+  return (
+    <Select
+      value={`${pageSize}`}
+      onValueChange={(value) => {
+        onPageSizeChange(Number(value));
+      }}
+    >
+      <SelectTrigger className="h-8 w-[70px]">
+        <SelectValue placeholder={pageSize} />
+      </SelectTrigger>
+      <SelectContent side="top">
+        {[10, 20, 25, 30, 40, 50].map((size) => (
+          <SelectItem key={size} value={`${size}`}>
+            {size}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
+});
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
@@ -47,23 +77,10 @@ export function DataTablePagination<TData>({
         {/* Rows per page */}
         <div className="hidden items-center space-x-2 md:flex">
           <p className="flex-none text-sm font-medium">Rows per page</p>
-          <Select
-            value={`${pageSize}`}
-            onValueChange={(value) => {
-              table.setPageSize(Number(value));
-            }}
-          >
-            <SelectTrigger className="h-8 w-[70px]">
-              <SelectValue placeholder={pageSize} />
-            </SelectTrigger>
-            <SelectContent side="top">
-              {[10, 20, 25, 30, 40, 50].map((size) => (
-                <SelectItem key={size} value={`${size}`}>
-                  {size}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <RowsPerPageSelect
+            pageSize={pageSize}
+            onPageSizeChange={table.setPageSize}
+          />
         </div>
 
         {/* Page x of y */}
