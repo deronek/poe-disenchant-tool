@@ -10,15 +10,12 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   RowData,
-  RowSelectionState,
   SortingState,
-  Updater,
   useReactTable,
 } from "@tanstack/react-table";
 
-import { DataTableToolbar } from "@/components/toolbar";
 import { type AdvancedSettings } from "@/components/advanced-settings-panel";
-import type { Item } from "@/lib/itemData";
+import { DataTableToolbar } from "@/components/toolbar";
 import {
   Table,
   TableBody,
@@ -27,11 +24,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import type { Item } from "@/lib/itemData";
 import { ChevronUp } from "lucide-react";
 import * as React from "react";
 import { DataTablePagination } from "./data-table-pagination";
-import { usePersistentRowSelection } from "./usePersistentRowSelection";
 import { MobileCardLayout } from "./mobile-card-layout";
+import { usePersistentRowSelection } from "./usePersistentRowSelection";
 
 declare module "@tanstack/react-table" {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -77,19 +75,13 @@ export function DataTable<TData extends Item, TValue>({
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
-    onColumnSizingChange: setColumnSizing as (
-      updater: Updater<ColumnSizingState>,
-    ) => void,
+    onColumnSizingChange: setColumnSizing,
     columnResizeMode: "onChange",
     enableColumnResizing: true,
     getRowId: (row, _index) =>
       // Fall back to array index string if uniqueId not present
       row.uniqueId ?? String(_index ?? 0),
-    onRowSelectionChange: setRowSelection as unknown as (
-      updater:
-        | RowSelectionState
-        | ((old: RowSelectionState) => RowSelectionState),
-    ) => void,
+    onRowSelectionChange: setRowSelection,
     state: {
       sorting,
       columnFilters,
