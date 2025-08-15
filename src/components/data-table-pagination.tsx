@@ -32,7 +32,7 @@ const RowsPerPageSelect = React.memo(function RowsPerPageSelect({
       }}
     >
       <SelectTrigger className="h-8 w-[70px]">
-        <SelectValue placeholder={pageSize} />
+        <SelectValue placeholder={pageSize}>{String(pageSize)}</SelectValue>
       </SelectTrigger>
       <SelectContent side="top">
         {[10, 20, 25, 30, 40, 50].map((size) => (
@@ -75,7 +75,7 @@ export function DataTablePagination<TData>({
 
       <div className="flex flex-1 items-center justify-end space-x-6 lg:space-x-8">
         {/* Rows per page */}
-        <div className="hidden items-center space-x-2 md:flex">
+        <div className="hidden items-center gap-2 md:flex">
           <p className="flex-none text-sm font-medium">Rows per page</p>
           <RowsPerPageSelect
             pageSize={pageSize}
