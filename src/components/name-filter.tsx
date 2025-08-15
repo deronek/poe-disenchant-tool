@@ -32,7 +32,7 @@ export function NameFilter<TData extends Item>({
   }, [table.getState().columnFilters]);
 
   return (
-    <div className="relative w-full md:max-w-xs">
+    <div className="relative w-full md:max-w-3xs">
       <Input
         placeholder="Filter by name or variant..."
         value={value}

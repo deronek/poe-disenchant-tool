@@ -118,7 +118,7 @@ export function DataTableToolbar<TData extends Item>({
     <div className="flex flex-col gap-3 border-b p-3">
       <div className="flex flex-col gap-3 md:flex-row md:items-center">
         <NameFilter table={table} />
-        <div className="md:ml-2">
+        <div className="flex items-center gap-3 md:ml-2">
           {table.getColumn(COLUMN_IDS.CHAOS) && (
             <RangeFilter
               column={table.getColumn(COLUMN_IDS.CHAOS)}
@@ -128,6 +128,11 @@ export function DataTableToolbar<TData extends Item>({
               max={600}
             />
           )}
+          {/* Active chips */}
+          <div className="flex flex-wrap gap-2">
+            <NameFilterChip table={table} />
+            <PriceFilterChip table={table} />
+          </div>
         </div>
 
         {/* Sorting Controls - Mobile Only */}
@@ -306,12 +311,6 @@ export function DataTableToolbar<TData extends Item>({
             </Popover>
           </div>
         </div>
-      </div>
-
-      {/* Active chips */}
-      <div className="flex flex-wrap gap-2">
-        <NameFilterChip table={table} />
-        <PriceFilterChip table={table} />
       </div>
     </div>
   );
