@@ -19,9 +19,11 @@ export function PriceFilterChip<TData>({ table }: PriceFilterChipProps<TData>) {
 
   return (
     <Badge variant="outline" className="inline-flex items-center gap-1">
-      <span className="inline-flex items-center gap-1">
+      <span className="inline-flex min-w-0 flex-shrink-0 items-center gap-1 truncate">
         Price: {`${chaosRange.min}–${chaosRange.max}`}
-        <ChaosOrbIcon />
+        <span className="flex-shrink-0">
+          <ChaosOrbIcon />
+        </span>
       </span>
       <XButton
         onClick={() =>

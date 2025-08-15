@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/popover";
 import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
-import { Filter } from "lucide-react";
+import { ChevronDown, Filter } from "lucide-react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import type { Item } from "@/lib/itemData";
 
@@ -84,9 +84,10 @@ export function RangeFilter<TData extends Item>({
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="relative bg-transparent">
+        <Button variant="outline" className="group relative bg-transparent">
           <Filter className="mr-2 h-4 w-4" />
           <span className="">{title}</span>
+          <ChevronDown className="ml-1 h-3 w-3 transition-transform duration-200 group-data-[state=open]:rotate-180" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80" align="start">

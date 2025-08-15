@@ -32,7 +32,7 @@ export function NameFilter<TData extends Item>({
   }, [table.getState().columnFilters]);
 
   return (
-    <div className="relative w-full md:max-w-3xs">
+    <div className="relative">
       <Input
         placeholder="Filter by name or variant..."
         value={value}
@@ -42,11 +42,12 @@ export function NameFilter<TData extends Item>({
           debouncedSetFilter(v);
         }}
         aria-label="Filter by name or variant"
+        className="pr-8"
       />
       {value.length > 0 && (
         <XButton
           aria-label="Clear name filter"
-          className="absolute top-1/2 right-1.5 h-7 w-7 -translate-y-1/2"
+          className="absolute top-1/2 right-1.5 h-8 w-8 -translate-y-1/2"
           onClick={() => {
             column?.setFilterValue("");
             setValue("");

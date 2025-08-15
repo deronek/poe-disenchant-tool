@@ -97,7 +97,7 @@ export function DataTable<TData extends Item, TValue>({
   });
 
   return (
-    <div className="mx-auto w-full max-w-screen-xl rounded-md border">
+    <div className="mx-auto w-full max-w-md rounded-md border lg:max-w-screen-xl">
       {/* Toolbar */}
       <DataTableToolbar
         table={table}
@@ -107,12 +107,12 @@ export function DataTable<TData extends Item, TValue>({
       />
 
       {/* Mobile Card Layout */}
-      <div className="md:hidden">
+      <div className="lg:hidden">
         <MobileCardLayout table={table} advancedSettings={advancedSettings} />
       </div>
 
       {/* Desktop Table Layout */}
-      <div className="hidden overflow-x-auto px-1 md:block">
+      <div className="hidden overflow-x-auto px-1 lg:block">
         <Table className="w-full table-fixed text-sm">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

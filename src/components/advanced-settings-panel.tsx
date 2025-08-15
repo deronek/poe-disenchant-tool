@@ -75,10 +75,13 @@ export function AdvancedSettingsPanel({
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="relative bg-transparent">
+        <Button
+          variant="outline"
+          className="group w-full bg-transparent xl:w-auto"
+        >
           <Settings className="mr-2 h-4 w-4" />
           <span>Trade</span>
-          <ChevronDown className="ml-2 h-3 w-3 transition-transform duration-200 data-[state=open]:rotate-180" />
+          <ChevronDown className="ml-1 h-3 w-3 transition-transform duration-200 group-data-[state=open]:rotate-180" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80" align="start">
