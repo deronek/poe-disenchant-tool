@@ -17,6 +17,7 @@ import { DustIcon } from "./dust-icon";
 import { DustInfo } from "./dust-info";
 import { ItemMarkingInfo } from "./item-marking-info";
 import { AdvancedSettings } from "./advanced-settings-panel";
+import { COLUMN_IDS } from "./columns";
 // Checkbox with memo
 const SelectionCheckbox = React.memo(function SelectionCheckbox({
   checked,
@@ -97,10 +98,10 @@ function MobileCardComponent<TData extends Item>({
   isSelected,
   advancedSettings,
 }: MobileCardProps<TData>) {
-  const name = row.getValue<string>("name");
+  const name = row.getValue<string>(COLUMN_IDS.NAME);
   const variant = row.original.variant;
-  const chaos = row.getValue<number>("chaos");
-  const dustPerChaos = row.getValue<number>("dustPerChaos");
+  const chaos = row.getValue<number>(COLUMN_IDS.CHAOS);
+  const dustPerChaos = row.getValue<number>(COLUMN_IDS.DUST_PER_CHAOS);
   const tradeLink = createTradeLink(name, advancedSettings);
   const calculatedDustValue = row.original.calculatedDustValue;
 

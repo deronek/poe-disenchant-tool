@@ -33,6 +33,8 @@ import {
   Type,
 } from "lucide-react";
 
+import { COLUMN_IDS, type ColumnId } from "./columns";
+
 type ToolbarProps<TData extends Item> = {
   table: Table<TData>;
   onClearMarks?: () => void;
@@ -47,25 +49,27 @@ export function DataTableToolbar<TData extends Item>({
   onAdvancedSettingsChange,
 }: ToolbarProps<TData>) {
   const nameFilter =
-    (table.getColumn("name")?.getFilterValue() as string) ?? "";
-  const chaosRange = table.getColumn("chaos")?.getFilterValue() as
+    (table.getColumn(COLUMN_IDS.NAME)?.getFilterValue() as string) ?? "";
+  const chaosRange = table.getColumn(COLUMN_IDS.CHAOS)?.getFilterValue() as
     | { min: number; max: number }
     | undefined;
 
   // Get current sorting information
   const sorting = table.getState().sorting;
-  const currentSort = sorting[0]; // Get the first (and currently only) sort
+  const currentSort = sorting[0] as
+    | { id: ColumnId; desc?: boolean }
+    | undefined;
 
   // Get column information for display
-  const getSortLabel = (columnId: string) => {
+  const getSortLabel = (columnId: ColumnId) => {
     switch (columnId) {
-      case "dustPerChaos":
+      case COLUMN_IDS.DUST_PER_CHAOS:
         return "Dust per Chaos";
-      case "name":
+      case COLUMN_IDS.NAME:
         return "Name";
-      case "chaos":
+      case COLUMN_IDS.CHAOS:
         return "Price";
-      case "dustValIlvl84Q20":
+      case COLUMN_IDS.CALCULATED_DUST_VALUE:
         return "Dust Value";
       default:
         return columnId;
@@ -73,8 +77,8 @@ export function DataTableToolbar<TData extends Item>({
   };
 
   // Handle sorting with tri-state toggle (desc -> asc -> none)
-  const handleSort = (columnId: string) => {
-    const column = table.getColumn(columnId);
+  const handleSort = (columnId: ColumnId) => {
+    const column = table.getColumn(String(columnId));
     if (!column) return;
 
     const currentSort = sorting.find((sort) => sort.id === columnId);
@@ -98,7 +102,7 @@ export function DataTableToolbar<TData extends Item>({
   };
 
   // Get sort state for a column
-  const getSortState = (columnId: string) => {
+  const getSortState = (columnId: ColumnId) => {
     const sort = sorting.find((sort) => sort.id === columnId);
     if (!sort) return "none";
     return sort.desc ? "desc" : "asc";
@@ -113,9 +117,9 @@ export function DataTableToolbar<TData extends Item>({
       <div className="flex flex-col gap-3 md:flex-row md:items-center">
         <NameFilter table={table} />
         <div className="md:ml-2">
-          {table.getColumn("chaos") && (
+          {table.getColumn(COLUMN_IDS.CHAOS) && (
             <RangeFilter
-              column={table.getColumn("chaos")}
+              column={table.getColumn(COLUMN_IDS.CHAOS)}
               title="Price Filter"
               description="Filter items by chaos price range."
               min={0}
@@ -147,7 +151,7 @@ export function DataTableToolbar<TData extends Item>({
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="min-w-[207px]">
               <DropdownMenuItem
-                onClick={() => handleSort("dustPerChaos")}
+                onClick={() => handleSort(COLUMN_IDS.DUST_PER_CHAOS)}
                 className="flex items-center justify-between gap-0"
               >
                 <div className="flex items-start gap-6">
@@ -157,9 +161,9 @@ export function DataTableToolbar<TData extends Item>({
                   </div>
                   <span className="text-left">Dust per Chaos</span>
                 </div>
-                {getSortState("dustPerChaos") !== "none" && (
+                {getSortState(COLUMN_IDS.DUST_PER_CHAOS) !== "none" && (
                   <span className="text-muted-foreground">
-                    {getSortState("dustPerChaos") === "desc" ? (
+                    {getSortState(COLUMN_IDS.DUST_PER_CHAOS) === "desc" ? (
                       <ArrowDown className="h-4 w-4" />
                     ) : (
                       <ArrowUp className="h-4 w-4" />
@@ -168,7 +172,7 @@ export function DataTableToolbar<TData extends Item>({
                 )}
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => handleSort("name")}
+                onClick={() => handleSort(COLUMN_IDS.NAME)}
                 className="flex items-center justify-between"
               >
                 <div className="flex items-start gap-6">
@@ -178,9 +182,9 @@ export function DataTableToolbar<TData extends Item>({
                   </div>
                   <span className="text-left">Name</span>
                 </div>
-                {getSortState("name") !== "none" && (
+                {getSortState(COLUMN_IDS.NAME) !== "none" && (
                   <span className="text-muted-foreground">
-                    {getSortState("name") === "desc" ? (
+                    {getSortState(COLUMN_IDS.NAME) === "desc" ? (
                       <ArrowDown className="h-4 w-4" />
                     ) : (
                       <ArrowUp className="h-4 w-4" />
@@ -189,7 +193,7 @@ export function DataTableToolbar<TData extends Item>({
                 )}
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => handleSort("chaos")}
+                onClick={() => handleSort(COLUMN_IDS.CHAOS)}
                 className="flex items-center justify-between"
               >
                 <div className="flex items-start gap-6">
@@ -198,9 +202,9 @@ export function DataTableToolbar<TData extends Item>({
                   </div>
                   <span className="text-left">Price</span>
                 </div>
-                {getSortState("chaos") !== "none" && (
+                {getSortState(COLUMN_IDS.CHAOS) !== "none" && (
                   <span className="text-muted-foreground">
-                    {getSortState("chaos") === "desc" ? (
+                    {getSortState(COLUMN_IDS.CHAOS) === "desc" ? (
                       <ArrowDown className="h-4 w-4" />
                     ) : (
                       <ArrowUp className="h-4 w-4" />
@@ -209,7 +213,7 @@ export function DataTableToolbar<TData extends Item>({
                 )}
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => handleSort("dustValIlvl84Q20")}
+                onClick={() => handleSort(COLUMN_IDS.CALCULATED_DUST_VALUE)}
                 className="flex items-center justify-between"
               >
                 <div className="flex items-start gap-6">
@@ -218,9 +222,10 @@ export function DataTableToolbar<TData extends Item>({
                   </div>
                   <span className="text-left">Dust Value</span>
                 </div>
-                {getSortState("dustValIlvl84Q20") !== "none" && (
+                {getSortState(COLUMN_IDS.CALCULATED_DUST_VALUE) !== "none" && (
                   <span className="text-muted-foreground">
-                    {getSortState("dustValIlvl84Q20") === "desc" ? (
+                    {getSortState(COLUMN_IDS.CALCULATED_DUST_VALUE) ===
+                    "desc" ? (
                       <ArrowDown className="h-4 w-4" />
                     ) : (
                       <ArrowUp className="h-4 w-4" />
@@ -308,7 +313,9 @@ export function DataTableToolbar<TData extends Item>({
             <Badge variant="outline">
               Name: {nameFilter}
               <XButton
-                onClick={() => table.getColumn("name")?.setFilterValue("")}
+                onClick={() =>
+                  table.getColumn(COLUMN_IDS.NAME)?.setFilterValue("")
+                }
                 aria-label="Clear name filter"
                 className="text-foreground/90"
               />
@@ -322,7 +329,7 @@ export function DataTableToolbar<TData extends Item>({
               </span>
               <XButton
                 onClick={() =>
-                  table.getColumn("chaos")?.setFilterValue(undefined)
+                  table.getColumn(COLUMN_IDS.CHAOS)?.setFilterValue(undefined)
                 }
                 aria-label="Clear price filter"
                 className="text-foreground/90"
