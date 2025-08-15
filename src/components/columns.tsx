@@ -15,11 +15,11 @@ import {
   HeaderContext,
 } from "@tanstack/react-table";
 import { ExternalLink, Info } from "lucide-react";
+import * as React from "react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
 import { DustInfo } from "./dust-info";
 import { ItemMarkingInfo } from "./item-marking-info";
-import * as React from "react";
 
 import type { AdvancedSettings } from "./advanced-settings-panel";
 
@@ -62,11 +62,22 @@ const MarkHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> = React.memo(
   () => true,
 );
 
+export const COLUMN_IDS = {
+  NAME: "name",
+  CHAOS: "chaos",
+  CALCULATED_DUST_VALUE: "calculatedDustValue",
+  DUST_PER_CHAOS: "dustPerChaos",
+  TRADE_LINK: "tradeLink",
+  SELECT: "select",
+} as const;
+
+export type ColumnId = (typeof COLUMN_IDS)[keyof typeof COLUMN_IDS];
+
 export const createColumns = (
   advancedSettings: AdvancedSettings,
 ): ColumnDef<Item>[] => [
   {
-    accessorKey: "name",
+    accessorKey: COLUMN_IDS.NAME,
     header: "Name",
     size: 210,
     filterFn: (row, _columnId, filterValue) => {
@@ -74,14 +85,14 @@ export const createColumns = (
         .trim()
         .toLowerCase();
       if (query === "") return true;
-      const nameVal = String(row.getValue("name") ?? "").toLowerCase();
+      const nameVal = String(row.getValue(COLUMN_IDS.NAME) ?? "").toLowerCase();
       const variantVal = String(
         (row.original as Item).variant ?? "",
       ).toLowerCase();
       return nameVal.includes(query) || variantVal.includes(query);
     },
     cell: ({ row }) => {
-      const name = row.getValue("name") as string;
+      const name = row.getValue(COLUMN_IDS.NAME) as string;
       const variant = row.original.variant;
       return (
         <div
@@ -97,7 +108,7 @@ export const createColumns = (
     },
   },
   {
-    accessorKey: "chaos",
+    accessorKey: COLUMN_IDS.CHAOS,
     header: () => <span>Price</span>,
     size: 110,
     meta: { className: "text-right tabular-nums" },
@@ -106,7 +117,7 @@ export const createColumns = (
       return value >= filterValue.min && value <= filterValue.max;
     },
     cell: ({ row }) => {
-      const value = row.getValue("chaos") as number;
+      const value = row.getValue(COLUMN_IDS.CHAOS) as number;
       return (
         <span className="block w-full">
           <span className="float-right inline-flex items-center gap-1">
@@ -118,12 +129,12 @@ export const createColumns = (
     },
   },
   {
-    accessorKey: "calculatedDustValue",
+    accessorKey: COLUMN_IDS.CALCULATED_DUST_VALUE,
     header: DustValueHeader,
     size: 140,
     meta: { className: "text-right tabular-nums" },
     cell: ({ row }) => {
-      const value = row.getValue("calculatedDustValue") as number;
+      const value = row.getValue(COLUMN_IDS.CALCULATED_DUST_VALUE) as number;
       return (
         <span className="block w-full">
           <span className="float-right inline-flex items-center gap-1">
@@ -135,7 +146,7 @@ export const createColumns = (
     },
   },
   {
-    accessorKey: "dustPerChaos",
+    accessorKey: COLUMN_IDS.DUST_PER_CHAOS,
     header: () => <span>Dust per Chaos</span>,
     size: 140,
     meta: {
@@ -147,7 +158,7 @@ export const createColumns = (
         "after:content-[''] after:absolute after:inset-y-0 after:right-0 after:w-px after:bg-border",
     },
     cell: ({ row }) => {
-      const value = row.getValue("dustPerChaos") as number;
+      const value = row.getValue(COLUMN_IDS.DUST_PER_CHAOS) as number;
       return (
         <span className="block w-full">
           <span className="float-right inline-flex items-center gap-1 align-baseline">
@@ -161,12 +172,12 @@ export const createColumns = (
     },
   },
   {
-    id: "tradeLink",
+    id: COLUMN_IDS.TRADE_LINK,
     header: "Trade Link",
     size: 110,
     enableSorting: false,
     cell: ({ row }) => {
-      const name = row.getValue("name") as string;
+      const name = row.getValue(COLUMN_IDS.NAME) as string;
       const link = createTradeLink(name, advancedSettings);
       return (
         <div className="flex w-full flex-1 items-center">
@@ -192,13 +203,13 @@ export const createColumns = (
     },
   },
   {
-    id: "select",
+    id: COLUMN_IDS.SELECT,
     header: MarkHeader,
     size: 80,
     enableSorting: false,
     enableHiding: false,
     cell: ({ row }) => {
-      const name = row.getValue("name") as string;
+      const name = row.getValue(COLUMN_IDS.NAME) as string;
       return (
         <div className="flex items-center justify-center">
           <Checkbox
