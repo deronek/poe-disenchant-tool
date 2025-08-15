@@ -34,6 +34,8 @@ import {
 } from "lucide-react";
 
 import { COLUMN_IDS, type ColumnId } from "./columns";
+import { NameFilterChip } from "./name-filter-chip";
+import { PriceFilterChip } from "./price-filter-chip";
 
 type ToolbarProps<TData extends Item> = {
   table: Table<TData>;
@@ -307,37 +309,10 @@ export function DataTableToolbar<TData extends Item>({
       </div>
 
       {/* Active chips */}
-      {nameFilter || chaosRange ? (
-        <div className="flex flex-wrap gap-2">
-          {nameFilter !== "" ? (
-            <Badge variant="outline">
-              Name: {nameFilter}
-              <XButton
-                onClick={() =>
-                  table.getColumn(COLUMN_IDS.NAME)?.setFilterValue("")
-                }
-                aria-label="Clear name filter"
-                className="text-foreground/90"
-              />
-            </Badge>
-          ) : null}
-          {chaosRange ? (
-            <Badge variant="outline" className="inline-flex items-center gap-1">
-              <span className="inline-flex items-center gap-1">
-                Price: {`${chaosRange.min}–${chaosRange.max}`}
-                <ChaosOrbIcon />
-              </span>
-              <XButton
-                onClick={() =>
-                  table.getColumn(COLUMN_IDS.CHAOS)?.setFilterValue(undefined)
-                }
-                aria-label="Clear price filter"
-                className="text-foreground/90"
-              />
-            </Badge>
-          ) : null}
-        </div>
-      ) : null}
+      <div className="flex flex-wrap gap-2">
+        <NameFilterChip table={table} />
+        <PriceFilterChip table={table} />
+      </div>
     </div>
   );
 }
