@@ -1,23 +1,19 @@
 "use client";
 
-import { NameFilter } from "@/components/name-filter";
-import { RangeFilter } from "@/components/range-filter";
 import {
   AdvancedSettingsPanel,
   type AdvancedSettings,
 } from "@/components/advanced-settings-panel";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { XButton } from "@/components/ui/x-button";
+import { NameFilter } from "@/components/name-filter";
+import { RangeFilter } from "@/components/range-filter";
 import type { Item } from "@/lib/itemData";
 import { Table } from "@tanstack/react-table";
 
-import { COLUMN_IDS, type ColumnId } from "./columns";
+import { ClearMarksButton } from "./clear-marks-button";
+import { COLUMN_IDS } from "./columns";
+import { MobileSortingControls } from "./mobile-sorting-controls";
 import { NameFilterChip } from "./name-filter-chip";
 import { PriceFilterChip } from "./price-filter-chip";
-import { ClearMarksButton } from "./clear-marks-button";
-import { MobileHelpPopover } from "./mobile-help-popover";
-import { MobileSortingControls } from "./mobile-sorting-controls";
 
 type ToolbarProps<TData extends Item> = {
   table: Table<TData>;
@@ -32,16 +28,6 @@ export function DataTableToolbar<TData extends Item>({
   advancedSettings,
   onAdvancedSettingsChange,
 }: ToolbarProps<TData>) {
-  const nameFilter =
-    (table.getColumn(COLUMN_IDS.NAME)?.getFilterValue() as string) ?? "";
-  const chaosRange = table.getColumn(COLUMN_IDS.CHAOS)?.getFilterValue() as
-    | { min: number; max: number }
-    | undefined;
-
-  const numberOfSelectedrows = Object.keys(
-    table.getState().rowSelection,
-  ).length;
-
   return (
     <div className="flex gap-3 border-b p-3">
       <div className="w-full">

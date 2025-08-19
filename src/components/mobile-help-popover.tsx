@@ -31,7 +31,7 @@ export function MobileHelpPopover() {
             <div>
               <p className="font-medium">Mark Items</p>
               <p className="text-neutral-900 dark:text-neutral-100">
-                Check the box to mark items you've traded recently. Marks are
+                Check the box to mark items you have traded recently. Marks are
                 saved locally and can be cleared anytime.
               </p>
             </div>
