@@ -10,13 +10,16 @@ import { DustIcon } from "@/components/dust-icon";
 import { ArrowDown, ArrowUp, ArrowUpDown, Type } from "lucide-react";
 import { Table } from "@tanstack/react-table";
 import { COLUMN_IDS, type ColumnId } from "./columns";
+import { cn } from "@/lib/utils";
 
 type MobileSortingControlsProps<TData> = {
   table: Table<TData>;
+  className?: string;
 };
 
 export function MobileSortingControls<TData>({
   table,
+  className,
 }: MobileSortingControlsProps<TData>) {
   const sorting = table.getState().sorting;
   const currentSort = sorting[0] as
@@ -72,10 +75,10 @@ export function MobileSortingControls<TData>({
   };
 
   return (
-    <div className="md:ml-2 md:hidden">
+    <div className="lg:hidden">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="gap-3">
+          <Button variant="outline" className={cn("gap-3", className)}>
             <ArrowUpDown className="h-4 w-4" />
             Sort
             {currentSort && (

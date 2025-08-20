@@ -16,6 +16,7 @@ import {
 
 import { type AdvancedSettings } from "@/components/advanced-settings-panel";
 import { DataTableToolbar } from "@/components/toolbar";
+import { MobileToolbar } from "@/components/mobile-toolbar";
 import {
   Table,
   TableBody,
@@ -98,13 +99,25 @@ export function DataTable<TData extends Item, TValue>({
 
   return (
     <div className="mx-auto w-full max-w-md rounded-md border lg:max-w-screen-xl">
-      {/* Toolbar */}
-      <DataTableToolbar
-        table={table}
-        onClearMarks={clearSelection}
-        advancedSettings={advancedSettings}
-        onAdvancedSettingsChange={onAdvancedSettingsChange}
-      />
+      {/* Desktop Toolbar */}
+      <div className="hidden lg:block">
+        <DataTableToolbar
+          table={table}
+          onClearMarks={clearSelection}
+          advancedSettings={advancedSettings}
+          onAdvancedSettingsChange={onAdvancedSettingsChange}
+        />
+      </div>
+
+      {/* Mobile Toolbar */}
+      <div className="lg:hidden">
+        <MobileToolbar
+          table={table}
+          onClearMarks={clearSelection}
+          advancedSettings={advancedSettings}
+          onAdvancedSettingsChange={onAdvancedSettingsChange}
+        />
+      </div>
 
       {/* Mobile Card Layout */}
       <div className="lg:hidden">

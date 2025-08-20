@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import * as React from "react";
 import { Separator } from "./ui/separator";
+import { cn } from "@/lib/utils";
 
 export interface AdvancedSettings {
   minItemLevel: number;
@@ -35,6 +36,7 @@ export const DEFAULT_ADVANCED_SETTINGS: AdvancedSettings = {
 interface AdvancedSettingsPanelProps {
   settings: AdvancedSettings;
   onSettingsChange: (settings: AdvancedSettings) => void;
+  className?: string;
 }
 
 const getMinimumItemLevelIcon: (iLvl: number) => React.ReactNode = (iLvl) => {
@@ -52,6 +54,7 @@ const getMinimumItemLevelIcon: (iLvl: number) => React.ReactNode = (iLvl) => {
 export function AdvancedSettingsPanel({
   settings,
   onSettingsChange,
+  className,
 }: AdvancedSettingsPanelProps) {
   const [isOpen, setIsOpen] = React.useState(false);
 
@@ -75,10 +78,7 @@ export function AdvancedSettingsPanel({
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          className="group w-full bg-transparent xl:w-auto"
-        >
+        <Button variant="outline" className={cn("group", className)}>
           <Settings className="mr-2 h-4 w-4" />
           <span>Trade</span>
           <ChevronDown className="ml-1 h-3 w-3 transition-transform duration-200 group-data-[state=open]:rotate-180" />

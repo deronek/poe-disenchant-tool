@@ -5,7 +5,7 @@ import {
   type AdvancedSettings,
 } from "@/components/advanced-settings-panel";
 import { NameFilter } from "@/components/name-filter";
-import { RangeFilter } from "@/components/range-filter";
+import { PriceFilter } from "@/components/price-filter";
 import type { Item } from "@/lib/itemData";
 import { Table } from "@tanstack/react-table";
 
@@ -37,9 +37,8 @@ export function DataTableToolbar<TData extends Item>({
           </div>
 
           <div className="w-full min-w-0 xl:w-auto xl:shrink-0">
-            <RangeFilter
+            <PriceFilter
               column={table.getColumn(COLUMN_IDS.CHAOS)}
-              title="Price Filter"
               description="Filter items by chaos price range."
               min={0}
               max={600}
@@ -64,9 +63,14 @@ export function DataTableToolbar<TData extends Item>({
         <AdvancedSettingsPanel
           settings={advancedSettings}
           onSettingsChange={onAdvancedSettingsChange}
+          className="w-full xl:w-auto"
         />
 
-        <ClearMarksButton table={table} onClearMarks={onClearMarks} />
+        <ClearMarksButton
+          table={table}
+          onClearMarks={onClearMarks}
+          className="w-full xl:w-auto"
+        />
 
         {/* Mobile Help Section */}
         {/* <div className="md:hidden">
