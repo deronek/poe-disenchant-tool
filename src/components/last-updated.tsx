@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useLocalStorage } from "@/lib/use-local-storage";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 interface LastUpdatedProps {
   timestamp: string;
@@ -129,14 +130,23 @@ export default function LastUpdated({
           >
             Last updated: {relativeTime}
             {(isStale || alwaysShowRefresh) && showRefreshButton && (
-              <button
+              <Button
                 onClick={handleRefresh}
                 disabled={isRefreshing}
-                className="bg-primary text-primary-foreground hover:bg-primary/90 ml-2 rounded px-2 py-1 text-xs transition-colors disabled:opacity-50"
-                aria-label="Refresh data"
+                size="sm"
+                className="ml-2 h-6 px-2 text-xs"
+                aria-label={
+                  isRefreshing ? "Refreshing data..." : "Refresh data"
+                }
               >
-                {isRefreshing ? "..." : "↻"}
-              </button>
+                <span
+                  className={`inline-block transition-transform duration-200 ${
+                    isRefreshing ? "animate-spin" : ""
+                  }`}
+                >
+                  ↻
+                </span>
+              </Button>
             )}
           </time>
         </TooltipTrigger>
