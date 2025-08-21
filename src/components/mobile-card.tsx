@@ -30,7 +30,7 @@ const SelectionCheckbox = React.memo(function SelectionCheckbox({
 }) {
   return (
     <Checkbox
-      className="mt-0.5 size-5"
+      className="mt-0.5 size-6"
       checked={checked}
       onCheckedChange={onChange}
       aria-label={label}
