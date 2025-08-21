@@ -22,10 +22,10 @@ export default async function SandboxPage() {
         Dust in Kingsmarch
       </h3>
       <h4 className="font-italic text-muted-foreground text-sm">
-        <LastUpdated timestamp={lastUpdated} />
+        <LastUpdated timestamp={lastUpdated} showRefreshButton={true} />
       </h4>
       <div className="pt-6 xl:pb-4">
-        <SharedDataView items={items} />
+        <SharedDataView items={items} lastUpdated={lastUpdated} />
       </div>
     </div>
   );
