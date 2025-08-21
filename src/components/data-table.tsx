@@ -98,7 +98,7 @@ export function DataTable<TData extends Item, TValue>({
   });
 
   return (
-    <div className="mx-auto w-full max-w-md rounded-md border lg:max-w-screen-xl">
+    <div className="mx-auto w-full max-w-md rounded-md border md:max-w-4xl lg:max-w-screen-xl">
       {/* Desktop Toolbar */}
       <div className="hidden lg:block">
         <DataTableToolbar

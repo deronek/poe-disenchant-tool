@@ -17,18 +17,18 @@ export function MobileCardLayout<TData extends Item>({
   advancedSettings,
 }: MobileCardLayoutProps<TData>) {
   return (
-    <div className="space-y-3 px-3 py-4">
+    <div className="px-3 py-4">
       {table.getRowModel().rows?.length ? (
-        table
-          .getRowModel()
-          .rows.map((row) => (
+        <div className="grid gap-3 md:grid-cols-2">
+          {table.getRowModel().rows.map((row) => (
             <MobileCard
               key={row.id}
               row={row}
               isSelected={row.getIsSelected()}
               advancedSettings={advancedSettings}
             />
-          ))
+          ))}
+        </div>
       ) : (
         <div className="py-8 text-center">
           <p className="text-muted-foreground">No results.</p>
