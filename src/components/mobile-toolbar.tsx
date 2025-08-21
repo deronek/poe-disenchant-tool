@@ -58,7 +58,10 @@ export function MobileToolbar<TData extends Item>({
       </div>
       {/* Secondary Actions Row */}
       <div className="flex flex-col gap-2">
-        <NameFilter table={table} />
+        <div className="md:w-3xs">
+          <NameFilter table={table} />
+        </div>
+
         <div className="flex flex-wrap gap-1">
           <NameFilterChip table={table} />
           <PriceFilterChip table={table} />
