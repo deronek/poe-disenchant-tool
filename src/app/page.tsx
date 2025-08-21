@@ -2,8 +2,20 @@ import LastUpdated from "@/components/last-updated";
 import { SharedDataView } from "@/components/shared-data-view";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import { getItems } from "@/lib/itemData";
+import { revalidatePath } from "next/cache";
 
 export const revalidate = 300; // 5 minutes
+
+// Server Action for data revalidation
+async function revalidateData() {
+  "use server";
+  try {
+    revalidatePath("/");
+  } catch (error) {
+    console.error("Revalidation error:", error);
+    throw new Error("Failed to revalidate data");
+  }
+}
 
 export default async function SandboxPage() {
   const items = await getItems();
@@ -22,7 +34,11 @@ export default async function SandboxPage() {
         Dust in Kingsmarch
       </h3>
       <h4 className="font-italic text-muted-foreground text-sm">
-        <LastUpdated timestamp={lastUpdated} showRefreshButton={true} />
+        <LastUpdated
+          timestamp={lastUpdated}
+          showRefreshButton={true}
+          revalidateData={revalidateData}
+        />
       </h4>
       <div className="pt-6 xl:pb-4">
         <SharedDataView items={items} lastUpdated={lastUpdated} />

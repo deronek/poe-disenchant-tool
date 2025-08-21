@@ -18,11 +18,13 @@ import { useRouter } from "next/navigation";
 interface LastUpdatedProps {
   timestamp: string;
   showRefreshButton?: boolean;
+  revalidateData?: () => Promise<void>;
 }
 
 export default function LastUpdated({
   timestamp,
   showRefreshButton = false,
+  revalidateData,
 }: LastUpdatedProps) {
   const router = useRouter();
   const [relativeTime, setRelativeTime] = useState("...");
@@ -63,8 +65,10 @@ export default function LastUpdated({
   const handleRefresh = async () => {
     setIsRefreshing(true);
     try {
-      // First trigger ISR revalidation on the server
-      await fetch("/api/revalidate", { method: "POST" });
+      // Call the Server Action to revalidate data
+      if (revalidateData) {
+        await revalidateData();
+      }
       // Then refresh the current route to get fresh data
       router.refresh();
     } catch (error) {
