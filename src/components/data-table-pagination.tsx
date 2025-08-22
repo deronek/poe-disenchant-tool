@@ -70,7 +70,7 @@ export function DataTablePagination<TData>({
         Showing {start}–{end} of {total} items.
       </div>
 
-      <div className="flex flex-1 items-center justify-end space-x-6 lg:space-x-8">
+      <div className="flex flex-1 items-center justify-end gap-2 md:gap-6 lg:gap-8">
         {/* Rows per page */}
         <div className="hidden items-center gap-2 lg:flex">
           <p className="flex-none text-sm font-medium">Rows per page</p>

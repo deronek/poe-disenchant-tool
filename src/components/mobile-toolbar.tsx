@@ -29,7 +29,7 @@ export function MobileToolbar<TData extends Item>({
   onAdvancedSettingsChange,
 }: MobileToolbarProps<TData>) {
   return (
-    <div className="flex flex-col gap-3 border-b px-3 py-4">
+    <div className="flex flex-col gap-3 border-b px-2 py-4 sm:px-3">
       <div className="flex justify-between gap-2">
         {/* Primary Actions Row - Most Important Features */}
 
