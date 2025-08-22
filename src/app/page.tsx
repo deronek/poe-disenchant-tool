@@ -12,7 +12,7 @@ async function revalidateData() {
   try {
     revalidatePath("/");
     // Eagerly warm cache so CDN regenerates immediately
-    await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/`, {
+    await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/`, {
       cache: "no-store",
     });
   } catch (error) {
