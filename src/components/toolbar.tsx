@@ -100,11 +100,6 @@ export function DataTableToolbar<TData extends Item>({
           onClearMarks={onClearMarks}
           className="w-full xl:w-auto"
         />
-
-        {/* Mobile Help Section */}
-        {/* <div className="md:hidden">
-            <MobileHelpPopover />
-          </div> */}
       </div>
     </div>
   );
