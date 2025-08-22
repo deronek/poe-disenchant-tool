@@ -78,11 +78,12 @@ export default function LastUpdated({
       // No need to refresh the page explicitly
     } catch (error) {
       console.error("Failed to refresh data:", error);
+      // Remove the loading state, since we don't get the updated data
+      setIsRefreshing(false);
     } finally {
       // Not removing the loading state here, since there's a gap between setting this
       // and revalidation being reflected in the UI.
       // Updated date will hide the button.
-      setIsRefreshing(false);
     }
   };
 
