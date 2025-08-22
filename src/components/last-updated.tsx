@@ -75,11 +75,13 @@ export default function LastUpdated({
       if (revalidateData) {
         await revalidateData();
       }
-      // Then refresh the current route to get fresh data
-      // router.refresh();
+      // No need to refresh the page explicitly
     } catch (error) {
       console.error("Failed to refresh data:", error);
     } finally {
+      // Not removing the loading state here, since there's a gap between setting this
+      // and revalidation being reflected in the UI.
+      // Updated date will hide the button.
       setIsRefreshing(false);
     }
   };
