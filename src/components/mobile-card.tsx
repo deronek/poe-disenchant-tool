@@ -112,7 +112,7 @@ function MobileCardComponent<TData extends Item>({
 
   return (
     <div
-      className={`space-y-3 rounded-lg border p-4 ${
+      className={`space-y-4 rounded-lg border p-5 ${
         isSelected
           ? "bg-muted/60 border-primary/30 opacity-95"
           : "bg-card hover:bg-muted/40"
@@ -169,10 +169,7 @@ function MobileCardComponent<TData extends Item>({
       </div>
 
       {/* Trade Link */}
-      <div className="pt-2">
-        <div className="mb-2 flex items-center justify-between">
-          <p className="text-muted-foreground text-sm">Trade Search</p>
-        </div>
+      <div className="pt-3">
         <Button
           asChild
           variant="default"
