@@ -113,10 +113,8 @@ function MobileCardComponent<TData extends Item>({
   return (
     <div
       className={`space-y-4 rounded-lg border p-5 ${
-        isSelected
-          ? "bg-muted/60 border-primary/30 opacity-95"
-          : "bg-card hover:bg-muted/40"
-      } transition-colors`}
+        isSelected ? "bg-muted/60 border-primary/30 opacity-95" : "bg-card"
+      } transition-all`}
     >
       {/* Header with selection and name */}
       <div className="flex items-start justify-between gap-3">
