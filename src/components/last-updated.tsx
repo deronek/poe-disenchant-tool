@@ -15,6 +15,8 @@ import {
 import { useLocalStorage } from "@/lib/use-local-storage";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Clock, RefreshCw, AlertCircle } from "lucide-react";
 
 interface LastUpdatedProps {
   timestamp: string;
@@ -80,41 +82,40 @@ export default function LastUpdated({
   };
 
   const tooltipContent = (
-    <div className="space-y-2 text-sm">
-      <div>
-        <strong>Last updated:</strong> {absoluteTime}
-      </div>
-      <div>
-        <strong>Time since update:</strong> {relativeTime}
-      </div>
-      <div>
-        <strong>Data source:</strong> poe.ninja API
-      </div>
-      <div>
-        <strong>Revalidation:</strong> Every 5 minutes (ISR)
-      </div>
-      {isStale && (
-        <div className="border-t pt-2">
-          <div className="text-amber-600 dark:text-amber-400">
-            <strong>Note:</strong> Data may be stale. Manual refresh might not
-            get the latest data due to caching.
+    <div className="space-y-4">
+      {/* Last Updated Section */}
+      <div className="space-y-3">
+        <div className="flex items-center gap-2">
+          <Clock className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+          <span className="text-sm font-semibold">Last Updated</span>
+          {isStale ||
+            (alwaysShowRefresh && (
+              <Badge variant="destructive" className="text-xs">
+                Stale
+              </Badge>
+            ))}
+        </div>
+        <div className="space-y-1">
+          <div className="text-muted-foreground text-xs font-medium">
+            Absolute Time
           </div>
-          {showRefreshButton && (
-            <div className="mt-2">
-              <strong>Tip:</strong> Use the refresh button to request fresh data
-              directly.
+          <div className="text-sm font-medium">{absoluteTime}</div>
+        </div>
+      </div>
+
+      {/* Refresh Section - Only shown when data is stale */}
+      {isStale ||
+        (alwaysShowRefresh && (
+          <div className="space-y-3 border-t pt-2">
+            <div className="flex items-center gap-2">
+              <RefreshCw className="h-4 w-4 text-green-600 dark:text-green-400" />
+              <span className="text-sm font-semibold">Refresh Data</span>
             </div>
-          )}
-        </div>
-      )}
-      {alwaysShowRefresh && (
-        <div className="border-t pt-2">
-          <div className="text-blue-600 dark:text-blue-400">
-            <strong>Dev Mode:</strong> Refresh button is always visible due to
-            feature flag.
+            <div className="text-muted-foreground text-sm">
+              Click the refresh button to get the latest price data.
+            </div>
           </div>
-        </div>
-      )}
+        ))}
     </div>
   );
 
@@ -150,7 +151,7 @@ export default function LastUpdated({
             )}
           </time>
         </TooltipTrigger>
-        <TooltipContent side="bottom" className="max-w-sm">
+        <TooltipContent side="bottom" className="max-w-sm" variant="popover">
           {tooltipContent}
         </TooltipContent>
       </Tooltip>
