@@ -11,34 +11,35 @@ import {
 } from "@/components/ui/popover";
 import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
-import { Filter } from "lucide-react";
+import { ChevronDown, Filter } from "lucide-react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import type { Item } from "@/lib/itemData";
+import { cn } from "@/lib/utils";
 
-export type RangeFilterValue = {
+export type PriceFiltervalue = {
   min: number;
   max: number;
 };
 
-interface RangeFilterProps<TData> {
+interface PriceFilterProps<TData> {
   column: Column<TData, unknown> | undefined;
-  title: string;
   description: string;
   min: number;
   max: number;
+  className?: string;
 }
 
-export function RangeFilter<TData extends Item>({
+export function PriceFilter<TData extends Item>({
   column,
-  title,
   description,
   min,
   max,
-}: RangeFilterProps<TData>) {
+  className,
+}: PriceFilterProps<TData>) {
   const [isOpen, setIsOpen] = useState(false);
 
   // Get current filter value from TanStack Table
-  const filterValue = column?.getFilterValue() as RangeFilterValue | undefined;
+  const filterValue = column?.getFilterValue() as PriceFiltervalue | undefined;
   const currentRange = filterValue
     ? [filterValue.min, filterValue.max]
     : [min, max];
@@ -74,7 +75,7 @@ export function RangeFilter<TData extends Item>({
 
   const handleApply = () => {
     // Ensure default-range equals cleared state
-    const v = column?.getFilterValue() as RangeFilterValue | undefined;
+    const v = column?.getFilterValue() as PriceFiltervalue | undefined;
     if (column && v && v.min === min && v.max === max) {
       column.setFilterValue(undefined);
     }
@@ -84,16 +85,17 @@ export function RangeFilter<TData extends Item>({
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="relative bg-transparent">
+        <Button variant="outline" className={cn("group relative", className)}>
           <Filter className="mr-2 h-4 w-4" />
-          <span className="">{title}</span>
+          <span className="">Price</span>
+          <ChevronDown className="ml-1 h-3 w-3 transition-transform duration-200 group-data-[state=open]:rotate-180" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80" align="start">
         <div className="space-y-4">
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <h4 className="font-semibold">{title}</h4>
+              <h4 className="font-semibold">Price Filter</h4>
             </div>
             <p className="text-muted-foreground text-sm">{description}</p>
           </div>

@@ -30,7 +30,7 @@ const SelectionCheckbox = React.memo(function SelectionCheckbox({
 }) {
   return (
     <Checkbox
-      className="mt-0.5 size-5"
+      className="mt-0.5 size-6"
       checked={checked}
       onCheckedChange={onChange}
       aria-label={label}
@@ -112,11 +112,9 @@ function MobileCardComponent<TData extends Item>({
 
   return (
     <div
-      className={`space-y-3 rounded-lg border p-4 ${
-        isSelected
-          ? "bg-muted/60 border-primary/30 opacity-95"
-          : "bg-card hover:bg-muted/40"
-      } transition-colors`}
+      className={`space-y-4 rounded-lg border p-5 ${
+        isSelected ? "bg-muted/60 border-primary/30 opacity-95" : "bg-card"
+      } transition-all`}
     >
       {/* Header with selection and name */}
       <div className="flex items-start justify-between gap-3">
@@ -145,15 +143,15 @@ function MobileCardComponent<TData extends Item>({
             <ChaosOrbIcon className="h-4 w-4" />
           </div>
         </div>
-        <div className="space-y-1">
-          <p className="text-muted-foreground text-sm">Dust Value</p>
-          <div className="flex items-start justify-between gap-2">
+        <div className="flex items-center justify-between">
+          <div className="space-y-1">
+            <p className="text-muted-foreground text-sm">Dust Value</p>
             <div className="flex items-center gap-1 text-sm font-medium">
               <span>{calculatedDustValue}</span>
               <DustIcon className="h-4 w-4" />
             </div>
-            <DustInfoPopover />
           </div>
+          <DustInfoPopover />
         </div>
       </div>
 
@@ -169,10 +167,7 @@ function MobileCardComponent<TData extends Item>({
       </div>
 
       {/* Trade Link */}
-      <div className="pt-2">
-        <div className="mb-2 flex items-center justify-between">
-          <p className="text-muted-foreground text-sm">Trade Search</p>
-        </div>
+      <div className="pt-3">
         <Button
           asChild
           variant="default"

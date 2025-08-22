@@ -17,18 +17,23 @@ export function MobileCardLayout<TData extends Item>({
   advancedSettings,
 }: MobileCardLayoutProps<TData>) {
   return (
-    <div className="space-y-3 px-3 py-4">
+    <div className="px-2 py-4 sm:px-3">
       {table.getRowModel().rows?.length ? (
-        table
-          .getRowModel()
-          .rows.map((row) => (
-            <MobileCard
-              key={row.id}
-              row={row}
-              isSelected={row.getIsSelected()}
-              advancedSettings={advancedSettings}
-            />
-          ))
+        <div className="grid gap-3 md:grid-cols-2">
+          {table.getRowModel().rows.map((row, index) => (
+            <div key={row.id} className="relative">
+              <MobileCard
+                row={row}
+                isSelected={row.getIsSelected()}
+                advancedSettings={advancedSettings}
+              />
+              {/* Subtle order indicator for tablet two-column layout */}
+              <div className="text-muted-foreground/60 absolute -top-1 -right-1 hidden text-[10px] font-medium md:block">
+                {index + 1}
+              </div>
+            </div>
+          ))}
+        </div>
       ) : (
         <div className="py-8 text-center">
           <p className="text-muted-foreground">No results.</p>

@@ -64,18 +64,15 @@ export function DataTablePagination<TData>({
   const canNext = table.getCanNextPage();
 
   return (
-    <div className="flex items-center justify-between px-3 py-2">
+    <div className="flex items-baseline justify-between px-3 py-2">
       {/* Left caption: start–end of total */}
-      <div
-        className="text-muted-foreground hidden flex-1 text-sm sm:block"
-        aria-live="polite"
-      >
-        {start}–{end} of {total} items in the table.
+      <div className="text-muted-foreground flex-1 text-sm" aria-live="polite">
+        Showing {start}–{end} of {total} items.
       </div>
 
-      <div className="flex flex-1 items-center justify-end space-x-6 lg:space-x-8">
+      <div className="flex flex-1 items-center justify-end gap-2 md:gap-6 lg:gap-8">
         {/* Rows per page */}
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="hidden items-center gap-2 lg:flex">
           <p className="flex-none text-sm font-medium">Rows per page</p>
           <RowsPerPageSelect
             pageSize={pageSize}

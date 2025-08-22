@@ -16,6 +16,7 @@ import {
 
 import { type AdvancedSettings } from "@/components/advanced-settings-panel";
 import { DataTableToolbar } from "@/components/toolbar";
+import { MobileToolbar } from "@/components/mobile-toolbar";
 import {
   Table,
   TableBody,
@@ -97,22 +98,34 @@ export function DataTable<TData extends Item, TValue>({
   });
 
   return (
-    <div className="mx-auto w-full max-w-screen-xl rounded-md border">
-      {/* Toolbar */}
-      <DataTableToolbar
-        table={table}
-        onClearMarks={clearSelection}
-        advancedSettings={advancedSettings}
-        onAdvancedSettingsChange={onAdvancedSettingsChange}
-      />
+    <div className="mx-auto w-full max-w-md rounded-md border md:max-w-4xl lg:max-w-screen-xl">
+      {/* Desktop Toolbar */}
+      <div className="hidden lg:block">
+        <DataTableToolbar
+          table={table}
+          onClearMarks={clearSelection}
+          advancedSettings={advancedSettings}
+          onAdvancedSettingsChange={onAdvancedSettingsChange}
+        />
+      </div>
+
+      {/* Mobile Toolbar */}
+      <div className="lg:hidden">
+        <MobileToolbar
+          table={table}
+          onClearMarks={clearSelection}
+          advancedSettings={advancedSettings}
+          onAdvancedSettingsChange={onAdvancedSettingsChange}
+        />
+      </div>
 
       {/* Mobile Card Layout */}
-      <div className="md:hidden">
+      <div className="lg:hidden">
         <MobileCardLayout table={table} advancedSettings={advancedSettings} />
       </div>
 
       {/* Desktop Table Layout */}
-      <div className="hidden overflow-x-auto px-1 md:block">
+      <div className="hidden overflow-x-auto px-1 lg:block">
         <Table className="w-full table-fixed text-sm">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
