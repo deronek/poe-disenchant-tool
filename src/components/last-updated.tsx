@@ -12,6 +12,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { useLocalStorage } from "@/lib/use-local-storage";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -34,6 +39,18 @@ export default function LastUpdated({
   const [absoluteTime, setAbsoluteTime] = useState("");
   const [isStale, setIsStale] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Feature flag to always show refresh button for development/testing
   const [alwaysShowRefresh] = useLocalStorage(
@@ -119,42 +136,55 @@ export default function LastUpdated({
     </div>
   );
 
-  return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <time
-            dateTime={timestamp}
-            className={`text-muted-foreground cursor-help text-sm transition-colors ${
-              isStale ? "text-amber-600 dark:text-amber-400" : ""
+  const triggerElement = (
+    <time
+      dateTime={timestamp}
+      className={`text-muted-foreground cursor-pointer text-sm transition-colors ${
+        isStale ? "text-amber-600 dark:text-amber-400" : ""
+      }`}
+    >
+      Last updated: {relativeTime}
+      {(isStale || alwaysShowRefresh) && showRefreshButton && (
+        <Button
+          onClick={handleRefresh}
+          disabled={isRefreshing}
+          size="sm"
+          className="ml-2 h-6 px-2 text-xs"
+          aria-label={isRefreshing ? "Refreshing data..." : "Refresh data"}
+        >
+          <span
+            className={`inline-block transition-transform duration-200 ${
+              isRefreshing ? "animate-spin" : ""
             }`}
           >
-            Last updated: {relativeTime}
-            {(isStale || alwaysShowRefresh) && showRefreshButton && (
-              <Button
-                onClick={handleRefresh}
-                disabled={isRefreshing}
-                size="sm"
-                className="ml-2 h-6 px-2 text-xs"
-                aria-label={
-                  isRefreshing ? "Refreshing data..." : "Refresh data"
-                }
-              >
-                <span
-                  className={`inline-block transition-transform duration-200 ${
-                    isRefreshing ? "animate-spin" : ""
-                  }`}
-                >
-                  ↻
-                </span>
-              </Button>
-            )}
-          </time>
-        </TooltipTrigger>
-        <TooltipContent side="bottom" className="max-w-sm" variant="popover">
-          {tooltipContent}
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+            ↻
+          </span>
+        </Button>
+      )}
+    </time>
+  );
+
+  return (
+    <>
+      {isMobile ? (
+        <Popover>
+          <PopoverTrigger asChild>{triggerElement}</PopoverTrigger>
+          <PopoverContent className="max-w-sm">{tooltipContent}</PopoverContent>
+        </Popover>
+      ) : (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>{triggerElement}</TooltipTrigger>
+            <TooltipContent
+              side="bottom"
+              className="max-w-sm"
+              variant="popover"
+            >
+              {tooltipContent}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
+    </>
   );
 }
