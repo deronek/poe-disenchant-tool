@@ -34,14 +34,10 @@ export default async function SandboxPage() {
         Dust in Kingsmarch
       </h3>
       <h4 className="font-italic text-muted-foreground text-sm">
-        <LastUpdated
-          timestamp={lastUpdated}
-          showRefreshButton={true}
-          revalidateData={revalidateData}
-        />
+        <LastUpdated timestamp={lastUpdated} revalidateData={revalidateData} />
       </h4>
       <div className="pt-6 xl:pb-4">
-        <SharedDataView items={items} lastUpdated={lastUpdated} />
+        <SharedDataView items={items} />
       </div>
     </div>
   );

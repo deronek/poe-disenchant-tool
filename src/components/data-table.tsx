@@ -43,7 +43,6 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   advancedSettings: AdvancedSettings;
   onAdvancedSettingsChange: (settings: AdvancedSettings) => void;
-  lastUpdated?: string;
 }
 
 export function DataTable<TData extends Item, TValue>({
@@ -51,7 +50,6 @@ export function DataTable<TData extends Item, TValue>({
   data,
   advancedSettings,
   onAdvancedSettingsChange,
-  lastUpdated,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([
     {

@@ -12,10 +12,9 @@ import { useLocalStorage } from "@/lib/use-local-storage";
 
 interface SharedDataViewProps {
   items: Item[];
-  lastUpdated?: string;
 }
 
-export function SharedDataView({ items, lastUpdated }: SharedDataViewProps) {
+export function SharedDataView({ items }: SharedDataViewProps) {
   const [advancedSettings, setAdvancedSettings] =
     useLocalStorage<AdvancedSettings>(
       DEFAULT_ADVANCED_SETTINGS,
@@ -34,7 +33,6 @@ export function SharedDataView({ items, lastUpdated }: SharedDataViewProps) {
       data={items}
       advancedSettings={advancedSettings}
       onAdvancedSettingsChange={setAdvancedSettings}
-      lastUpdated={lastUpdated}
     />
   );
 }

@@ -1,11 +1,12 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
-  calculateTimeDifferences,
-  formatAbsoluteTime,
-  formatRelativeTime,
-} from "@/lib/dateUtils";
-import { useState, useEffect } from "react";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Tooltip,
   TooltipContent,
@@ -13,28 +14,25 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+  calculateTimeDifferences,
+  formatAbsoluteTime,
+  formatRelativeTime,
+} from "@/lib/dateUtils";
 import { useLocalStorage } from "@/lib/use-local-storage";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Clock, RefreshCw, AlertCircle } from "lucide-react";
+import { Clock, RefreshCw } from "lucide-react";
+// import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface LastUpdatedProps {
   timestamp: string;
-  showRefreshButton?: boolean;
   revalidateData?: () => Promise<void>;
 }
 
 export default function LastUpdated({
   timestamp,
-  showRefreshButton = false,
   revalidateData,
 }: LastUpdatedProps) {
-  const router = useRouter();
+  // const router = useRouter();
   const [relativeTime, setRelativeTime] = useState("...");
   const [absoluteTime, setAbsoluteTime] = useState("");
   const [isStale, setIsStale] = useState(false);
@@ -78,7 +76,7 @@ export default function LastUpdated({
         await revalidateData();
       }
       // Then refresh the current route to get fresh data
-      router.refresh();
+      // router.refresh();
     } catch (error) {
       console.error("Failed to refresh data:", error);
     } finally {
@@ -132,7 +130,7 @@ export default function LastUpdated({
       }`}
     >
       Last updated: {relativeTime}
-      {(isStale || alwaysShowRefresh) && showRefreshButton && (
+      {(isStale || alwaysShowRefresh) && (
         <Button
           onClick={handleRefresh}
           disabled={isRefreshing}
