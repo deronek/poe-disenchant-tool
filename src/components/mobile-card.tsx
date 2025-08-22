@@ -145,15 +145,15 @@ function MobileCardComponent<TData extends Item>({
             <ChaosOrbIcon className="h-4 w-4" />
           </div>
         </div>
-        <div className="space-y-1">
-          <p className="text-muted-foreground text-sm">Dust Value</p>
-          <div className="flex items-start justify-between gap-2">
+        <div className="flex items-center justify-between">
+          <div className="space-y-1">
+            <p className="text-muted-foreground text-sm">Dust Value</p>
             <div className="flex items-center gap-1 text-sm font-medium">
               <span>{calculatedDustValue}</span>
               <DustIcon className="h-4 w-4" />
             </div>
-            <DustInfoPopover />
           </div>
+          <DustInfoPopover />
         </div>
       </div>
 
