@@ -62,10 +62,33 @@ export function MobileToolbar<TData extends Item>({
           <NameFilter table={table} />
         </div>
 
-        <div className="flex flex-wrap gap-1">
-          <NameFilterChip table={table} />
-          <PriceFilterChip table={table} />
-        </div>
+        {(() => {
+          const nameFilter =
+            (table.getColumn(COLUMN_IDS.NAME)?.getFilterValue() as string) ??
+            "";
+          const chaosRange = table
+            .getColumn(COLUMN_IDS.CHAOS)
+            ?.getFilterValue() as { min: number; max: number } | undefined;
+
+          const hasActiveFilters = nameFilter !== "" || !!chaosRange;
+
+          return hasActiveFilters ? (
+            <div className="flex flex-wrap gap-1">
+              <NameFilterChip
+                value={nameFilter}
+                onClear={() =>
+                  table.getColumn(COLUMN_IDS.NAME)?.setFilterValue("")
+                }
+              />
+              <PriceFilterChip
+                value={chaosRange}
+                onClear={() =>
+                  table.getColumn(COLUMN_IDS.CHAOS)?.setFilterValue(undefined)
+                }
+              />
+            </div>
+          ) : null;
+        })()}
       </div>
     </div>
   );

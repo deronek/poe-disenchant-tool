@@ -1,34 +1,27 @@
 import { XButton } from "@/components/ui/x-button";
 import { Badge } from "@/components/ui/badge";
 import { ChaosOrbIcon } from "@/components/chaos-orb-icon";
-import { Table } from "@tanstack/react-table";
-import { COLUMN_IDS } from "./columns";
 
-interface PriceFilterChipProps<TData> {
-  table: Table<TData>;
+interface PriceFilterChipProps {
+  value?: { min: number; max: number };
+  onClear: () => void;
 }
 
-export function PriceFilterChip<TData>({ table }: PriceFilterChipProps<TData>) {
-  const chaosRange = table.getColumn(COLUMN_IDS.CHAOS)?.getFilterValue() as
-    | { min: number; max: number }
-    | undefined;
-
-  if (!chaosRange) {
+export function PriceFilterChip({ value, onClear }: PriceFilterChipProps) {
+  if (!value) {
     return null;
   }
 
   return (
-    <Badge variant="outline" className="inline-flex items-center gap-1">
+    <Badge variant="outline" className="inline-flex items-center gap-1 px-3">
       <span className="inline-flex min-w-0 flex-shrink-0 items-center gap-1 truncate">
-        Price: {`${chaosRange.min}–${chaosRange.max}`}
+        Price: {`${value.min}–${value.max}`}
         <span className="flex-shrink-0">
           <ChaosOrbIcon />
         </span>
       </span>
       <XButton
-        onClick={() =>
-          table.getColumn(COLUMN_IDS.CHAOS)?.setFilterValue(undefined)
-        }
+        onClick={onClear}
         aria-label="Clear price filter"
         className="text-foreground/90"
       />

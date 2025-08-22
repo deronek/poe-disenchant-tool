@@ -1,25 +1,21 @@
 import { XButton } from "@/components/ui/x-button";
 import { Badge } from "@/components/ui/badge";
-import { Table } from "@tanstack/react-table";
-import { COLUMN_IDS } from "./columns";
 
-interface NameFilterChipProps<TData> {
-  table: Table<TData>;
+interface NameFilterChipProps {
+  value: string;
+  onClear: () => void;
 }
 
-export function NameFilterChip<TData>({ table }: NameFilterChipProps<TData>) {
-  const nameFilter =
-    (table.getColumn(COLUMN_IDS.NAME)?.getFilterValue() as string) ?? "";
-
-  if (nameFilter === "") {
+export function NameFilterChip({ value, onClear }: NameFilterChipProps) {
+  if (value === "") {
     return null;
   }
 
   return (
-    <Badge variant="outline">
-      Name: {nameFilter}
+    <Badge variant="outline" className="px-3">
+      Name: {value}
       <XButton
-        onClick={() => table.getColumn(COLUMN_IDS.NAME)?.setFilterValue("")}
+        onClick={onClear}
         aria-label="Clear name filter"
         className="text-foreground/90"
       />

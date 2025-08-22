@@ -45,13 +45,42 @@ export function DataTableToolbar<TData extends Item>({
             />
           </div>
 
-          <div className="w-auto min-w-0 xl:ml-2 xl:shrink-0">
-            <NameFilterChip table={table} />
-          </div>
+          {(() => {
+            const nameFilter =
+              (table.getColumn(COLUMN_IDS.NAME)?.getFilterValue() as string) ??
+              "";
+            const chaosRange = table
+              .getColumn(COLUMN_IDS.CHAOS)
+              ?.getFilterValue() as { min: number; max: number } | undefined;
 
-          <div className="w-auto min-w-0 xl:ml-2 xl:shrink-0">
-            <PriceFilterChip table={table} />
-          </div>
+            return (
+              <>
+                {nameFilter !== "" && (
+                  <div className="w-auto min-w-0 xl:shrink-0">
+                    <NameFilterChip
+                      value={nameFilter}
+                      onClear={() =>
+                        table.getColumn(COLUMN_IDS.NAME)?.setFilterValue("")
+                      }
+                    />
+                  </div>
+                )}
+
+                {chaosRange && (
+                  <div className="w-auto min-w-0 xl:shrink-0">
+                    <PriceFilterChip
+                      value={chaosRange}
+                      onClear={() =>
+                        table
+                          .getColumn(COLUMN_IDS.CHAOS)
+                          ?.setFilterValue(undefined)
+                      }
+                    />
+                  </div>
+                )}
+              </>
+            );
+          })()}
         </div>
       </div>
 
