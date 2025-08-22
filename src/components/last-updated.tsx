@@ -20,7 +20,7 @@ import {
 } from "@/lib/dateUtils";
 import { useLocalStorage } from "@/lib/use-local-storage";
 import { Clock, RefreshCw } from "lucide-react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface LastUpdatedProps {
@@ -32,7 +32,7 @@ export default function LastUpdated({
   timestamp,
   revalidateData,
 }: LastUpdatedProps) {
-  const router = useRouter();
+  // const router = useRouter();
   const [relativeTime, setRelativeTime] = useState("...");
   const [absoluteTime, setAbsoluteTime] = useState("");
   const [isStale, setIsStale] = useState(false);
@@ -77,7 +77,7 @@ export default function LastUpdated({
         await revalidateData();
       }
       // Explicit refresh might be needed to force CDN to cache the new page
-      router.refresh();
+      // router.refresh();
     } catch (error) {
       console.error("Failed to refresh data:", error);
       // Remove the loading state, since we don't get the updated data

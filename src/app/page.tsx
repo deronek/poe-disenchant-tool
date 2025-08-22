@@ -11,6 +11,10 @@ async function revalidateData() {
   "use server";
   try {
     revalidatePath("/");
+    // Eagerly warm cache so CDN regenerates immediately
+    await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/`, {
+      cache: "no-store",
+    });
   } catch (error) {
     console.error("Revalidation error:", error);
     throw new Error("Failed to revalidate data");
