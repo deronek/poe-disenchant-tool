@@ -39,18 +39,6 @@ export default function LastUpdated({
   const [absoluteTime, setAbsoluteTime] = useState("");
   const [isStale, setIsStale] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
 
   // Feature flag to always show refresh button for development/testing
   const [alwaysShowRefresh] = useLocalStorage(
@@ -166,12 +154,7 @@ export default function LastUpdated({
 
   return (
     <>
-      {isMobile ? (
-        <Popover>
-          <PopoverTrigger asChild>{triggerElement}</PopoverTrigger>
-          <PopoverContent className="max-w-sm">{tooltipContent}</PopoverContent>
-        </Popover>
-      ) : (
+      <div className="hidden lg:block">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>{triggerElement}</TooltipTrigger>
@@ -184,7 +167,13 @@ export default function LastUpdated({
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-      )}
+      </div>
+      <div className="lg:hidden">
+        <Popover>
+          <PopoverTrigger asChild>{triggerElement}</PopoverTrigger>
+          <PopoverContent>{tooltipContent}</PopoverContent>
+        </Popover>
+      </div>
     </>
   );
 }
