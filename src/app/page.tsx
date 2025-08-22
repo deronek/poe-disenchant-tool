@@ -11,8 +11,12 @@ async function revalidateData() {
   "use server";
   try {
     revalidatePath("/");
+
     // Eagerly warm cache so CDN regenerates immediately
-    await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/`, {
+    const path = process.env.NEXT_PUBLIC_VERCEL_URL
+      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/`
+      : "http://localhost:3000/";
+    await fetch(path, {
       cache: "no-store",
     });
   } catch (error) {
