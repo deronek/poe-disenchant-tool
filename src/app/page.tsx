@@ -2,28 +2,9 @@ import LastUpdated from "@/components/last-updated";
 import { SharedDataView } from "@/components/shared-data-view";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import { getItems } from "@/lib/itemData";
-import { revalidatePath } from "next/cache";
+import { revalidateData } from "./actions/revalidate";
 
 export const revalidate = 300; // 5 minutes
-
-// Server Action for data revalidation
-async function revalidateData() {
-  "use server";
-  try {
-    revalidatePath("/");
-
-    // Eagerly warm cache so CDN regenerates immediately
-    const path = process.env.NEXT_PUBLIC_VERCEL_URL
-      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/`
-      : "http://localhost:3000/";
-    await fetch(path, {
-      cache: "no-store",
-    });
-  } catch (error) {
-    console.error("Revalidation error:", error);
-    throw new Error("Failed to revalidate data");
-  }
-}
 
 export default async function SandboxPage() {
   const items = await getItems();

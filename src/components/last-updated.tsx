@@ -25,7 +25,7 @@ import { useEffect, useState } from "react";
 
 interface LastUpdatedProps {
   timestamp: string;
-  revalidateData?: () => Promise<void>;
+  revalidateData?: (origin?: string) => Promise<unknown>;
 }
 
 export default function LastUpdated({
@@ -74,7 +74,8 @@ export default function LastUpdated({
     try {
       // Call the Server Action to revalidate data
       if (revalidateData) {
-        await revalidateData();
+        const res = await revalidateData(window.location.origin);
+        console.debug("revalidateData response:", res);
       }
       // Explicit refresh might be needed to force CDN to cache the new page
       // router.refresh();
