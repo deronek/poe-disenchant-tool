@@ -48,6 +48,7 @@ function isIpLiteral(hostname: string) {
 }
 
 function throwHttpError(message: string, status = 400): never {
+  console.log("throwHttpError", message, status);
   throw new Response(message, { status });
 }
 
