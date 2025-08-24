@@ -66,11 +66,6 @@ const getPriceDataApi = async (): Promise<ApiResponse> => {
     // TODO: add league param
     const response = await fetch(
       "https://poe.ninja/api/data/denseoverviews?league=Mercenaries",
-      {
-        next: {
-          tags: ["items-Mercenaries"],
-        },
-      },
     );
     const json = await response.json();
     const data = await parseResponse(json);
