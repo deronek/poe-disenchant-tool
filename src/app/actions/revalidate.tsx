@@ -1,5 +1,6 @@
 // app/actions/revalidate.ts
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 
 function normalizeOrigin(origin: string) {
   return origin.replace(/\/$/, "");
@@ -89,6 +90,7 @@ function validateOriginAllowed(
 async function warmOrigin(normalizedOrigin: string) {
   const warmUrl = `${normalizedOrigin}/`;
   console.debug("Warming origin", warmUrl);
+  const requestCookies = (await cookies()).toString();
 
   const res = await fetch(warmUrl, {
     method: "GET",
@@ -97,6 +99,7 @@ async function warmOrigin(normalizedOrigin: string) {
     headers: {
       pragma: "no-cache",
       "cache-control": "no-cache",
+      cookie: requestCookies,
     },
   });
 
