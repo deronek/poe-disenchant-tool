@@ -131,9 +131,9 @@ export default function LastUpdated({
   const triggerElement = (
     <time
       dateTime={timestamp}
-      className={`text-muted-foreground cursor-pointer text-sm transition-colors ${
-        isStale ? "text-amber-600 dark:text-amber-400" : ""
-      }`}
+      className={
+        "text-muted-foreground inline-flex h-8 cursor-pointer items-center text-sm transition-colors"
+      }
     >
       Last updated: {relativeTime}
       {(isStale || alwaysShowRefresh) && (
@@ -141,7 +141,7 @@ export default function LastUpdated({
           onClick={handleRefresh}
           disabled={isRefreshing}
           size="sm"
-          className="ml-2 h-6 px-2 text-xs"
+          className="ml-2 text-xs"
           aria-label={isRefreshing ? "Refreshing data..." : "Refresh data"}
         >
           <span
@@ -149,7 +149,7 @@ export default function LastUpdated({
               isRefreshing ? "animate-spin" : ""
             }`}
           >
-            ↻
+            <RefreshCw />
           </span>
         </Button>
       )}

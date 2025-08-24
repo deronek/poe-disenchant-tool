@@ -25,7 +25,7 @@ export default async function SandboxPage() {
       <h4 className="font-italic text-muted-foreground text-sm">
         <LastUpdated timestamp={lastUpdated} revalidateData={revalidateData} />
       </h4>
-      <div className="pt-6 xl:pb-4">
+      <div className="pt-2 xl:pt-6 xl:pb-4">
         <SharedDataView items={items} />
       </div>
     </div>
