@@ -94,11 +94,11 @@ async function warmOrigin(normalizedOrigin: string) {
 
   const res = await fetch(warmUrl, {
     method: "GET",
-    cache: "no-store",
+    // cache: "no-store",
     redirect: "manual", // don't follow redirects
     headers: {
-      pragma: "no-cache",
-      "cache-control": "no-cache",
+      // pragma: "no-cache",
+      // "cache-control": "no-cache",
       cookie: requestCookies,
     },
   });
@@ -133,7 +133,7 @@ export async function revalidateData(originFromClient?: string) {
   const normalizedOrigin = validateOriginAllowed(originFromClient, allowlist);
 
   try {
-    revalidatePath("/");
+    revalidatePath("/", "page");
     const warmResult = await warmOrigin(normalizedOrigin);
     return { ok: true, warmedOrigin: normalizedOrigin, ...warmResult };
   } catch (err) {
