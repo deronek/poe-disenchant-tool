@@ -19,7 +19,9 @@ export const formatRelativeTime = (
 ) => {
   const rtf = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
 
-  if (diffInDays > 0) {
+  if (diffInMinutes === 0) {
+    return "just now";
+  } else if (diffInDays > 0) {
     return rtf.format(-diffInDays, "day");
   } else if (diffInHours > 0) {
     return rtf.format(-diffInHours, "hour");
