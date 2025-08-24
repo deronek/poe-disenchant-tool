@@ -86,7 +86,8 @@ function validateOriginAllowed(
 }
 
 async function warmOrigin(normalizedOrigin: string) {
-  const warmUrl = `${normalizedOrigin}/?revalidated=${Date.now()}`;
+  const warmUrl = `${normalizedOrigin}/`;
+  console.debug("Warming origin", warmUrl);
 
   const res = await fetch(warmUrl, {
     method: "GET",
