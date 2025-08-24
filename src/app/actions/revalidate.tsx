@@ -1,5 +1,5 @@
 // app/actions/revalidate.ts
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 function normalizeOrigin(origin: string) {
@@ -133,7 +133,7 @@ export async function revalidateData(originFromClient?: string) {
   const normalizedOrigin = validateOriginAllowed(originFromClient, allowlist);
 
   try {
-    revalidatePath("/");
+    revalidateTag("items-Mercenaries");
     const warmResult = await warmOrigin(normalizedOrigin);
     return { ok: true, warmedOrigin: normalizedOrigin, ...warmResult };
   } catch (err) {
