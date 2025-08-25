@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 
 export const revalidate = 300; // 5 minutes
 
-export async function revalidateData() {
+async function revalidateData() {
   "use server";
 
   revalidatePath("/", "page");

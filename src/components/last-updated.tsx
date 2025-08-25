@@ -18,13 +18,12 @@ import {
   formatAbsoluteTime,
   formatRelativeTime,
 } from "@/lib/dateUtils";
-import { useLocalStorage } from "@/lib/use-local-storage";
 import { Clock, RefreshCw } from "lucide-react";
 import { useEffect, useState } from "react";
 
 interface LastUpdatedProps {
   timestamp: string;
-  revalidateData?: (origin?: string) => Promise<unknown>;
+  revalidateData?: () => Promise<void>;
 }
 
 export default function LastUpdated({
@@ -37,11 +36,21 @@ export default function LastUpdated({
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   // Feature flag to always show refresh button for development/testing
-  const [alwaysShowRefresh] = useLocalStorage(
-    false,
-    "poe-udt:always-show-refresh",
-    { timeout: 300 },
-  );
+  // Only read from localStorage if it exists
+  const [alwaysShowRefresh, setAlwaysShowRefresh] = useState(false);
+
+  useEffect(() => {
+    try {
+      const item = window.localStorage.getItem(
+        "poe-udt:always-show-refresh:v1",
+      );
+      if (item) {
+        setAlwaysShowRefresh(JSON.parse(item));
+      }
+    } catch (
+      _ // eslint-disable-line @typescript-eslint/no-unused-vars
+    ) {}
+  }, []);
 
   useEffect(() => {
     const updateTime = () => {
@@ -68,15 +77,12 @@ export default function LastUpdated({
   }, [timestamp]);
 
   const handleRefresh = async () => {
+    if (!revalidateData) return;
     setIsRefreshing(true);
     try {
       // Call the Server Action to revalidate data
-      if (revalidateData) {
-        const res = await revalidateData(window.location.origin);
-        console.debug("revalidateData response:", res);
-      }
-      // Explicit refresh might be needed to force CDN to cache the new page
-      // router.refresh();
+      const res = await revalidateData();
+      console.debug("revalidateData response:", res);
     } catch (error) {
       console.error("Failed to refresh data:", error);
       // Remove the loading state, since we don't get the updated data
