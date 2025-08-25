@@ -1,3 +1,4 @@
+import { unstable_cache } from "next/cache";
 import { getDustData } from "./dust";
 import { AllowedUnique, getPriceData } from "./prices";
 
@@ -24,7 +25,7 @@ const ITEMS_TO_IGNORE = [
 const createUniqueId = (name: string, variant?: string) =>
   `${name}${variant ? `-${variant}` : ""}`;
 
-export const getItems = async (): Promise<Item[]> => {
+const uncached__getItems = async () => {
   const dustData = getDustData();
   const priceData = await getPriceData();
 
@@ -59,5 +60,13 @@ export const getItems = async (): Promise<Item[]> => {
     }
   }
 
-  return merged;
+  return {
+    items: merged,
+    lastUpdated: new Date().toISOString(),
+  };
 };
+
+export const getItems = unstable_cache(uncached__getItems, [], {
+  tags: ["items-Mercenaries"],
+  revalidate: 300, // 5 minutes
+});

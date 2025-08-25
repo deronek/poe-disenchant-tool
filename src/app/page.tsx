@@ -2,12 +2,18 @@ import LastUpdated from "@/components/last-updated";
 import { SharedDataView } from "@/components/shared-data-view";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import { getItems } from "@/lib/itemData";
+import { revalidatePath } from "next/cache";
 
 export const revalidate = 300; // 5 minutes
 
+async function revalidateData() {
+  "use server";
+
+  revalidatePath("/", "page");
+}
+
 export default async function SandboxPage() {
-  const items = await getItems();
-  const lastUpdated = new Date().toISOString();
+  const { items, lastUpdated } = await getItems();
 
   return (
     <div className="container mx-auto p-4 pb-0 sm:pt-6 sm:pr-6 sm:pb-0 sm:pl-6 md:px-8 xl:pb-4">
@@ -22,9 +28,9 @@ export default async function SandboxPage() {
         Dust in Kingsmarch
       </h3>
       <h4 className="font-italic text-muted-foreground text-sm">
-        <LastUpdated timestamp={lastUpdated} />
+        <LastUpdated timestamp={lastUpdated} revalidateData={revalidateData} />
       </h4>
-      <div className="pt-6 xl:pb-4">
+      <div className="pt-2 xl:pt-6 xl:pb-4">
         <SharedDataView items={items} />
       </div>
     </div>
