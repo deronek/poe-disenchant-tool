@@ -2,9 +2,15 @@ import LastUpdated from "@/components/last-updated";
 import { SharedDataView } from "@/components/shared-data-view";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import { getItems } from "@/lib/itemData";
-import { revalidateData } from "./actions/revalidate";
+import { revalidatePath } from "next/cache";
 
 export const revalidate = 300; // 5 minutes
+
+export async function revalidateData() {
+  "use server";
+
+  revalidatePath("/", "page");
+}
 
 export default async function SandboxPage() {
   const { items, lastUpdated } = await getItems();
