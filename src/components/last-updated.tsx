@@ -45,7 +45,10 @@ export default function LastUpdated({
         "poe-udt:always-show-refresh:v1",
       );
       if (item) {
-        setAlwaysShowRefresh(JSON.parse(item));
+        const parsedValue = JSON.parse(item);
+        if (typeof parsedValue === "boolean") {
+          setAlwaysShowRefresh(parsedValue);
+        }
       }
     } catch (
       _ // eslint-disable-line @typescript-eslint/no-unused-vars
