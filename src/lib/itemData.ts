@@ -62,7 +62,7 @@ const uncached__getItems = async () => {
 
   return {
     items: merged,
-    lastUpdatedDate: new Date(),
+    lastUpdated: new Date().toISOString(),
   };
 };
 
