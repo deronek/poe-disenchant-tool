@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Column } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
 
 export type PriceFiltervalue = {
   min: number;
-  max: number;
+  max?: number; // Optional for single bound filtering
 };
 
 interface PriceFilterProps<TData> {
@@ -40,30 +40,119 @@ export function PriceFilter<TData extends Item>({
 
   // Get current filter value from TanStack Table
   const filterValue = column?.getFilterValue() as PriceFiltervalue | undefined;
-  const currentRange = filterValue
-    ? [filterValue.min, filterValue.max]
-    : [min, max];
+  const currentMin = filterValue?.min ?? min;
+  const currentMax = filterValue?.max ?? max;
+  const currentRange = [currentMin, currentMax];
+
+  // Initialize upper bound enabled state based on existing filter
+  const [upperBoundEnabled, setUpperBoundEnabled] = useState(false);
+
+  // Handle upper bound changes - always interactive, enable/disable based on value
+  const handleUpperBoundChange = (value: number[]) => {
+    const newUpperValue = value[0];
+    const shouldEnable = newUpperValue !== max;
+
+    // Update visual state
+    setUpperBoundEnabled(shouldEnable);
+
+    // Handle the range change with explicit enable state to avoid async state issues
+    const lower = currentMin;
+    const upper = shouldEnable ? newUpperValue : undefined;
+
+    // Update TanStack Table filter with explicit enabled state
+    normalizeAndSet(lower, upper, shouldEnable);
+  };
+
+  // Logarithmic scale transformation for better low-value precision
+  const linearToLog = (
+    linearValue: number,
+    min: number,
+    max: number,
+  ): number => {
+    if (linearValue <= min) return 0;
+    // Use log scale that gives more precision to low values
+    const logMin = Math.log(min + 1);
+    const logMax = Math.log(max + 1);
+    const logValue = Math.log(linearValue + 1);
+    return ((logValue - logMin) / (logMax - logMin)) * 100;
+  };
+
+  const logToLinear = (logValue: number, min: number, max: number): number => {
+    const logMin = Math.log(min + 1);
+    const logMax = Math.log(max + 1);
+    const linearValue =
+      Math.exp(logMin + (logValue / 100) * (logMax - logMin)) - 1;
+    return Math.round(linearValue);
+  };
+
+  // Get the effective slider range (logarithmic for lower bound, linear for upper bound)
+  const getSliderValue = (
+    linearValue: number,
+    isLowerBound: boolean,
+  ): number => {
+    if (isLowerBound) {
+      // For lower bound, use current upper bound as max when enabled, otherwise use max
+      const maxForLower = upperBoundEnabled ? currentMax : max;
+      return linearToLog(linearValue, min, maxForLower);
+    }
+    return linearValue;
+  };
+
+  const getLinearValue = (
+    sliderValue: number,
+    isLowerBound: boolean,
+  ): number => {
+    if (isLowerBound) {
+      // For lower bound, use current upper bound as max when enabled, otherwise use max
+      const maxForLower = upperBoundEnabled ? currentMax : max;
+      return logToLinear(sliderValue, min, maxForLower);
+    }
+    return sliderValue;
+  };
+
+  // Sync upper bound enabled state with filter value changes
+  useEffect(() => {
+    if (filterValue?.max !== undefined) {
+      // Enable if there's a max value and it's different from the default
+      setUpperBoundEnabled(filterValue.max !== max);
+    } else {
+      // Disable by default when no filter is set
+      setUpperBoundEnabled(false);
+    }
+  }, [filterValue?.max, max]);
 
   // Active if filter exists and differs from defaults
   const hasActiveFilter =
     filterValue !== undefined &&
-    (filterValue.min !== min || filterValue.max !== max);
+    (filterValue.min !== min || (upperBoundEnabled && filterValue.max !== max));
 
   // Normalize: when range equals defaults, clear filter in table state
-  const normalizeAndSet = (lower: number, upper: number) => {
+  const normalizeAndSet = (
+    lower: number,
+    upper?: number,
+    enabled?: boolean,
+  ) => {
     if (column) {
-      if (lower === min && upper === max) {
+      if (lower === min && (!(enabled ?? upperBoundEnabled) || upper === max)) {
         column.setFilterValue(undefined);
       } else {
-        column.setFilterValue({ min: lower, max: upper });
+        column.setFilterValue({
+          min: lower,
+          max: (enabled ?? upperBoundEnabled) ? upper : undefined,
+        });
       }
     }
   };
 
   const handleRangeChange = (newRange: number[], isLowerBound: boolean) => {
-    const [lower, upper] = isLowerBound
-      ? [newRange[0], currentRange[1]]
-      : [currentRange[0], newRange[0]];
+    const lower = isLowerBound ? newRange[0] : currentMin;
+    const upper = isLowerBound
+      ? upperBoundEnabled
+        ? currentMax
+        : undefined
+      : upperBoundEnabled
+        ? newRange[0]
+        : undefined;
 
     // Update TanStack Table filter (auto-clear when equal to defaults)
     normalizeAndSet(lower, upper);
@@ -71,12 +160,13 @@ export function PriceFilter<TData extends Item>({
 
   const handleReset = () => {
     column?.setFilterValue(undefined);
+    setUpperBoundEnabled(false);
   };
 
   const handleApply = () => {
     // Ensure default-range equals cleared state
     const v = column?.getFilterValue() as PriceFiltervalue | undefined;
-    if (column && v && v.min === min && v.max === max) {
+    if (column && v && v.min === min && (!upperBoundEnabled || v.max === max)) {
       column.setFilterValue(undefined);
     }
     setIsOpen(false);
@@ -91,7 +181,7 @@ export function PriceFilter<TData extends Item>({
           <ChevronDown className="ml-1 h-3 w-3 transition-transform duration-200 group-data-[state=open]:rotate-180" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80" align="start">
+      <PopoverContent className="w-80 sm:w-96" align="start">
         <div className="space-y-4">
           <div className="space-y-2">
             <div className="flex items-center justify-between">
@@ -106,12 +196,20 @@ export function PriceFilter<TData extends Item>({
               <div className="px-2">
                 <Slider
                   id="lower-bound"
-                  min={min}
-                  max={currentRange[1]}
-                  step={10}
-                  value={[currentRange[0]]}
-                  onValueChange={(value) => handleRangeChange(value, true)}
+                  min={0}
+                  max={100}
+                  step={1}
+                  value={[getSliderValue(currentMin, true)]}
+                  onValueChange={(value) => {
+                    const newValue = getLinearValue(value[0], true);
+                    // Ensure lower bound doesn't exceed upper bound when upper bound is enabled
+                    const constrainedValue = upperBoundEnabled
+                      ? Math.min(newValue, currentMax)
+                      : newValue;
+                    handleRangeChange([constrainedValue], true);
+                  }}
                   className="w-full py-1"
+                  aria-label="Lower bound price filter"
                 />
               </div>
               <div className="text-muted-foreground flex justify-between text-xs">
@@ -120,7 +218,7 @@ export function PriceFilter<TData extends Item>({
                   <ChaosOrbIcon />
                 </span>
                 <span className="text-foreground inline-flex items-center gap-1 font-medium">
-                  <span className="leading-none">{currentRange[0]}</span>
+                  <span className="leading-none">{currentMin}</span>
                   <ChaosOrbIcon />
                 </span>
               </div>
@@ -131,20 +229,29 @@ export function PriceFilter<TData extends Item>({
               <div className="px-2">
                 <Slider
                   id="upper-bound"
-                  min={currentRange[0]}
+                  min={currentMin}
                   max={max}
                   step={10}
-                  value={[currentRange[1]]}
-                  onValueChange={(value) => handleRangeChange(value, false)}
-                  className="w-full py-1"
+                  value={[currentMax]}
+                  onValueChange={handleUpperBoundChange}
+                  disabled={false}
+                  className={cn(
+                    "w-full py-1",
+                    !upperBoundEnabled && "opacity-60",
+                  )}
+                  aria-label="Upper bound price filter"
                 />
               </div>
               <div className="text-muted-foreground flex justify-between text-xs">
-                <span className="text-foreground inline-flex items-center gap-1 font-medium">
-                  <span className="leading-none">{currentRange[1]}</span>
-                  <ChaosOrbIcon />
+                <span
+                  className={`inline-flex items-center gap-1 font-medium ${upperBoundEnabled ? "text-foreground" : "text-muted-foreground"}`}
+                >
+                  <span className="leading-none">
+                    {upperBoundEnabled ? currentMax : "No limit"}
+                  </span>
+                  {upperBoundEnabled && <ChaosOrbIcon />}
                 </span>
-                <span className="inline-flex items-center gap-1 align-middle">
+                <span className="inline-flex items-center gap-1">
                   <span className="leading-none">{max}</span>
                   <ChaosOrbIcon />
                 </span>
@@ -164,16 +271,29 @@ export function PriceFilter<TData extends Item>({
             </div>
             {hasActiveFilter && (
               <div className="text-muted-foreground text-xs">
-                Showing items between{" "}
-                <span className="inline-flex items-center gap-1">
-                  <span className="leading-none">{currentRange[0]}</span>
-                  <ChaosOrbIcon />
-                </span>{" "}
-                and{" "}
-                <span className="inline-flex items-center gap-1">
-                  <span className="leading-none">{currentRange[1]}</span>
-                  <ChaosOrbIcon />
-                </span>
+                {upperBoundEnabled ? (
+                  <>
+                    Showing items between{" "}
+                    <span className="inline-flex items-center gap-1">
+                      <span className="leading-none">{currentMin}</span>
+                      <ChaosOrbIcon />
+                    </span>{" "}
+                    and{" "}
+                    <span className="inline-flex items-center gap-1">
+                      <span className="leading-none">{currentMax}</span>
+                      <ChaosOrbIcon />
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    Showing items{" "}
+                    <span className="inline-flex items-center gap-1">
+                      <span className="leading-none">{currentMin}</span>
+                      <ChaosOrbIcon />
+                    </span>{" "}
+                    and above
+                  </>
+                )}
               </div>
             )}
           </div>

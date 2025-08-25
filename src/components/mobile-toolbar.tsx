@@ -38,7 +38,7 @@ export function MobileToolbar<TData extends Item>({
             column={table.getColumn(COLUMN_IDS.CHAOS)}
             description="Filter items by chaos price range."
             min={0}
-            max={600}
+            max={500}
             className="w-full"
           />
           <MobileSortingControls table={table} className="w-full" />

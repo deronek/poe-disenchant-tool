@@ -12,10 +12,17 @@ export function PriceFilterChip({ value, onClear }: PriceFilterChipProps) {
     return null;
   }
 
+  const formatPriceRange = () => {
+    if (value.max === undefined) {
+      return `≥ ${value.min}`;
+    }
+    return `${value.min}–${value.max}`;
+  };
+
   return (
     <Badge variant="outline" className="inline-flex items-center gap-1 px-3">
       <span className="inline-flex min-w-0 flex-shrink-0 items-center gap-1 truncate">
-        Price: {`${value.min}–${value.max}`}
+        Price: {formatPriceRange()}
         <span className="flex-shrink-0">
           <ChaosOrbIcon />
         </span>

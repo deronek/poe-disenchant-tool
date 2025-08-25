@@ -113,8 +113,14 @@ export const createColumns = (
     size: 110,
     meta: { className: "text-right tabular-nums" },
     filterFn: (row, columnId, filterValue) => {
+      if (!filterValue) return true;
+
       const value = row.getValue(columnId) as number;
-      return value >= filterValue.min && value <= filterValue.max;
+      const minCheck = value >= filterValue.min;
+      const maxCheck =
+        filterValue.max === undefined || value <= filterValue.max;
+
+      return minCheck && maxCheck;
     },
     cell: ({ row }) => {
       const value = row.getValue(COLUMN_IDS.CHAOS) as number;
