@@ -7,8 +7,8 @@ import { revalidateData } from "./actions/revalidate";
 export const revalidate = 300; // 5 minutes
 
 export default async function SandboxPage() {
-  const items = await getItems();
-  const lastUpdated = new Date().toISOString();
+  const { items, lastUpdatedDate } = await getItems();
+  const lastUpdated = lastUpdatedDate.toISOString();
 
   return (
     <div className="container mx-auto p-4 pb-0 sm:pt-6 sm:pr-6 sm:pb-0 sm:pl-6 md:px-8 xl:pb-4">

@@ -25,7 +25,7 @@ const ITEMS_TO_IGNORE = [
 const createUniqueId = (name: string, variant?: string) =>
   `${name}${variant ? `-${variant}` : ""}`;
 
-const uncached__getItems = async (): Promise<Item[]> => {
+const uncached__getItems = async () => {
   const dustData = getDustData();
   const priceData = await getPriceData();
 
@@ -60,7 +60,10 @@ const uncached__getItems = async (): Promise<Item[]> => {
     }
   }
 
-  return merged;
+  return {
+    items: merged,
+    lastUpdatedDate: new Date(),
+  };
 };
 
 export const getItems = unstable_cache(uncached__getItems, [], {
