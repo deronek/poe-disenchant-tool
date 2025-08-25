@@ -23,7 +23,7 @@ import { useEffect, useState } from "react";
 
 interface LastUpdatedProps {
   timestamp: string;
-  revalidateData?: () => Promise<void>;
+  revalidateData?: (origin?: string) => Promise<unknown>;
 }
 
 export default function LastUpdated({
@@ -84,7 +84,7 @@ export default function LastUpdated({
     setIsRefreshing(true);
     try {
       // Call the Server Action to revalidate data
-      const res = await revalidateData();
+      const res = await revalidateData(window.location.origin);
       console.debug("revalidateData response:", res);
     } catch (error) {
       console.error("Failed to refresh data:", error);
