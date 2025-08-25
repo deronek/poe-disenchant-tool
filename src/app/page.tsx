@@ -6,12 +6,6 @@ import { revalidateData } from "./actions/revalidate";
 
 export const revalidate = 300; // 5 minutes
 
-// async function revalidateData() {
-//   "use server";
-
-//   revalidatePath("/", "page");
-// }
-
 export default async function SandboxPage() {
   const { items, lastUpdated } = await getItems();
 

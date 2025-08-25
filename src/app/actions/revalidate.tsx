@@ -1,4 +1,3 @@
-// app/actions/revalidate.ts
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
