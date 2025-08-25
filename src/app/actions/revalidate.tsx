@@ -133,7 +133,7 @@ export async function revalidateData(originFromClient?: string) {
   const normalizedOrigin = validateOriginAllowed(originFromClient, allowlist);
 
   try {
-    revalidatePath("/");
+    revalidatePath("/", "page");
     const warmResult = await warmOrigin(normalizedOrigin);
     return { ok: true, warmedOrigin: normalizedOrigin, ...warmResult };
   } catch (err) {
