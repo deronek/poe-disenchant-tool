@@ -141,8 +141,8 @@ export async function revalidateData(originFromClient: string, league: string) {
 
   try {
     // Revalidate specific league page
-    revalidatePath(`/${league}`, "page");
     revalidateTag(`items-${league}`);
+    revalidatePath(`/${league}`, "page");
     const fullWarmUrl = `${normalizedOrigin}/${league}`;
     const warmResult = await warmOrigin(fullWarmUrl);
     return { ok: true, warmedOrigin: fullWarmUrl, ...warmResult };
