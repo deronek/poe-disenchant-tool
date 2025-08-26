@@ -193,9 +193,9 @@ export function PriceFilter<TData extends Item>({
                 {isFilterActive ? "Active" : "Inactive"}
               </Badge>
             </div>
-            {isFilterActive && (
-              <div className="text-muted-foreground text-xs">
-                {currentRange.upperEnabled ? (
+            <div className="text-muted-foreground text-xs">
+              {isFilterActive ? (
+                currentRange.upperEnabled ? (
                   <>
                     Showing items between{" "}
                     <span className="inline-flex items-center gap-1">
@@ -207,6 +207,7 @@ export function PriceFilter<TData extends Item>({
                       <span className="leading-none">{currentRange.upper}</span>
                       <ChaosOrbIcon />
                     </span>
+                    .
                   </>
                 ) : (
                   <>
@@ -215,11 +216,16 @@ export function PriceFilter<TData extends Item>({
                       <span className="leading-none">{currentRange.lower}</span>
                       <ChaosOrbIcon />
                     </span>{" "}
-                    and above
+                    and above.
                   </>
-                )}
-              </div>
-            )}
+                )
+              ) : (
+                <span className="inline-flex items-center gap-1">
+                  Showing all items.
+                  <span className="inline-block h-[18px] w-[18px]" />
+                </span>
+              )}
+            </div>
           </div>
 
           <div className="flex gap-2 pt-2">
