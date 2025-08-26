@@ -2,10 +2,7 @@ import fs from "fs";
 import path from "path";
 
 import { z } from "zod";
-
-// data is:
-// const a = await fetch('https://poe.ninja/api/data/denseoverviews?league=Mercenaries')
-// const b = await a.json()
+import { getLeagueApiName, League } from "../leagues";
 
 const dataHardcoded = fs.readFileSync(
   path.join(process.cwd(), "src/lib/prices/prices.json"),
@@ -57,24 +54,25 @@ export type Item = {
 };
 
 // TODO: cache using ISR
-const getPriceDataApi = async (): Promise<ApiResponse> => {
+const getPriceDataApi = async (league: League): Promise<ApiResponse> => {
   try {
     if (process.env.NODE_ENV === "development") {
       // hardcoded data for dev
       return jsonHardcoded;
     }
-    // TODO: add league param
+
+    const leagueApiName = getLeagueApiName(league);
     const response = await fetch(
-      "https://poe.ninja/api/data/denseoverviews?league=Mercenaries",
+      `https://poe.ninja/api/data/denseoverviews?league=${encodeURIComponent(leagueApiName)}`,
     );
     const json = await response.json();
     const data = await parseResponse(json);
-    console.log("Successfully fetched price data");
+    console.log(`Successfully fetched price data for ${leagueApiName}`);
     return data;
   } catch (error) {
     // TODO: need to show this info on page
     console.error(
-      "Error fetching price data:",
+      `Error fetching price data for ${league}:`,
       error,
       "Falling back to hardcoded data",
     );
@@ -221,8 +219,8 @@ const getUniqueItemLines = async (json: unknown): Promise<Item[]> => {
   return filtered;
 };
 
-const uncached__getPriceData = async (): Promise<Item[]> => {
-  const data = await getPriceDataApi();
+const uncached__getPriceData = async (league: League): Promise<Item[]> => {
+  const data = await getPriceDataApi(league);
   const lines = await getUniqueItemLines(data);
   return lines;
 };

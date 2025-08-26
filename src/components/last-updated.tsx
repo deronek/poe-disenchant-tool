@@ -23,11 +23,13 @@ import { useEffect, useState } from "react";
 
 interface LastUpdatedProps {
   timestamp: string;
-  revalidateData?: (origin?: string) => Promise<unknown>;
+  league: string;
+  revalidateData?: (origin: string, league: string) => Promise<unknown>;
 }
 
 export default function LastUpdated({
   timestamp,
+  league,
   revalidateData,
 }: LastUpdatedProps) {
   const [relativeTime, setRelativeTime] = useState("...");
@@ -84,7 +86,7 @@ export default function LastUpdated({
     setIsRefreshing(true);
     try {
       // Call the Server Action to revalidate data
-      const res = await revalidateData(window.location.origin);
+      const res = await revalidateData(window.location.origin, league);
       console.debug("revalidateData response:", res);
     } catch (error) {
       console.error("Failed to refresh data:", error);
@@ -94,6 +96,8 @@ export default function LastUpdated({
       // Not removing the loading state here, since there's a gap between setting this
       // and revalidation being reflected in the UI.
       // Updated date will hide the button.
+      // If for some reason we get the same data from the server (e.g. beacuse of Data Cache),
+      // this will keep the "revalidating" state until next time update.
     }
   };
 

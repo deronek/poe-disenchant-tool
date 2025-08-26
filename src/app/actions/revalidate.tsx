@@ -1,5 +1,6 @@
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import { isValidLeague } from "@/lib/leagues";
 
 function normalizeOrigin(origin: string) {
   return origin.replace(/\/$/, "");
@@ -86,12 +87,11 @@ function validateOriginAllowed(
   return normalized;
 }
 
-async function warmOrigin(normalizedOrigin: string) {
-  const warmUrl = `${normalizedOrigin}/`;
-  console.debug("Warming origin", warmUrl);
+async function warmOrigin(fullWarmUrl: string) {
+  console.debug("Warming origin", fullWarmUrl);
   const requestCookies = (await cookies()).toString();
 
-  const res = await fetch(warmUrl, {
+  const res = await fetch(fullWarmUrl, {
     method: "GET",
     // cache: "no-store",
     redirect: "manual", // don't follow redirects
@@ -120,11 +120,19 @@ async function warmOrigin(normalizedOrigin: string) {
   return { status: res.status, xVercel };
 }
 
-export async function revalidateData(originFromClient?: string) {
+export async function revalidateData(originFromClient: string, league: string) {
   "use server";
 
   if (!originFromClient) {
     throwHttpError("Missing origin", 400);
+  }
+
+  if (!league) {
+    throwHttpError("Missing league parameter", 400);
+  }
+
+  if (!isValidLeague(league)) {
+    throwHttpError(`Invalid league parameter: ${league}`, 400);
   }
 
   const allowlist = buildAllowlistOrigins();
@@ -132,9 +140,11 @@ export async function revalidateData(originFromClient?: string) {
   const normalizedOrigin = validateOriginAllowed(originFromClient, allowlist);
 
   try {
-    revalidatePath("/", "page");
-    const warmResult = await warmOrigin(normalizedOrigin);
-    return { ok: true, warmedOrigin: normalizedOrigin, ...warmResult };
+    // Revalidate specific league page
+    revalidatePath(`/${league}`, "page");
+    const fullWarmUrl = `${normalizedOrigin}/${league}`;
+    const warmResult = await warmOrigin(fullWarmUrl);
+    return { ok: true, warmedOrigin: fullWarmUrl, ...warmResult };
   } catch (err) {
     // If we've thrown a Response via throwHttpError, it already propagated as the proper HTTP code.
     // Any other unexpected errors become 500.

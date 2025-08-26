@@ -1,6 +1,7 @@
 import { unstable_cache } from "next/cache";
 import { getDustData } from "./dust";
 import { AllowedUnique, getPriceData } from "./prices";
+import { League } from "./leagues";
 
 export type Item = {
   name: string;
@@ -25,9 +26,9 @@ const ITEMS_TO_IGNORE = [
 const createUniqueId = (name: string, variant?: string) =>
   `${name}${variant ? `-${variant}` : ""}`;
 
-const uncached__getItems = async () => {
+const uncached__getItems = async (league: League) => {
   const dustData = getDustData();
-  const priceData = await getPriceData();
+  const priceData = await getPriceData(league);
 
   const merged: Item[] = [];
   let id = 0;
@@ -66,7 +67,9 @@ const uncached__getItems = async () => {
   };
 };
 
-export const getItems = unstable_cache(uncached__getItems, [], {
-  tags: ["items-Mercenaries"],
-  revalidate: 300, // 5 minutes
-});
+export const getItems = async (league: League) => {
+  return unstable_cache(async () => uncached__getItems(league), [], {
+    tags: [`items-${league}`],
+    revalidate: 300, // 5 minutes
+  })();
+};
