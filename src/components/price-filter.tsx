@@ -193,7 +193,7 @@ export function PriceFilter<TData extends Item>({
                 {isFilterActive ? "Active" : "Inactive"}
               </Badge>
             </div>
-            <div className="text-muted-foreground text-xs">
+            <div className="text-muted-foreground text-xs leading-[18px]">
               {isFilterActive ? (
                 currentRange.upperEnabled ? (
                   <>
@@ -222,7 +222,6 @@ export function PriceFilter<TData extends Item>({
               ) : (
                 <span className="inline-flex items-center gap-1">
                   Showing all items.
-                  <span className="inline-block h-[18px] w-[18px]" />
                 </span>
               )}
             </div>
