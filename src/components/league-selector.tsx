@@ -1,11 +1,13 @@
 "use client";
+
+import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import {
   Select,
-  SelectContent,
-  SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectContent,
+  SelectItem,
 } from "@/components/ui/select";
 import { LEAGUES, LEAGUE_SLUGS, League } from "@/lib/leagues";
 
@@ -15,16 +17,28 @@ interface LeagueSelectorProps {
 
 export function LeagueSelector({ currentLeague }: LeagueSelectorProps) {
   const router = useRouter();
+  const [selected, setSelected] = useState<League>(currentLeague);
+  const [, startTransition] = useTransition();
 
   const handleLeagueChange = (newLeague: League) => {
-    router.push(`/${newLeague}`);
+    setSelected(newLeague);
+    try {
+      // TODO: check if prefetch is beneficial at all
+      router.prefetch(`/${newLeague}`);
+    } catch {}
+    startTransition(() => {
+      router.push(`/${newLeague}`);
+    });
   };
 
   return (
-    <Select value={currentLeague} onValueChange={handleLeagueChange}>
+    <Select
+      value={selected}
+      onValueChange={(v) => handleLeagueChange(v as League)}
+    >
       <SelectTrigger className="w-[200px]">
         <SelectValue placeholder="Select league">
-          {LEAGUES[currentLeague].name}
+          {LEAGUES[selected].name}
         </SelectValue>
       </SelectTrigger>
       <SelectContent>

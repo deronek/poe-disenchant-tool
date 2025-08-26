@@ -24,7 +24,7 @@ import { useEffect, useState } from "react";
 interface LastUpdatedProps {
   timestamp: string;
   league: string;
-  revalidateData?: (origin: string, league: string) => Promise<unknown>;
+  revalidateData: (origin: string, league: string) => Promise<unknown>;
 }
 
 export default function LastUpdated({
@@ -82,7 +82,6 @@ export default function LastUpdated({
   }, [timestamp]);
 
   const handleRefresh = async () => {
-    if (!revalidateData) return;
     setIsRefreshing(true);
     try {
       // Call the Server Action to revalidate data
