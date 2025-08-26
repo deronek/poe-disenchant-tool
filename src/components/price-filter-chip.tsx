@@ -1,9 +1,10 @@
 import { XButton } from "@/components/ui/x-button";
 import { Badge } from "@/components/ui/badge";
 import { ChaosOrbIcon } from "@/components/chaos-orb-icon";
+import type { PriceFilterValue } from "@/components/price-filter";
 
 interface PriceFilterChipProps {
-  value?: { min: number; max: number };
+  value?: PriceFilterValue;
   onClear: () => void;
 }
 

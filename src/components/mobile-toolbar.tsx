@@ -5,7 +5,7 @@ import {
   type AdvancedSettings,
 } from "@/components/advanced-settings-panel";
 import { NameFilter } from "@/components/name-filter";
-import { PriceFilter } from "@/components/price-filter";
+import { PriceFilter, type PriceFilterValue } from "@/components/price-filter";
 import type { Item } from "@/lib/itemData";
 import { Table } from "@tanstack/react-table";
 
@@ -68,7 +68,7 @@ export function MobileToolbar<TData extends Item>({
             "";
           const chaosRange = table
             .getColumn(COLUMN_IDS.CHAOS)
-            ?.getFilterValue() as { min: number; max: number } | undefined;
+            ?.getFilterValue() as PriceFilterValue | undefined;
 
           const hasActiveFilters = nameFilter !== "" || !!chaosRange;
 
