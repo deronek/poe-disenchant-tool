@@ -91,9 +91,9 @@ export function PriceFilter<TData extends Item>({
     isLowerBound: boolean,
   ): number => {
     if (isLowerBound) {
-      // For lower bound, use current upper bound as max when enabled, otherwise use max
-      const maxForLower = upperBoundEnabled ? currentMax : max;
-      return linearToLog(linearValue, min, maxForLower);
+      // Use the effective range for logarithmic scaling to ensure proper full-width usage
+      const effectiveMax = upperBoundEnabled ? currentMax : max;
+      return linearToLog(linearValue, min, effectiveMax);
     }
     return linearValue;
   };
@@ -103,9 +103,9 @@ export function PriceFilter<TData extends Item>({
     isLowerBound: boolean,
   ): number => {
     if (isLowerBound) {
-      // For lower bound, use current upper bound as max when enabled, otherwise use max
-      const maxForLower = upperBoundEnabled ? currentMax : max;
-      return logToLinear(sliderValue, min, maxForLower);
+      // Use the effective range for logarithmic scaling
+      const effectiveMax = upperBoundEnabled ? currentMax : max;
+      return logToLinear(sliderValue, min, effectiveMax);
     }
     return sliderValue;
   };
