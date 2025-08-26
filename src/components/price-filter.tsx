@@ -108,7 +108,7 @@ export function PriceFilter<TData extends Item>({
           <ChevronDown className="ml-1 h-3 w-3 transition-transform duration-200 group-data-[state=open]:rotate-180" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80 sm:w-96" align="start">
+      <PopoverContent className="w-80" align="start">
         <div className="space-y-4">
           <div className="space-y-2">
             <div className="flex items-center justify-between">
