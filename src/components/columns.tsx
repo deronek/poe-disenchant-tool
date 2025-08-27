@@ -73,8 +73,11 @@ export const COLUMN_IDS = {
 
 export type ColumnId = (typeof COLUMN_IDS)[keyof typeof COLUMN_IDS];
 
+import { League } from "@/lib/leagues";
+
 export const createColumns = (
   advancedSettings: AdvancedSettings,
+  league: League,
 ): ColumnDef<Item>[] => [
   {
     accessorKey: COLUMN_IDS.NAME,
@@ -184,7 +187,7 @@ export const createColumns = (
     enableSorting: false,
     cell: ({ row }) => {
       const name = row.getValue(COLUMN_IDS.NAME) as string;
-      const link = createTradeLink(name, advancedSettings);
+      const link = createTradeLink(name, league, advancedSettings);
       return (
         <div className="flex w-full flex-1 items-center">
           <Button

@@ -23,7 +23,7 @@ export default async function LeagueContentServer({
         />
       </h4>
       <div className="pt-2 xl:pt-6 xl:pb-4">
-        <SharedDataView items={items} />
+        <SharedDataView items={items} league={league} />
       </div>
     </>
   );

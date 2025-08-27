@@ -36,11 +36,14 @@ declare module "@tanstack/react-table" {
     className?: string;
   }
 }
+import { League } from "@/lib/leagues";
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   advancedSettings: AdvancedSettings;
   onAdvancedSettingsChange: (settings: AdvancedSettings) => void;
+  league: League;
 }
 
 export function DataTable<TData extends Item, TValue>({
@@ -48,6 +51,7 @@ export function DataTable<TData extends Item, TValue>({
   data,
   advancedSettings,
   onAdvancedSettingsChange,
+  league,
 }: DataTableProps<TData, TValue>) {
   const {
     sorting,
@@ -116,7 +120,11 @@ export function DataTable<TData extends Item, TValue>({
 
       {/* Mobile Card Layout */}
       <div className="lg:hidden">
-        <MobileCardLayout table={table} advancedSettings={advancedSettings} />
+        <MobileCardLayout
+          table={table}
+          advancedSettings={advancedSettings}
+          league={league}
+        />
       </div>
 
       {/* Desktop Table Layout */}

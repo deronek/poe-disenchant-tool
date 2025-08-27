@@ -87,22 +87,26 @@ const DustInfoPopover = React.memo(function DustInfoPopover() {
   );
 });
 
+import { League } from "@/lib/leagues";
+
 interface MobileCardProps<TData extends Item> {
   row: Row<TData>;
   isSelected: boolean;
   advancedSettings?: AdvancedSettings;
+  league: League;
 }
 
 function MobileCardComponent<TData extends Item>({
   row,
   isSelected,
   advancedSettings,
+  league,
 }: MobileCardProps<TData>) {
   const name = row.getValue<string>(COLUMN_IDS.NAME);
   const variant = row.original.variant;
   const chaos = row.getValue<number>(COLUMN_IDS.CHAOS);
   const dustPerChaos = row.getValue<number>(COLUMN_IDS.DUST_PER_CHAOS);
-  const tradeLink = createTradeLink(name, advancedSettings);
+  const tradeLink = createTradeLink(name, league, advancedSettings);
   const calculatedDustValue = row.original.calculatedDustValue;
 
   const handleSelect = React.useCallback(
