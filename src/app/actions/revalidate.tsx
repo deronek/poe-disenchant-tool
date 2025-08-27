@@ -1,6 +1,6 @@
-import { revalidatePath, revalidateTag } from "next/cache";
-import { cookies } from "next/headers";
 import { isValidLeague } from "@/lib/leagues";
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 
 function normalizeOrigin(origin: string) {
   return origin.replace(/\/$/, "");
@@ -141,7 +141,7 @@ export async function revalidateData(originFromClient: string, league: string) {
 
   try {
     // Revalidate specific league page
-    revalidateTag(`items-${league}`);
+    // revalidateTag(`items-${league}`);
     revalidatePath(`/${league}`, "page");
     const fullWarmUrl = `${normalizedOrigin}/${league}`;
     const warmResult = await warmOrigin(fullWarmUrl);
