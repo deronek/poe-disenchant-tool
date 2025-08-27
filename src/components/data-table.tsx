@@ -2,21 +2,18 @@
 
 import {
   ColumnDef,
-  ColumnFiltersState,
-  ColumnSizingState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   RowData,
-  SortingState,
   useReactTable,
 } from "@tanstack/react-table";
 
 import { type AdvancedSettings } from "@/components/advanced-settings-panel";
-import { DataTableToolbar } from "@/components/toolbar";
 import { MobileToolbar } from "@/components/mobile-toolbar";
+import { DataTableToolbar } from "@/components/toolbar";
 import {
   Table,
   TableBody,
@@ -29,6 +26,7 @@ import type { Item } from "@/lib/itemData";
 import { ChevronUp } from "lucide-react";
 import * as React from "react";
 import { DataTablePagination } from "./data-table-pagination";
+import { useDataTableState } from "./data-table-state-context";
 import { MobileCardLayout } from "./mobile-card-layout";
 import { usePersistentRowSelection } from "./usePersistentRowSelection";
 
@@ -51,17 +49,14 @@ export function DataTable<TData extends Item, TValue>({
   advancedSettings,
   onAdvancedSettingsChange,
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = React.useState<SortingState>([
-    {
-      id: "dustPerChaos",
-      desc: true,
-    },
-  ]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [],
-  );
-  // Keep column sizes in state to make widths stable
-  const [columnSizing, setColumnSizing] = React.useState<ColumnSizingState>({});
+  const {
+    sorting,
+    columnFilters,
+    columnSizing,
+    updateSorting,
+    updateColumnFilters,
+    updateColumnSizing,
+  } = useDataTableState();
 
   // Persistent row selection
   const { rowSelection, setRowSelection, clearSelection } =
@@ -72,11 +67,11 @@ export function DataTable<TData extends Item, TValue>({
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    onSortingChange: setSorting,
+    onSortingChange: updateSorting,
     getSortedRowModel: getSortedRowModel(),
-    onColumnFiltersChange: setColumnFilters,
+    onColumnFiltersChange: updateColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
-    onColumnSizingChange: setColumnSizing,
+    onColumnSizingChange: updateColumnSizing,
     columnResizeMode: "onChange",
     enableColumnResizing: true,
     getRowId: (row, _index) =>

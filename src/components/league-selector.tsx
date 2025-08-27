@@ -10,6 +10,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { LEAGUES, LEAGUE_SLUGS, League } from "@/lib/leagues";
+import Spinner from "./ui/spinner";
 
 interface LeagueSelectorProps {
   currentLeague: League;
@@ -18,36 +19,36 @@ interface LeagueSelectorProps {
 export function LeagueSelector({ currentLeague }: LeagueSelectorProps) {
   const router = useRouter();
   const [selected, setSelected] = useState<League>(currentLeague);
-  const [, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition();
 
   const handleLeagueChange = (newLeague: League) => {
     setSelected(newLeague);
-    try {
-      // TODO: check if prefetch is beneficial at all
-      router.prefetch(`/${newLeague}`);
-    } catch {}
     startTransition(() => {
       router.push(`/${newLeague}`);
     });
   };
 
   return (
-    <Select
-      value={selected}
-      onValueChange={(v) => handleLeagueChange(v as League)}
-    >
-      <SelectTrigger className="w-[200px]">
-        <SelectValue placeholder="Select league">
-          {LEAGUES[selected].name}
-        </SelectValue>
-      </SelectTrigger>
-      <SelectContent>
-        {LEAGUE_SLUGS.map((slug) => (
-          <SelectItem key={slug} value={slug}>
-            {LEAGUES[slug].name}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+    <div className="flex items-center gap-4">
+      {isPending && <Spinner />}
+
+      <Select
+        value={selected}
+        onValueChange={(v) => handleLeagueChange(v as League)}
+      >
+        <SelectTrigger className="w-[200px]">
+          <SelectValue placeholder="Select league">
+            {LEAGUES[selected].name}
+          </SelectValue>
+        </SelectTrigger>
+        <SelectContent>
+          {LEAGUE_SLUGS.map((slug) => (
+            <SelectItem key={slug} value={slug}>
+              {LEAGUES[slug].name}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
   );
 }
