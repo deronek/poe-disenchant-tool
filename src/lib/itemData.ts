@@ -68,7 +68,7 @@ const uncached__getItems = async (league: League) => {
 };
 
 export const getItems = async (league: League) => {
-  return unstable_cache(async () => uncached__getItems(league), [], {
+  return unstable_cache(async () => uncached__getItems(league), [league], {
     tags: [`items-${league}`],
     revalidate: 300, // 5 minutes
   })();
