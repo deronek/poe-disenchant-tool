@@ -22,7 +22,7 @@ export default async function LeagueContentServer({
           revalidateData={revalidateData}
         />
       </h4>
-      <div className="pt-2 xl:pt-6 xl:pb-4">
+      <div className="xl:py-4">
         <SharedDataView items={items} league={league} />
       </div>
     </>
