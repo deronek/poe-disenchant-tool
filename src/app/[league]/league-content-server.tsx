@@ -11,7 +11,8 @@ interface LeagueContentServerProps {
 export default async function LeagueContentServer({
   league,
 }: LeagueContentServerProps) {
-  const { items, lastUpdated } = await getItems(league);
+  const { items, lastUpdated: lastUpdatedTimestamp } = await getItems(league);
+  const lastUpdated = new Date(lastUpdatedTimestamp);
 
   return (
     <>

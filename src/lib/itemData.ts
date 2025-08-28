@@ -63,7 +63,7 @@ const uncached__getItems = async (league: League) => {
 
   return {
     items: merged,
-    lastUpdated: new Date().toISOString(),
+    lastUpdated: Date.now(),
   };
 };
 
