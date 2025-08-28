@@ -5,36 +5,7 @@ import path from "path";
 
 import { z } from "zod";
 import { getLeagueApiName, League } from "../leagues";
-
-const dataHardcoded = fs.readFileSync(
-  path.join(process.cwd(), "src/lib/prices/prices.json"),
-  "utf-8",
-);
-
-const jsonHardcoded = JSON.parse(dataHardcoded);
-
-const LineSchema = z.object({
-  name: z.string(),
-  chaos: z.number(),
-  graph: z.array(z.number().nullable()),
-  variant: z.string().optional(),
-});
-
-const OverviewSchema = z.object({
-  type: z.string(),
-  lines: z.array(LineSchema),
-});
-
-const ApiResponseSchema = z.object({
-  currencyOverviews: z.array(OverviewSchema),
-  itemOverviews: z.array(OverviewSchema),
-});
-
-type ApiResponse = z.infer<typeof ApiResponseSchema>;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-type Overview = z.infer<typeof OverviewSchema>;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-type Line = z.infer<typeof LineSchema>;
+import { isDevelopment } from "../utils";
 
 const allowedUniqueTypes = [
   "UniqueWeapon",
@@ -44,120 +15,121 @@ const allowedUniqueTypes = [
 
 export type AllowedUnique = (typeof allowedUniqueTypes)[number];
 
-const isAllowedUnique = (t: string): t is AllowedUnique =>
-  (allowedUniqueTypes as readonly string[]).includes(t);
+const LineSchema = z.object({
+  name: z.string(),
+  chaosValue: z.number(),
+  baseType: z.string(),
+});
+
+const ItemOverviewResponseSchema = z.object({
+  lines: z.optional(z.array(LineSchema)),
+});
+
+type ItemOverviewResponse = z.infer<typeof ItemOverviewResponseSchema>;
 
 export type Item = {
   type: AllowedUnique;
   name: string;
   chaos: number;
-  graph: (number | null)[];
-  variant?: string;
+  baseType: string;
 };
 
-// TODO: cache using ISR
-const getPriceDataApi = async (league: League): Promise<ApiResponse> => {
+// Parse dev data globally in development only
+const devDataCache = {} as Record<AllowedUnique, ItemOverviewResponse>;
+
+if (isDevelopment) {
+  const loadData = (type: string): ItemOverviewResponse => {
+    const filePath = path.join(
+      process.cwd(),
+      "src/lib/prices/dev-data",
+      `${type}.json`,
+    );
+
+    try {
+      const data = fs.readFileSync(filePath, "utf-8");
+      const json = JSON.parse(data);
+      return ItemOverviewResponseSchema.parse(json);
+    } catch (error) {
+      console.warn(
+        `Could not load dev data for ${type}, returning empty data`,
+        error,
+      );
+      return { lines: [] };
+    }
+  };
+
+  // Load all dev data at startup
+  allowedUniqueTypes.forEach((type) => {
+    devDataCache[type] = loadData(type);
+  });
+}
+
+const getDevData = async (
+  type: AllowedUnique,
+): Promise<ItemOverviewResponse> => {
+  // Return cached dev data
+  return devDataCache[type];
+};
+
+const getProductionDataForType = async (
+  type: AllowedUnique,
+  leagueApiName: string,
+): Promise<Item[]> => {
+  const url = `https://poe.ninja/api/data/itemoverview?type=${encodeURIComponent(type)}&league=${encodeURIComponent(leagueApiName)}`;
   try {
-    if (process.env.NODE_ENV === "development") {
-      // hardcoded data for dev
-      return jsonHardcoded;
-    }
-
-    const leagueApiName = getLeagueApiName(league);
-    const response = await fetch(
-      `https://poe.ninja/api/data/denseoverviews?league=${encodeURIComponent(leagueApiName)}`,
-    );
+    const response = await fetch(url);
     const json = await response.json();
-    const data = await parseResponse(json);
-    console.log(`Successfully fetched price data for ${leagueApiName}`);
-    return data;
+    const data = await ItemOverviewResponseSchema.parse(json);
+
+    if (!data.lines) {
+      console.warn(`No data returned for ${type} in ${leagueApiName}`);
+      return [];
+    }
+
+    const items: Item[] = data.lines.map((line) => ({
+      type,
+      name: line.name,
+      chaos: line.chaosValue,
+      baseType: line.baseType,
+    }));
+
+    console.log(
+      `Successfully fetched price data for ${type} in ${leagueApiName}`,
+    );
+    return items;
   } catch (error) {
-    // TODO: need to show this info on page
     console.error(
-      `Error fetching price data for ${league}:`,
+      `Error fetching price data for ${type} in ${leagueApiName}:`,
       error,
-      "Falling back to hardcoded data",
     );
-    return jsonHardcoded;
+    return [];
   }
 };
 
-const parseResponse = async (json: unknown): Promise<ApiResponse> => {
-  return ApiResponseSchema.parse(json);
+const getPriceDataForType = async (
+  type: AllowedUnique,
+  leagueApiName: string,
+): Promise<Item[]> => {
+  if (isDevelopment) {
+    return getDevDataForType(type);
+  }
+
+  return getProductionDataForType(type, leagueApiName);
 };
 
-// If we get a line with a variant containing 5L or 6L, we need to keep the base version only
-const dedupeLinkedVariants = (lines: Item[]) => {
-  const grouped = new Map<string, Item[]>();
-
-  for (const line of lines) {
-    grouped.set(line.name, [...(grouped.get(line.name) ?? []), line]);
+const getDevDataForType = async (type: AllowedUnique): Promise<Item[]> => {
+  const data = await getDevData(type);
+  if (!data.lines) {
+    console.warn(`No dev data returned for ${type}`);
+    return [];
   }
 
-  const filtered: Item[] = [];
-
-  for (const [, sameNameLines] of grouped.entries()) {
-    const hasLinked = sameNameLines.some((line) =>
-      /5L|6L/i.test(line.variant ?? ""),
-    );
-    const hasBase = sameNameLines.some(
-      (line) => !(line.variant && /5L|6L/i.test(line.variant)),
-    );
-
-    if (hasLinked && hasBase) {
-      const baseLines = sameNameLines.filter(
-        (line) => !(line.variant && /5L|6L/i.test(line.variant)),
-      );
-      // Log removed linked variants
-      // sameNameLines.forEach((line) => {
-      //   if (line.variant && /5L|6L/i.test(line.variant)) {
-      //     console.warn(`Removed linked variant due to base existing:`, line);
-      //   }
-      // });
-      filtered.push(...baseLines);
-    } else {
-      filtered.push(...sameNameLines);
-    }
-  }
-
-  return filtered;
-};
-
-// If we get a line with a relic, keep only the base variant
-const dedupeRelics = (lines: Item[]) => {
-  const grouped = new Map<string, Item[]>();
-
-  for (const line of lines) {
-    grouped.set(line.name, [...(grouped.get(line.name) ?? []), line]);
-  }
-
-  const filtered: Item[] = [];
-
-  for (const [, sameNameLines] of grouped.entries()) {
-    const hasRelic = sameNameLines.some((line) =>
-      /, Relic/i.test(line.variant ?? ""),
-    );
-    const hasBase = sameNameLines.some(
-      (line) => !(line.variant && /, Relic/i.test(line.variant)),
-    );
-
-    if (hasRelic && hasBase) {
-      const baseLines = sameNameLines.filter(
-        (line) => !(line.variant && /, Relic/i.test(line.variant)),
-      );
-      // Log removed relic variants
-      // sameNameLines.forEach((line) => {
-      //   if (line.variant && /, Relic/i.test(line.variant)) {
-      //     console.warn(`Removed relic variant due to base existing:`, line);
-      //   }
-      // });
-      filtered.push(...baseLines);
-    } else {
-      filtered.push(...sameNameLines);
-    }
-  }
-
-  return filtered;
+  return data.lines.map((line) => ({
+    type,
+    name: line.name,
+    chaos: line.chaosValue,
+    baseType: line.baseType,
+  }));
 };
 
 // Keep only the cheapest variant for items with the same name
@@ -187,52 +159,24 @@ const dedupeCheapestVariants = (lines: Item[]) => {
   return filtered;
 };
 
-const getUniqueItemLines = async (json: unknown): Promise<Item[]> => {
-  const data = await parseResponse(json);
-
-  const items: Item[] = data.itemOverviews
-    .filter((item) => isAllowedUnique(item.type))
-    .flatMap((item) =>
-      item.lines.map((line) => ({
-        type: item.type as AllowedUnique,
-        ...line,
-      })),
-    );
-
-  const noLinked = dedupeLinkedVariants(items);
-  const noRelic = dedupeRelics(noLinked);
-  const cheapestVariants = dedupeCheapestVariants(noRelic);
-
-  const filtered = cheapestVariants;
-
-  // Check for duplicate names
-  // const seen = new Map<string, Line>();
-  // for (const line of filtered) {
-  //   const existing = seen.get(line.name);
-  //   if (existing) {
-  //     console.warn(`⚠️ Duplicate name found: "${line.name}"`);
-  //     console.warn("First occurrence:", existing);
-  //     console.warn("Second occurrence:", line);
-  //   } else {
-  //     seen.set(line.name, line);
-  //   }
-  // }
-
-  return filtered;
-};
-
 const uncached__getPriceData = async (league: League): Promise<Item[]> => {
-  const data = await getPriceDataApi(league);
-  const lines = await getUniqueItemLines(data);
-  return lines;
-};
+  const leagueApiName = getLeagueApiName(league);
+  const allTypes = allowedUniqueTypes as readonly AllowedUnique[];
 
-// export const getPriceData = unstable_cache(
-//   uncached__getPriceData,
-//   ["poe.ninja"],
-//   {
-//     revalidate: 300, // 5 minutes
-//   },
-// );
+  // Fetch data for each type in parallel
+  const typePromises = allTypes.map((type) =>
+    getPriceDataForType(type, leagueApiName),
+  );
+
+  const allItems = await Promise.all(typePromises);
+  const combinedItems = allItems.flat();
+
+  // We don't neccesarily dedupe 5Ls/6Ls/relics
+  // We can just take cheapest item for multiple with the same name
+  // For items with multiple base types, the dust value should be the same for all
+  const cheapestVariants = dedupeCheapestVariants(combinedItems);
+
+  return cheapestVariants;
+};
 
 export const getPriceData = uncached__getPriceData;

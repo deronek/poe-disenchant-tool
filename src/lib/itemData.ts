@@ -1,15 +1,13 @@
 import { unstable_cache } from "next/cache";
 import { getDustData } from "./dust";
-import { AllowedUnique, getPriceData } from "./prices";
 import { League } from "./leagues";
+import { AllowedUnique, getPriceData } from "./prices";
 
 export type Item = {
   name: string;
-  baseType: string;
   id: number;
   uniqueId: string;
   chaos: number;
-  graph: (number | null)[];
   variant?: string;
   calculatedDustValue: number;
   dustPerChaos: number;
@@ -45,12 +43,10 @@ const uncached__getItems = async (league: League) => {
 
       merged.push({
         id: id++,
-        uniqueId: createUniqueId(priceItem.name, priceItem.variant),
+        uniqueId: createUniqueId(priceItem.name, priceItem.baseType),
         name: priceItem.name,
-        baseType: dustItem.baseType,
         chaos: priceItem.chaos,
-        graph: priceItem.graph,
-        variant: dustItem.baseType,
+        variant: priceItem.baseType,
         calculatedDustValue,
         dustPerChaos: Math.round(calculatedDustValue / priceItem.chaos),
         type: priceItem.type,
