@@ -12,6 +12,7 @@ export type Item = {
   calculatedDustValue: number;
   dustPerChaos: number;
   type: AllowedUnique;
+  icon: string;
 };
 
 const ITEMS_TO_IGNORE = [
@@ -50,6 +51,7 @@ const uncached__getItems = async (league: League) => {
         calculatedDustValue,
         dustPerChaos: Math.round(calculatedDustValue / priceItem.chaos),
         type: priceItem.type,
+        icon: priceItem.icon,
       });
     } else {
       // TODO: need to display this in the UI, as an information that something will be missing

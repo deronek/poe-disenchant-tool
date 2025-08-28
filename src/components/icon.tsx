@@ -1,7 +1,7 @@
 type IconProps = {
   src: string;
   className?: string;
-  size?: number; // square size in px
+  size?: number; // max size in px (preserves aspect ratio)
   alt?: string;
   title?: string;
   loading?: "eager" | "lazy";
@@ -21,10 +21,15 @@ function Icon({
       src={src}
       title={title ?? alt}
       alt={alt}
-      width={size}
-      height={size}
       className={className}
-      style={{ display: "inline-block" }}
+      style={{
+        display: "inline-block",
+        maxWidth: `${size}px`,
+        maxHeight: `${size}px`,
+        width: "auto",
+        height: "auto",
+        objectFit: "contain",
+      }}
       loading={loading}
     />
   );

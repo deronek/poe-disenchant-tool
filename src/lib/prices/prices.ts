@@ -19,6 +19,7 @@ const LineSchema = z.object({
   name: z.string(),
   chaosValue: z.number(),
   baseType: z.string(),
+  icon: z.string().url(),
 });
 
 const ItemOverviewResponseSchema = z.object({
@@ -32,6 +33,7 @@ export type Item = {
   name: string;
   chaos: number;
   baseType: string;
+  icon: string;
 };
 
 // Parse dev data globally in development only
@@ -91,6 +93,7 @@ const getProductionDataForType = async (
       name: line.name,
       chaos: line.chaosValue,
       baseType: line.baseType,
+      icon: line.icon,
     }));
 
     console.log(
@@ -129,6 +132,7 @@ const getDevDataForType = async (type: AllowedUnique): Promise<Item[]> => {
     name: line.name,
     chaos: line.chaosValue,
     baseType: line.baseType,
+    icon: line.icon,
   }));
 };
 

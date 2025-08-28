@@ -18,6 +18,7 @@ import { DustInfo } from "./dust-info";
 import { ItemMarkingInfo } from "./item-marking-info";
 import { AdvancedSettings } from "./advanced-settings-panel";
 import { COLUMN_IDS } from "./columns";
+import { Icon } from "./icon";
 // Checkbox with memo
 const SelectionCheckbox = React.memo(function SelectionCheckbox({
   checked,
@@ -104,6 +105,7 @@ function MobileCardComponent<TData extends Item>({
 }: MobileCardProps<TData>) {
   const name = row.getValue<string>(COLUMN_IDS.NAME);
   const variant = row.original.variant;
+  const icon = row.getValue<string>(COLUMN_IDS.ICON);
   const chaos = row.getValue<number>(COLUMN_IDS.CHAOS);
   const dustPerChaos = row.getValue<number>(COLUMN_IDS.DUST_PER_CHAOS);
   const tradeLink = createTradeLink(name, league, advancedSettings);
@@ -122,11 +124,22 @@ function MobileCardComponent<TData extends Item>({
     >
       {/* Header with selection and name */}
       <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0 flex-1">
-          <h3 className="truncate font-medium tracking-[0.015em]">{name}</h3>
-          {variant && (
-            <p className="text-muted-foreground truncate text-sm">{variant}</p>
-          )}
+        <div className="flex min-w-0 flex-1 items-center gap-6">
+          <Icon
+            src={icon}
+            size={48}
+            alt="Item icon"
+            loading="lazy"
+            className="flex-shrink-0 rounded-sm"
+          />
+          <div className="min-w-0 flex-1">
+            <h3 className="truncate font-medium tracking-[0.015em]">{name}</h3>
+            {variant && (
+              <p className="text-muted-foreground truncate text-sm">
+                {variant}
+              </p>
+            )}
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <SelectionCheckbox

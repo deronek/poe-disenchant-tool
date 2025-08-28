@@ -20,6 +20,7 @@ import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
 import { DustInfo } from "./dust-info";
 import { ItemMarkingInfo } from "./item-marking-info";
+import { Icon } from "./icon";
 
 import type { AdvancedSettings } from "./advanced-settings-panel";
 
@@ -63,6 +64,7 @@ const MarkHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> = React.memo(
 );
 
 export const COLUMN_IDS = {
+  ICON: "icon",
   NAME: "name",
   CHAOS: "chaos",
   CALCULATED_DUST_VALUE: "calculatedDustValue",
@@ -80,9 +82,30 @@ export const createColumns = (
   league: League,
 ): ColumnDef<Item>[] => [
   {
+    accessorKey: COLUMN_IDS.ICON,
+    header: "",
+    size: 40,
+    enableSorting: false,
+    enableHiding: false,
+    cell: ({ row }) => {
+      const icon = row.getValue(COLUMN_IDS.ICON) as string;
+      return (
+        <div className="flex items-center justify-center">
+          <Icon
+            src={icon}
+            size={36}
+            alt="Item icon"
+            loading="lazy"
+            className="rounded-sm"
+          />
+        </div>
+      );
+    },
+  },
+  {
     accessorKey: COLUMN_IDS.NAME,
     header: "Name",
-    size: 210,
+    size: 180, // Reduced from 210 to account for icon column
     filterFn: (row, _columnId, filterValue) => {
       const query = String(filterValue ?? "")
         .trim()
