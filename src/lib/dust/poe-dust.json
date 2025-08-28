@@ -1740,6 +1740,18 @@
     "link": "https://poedb.tw/us/The_Iron_Fortress"
   },
   {
+    "name": "Iron Heart",
+    "baseType": "Crusader Plate",
+    "dustVal": 33.32,
+    "dustValIlvl84": 66640,
+    "dustValIlvl84Q20": 79968,
+    "dustPerSlot": 11106,
+    "w": 2,
+    "h": 3,
+    "slots": 6,
+    "link": "https://poedb.tw/us/The_Iron_Fortress"
+  },
+  {
     "name": "Farrul's Pounce",
     "baseType": "Hydrascale Gauntlets",
     "dustVal": 33.32,
@@ -12745,5 +12757,16 @@
     "h": 2,
     "slots": 4,
     "link": "https://poedb.tw/us/Verusos_Ambition"
+  },
+  {
+    "name": "Broadstroke",
+    "baseType": "Shackled Boots",
+    "dustVal": 1.19,
+    "dustValIlvl84": 2380,
+    "dustValIlvl84Q20": 2856,
+    "w": 2,
+    "h": 3,
+    "slots": 6,
+    "link": "https://poedb.tw/us/Broadstroke"
   }
 ]
