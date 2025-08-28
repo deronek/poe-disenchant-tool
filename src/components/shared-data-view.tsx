@@ -8,13 +8,15 @@ import {
   DEFAULT_ADVANCED_SETTINGS,
 } from "@/components/advanced-settings-panel";
 import type { Item } from "@/lib/itemData";
+import { League } from "@/lib/leagues";
 import { useLocalStorage } from "@/lib/use-local-storage";
 
 interface SharedDataViewProps {
   items: Item[];
+  league: League;
 }
 
-export function SharedDataView({ items }: SharedDataViewProps) {
+export function SharedDataView({ items, league }: SharedDataViewProps) {
   const [advancedSettings, setAdvancedSettings] =
     useLocalStorage<AdvancedSettings>(
       DEFAULT_ADVANCED_SETTINGS,
@@ -24,8 +26,8 @@ export function SharedDataView({ items }: SharedDataViewProps) {
       },
     );
 
-  // Generate columns with current settings
-  const columns = createColumns(advancedSettings);
+  // Generate columns with current settings and league
+  const columns = createColumns(advancedSettings, league);
 
   return (
     <DataTable
@@ -33,6 +35,7 @@ export function SharedDataView({ items }: SharedDataViewProps) {
       data={items}
       advancedSettings={advancedSettings}
       onAdvancedSettingsChange={setAdvancedSettings}
+      league={league}
     />
   );
 }

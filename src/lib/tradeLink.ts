@@ -1,9 +1,15 @@
+import { League, LEAGUES } from "./leagues";
+
 export interface TradeLinkSettings {
   minItemLevel?: number;
   includeCorrupted?: boolean;
 }
 
-export const createTradeLink = (name: string, settings?: TradeLinkSettings) => {
+export const createTradeLink = (
+  name: string,
+  league: League,
+  settings?: TradeLinkSettings,
+) => {
   const payload = {
     query: {
       status: {
@@ -45,6 +51,7 @@ export const createTradeLink = (name: string, settings?: TradeLinkSettings) => {
     },
   };
 
-  const baseLink = `https://www.pathofexile.com/trade/search/Mercenaries?q=`;
+  const leagueName = LEAGUES[league].apiName;
+  const baseLink = `https://www.pathofexile.com/trade/search/${leagueName}?q=`;
   return baseLink + encodeURIComponent(JSON.stringify(payload));
 };

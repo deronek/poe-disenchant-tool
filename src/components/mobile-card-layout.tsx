@@ -3,6 +3,7 @@
 import { MobileCard } from "./mobile-card";
 import { Table } from "@tanstack/react-table";
 import type { Item } from "@/lib/itemData";
+import { League } from "@/lib/leagues";
 
 interface MobileCardLayoutProps<TData extends Item> {
   table: Table<TData>;
@@ -10,11 +11,13 @@ interface MobileCardLayoutProps<TData extends Item> {
     minItemLevel: number;
     includeCorrupted: boolean;
   };
+  league: League;
 }
 
 export function MobileCardLayout<TData extends Item>({
   table,
   advancedSettings,
+  league,
 }: MobileCardLayoutProps<TData>) {
   return (
     <div className="px-2 py-4 sm:px-3">
@@ -26,6 +29,7 @@ export function MobileCardLayout<TData extends Item>({
                 row={row}
                 isSelected={row.getIsSelected()}
                 advancedSettings={advancedSettings}
+                league={league}
               />
               {/* Subtle order indicator for tablet two-column layout */}
               <div className="text-muted-foreground/60 absolute -top-1 -right-1 hidden text-[10px] font-medium md:block">
