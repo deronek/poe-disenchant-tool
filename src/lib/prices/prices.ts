@@ -38,7 +38,7 @@ type Line = z.infer<typeof LineSchema>;
 
 const allowedUniqueTypes = [
   "UniqueWeapon",
-  "UniqueArmor",
+  "UniqueArmour",
   "UniqueAccessory",
 ] as const;
 
