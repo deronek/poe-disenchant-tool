@@ -22,7 +22,7 @@ import { Clock, RefreshCw } from "lucide-react";
 import { useEffect, useState } from "react";
 
 interface LastUpdatedProps {
-  timestamp: string;
+  timestamp: Date;
   league: string;
   revalidateData: (origin: string, league: string) => Promise<unknown>;
 }
@@ -140,7 +140,7 @@ export default function LastUpdated({
 
   const triggerElement = (
     <time
-      dateTime={timestamp}
+      dateTime={timestamp.toISOString()}
       className={
         "text-muted-foreground inline-flex h-8 cursor-pointer items-center text-sm transition-colors"
       }

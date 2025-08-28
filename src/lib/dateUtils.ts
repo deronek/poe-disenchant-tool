@@ -1,9 +1,8 @@
 export const calculateTimeDifferences = (
-  timestamp: string,
+  timestamp: Date,
   now: Date = new Date(),
 ) => {
-  const lastUpdate = new Date(timestamp);
-  const diffInMs = now.getTime() - lastUpdate.getTime();
+  const diffInMs = now.getTime() - timestamp.getTime();
 
   return {
     diffInMinutes: Math.floor(diffInMs / (1000 * 60)),
@@ -30,8 +29,7 @@ export const formatRelativeTime = (
   }
 };
 
-export const formatAbsoluteTime = (timestamp: string) => {
-  const lastUpdate = new Date(timestamp);
+export const formatAbsoluteTime = (timestamp: Date) => {
   const clientLocale = navigator.language || "en-US";
   const localeForFormatting = clientLocale.startsWith("en")
     ? clientLocale
@@ -46,5 +44,5 @@ export const formatAbsoluteTime = (timestamp: string) => {
     second: "2-digit",
     hour12: false,
     timeZoneName: "short",
-  }).format(lastUpdate);
+  }).format(timestamp);
 };
