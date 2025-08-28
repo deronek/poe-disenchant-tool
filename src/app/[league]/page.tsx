@@ -15,7 +15,7 @@ export default async function LeaguePage({ params }: Props) {
   const { league } = await params;
 
   return (
-    <div className="container mx-auto space-y-2 p-4 pb-0 sm:pt-6 sm:pr-6 sm:pb-0 sm:pl-6 md:px-8 xl:pb-4">
+    <div className="container mx-auto space-y-3 p-4 pb-0 sm:pt-6 sm:pr-6 sm:pb-0 sm:pl-6 md:px-8 lg:space-y-2 xl:pb-4">
       <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
         <div className="">
           <h1 className="mb-2 text-2xl font-bold sm:mb-4">
