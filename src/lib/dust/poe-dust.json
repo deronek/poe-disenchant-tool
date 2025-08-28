@@ -8280,6 +8280,18 @@
     "link": "https://poedb.tw/us/Winterweave"
   },
   {
+    "name": "Bloodboil",
+    "baseType": "Coral Ring",
+    "dustVal": 3.95,
+    "dustValIlvl84": 7900,
+    "dustValIlvl84Q20": 9480,
+    "dustPerSlot": 7900,
+    "w": 1,
+    "h": 1,
+    "slots": 1,
+    "link": "https://poedb.tw/us/Winterweave"
+  },
+  {
     "name": "Doedre's Tongue",
     "baseType": "Lapis Amulet",
     "dustVal": 3.95,
@@ -11100,6 +11112,18 @@
     "link": "https://poedb.tw/us/The_Untouched_Soul"
   },
   {
+    "name": "Tipua Kaikohuru",
+    "baseType": "Whalebone Rapier",
+    "dustVal": 1.49,
+    "dustValIlvl84": 2980,
+    "dustValIlvl84Q20": 3576,
+    "dustPerSlot": 745,
+    "w": 1,
+    "h": 4,
+    "slots": 4,
+    "link": "https://poedb.tw/us/The_Goddess_Bound"
+  },
+  {
     "name": "The Goddess Bound",
     "baseType": "Whalebone Rapier",
     "dustVal": 1.49,
@@ -12501,5 +12525,27 @@
     "h": 1,
     "slots": 1,
     "link": "https://poedb.tw/us/Grattus_Signet"
+  },
+  {
+    "name": "The Tempest",
+    "baseType": "Long Bow",
+    "dustVal": 1.27,
+    "dustValIlvl84": 2540,
+    "dustValIlvl84Q20": 3048,
+    "w": 2,
+    "h": 3,
+    "slots": 6,
+    "link": "https://poedb.tw/us/The_Tempest"
+  },
+  {
+    "name": "Serle's Masterwork",
+    "baseType": "Phantom Mace",
+    "dustVal": 5.81,
+    "dustValIlvl84": 11620,
+    "dustValIlvl84Q20": 13944,
+    "w": 2,
+    "h": 3,
+    "slots": 6,
+    "link": "https://poedb.tw/us/Serles_Masterwork"
   }
 ]
