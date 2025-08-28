@@ -36,7 +36,7 @@ const Spinner: React.FC<SpinnerProps> = ({
     <div
       {...props}
       className={cn(
-        "relative inline-flex items-center justify-center align-middle",
+        "text-primary relative inline-flex items-center justify-center align-middle",
         className,
         indeterminate && "indeterminate",
       )}
