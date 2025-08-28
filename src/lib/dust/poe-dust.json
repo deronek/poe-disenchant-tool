@@ -1740,6 +1740,18 @@
     "link": "https://poedb.tw/us/The_Iron_Fortress"
   },
   {
+    "name": "Iron Heart",
+    "baseType": "Crusader Plate",
+    "dustVal": 33.32,
+    "dustValIlvl84": 66640,
+    "dustValIlvl84Q20": 79968,
+    "dustPerSlot": 11106,
+    "w": 2,
+    "h": 3,
+    "slots": 6,
+    "link": "https://poedb.tw/us/The_Iron_Fortress"
+  },
+  {
     "name": "Farrul's Pounce",
     "baseType": "Hydrascale Gauntlets",
     "dustVal": 33.32,
@@ -12547,5 +12559,214 @@
     "h": 3,
     "slots": 6,
     "link": "https://poedb.tw/us/Serles_Masterwork"
+  },
+  {
+    "name": "Svalinn",
+    "baseType": "Girded Tower Shield",
+    "dustVal": 26.3,
+    "dustValIlvl84": 52600,
+    "dustValIlvl84Q20": 63120,
+    "w": 2,
+    "h": 4,
+    "slots": 8,
+    "link": "https://poedb.tw/us/Svalinn"
+  },
+  {
+    "name": "The Celestial Brace",
+    "baseType": "Goliath Gauntlets",
+    "dustVal": 27.91,
+    "dustValIlvl84": 55820,
+    "dustValIlvl84Q20": 66984,
+    "w": 2,
+    "h": 2,
+    "slots": 4,
+    "link": "https://poedb.tw/us/The_Celestial_Brace"
+  },
+  {
+    "name": "The Apostate",
+    "baseType": "Cabalist Regalia",
+    "dustVal": 16.39,
+    "dustValIlvl84": 32780,
+    "dustValIlvl84Q20": 39336,
+    "w": 2,
+    "h": 3,
+    "slots": 6,
+    "link": "https://poedb.tw/us/The_Apostate"
+  },
+  {
+    "name": "Spinehail",
+    "baseType": "Vile Arrow Quiver",
+    "dustVal": 49.34,
+    "dustValIlvl84": 98680,
+    "dustValIlvl84Q20": 118416,
+    "w": 2,
+    "h": 3,
+    "slots": 6,
+    "link": "https://poedb.tw/us/Spinehail"
+  },
+  {
+    "name": "Seven Teachings",
+    "baseType": "Waxed Garb",
+    "dustVal": 50,
+    "dustValIlvl84": 100000,
+    "dustValIlvl84Q20": 120000,
+    "w": 2,
+    "h": 3,
+    "slots": 6,
+    "link": "https://poedb.tw/us/Seven_Teachings"
+  },
+  {
+    "name": "Kaom's Command",
+    "baseType": "Siege Helmet",
+    "dustVal": 8.02,
+    "dustValIlvl84": 16040,
+    "dustValIlvl84Q20": 19248,
+    "w": 2,
+    "h": 2,
+    "slots": 4,
+    "link": "https://poedb.tw/us/Kaoms_Command"
+  },
+  {
+    "name": "Hand of Heresy",
+    "baseType": "Martyr Gloves",
+    "dustVal": 116.86,
+    "dustValIlvl84": 233720,
+    "dustValIlvl84Q20": 280464,
+    "w": 2,
+    "h": 2,
+    "slots": 4,
+    "link": "https://poedb.tw/us/Hand_of_Heresy"
+  },
+  {
+    "name": "Servant of Decay",
+    "baseType": "Torturer Garb",
+    "dustVal": 58.43,
+    "dustValIlvl84": 116860,
+    "dustValIlvl84Q20": 140232,
+    "w": 2,
+    "h": 3,
+    "slots": 6,
+    "link": "https://poedb.tw/us/Servant_of_Decay"
+  },
+  {
+    "name": "The Devourer of Minds",
+    "baseType": "Pig-Faced Bascinet",
+    "dustVal": 37.5,
+    "dustValIlvl84": 75000,
+    "dustValIlvl84Q20": 90000,
+    "w": 2,
+    "h": 2,
+    "slots": 4,
+    "link": "https://poedb.tw/us/The_Devourer_of_Minds"
+  },
+  {
+    "name": "Ravenous Passion",
+    "baseType": "Zealot Helmet",
+    "dustVal": 21.39,
+    "dustValIlvl84": 42780,
+    "dustValIlvl84Q20": 51336,
+    "w": 2,
+    "h": 2,
+    "slots": 4,
+    "link": "https://poedb.tw/us/Ravenous_Passion"
+  },
+  {
+    "name": "Azadi Crest",
+    "baseType": "Lacquered Buckler",
+    "dustVal": 9.06,
+    "dustValIlvl84": 18120,
+    "dustValIlvl84Q20": 21744,
+    "w": 2,
+    "h": 2,
+    "slots": 4,
+    "link": "https://poedb.tw/us/Azadi_Crest"
+  },
+  {
+    "name": "The Tempest Rising",
+    "baseType": "Goliath Greaves",
+    "dustVal": 28.74,
+    "dustValIlvl84": 57480,
+    "dustValIlvl84Q20": 68976,
+    "w": 2,
+    "h": 2,
+    "slots": 4,
+    "link": "https://poedb.tw/us/The_Tempest_Rising"
+  },
+  {
+    "name": "Admiral's Arrogance",
+    "baseType": "Antique Gauntlets",
+    "dustVal": 6.15,
+    "dustValIlvl84": 12300,
+    "dustValIlvl84Q20": 14760,
+    "w": 2,
+    "h": 2,
+    "slots": 4,
+    "link": "https://poedb.tw/us/Admirals_Arrogance"
+  },
+  {
+    "name": "The Dark Monarch",
+    "baseType": "Lich's Circlet",
+    "dustVal": 46.51,
+    "dustValIlvl84": 93020,
+    "dustValIlvl84Q20": 111624,
+    "w": 2,
+    "h": 2,
+    "slots": 4,
+    "link": "https://poedb.tw/us/The_Dark_Monarch"
+  },
+  {
+    "name": "The Hand of Phrecia",
+    "baseType": "Mesh Gloves",
+    "dustVal": 5,
+    "dustValIlvl84": 10000,
+    "dustValIlvl84Q20": 12000,
+    "w": 2,
+    "h": 2,
+    "slots": 4,
+    "link": "https://poedb.tw/us/The_Hand_of_Phrecia"
+  },
+  {
+    "name": "Howlcrack",
+    "baseType": "Ezomyte Burgonet",
+    "dustVal": 14.49,
+    "dustValIlvl84": 28980,
+    "dustValIlvl84Q20": 34776,
+    "w": 2,
+    "h": 2,
+    "slots": 4,
+    "link": "https://poedb.tw/us/Howlcrack"
+  },
+  {
+    "name": "Scornflux",
+    "baseType": "Satin Slippers",
+    "dustVal": 9.06,
+    "dustValIlvl84": 18120,
+    "dustValIlvl84Q20": 21744,
+    "w": 2,
+    "h": 2,
+    "slots": 4,
+    "link": "https://poedb.tw/us/Scornflux"
+  },
+  {
+    "name": "Veruso's Ambition",
+    "baseType": "Shackled Boots",
+    "dustVal": 3.32,
+    "dustValIlvl84": 6640,
+    "dustValIlvl84Q20": 7968,
+    "w": 2,
+    "h": 2,
+    "slots": 4,
+    "link": "https://poedb.tw/us/Verusos_Ambition"
+  },
+  {
+    "name": "Broadstroke",
+    "baseType": "Shackled Boots",
+    "dustVal": 1.19,
+    "dustValIlvl84": 2380,
+    "dustValIlvl84Q20": 2856,
+    "w": 2,
+    "h": 3,
+    "slots": 6,
+    "link": "https://poedb.tw/us/Broadstroke"
   }
 ]
