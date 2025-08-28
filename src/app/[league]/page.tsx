@@ -1,10 +1,10 @@
 // src/app/[league]/page.tsx
-import { Suspense } from "react";
-import { LeagueSelector } from "@/components/league-selector";
-import { ModeToggle } from "@/components/ui/mode-toggle";
 import LeagueContentServer from "@/app/[league]/league-content-server";
 import DataViewSkeleton from "@/components/data-view-skeleton";
+import { LeagueSelector } from "@/components/league-selector";
+import { ModeToggle } from "@/components/ui/mode-toggle";
 import { League, LEAGUE_SLUGS } from "@/lib/leagues";
+import { Suspense } from "react";
 
 type Props = { params: Promise<{ league: League }> };
 
@@ -13,12 +13,6 @@ export const revalidate = 300; // 5 minutes
 
 export default async function LeaguePage({ params }: Props) {
   const { league } = await params;
-
-  // Probably not needed since dynamicParams is false
-  // if (!isValidLeague(league )) {
-  // console.warn("Invalid league with manual catch", league);
-  // notFound();
-  // }
 
   return (
     <div className="container mx-auto space-y-2 p-4 pb-0 sm:pt-6 sm:pr-6 sm:pb-0 sm:pl-6 md:px-8 xl:pb-4">
