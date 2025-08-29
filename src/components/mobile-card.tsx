@@ -128,7 +128,6 @@ function MobileCardComponent<TData extends Item>({
           <Icon
             src={icon}
             size={48}
-            alt="Item icon"
             loading="lazy"
             className="flex-shrink-0 rounded-sm"
           />

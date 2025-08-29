@@ -91,13 +91,7 @@ export const createColumns = (
       const icon = row.getValue(COLUMN_IDS.ICON) as string;
       return (
         <div className="flex items-center justify-center">
-          <Icon
-            src={icon}
-            size={36}
-            alt="Item icon"
-            loading="lazy"
-            className="rounded-sm"
-          />
+          <Icon src={icon} size={36} loading="lazy" className="rounded-sm" />
         </div>
       );
     },
