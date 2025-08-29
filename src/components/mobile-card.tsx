@@ -124,17 +124,25 @@ function MobileCardComponent<TData extends Item>({
     >
       {/* Header with selection and name */}
       <div className="flex items-start justify-between gap-3">
-        <div className="flex min-w-0 flex-1 items-center gap-6">
+        <div className="flex min-w-0 flex-1 items-center gap-3">
           <Icon
             src={icon}
-            size={48}
+            size={56}
             loading="lazy"
             className="flex-shrink-0 rounded-sm"
           />
           <div className="min-w-0 flex-1">
-            <h3 className="truncate font-medium tracking-[0.015em]">{name}</h3>
+            <h3
+              className="truncate font-medium tracking-[0.015em]"
+              title={name}
+            >
+              {name}
+            </h3>
             {variant && (
-              <p className="text-muted-foreground truncate text-sm">
+              <p
+                className="text-muted-foreground truncate text-sm"
+                title={variant}
+              >
                 {variant}
               </p>
             )}
