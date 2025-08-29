@@ -5,7 +5,7 @@ import path from "path";
 
 import { z } from "zod";
 import { getLeagueApiName, League } from "../leagues";
-import { isDevelopment } from "../utils";
+import { isDevelopment } from "../utils-server";
 
 const allowedUniqueTypes = [
   "UniqueWeapon",
