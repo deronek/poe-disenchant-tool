@@ -134,29 +134,12 @@ const getDevDataForType = async (type: AllowedUnique): Promise<Item[]> => {
 
 // Keep only the cheapest variant for items with the same name
 const dedupeCheapestVariants = (lines: Item[]) => {
-  const grouped = new Map<string, Item[]>();
-
+  const bestByName = new Map<string, Item>();
   for (const line of lines) {
-    grouped.set(line.name, [...(grouped.get(line.name) ?? []), line]);
+    const prev = bestByName.get(line.name);
+    if (!prev || line.chaos < prev.chaos) bestByName.set(line.name, line);
   }
-
-  const filtered: Item[] = [];
-
-  for (const [, sameNameLines] of grouped.entries()) {
-    if (sameNameLines.length === 1) {
-      filtered.push(sameNameLines[0]);
-      continue;
-    }
-
-    // Find the item with the lowest chaos value
-    const cheapest = sameNameLines.reduce((min, current) =>
-      current.chaos < min.chaos ? current : min,
-    );
-
-    filtered.push(cheapest);
-  }
-
-  return filtered;
+  return Array.from(bestByName.values());
 };
 
 const uncached__getPriceData = async (league: League): Promise<Item[]> => {
