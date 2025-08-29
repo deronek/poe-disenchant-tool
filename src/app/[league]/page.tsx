@@ -26,7 +26,7 @@ export default async function LeaguePage({ params }: Props) {
             Thaumaturgic Dust
           </h3>
         </div>
-        <div className="ml-auto flex gap-4">
+        <div className="flex w-full justify-between gap-4 sm:ml-auto sm:w-auto">
           <LeagueSelector currentLeague={league} />
           <ModeToggle />
         </div>

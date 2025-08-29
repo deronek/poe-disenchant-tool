@@ -9,6 +9,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 import { LEAGUES, LEAGUE_SLUGS, League } from "@/lib/leagues";
 import Spinner from "./ui/spinner";
 
@@ -29,26 +30,31 @@ export function LeagueSelector({ currentLeague }: LeagueSelectorProps) {
   };
 
   return (
-    <div className="flex items-center gap-4">
-      {isPending && <Spinner />}
+    <div className="flex flex-col gap-2">
+      <Label className="text-muted-foreground" htmlFor="league-selector">
+        League
+      </Label>
+      <div className="flex items-center gap-4">
+        {isPending && <Spinner />}
 
-      <Select
-        value={selected}
-        onValueChange={(v) => handleLeagueChange(v as League)}
-      >
-        <SelectTrigger className="w-[200px]">
-          <SelectValue placeholder="Select league">
-            {LEAGUES[selected].name}
-          </SelectValue>
-        </SelectTrigger>
-        <SelectContent>
-          {LEAGUE_SLUGS.map((slug) => (
-            <SelectItem key={slug} value={slug}>
-              {LEAGUES[slug].name}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+        <Select
+          value={selected}
+          onValueChange={(v) => handleLeagueChange(v as League)}
+        >
+          <SelectTrigger className="w-[200px]" id="league-selector">
+            <SelectValue placeholder="Select league">
+              {LEAGUES[selected].name}
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            {LEAGUE_SLUGS.map((slug) => (
+              <SelectItem key={slug} value={slug}>
+                {LEAGUES[slug].name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
     </div>
   );
 }
