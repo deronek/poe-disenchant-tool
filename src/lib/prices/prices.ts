@@ -82,7 +82,7 @@ const getProductionDataForType = async (
   try {
     const response = await fetch(url);
     const json = await response.json();
-    const data = await ItemOverviewResponseSchema.parse(json);
+    const data = ItemOverviewResponseSchema.parse(json);
 
     if (!data.lines) {
       console.warn(`No data returned for ${type} in ${leagueApiName}`);
