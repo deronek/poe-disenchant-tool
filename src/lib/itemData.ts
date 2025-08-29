@@ -42,6 +42,11 @@ const uncached__getItems = async (league: League) => {
           ? dustItem.dustValIlvl84
           : dustItem.dustValIlvl84Q20;
 
+      const dustPerChaos =
+        priceItem.chaos > 0
+          ? Math.round(calculatedDustValue / priceItem.chaos)
+          : 0;
+
       merged.push({
         id: id++,
         uniqueId: createUniqueId(priceItem.name, priceItem.baseType),
@@ -49,7 +54,7 @@ const uncached__getItems = async (league: League) => {
         chaos: priceItem.chaos,
         variant: priceItem.baseType,
         calculatedDustValue,
-        dustPerChaos: Math.round(calculatedDustValue / priceItem.chaos),
+        dustPerChaos: dustPerChaos,
         type: priceItem.type,
         icon: priceItem.icon,
       });

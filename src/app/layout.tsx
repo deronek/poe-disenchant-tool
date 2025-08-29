@@ -18,7 +18,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "PoE Unique Disenchanting Tool",
-  description: "PoE Unique Disenchanting Tool",
+  description:
+    "Calculate the efficiency of disenchanting unique items for Thaumaturgic Dust",
 };
 
 export default function RootLayout({

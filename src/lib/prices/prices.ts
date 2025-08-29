@@ -5,7 +5,8 @@ import path from "path";
 
 import { z } from "zod";
 import { getLeagueApiName, League } from "../leagues";
-import { isDevelopment } from "../utils";
+
+import { isDevelopment } from "../utils-server";
 
 const allowedUniqueTypes = [
   "UniqueWeapon",
@@ -138,29 +139,12 @@ const getDevDataForType = async (type: AllowedUnique): Promise<Item[]> => {
 
 // Keep only the cheapest variant for items with the same name
 const dedupeCheapestVariants = (lines: Item[]) => {
-  const grouped = new Map<string, Item[]>();
-
+  const bestByName = new Map<string, Item>();
   for (const line of lines) {
-    grouped.set(line.name, [...(grouped.get(line.name) ?? []), line]);
+    const prev = bestByName.get(line.name);
+    if (!prev || line.chaos < prev.chaos) bestByName.set(line.name, line);
   }
-
-  const filtered: Item[] = [];
-
-  for (const [, sameNameLines] of grouped.entries()) {
-    if (sameNameLines.length === 1) {
-      filtered.push(sameNameLines[0]);
-      continue;
-    }
-
-    // Find the item with the lowest chaos value
-    const cheapest = sameNameLines.reduce((min, current) =>
-      current.chaos < min.chaos ? current : min,
-    );
-
-    filtered.push(cheapest);
-  }
-
-  return filtered;
+  return Array.from(bestByName.values());
 };
 
 const uncached__getPriceData = async (league: League): Promise<Item[]> => {
@@ -175,7 +159,7 @@ const uncached__getPriceData = async (league: League): Promise<Item[]> => {
   const allItems = await Promise.all(typePromises);
   const combinedItems = allItems.flat();
 
-  // We don't neccesarily dedupe 5Ls/6Ls/relics
+  // We don't necessarily dedupe 5Ls/6Ls/relics
   // We can just take cheapest item for multiple with the same name
   // For items with multiple base types, the dust value should be the same for all
   const cheapestVariants = dedupeCheapestVariants(combinedItems);
