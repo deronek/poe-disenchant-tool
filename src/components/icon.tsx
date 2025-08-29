@@ -1,7 +1,7 @@
 type IconProps = {
   src: string;
   className?: string;
-  size?: number; // square size in px
+  size?: number; // render box size in px (image contains, preserves aspect)
   alt?: string;
   title?: string;
   loading?: "eager" | "lazy";
@@ -11,7 +11,7 @@ function Icon({
   src,
   className,
   size = 18,
-  alt = "icon",
+  alt = "",
   title,
   loading = "lazy",
 }: IconProps) {
@@ -21,10 +21,15 @@ function Icon({
       src={src}
       title={title ?? alt}
       alt={alt}
-      width={size}
-      height={size}
       className={className}
-      style={{ display: "inline-block" }}
+      style={{
+        display: "inline-block",
+        width: `${size}px`,
+        height: `${size}px`,
+        objectFit: "contain",
+      }}
+      referrerPolicy="no-referrer"
+      decoding="async"
       loading={loading}
     />
   );
