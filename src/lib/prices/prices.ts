@@ -171,7 +171,7 @@ const uncached__getPriceData = async (league: League): Promise<Item[]> => {
   const allItems = await Promise.all(typePromises);
   const combinedItems = allItems.flat();
 
-  // We don't neccesarily dedupe 5Ls/6Ls/relics
+  // We don't necessarily dedupe 5Ls/6Ls/relics
   // We can just take cheapest item for multiple with the same name
   // For items with multiple base types, the dust value should be the same for all
   const cheapestVariants = dedupeCheapestVariants(combinedItems);
