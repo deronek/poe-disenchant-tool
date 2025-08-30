@@ -34,9 +34,18 @@ export function LeagueSelector({ currentLeague }: LeagueSelectorProps) {
       <Label className="text-muted-foreground" htmlFor="league-selector">
         League
       </Label>
-      <div className="flex items-center gap-4">
-        {isPending && <Spinner />}
-
+      <div
+        className="flex items-center gap-4"
+        aria-busy={isPending || undefined}
+      >
+        {isPending && (
+          <>
+            <Spinner />
+            <span className="sr-only" role="status" aria-live="polite">
+              Switching league…
+            </span>
+          </>
+        )}
         <Select
           value={selected}
           onValueChange={(v) => handleLeagueChange(v as League)}
