@@ -30,39 +30,42 @@ export function LeagueSelector({ currentLeague }: LeagueSelectorProps) {
   };
 
   return (
-    <div className="flex flex-col gap-2">
-      <Label className="text-muted-foreground" htmlFor="league-selector">
-        League
-      </Label>
-      <div
-        className="flex items-center gap-4"
-        aria-busy={isPending || undefined}
-      >
-        {isPending && (
-          <>
-            <Spinner />
-            <span className="sr-only" role="status" aria-live="polite">
-              Switching league…
-            </span>
-          </>
-        )}
-        <Select
-          value={selected}
-          onValueChange={(v) => handleLeagueChange(v as League)}
+    <div className="flex flex-row-reverse gap-3 sm:flex-row">
+      {isPending && (
+        <>
+          <Spinner className="mb-1 place-self-end" />
+          <span className="sr-only" role="status" aria-live="polite">
+            Switching league…
+          </span>
+        </>
+      )}
+
+      <div className="flex flex-col gap-2">
+        <Label className="text-muted-foreground" htmlFor="league-selector">
+          League
+        </Label>
+        <div
+          className="flex items-center gap-4"
+          aria-busy={isPending || undefined}
         >
-          <SelectTrigger className="w-[200px]" id="league-selector">
-            <SelectValue placeholder="Select league">
-              {LEAGUES[selected].name}
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent>
-            {LEAGUE_SLUGS.map((slug) => (
-              <SelectItem key={slug} value={slug}>
-                {LEAGUES[slug].name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          <Select
+            value={selected}
+            onValueChange={(v) => handleLeagueChange(v as League)}
+          >
+            <SelectTrigger className="w-[200px]" id="league-selector">
+              <SelectValue placeholder="Select league">
+                {LEAGUES[selected].name}
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+              {LEAGUE_SLUGS.map((slug) => (
+                <SelectItem key={slug} value={slug}>
+                  {LEAGUES[slug].name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
     </div>
   );
