@@ -16,3 +16,4 @@ export const ItemSchema = z.object({
 export const ItemDataSchema = z.array(ItemSchema);
 
 export type Item = z.infer<typeof ItemSchema>;
+export type ItemData = z.infer<typeof ItemDataSchema>;

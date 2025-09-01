@@ -1,4 +1,4 @@
 import { getDustData } from "./dust";
-import { ItemDataSchema, ItemSchema, type Item } from "./schema";
+import { ItemDataSchema, ItemSchema, type Item, type ItemData } from "./schema";
 
-export { getDustData, type Item, ItemSchema, ItemDataSchema };
+export { getDustData, type Item, type ItemData, ItemSchema, ItemDataSchema };
