@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 const jsonPath = path.join(__dirname, "../src/lib/dust/poe-dust.json");
 const raw = fs.readFileSync(jsonPath, "utf8");
 
-let parsed;
+let parsed: unknown;
 try {
   parsed = JSON.parse(raw);
 } catch (err) {
@@ -18,8 +18,8 @@ try {
 }
 
 try {
-  ItemDataSchema.parse(parsed);
-  console.log(`✅ Dust data validated (${parsed.length} items)`);
+  const data = ItemDataSchema.parse(parsed);
+  console.log(`✅ Dust data validated (${data.length} items)`);
 } catch (err) {
   console.error("❌ Schema validation failed");
   if (err instanceof z.ZodError) {
