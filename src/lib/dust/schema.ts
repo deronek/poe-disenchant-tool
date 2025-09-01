@@ -2,8 +2,8 @@ import { z } from "zod";
 
 export const ItemSchema = z
   .object({
-    name: z.string().min(1),
-    baseType: z.string().min(1),
+    name: z.string().trim().min(1),
+    baseType: z.string().trim().min(1),
     dustVal: z.number().positive(),
     dustValIlvl84: z.number().positive(),
     dustValIlvl84Q20: z.number().positive(),
