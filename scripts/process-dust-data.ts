@@ -1,5 +1,6 @@
 // Remove unused fields (raw dust value, data related to slots) from the dust data
 
+import { Item } from "@/lib/dust";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -20,10 +21,10 @@ try {
   const data = JSON.parse(rawData);
 
   if (!Array.isArray(data) || !data.every((x) => x && typeof x === "object")) {
-    throw new Error("Expected data to be an array");
+    throw new Error("Expected data to be an array of objects");
   }
 
-  const originalSize = Buffer.byteLength(rawData, "utf8");
+  const originalSize = fs.statSync(sourcePath).size;
   console.log(`✅ Found ${data.length} items to process`);
 
   // Create backup
@@ -35,12 +36,13 @@ try {
   // Process each item to remove specified fields
   console.log("🔧 Processing items...");
   const processedData = data.map((item: any, idx: number) => {
-    const { name, baseType, dustValIlvl84, dustValIlvl84Q20 } = item ?? {};
+    const { name, baseType, dustValIlvl84, dustValIlvl84Q20 }: Item =
+      item ?? {};
     if (
       typeof name !== "string" ||
       typeof baseType !== "string" ||
-      typeof dustValIlvl84 !== "number" ||
-      typeof dustValIlvl84Q20 !== "number"
+      !Number.isFinite(dustValIlvl84) ||
+      !Number.isFinite(dustValIlvl84Q20)
     ) {
       throw new Error(
         `Item at index ${idx} is missing required fields or has wrong types`,
