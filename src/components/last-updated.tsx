@@ -20,6 +20,7 @@ import {
 } from "@/lib/dateUtils";
 import { Clock, RefreshCw } from "lucide-react";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 interface LastUpdatedProps {
   timestamp: Date;
@@ -89,6 +90,10 @@ export default function LastUpdated({
       console.debug("revalidateData response:", res);
     } catch (error) {
       console.error("Failed to refresh data:", error);
+      toast.error("Failed to refresh data", {
+        description:
+          "Unable to refresh the price data. Please try again later.",
+      });
       // Remove the loading state, since we don't get the updated data
       setIsRefreshing(false);
     } finally {
