@@ -1,17 +1,27 @@
 import { z } from "zod";
 
-export const ItemSchema = z.object({
-  name: z.string(),
-  baseType: z.string(),
-  dustVal: z.number(),
-  dustValIlvl84: z.number(),
-  dustValIlvl84Q20: z.number(),
-  dustPerSlot: z.number().optional(),
-  w: z.number(),
-  h: z.number(),
-  slots: z.number(),
-  link: z.string().url(),
-});
+export const ItemSchema = z
+  .object({
+    name: z.string().min(1),
+    baseType: z.string().min(1),
+    dustVal: z.number().positive(),
+    dustValIlvl84: z.number().positive(),
+    dustValIlvl84Q20: z.number().positive(),
+    dustPerSlot: z.number().positive().optional(),
+    w: z.number().int().positive(),
+    h: z.number().int().positive(),
+    slots: z.number().int().positive(),
+    link: z.string().url(),
+  })
+  .superRefine((v, ctx) => {
+    if (v.slots !== v.w * v.h) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["slots"],
+        message: "slots must equal w*h",
+      });
+    }
+  });
 
 export const ItemDataSchema = z.array(ItemSchema);
 
