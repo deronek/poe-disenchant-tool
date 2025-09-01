@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "tsx scripts/validate-dust-data.ts",
     "build": "next build",
     "start": "next start",
     "lint": "prettier --check . && next lint && tsc --noEmit",
@@ -46,6 +47,7 @@
     "prettier-plugin-tailwindcss": "^0.6.13",
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
+    "tsx": "^4.20.5",
     "tw-animate-css": "^1.3.4",
     "typescript": "^5"
   }
