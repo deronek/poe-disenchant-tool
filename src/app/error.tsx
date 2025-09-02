@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 
-export default function Error({
+export default function GlobalError({
   error, // eslint-disable-line @typescript-eslint/no-unused-vars
   reset,
 }: {
@@ -17,7 +17,7 @@ export default function Error({
         </h1>
         <p className="text-sm">Something went wrong with the application.</p>
       </div>
-      <Button onClick={() => reset()}>Refresh</Button>
+      <Button onClick={reset}>Refresh</Button>
     </div>
   );
 }
