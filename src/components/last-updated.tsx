@@ -112,12 +112,11 @@ export default function LastUpdated({
         <div className="flex items-center gap-2">
           <Clock className="h-4 w-4 text-blue-600 dark:text-blue-400" />
           <span className="text-sm font-semibold">Last Updated</span>
-          {isStale ||
-            (alwaysShowRefresh && (
-              <Badge variant="destructive" className="text-xs">
-                Stale
-              </Badge>
-            ))}
+          {(isStale || alwaysShowRefresh) && (
+            <Badge variant="destructive" className="text-xs">
+              Needs refresh
+            </Badge>
+          )}
         </div>
         <div className="space-y-1">
           <div className="text-muted-foreground text-xs font-medium">
@@ -126,20 +125,18 @@ export default function LastUpdated({
           <div className="text-sm font-medium">{absoluteTime}</div>
         </div>
       </div>
-
       {/* Refresh Section - Only shown when data is stale */}
-      {isStale ||
-        (alwaysShowRefresh && (
-          <div className="space-y-3 border-t pt-2">
-            <div className="flex items-center gap-2">
-              <RefreshCw className="h-4 w-4 text-green-600 dark:text-green-400" />
-              <span className="text-sm font-semibold">Refresh Data</span>
-            </div>
-            <div className="text-muted-foreground text-sm">
-              Click the refresh button to get the latest price data.
-            </div>
+      {(isStale || alwaysShowRefresh) && (
+        <div className="space-y-3 border-t pt-2">
+          <div className="flex items-center gap-2">
+            <RefreshCw className="h-4 w-4 text-green-600 dark:text-green-400" />
+            <span className="text-sm font-semibold">Refresh Data</span>
           </div>
-        ))}
+          <div className="text-muted-foreground text-sm">
+            Click the refresh button to get the latest price data.
+          </div>
+        </div>
+      )}
     </div>
   );
 
