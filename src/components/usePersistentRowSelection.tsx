@@ -10,7 +10,7 @@ import { useLocalStorage } from "@/lib/use-local-storage";
  * - Restores to a RowSelectionState object.
  * - SSR safe: no localStorage access until mounted.
  */
-export function usePersistentRowSelection(storageKey = "poe-udt:selected:v1") {
+export function usePersistentRowSelection(storageKey: string) {
   const [selectedIds, setSelectedIds] = useLocalStorage<string[]>(
     [],
     storageKey,
