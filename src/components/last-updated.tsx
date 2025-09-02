@@ -100,7 +100,7 @@ export default function LastUpdated({
       // Not removing the loading state here, since there's a gap between setting this
       // and revalidation being reflected in the UI.
       // Updated date will hide the button.
-      // If for some reason we get the same data from the server (e.g. beacuse of Data Cache),
+      // If for some reason we get the same data from the server (e.g. because of Data Cache),
       // this will keep the "revalidating" state until next time update.
     }
   };
