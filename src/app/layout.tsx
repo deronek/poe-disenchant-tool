@@ -42,10 +42,10 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <ErrorHandler />
+            <Toaster richColors />
             <DataTableStateProvider>
               {children}
               <Footer />
-              <Toaster richColors />
             </DataTableStateProvider>
           </ThemeProvider>
         </TooltipProvider>
