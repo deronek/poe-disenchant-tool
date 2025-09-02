@@ -1,3 +1,4 @@
+import { CleanupOldLeagueMarks } from "@/components/cleanup-old-league-marks";
 import { DataTableStateProvider } from "@/components/data-table-state-context";
 import { Footer } from "@/components/footer";
 import { ErrorHandler } from "@/components/error-handler";
@@ -43,6 +44,7 @@ export default function RootLayout({
           >
             <ErrorHandler />
             <Toaster richColors />
+            <CleanupOldLeagueMarks />
             <DataTableStateProvider>
               {children}
               <Footer />

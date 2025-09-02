@@ -14,7 +14,7 @@ export const LEAGUE_SLUGS = Object.keys(LEAGUES) as League[];
 export const DEFAULT_LEAGUE: League = "mercenaries";
 
 export function isValidLeague(slug: string): slug is League {
-  return slug in LEAGUES;
+  return Object.hasOwn(LEAGUES, slug);
 }
 
 export function getLeagueApiName(slug: League) {
