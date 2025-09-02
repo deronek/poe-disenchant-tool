@@ -63,8 +63,12 @@ export function DataTable<TData extends Item, TValue>({
   } = useDataTableState();
 
   // Persistent row selection
+  const selectionStorageKey = React.useMemo(
+    () => `poe-udt:selected:${league}:v2`,
+    [league],
+  );
   const { rowSelection, setRowSelection, clearSelection } =
-    usePersistentRowSelection(`poe-udt:selected:${league}:v2`);
+    usePersistentRowSelection(selectionStorageKey);
 
   const table = useReactTable({
     data,
