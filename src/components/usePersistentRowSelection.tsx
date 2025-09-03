@@ -32,11 +32,14 @@ export function usePersistentRowSelection(storageKey: string) {
   const setRowSelection = React.useCallback(
     (update: Updater<RowSelectionState>) => {
       setSelectedIds((prev) => {
-        const prevSelection = Object.fromEntries(
-          prev.map((id) => [id, true] as const),
-        ) as RowSelectionState;
         const next =
-          typeof update === "function" ? update(prevSelection) : update;
+          typeof update === "function"
+            ? update(
+                Object.fromEntries(
+                  prev.map((id) => [id, true] as const),
+                ) as RowSelectionState,
+              )
+            : update;
         return Object.entries(next)
           .filter(([, v]) => v)
           .map(([k]) => k);
