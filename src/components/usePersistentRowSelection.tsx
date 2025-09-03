@@ -29,7 +29,7 @@ export function usePersistentRowSelection(storageKey: string) {
     return selection;
   }, [selectedIds]);
 
-  const rowSelectionRef = React.useRef<RowSelectionState>({});
+  const rowSelectionRef = React.useRef<RowSelectionState>(rowSelection);
   React.useEffect(() => {
     rowSelectionRef.current = rowSelection;
   }, [rowSelection]);
