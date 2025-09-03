@@ -11,6 +11,10 @@ import { useLocalStorage } from "@/lib/use-local-storage";
  * - SSR safe: no localStorage access until mounted.
  */
 export function usePersistentRowSelection(storageKey: string) {
+  if (!storageKey) {
+    throw new Error("storageKey must be non-empty");
+  }
+
   const [selectedIds, setSelectedIds] = useLocalStorage<string[]>(
     [],
     storageKey,
