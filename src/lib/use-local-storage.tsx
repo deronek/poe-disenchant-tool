@@ -25,6 +25,12 @@ export function useLocalStorage<T>(
 
   const throttle = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Track latest value for unmount/pagehide/hidden flushes without resubscribing listeners
+  const valueRef = React.useRef(value);
+  React.useLayoutEffect(() => {
+    valueRef.current = value;
+  }, [value]);
+
   // On mount, read from localStorage
   React.useEffect(() => {
     if (typeof window === "undefined") return;
@@ -66,7 +72,7 @@ export function useLocalStorage<T>(
     };
   }, [key, timeout, value, flush]);
 
-  // Flush defensively on every visibilityState === hidden
+  // On every visibilityState === hidden, flush defensively
   // to avoid dropped writes
   React.useEffect(() => {
     if (typeof window === "undefined") return;
@@ -86,6 +92,18 @@ export function useLocalStorage<T>(
       document.removeEventListener("visibilitychange", handleFlush);
     };
   }, [flush, value]);
+
+  // On unmount, flush any pending write to avoid drops (e.g., route changes)
+  React.useEffect(() => {
+    return () => {
+      if (typeof window === "undefined") return;
+      if (throttle.current) {
+        clearTimeout(throttle.current);
+        throttle.current = null;
+      }
+      flush(valueRef.current);
+    };
+  }, [flush]);
 
   return [value, setValue];
 }
