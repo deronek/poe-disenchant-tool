@@ -1,6 +1,6 @@
 "use client";
 
-import type { RowSelectionState } from "@tanstack/react-table";
+import type { RowSelectionState, Updater } from "@tanstack/react-table";
 import * as React from "react";
 import { useLocalStorage } from "@/lib/use-local-storage";
 
@@ -35,11 +35,7 @@ export function usePersistentRowSelection(storageKey: string) {
   }, [rowSelection]);
 
   const setRowSelection = React.useCallback(
-    (
-      newSelection:
-        | RowSelectionState
-        | ((prev: RowSelectionState) => RowSelectionState),
-    ) => {
+    (newSelection: Updater<RowSelectionState>) => {
       const current =
         typeof newSelection === "function"
           ? newSelection(rowSelectionRef.current)
