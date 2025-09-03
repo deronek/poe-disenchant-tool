@@ -23,7 +23,7 @@ export function useLocalStorage<T>(
 
   const [value, setValue] = React.useState<T>(initialState);
 
-  const throttle = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const debounce = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Track latest value for unmount/pagehide/hidden flushes without resubscribing listeners
   const valueRef = React.useRef(value);
@@ -61,14 +61,14 @@ export function useLocalStorage<T>(
     if (typeof window === "undefined") return;
 
     if (timeout) {
-      if (throttle.current) clearTimeout(throttle.current);
-      throttle.current = setTimeout(() => flush(value), timeout);
+      if (debounce.current) clearTimeout(debounce.current);
+      debounce.current = setTimeout(() => flush(value), timeout);
     } else {
       flush(value);
     }
 
     return () => {
-      if (throttle.current) clearTimeout(throttle.current);
+      if (debounce.current) clearTimeout(debounce.current);
     };
   }, [key, timeout, value, flush]);
 
@@ -79,9 +79,9 @@ export function useLocalStorage<T>(
 
     const handleFlush = () => {
       if (document.visibilityState !== "hidden") return;
-      if (throttle.current) {
-        clearTimeout(throttle.current);
-        throttle.current = null;
+      if (debounce.current) {
+        clearTimeout(debounce.current);
+        debounce.current = null;
       }
       flush(value);
     };
@@ -97,9 +97,9 @@ export function useLocalStorage<T>(
   React.useEffect(() => {
     return () => {
       if (typeof window === "undefined") return;
-      if (throttle.current) {
-        clearTimeout(throttle.current);
-        throttle.current = null;
+      if (debounce.current) {
+        clearTimeout(debounce.current);
+        debounce.current = null;
       }
       flush(valueRef.current);
     };
