@@ -29,27 +29,25 @@ export function usePersistentRowSelection(storageKey: string) {
     return selection;
   }, [selectedIds]);
 
+  const rowSelectionRef = React.useRef<RowSelectionState>({});
+  React.useEffect(() => {
+    rowSelectionRef.current = rowSelection;
+  }, [rowSelection]);
+
   const setRowSelection = React.useCallback(
     (
       newSelection:
         | RowSelectionState
         | ((prev: RowSelectionState) => RowSelectionState),
     ) => {
-      if (typeof newSelection === "function") {
-        const updatedSelection = newSelection(rowSelection);
-        const newSelectedIds = Object.entries(updatedSelection)
-          .filter(([, v]) => Boolean(v))
-          .map(([k]) => k);
-        setSelectedIds(newSelectedIds);
-        return;
-      }
-
-      const newSelectedIds = Object.entries(newSelection)
-        .filter(([, v]) => Boolean(v))
-        .map(([k]) => k);
+      const current =
+        typeof newSelection === "function"
+          ? newSelection(rowSelectionRef.current)
+          : newSelection;
+      const newSelectedIds = Object.keys(current).filter((k) => current[k]);
       setSelectedIds(newSelectedIds);
     },
-    [rowSelection, setSelectedIds],
+    [setSelectedIds],
   );
 
   const clearSelection = React.useCallback(() => {
