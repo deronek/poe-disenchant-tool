@@ -1,4 +1,4 @@
-// https://gist.github.com/lukemcdonald/021d5584c058dfd570d59586daaefe59
+// Based on https://gist.github.com/lukemcdonald/021d5584c058dfd570d59586daaefe59
 
 import React from "react";
 
@@ -7,45 +7,45 @@ import React from "react";
  *
  * @param initialState The initial value to use
  * @param key The local storage key to use
- * @param options Optional. Currently allows a timeout (in milliseconds) to debouce the setting localStorage if needed.
+ * @param options Optional. Currently allows a debounceDelay (in milliseconds) to debounce the setting localStorage if needed.
  * @returns The current value of the local storage item state, and a function to set it
  */
 export function useLocalStorage<T>(
-  initialState: T,
+  initialState: T | (() => T),
   key: string,
   options: {
-    timeout?: number;
-  } = {
-    timeout: 0,
-  },
+    debounceDelay?: number;
+  } = {},
 ): [T, (value: T | ((val: T) => T)) => void] {
-  const { timeout } = options;
+  const { debounceDelay } = options;
 
-  const [value, setValue] = React.useState<T>(initialState);
+  const initialValue = (
+    typeof initialState === "function"
+      ? (initialState as () => T)()
+      : initialState
+  ) as T;
 
-  const debounce = React.useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  // Track latest value for unmount/pagehide/hidden flushes without resubscribing listeners
-  const valueRef = React.useRef(value);
+  const [value, setValue] = React.useState<T>(initialValue);
+  const valueRef = React.useRef<T>(value);
   React.useLayoutEffect(() => {
     valueRef.current = value;
   }, [value]);
 
-  // On mount, read from localStorage
-  React.useEffect(() => {
-    if (typeof window === "undefined") return;
+  const debounceRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const readFromStorage = React.useCallback((): T | undefined => {
     try {
       const item = window.localStorage.getItem(key);
       if (item !== null) {
-        setValue(JSON.parse(item));
+        const parsed = JSON.parse(item);
+        return parsed;
       }
     } catch (err) {
       console.error(`Error reading localStorage key "${key}":`, err);
     }
   }, [key]);
 
-  // Helper to write immediately
-  const flush = React.useCallback(
+  const writeToStorage = React.useCallback(
     (val: T) => {
       try {
         window.localStorage.setItem(key, JSON.stringify(val));
@@ -56,21 +56,41 @@ export function useLocalStorage<T>(
     [key],
   );
 
+  // On mount, read from localStorage
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
+    const value = readFromStorage();
+    if (value === undefined) return;
+    setValue(value);
+
+    return () => {
+      // Cancel any existing debounce/flush
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+
+      // Defer the final flush so a Strict Mode unmount->remount can cancel it.
+      debounceRef.current = setTimeout(() => {
+        writeToStorage(valueRef.current);
+      }, 0);
+    };
+  }, [readFromStorage, writeToStorage]);
+
   // On value change, write to localStorage (debounced if timeout > 0)
   React.useEffect(() => {
     if (typeof window === "undefined") return;
 
-    if (timeout) {
-      if (debounce.current) clearTimeout(debounce.current);
-      debounce.current = setTimeout(() => flush(value), timeout);
+    if (debounceDelay) {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      debounceRef.current = setTimeout(() => {
+        writeToStorage(valueRef.current);
+      }, debounceDelay);
     } else {
-      flush(value);
+      writeToStorage(value);
     }
 
     return () => {
-      if (debounce.current) clearTimeout(debounce.current);
+      if (debounceRef.current) clearTimeout(debounceRef.current);
     };
-  }, [key, timeout, value, flush]);
+  }, [value, writeToStorage, debounceDelay]);
 
   // On every visibilityState === hidden, flush defensively
   // to avoid dropped writes
@@ -79,11 +99,8 @@ export function useLocalStorage<T>(
 
     const handleFlush = () => {
       if (document.visibilityState !== "hidden") return;
-      if (debounce.current) {
-        clearTimeout(debounce.current);
-        debounce.current = null;
-      }
-      flush(value);
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      writeToStorage(valueRef.current);
     };
 
     document.addEventListener("visibilitychange", handleFlush);
@@ -91,19 +108,7 @@ export function useLocalStorage<T>(
     return () => {
       document.removeEventListener("visibilitychange", handleFlush);
     };
-  }, [flush, value]);
-
-  // On unmount, flush any pending write to avoid drops (e.g., route changes)
-  React.useEffect(() => {
-    return () => {
-      if (typeof window === "undefined") return;
-      if (debounce.current) {
-        clearTimeout(debounce.current);
-        debounce.current = null;
-      }
-      flush(valueRef.current);
-    };
-  }, [flush]);
+  }, [writeToStorage]);
 
   return [value, setValue];
 }

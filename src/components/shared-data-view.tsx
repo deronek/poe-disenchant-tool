@@ -22,7 +22,7 @@ export function SharedDataView({ items, league }: SharedDataViewProps) {
       DEFAULT_ADVANCED_SETTINGS,
       "poe-udt:trade-settings:v1",
       {
-        timeout: 300,
+        debounceDelay: 300,
       },
     );
 

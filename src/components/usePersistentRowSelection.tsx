@@ -18,7 +18,7 @@ export function usePersistentRowSelection(storageKey: string) {
   const [selectedIds, setSelectedIds] = useLocalStorage<string[]>(
     [],
     storageKey,
-    { timeout: 300 },
+    { debounceDelay: 300 },
   );
 
   const rowSelection = React.useMemo(() => {
