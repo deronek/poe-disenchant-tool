@@ -10,7 +10,6 @@ import React from "react";
  * @param options Optional. Currently allows a timeout (in milliseconds) to debouce the setting localStorage if needed.
  * @returns The current value of the local storage item state, and a function to set it
  */
-
 export function useLocalStorage<T>(
   initialState: T,
   key: string,
@@ -39,26 +38,54 @@ export function useLocalStorage<T>(
     }
   }, [key]);
 
+  // Helper to write immediately
+  const flush = React.useCallback(
+    (val: T) => {
+      try {
+        window.localStorage.setItem(key, JSON.stringify(val));
+      } catch (err) {
+        console.error(`Error writing localStorage key "${key}":`, err);
+      }
+    },
+    [key],
+  );
+
   // On value change, write to localStorage (debounced if timeout > 0)
   React.useEffect(() => {
     if (typeof window === "undefined") return;
-    try {
-      if (timeout) {
-        if (throttle.current) clearTimeout(throttle.current);
-        throttle.current = setTimeout(() => {
-          window.localStorage.setItem(key, JSON.stringify(value));
-        }, timeout);
-      } else {
-        window.localStorage.setItem(key, JSON.stringify(value));
-      }
-    } catch (err) {
-      console.error(`Error writing localStorage key "${key}":`, err);
+
+    if (timeout) {
+      if (throttle.current) clearTimeout(throttle.current);
+      throttle.current = setTimeout(() => flush(value), timeout);
+    } else {
+      flush(value);
     }
 
     return () => {
       if (throttle.current) clearTimeout(throttle.current);
     };
-  }, [key, timeout, value]);
+  }, [key, timeout, value, flush]);
+
+  // Flush defensively on every visibilityState === hidden
+  // to avoid dropped writes
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const handleFlush = () => {
+      if (document.visibilityState !== "hidden") return;
+      if (throttle.current) {
+        clearTimeout(throttle.current);
+        throttle.current = null;
+      }
+      flush(value);
+    };
+
+    document.addEventListener("visibilitychange", handleFlush);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleFlush);
+    };
+  }, [flush, value]);
 
   return [value, setValue];
 }
