@@ -148,7 +148,7 @@ function MobileCardComponent<TData extends Item>({
             )}
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 pt-1">
           <SelectionCheckbox
             checked={isSelected}
             onChange={handleSelect}
