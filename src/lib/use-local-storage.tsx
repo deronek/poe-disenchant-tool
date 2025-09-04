@@ -1,13 +1,14 @@
 // Based on https://gist.github.com/lukemcdonald/021d5584c058dfd570d59586daaefe59
 
 import React from "react";
+import { ZodType } from "zod";
 
 /**
  * localStorage works just like useState, except it backs up to (and restores from) localStorage.
  *
  * @param initialState The initial value to use
  * @param key The local storage key to use
- * @param options Optional. Currently allows a debounceDelay (in milliseconds) to debounce the setting localStorage if needed.
+ * @param options Optional. Allows a debounceDelay (in milliseconds) to debounce the setting localStorage, and an optional schema (ZodType<T>) for validation.
  * @returns The current value of the local storage item state, and a function to set it
  */
 export function useLocalStorage<T>(
@@ -15,12 +16,13 @@ export function useLocalStorage<T>(
   key: string,
   options: {
     debounceDelay?: number;
+    schema?: ZodType<T>;
   } = {},
 ): [T, (value: T | ((val: T) => T)) => void] {
   if (!key) {
     throw new Error("useLocalStorage: key must be a non-empty string");
   }
-  const { debounceDelay } = options;
+  const { debounceDelay, schema } = options;
 
   const [value, setValue] = React.useState<T>(() =>
     typeof initialState === "function"
@@ -28,18 +30,20 @@ export function useLocalStorage<T>(
       : initialState,
   );
   const valueRef = React.useRef<T>(value);
-  React.useLayoutEffect(() => {
-    valueRef.current = value;
-  }, [value]);
-
   const debounceRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const schemaRef = React.useRef<ZodType<T> | undefined>(schema);
 
   const readFromStorage = React.useCallback((): T | undefined => {
     try {
       const item = window.localStorage.getItem(key);
       if (item !== null) {
         const parsed = JSON.parse(item);
-        return parsed;
+        if (schemaRef.current) {
+          const result = schemaRef.current.parse(parsed);
+          return result;
+        } else {
+          return parsed;
+        }
       }
     } catch (err) {
       console.error(`Error reading localStorage key "${key}":`, err);
@@ -63,6 +67,12 @@ export function useLocalStorage<T>(
       debounceRef.current = null;
     }
   }, []);
+
+  // Update refs before other useEffect hooks
+  React.useEffect(() => {
+    valueRef.current = value;
+    schemaRef.current = schema;
+  }, [value, schema]);
 
   // On mount and when key changes, read from localStorage
   React.useEffect(() => {
