@@ -17,6 +17,9 @@ export function useLocalStorage<T>(
     debounceDelay?: number;
   } = {},
 ): [T, (value: T | ((val: T) => T)) => void] {
+  if (!key) {
+    throw new Error("useLocalStorage: key must be a non-empty string");
+  }
   const { debounceDelay } = options;
 
   const [value, setValue] = React.useState<T>(() =>
@@ -54,7 +57,7 @@ export function useLocalStorage<T>(
     [key],
   );
 
-  // On mount, read from localStorage
+  // On mount and when key changes, read from localStorage
   React.useEffect(() => {
     if (typeof window === "undefined") return;
     const value = readFromStorage();
