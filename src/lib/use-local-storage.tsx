@@ -25,7 +25,7 @@ export function useLocalStorage<T>(
       : initialState
   ) as T;
 
-  const [value, setValue] = React.useState<T>(initialValue);
+  const [value, setValue] = React.useState<T>(() => initialValue);
   const valueRef = React.useRef<T>(value);
   React.useLayoutEffect(() => {
     valueRef.current = value;
