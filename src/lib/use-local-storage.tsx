@@ -94,6 +94,8 @@ export function useLocalStorage<T>(
 
   // On every visibilityState === hidden, flush defensively
   // to avoid dropped writes
+  // Not using pagehide, unload or beforeunload since their firing is non-deterministic
+  // visibilitychange is supported in every modern browser
   React.useEffect(() => {
     if (typeof window === "undefined") return;
 
