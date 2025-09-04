@@ -63,14 +63,16 @@ export function useLocalStorage<T>(
     if (value === undefined) return;
     setValue(value);
 
+    // Update the value ref asynchronously to avoid a race condition
+    // in case we unmount immediately after (e.g. Strict Mode)
+    valueRef.current = value;
+
+    // On unmount, write the final value to localStorage
     return () => {
       // Cancel any existing debounce/flush
       if (debounceRef.current) clearTimeout(debounceRef.current);
 
-      // Defer the final flush so a Strict Mode unmount->remount can cancel it.
-      debounceRef.current = setTimeout(() => {
-        writeToStorage(valueRef.current);
-      }, 0);
+      writeToStorage(valueRef.current);
     };
   }, [readFromStorage, writeToStorage]);
 
