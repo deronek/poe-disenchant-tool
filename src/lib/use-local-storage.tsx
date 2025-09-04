@@ -66,7 +66,6 @@ export function useLocalStorage<T>(
 
   // On mount and when key changes, read from localStorage
   React.useEffect(() => {
-    if (typeof window === "undefined") return;
     const value = readFromStorage();
     if (value === undefined) return;
     setValue(value);
@@ -85,8 +84,6 @@ export function useLocalStorage<T>(
 
   // On value change, write to localStorage (debounced if debounceDelay > 0)
   React.useEffect(() => {
-    if (typeof window === "undefined") return;
-
     if (debounceDelay) {
       clearDebounce();
       debounceRef.current = setTimeout(() => {
@@ -106,8 +103,6 @@ export function useLocalStorage<T>(
   // Not using pagehide, unload or beforeunload since their firing is non-deterministic
   // visibilitychange is supported in every modern browser
   React.useEffect(() => {
-    if (typeof window === "undefined") return;
-
     const handleFlush = () => {
       if (document.visibilityState !== "hidden") return;
       clearDebounce();
