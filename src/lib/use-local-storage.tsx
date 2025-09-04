@@ -76,7 +76,7 @@ export function useLocalStorage<T>(
     };
   }, [readFromStorage, writeToStorage]);
 
-  // On value change, write to localStorage (debounced if timeout > 0)
+  // On value change, write to localStorage (debounced if debounceDelay > 0)
   React.useEffect(() => {
     if (typeof window === "undefined") return;
 
