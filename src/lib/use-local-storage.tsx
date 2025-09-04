@@ -66,13 +66,13 @@ export function useLocalStorage<T>(
 
   // On mount and when key changes, read from localStorage
   React.useEffect(() => {
-    const value = readFromStorage();
-    if (value === undefined) return;
-    setValue(value);
+    const storedValue = readFromStorage();
+    if (storedValue === undefined) return;
+    setValue(storedValue);
 
-    // Update the value ref asynchronously to avoid a race condition
-    // in case we unmount immediately after (e.g. Strict Mode)
-    valueRef.current = value;
+    // Update valueRef here so cleanup flushes the freshly loaded value
+    // even if we unmount before the next render cycle
+    valueRef.current = storedValue;
 
     // On unmount, write the final value to localStorage
     return () => {
