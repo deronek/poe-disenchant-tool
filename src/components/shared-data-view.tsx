@@ -5,6 +5,7 @@ import { DataTable } from "@/components/data-table";
 
 import {
   type AdvancedSettings,
+  AdvancedSettingsSchema,
   DEFAULT_ADVANCED_SETTINGS,
 } from "@/components/advanced-settings-panel";
 import type { Item } from "@/lib/itemData";
@@ -23,6 +24,7 @@ export function SharedDataView({ items, league }: SharedDataViewProps) {
       "poe-udt:trade-settings:v1",
       {
         debounceDelay: 300,
+        schema: AdvancedSettingsSchema,
       },
     );
 
