@@ -19,13 +19,11 @@ export function useLocalStorage<T>(
 ): [T, (value: T | ((val: T) => T)) => void] {
   const { debounceDelay } = options;
 
-  const initialValue = (
+  const [value, setValue] = React.useState<T>(() =>
     typeof initialState === "function"
       ? (initialState as () => T)()
-      : initialState
-  ) as T;
-
-  const [value, setValue] = React.useState<T>(() => initialValue);
+      : initialState,
+  );
   const valueRef = React.useRef<T>(value);
   React.useLayoutEffect(() => {
     valueRef.current = value;
