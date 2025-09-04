@@ -31,7 +31,7 @@ const SelectionCheckbox = React.memo(function SelectionCheckbox({
 }) {
   return (
     <Checkbox
-      className="mt-0.5 size-6"
+      className="size-6"
       checked={checked}
       onCheckedChange={onChange}
       aria-label={label}
@@ -148,7 +148,7 @@ function MobileCardComponent<TData extends Item>({
             )}
           </div>
         </div>
-        <div className="flex items-center gap-2 pt-1">
+        <div className="flex items-center gap-2 pt-1.5">
           <SelectionCheckbox
             checked={isSelected}
             onChange={handleSelect}
