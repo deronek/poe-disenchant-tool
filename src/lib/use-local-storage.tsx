@@ -57,6 +57,13 @@ export function useLocalStorage<T>(
     [key],
   );
 
+  const clearDebounce = React.useCallback(() => {
+    if (debounceRef.current != null) {
+      clearTimeout(debounceRef.current);
+      debounceRef.current = null;
+    }
+  }, []);
+
   // On mount and when key changes, read from localStorage
   React.useEffect(() => {
     if (typeof window === "undefined") return;
@@ -71,18 +78,17 @@ export function useLocalStorage<T>(
     // On unmount, write the final value to localStorage
     return () => {
       // Cancel any existing debounce/flush
-      if (debounceRef.current) clearTimeout(debounceRef.current);
-
+      clearDebounce();
       writeToStorage(valueRef.current);
     };
-  }, [readFromStorage, writeToStorage]);
+  }, [readFromStorage, writeToStorage, clearDebounce]);
 
   // On value change, write to localStorage (debounced if debounceDelay > 0)
   React.useEffect(() => {
     if (typeof window === "undefined") return;
 
     if (debounceDelay) {
-      if (debounceRef.current) clearTimeout(debounceRef.current);
+      clearDebounce();
       debounceRef.current = setTimeout(() => {
         writeToStorage(valueRef.current);
       }, debounceDelay);
@@ -91,9 +97,9 @@ export function useLocalStorage<T>(
     }
 
     return () => {
-      if (debounceRef.current) clearTimeout(debounceRef.current);
+      clearDebounce();
     };
-  }, [value, writeToStorage, debounceDelay]);
+  }, [value, debounceDelay, writeToStorage, clearDebounce]);
 
   // On every visibilityState === hidden, flush defensively
   // to avoid dropped writes
@@ -104,7 +110,7 @@ export function useLocalStorage<T>(
 
     const handleFlush = () => {
       if (document.visibilityState !== "hidden") return;
-      if (debounceRef.current) clearTimeout(debounceRef.current);
+      clearDebounce();
       writeToStorage(valueRef.current);
     };
 
@@ -113,7 +119,7 @@ export function useLocalStorage<T>(
     return () => {
       document.removeEventListener("visibilitychange", handleFlush);
     };
-  }, [writeToStorage]);
+  }, [writeToStorage, clearDebounce]);
 
   return [value, setValue];
 }
