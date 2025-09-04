@@ -22,11 +22,14 @@ import {
 import * as React from "react";
 import { Separator } from "./ui/separator";
 import { cn } from "@/lib/utils";
+import { z } from "zod";
 
-export interface AdvancedSettings {
-  minItemLevel: number;
-  includeCorrupted: boolean;
-}
+export const AdvancedSettingsSchema = z.object({
+  minItemLevel: z.number(),
+  includeCorrupted: z.boolean(),
+});
+
+export type AdvancedSettings = z.infer<typeof AdvancedSettingsSchema>;
 
 export const DEFAULT_ADVANCED_SETTINGS: AdvancedSettings = {
   minItemLevel: 78,
