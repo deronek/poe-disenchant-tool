@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox, type CheckedState } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -68,10 +68,10 @@ export function AdvancedSettingsPanel({
     });
   };
 
-  const handleIncludeCorruptedChange = (checked: boolean) => {
+  const handleIncludeCorruptedChange = (checked: CheckedState) => {
     onSettingsChange({
       ...settings,
-      includeCorrupted: checked,
+      includeCorrupted: checked === true,
     });
   };
 
