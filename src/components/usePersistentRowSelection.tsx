@@ -5,7 +5,7 @@ import * as React from "react";
 import { z } from "zod";
 import { useLocalStorage } from "@/lib/use-local-storage";
 
-function idsToRowSelection(ids: string[]): RowSelectionState {
+function idsToRowSelection(ids: readonly string[]): RowSelectionState {
   return ids.reduce<RowSelectionState>((acc, id) => {
     acc[id] = true;
     return acc;
