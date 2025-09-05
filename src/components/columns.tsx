@@ -241,7 +241,7 @@ export const createColumns = (
           <Checkbox
             className="size-6"
             checked={row.getIsSelected()}
-            onCheckedChange={(v) => row.toggleSelected(Boolean(v))}
+            onCheckedChange={(v) => row.toggleSelected(v === true)}
             aria-label={`Mark ${name} as completed`}
           />
         </div>
