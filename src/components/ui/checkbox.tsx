@@ -30,4 +30,4 @@ function Checkbox({
   );
 }
 
-export { Checkbox, CheckedState };
+export { Checkbox, type CheckedState };
