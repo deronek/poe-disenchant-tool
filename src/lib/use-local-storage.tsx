@@ -16,7 +16,8 @@ export function useLocalStorage<T>(
   key: string,
   options: {
     debounceDelay?: number;
-    schema?: ZodType<T>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- schema can be whatever as long as it parses into T
+    schema?: ZodType<T, any, any>;
   } = {},
 ): [T, (value: T | ((val: T) => T)) => void] {
   if (!key) {
@@ -31,7 +32,7 @@ export function useLocalStorage<T>(
   );
   const valueRef = React.useRef<T>(value);
   const debounceRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
-  const schemaRef = React.useRef<ZodType<T> | undefined>(schema);
+  const schemaRef = React.useRef<typeof schema>(schema);
 
   const readFromStorage = React.useCallback((): T | undefined => {
     try {
