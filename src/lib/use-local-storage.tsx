@@ -39,11 +39,15 @@ export function useLocalStorage<T>(
       if (item !== null) {
         const parsed = JSON.parse(item);
         if (schemaRef.current) {
-          const result = schemaRef.current.parse(parsed);
-          return result;
-        } else {
-          return parsed;
+          const res = schemaRef.current.safeParse(parsed);
+          if (res.success) return res.data;
+          console.warn(
+            `Invalid data for localStorage key "${key}"`,
+            res.error.issues,
+          );
+          return undefined;
         }
+        return parsed;
       }
     } catch (err) {
       console.error(`Error reading localStorage key "${key}":`, err);
