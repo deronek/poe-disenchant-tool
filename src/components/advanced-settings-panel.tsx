@@ -24,18 +24,18 @@ import { Separator } from "./ui/separator";
 import { cn } from "@/lib/utils";
 import { z } from "zod";
 
-export const AdvancedSettingsSchema = z.object({
-  minItemLevel: z.number(),
-  includeCorrupted: z.boolean(),
-});
+export const AdvancedSettingsSchema = z
+  .object({
+    minItemLevel: z.number().int().min(65).max(84).default(78),
+    includeCorrupted: z.boolean().default(true),
+  })
+  .strict();
 
 export type AdvancedSettings = z.infer<typeof AdvancedSettingsSchema>;
 
-export const DEFAULT_ADVANCED_SETTINGS: AdvancedSettings = {
-  minItemLevel: 78,
-  includeCorrupted: true,
-};
-
+// Default values derived from schema
+export const DEFAULT_ADVANCED_SETTINGS: AdvancedSettings =
+  AdvancedSettingsSchema.parse({});
 interface AdvancedSettingsPanelProps {
   settings: AdvancedSettings;
   onSettingsChange: (settings: AdvancedSettings) => void;
