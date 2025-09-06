@@ -5,6 +5,7 @@ import * as React from "react";
 import { z } from "zod";
 import { useLocalStorage } from "@/lib/use-local-storage";
 import type { PriceFilterValue } from "@/lib/price-filter";
+import { COLUMN_IDS } from "./columns";
 
 const PersistedFiltersSchema = z.object({
   price: z
@@ -35,7 +36,7 @@ export function usePersistentFilters(storageKey: string) {
   const updatePersistedFilters = React.useCallback(
     (columnFilters: ColumnFiltersState) => {
       const priceFilter = columnFilters.find(
-        (filter) => filter.id === "chaos" && filter.value,
+        (filter) => filter.id === COLUMN_IDS.CHAOS && filter.value,
       );
 
       if (priceFilter?.value) {

@@ -8,6 +8,7 @@ import type {
 } from "@tanstack/react-table";
 import React, { createContext, useCallback, useContext, useState } from "react";
 import { usePersistentFilters } from "./use-persistent-filters";
+import { COLUMN_IDS } from "./columns";
 
 interface DataTableState {
   sorting: SortingState;
@@ -46,6 +47,8 @@ export function DataTableStateProvider({
     defaultState.columnFilters,
   );
 
+  const chaosColumnId = COLUMN_IDS.CHAOS;
+
   // Restore persisted filters after mount
   React.useEffect(() => {
     // This write needs to be deferred.
@@ -58,12 +61,12 @@ export function DataTableStateProvider({
 
         // If chaos filter needs to be applied
         if (persistedPrice != null) {
-          const chaosFilter = { id: "chaos", value: persistedPrice };
-          return [...prev.filter((f) => f.id !== "chaos"), chaosFilter];
+          const chaosFilter = { id: chaosColumnId, value: persistedPrice };
+          return [...prev.filter((f) => f.id !== chaosColumnId), chaosFilter];
         }
 
         // Otherwise, strip chaos filter if present
-        return prev.filter((f) => f.id !== "chaos");
+        return prev.filter((f) => f.id !== chaosColumnId);
       });
     }, 0);
   }, [persistedFilters]);
