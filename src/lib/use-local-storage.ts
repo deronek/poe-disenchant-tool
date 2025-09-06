@@ -20,7 +20,7 @@ export function useLocalStorage<T>(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- schema can be whatever as long as it parses into T
     schema?: ZodType<T, any, any>;
   } = {},
-): [T, (value: T | ((val: T) => T)) => void] {
+): [T, React.Dispatch<React.SetStateAction<T>>] {
   if (!key) {
     throw new Error("useLocalStorage: key must be a non-empty string");
   }
