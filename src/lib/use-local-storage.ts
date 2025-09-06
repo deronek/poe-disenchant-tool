@@ -34,6 +34,7 @@ export function useLocalStorage<T>(
   const valueRef = React.useRef<T>(value);
   const debounceRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
   const schemaRef = React.useRef<typeof schema>(schema);
+  const lastWrittenRef = React.useRef<string | null>(null);
 
   const readFromStorage = React.useCallback((): T | undefined => {
     try {
@@ -59,7 +60,10 @@ export function useLocalStorage<T>(
   const writeToStorage = React.useCallback(
     (val: T) => {
       try {
-        window.localStorage.setItem(key, JSON.stringify(val));
+        const json = JSON.stringify(val);
+        if (lastWrittenRef.current === json) return;
+        window.localStorage.setItem(key, json);
+        lastWrittenRef.current = json;
       } catch (err) {
         console.error(`Error writing localStorage key "${key}":`, err);
       }
@@ -79,6 +83,11 @@ export function useLocalStorage<T>(
     valueRef.current = value;
     schemaRef.current = schema;
   }, [value, schema]);
+
+  // Clean-up last written value on key change
+  React.useEffect(() => {
+    lastWrittenRef.current = null;
+  }, [key]);
 
   // On mount and when key changes, read from localStorage
   React.useEffect(() => {
