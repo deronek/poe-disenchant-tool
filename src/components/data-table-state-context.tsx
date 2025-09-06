@@ -55,7 +55,7 @@ export function DataTableStateProvider({
     // As the provider is used in the layout (because it needs to persist state between league pages),
     // by the time the data table renders, filter value is already populated from localStorage,
     // which triggers hydration warnings.
-    window.setTimeout(() => {
+    const timeout = window.setTimeout(() => {
       setColumnFilters((prev) => {
         const persistedPrice = persistedFilters?.price;
 
@@ -69,6 +69,7 @@ export function DataTableStateProvider({
         return prev.filter((f) => f.id !== chaosColumnId);
       });
     }, 0);
+    return () => window.clearTimeout(timeout);
   }, [persistedFilters]);
 
   const updateSorting = useCallback((updater: Updater<SortingState>) => {
