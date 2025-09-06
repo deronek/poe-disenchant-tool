@@ -103,7 +103,7 @@ export function useLocalStorage<T>(
     if (debounceDelay) {
       clearDebounce();
       debounceRef.current = setTimeout(() => {
-        writeToStorage(valueRef.current);
+        writeToStorage(value);
       }, debounceDelay);
     } else {
       writeToStorage(value);
