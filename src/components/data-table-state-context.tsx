@@ -7,6 +7,7 @@ import type {
   Updater,
 } from "@tanstack/react-table";
 import React, { createContext, useCallback, useContext, useState } from "react";
+import { usePersistentFilters } from "./use-persistent-filters";
 
 interface DataTableState {
   sorting: SortingState;
@@ -34,12 +35,38 @@ export function DataTableStateProvider({
   children: React.ReactNode;
 }) {
   const [sorting, setSorting] = useState<SortingState>(defaultState.sorting);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
-    defaultState.columnFilters,
-  );
   const [columnSizing, setColumnSizing] = useState<ColumnSizingState>(
     defaultState.columnSizing,
   );
+
+  const { persistedFilters, updatePersistedFilters } =
+    usePersistentFilters("poe-udt:filters:v1");
+
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
+    defaultState.columnFilters,
+  );
+
+  // Restore persisted filters after mount
+  React.useEffect(() => {
+    // This write needs to be deferred.
+    // As the provider is used in the layout (because it needs to persist state between league pages),
+    // by the time the data table renders, filter value is already populated from localStorage,
+    // which triggers hydration warnings.
+    window.setTimeout(() => {
+      setColumnFilters((prev) => {
+        const persistedPrice = persistedFilters?.price;
+
+        // If chaos filter needs to be applied
+        if (persistedPrice != null) {
+          const chaosFilter = { id: "chaos", value: persistedPrice };
+          return [...prev.filter((f) => f.id !== "chaos"), chaosFilter];
+        }
+
+        // Otherwise, strip chaos filter if present
+        return prev.filter((f) => f.id !== "chaos");
+      });
+    }, 0);
+  }, [persistedFilters]);
 
   const updateSorting = useCallback((updater: Updater<SortingState>) => {
     setSorting(updater);
@@ -47,9 +74,13 @@ export function DataTableStateProvider({
 
   const updateColumnFilters = useCallback(
     (updater: Updater<ColumnFiltersState>) => {
-      setColumnFilters(updater);
+      setColumnFilters((prev) => {
+        const next = typeof updater === "function" ? updater(prev) : updater;
+        updatePersistedFilters(next);
+        return next;
+      });
     },
-    [],
+    [updatePersistedFilters],
   );
 
   const updateColumnSizing = useCallback(

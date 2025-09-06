@@ -39,7 +39,6 @@ export function DataTableToolbar<TData extends Item>({
           <div className="w-full min-w-0 xl:w-auto xl:shrink-0">
             <PriceFilter
               column={table.getColumn(COLUMN_IDS.CHAOS)}
-              description="Filter items by chaos price range."
               min={0}
               max={500}
             />

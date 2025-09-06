@@ -33,7 +33,6 @@ export type { PriceFilterValue };
 
 interface PriceFilterProps<TData> {
   column: Column<TData, unknown> | undefined;
-  description: string;
   min: number;
   max: number;
   className?: string;
@@ -41,7 +40,6 @@ interface PriceFilterProps<TData> {
 
 export function PriceFilter<TData extends Item>({
   column,
-  description,
   min,
   max,
   className,
@@ -124,7 +122,9 @@ export function PriceFilter<TData extends Item>({
             <div className="flex items-center justify-between">
               <h4 className="font-semibold">Price Filter</h4>
             </div>
-            <p className="text-muted-foreground text-sm">{description}</p>
+            <p className="text-muted-foreground text-sm text-pretty">
+              Filter items by chaos price range. Saved locally.
+            </p>
           </div>
 
           <div className="space-y-4">
