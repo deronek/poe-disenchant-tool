@@ -5,6 +5,7 @@ import type { ZodType } from "zod";
 
 /**
  * localStorage works just like useState, except it backs up to (and restores from) localStorage.
+ * Stored value cannot be undefined per JSON spec, however it can be null.
  *
  * @param initialState The initial value to use
  * @param key The local storage key to use
