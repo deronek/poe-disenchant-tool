@@ -10,10 +10,14 @@ import React, { createContext, useCallback, useContext, useState } from "react";
 import { usePersistentFilters } from "./use-persistent-filters";
 import { COLUMN_IDS } from "./columns";
 
+// For dev
+const lowStockThreshold = 8000;
+// const lowStockThreshold = 500;
 interface DataTableState {
   sorting: SortingState;
   columnFilters: ColumnFiltersState;
   columnSizing: ColumnSizingState;
+  lowStockThreshold: number;
   updateSorting: (updater: Updater<SortingState>) => void;
   updateColumnFilters: (updater: Updater<ColumnFiltersState>) => void;
   updateColumnSizing: (updater: Updater<ColumnSizingState>) => void;
@@ -23,6 +27,7 @@ const defaultState: DataTableState = {
   sorting: [{ id: "dustPerChaos", desc: true }],
   columnFilters: [],
   columnSizing: {},
+  lowStockThreshold: lowStockThreshold,
   updateSorting: () => {},
   updateColumnFilters: () => {},
   updateColumnSizing: () => {},
@@ -103,6 +108,7 @@ export function DataTableStateProvider({
         updateSorting,
         updateColumnFilters,
         updateColumnSizing,
+        lowStockThreshold: lowStockThreshold,
       }}
     >
       {children}

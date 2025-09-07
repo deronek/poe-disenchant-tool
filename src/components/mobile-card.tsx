@@ -1,5 +1,6 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -89,6 +90,7 @@ const DustInfoPopover = React.memo(function DustInfoPopover() {
 });
 
 import { League } from "@/lib/leagues";
+import { useDataTableState } from "./data-table-state-context";
 
 interface MobileCardProps<TData extends Item> {
   row: Row<TData>;
@@ -110,6 +112,8 @@ function MobileCardComponent<TData extends Item>({
   const dustPerChaos = row.getValue<number>(COLUMN_IDS.DUST_PER_CHAOS);
   const tradeLink = createTradeLink(name, league, advancedSettings);
   const calculatedDustValue = row.original.calculatedDustValue;
+
+  const lowStockThreshold = useDataTableState().lowStockThreshold;
 
   const handleSelect = React.useCallback(
     (v: boolean) => row.toggleSelected(!!v),
@@ -160,15 +164,22 @@ function MobileCardComponent<TData extends Item>({
 
       {/* Price and Dust Value */}
       <div className="grid grid-cols-2 gap-3">
-        <div className="space-y-1">
-          <p className="text-muted-foreground text-sm">Price</p>
+        <div className="space-y-2">
+          <div className="flex items-center gap-1 text-sm">
+            <p className="text-muted-foreground">Price</p>
+            {row.original.listingCount < lowStockThreshold && (
+              <Badge variant="amber" className="ml-2">
+                Low Stock
+              </Badge>
+            )}
+          </div>
           <div className="flex items-center gap-1 text-sm font-semibold">
             <span>{chaos}</span>
             <ChaosOrbIcon className="h-4 w-4" />
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <div className="space-y-1">
+          <div className="space-y-2">
             <p className="text-muted-foreground text-sm">Dust Value</p>
             <div className="flex items-center gap-1 text-sm font-semibold">
               <span>{calculatedDustValue}</span>
@@ -180,7 +191,7 @@ function MobileCardComponent<TData extends Item>({
       </div>
 
       {/* Dust per Chaos (Primary metric) */}
-      <div className="space-y-1">
+      <div className="space-y-2">
         <p className="text-muted-foreground text-sm">Dust per Chaos</p>
         <div className="text-primary flex items-center gap-1 text-left text-lg font-bold">
           <span className="">{dustPerChaos}</span>

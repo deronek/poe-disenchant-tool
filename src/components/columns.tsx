@@ -77,6 +77,7 @@ export const COLUMN_IDS = {
 export type ColumnId = (typeof COLUMN_IDS)[keyof typeof COLUMN_IDS];
 
 import { League } from "@/lib/leagues";
+import { useDataTableState } from "./data-table-state-context";
 
 export const createColumns = (
   advancedSettings: AdvancedSettings,
@@ -146,7 +147,8 @@ export const createColumns = (
     cell: ({ row }) => {
       const value = row.getValue(COLUMN_IDS.CHAOS) as number;
       const listingCount = row.original.listingCount;
-      const isLowStock = listingCount < 300;
+      const lowStockThreshold = useDataTableState().lowStockThreshold;
+      const isLowStock = listingCount < lowStockThreshold;
       return (
         <span className="flex w-full flex-1 justify-between">
           {isLowStock && (
