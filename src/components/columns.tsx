@@ -15,7 +15,7 @@ import {
   ColumnDefTemplate,
   HeaderContext,
 } from "@tanstack/react-table";
-import { ExternalLink, Info } from "lucide-react";
+import { AlertCircle, ExternalLink, Info } from "lucide-react";
 import * as React from "react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
@@ -132,7 +132,7 @@ export const createColumns = (
   {
     accessorKey: COLUMN_IDS.CHAOS,
     header: () => <span>Price</span>,
-    size: 170,
+    size: 100,
     meta: { className: "text-right tabular-nums" },
     filterFn: (row, columnId, filterValue) => {
       if (!filterValue) return true;
@@ -147,14 +147,8 @@ export const createColumns = (
     cell: ({ row }) => {
       const value = row.getValue(COLUMN_IDS.CHAOS) as number;
       const listingCount = row.original.listingCount;
-      const isLowStock = listingCount < lowStockThreshold;
       return (
         <span className="flex w-full flex-1 justify-between">
-          {isLowStock && (
-            <Badge variant="amber" className="">
-              Low Stock
-            </Badge>
-          )}
           <span className="ml-auto inline-flex items-center gap-1">
             <span>{value}</span>
             <ChaosOrbIcon />
@@ -209,18 +203,26 @@ export const createColumns = (
   {
     id: COLUMN_IDS.TRADE_LINK,
     header: "Trade Link",
-    size: 110,
+    size: 160,
     enableSorting: false,
     cell: ({ row }) => {
       const name = row.getValue(COLUMN_IDS.NAME) as string;
       const link = createTradeLink(name, league, advancedSettings);
+      const listingCount = row.original.listingCount;
+      const isLowStock = listingCount < lowStockThreshold;
       return (
-        <div className="flex w-full flex-1 items-center">
+        <div className="flex w-full flex-1 items-center justify-between px-1 xl:px-2">
+          {isLowStock && (
+            <Badge variant="amber" className="">
+              <AlertCircle className="mr-1 h-4 w-4" />
+              Low Stock
+            </Badge>
+          )}
           <Button
             asChild
             variant="default"
             size="icon"
-            className="text-primary bg-primary/10 hover:bg-primary/20 hover:outline-primary mx-auto size-10 outline-1 hover:outline-solid"
+            className="text-primary bg-primary/10 hover:bg-primary/20 hover:outline-primary ml-auto size-10 outline-1 hover:outline-solid"
           >
             <a
               href={link}
