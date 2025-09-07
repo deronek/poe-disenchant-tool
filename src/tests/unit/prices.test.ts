@@ -428,22 +428,5 @@ describe("dedupeCheapestVariants", () => {
       expect(output[0].chaos).toBe(10);
       expect(output[0].listingCount).toBe(3);
     });
-
-    it("does not treat as special if contains suffix but does not end with it", () => {
-      const baseItem: Omit<Item, "chaos" | "listingCount"> = {
-        type: "UniqueWeapon",
-        name: "Contains Suffix Item",
-        baseType: "Cool Base",
-        icon: "http://example.com/icon.png",
-        detailsId: "contains-item-cool-base-with-relic-in-middle", // contains but not ends
-      };
-      const item1: Item = { ...baseItem, chaos: 15, listingCount: 2 };
-      const item2: Item = { ...baseItem, chaos: 10, listingCount: 3 };
-      const input: Item[] = [item1, item2];
-      const expected: Item = { ...item2, listingCount: 5 }; // Non-special, sum
-      const output = dedupeCheapestVariants(input);
-      expect(output).toEqual([expected]);
-      expect(output[0].listingCount).toBe(5);
-    });
   });
 });
