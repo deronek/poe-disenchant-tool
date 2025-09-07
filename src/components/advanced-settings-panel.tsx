@@ -111,7 +111,10 @@ export function AdvancedSettingsPanel({
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 {getMinimumItemLevelIcon(settings.minItemLevel)}
-                <Label htmlFor="min-item-level" className="text-sm font-semibold">
+                <Label
+                  htmlFor="min-item-level"
+                  className="text-sm font-semibold"
+                >
                   Minimum Item Level
                 </Label>
               </div>
