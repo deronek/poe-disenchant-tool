@@ -31,7 +31,7 @@ const ItemOverviewResponseSchema = z.object({
 
 type ItemOverviewResponse = z.infer<typeof ItemOverviewResponseSchema>;
 
-export type Item = {
+export type InternalItem = {
   type: AllowedUnique;
   name: string;
   chaos: number;
@@ -40,6 +40,8 @@ export type Item = {
   listingCount: number;
   detailsId: string;
 };
+
+export type Item = Omit<InternalItem, "detailsId">;
 
 // Parse dev data globally in development only
 const devDataCache = {} as Record<AllowedUnique, ItemOverviewResponse>;
@@ -81,7 +83,7 @@ const getDevData = async (
 const getProductionDataForType = async (
   type: AllowedUnique,
   leagueApiName: string,
-): Promise<Item[]> => {
+): Promise<InternalItem[]> => {
   const url = `https://poe.ninja/api/data/itemoverview?type=${encodeURIComponent(type)}&league=${encodeURIComponent(leagueApiName)}`;
   try {
     const response = await fetch(url);
@@ -93,7 +95,7 @@ const getProductionDataForType = async (
       return [];
     }
 
-    const items: Item[] = data.lines.map((line) => ({
+    const items: InternalItem[] = data.lines.map((line) => ({
       type,
       name: line.name,
       chaos: line.chaosValue,
@@ -119,7 +121,7 @@ const getProductionDataForType = async (
 const getPriceDataForType = async (
   type: AllowedUnique,
   leagueApiName: string,
-): Promise<Item[]> => {
+): Promise<InternalItem[]> => {
   if (isDevelopment) {
     return getDevDataForType(type);
   }
@@ -127,7 +129,7 @@ const getPriceDataForType = async (
   return getProductionDataForType(type, leagueApiName);
 };
 
-const getDevDataForType = async (type: AllowedUnique): Promise<Item[]> => {
+const getDevDataForType = async (type: AllowedUnique): Promise<InternalItem[]> => {
   const data = await getDevData(type);
   if (!data.lines) {
     console.warn(`No dev data returned for ${type}`);
@@ -152,22 +154,22 @@ const getDevDataForType = async (type: AllowedUnique): Promise<Item[]> => {
  * - Duplicates only special: select cheapest special.
  * Specials detected if detailsId ends with "-relic", "-5l", or "-6l".
  * For equal chaos, retains the first item's other properties.
- * @param lines Array of Item objects
+ * @param lines Array of InternalItem objects
  * @returns Deduped array with modified listingCount where summed.
  * @throws Error if input is null or undefined.
  * @throws Runtime error if array contains null/undefined items (property access).
  */
-export const dedupeCheapestVariants = (lines: Item[]) => {
+export const dedupeCheapestVariants = (lines: InternalItem[]): InternalItem[] => {
   if (lines.length === 0) return [];
 
   const specialSuffixes = ["-relic", "-5l", "-6l"];
 
-  const isSpecialSuffix = (item: Item): boolean => {
+  const isSpecialSuffix = (item: InternalItem): boolean => {
     return specialSuffixes.some((suffix) => item.detailsId.endsWith(suffix));
   };
 
   // Group all items by name
-  const groupsByName = new Map<string, Item[]>();
+  const groupsByName = new Map<string, InternalItem[]>();
   for (const item of lines) {
     const name = item.name;
     if (!groupsByName.has(name)) {
@@ -176,7 +178,7 @@ export const dedupeCheapestVariants = (lines: Item[]) => {
     groupsByName.get(name)!.push(item);
   }
 
-  const result: Item[] = [];
+  const result: InternalItem[] = [];
 
   for (const [, group] of groupsByName) {
     if (group.length === 1) {
@@ -186,7 +188,7 @@ export const dedupeCheapestVariants = (lines: Item[]) => {
       // Non-unique name - handle duplicates
       const nonSpecialItems = group.filter((item) => !isSpecialSuffix(item));
 
-      let chosenItem: Item;
+      let chosenItem: InternalItem;
       let totalListingCount: number;
 
       if (nonSpecialItems.length > 0) {
@@ -247,7 +249,15 @@ const uncached__getPriceData = async (league: League): Promise<Item[]> => {
   // For items with multiple base types, the dust value should be the same for all
   const cheapestVariants = dedupeCheapestVariants(combinedItems);
 
-  return cheapestVariants;
+  // Map to public Item type, excluding detailsId
+  return cheapestVariants.map((item): Item => ({
+    type: item.type,
+    name: item.name,
+    chaos: item.chaos,
+    baseType: item.baseType,
+    icon: item.icon,
+    listingCount: item.listingCount,
+  }));
 };
 
 export const getPriceData = uncached__getPriceData;
