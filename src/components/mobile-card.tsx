@@ -1,5 +1,6 @@
 "use client";
 
+import type { AdvancedSettings } from "@/components/advanced-settings-panel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -9,18 +10,17 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import type { Item } from "@/lib/itemData";
+import type { League } from "@/lib/leagues";
 import { createTradeLink } from "@/lib/tradeLink";
 import { Row } from "@tanstack/react-table";
 import { ExternalLink, Info } from "lucide-react";
 import * as React from "react";
-import { AdvancedSettings } from "./advanced-settings-panel";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { COLUMN_IDS } from "./columns";
 import { DustIcon } from "./dust-icon";
 import { DustInfo } from "./dust-info";
 import { Icon } from "./icon";
 import { ItemMarkingInfo } from "./item-marking-info";
-import { League } from "@/lib/leagues";
 
 // Checkbox with memo
 const SelectionCheckbox = React.memo(function SelectionCheckbox({
