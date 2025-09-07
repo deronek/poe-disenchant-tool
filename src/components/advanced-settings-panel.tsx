@@ -111,10 +111,7 @@ export function AdvancedSettingsPanel({
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 {getMinimumItemLevelIcon(settings.minItemLevel)}
-                <Label
-                  htmlFor="min-item-level"
-                  className="text-sm font-semibold"
-                >
+                <Label htmlFor="min-item-level" className="text-sm">
                   Minimum Item Level
                 </Label>
               </div>
@@ -158,7 +155,7 @@ export function AdvancedSettingsPanel({
                   <Zap className="h-4 w-4 text-red-600 dark:text-red-400" />
                   <Label
                     htmlFor="include-corrupted"
-                    className="cursor-pointer text-sm font-semibold"
+                    className="cursor-pointer text-sm"
                   >
                     Include Corrupted Items
                   </Label>
