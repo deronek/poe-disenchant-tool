@@ -21,6 +21,8 @@ const LineSchema = z.object({
   chaosValue: z.number(),
   baseType: z.string(),
   icon: z.string().url(),
+  listingCount: z.number().int(),
+  detailsId: z.string(),
 });
 
 const ItemOverviewResponseSchema = z.object({
@@ -35,6 +37,8 @@ export type Item = {
   chaos: number;
   baseType: string;
   icon: string;
+  listingCount: number;
+  detailsId: string;
 };
 
 // Parse dev data globally in development only
@@ -95,6 +99,8 @@ const getProductionDataForType = async (
       chaos: line.chaosValue,
       baseType: line.baseType,
       icon: line.icon,
+      listingCount: line.listingCount,
+      detailsId: line.detailsId,
     }));
 
     console.log(
@@ -134,17 +140,87 @@ const getDevDataForType = async (type: AllowedUnique): Promise<Item[]> => {
     chaos: line.chaosValue,
     baseType: line.baseType,
     icon: line.icon,
+    listingCount: line.listingCount,
+    detailsId: line.detailsId,
   }));
 };
 
-// Keep only the cheapest variant for items with the same name
+// Dedupe items according to requirements about special items (relics, 5Ls, 6Ls):
+// - Unique names: pass through unchanged
+// - Duplicates:
+//   - If non-special items exist: keep only non-special items (cheapest + merged counts)
+//   - If only special suffix items exist: keep cheapest special suffix item
 const dedupeCheapestVariants = (lines: Item[]) => {
-  const bestByName = new Map<string, Item>();
-  for (const line of lines) {
-    const prev = bestByName.get(line.name);
-    if (!prev || line.chaos < prev.chaos) bestByName.set(line.name, line);
+  if (lines.length === 0) return [];
+
+  const specialSuffixes = ["-relic", "-5l", "-6l"];
+
+  const isSpecialSuffix = (item: Item): boolean => {
+    return specialSuffixes.some((suffix) => item.detailsId.endsWith(suffix));
+  };
+
+  // Group all items by name
+  const groupsByName = new Map<string, Item[]>();
+  for (const item of lines) {
+    const name = item.name;
+    if (!groupsByName.has(name)) {
+      groupsByName.set(name, []);
+    }
+    groupsByName.get(name)!.push(item);
   }
-  return Array.from(bestByName.values());
+
+  const result: Item[] = [];
+
+  for (const [name, group] of groupsByName) {
+    if (group.length === 1) {
+      // Unique name - pass through unchanged
+      result.push(group[0]);
+    } else {
+      // Non-unique name - handle duplicates
+      const nonSpecialItems = group.filter((item) => !isSpecialSuffix(item));
+
+      let chosenItem: Item;
+      let totalListingCount: number;
+
+      if (nonSpecialItems.length > 0) {
+        // Keep only non-special items: take cheapest and merge their listing counts
+        chosenItem = nonSpecialItems.reduce((min, curr) =>
+          curr.chaos < min.chaos ? curr : min,
+        );
+        totalListingCount = nonSpecialItems.reduce(
+          (sum, item) => sum + item.listingCount,
+          0,
+        );
+      } else {
+        // Only special suffix items exist: keep cheapest special suffix item
+        chosenItem = group.reduce((min, curr) =>
+          curr.chaos < min.chaos ? curr : min,
+        );
+        totalListingCount = chosenItem.listingCount;
+      }
+
+      // Create the result item
+      result.push({
+        ...chosenItem,
+        listingCount: totalListingCount,
+      });
+    }
+  }
+
+  // Dev-only verification
+  if (isDevelopment) {
+    const names = result.map((i) => i.name);
+    const uniqueNames = new Set(names);
+    if (uniqueNames.size !== names.length) {
+      console.warn("Duplicate names after deduping:", [
+        ...new Set(names.filter((n, i) => names.indexOf(n) !== i)),
+      ]);
+    } else {
+      console.log(`Deduping successful: ${uniqueNames.size} unique names`);
+    }
+  }
+
+  return result;
 };
 
 const uncached__getPriceData = async (league: League): Promise<Item[]> => {
