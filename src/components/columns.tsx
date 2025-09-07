@@ -1,5 +1,6 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -130,7 +131,7 @@ export const createColumns = (
   {
     accessorKey: COLUMN_IDS.CHAOS,
     header: () => <span>Price</span>,
-    size: 110,
+    size: 120,
     meta: { className: "text-right tabular-nums" },
     filterFn: (row, columnId, filterValue) => {
       if (!filterValue) return true;
@@ -144,9 +145,16 @@ export const createColumns = (
     },
     cell: ({ row }) => {
       const value = row.getValue(COLUMN_IDS.CHAOS) as number;
+      const listingCount = row.original.listingCount;
+      const isLowStock = listingCount < 300;
       return (
-        <span className="block w-full">
-          <span className="float-right inline-flex items-center gap-1">
+        <span className="flex w-full flex-1 justify-between">
+          {isLowStock && (
+            <Badge variant="amber" className="">
+              Low Stock
+            </Badge>
+          )}
+          <span className="ml-auto inline-flex items-center gap-1">
             <span>{value}</span>
             <ChaosOrbIcon />
           </span>

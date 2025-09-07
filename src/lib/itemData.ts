@@ -8,6 +8,7 @@ export type Item = {
   id: number;
   uniqueId: string;
   chaos: number;
+  listingCount: number;
   variant?: string;
   calculatedDustValue: number;
   dustPerChaos: number;
@@ -52,6 +53,7 @@ const uncached__getItems = async (league: League) => {
         uniqueId: createUniqueId(priceItem.name, priceItem.baseType),
         name: priceItem.name,
         chaos: priceItem.chaos,
+        listingCount: priceItem.listingCount,
         variant: priceItem.baseType,
         calculatedDustValue,
         dustPerChaos: dustPerChaos,
