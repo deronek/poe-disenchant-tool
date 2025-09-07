@@ -73,7 +73,7 @@ export function DataTablePagination<TData>({
       <div className="flex flex-1 items-center justify-end gap-2 md:gap-6 lg:gap-8">
         {/* Rows per page */}
         <div className="hidden items-center gap-2 lg:flex">
-          <p className="flex-none text-sm font-medium">Rows per page</p>
+          <p className="flex-none text-sm font-semibold">Rows per page</p>
           <RowsPerPageSelect
             pageSize={pageSize}
             onPageSizeChange={table.setPageSize}
@@ -81,7 +81,7 @@ export function DataTablePagination<TData>({
         </div>
 
         {/* Page x of y */}
-        <div className="flex w-[100px] items-center justify-center text-sm font-medium">
+        <div className="flex w-[100px] items-center justify-center text-sm font-semibold">
           Page {pageIndex + 1} of {table.getPageCount()}
         </div>
 

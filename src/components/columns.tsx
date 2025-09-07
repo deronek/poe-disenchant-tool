@@ -119,7 +119,7 @@ export const createColumns = (
           className="truncate"
           title={name + (variant ? ` — ${variant}` : "")}
         >
-          <p className={`truncate font-medium tracking-[0.015em]`}>{name}</p>
+          <p className={`truncate font-semibold tracking-[0.015em]`}>{name}</p>
           {variant && (
             <p className={`text-muted-foreground truncate`}>{variant}</p>
           )}

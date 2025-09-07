@@ -133,7 +133,7 @@ function MobileCardComponent<TData extends Item>({
           />
           <div className="min-w-0 flex-1">
             <h3
-              className="truncate font-medium tracking-[0.015em]"
+              className="truncate font-semibold tracking-[0.015em]"
               title={name}
             >
               {name}
@@ -162,7 +162,7 @@ function MobileCardComponent<TData extends Item>({
       <div className="grid grid-cols-2 gap-3">
         <div className="space-y-1">
           <p className="text-muted-foreground text-sm">Price</p>
-          <div className="flex items-center gap-1 text-sm font-medium">
+          <div className="flex items-center gap-1 text-sm font-semibold">
             <span>{chaos}</span>
             <ChaosOrbIcon className="h-4 w-4" />
           </div>
@@ -170,7 +170,7 @@ function MobileCardComponent<TData extends Item>({
         <div className="flex items-center justify-between">
           <div className="space-y-1">
             <p className="text-muted-foreground text-sm">Dust Value</p>
-            <div className="flex items-center gap-1 text-sm font-medium">
+            <div className="flex items-center gap-1 text-sm font-semibold">
               <span>{calculatedDustValue}</span>
               <DustIcon className="h-4 w-4" />
             </div>

@@ -111,7 +111,7 @@ export function AdvancedSettingsPanel({
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 {getMinimumItemLevelIcon(settings.minItemLevel)}
-                <Label htmlFor="min-item-level" className="text-sm font-medium">
+                <Label htmlFor="min-item-level" className="text-sm font-semibold">
                   Minimum Item Level
                 </Label>
               </div>
@@ -129,7 +129,7 @@ export function AdvancedSettingsPanel({
               </div>
               <div className="text-muted-foreground flex justify-between text-xs">
                 <span className="leading-none">65</span>
-                <span className="text-foreground leading-none font-medium">
+                <span className="text-foreground leading-none font-semibold">
                   {settings.minItemLevel}
                 </span>
                 <span className="leading-none">84</span>
@@ -155,7 +155,7 @@ export function AdvancedSettingsPanel({
                   <Zap className="h-4 w-4 text-red-600 dark:text-red-400" />
                   <Label
                     htmlFor="include-corrupted"
-                    className="cursor-pointer text-sm font-medium"
+                    className="cursor-pointer text-sm font-semibold"
                   >
                     Include Corrupted Items
                   </Label>

@@ -9,7 +9,7 @@ export function DustInfo() {
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-2">
         <Sparkles className="size-4 text-green-600 dark:text-green-400" />
-        <h4 className="text-sm font-medium">Quality</h4>
+        <h4 className="text-sm font-semibold">Quality</h4>
       </div>
       <div className="flex flex-col gap-3">
         <p className="leading-relaxed">
@@ -59,7 +59,7 @@ export function DustInfo() {
       <div className="flex flex-col gap-3">
         <div className="flex items-center gap-2">
           <TrendingDown className="size-4 text-red-600 dark:text-red-400" />
-          <h4 className="text-sm font-medium">Item Level</h4>
+          <h4 className="text-sm font-semibold">Item Level</h4>
         </div>
         <div className="flex flex-col gap-3">
           <p className="leading-relaxed">

@@ -32,7 +32,7 @@ export function MobileCardLayout<TData extends Item>({
                 league={league}
               />
               {/* Subtle order indicator for tablet two-column layout */}
-              <div className="text-muted-foreground/60 absolute -top-1 -right-1 hidden text-[10px] font-medium md:block">
+              <div className="text-muted-foreground/60 absolute -top-1 -right-1 hidden text-[10px] font-semibold md:block">
                 {index + 1}
               </div>
             </div>

@@ -119,10 +119,10 @@ export default function LastUpdated({
           )}
         </div>
         <div className="space-y-1">
-          <div className="text-muted-foreground text-xs font-medium">
+          <div className="text-muted-foreground text-xs font-semibold">
             Absolute Time
           </div>
-          <div className="text-sm font-medium">{absoluteTime}</div>
+          <div className="text-sm font-semibold">{absoluteTime}</div>
         </div>
       </div>
       {/* Refresh Section - Only shown when data is stale */}
