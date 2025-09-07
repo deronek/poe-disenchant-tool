@@ -287,7 +287,7 @@ describe("dedupeCheapestVariants", () => {
           input.push({
             ...baseItem,
             name: groupName,
-            chaos: 10 + Math.random() * 10, // Vary slightly
+            chaos: 10 + (dup % 10), // Vary slightly
             listingCount: 1,
           });
         }
@@ -413,7 +413,7 @@ describe("dedupeCheapestVariants", () => {
       );
     });
 
-    it("handles zero chaos: treats as higher than positive, picks positive", () => {
+    it("handles zero chaos: zero is valid low and is selected; sums counts", () => {
       const baseItem: Omit<InternalItem, "chaos" | "listingCount"> = {
         type: "UniqueWeapon",
         name: "Zero Chaos Item",
