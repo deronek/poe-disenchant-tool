@@ -132,7 +132,7 @@ export const createColumns = (
   {
     accessorKey: COLUMN_IDS.CHAOS,
     header: () => <span>Price</span>,
-    size: 120,
+    size: 170,
     meta: { className: "text-right tabular-nums" },
     filterFn: (row, columnId, filterValue) => {
       if (!filterValue) return true;
