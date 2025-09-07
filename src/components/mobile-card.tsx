@@ -13,13 +13,15 @@ import { createTradeLink } from "@/lib/tradeLink";
 import { Row } from "@tanstack/react-table";
 import { ExternalLink, Info } from "lucide-react";
 import * as React from "react";
+import { AdvancedSettings } from "./advanced-settings-panel";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
+import { COLUMN_IDS } from "./columns";
 import { DustIcon } from "./dust-icon";
 import { DustInfo } from "./dust-info";
-import { ItemMarkingInfo } from "./item-marking-info";
-import { AdvancedSettings } from "./advanced-settings-panel";
-import { COLUMN_IDS } from "./columns";
 import { Icon } from "./icon";
+import { ItemMarkingInfo } from "./item-marking-info";
+import { League } from "@/lib/leagues";
+
 // Checkbox with memo
 const SelectionCheckbox = React.memo(function SelectionCheckbox({
   checked,
@@ -89,13 +91,10 @@ const DustInfoPopover = React.memo(function DustInfoPopover() {
   );
 });
 
-import { League } from "@/lib/leagues";
-import { useDataTableState } from "./data-table-state-context";
-
 interface MobileCardProps<TData extends Item> {
   row: Row<TData>;
   isSelected: boolean;
-  advancedSettings?: AdvancedSettings;
+  advancedSettings: AdvancedSettings;
   league: League;
 }
 
@@ -113,7 +112,7 @@ function MobileCardComponent<TData extends Item>({
   const tradeLink = createTradeLink(name, league, advancedSettings);
   const calculatedDustValue = row.original.calculatedDustValue;
 
-  const lowStockThreshold = useDataTableState().lowStockThreshold;
+  const lowStockThreshold = advancedSettings.lowStockThreshold;
 
   const handleSelect = React.useCallback(
     (v: boolean) => row.toggleSelected(!!v),

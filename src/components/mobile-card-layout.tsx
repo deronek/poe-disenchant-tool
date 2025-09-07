@@ -4,13 +4,11 @@ import { MobileCard } from "./mobile-card";
 import { Table } from "@tanstack/react-table";
 import type { Item } from "@/lib/itemData";
 import { League } from "@/lib/leagues";
+import { AdvancedSettings } from "./advanced-settings-panel";
 
 interface MobileCardLayoutProps<TData extends Item> {
   table: Table<TData>;
-  advancedSettings?: {
-    minItemLevel: number;
-    includeCorrupted: boolean;
-  };
+  advancedSettings: AdvancedSettings;
   league: League;
 }
 

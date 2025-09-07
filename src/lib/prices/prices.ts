@@ -129,7 +129,9 @@ const getPriceDataForType = async (
   return getProductionDataForType(type, leagueApiName);
 };
 
-const getDevDataForType = async (type: AllowedUnique): Promise<InternalItem[]> => {
+const getDevDataForType = async (
+  type: AllowedUnique,
+): Promise<InternalItem[]> => {
   const data = await getDevData(type);
   if (!data.lines) {
     console.warn(`No dev data returned for ${type}`);
@@ -159,7 +161,9 @@ const getDevDataForType = async (type: AllowedUnique): Promise<InternalItem[]> =
  * @throws Error if input is null or undefined.
  * @throws Runtime error if array contains null/undefined items (property access).
  */
-export const dedupeCheapestVariants = (lines: InternalItem[]): InternalItem[] => {
+export const dedupeCheapestVariants = (
+  lines: InternalItem[],
+): InternalItem[] => {
   if (lines.length === 0) return [];
 
   const specialSuffixes = ["-relic", "-5l", "-6l"];
@@ -250,14 +254,16 @@ const uncached__getPriceData = async (league: League): Promise<Item[]> => {
   const cheapestVariants = dedupeCheapestVariants(combinedItems);
 
   // Map to public Item type, excluding detailsId
-  return cheapestVariants.map((item): Item => ({
-    type: item.type,
-    name: item.name,
-    chaos: item.chaos,
-    baseType: item.baseType,
-    icon: item.icon,
-    listingCount: item.listingCount,
-  }));
+  return cheapestVariants.map(
+    (item): Item => ({
+      type: item.type,
+      name: item.name,
+      chaos: item.chaos,
+      baseType: item.baseType,
+      icon: item.icon,
+      listingCount: item.listingCount,
+    }),
+  );
 };
 
 export const getPriceData = uncached__getPriceData;

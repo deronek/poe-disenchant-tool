@@ -23,13 +23,13 @@ describe("dedupeCheapestVariants", () => {
 
     it("handles single item unchanged", () => {
       const singleItem: InternalItem = {
-      type: "UniqueWeapon",
-      name: "Single Item",
-      chaos: 10,
-      baseType: "Cool Type",
-      icon: "http://example.com/icon.png",
-      listingCount: 5,
-      detailsId: "single-item-cool-type",
+        type: "UniqueWeapon",
+        name: "Single Item",
+        chaos: 10,
+        baseType: "Cool Type",
+        icon: "http://example.com/icon.png",
+        listingCount: 5,
+        detailsId: "single-item-cool-type",
       };
       const input: InternalItem[] = [singleItem];
       const output = dedupeCheapestVariants(input);
@@ -134,7 +134,10 @@ describe("dedupeCheapestVariants", () => {
     });
 
     it("prefers non-special over special when mixed in group", () => {
-      const baseItem: Omit<InternalItem, "chaos" | "listingCount" | "detailsId"> = {
+      const baseItem: Omit<
+        InternalItem,
+        "chaos" | "listingCount" | "detailsId"
+      > = {
         type: "UniqueWeapon",
         name: "Mixed Item",
         baseType: "Cool Base",
@@ -215,7 +218,10 @@ describe("dedupeCheapestVariants", () => {
         listingCount: 5,
         detailsId: "malformed-item-cool-base",
       }; // No name
-      const validItem: InternalItem = { ...malformed, name: "Valid Malformed Item" };
+      const validItem: InternalItem = {
+        ...malformed,
+        name: "Valid Malformed Item",
+      };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const input: any[] = [malformed, validItem];
       // Grouping on undefined name: Map key undefined, but proceeds; output includes both (undefined group and valid)
@@ -314,7 +320,10 @@ describe("dedupeCheapestVariants", () => {
     });
 
     it("handles only-special group with all three suffixes: picks cheapest regardless of suffix type", () => {
-      const baseItem: Omit<InternalItem, "chaos" | "listingCount" | "detailsId"> = {
+      const baseItem: Omit<
+        InternalItem,
+        "chaos" | "listingCount" | "detailsId"
+      > = {
         type: "UniqueWeapon",
         name: "All Specials Item",
         baseType: "Cool Base",
@@ -348,7 +357,10 @@ describe("dedupeCheapestVariants", () => {
     });
 
     it("handles mixed non-special + all three specials: prefers non-special, sums only non-specials", () => {
-      const baseItem: Omit<InternalItem, "chaos" | "listingCount" | "detailsId"> = {
+      const baseItem: Omit<
+        InternalItem,
+        "chaos" | "listingCount" | "detailsId"
+      > = {
         type: "UniqueWeapon",
         name: "Mixed All Specials Item",
         baseType: "Cool Base",
@@ -384,7 +396,13 @@ describe("dedupeCheapestVariants", () => {
         listingCount: 5,
         detailsId: "mixed-all-specials-item-cool-base-6l",
       };
-      const input: InternalItem[] = [nonSpecial1, nonSpecial2, relic, fiveL, sixL];
+      const input: InternalItem[] = [
+        nonSpecial1,
+        nonSpecial2,
+        relic,
+        fiveL,
+        sixL,
+      ];
       const expected: InternalItem = { ...nonSpecial2, listingCount: 6 }; // Cheapest non-special's details, sum non-special counts: 4+2
       const output = dedupeCheapestVariants(input);
       expect(output).toEqual([expected]);
@@ -403,10 +421,18 @@ describe("dedupeCheapestVariants", () => {
         icon: "http://example.com/icon.png",
         detailsId: "zero-chaos-item-cool-base",
       };
-      const zeroChaos: InternalItem = { ...baseItem, chaos: 0, listingCount: 2 };
-      const positiveChaos: InternalItem = { ...baseItem, chaos: 5, listingCount: 3 };
+      const zeroChaos: InternalItem = {
+        ...baseItem,
+        chaos: 0,
+        listingCount: 2,
+      };
+      const positiveChaos: InternalItem = {
+        ...baseItem,
+        chaos: 5,
+        listingCount: 3,
+      };
       const input: InternalItem[] = [zeroChaos, positiveChaos];
-   
+
       const output = dedupeCheapestVariants(input);
       expect(output[0].chaos).toBe(0); // Confirms 0 is treated as valid low
       expect(output[0].listingCount).toBe(5);
@@ -423,7 +449,7 @@ describe("dedupeCheapestVariants", () => {
       const item1: InternalItem = { ...baseItem, chaos: 10, listingCount: 0 };
       const item2: InternalItem = { ...baseItem, chaos: 15, listingCount: 3 };
       const input: InternalItem[] = [item1, item2];
-   
+
       const output = dedupeCheapestVariants(input);
       expect(output[0].chaos).toBe(10);
       expect(output[0].listingCount).toBe(3);
