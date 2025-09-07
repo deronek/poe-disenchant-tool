@@ -28,7 +28,6 @@ export const AdvancedSettingsSchema = z
   .object({
     minItemLevel: z.number().int().min(65).max(84).default(78),
     includeCorrupted: z.boolean().default(true),
-    lowStockThreshold: z.number().int().positive().default(8000),
   })
   .strict();
 

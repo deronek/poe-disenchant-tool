@@ -15,9 +15,14 @@ import { useLocalStorage } from "@/lib/use-local-storage";
 interface SharedDataViewProps {
   items: Item[];
   league: League;
+  lowStockThreshold: number;
 }
 
-export function SharedDataView({ items, league }: SharedDataViewProps) {
+export function SharedDataView({
+  items,
+  league,
+  lowStockThreshold,
+}: SharedDataViewProps) {
   const [advancedSettings, setAdvancedSettings] =
     useLocalStorage<AdvancedSettings>(
       DEFAULT_ADVANCED_SETTINGS,
@@ -29,7 +34,7 @@ export function SharedDataView({ items, league }: SharedDataViewProps) {
     );
 
   // Generate columns with current settings and league
-  const columns = createColumns(advancedSettings, league);
+  const columns = createColumns(advancedSettings, lowStockThreshold, league);
 
   return (
     <DataTable
@@ -38,6 +43,7 @@ export function SharedDataView({ items, league }: SharedDataViewProps) {
       advancedSettings={advancedSettings}
       onAdvancedSettingsChange={setAdvancedSettings}
       league={league}
+      lowStockThreshold={lowStockThreshold}
     />
   );
 }

@@ -96,6 +96,7 @@ interface MobileCardProps<TData extends Item> {
   isSelected: boolean;
   advancedSettings: AdvancedSettings;
   league: League;
+  lowStockThreshold: number;
 }
 
 function MobileCardComponent<TData extends Item>({
@@ -103,6 +104,7 @@ function MobileCardComponent<TData extends Item>({
   isSelected,
   advancedSettings,
   league,
+  lowStockThreshold,
 }: MobileCardProps<TData>) {
   const name = row.getValue<string>(COLUMN_IDS.NAME);
   const variant = row.original.variant;
@@ -111,8 +113,6 @@ function MobileCardComponent<TData extends Item>({
   const dustPerChaos = row.getValue<number>(COLUMN_IDS.DUST_PER_CHAOS);
   const tradeLink = createTradeLink(name, league, advancedSettings);
   const calculatedDustValue = row.original.calculatedDustValue;
-
-  const lowStockThreshold = advancedSettings.lowStockThreshold;
 
   const handleSelect = React.useCallback(
     (v: boolean) => row.toggleSelected(!!v),

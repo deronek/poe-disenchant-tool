@@ -11,7 +11,11 @@ interface LeagueContentServerProps {
 export default async function LeagueContentServer({
   league,
 }: LeagueContentServerProps) {
-  const { items, lastUpdated: lastUpdatedTimestamp } = await getItems(league);
+  const {
+    items,
+    lastUpdated: lastUpdatedTimestamp,
+    lowStockThreshold,
+  } = await getItems(league);
   const lastUpdated = new Date(lastUpdatedTimestamp);
 
   return (
@@ -24,7 +28,11 @@ export default async function LeagueContentServer({
         />
       </h4>
       <div className="xl:py-4">
-        <SharedDataView items={items} league={league} />
+        <SharedDataView
+          items={items}
+          league={league}
+          lowStockThreshold={lowStockThreshold}
+        />
       </div>
     </>
   );

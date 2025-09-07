@@ -66,9 +66,17 @@ const uncached__getItems = async (league: League) => {
     }
   }
 
+  // Calculate p10 of listingCounts
+  const listingCounts = merged
+    .map((item) => item.listingCount)
+    .sort((a, b) => a - b);
+  const p10Index = Math.floor(0.1 * listingCounts.length);
+  const lowStockThreshold = listingCounts[p10Index] || 1; // fallback to 1 if empty
+  console.log("p10 of listingCounts:", lowStockThreshold);
   return {
     items: merged,
     lastUpdated: Date.now(),
+    lowStockThreshold,
   };
 };
 

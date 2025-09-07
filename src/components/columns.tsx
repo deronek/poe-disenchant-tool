@@ -80,6 +80,7 @@ import { League } from "@/lib/leagues";
 
 export const createColumns = (
   advancedSettings: AdvancedSettings,
+  lowStockThreshold: number,
   league: League,
 ): ColumnDef<Item>[] => [
   {
@@ -146,7 +147,6 @@ export const createColumns = (
     cell: ({ row }) => {
       const value = row.getValue(COLUMN_IDS.CHAOS) as number;
       const listingCount = row.original.listingCount;
-      const lowStockThreshold = advancedSettings.lowStockThreshold;
       const isLowStock = listingCount < lowStockThreshold;
       return (
         <span className="flex w-full flex-1 justify-between">
