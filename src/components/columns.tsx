@@ -211,31 +211,30 @@ export const createColumns = (
       const listingCount = row.original.listingCount;
       const isLowStock = listingCount < lowStockThreshold;
       return (
-        <div className="flex w-full flex-1 items-center justify-between px-1 xl:px-2">
-          {isLowStock && (
-            <Badge variant="amber" className="">
-              <AlertCircle className="mr-1 h-4 w-4" />
-              Low Stock
-            </Badge>
-          )}
-          <Button
-            asChild
-            variant="default"
-            size="icon"
-            className="text-primary bg-primary/10 hover:bg-primary/20 hover:outline-primary ml-auto size-10 outline-1 hover:outline-solid"
+        <Button
+          asChild
+          variant="default"
+          size="sm"
+          className="text-primary bg-primary/10 hover:bg-primary/20 border-input w-full gap-2 border border-solid"
+        >
+          <a
+            href={link}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`Open trade search for ${name} in new tab`}
+            title={`Open trade search for ${name}`}
+            className="inline-flex w-full items-center gap-2"
           >
-            <a
-              href={link}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={`Open trade search for ${name} in new tab`}
-              title={`Open trade search for ${name}`}
-              className="inline-flex items-center"
-            >
-              <ExternalLink className="size-5" aria-hidden="true" />
-            </a>
-          </Button>
-        </div>
+            <ExternalLink className="size-5" aria-hidden="true" />
+
+            {isLowStock && (
+              <Badge variant="amber" className="mx-2">
+                <AlertCircle className="mr-1 h-3 w-3" />
+                Low Stock
+              </Badge>
+            )}
+          </a>
+        </Button>
       );
     },
   },
