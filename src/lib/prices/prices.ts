@@ -145,12 +145,19 @@ const getDevDataForType = async (type: AllowedUnique): Promise<Item[]> => {
   }));
 };
 
-// Dedupe items according to requirements about special items (relics, 5Ls, 6Ls):
-// - Unique names: pass through unchanged
-// - Duplicates:
-//   - If non-special items exist: keep only non-special items (cheapest + merged counts)
-//   - If only special suffix items exist: keep cheapest special suffix item
-const dedupeCheapestVariants = (lines: Item[]) => {
+/**
+ * Dedupes items by name, preferring non-special variants where possible.
+ * - Unique names: pass through unchanged.
+ * - Duplicates with non-special: select cheapest non-special, sum listingCounts.
+ * - Duplicates only special: select cheapest special.
+ * Specials detected if detailsId ends with "-relic", "-5l", or "-6l".
+ * For equal chaos, retains the first item's other properties.
+ * @param lines Array of Item objects
+ * @returns Deduped array with modified listingCount where summed.
+ * @throws Error if input is null or undefined.
+ * @throws Runtime error if array contains null/undefined items (property access).
+ */
+export const dedupeCheapestVariants = (lines: Item[]) => {
   if (lines.length === 0) return [];
 
   const specialSuffixes = ["-relic", "-5l", "-6l"];
@@ -171,7 +178,7 @@ const dedupeCheapestVariants = (lines: Item[]) => {
 
   const result: Item[] = [];
 
-  for (const [name, group] of groupsByName) {
+  for (const [, group] of groupsByName) {
     if (group.length === 1) {
       // Unique name - pass through unchanged
       result.push(group[0]);
