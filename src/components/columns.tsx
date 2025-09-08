@@ -20,6 +20,7 @@ import * as React from "react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
 import { DustInfo } from "./dust-info";
+import { LowStockInfo } from "./low-stock-info";
 import { ItemMarkingInfo } from "./item-marking-info";
 import { Icon } from "./icon";
 
@@ -146,7 +147,6 @@ export const createColumns = (
     },
     cell: ({ row }) => {
       const value = row.getValue(COLUMN_IDS.CHAOS) as number;
-      const listingCount = row.original.listingCount;
       return (
         <span className="flex w-full flex-1 justify-between">
           <span className="ml-auto inline-flex items-center gap-1">
@@ -226,12 +226,25 @@ export const createColumns = (
             className="inline-flex w-full items-center gap-2"
           >
             <ExternalLink className="size-5" aria-hidden="true" />
-
             {isLowStock && (
-              <Badge variant="amber" className="mx-2">
-                <AlertCircle className="mr-1 h-3 w-3" />
-                Low Stock
-              </Badge>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Badge variant="amber" className="mx-2">
+                    <AlertCircle className="mr-1" />
+                    Low Stock
+                  </Badge>
+                </TooltipTrigger>
+                <TooltipContent
+                  className="max-w-[280px] text-sm"
+                  variant="popover"
+                >
+                  <LowStockInfo
+                    name={name}
+                    listingCount={listingCount}
+                    lowStockThreshold={lowStockThreshold}
+                  />
+                </TooltipContent>
+              </Tooltip>
             )}
           </a>
         </Button>

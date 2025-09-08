@@ -13,7 +13,7 @@ import type { Item } from "@/lib/itemData";
 import type { League } from "@/lib/leagues";
 import { createTradeLink } from "@/lib/tradeLink";
 import { Row } from "@tanstack/react-table";
-import { ExternalLink, Info } from "lucide-react";
+import { AlertCircle, ExternalLink, Info } from "lucide-react";
 import * as React from "react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { COLUMN_IDS } from "./columns";
@@ -21,6 +21,7 @@ import { DustIcon } from "./dust-icon";
 import { DustInfo } from "./dust-info";
 import { Icon } from "./icon";
 import { ItemMarkingInfo } from "./item-marking-info";
+import { LowStockInfo } from "./low-stock-info";
 
 // Checkbox with memo
 const SelectionCheckbox = React.memo(function SelectionCheckbox({
@@ -166,11 +167,6 @@ function MobileCardComponent<TData extends Item>({
         <div className="space-y-2">
           <div className="flex items-center gap-1 text-sm">
             <p className="text-muted-foreground">Price</p>
-            {row.original.listingCount < lowStockThreshold && (
-              <Badge variant="amber" className="ml-2">
-                Low Stock
-              </Badge>
-            )}
           </div>
           <div className="flex items-center gap-1 text-sm font-semibold">
             <span>{chaos}</span>
@@ -189,15 +185,39 @@ function MobileCardComponent<TData extends Item>({
         </div>
       </div>
 
-      {/* Dust per Chaos (Primary metric) */}
-      <div className="space-y-2">
-        <p className="text-muted-foreground text-sm">Dust per Chaos</p>
-        <div className="text-primary flex items-center gap-1 text-left text-lg font-bold">
-          <span className="">{dustPerChaos}</span>
-          <DustIcon className="h-5 w-5" />
-          <span className="text-muted-foreground">/</span>
-          <ChaosOrbIcon className="h-5 w-5" />
+      {/* Dust per Chaos (Primary metric) with low stock badge */}
+      <div className="flex justify-between">
+        <div className="min-w-0 flex-1 space-y-1">
+          <p className="text-muted-foreground text-sm">Dust per Chaos</p>
+
+          <div className="text-primary flex items-center gap-1 text-lg font-bold">
+            <span className="truncate">{dustPerChaos}</span>
+            <DustIcon className="h-5 w-5" />
+            <span className="text-muted-foreground">/</span>
+            <ChaosOrbIcon className="h-5 w-5" />
+          </div>
         </div>
+
+        {row.original.listingCount < lowStockThreshold && (
+          <Popover>
+            <PopoverTrigger asChild>
+              <Badge variant="amber" asChild>
+                <Button className="mb-1 inline-flex place-self-end" size="sm">
+                  <AlertCircle className="mr-1" />
+                  Low Stock
+                </Button>
+              </Badge>
+            </PopoverTrigger>
+
+            <PopoverContent className="max-w-[280px] text-sm" side="left">
+              <LowStockInfo
+                name={name}
+                listingCount={row.original.listingCount}
+                lowStockThreshold={lowStockThreshold}
+              />
+            </PopoverContent>
+          </Popover>
+        )}
       </div>
 
       {/* Trade Link */}
