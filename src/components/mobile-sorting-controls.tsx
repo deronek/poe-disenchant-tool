@@ -27,7 +27,6 @@ export function MobileSortingControls<TData>({
     | { id: ColumnId; desc?: boolean }
     | undefined;
 
-
   // Handle sorting with tri-state toggle (desc -> asc -> none)
   const handleSort = (columnId: ColumnId) => {
     const column = table.getColumn(String(columnId));
@@ -105,7 +104,7 @@ export function MobileSortingControls<TData>({
   }: SortOption & { onSort: (id: ColumnId) => void; sortState: SortState }) {
     return (
       <DropdownMenuItem
-        onClick={() => onSort(id)}
+        onSelect={() => onSort(id)}
         className="flex items-center justify-between"
       >
         <div className="flex flex-1 items-center gap-6">
@@ -134,7 +133,8 @@ export function MobileSortingControls<TData>({
             Sort
             {currentSort && (
               <span className="text-muted-foreground inline-flex items-center font-normal">
-                {sortOptions.find((opt) => opt.id === currentSort.id)?.label || currentSort.id}
+                {sortOptions.find((opt) => opt.id === currentSort.id)?.label ||
+                  currentSort.id}
                 <span className="ml-1">
                   {currentSort.desc ? (
                     <ArrowDown className="h-4 w-4" />
