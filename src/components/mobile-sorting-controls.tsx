@@ -81,6 +81,8 @@ export function MobileSortingControls<TData>({
     icons: React.ReactNode;
   };
 
+  type SortState = "none" | "asc" | "desc";
+
   const sortOptions: SortOption[] = [
     {
       id: COLUMN_IDS.DUST_PER_CHAOS,
@@ -115,7 +117,7 @@ export function MobileSortingControls<TData>({
     icons,
     onSort,
     sortState,
-  }: SortOption & { onSort: (id: ColumnId) => void; sortState: string }) {
+  }: SortOption & { onSort: (id: ColumnId) => void; sortState: SortState }) {
     return (
       <DropdownMenuItem
         onClick={() => onSort(id)}
