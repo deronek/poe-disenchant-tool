@@ -97,23 +97,17 @@ export function MobileSortingControls<TData>({
     return sort.desc ? "desc" : "asc";
   };
 
-  // Handle single-column sorting with tri-state toggle (desc -> asc -> none)
+  // Single-column tri-state: new -> desc; desc -> asc; asc -> none
   const handleSort = (columnId: ColumnId) => {
-    const sortingState = table.getState().sorting;
-    const currentSort = sortingState[0];
-
-    if (currentSort) {
-      // Cycle: desc -> asc -> none
-      if (currentSort.desc) {
-        // Currently descending, change to ascending
-        table.setSorting([{ id: columnId, desc: false }]);
-      } else {
-        // Currently ascending, remove sorting
-        table.setSorting([]);
-      }
-    } else {
-      // No sorting, add descending
+    const [prev] = table.getState().sorting;
+    if (!prev || prev.id !== columnId) {
       table.setSorting([{ id: columnId, desc: true }]);
+      return;
+    }
+    if (prev.desc) {
+      table.setSorting([{ id: columnId, desc: false }]);
+    } else {
+      table.setSorting([]);
     }
   };
 
