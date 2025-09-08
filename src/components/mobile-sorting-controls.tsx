@@ -74,6 +74,69 @@ export function MobileSortingControls<TData>({
     return sort.desc ? "desc" : "asc";
   };
 
+  type SortOption = {
+    id: ColumnId;
+    label: string;
+    icons: React.ReactNode;
+  };
+
+  const sortOptions: SortOption[] = [
+    {
+      id: COLUMN_IDS.DUST_PER_CHAOS,
+      label: "Dust per Chaos",
+      icons: (
+        <>
+          <DustIcon className="h-4 w-4" />
+          <ChaosOrbIcon className="h-4 w-4" />
+        </>
+      ),
+    },
+    {
+      id: COLUMN_IDS.NAME,
+      label: "Name",
+      icons: <Type className="h-4 w-4" />,
+    },
+    {
+      id: COLUMN_IDS.CHAOS,
+      label: "Price",
+      icons: <ChaosOrbIcon className="h-4 w-4" />,
+    },
+    {
+      id: COLUMN_IDS.CALCULATED_DUST_VALUE,
+      label: "Dust Value",
+      icons: <DustIcon className="h-4 w-4" />,
+    },
+  ];
+
+  function SortingMenuItem({
+    id,
+    label,
+    icons,
+    onSort,
+    sortState,
+  }: SortOption & { onSort: (id: ColumnId) => void; sortState: string }) {
+    return (
+      <DropdownMenuItem
+        onClick={() => onSort(id)}
+        className="flex items-center justify-between"
+      >
+        <div className="flex flex-1 items-center gap-6">
+          <div className="flex min-w-10 items-center gap-1">{icons}</div>
+          <span className="flex-1 text-left">{label}</span>
+        </div>
+        {sortState !== "none" && (
+          <span className="text-muted-foreground flex-shrink-0">
+            {sortState === "desc" ? (
+              <ArrowDown className="h-4 w-4" />
+            ) : (
+              <ArrowUp className="h-4 w-4" />
+            )}
+          </span>
+        )}
+      </DropdownMenuItem>
+    );
+  }
+
   return (
     <div className="lg:hidden">
       <DropdownMenu>
@@ -96,88 +159,14 @@ export function MobileSortingControls<TData>({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="min-w-[207px]">
-          <DropdownMenuItem
-            onClick={() => handleSort(COLUMN_IDS.DUST_PER_CHAOS)}
-            className="flex items-center justify-between gap-0"
-          >
-            <div className="flex items-start gap-6">
-              <div className="flex items-center gap-1">
-                <DustIcon className="h-4 w-4" />
-                <ChaosOrbIcon className="h-4 w-4" />
-              </div>
-              <span className="text-left">Dust per Chaos</span>
-            </div>
-            {getSortState(COLUMN_IDS.DUST_PER_CHAOS) !== "none" && (
-              <span className="text-muted-foreground">
-                {getSortState(COLUMN_IDS.DUST_PER_CHAOS) === "desc" ? (
-                  <ArrowDown className="h-4 w-4" />
-                ) : (
-                  <ArrowUp className="h-4 w-4" />
-                )}
-              </span>
-            )}
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => handleSort(COLUMN_IDS.NAME)}
-            className="flex items-center justify-between"
-          >
-            <div className="flex items-start gap-6">
-              <div className="flex items-center gap-1">
-                <Type className="h-4 w-4" />
-                <span className="w-4"></span>
-              </div>
-              <span className="text-left">Name</span>
-            </div>
-            {getSortState(COLUMN_IDS.NAME) !== "none" && (
-              <span className="text-muted-foreground">
-                {getSortState(COLUMN_IDS.NAME) === "desc" ? (
-                  <ArrowDown className="h-4 w-4" />
-                ) : (
-                  <ArrowUp className="h-4 w-4" />
-                )}
-              </span>
-            )}
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => handleSort(COLUMN_IDS.CHAOS)}
-            className="flex items-center justify-between"
-          >
-            <div className="flex items-start gap-6">
-              <div className="mr-5 flex items-center gap-1">
-                <ChaosOrbIcon className="h-4 w-4" />
-              </div>
-              <span className="text-left">Price</span>
-            </div>
-            {getSortState(COLUMN_IDS.CHAOS) !== "none" && (
-              <span className="text-muted-foreground">
-                {getSortState(COLUMN_IDS.CHAOS) === "desc" ? (
-                  <ArrowDown className="h-4 w-4" />
-                ) : (
-                  <ArrowUp className="h-4 w-4" />
-                )}
-              </span>
-            )}
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => handleSort(COLUMN_IDS.CALCULATED_DUST_VALUE)}
-            className="flex items-center justify-between"
-          >
-            <div className="flex items-start gap-6">
-              <div className="mr-5 flex items-center gap-1">
-                <DustIcon className="h-4 w-4" />
-              </div>
-              <span className="text-left">Dust Value</span>
-            </div>
-            {getSortState(COLUMN_IDS.CALCULATED_DUST_VALUE) !== "none" && (
-              <span className="text-muted-foreground">
-                {getSortState(COLUMN_IDS.CALCULATED_DUST_VALUE) === "desc" ? (
-                  <ArrowDown className="h-4 w-4" />
-                ) : (
-                  <ArrowUp className="h-4 w-4" />
-                )}
-              </span>
-            )}
-          </DropdownMenuItem>
+          {sortOptions.map((option) => (
+            <SortingMenuItem
+              key={option.id}
+              {...option}
+              onSort={handleSort}
+              sortState={getSortState(option.id)}
+            />
+          ))}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
