@@ -27,31 +27,6 @@ export function MobileSortingControls<TData>({
     | { id: ColumnId; desc?: boolean }
     | undefined;
 
-  // Handle sorting with tri-state toggle (desc -> asc -> none)
-  const handleSort = (columnId: ColumnId) => {
-    const column = table.getColumn(String(columnId));
-    if (!column) return;
-
-    const currentSort = sorting.find((sort) => sort.id === columnId);
-
-    if (currentSort) {
-      // Cycle: desc -> asc -> none
-      if (currentSort.desc) {
-        // Currently descending, change to ascending
-        table.setSorting([
-          ...sorting.filter((sort) => sort.id !== columnId),
-          { id: columnId, desc: false },
-        ]);
-      } else {
-        // Currently ascending, remove sorting
-        table.setSorting(sorting.filter((sort) => sort.id !== columnId));
-      }
-    } else {
-      // No sorting, add descending (most common use case) - remove other sorts first
-      table.setSorting([{ id: columnId, desc: true }]);
-    }
-  };
-
   // Get sort state for a column
   const getSortState = (columnId: ColumnId) => {
     const sort = sorting.find((sort) => sort.id === columnId);
@@ -94,6 +69,29 @@ export function MobileSortingControls<TData>({
       icons: <DustIcon className="h-4 w-4" />,
     },
   ];
+
+  // Handle sorting with tri-state toggle (desc -> asc -> none)
+  const handleSort = (columnId: ColumnId) => {
+    const sortingState = table.getState().sorting;
+    const currentSort = sortingState.find((sort) => sort.id === columnId);
+
+    if (currentSort) {
+      // Cycle: desc -> asc -> none
+      if (currentSort.desc) {
+        // Currently descending, change to ascending
+        table.setSorting([
+          ...sortingState.filter((sort) => sort.id !== columnId),
+          { id: columnId, desc: false },
+        ]);
+      } else {
+        // Currently ascending, remove sorting
+        table.setSorting(sortingState.filter((sort) => sort.id !== columnId));
+      }
+    } else {
+      // No sorting, add descending (most common use case) - remove other sorts first
+      table.setSorting([{ id: columnId, desc: true }]);
+    }
+  };
 
   function SortingMenuItem({
     id,
