@@ -27,21 +27,6 @@ export function MobileSortingControls<TData>({
     | { id: ColumnId; desc?: boolean }
     | undefined;
 
-  // Get current sorting information
-  const getSortLabel = (columnId: ColumnId) => {
-    switch (columnId) {
-      case COLUMN_IDS.DUST_PER_CHAOS:
-        return "Dust per Chaos";
-      case COLUMN_IDS.NAME:
-        return "Name";
-      case COLUMN_IDS.CHAOS:
-        return "Price";
-      case COLUMN_IDS.CALCULATED_DUST_VALUE:
-        return "Dust Value";
-      default:
-        return columnId;
-    }
-  };
 
   // Handle sorting with tri-state toggle (desc -> asc -> none)
   const handleSort = (columnId: ColumnId) => {
@@ -149,7 +134,7 @@ export function MobileSortingControls<TData>({
             Sort
             {currentSort && (
               <span className="text-muted-foreground inline-flex items-center font-normal">
-                {getSortLabel(currentSort.id)}
+                {sortOptions.find((opt) => opt.id === currentSort.id)?.label || currentSort.id}
                 <span className="ml-1">
                   {currentSort.desc ? (
                     <ArrowDown className="h-4 w-4" />
