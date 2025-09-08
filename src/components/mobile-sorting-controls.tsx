@@ -32,25 +32,25 @@ const sortOptions: SortOption[] = [
     label: "Dust per Chaos",
     icons: (
       <>
-        <DustIcon className="h-4 w-4" />
-        <ChaosOrbIcon className="h-4 w-4" />
+        <DustIcon className="h-4 w-4" aria-hidden="true" alt="" />
+        <ChaosOrbIcon className="h-4 w-4" aria-hidden="true" alt="" />
       </>
     ),
   },
   {
     id: COLUMN_IDS.NAME,
     label: "Name",
-    icons: <Type className="h-4 w-4" />,
+    icons: <Type className="h-4 w-4" aria-hidden="true" focusable="false" />,
   },
   {
     id: COLUMN_IDS.CHAOS,
     label: "Price",
-    icons: <ChaosOrbIcon className="h-4 w-4" />,
+    icons: <ChaosOrbIcon className="h-4 w-4" aria-hidden="true" alt="" />,
   },
   {
     id: COLUMN_IDS.CALCULATED_DUST_VALUE,
     label: "Dust Value",
-    icons: <DustIcon className="h-4 w-4" />,
+    icons: <DustIcon className="h-4 w-4" aria-hidden="true" alt="" />,
   },
 ];
 
