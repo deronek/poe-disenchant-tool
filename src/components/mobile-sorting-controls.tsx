@@ -18,6 +18,71 @@ type MobileSortingControlsProps<TData> = {
   className?: string;
 };
 
+type SortOption = {
+  id: ColumnId;
+  label: string;
+  icons: React.ReactNode;
+};
+
+type SortState = "none" | "asc" | "desc";
+
+const sortOptions: SortOption[] = [
+  {
+    id: COLUMN_IDS.DUST_PER_CHAOS,
+    label: "Dust per Chaos",
+    icons: (
+      <>
+        <DustIcon className="h-4 w-4" />
+        <ChaosOrbIcon className="h-4 w-4" />
+      </>
+    ),
+  },
+  {
+    id: COLUMN_IDS.NAME,
+    label: "Name",
+    icons: <Type className="h-4 w-4" />,
+  },
+  {
+    id: COLUMN_IDS.CHAOS,
+    label: "Price",
+    icons: <ChaosOrbIcon className="h-4 w-4" />,
+  },
+  {
+    id: COLUMN_IDS.CALCULATED_DUST_VALUE,
+    label: "Dust Value",
+    icons: <DustIcon className="h-4 w-4" />,
+  },
+];
+
+function SortingMenuItem({
+  id,
+  label,
+  icons,
+  onSort,
+  sortState,
+}: SortOption & { onSort: (id: ColumnId) => void; sortState: SortState }) {
+  return (
+    <DropdownMenuItem
+      onSelect={() => onSort(id)}
+      className="flex items-center justify-between"
+    >
+      <div className="flex flex-1 items-center gap-6">
+        <div className="flex min-w-10 items-center gap-1">{icons}</div>
+        <span className="flex-1 text-left">{label}</span>
+      </div>
+      {sortState !== "none" && (
+        <span className="text-muted-foreground flex-shrink-0">
+          {sortState === "desc" ? (
+            <ArrowDown className="h-4 w-4" />
+          ) : (
+            <ArrowUp className="h-4 w-4" />
+          )}
+        </span>
+      )}
+    </DropdownMenuItem>
+  );
+}
+
 export function MobileSortingControls<TData>({
   table,
   className,
@@ -33,42 +98,6 @@ export function MobileSortingControls<TData>({
     if (!sort) return "none";
     return sort.desc ? "desc" : "asc";
   };
-
-  type SortOption = {
-    id: ColumnId;
-    label: string;
-    icons: React.ReactNode;
-  };
-
-  type SortState = "none" | "asc" | "desc";
-
-  const sortOptions: SortOption[] = [
-    {
-      id: COLUMN_IDS.DUST_PER_CHAOS,
-      label: "Dust per Chaos",
-      icons: (
-        <>
-          <DustIcon className="h-4 w-4" />
-          <ChaosOrbIcon className="h-4 w-4" />
-        </>
-      ),
-    },
-    {
-      id: COLUMN_IDS.NAME,
-      label: "Name",
-      icons: <Type className="h-4 w-4" />,
-    },
-    {
-      id: COLUMN_IDS.CHAOS,
-      label: "Price",
-      icons: <ChaosOrbIcon className="h-4 w-4" />,
-    },
-    {
-      id: COLUMN_IDS.CALCULATED_DUST_VALUE,
-      label: "Dust Value",
-      icons: <DustIcon className="h-4 w-4" />,
-    },
-  ];
 
   // Handle sorting with tri-state toggle (desc -> asc -> none)
   const handleSort = (columnId: ColumnId) => {
@@ -92,35 +121,6 @@ export function MobileSortingControls<TData>({
       table.setSorting([{ id: columnId, desc: true }]);
     }
   };
-
-  function SortingMenuItem({
-    id,
-    label,
-    icons,
-    onSort,
-    sortState,
-  }: SortOption & { onSort: (id: ColumnId) => void; sortState: SortState }) {
-    return (
-      <DropdownMenuItem
-        onSelect={() => onSort(id)}
-        className="flex items-center justify-between"
-      >
-        <div className="flex flex-1 items-center gap-6">
-          <div className="flex min-w-10 items-center gap-1">{icons}</div>
-          <span className="flex-1 text-left">{label}</span>
-        </div>
-        {sortState !== "none" && (
-          <span className="text-muted-foreground flex-shrink-0">
-            {sortState === "desc" ? (
-              <ArrowDown className="h-4 w-4" />
-            ) : (
-              <ArrowUp className="h-4 w-4" />
-            )}
-          </span>
-        )}
-      </DropdownMenuItem>
-    );
-  }
 
   return (
     <div className="lg:hidden">
