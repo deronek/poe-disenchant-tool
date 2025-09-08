@@ -82,6 +82,7 @@ export function DataTable<TData extends Item, TValue>({
     onColumnSizingChange: updateColumnSizing,
     columnResizeMode: "onChange",
     enableColumnResizing: true,
+    enableMultiSort: false,
     getRowId: (row, _index) =>
       // Fall back to array index string if uniqueId not present
       row.uniqueId ?? String(_index ?? 0),

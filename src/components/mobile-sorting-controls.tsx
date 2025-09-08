@@ -88,9 +88,7 @@ export function MobileSortingControls<TData>({
   className,
 }: MobileSortingControlsProps<TData>) {
   const sorting = table.getState().sorting;
-  const currentSort = sorting[0] as
-    | { id: ColumnId; desc?: boolean }
-    | undefined;
+  const currentSort = sorting[0];
 
   // Get sort state for a column
   const getSortState = (columnId: ColumnId) => {
@@ -99,25 +97,22 @@ export function MobileSortingControls<TData>({
     return sort.desc ? "desc" : "asc";
   };
 
-  // Handle sorting with tri-state toggle (desc -> asc -> none)
+  // Handle single-column sorting with tri-state toggle (desc -> asc -> none)
   const handleSort = (columnId: ColumnId) => {
     const sortingState = table.getState().sorting;
-    const currentSort = sortingState.find((sort) => sort.id === columnId);
+    const currentSort = sortingState[0];
 
     if (currentSort) {
       // Cycle: desc -> asc -> none
       if (currentSort.desc) {
         // Currently descending, change to ascending
-        table.setSorting([
-          ...sortingState.filter((sort) => sort.id !== columnId),
-          { id: columnId, desc: false },
-        ]);
+        table.setSorting([{ id: columnId, desc: false }]);
       } else {
         // Currently ascending, remove sorting
-        table.setSorting(sortingState.filter((sort) => sort.id !== columnId));
+        table.setSorting([]);
       }
     } else {
-      // No sorting, add descending (most common use case) - remove other sorts first
+      // No sorting, add descending
       table.setSorting([{ id: columnId, desc: true }]);
     }
   };
