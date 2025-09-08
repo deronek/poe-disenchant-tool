@@ -13,6 +13,13 @@ import { ArrowDown, ArrowUp, ArrowUpDown, Type } from "lucide-react";
 import React from "react";
 import { COLUMN_IDS, type ColumnId } from "./columns";
 
+const AscendingSortIcon = () => (
+  <ArrowUp className="h-4 w-4" aria-label="ascending" />
+);
+
+const DescendingSortIcon = () => (
+  <ArrowDown className="h-4 w-4" aria-label="descending" />
+);
 type MobileSortingControlsProps<TData> = {
   table: Table<TData>;
   className?: string;
@@ -73,9 +80,9 @@ function SortingMenuItem({
       {sortState !== "none" && (
         <span className="text-muted-foreground flex-shrink-0">
           {sortState === "desc" ? (
-            <ArrowDown className="h-4 w-4" />
+            <DescendingSortIcon />
           ) : (
-            <ArrowUp className="h-4 w-4" />
+            <AscendingSortIcon />
           )}
         </span>
       )}
@@ -124,9 +131,9 @@ export function MobileSortingControls<TData>({
                   currentSort.id}
                 <span className="ml-1">
                   {currentSort.desc ? (
-                    <ArrowDown className="h-4 w-4" />
+                    <DescendingSortIcon />
                   ) : (
-                    <ArrowUp className="h-4 w-4" />
+                    <AscendingSortIcon />
                   )}
                 </span>
               </span>
