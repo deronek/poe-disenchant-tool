@@ -15,7 +15,7 @@ import {
   ColumnDefTemplate,
   HeaderContext,
 } from "@tanstack/react-table";
-import { AlertCircle, ExternalLink, Info } from "lucide-react";
+import { AlertCircle, ExternalLink, Info, PackageMinus } from "lucide-react";
 import * as React from "react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
@@ -219,13 +219,16 @@ export const createColumns = (
           rel="noreferrer"
           aria-label={`Open trade search for ${name} in new tab${isLowStock ? " (low stock warning)" : ""}`}
           title={`Open trade search for ${name}`}
-          className="inline-flex w-full items-center gap-2"
+          className="inline-flex items-center gap-2"
         >
           <ExternalLink className="size-5" aria-hidden="true" />
           {isLowStock && (
-            <Badge variant="amber" className="mx-2">
-              <AlertCircle className="mr-1" aria-hidden="true" />
-              Low Stock
+            <Badge
+              variant="amber"
+              className="absolute -top-1 -right-2 size-4 border-none bg-transparent p-0"
+              aria-hidden="true"
+            >
+              <PackageMinus />
             </Badge>
           )}
         </a>
@@ -234,36 +237,43 @@ export const createColumns = (
       // Reusable Button props
       const buttonProps = {
         variant: "default" as const,
-        size: "sm" as const,
+        size: "default" as const,
         className:
-          "text-primary bg-primary/10 hover:bg-primary/20 border-input w-full gap-2 border border-solid",
+          "text-primary bg-primary/10 hover:bg-primary/20 border-input gap-2 border border-solid relative mx-auto",
       };
 
       // Wrap in Tooltip only if low stock
       if (isLowStock) {
         return (
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button asChild {...buttonProps}>
-                {linkElement}
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent className="max-w-[280px] text-sm" variant="popover">
-              <LowStockInfo
-                name={name}
-                listingCount={listingCount}
-                lowStockThreshold={lowStockThreshold}
-              />
-            </TooltipContent>
-          </Tooltip>
+          <div className="flex w-full flex-1 items-center">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button asChild {...buttonProps}>
+                  {linkElement}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent
+                className="max-w-[280px] text-sm"
+                variant="popover"
+              >
+                <LowStockInfo
+                  name={name}
+                  listingCount={listingCount}
+                  lowStockThreshold={lowStockThreshold}
+                />
+              </TooltipContent>
+            </Tooltip>
+          </div>
         );
       }
 
       // No low stock: Just the Button
       return (
-        <Button asChild {...buttonProps}>
-          {linkElement}
-        </Button>
+        <div className="flex w-full flex-1 items-center">
+          <Button asChild {...buttonProps}>
+            {linkElement}
+          </Button>
+        </div>
       );
     },
   },
