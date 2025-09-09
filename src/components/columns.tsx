@@ -234,47 +234,33 @@ export const createColumns = (
         </a>
       );
 
-      // Reusable Button props
-      const buttonProps = {
-        variant: "default" as const,
-        size: "default" as const,
-        className:
-          "text-primary bg-primary/10 hover:bg-primary/20 border-input gap-2 border border-solid relative mx-auto",
-      };
-
-      // Wrap in Tooltip only if low stock
-      if (isLowStock) {
-        return (
-          <div className="flex w-full flex-1 items-center">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button asChild {...buttonProps}>
-                  {linkElement}
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent
-                className="max-w-[280px] text-sm"
-                variant="popover"
-              >
-                <LowStockInfo
-                  name={name}
-                  listingCount={listingCount}
-                  lowStockThreshold={lowStockThreshold}
-                />
-              </TooltipContent>
-            </Tooltip>
-          </div>
-        );
-      }
-
-      // No low stock: Just the Button
-      return (
-        <div className="flex w-full flex-1 items-center">
-          <Button asChild {...buttonProps}>
-            {linkElement}
-          </Button>
-        </div>
+      const button = (
+        <Button
+          asChild
+          variant="default"
+          size="lg"
+          className="text-primary bg-primary/10 hover:bg-primary/20 border-input hover:border-primary relative mx-auto gap-2 border border-solid"
+        >
+          {linkElement}
+        </Button>
       );
+
+      const content = isLowStock ? (
+        <Tooltip>
+          <TooltipTrigger asChild>{button}</TooltipTrigger>
+          <TooltipContent className="max-w-[280px] text-sm" variant="popover">
+            <LowStockInfo
+              name={name}
+              listingCount={listingCount}
+              lowStockThreshold={lowStockThreshold}
+            />
+          </TooltipContent>
+        </Tooltip>
+      ) : (
+        button
+      );
+
+      return <div className="flex w-full flex-1 items-center">{content}</div>;
     },
   },
   {

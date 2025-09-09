@@ -13,7 +13,7 @@ import type { Item } from "@/lib/itemData";
 import type { League } from "@/lib/leagues";
 import { createTradeLink } from "@/lib/tradeLink";
 import { Row } from "@tanstack/react-table";
-import { AlertCircle, ExternalLink, Info } from "lucide-react";
+import { ExternalLink, Info, PackageMinus } from "lucide-react";
 import * as React from "react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { COLUMN_IDS } from "./columns";
@@ -203,7 +203,7 @@ function MobileCardComponent<TData extends Item>({
             <PopoverTrigger asChild>
               <Badge variant="amber" asChild>
                 <Button className="mb-1 inline-flex place-self-end" size="sm">
-                  <AlertCircle className="mr-1" />
+                  <PackageMinus className="mr-1" />
                   Low Stock
                 </Button>
               </Badge>
