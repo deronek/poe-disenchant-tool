@@ -249,6 +249,8 @@ export const MobileCard = React.memo(
     return (
       prevProps.row.id === nextProps.row.id &&
       prevProps.isSelected === nextProps.isSelected &&
+      prevProps.league === nextProps.league &&
+      prevProps.lowStockThreshold === nextProps.lowStockThreshold &&
       JSON.stringify(prevProps.advancedSettings) ===
         JSON.stringify(nextProps.advancedSettings)
     );
