@@ -15,14 +15,14 @@ import {
   ColumnDefTemplate,
   HeaderContext,
 } from "@tanstack/react-table";
-import { AlertCircle, ExternalLink, Info, PackageMinus } from "lucide-react";
+import { ExternalLink, Info, PackageMinus } from "lucide-react";
 import * as React from "react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
 import { DustInfo } from "./dust-info";
-import { LowStockInfo } from "./low-stock-info";
-import { ItemMarkingInfo } from "./item-marking-info";
 import { Icon } from "./icon";
+import { ItemMarkingInfo } from "./item-marking-info";
+import { LowStockInfo } from "./low-stock-info";
 
 import type { AdvancedSettings } from "./advanced-settings-panel";
 
