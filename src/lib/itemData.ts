@@ -67,18 +67,39 @@ const uncached__getItems = async (league: League) => {
   }
 
   // Calculate p10 of listingCounts
-  const listingCounts = merged
-    .map((item) => item.listingCount)
-    .sort((a, b) => a - b);
-  const p10Index = Math.floor(0.1 * listingCounts.length);
-  const lowStockThreshold = listingCounts[p10Index] || 1; // fallback to 1 if empty
-  console.log("p10 of listingCounts:", lowStockThreshold);
+  const lowStockThreshold = calculateLowStockThreshold(merged);
   return {
     items: merged,
     lastUpdated: Date.now(),
     lowStockThreshold,
   };
 };
+
+/**
+ * Calculates the low stock threshold as the 10th percentile of listing counts across items.
+ * This value helps identify items with potentially low market availability.
+ * Falls back to 1 for empty or invalid inputs to ensure a usable threshold.
+ * @param merged - Array of merged item data containing listing counts.
+ * @returns The calculated low stock threshold (minimum 1).
+ */
+function calculateLowStockThreshold(items: Item[]) {
+  if (!Array.isArray(items) || items.length === 0) {
+    return 1;
+  }
+
+  const listingCounts = items
+    .map((item) => item.listingCount)
+    .sort((a, b) => a - b);
+
+  const PERCENTILE = 0.1;
+  const index = Math.floor(PERCENTILE * (listingCounts.length - 1));
+  const candidate = listingCounts[index];
+  const lowStockThreshold = Math.max(1, candidate ?? 1);
+
+  console.log("Low stock threshold:", lowStockThreshold);
+
+  return lowStockThreshold;
+}
 
 export const getItems = async (league: League) => {
   return unstable_cache(async () => uncached__getItems(league), [league], {
