@@ -210,43 +210,59 @@ export const createColumns = (
       const link = createTradeLink(name, league, advancedSettings);
       const listingCount = row.original.listingCount;
       const isLowStock = listingCount < lowStockThreshold;
-      return (
-        <Button
-          asChild
-          variant="default"
-          size="sm"
-          className="text-primary bg-primary/10 hover:bg-primary/20 border-input w-full gap-2 border border-solid"
+
+      // Reusable link element
+      const linkElement = (
+        <a
+          href={link}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`Open trade search for ${name} in new tab${isLowStock ? " (low stock warning)" : ""}`}
+          title={`Open trade search for ${name}`}
+          className="inline-flex w-full items-center gap-2"
         >
-          <a
-            href={link}
-            target="_blank"
-            rel="noreferrer"
-            aria-label={`Open trade search for ${name} in new tab`}
-            title={`Open trade search for ${name}`}
-            className="inline-flex w-full items-center gap-2"
-          >
-            <ExternalLink className="size-5" aria-hidden="true" />
-            {isLowStock && (
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Badge variant="amber" className="mx-2">
-                    <AlertCircle className="mr-1" />
-                    Low Stock
-                  </Badge>
-                </TooltipTrigger>
-                <TooltipContent
-                  className="max-w-[280px] text-sm"
-                  variant="popover"
-                >
-                  <LowStockInfo
-                    name={name}
-                    listingCount={listingCount}
-                    lowStockThreshold={lowStockThreshold}
-                  />
-                </TooltipContent>
-              </Tooltip>
-            )}
-          </a>
+          <ExternalLink className="size-5" aria-hidden="true" />
+          {isLowStock && (
+            <Badge variant="amber" className="mx-2">
+              <AlertCircle className="mr-1" aria-hidden="true" />
+              Low Stock
+            </Badge>
+          )}
+        </a>
+      );
+
+      // Reusable Button props
+      const buttonProps = {
+        variant: "default" as const,
+        size: "sm" as const,
+        className:
+          "text-primary bg-primary/10 hover:bg-primary/20 border-input w-full gap-2 border border-solid",
+      };
+
+      // Wrap in Tooltip only if low stock
+      if (isLowStock) {
+        return (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button asChild {...buttonProps}>
+                {linkElement}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent className="max-w-[280px] text-sm" variant="popover">
+              <LowStockInfo
+                name={name}
+                listingCount={listingCount}
+                lowStockThreshold={lowStockThreshold}
+              />
+            </TooltipContent>
+          </Tooltip>
+        );
+      }
+
+      // No low stock: Just the Button
+      return (
+        <Button asChild {...buttonProps}>
+          {linkElement}
         </Button>
       );
     },
