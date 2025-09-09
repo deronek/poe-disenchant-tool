@@ -148,11 +148,9 @@ export const createColumns = (
     cell: ({ row }) => {
       const value = row.getValue(COLUMN_IDS.CHAOS) as number;
       return (
-        <span className="flex w-full flex-1 justify-between">
-          <span className="ml-auto inline-flex items-center gap-1">
-            <span>{value}</span>
-            <ChaosOrbIcon />
-          </span>
+        <span className="inline-flex w-full justify-end gap-1">
+          <span>{value}</span>
+          <ChaosOrbIcon />
         </span>
       );
     },
