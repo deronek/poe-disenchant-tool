@@ -202,7 +202,11 @@ function MobileCardComponent<TData extends Item>({
           <Popover>
             <PopoverTrigger asChild>
               <Badge variant="amber" asChild>
-                <Button className="mb-1 inline-flex place-self-end" size="sm">
+                <Button
+                  className="mb-1 inline-flex place-self-end"
+                  size="sm"
+                  aria-label={`Low stock details for ${name}`}
+                >
                   <PackageMinus className="mr-1" />
                   Low Stock
                 </Button>
