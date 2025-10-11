@@ -100,8 +100,8 @@ export function MobileSortingControls<TData>({
             onClick={() => handleSort(COLUMN_IDS.DUST_PER_CHAOS)}
             className="flex items-center justify-between gap-0"
           >
-            <div className="flex items-start gap-6">
-              <div className="flex items-center gap-1">
+            <div className="flex items-start gap-5">
+              <div className="flex min-w-10 items-center gap-1">
                 <DustIcon className="h-4 w-4" />
                 <ChaosOrbIcon className="h-4 w-4" />
               </div>
@@ -121,10 +121,9 @@ export function MobileSortingControls<TData>({
             onClick={() => handleSort(COLUMN_IDS.NAME)}
             className="flex items-center justify-between"
           >
-            <div className="flex items-start gap-6">
-              <div className="flex items-center gap-1">
+            <div className="flex items-start gap-5">
+              <div className="flex min-w-10 items-center gap-1">
                 <Type className="h-4 w-4" />
-                <span className="w-4"></span>
               </div>
               <span className="text-left">Name</span>
             </div>
@@ -142,8 +141,8 @@ export function MobileSortingControls<TData>({
             onClick={() => handleSort(COLUMN_IDS.CHAOS)}
             className="flex items-center justify-between"
           >
-            <div className="flex items-start gap-6">
-              <div className="mr-5 flex items-center gap-1">
+            <div className="flex items-start gap-5">
+              <div className="flex min-w-10 items-center gap-1">
                 <ChaosOrbIcon className="h-4 w-4" />
               </div>
               <span className="text-left">Price</span>
@@ -162,8 +161,8 @@ export function MobileSortingControls<TData>({
             onClick={() => handleSort(COLUMN_IDS.CALCULATED_DUST_VALUE)}
             className="flex items-center justify-between"
           >
-            <div className="flex items-start gap-6">
-              <div className="mr-5 flex items-center gap-1">
+            <div className="flex items-start gap-5">
+              <div className="flex min-w-10 items-center gap-1">
                 <DustIcon className="h-4 w-4" />
               </div>
               <span className="text-left">Dust Value</span>
