@@ -213,7 +213,7 @@ function MobileCardComponent<TData extends Item>({
               </Badge>
             </PopoverTrigger>
 
-            <PopoverContent className="max-w-[280px] text-sm" side="left">
+            <PopoverContent className="max-w-[280px] text-sm">
               <LowStockInfo
                 name={name}
                 listingCount={row.original.listingCount}
