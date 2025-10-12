@@ -82,7 +82,12 @@ export function AdvancedSettingsPanel({
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <Button variant="outline" className={cn("group", className)}>
-          <Settings className="mr-2 h-4 w-4" />
+          <Settings className="h-4 w-4" />
+          <span
+            className={`mr-1 rounded-full p-1 transition-colors ${settings.includeCorrupted ? "bg-red-600/60 dark:bg-red-400/60" : ""}`}
+          >
+            {getMinimumItemLevelIcon(settings.minItemLevel)}
+          </span>
           <span>Trade</span>
           <ChevronDown className="ml-1 h-3 w-3 transition-transform duration-200 group-data-[state=open]:rotate-180" />
         </Button>
