@@ -87,10 +87,10 @@ export function AdvancedSettingsPanel({
     });
   };
 
-  const handleListingTimeFilterChange = (value: ListingTimeFilter) => {
+  const handleListingTimeFilterChange = (value: string) => {
     onSettingsChange({
       ...settings,
-      listingTimeFilter: value,
+      listingTimeFilter: value as ListingTimeFilter,
     });
   };
 
