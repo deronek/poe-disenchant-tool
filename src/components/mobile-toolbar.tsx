@@ -43,14 +43,14 @@ export function MobileToolbar<TData extends Item>({
           <MobileSortingControls table={table} className="w-full" />
         </div>
         <div className="flex flex-col gap-1">
-          <ClearMarksButton
-            table={table}
-            onClearMarks={onClearMarks}
-            className="w-auto"
-          />
           <AdvancedSettingsPanel
             settings={advancedSettings}
             onSettingsChange={onAdvancedSettingsChange}
+            className="w-auto"
+          />
+          <ClearMarksButton
+            table={table}
+            onClearMarks={onClearMarks}
             className="w-auto"
           />
         </div>
