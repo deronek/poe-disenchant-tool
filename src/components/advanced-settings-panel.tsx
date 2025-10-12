@@ -83,9 +83,11 @@ export function AdvancedSettingsPanel({
       <PopoverTrigger asChild>
         <Button variant="outline" className={cn("group", className)}>
           <Settings className="h-4 w-4" />
-          <span
-            className={`mr-1 rounded-full p-1 transition-colors ${settings.includeCorrupted ? "bg-red-600/60 dark:bg-red-400/60" : ""}`}
-          >
+          <span className={`relative mr-1 rounded-full p-1`}>
+            <div
+              className={`absolute top-0 left-0 size-3 rounded-full bg-red-400/80 transition-opacity duration-300 dark:bg-red-600/80 ${settings.includeCorrupted ? "opacity-100" : "opacity-0"}`}
+            ></div>
+
             {getMinimumItemLevelIcon(settings.minItemLevel)}
           </span>
           <span>Trade</span>
