@@ -101,7 +101,7 @@ export function DustInfo() {
 
           <p className="text-muted-foreground text-xs leading-relaxed">
             Use <span className="font-bold">Trade</span> settings to apply item
-            level filter.
+            level filter to trade search.
           </p>
         </div>
       </div>
