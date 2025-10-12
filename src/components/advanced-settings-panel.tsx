@@ -209,7 +209,7 @@ export function AdvancedSettingsPanel({
                 value={settings.listingTimeFilter}
                 onValueChange={handleListingTimeFilterChange}
               >
-                <SelectTrigger>
+                <SelectTrigger id="listing-time-filter">
                   <SelectValue placeholder="Select time filter" />
                 </SelectTrigger>
                 <SelectContent>
