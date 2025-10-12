@@ -31,19 +31,9 @@ import * as React from "react";
 import { Separator } from "./ui/separator";
 import { cn } from "@/lib/utils";
 import { z } from "zod";
+import { ListingTimeFilterSchema } from "@/lib/listing-time-filter";
+import type { ListingTimeFilter } from "@/lib/listing-time-filter";
 import equal from "fast-deep-equal";
-
-export const ListingTimeFilterSchema = z.enum([
-  "any",
-  "1hour",
-  "3hours",
-  "12hours",
-  "1day",
-  "3days",
-  "1week",
-]);
-
-export type ListingTimeFilter = z.infer<typeof ListingTimeFilterSchema>;
 
 export const AdvancedSettingsSchema = z
   .object({
