@@ -11,6 +11,13 @@ import { Checkbox, type CheckedState } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Settings,
   ChevronDown,
   Zap,
@@ -18,16 +25,30 @@ import {
   Tally2,
   Tally3,
   Tally4,
+  Clock,
 } from "lucide-react";
 import * as React from "react";
 import { Separator } from "./ui/separator";
 import { cn } from "@/lib/utils";
 import { z } from "zod";
 
+export const ListingTimeFilterSchema = z.enum([
+  "any",
+  "1hour",
+  "3hours",
+  "12hours",
+  "1day",
+  "3days",
+  "1week",
+]);
+
+export type ListingTimeFilter = z.infer<typeof ListingTimeFilterSchema>;
+
 export const AdvancedSettingsSchema = z
   .object({
     minItemLevel: z.number().int().min(65).max(84).default(78),
     includeCorrupted: z.boolean().default(true),
+    listingTimeFilter: ListingTimeFilterSchema.default("3days"),
   })
   .strict();
 
@@ -75,6 +96,13 @@ export function AdvancedSettingsPanel({
     });
   };
 
+  const handleListingTimeFilterChange = (value: ListingTimeFilter) => {
+    onSettingsChange({
+      ...settings,
+      listingTimeFilter: value,
+    });
+  };
+
   const dustValueLoss =
     (84 - Math.min(Math.max(settings.minItemLevel, 65), 84)) * 5;
 
@@ -92,14 +120,9 @@ export function AdvancedSettingsPanel({
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <h4 className="font-semibold">Trade Settings</h4>
-              <div className="flex items-center gap-1">
-                <Badge variant="secondary" className="text-xs">
-                  Last 3 Days
-                </Badge>
-                <Badge variant="outline" className="text-xs">
-                  Live Data
-                </Badge>
-              </div>
+              <Badge variant="outline" className="text-xs">
+                Live Data
+              </Badge>
             </div>
             <p className="text-muted-foreground text-sm">
               Configure trade search filters for Path of Exile trade website.
@@ -165,6 +188,7 @@ export function AdvancedSettingsPanel({
                   checked={settings.includeCorrupted}
                   onCheckedChange={handleIncludeCorruptedChange}
                   aria-label="Include corrupted items"
+                  className="size-4"
                 />
               </div>
               <div className="flex items-center gap-2">
@@ -178,6 +202,37 @@ export function AdvancedSettingsPanel({
               <p className="text-muted-foreground text-xs">
                 Corrupted items cannot have quality added cheaply, but may have
                 higher value from corruption implicits.
+              </p>
+            </div>
+
+            <Separator />
+
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <Clock className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                <Label htmlFor="listing-time-filter" className="text-sm">
+                  Listing Time
+                </Label>
+              </div>
+              <Select
+                value={settings.listingTimeFilter}
+                onValueChange={handleListingTimeFilterChange}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select time filter" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="any">Any time</SelectItem>
+                  <SelectItem value="1hour">Up to an hour ago</SelectItem>
+                  <SelectItem value="3hours">Up to 3 hours ago</SelectItem>
+                  <SelectItem value="12hours">Up to 12 hours ago</SelectItem>
+                  <SelectItem value="1day">Up to a day ago</SelectItem>
+                  <SelectItem value="3days">Up to 3 days ago</SelectItem>
+                  <SelectItem value="1week">Up to a week ago</SelectItem>
+                </SelectContent>
+              </Select>
+              <p className="text-muted-foreground text-xs">
+                Filter trade listings by when they were posted.
               </p>
             </div>
           </div>

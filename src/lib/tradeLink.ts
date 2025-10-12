@@ -1,8 +1,10 @@
 import { League, LEAGUES } from "./leagues";
+import type { ListingTimeFilter } from "@/components/advanced-settings-panel";
 
 export interface TradeLinkSettings {
   minItemLevel?: number;
   includeCorrupted?: boolean;
+  listingTimeFilter?: ListingTimeFilter;
 }
 
 export const createTradeLink = (
@@ -25,9 +27,12 @@ export const createTradeLink = (
       filters: {
         trade_filters: {
           filters: {
-            indexed: {
-              option: "3days",
-            },
+            ...(settings?.listingTimeFilter &&
+              settings.listingTimeFilter !== "any" && {
+                indexed: {
+                  option: settings.listingTimeFilter,
+                },
+              }),
           },
         },
         misc_filters: {
