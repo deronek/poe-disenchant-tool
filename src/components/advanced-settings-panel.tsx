@@ -188,7 +188,7 @@ export function AdvancedSettingsPanel({
                   checked={settings.includeCorrupted}
                   onCheckedChange={handleIncludeCorruptedChange}
                   aria-label="Include corrupted items"
-                  className="size-4"
+                  className="size-5"
                 />
               </div>
               <div className="flex items-center gap-2">
