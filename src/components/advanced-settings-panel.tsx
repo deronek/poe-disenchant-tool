@@ -31,6 +31,7 @@ import * as React from "react";
 import { Separator } from "./ui/separator";
 import { cn } from "@/lib/utils";
 import { z } from "zod";
+import equal from "fast-deep-equal";
 
 export const ListingTimeFilterSchema = z.enum([
   "any",
@@ -245,6 +246,7 @@ export function AdvancedSettingsPanel({
                 onSettingsChange(DEFAULT_ADVANCED_SETTINGS);
               }}
               className="flex-1"
+              disabled={equal(settings, DEFAULT_ADVANCED_SETTINGS)}
             >
               Reset
             </Button>
