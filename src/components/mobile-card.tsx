@@ -112,6 +112,10 @@ function MobileCardComponent<TData extends Item>({
   const icon = row.getValue<string>(COLUMN_IDS.ICON);
   const chaos = row.getValue<number>(COLUMN_IDS.CHAOS);
   const dustPerChaos = row.getValue<number>(COLUMN_IDS.DUST_PER_CHAOS);
+  const dustPerChaosPerSlot = row.getValue<number>(
+    COLUMN_IDS.DUST_PER_CHAOS_PER_SLOT,
+  );
+  const slots = row.original.slots;
   const tradeLink = createTradeLink(name, league, advancedSettings);
   const calculatedDustValue = row.original.calculatedDustValue;
 
@@ -187,7 +191,7 @@ function MobileCardComponent<TData extends Item>({
 
       {/* Dust per Chaos (Primary metric) with low stock badge */}
       <div className="flex justify-between">
-        <div className="min-w-0 flex-1 space-y-1">
+        <div className="min-w-0 flex-1 space-y-2">
           <p className="text-muted-foreground text-sm">Dust per Chaos</p>
 
           <div className="text-primary flex items-center gap-1 text-lg font-bold">
@@ -222,6 +226,21 @@ function MobileCardComponent<TData extends Item>({
             </PopoverContent>
           </Popover>
         )}
+      </div>
+
+      {/* Dust per Chaos per Slot */}
+      <div className="space-y-2">
+        <p className="text-muted-foreground text-sm">Dust per Chaos per Slot</p>
+        <div className="flex items-center gap-1 text-sm">
+          <span className="font-semibold">{dustPerChaosPerSlot}</span>
+          <DustIcon className="h-4 w-4" />
+          <span className="text-muted-foreground">/</span>
+          <ChaosOrbIcon className="h-4 w-4" />
+          <span className="text-muted-foreground">/</span>
+          <span className="text-xs">
+            {slots} slot{slots !== 1 ? "s" : ""}
+          </span>
+        </div>
       </div>
 
       {/* Trade Link */}

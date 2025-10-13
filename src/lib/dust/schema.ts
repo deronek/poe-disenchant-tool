@@ -6,6 +6,7 @@ export const ItemSchema = z
     baseType: z.string().trim().min(1),
     dustValIlvl84: z.number().positive(),
     dustValIlvl84Q20: z.number().positive(),
+    slots: z.number().int().positive(),
   })
   .strict();
 

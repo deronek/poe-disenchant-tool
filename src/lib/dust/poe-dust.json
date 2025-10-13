@@ -3,6408 +3,7476 @@
     "name": "Original Sin",
     "baseType": "Amethyst Ring",
     "dustValIlvl84": 2257780,
-    "dustValIlvl84Q20": 2709336
+    "dustValIlvl84Q20": 2709336,
+    "slots": 1
   },
   {
     "name": "Headhunter",
     "baseType": "Leather Belt",
     "dustValIlvl84": 1782320,
-    "dustValIlvl84Q20": 2138784
+    "dustValIlvl84Q20": 2138784,
+    "slots": 2
   },
   {
     "name": "Mageblood",
     "baseType": "Heavy Belt",
     "dustValIlvl84": 1782320,
-    "dustValIlvl84Q20": 2138784
+    "dustValIlvl84Q20": 2138784,
+    "slots": 2
   },
   {
     "name": "Defiance of Destiny",
     "baseType": "Paua Amulet",
     "dustValIlvl84": 1782320,
-    "dustValIlvl84Q20": 2138784
+    "dustValIlvl84Q20": 2138784,
+    "slots": 1
   },
   {
     "name": "Reefbane",
     "baseType": "Fishing Rod",
     "dustValIlvl84": 1702480,
-    "dustValIlvl84Q20": 2042976
+    "dustValIlvl84Q20": 2042976,
+    "slots": 4
   },
   {
     "name": "Replica Shroud of the Lightless",
     "baseType": "Carnal Armour",
     "dustValIlvl84": 1583560,
-    "dustValIlvl84Q20": 1900272
+    "dustValIlvl84Q20": 1900272,
+    "slots": 6
   },
   {
     "name": "Stasis Prison",
     "baseType": "Carnal Armour",
     "dustValIlvl84": 1583560,
-    "dustValIlvl84Q20": 1900272
+    "dustValIlvl84Q20": 1900272,
+    "slots": 6
   },
   {
     "name": "The Squire",
     "baseType": "Elegant Round Shield",
     "dustValIlvl84": 1537440,
-    "dustValIlvl84Q20": 1844928
+    "dustValIlvl84Q20": 1844928,
+    "slots": 6
   },
   {
     "name": "Rakiata's Dance",
     "baseType": "Engraved Greatsword",
     "dustValIlvl84": 1537440,
-    "dustValIlvl84Q20": 1844928
+    "dustValIlvl84Q20": 1844928,
+    "slots": 8
   },
   {
     "name": "Angler's Plait",
     "baseType": "Unset Ring",
     "dustValIlvl84": 1468580,
-    "dustValIlvl84Q20": 1762296
+    "dustValIlvl84Q20": 1762296,
+    "slots": 1
   },
   {
     "name": "Starforge",
     "baseType": "Infernal Sword",
     "dustValIlvl84": 1406980,
-    "dustValIlvl84Q20": 1688376
+    "dustValIlvl84Q20": 1688376,
+    "slots": 8
   },
   {
     "name": "Voidforge",
     "baseType": "Infernal Sword",
     "dustValIlvl84": 1406980,
-    "dustValIlvl84Q20": 1688376
+    "dustValIlvl84Q20": 1688376,
+    "slots": 8
   },
   {
     "name": "Replica Kongor's Undying Rage",
     "baseType": "Terror Maul",
     "dustValIlvl84": 1406980,
-    "dustValIlvl84Q20": 1688376
+    "dustValIlvl84Q20": 1688376,
+    "slots": 8
   },
   {
     "name": "Echoforge",
     "baseType": "Infernal Sword",
     "dustValIlvl84": 1406980,
-    "dustValIlvl84Q20": 1688376
+    "dustValIlvl84Q20": 1688376,
+    "slots": 8
   },
   {
     "name": "Lioneye's Glare",
     "baseType": "Imperial Bow",
     "dustValIlvl84": 1366000,
-    "dustValIlvl84Q20": 1639200
+    "dustValIlvl84Q20": 1639200,
+    "slots": 8
   },
   {
     "name": "Divinarius",
     "baseType": "Imperial Skean",
     "dustValIlvl84": 1366000,
-    "dustValIlvl84Q20": 1639200
+    "dustValIlvl84Q20": 1639200,
+    "slots": 3
   },
   {
     "name": "Essentia Sanguis",
     "baseType": "Vaal Claw",
     "dustValIlvl84": 1366000,
-    "dustValIlvl84Q20": 1639200
+    "dustValIlvl84Q20": 1639200,
+    "slots": 4
   },
   {
     "name": "Kingmaker",
     "baseType": "Despot Axe",
     "dustValIlvl84": 1366000,
-    "dustValIlvl84Q20": 1639200
+    "dustValIlvl84Q20": 1639200,
+    "slots": 8
   },
   {
     "name": "Soul Taker",
     "baseType": "Siege Axe",
     "dustValIlvl84": 1326220,
-    "dustValIlvl84Q20": 1591464
+    "dustValIlvl84Q20": 1591464,
+    "slots": 6
   },
   {
     "name": "Voltaxic Rift",
     "baseType": "Spine Bow",
     "dustValIlvl84": 1287580,
-    "dustValIlvl84Q20": 1545096
+    "dustValIlvl84Q20": 1545096,
+    "slots": 8
   },
   {
     "name": "Atziri's Disfavour",
     "baseType": "Vaal Axe",
     "dustValIlvl84": 1287580,
-    "dustValIlvl84Q20": 1545096
+    "dustValIlvl84Q20": 1545096,
+    "slots": 8
   },
   {
     "name": "Replica Duskdawn",
     "baseType": "Maelström Staff",
     "dustValIlvl84": 1287580,
-    "dustValIlvl84Q20": 1545096
+    "dustValIlvl84Q20": 1545096,
+    "slots": 8
   },
   {
     "name": "Bloodseeker",
     "baseType": "Hellion's Paw",
     "dustValIlvl84": 1213680,
-    "dustValIlvl84Q20": 1456416
+    "dustValIlvl84Q20": 1456416,
+    "slots": 4
   },
   {
     "name": "The Saviour",
     "baseType": "Legion Sword",
     "dustValIlvl84": 1213680,
-    "dustValIlvl84Q20": 1456416
+    "dustValIlvl84Q20": 1456416,
+    "slots": 6
   },
   {
     "name": "Replica Tukohama's Fortress",
     "baseType": "Ebony Tower Shield",
     "dustValIlvl84": 1178320,
-    "dustValIlvl84Q20": 1413984
+    "dustValIlvl84Q20": 1413984,
+    "slots": 8
   },
   {
     "name": "Kalandra's Touch",
     "baseType": "Ring",
     "dustValIlvl84": 1144000,
-    "dustValIlvl84Q20": 1372800
+    "dustValIlvl84Q20": 1372800,
+    "slots": 1
   },
   {
     "name": "Bino's Kitchen Knife",
     "baseType": "Slaughter Knife",
     "dustValIlvl84": 1078340,
-    "dustValIlvl84Q20": 1294008
+    "dustValIlvl84Q20": 1294008,
+    "slots": 3
   },
   {
     "name": "Marohi Erqi",
     "baseType": "Karui Maul",
     "dustValIlvl84": 1046920,
-    "dustValIlvl84Q20": 1256304
+    "dustValIlvl84Q20": 1256304,
+    "slots": 8
   },
   {
     "name": "The Winds of Fate",
     "baseType": "Foul Staff",
     "dustValIlvl84": 986820,
-    "dustValIlvl84Q20": 1184184
+    "dustValIlvl84Q20": 1184184,
+    "slots": 8
   },
   {
     "name": "Hateforge",
     "baseType": "Ancient Gauntlets",
     "dustValIlvl84": 779000,
-    "dustValIlvl84Q20": 934800
+    "dustValIlvl84Q20": 934800,
+    "slots": 4
   },
   {
     "name": "Uul-Netol's Vow",
     "baseType": "Unset Amulet",
     "dustValIlvl84": 734300,
-    "dustValIlvl84Q20": 881160
+    "dustValIlvl84Q20": 881160,
+    "slots": 1
   },
   {
     "name": "Soul Ascension",
     "baseType": "Carnal Mitts",
     "dustValIlvl84": 635280,
-    "dustValIlvl84Q20": 762336
+    "dustValIlvl84Q20": 762336,
+    "slots": 4
   },
   {
     "name": "Nimis",
     "baseType": "Topaz Ring",
     "dustValIlvl84": 635280,
-    "dustValIlvl84Q20": 762336
+    "dustValIlvl84Q20": 762336,
+    "slots": 1
   },
   {
     "name": "Replica Headhunter",
     "baseType": "Leather Belt",
     "dustValIlvl84": 633400,
-    "dustValIlvl84Q20": 760080
+    "dustValIlvl84Q20": 760080,
+    "slots": 2
   },
   {
     "name": "Yoke of Suffering",
     "baseType": "Onyx Amulet",
     "dustValIlvl84": 472720,
-    "dustValIlvl84Q20": 567264
+    "dustValIlvl84Q20": 567264,
+    "slots": 1
   },
   {
     "name": "Manastorm",
     "baseType": "Lacewood Spirit Shield",
     "dustValIlvl84": 420000,
-    "dustValIlvl84Q20": 504000
+    "dustValIlvl84Q20": 504000,
+    "slots": 4
   },
   {
     "name": "Replica Bated Breath",
     "baseType": "Chain Belt",
     "dustValIlvl84": 412000,
-    "dustValIlvl84Q20": 494400
+    "dustValIlvl84Q20": 494400,
+    "slots": 2
   },
   {
     "name": "Stranglegasp",
     "baseType": "Onyx Amulet",
     "dustValIlvl84": 406560,
-    "dustValIlvl84Q20": 487872
+    "dustValIlvl84Q20": 487872,
+    "slots": 1
   },
   {
     "name": "Replica Farrul's Fur",
     "baseType": "Triumphant Lamellar",
     "dustValIlvl84": 373160,
-    "dustValIlvl84Q20": 447792
+    "dustValIlvl84Q20": 447792,
+    "slots": 6
   },
   {
     "name": "Kitava's Feast",
     "baseType": "Void Axe",
     "dustValIlvl84": 362300,
-    "dustValIlvl84Q20": 434760
+    "dustValIlvl84Q20": 434760,
+    "slots": 8
   },
   {
     "name": "Replica Nebulis",
     "baseType": "Void Sceptre",
     "dustValIlvl84": 362300,
-    "dustValIlvl84Q20": 434760
+    "dustValIlvl84Q20": 434760,
+    "slots": 6
   },
   {
     "name": "Malachai's Mark",
     "baseType": "Murder Mitts",
     "dustValIlvl84": 351740,
-    "dustValIlvl84Q20": 422088
+    "dustValIlvl84Q20": 422088,
+    "slots": 4
   },
   {
     "name": "Replica Windripper",
     "baseType": "Imperial Bow",
     "dustValIlvl84": 341500,
-    "dustValIlvl84Q20": 409800
+    "dustValIlvl84Q20": 409800,
+    "slots": 8
   },
   {
     "name": "Tidebreaker",
     "baseType": "Imperial Maul",
     "dustValIlvl84": 331560,
-    "dustValIlvl84Q20": 397872
+    "dustValIlvl84Q20": 397872,
+    "slots": 8
   },
   {
     "name": "Replica Eternity Shroud",
     "baseType": "Blood Raiment",
     "dustValIlvl84": 331560,
-    "dustValIlvl84Q20": 397872
+    "dustValIlvl84Q20": 397872,
+    "slots": 6
   },
   {
     "name": "Annihilation's Approach",
     "baseType": "Dragonscale Boots",
     "dustValIlvl84": 331560,
-    "dustValIlvl84Q20": 397872
+    "dustValIlvl84Q20": 397872,
+    "slots": 4
   },
   {
     "name": "Eternal Damnation",
     "baseType": "Agate Amulet",
     "dustValIlvl84": 331560,
-    "dustValIlvl84Q20": 397872
+    "dustValIlvl84Q20": 397872,
+    "slots": 1
   },
   {
     "name": "Duskdawn",
     "baseType": "Maelström Staff",
     "dustValIlvl84": 321900,
-    "dustValIlvl84Q20": 386280
+    "dustValIlvl84Q20": 386280,
+    "slots": 8
   },
   {
     "name": "The Brine Crown",
     "baseType": "Prophet Crown",
     "dustValIlvl84": 312520,
-    "dustValIlvl84Q20": 375024
+    "dustValIlvl84Q20": 375024,
+    "slots": 4
   },
   {
     "name": "Replica Atziri's Acuity",
     "baseType": "Vaal Gauntlets",
     "dustValIlvl84": 312520,
-    "dustValIlvl84Q20": 375024
+    "dustValIlvl84Q20": 375024,
+    "slots": 4
   },
   {
     "name": "Garukhan's Flight",
     "baseType": "Stealth Boots",
     "dustValIlvl84": 303420,
-    "dustValIlvl84Q20": 364104
+    "dustValIlvl84Q20": 364104,
+    "slots": 4
   },
   {
     "name": "Tukohama's Fortress",
     "baseType": "Ebony Tower Shield",
     "dustValIlvl84": 294580,
-    "dustValIlvl84Q20": 353496
+    "dustValIlvl84Q20": 353496,
+    "slots": 8
   },
   {
     "name": "Entropic Devastation",
     "baseType": "Assassin's Mitts",
     "dustValIlvl84": 269580,
-    "dustValIlvl84Q20": 323496
+    "dustValIlvl84Q20": 323496,
+    "slots": 4
   },
   {
     "name": "Cloak of Tawm'r Isley",
     "baseType": "Savant's Robe",
     "dustValIlvl84": 254100,
-    "dustValIlvl84Q20": 304920
+    "dustValIlvl84Q20": 304920,
+    "slots": 6
   },
   {
     "name": "Arakaali's Fang",
     "baseType": "Fiend Dagger",
     "dustValIlvl84": 232540,
-    "dustValIlvl84Q20": 279048
+    "dustValIlvl84Q20": 279048,
+    "slots": 3
   },
   {
     "name": "Martyr of Innocence",
     "baseType": "Highborn Staff",
     "dustValIlvl84": 225780,
-    "dustValIlvl84Q20": 270936
+    "dustValIlvl84Q20": 270936,
+    "slots": 8
   },
   {
     "name": "Song of the Sirens",
     "baseType": "Fishing Rod",
     "dustValIlvl84": 223900,
-    "dustValIlvl84Q20": 268680
+    "dustValIlvl84Q20": 268680,
+    "slots": 4
   },
   {
     "name": "Replica Alberon's Warpath",
     "baseType": "Soldier Boots",
     "dustValIlvl84": 206620,
-    "dustValIlvl84Q20": 247944
+    "dustValIlvl84Q20": 247944,
+    "slots": 4
   },
   {
     "name": "Replica Maloney's Mechanism",
     "baseType": "Ornate Quiver",
     "dustValIlvl84": 183580,
-    "dustValIlvl84Q20": 220296
+    "dustValIlvl84Q20": 220296,
+    "slots": 6
   },
   {
     "name": "Replica Trypanon",
     "baseType": "Great Mallet",
     "dustValIlvl84": 158360,
-    "dustValIlvl84Q20": 190032
+    "dustValIlvl84Q20": 190032,
+    "slots": 8
   },
   {
     "name": "Gruthkul's Pelt",
     "baseType": "Wyrmscale Doublet",
     "dustValIlvl84": 149260,
-    "dustValIlvl84Q20": 179112
+    "dustValIlvl84Q20": 179112,
+    "slots": 6
   },
   {
     "name": "Dialla's Malefaction",
     "baseType": "Sage's Robe",
     "dustValIlvl84": 144920,
-    "dustValIlvl84Q20": 173904
+    "dustValIlvl84Q20": 173904,
+    "slots": 6
   },
   {
     "name": "Ralakesh's Impatience",
     "baseType": "Riveted Boots",
     "dustValIlvl84": 140700,
-    "dustValIlvl84Q20": 168840
+    "dustValIlvl84Q20": 168840,
+    "slots": 4
   },
   {
     "name": "Skyforth",
     "baseType": "Sorcerer Boots",
     "dustValIlvl84": 139540,
-    "dustValIlvl84Q20": 167448
+    "dustValIlvl84Q20": 167448,
+    "slots": 4
   },
   {
     "name": "Wraithlord",
     "baseType": "Bone Circlet",
     "dustValIlvl84": 132620,
-    "dustValIlvl84Q20": 159144
+    "dustValIlvl84Q20": 159144,
+    "slots": 4
   },
   {
     "name": "Eyes of the Greatwolf",
     "baseType": "Greatwolf Talisman",
     "dustValIlvl84": 131520,
-    "dustValIlvl84Q20": 157824
+    "dustValIlvl84Q20": 157824,
+    "slots": 1
   },
   {
     "name": "The Dark Seer",
     "baseType": "Shadow Sceptre",
     "dustValIlvl84": 125000,
-    "dustValIlvl84Q20": 150000
+    "dustValIlvl84Q20": 150000,
+    "slots": 6
   },
   {
     "name": "Ryslatha's Coil",
     "baseType": "Studded Belt",
     "dustValIlvl84": 125000,
-    "dustValIlvl84Q20": 150000
+    "dustValIlvl84Q20": 150000,
+    "slots": 2
   },
   {
     "name": "Shade of Solaris",
     "baseType": "Sage Wand",
     "dustValIlvl84": 117820,
-    "dustValIlvl84Q20": 141384
+    "dustValIlvl84Q20": 141384,
+    "slots": 3
   },
   {
     "name": "Void Battery",
     "baseType": "Prophecy Wand",
     "dustValIlvl84": 113460,
-    "dustValIlvl84Q20": 136152
+    "dustValIlvl84Q20": 136152,
+    "slots": 3
   },
   {
     "name": "Rigwald's Quills",
     "baseType": "Two-Point Arrow Quiver",
     "dustValIlvl84": 113460,
-    "dustValIlvl84Q20": 136152
+    "dustValIlvl84Q20": 136152,
+    "slots": 6
   },
   {
     "name": "The Brass Dome",
     "baseType": "Gladiator Plate",
     "dustValIlvl84": 113460,
-    "dustValIlvl84Q20": 136152
+    "dustValIlvl84Q20": 136152,
+    "slots": 6
   },
   {
     "name": "Light of Lunaris",
     "baseType": "Jingling Spirit Shield",
     "dustValIlvl84": 111060,
-    "dustValIlvl84Q20": 133272
+    "dustValIlvl84Q20": 133272,
+    "slots": 4
   },
   {
     "name": "Seven-League Step",
     "baseType": "Rawhide Boots",
     "dustValIlvl84": 106940,
-    "dustValIlvl84Q20": 128328
+    "dustValIlvl84Q20": 128328,
+    "slots": 4
   },
   {
     "name": "Warrior's Legacy",
     "baseType": "Ruby Ring",
     "dustValIlvl84": 106940,
-    "dustValIlvl84Q20": 128328
+    "dustValIlvl84Q20": 128328,
+    "slots": 1
   },
   {
     "name": "Astral Projector",
     "baseType": "Topaz Ring",
     "dustValIlvl84": 106940,
-    "dustValIlvl84Q20": 128328
+    "dustValIlvl84Q20": 128328,
+    "slots": 1
   },
   {
     "name": "Aegis Aurora",
     "baseType": "Champion Kite Shield",
     "dustValIlvl84": 100800,
-    "dustValIlvl84Q20": 120960
+    "dustValIlvl84Q20": 120960,
+    "slots": 6
   },
   {
     "name": "Atziri's Splendour",
     "baseType": "Sacrificial Garb",
     "dustValIlvl84": 97860,
-    "dustValIlvl84Q20": 117432
+    "dustValIlvl84Q20": 117432,
+    "slots": 6
   },
   {
     "name": "Shroud of the Lightless",
     "baseType": "Carnal Armour",
     "dustValIlvl84": 95020,
-    "dustValIlvl84Q20": 114024
+    "dustValIlvl84Q20": 114024,
+    "slots": 6
   },
   {
     "name": "Voll's Devotion",
     "baseType": "Agate Amulet",
     "dustValIlvl84": 92240,
-    "dustValIlvl84Q20": 110688
+    "dustValIlvl84Q20": 110688,
+    "slots": 1
   },
   {
     "name": "Shavronne's Revelation",
     "baseType": "Moonstone Ring",
     "dustValIlvl84": 92240,
-    "dustValIlvl84Q20": 110688
+    "dustValIlvl84Q20": 110688,
+    "slots": 1
   },
   {
     "name": "Windripper",
     "baseType": "Imperial Bow",
     "dustValIlvl84": 92240,
-    "dustValIlvl84Q20": 110688
+    "dustValIlvl84Q20": 110688,
+    "slots": 8
   },
   {
     "name": "Magna Eclipsis",
     "baseType": "Pinnacle Tower Shield",
     "dustValIlvl84": 92240,
-    "dustValIlvl84Q20": 110688
+    "dustValIlvl84Q20": 110688,
+    "slots": 8
   },
   {
     "name": "Doryani's Fist",
     "baseType": "Vaal Gauntlets",
     "dustValIlvl84": 89560,
-    "dustValIlvl84Q20": 107472
+    "dustValIlvl84Q20": 107472,
+    "slots": 4
   },
   {
     "name": "Indigon",
     "baseType": "Hubris Circlet",
     "dustValIlvl84": 89560,
-    "dustValIlvl84Q20": 107472
+    "dustValIlvl84Q20": 107472,
+    "slots": 4
   },
   {
     "name": "Farrul's Fur",
     "baseType": "Triumphant Lamellar",
     "dustValIlvl84": 89560,
-    "dustValIlvl84Q20": 107472
+    "dustValIlvl84Q20": 107472,
+    "slots": 6
   },
   {
     "name": "Farrul's Chase",
     "baseType": "Slink Boots",
     "dustValIlvl84": 89560,
-    "dustValIlvl84Q20": 107472
+    "dustValIlvl84Q20": 107472,
+    "slots": 4
   },
   {
     "name": "Kaom's Heart",
     "baseType": "Glorious Plate",
     "dustValIlvl84": 86960,
-    "dustValIlvl84Q20": 104352
+    "dustValIlvl84Q20": 104352,
+    "slots": 6
   },
   {
     "name": "Rathpith Globe",
     "baseType": "Titanium Spirit Shield",
     "dustValIlvl84": 86960,
-    "dustValIlvl84Q20": 104352
+    "dustValIlvl84Q20": 104352,
+    "slots": 4
   },
   {
     "name": "Prism Guardian",
     "baseType": "Archon Kite Shield",
     "dustValIlvl84": 86960,
-    "dustValIlvl84Q20": 104352
+    "dustValIlvl84Q20": 104352,
+    "slots": 6
   },
   {
     "name": "Broken Faith",
     "baseType": "Archon Kite Shield",
     "dustValIlvl84": 86960,
-    "dustValIlvl84Q20": 104352
+    "dustValIlvl84Q20": 104352,
+    "slots": 6
   },
   {
     "name": "Cospri's Malice",
     "baseType": "Jewelled Foil",
     "dustValIlvl84": 86960,
-    "dustValIlvl84Q20": 104352
+    "dustValIlvl84Q20": 104352,
+    "slots": 4
   },
   {
     "name": "Inpulsa's Broken Heart",
     "baseType": "Sadist Garb",
     "dustValIlvl84": 86960,
-    "dustValIlvl84Q20": 104352
+    "dustValIlvl84Q20": 104352,
+    "slots": 6
   },
   {
     "name": "Hand of Wisdom and Action",
     "baseType": "Imperial Claw",
     "dustValIlvl84": 86960,
-    "dustValIlvl84Q20": 104352
+    "dustValIlvl84Q20": 104352,
+    "slots": 4
   },
   {
     "name": "The Red Trail",
     "baseType": "Titan Greaves",
     "dustValIlvl84": 86960,
-    "dustValIlvl84Q20": 104352
+    "dustValIlvl84Q20": 104352,
+    "slots": 4
   },
   {
     "name": "Doryani's Delusion",
     "baseType": "Sorcerer Boots",
     "dustValIlvl84": 86960,
-    "dustValIlvl84Q20": 104352
+    "dustValIlvl84Q20": 104352,
+    "slots": 4
   },
   {
     "name": "The Queen's Hunger",
     "baseType": "Vaal Regalia",
     "dustValIlvl84": 86960,
-    "dustValIlvl84Q20": 104352
+    "dustValIlvl84Q20": 104352,
+    "slots": 6
   },
   {
     "name": "Maloney's Mechanism",
     "baseType": "Ornate Quiver",
     "dustValIlvl84": 86960,
-    "dustValIlvl84Q20": 104352
+    "dustValIlvl84Q20": 104352,
+    "slots": 6
   },
   {
     "name": "Badge of the Brotherhood",
     "baseType": "Turquoise Amulet",
     "dustValIlvl84": 86960,
-    "dustValIlvl84Q20": 104352
+    "dustValIlvl84Q20": 104352,
+    "slots": 1
   },
   {
     "name": "The Immortal Will",
     "baseType": "Archon Kite Shield",
     "dustValIlvl84": 86960,
-    "dustValIlvl84Q20": 104352
+    "dustValIlvl84Q20": 104352,
+    "slots": 6
   },
   {
     "name": "Replica Kaom's Heart",
     "baseType": "Glorious Plate",
     "dustValIlvl84": 86960,
-    "dustValIlvl84Q20": 104352
+    "dustValIlvl84Q20": 104352,
+    "slots": 6
   },
   {
     "name": "Replica Red Trail",
     "baseType": "Titan Greaves",
     "dustValIlvl84": 86960,
-    "dustValIlvl84Q20": 104352
+    "dustValIlvl84Q20": 104352,
+    "slots": 4
   },
   {
     "name": "Viridi's Veil",
     "baseType": "Praetor Crown",
     "dustValIlvl84": 86960,
-    "dustValIlvl84Q20": 104352
+    "dustValIlvl84Q20": 104352,
+    "slots": 4
   },
   {
     "name": "Doppelgänger Guise",
     "baseType": "Sadist Garb",
     "dustValIlvl84": 86960,
-    "dustValIlvl84Q20": 104352
+    "dustValIlvl84Q20": 104352,
+    "slots": 6
   },
   {
     "name": "Thunderfist",
     "baseType": "Murder Mitts",
     "dustValIlvl84": 84420,
-    "dustValIlvl84Q20": 101304
+    "dustValIlvl84Q20": 101304,
+    "slots": 4
   },
   {
     "name": "Steppan Eard",
     "baseType": "Sorcerer Boots",
     "dustValIlvl84": 84420,
-    "dustValIlvl84Q20": 101304
+    "dustValIlvl84Q20": 101304,
+    "slots": 4
   },
   {
     "name": "Heretic's Veil",
     "baseType": "Deicide Mask",
     "dustValIlvl84": 84420,
-    "dustValIlvl84Q20": 101304
+    "dustValIlvl84Q20": 101304,
+    "slots": 4
   },
   {
     "name": "Machina Mitts",
     "baseType": "Murder Mitts",
     "dustValIlvl84": 84420,
-    "dustValIlvl84Q20": 101304
+    "dustValIlvl84Q20": 101304,
+    "slots": 4
   },
   {
     "name": "Sporeguard",
     "baseType": "Saint's Hauberk",
     "dustValIlvl84": 84420,
-    "dustValIlvl84Q20": 101304
+    "dustValIlvl84Q20": 101304,
+    "slots": 6
   },
   {
     "name": "Doryani's Prototype",
     "baseType": "Saint's Hauberk",
     "dustValIlvl84": 84420,
-    "dustValIlvl84Q20": 101304
+    "dustValIlvl84Q20": 101304,
+    "slots": 6
   },
   {
     "name": "Paradoxica",
     "baseType": "Vaal Rapier",
     "dustValIlvl84": 81960,
-    "dustValIlvl84Q20": 98352
+    "dustValIlvl84Q20": 98352,
+    "slots": 4
   },
   {
     "name": "The Yielding Mortality",
     "baseType": "Imperial Staff",
     "dustValIlvl84": 81960,
-    "dustValIlvl84Q20": 98352
+    "dustValIlvl84Q20": 98352,
+    "slots": 8
   },
   {
     "name": "Replica Paradoxica",
     "baseType": "Vaal Rapier",
     "dustValIlvl84": 81960,
-    "dustValIlvl84Q20": 98352
+    "dustValIlvl84Q20": 98352,
+    "slots": 4
   },
   {
     "name": "Replica Allure",
     "baseType": "Vaal Claw",
     "dustValIlvl84": 81960,
-    "dustValIlvl84Q20": 98352
+    "dustValIlvl84Q20": 98352,
+    "slots": 4
   },
   {
     "name": "Hyrri's Ire",
     "baseType": "Zodiac Leather",
     "dustValIlvl84": 79580,
-    "dustValIlvl84Q20": 95496
+    "dustValIlvl84Q20": 95496,
+    "slots": 6
   },
   {
     "name": "The Formless Inferno",
     "baseType": "Royal Burgonet",
     "dustValIlvl84": 79580,
-    "dustValIlvl84Q20": 95496
+    "dustValIlvl84Q20": 95496,
+    "slots": 4
   },
   {
     "name": "The Perfect Form",
     "baseType": "Zodiac Leather",
     "dustValIlvl84": 79580,
-    "dustValIlvl84Q20": 95496
+    "dustValIlvl84Q20": 95496,
+    "slots": 6
   },
   {
     "name": "Doedre's Skin",
     "baseType": "Widowsilk Robe",
     "dustValIlvl84": 79580,
-    "dustValIlvl84Q20": 95496
+    "dustValIlvl84Q20": 95496,
+    "slots": 6
   },
   {
     "name": "The Eternity Shroud",
     "baseType": "Blood Raiment",
     "dustValIlvl84": 79580,
-    "dustValIlvl84Q20": 95496
+    "dustValIlvl84Q20": 95496,
+    "slots": 6
   },
   {
     "name": "Replica Perfect Form",
     "baseType": "Zodiac Leather",
     "dustValIlvl84": 79580,
-    "dustValIlvl84Q20": 95496
+    "dustValIlvl84Q20": 95496,
+    "slots": 6
   },
   {
     "name": "Replica Hyrri's Ire",
     "baseType": "Zodiac Leather",
     "dustValIlvl84": 79580,
-    "dustValIlvl84Q20": 95496
+    "dustValIlvl84Q20": 95496,
+    "slots": 6
   },
   {
     "name": "Varunastra",
     "baseType": "Vaal Blade",
     "dustValIlvl84": 77260,
-    "dustValIlvl84Q20": 92712
+    "dustValIlvl84Q20": 92712,
+    "slots": 6
   },
   {
     "name": "Uul-Netol's Embrace",
     "baseType": "Vaal Axe",
     "dustValIlvl84": 77260,
-    "dustValIlvl84Q20": 92712
+    "dustValIlvl84Q20": 92712,
+    "slots": 8
   },
   {
     "name": "The Surrender",
     "baseType": "Ezomyte Tower Shield",
     "dustValIlvl84": 77260,
-    "dustValIlvl84Q20": 92712
+    "dustValIlvl84Q20": 92712,
+    "slots": 8
   },
   {
     "name": "Disintegrator",
     "baseType": "Maelström Staff",
     "dustValIlvl84": 77260,
-    "dustValIlvl84Q20": 92712
+    "dustValIlvl84Q20": 92712,
+    "slots": 8
   },
   {
     "name": "Loreweave",
     "baseType": "Elegant Ringmail",
     "dustValIlvl84": 77260,
-    "dustValIlvl84Q20": 92712
+    "dustValIlvl84Q20": 92712,
+    "slots": 6
   },
   {
     "name": "Replica Loreweave",
     "baseType": "Elegant Ringmail",
     "dustValIlvl84": 77260,
-    "dustValIlvl84Q20": 92712
+    "dustValIlvl84Q20": 92712,
+    "slots": 6
   },
   {
     "name": "Yaomac's Accord",
     "baseType": "Vaal Sceptre",
     "dustValIlvl84": 77260,
-    "dustValIlvl84Q20": 92712
+    "dustValIlvl84Q20": 92712,
+    "slots": 6
   },
   {
     "name": "Replica Stampede",
     "baseType": "Assassin's Boots",
     "dustValIlvl84": 75000,
-    "dustValIlvl84Q20": 90000
+    "dustValIlvl84Q20": 90000,
+    "slots": 4
   },
   {
     "name": "Shavronne's Wrappings",
     "baseType": "Occultist's Vestment",
     "dustValIlvl84": 72820,
-    "dustValIlvl84Q20": 87384
+    "dustValIlvl84Q20": 87384,
+    "slots": 6
   },
   {
     "name": "Darkscorn",
     "baseType": "Assassin Bow",
     "dustValIlvl84": 72820,
-    "dustValIlvl84Q20": 87384
+    "dustValIlvl84Q20": 87384,
+    "slots": 8
   },
   {
     "name": "Kintsugi",
     "baseType": "Exquisite Leather",
     "dustValIlvl84": 72820,
-    "dustValIlvl84Q20": 87384
+    "dustValIlvl84Q20": 87384,
+    "slots": 6
   },
   {
     "name": "Tulfall",
     "baseType": "Opal Wand",
     "dustValIlvl84": 72820,
-    "dustValIlvl84Q20": 87384
+    "dustValIlvl84Q20": 87384,
+    "slots": 3
   },
   {
     "name": "Esh's Visage",
     "baseType": "Vaal Spirit Shield",
     "dustValIlvl84": 72820,
-    "dustValIlvl84Q20": 87384
+    "dustValIlvl84Q20": 87384,
+    "slots": 4
   },
   {
     "name": "Arborix",
     "baseType": "Assassin Bow",
     "dustValIlvl84": 72820,
-    "dustValIlvl84Q20": 87384
+    "dustValIlvl84Q20": 87384,
+    "slots": 8
   },
   {
     "name": "Apep's Supremacy",
     "baseType": "Vaal Spirit Shield",
     "dustValIlvl84": 72820,
-    "dustValIlvl84Q20": 87384
+    "dustValIlvl84Q20": 87384,
+    "slots": 4
   },
   {
     "name": "The Surging Thoughts",
     "baseType": "Legion Sword",
     "dustValIlvl84": 72820,
-    "dustValIlvl84Q20": 87384
+    "dustValIlvl84Q20": 87384,
+    "slots": 6
   },
   {
     "name": "The Admiral",
     "baseType": "Varnished Coat",
     "dustValIlvl84": 72820,
-    "dustValIlvl84Q20": 87384
+    "dustValIlvl84Q20": 87384,
+    "slots": 6
   },
   {
     "name": "Replica Cold Iron Point",
     "baseType": "Ezomyte Dagger",
     "dustValIlvl84": 72820,
-    "dustValIlvl84Q20": 87384
+    "dustValIlvl84Q20": 87384,
+    "slots": 3
   },
   {
     "name": "Replica Tulfall",
     "baseType": "Opal Wand",
     "dustValIlvl84": 72820,
-    "dustValIlvl84Q20": 87384
+    "dustValIlvl84Q20": 87384,
+    "slots": 3
   },
   {
     "name": "Abberath's Hooves",
     "baseType": "Goathide Boots",
     "dustValIlvl84": 69220,
-    "dustValIlvl84Q20": 83064
+    "dustValIlvl84Q20": 83064,
+    "slots": 4
   },
   {
     "name": "Mjölner",
     "baseType": "Gavel",
     "dustValIlvl84": 68640,
-    "dustValIlvl84Q20": 82368
+    "dustValIlvl84Q20": 82368,
+    "slots": 6
   },
   {
     "name": "Replica Abyssus",
     "baseType": "Ezomyte Burgonet",
     "dustValIlvl84": 68640,
-    "dustValIlvl84Q20": 82368
+    "dustValIlvl84Q20": 82368,
+    "slots": 4
   },
   {
     "name": "Replica Mistwall",
     "baseType": "Lacquered Buckler",
     "dustValIlvl84": 68640,
-    "dustValIlvl84Q20": 82368
+    "dustValIlvl84Q20": 82368,
+    "slots": 4
   },
   {
     "name": "The Iron Fortress",
     "baseType": "Crusader Plate",
     "dustValIlvl84": 66640,
-    "dustValIlvl84Q20": 79968
+    "dustValIlvl84Q20": 79968,
+    "slots": 6
   },
   {
     "name": "Iron Heart",
     "baseType": "Crusader Plate",
     "dustValIlvl84": 66640,
-    "dustValIlvl84Q20": 79968
+    "dustValIlvl84Q20": 79968,
+    "slots": 6
   },
   {
     "name": "Farrul's Pounce",
     "baseType": "Hydrascale Gauntlets",
     "dustValIlvl84": 66640,
-    "dustValIlvl84Q20": 79968
+    "dustValIlvl84Q20": 79968,
+    "slots": 4
   },
   {
     "name": "Fleshcrafter",
     "baseType": "Necromancer Silks",
     "dustValIlvl84": 66640,
-    "dustValIlvl84Q20": 79968
+    "dustValIlvl84Q20": 79968,
+    "slots": 6
   },
   {
     "name": "Gravebind",
     "baseType": "Hydrascale Gauntlets",
     "dustValIlvl84": 66640,
-    "dustValIlvl84Q20": 79968
+    "dustValIlvl84Q20": 79968,
+    "slots": 4
   },
   {
     "name": "Xoph's Nurture",
     "baseType": "Citadel Bow",
     "dustValIlvl84": 64700,
-    "dustValIlvl84Q20": 77640
+    "dustValIlvl84Q20": 77640,
+    "slots": 8
   },
   {
     "name": "Crown of the Tyrant",
     "baseType": "Magistrate Crown",
     "dustValIlvl84": 64700,
-    "dustValIlvl84Q20": 77640
+    "dustValIlvl84Q20": 77640,
+    "slots": 4
   },
   {
     "name": "Crest of Desire",
     "baseType": "Fluted Bascinet",
     "dustValIlvl84": 64700,
-    "dustValIlvl84Q20": 77640
+    "dustValIlvl84Q20": 77640,
+    "slots": 4
   },
   {
     "name": "Farrul's Bite",
     "baseType": "Harlequin Mask",
     "dustValIlvl84": 62820,
-    "dustValIlvl84Q20": 75384
+    "dustValIlvl84Q20": 75384,
+    "slots": 4
   },
   {
     "name": "Offering to the Serpent",
     "baseType": "Legion Gloves",
     "dustValIlvl84": 62820,
-    "dustValIlvl84Q20": 75384
+    "dustValIlvl84Q20": 75384,
+    "slots": 4
   },
   {
     "name": "Garb of the Ephemeral",
     "baseType": "Savant's Robe",
     "dustValIlvl84": 60980,
-    "dustValIlvl84Q20": 73176
+    "dustValIlvl84Q20": 73176,
+    "slots": 6
   },
   {
     "name": "Maata's Teaching",
     "baseType": "Karui Sceptre",
     "dustValIlvl84": 60980,
-    "dustValIlvl84Q20": 73176
+    "dustValIlvl84Q20": 73176,
+    "slots": 6
   },
   {
     "name": "Corpsewalker",
     "baseType": "Carnal Boots",
     "dustValIlvl84": 59200,
-    "dustValIlvl84Q20": 71040
+    "dustValIlvl84Q20": 71040,
+    "slots": 4
   },
   {
     "name": "The Fourth Vow",
     "baseType": "Devout Chainmail",
     "dustValIlvl84": 59200,
-    "dustValIlvl84Q20": 71040
+    "dustValIlvl84Q20": 71040,
+    "slots": 6
   },
   {
     "name": "The Devouring Diadem",
     "baseType": "Necromancer Circlet",
     "dustValIlvl84": 57480,
-    "dustValIlvl84Q20": 68976
+    "dustValIlvl84Q20": 68976,
+    "slots": 4
   },
   {
     "name": "Qotra's Regulator",
     "baseType": "Sovereign Spiked Shield",
     "dustValIlvl84": 57480,
-    "dustValIlvl84Q20": 68976
+    "dustValIlvl84Q20": 68976,
+    "slots": 4
   },
   {
     "name": "Atziri's Reflection",
     "baseType": "Golden Buckler",
     "dustValIlvl84": 57480,
-    "dustValIlvl84Q20": 68976
+    "dustValIlvl84Q20": 68976,
+    "slots": 4
   },
   {
     "name": "Sandstorm Visage",
     "baseType": "Necromancer Circlet",
     "dustValIlvl84": 57480,
-    "dustValIlvl84Q20": 68976
+    "dustValIlvl84Q20": 68976,
+    "slots": 4
   },
   {
     "name": "Utula's Hunger",
     "baseType": "Majestic Plate",
     "dustValIlvl84": 55820,
-    "dustValIlvl84Q20": 66984
+    "dustValIlvl84Q20": 66984,
+    "slots": 6
   },
   {
     "name": "Cloak of Defiance",
     "baseType": "Lacquered Garb",
     "dustValIlvl84": 54180,
-    "dustValIlvl84Q20": 65016
+    "dustValIlvl84Q20": 65016,
+    "slots": 6
   },
   {
     "name": "Skin of the Lords",
     "baseType": "Simple Robe",
     "dustValIlvl84": 53040,
-    "dustValIlvl84Q20": 63648
+    "dustValIlvl84Q20": 63648,
+    "slots": 6
   },
   {
     "name": "Zerphi's Heart",
     "baseType": "Paua Amulet",
     "dustValIlvl84": 53040,
-    "dustValIlvl84Q20": 63648
+    "dustValIlvl84Q20": 63648,
+    "slots": 1
   },
   {
     "name": "Replica Frostbreath",
     "baseType": "Ornate Mace",
     "dustValIlvl84": 51080,
-    "dustValIlvl84Q20": 61296
+    "dustValIlvl84Q20": 61296,
+    "slots": 6
   },
   {
     "name": "The Covenant",
     "baseType": "Spidersilk Robe",
     "dustValIlvl84": 49580,
-    "dustValIlvl84Q20": 59496
+    "dustValIlvl84Q20": 59496,
+    "slots": 6
   },
   {
     "name": "Anathema",
     "baseType": "Moonstone Ring",
     "dustValIlvl84": 49580,
-    "dustValIlvl84Q20": 59496
+    "dustValIlvl84Q20": 59496,
+    "slots": 1
   },
   {
     "name": "Replica Covenant",
     "baseType": "Spidersilk Robe",
     "dustValIlvl84": 49580,
-    "dustValIlvl84Q20": 59496
+    "dustValIlvl84Q20": 59496,
+    "slots": 6
   },
   {
     "name": "Winds of Change",
     "baseType": "Ancient Gauntlets",
     "dustValIlvl84": 46740,
-    "dustValIlvl84Q20": 56088
+    "dustValIlvl84Q20": 56088,
+    "slots": 4
   },
   {
     "name": "Death Rush",
     "baseType": "Amethyst Ring",
     "dustValIlvl84": 45380,
-    "dustValIlvl84Q20": 54456
+    "dustValIlvl84Q20": 54456,
+    "slots": 1
   },
   {
     "name": "Emperor's Vigilance",
     "baseType": "Steel Kite Shield",
     "dustValIlvl84": 45380,
-    "dustValIlvl84Q20": 54456
+    "dustValIlvl84Q20": 54456,
+    "slots": 6
   },
   {
     "name": "Mahuxotl's Machination",
     "baseType": "Steel Kite Shield",
     "dustValIlvl84": 45380,
-    "dustValIlvl84Q20": 54456
+    "dustValIlvl84Q20": 54456,
+    "slots": 6
   },
   {
     "name": "The Pariah",
     "baseType": "Unset Ring",
     "dustValIlvl84": 44060,
-    "dustValIlvl84Q20": 52872
+    "dustValIlvl84Q20": 52872,
+    "slots": 1
   },
   {
     "name": "Abhorrent Interrogation",
     "baseType": "Ambush Mitts",
     "dustValIlvl84": 44060,
-    "dustValIlvl84Q20": 52872
+    "dustValIlvl84Q20": 52872,
+    "slots": 4
   },
   {
     "name": "The Tempest's Liberation",
     "baseType": "Callous Mask",
     "dustValIlvl84": 44060,
-    "dustValIlvl84Q20": 52872
+    "dustValIlvl84Q20": 52872,
+    "slots": 4
   },
   {
     "name": "Perfidy",
     "baseType": "Glorious Plate",
     "dustValIlvl84": 43840,
-    "dustValIlvl84Q20": 52608
+    "dustValIlvl84Q20": 52608,
+    "slots": 6
   },
   {
     "name": "Hand of the Fervent",
     "baseType": "Zealot Gloves",
     "dustValIlvl84": 41520,
-    "dustValIlvl84Q20": 49824
+    "dustValIlvl84Q20": 49824,
+    "slots": 4
   },
   {
     "name": "Impresence",
     "baseType": "Onyx Amulet",
     "dustValIlvl84": 41320,
-    "dustValIlvl84Q20": 49584
+    "dustValIlvl84Q20": 49584,
+    "slots": 1
   },
   {
     "name": "Assailum",
     "baseType": "Sinner Tricorne",
     "dustValIlvl84": 41320,
-    "dustValIlvl84Q20": 49584
+    "dustValIlvl84Q20": 49584,
+    "slots": 4
   },
   {
     "name": "Mark of the Elder",
     "baseType": "Steel Ring",
     "dustValIlvl84": 38960,
-    "dustValIlvl84Q20": 46752
+    "dustValIlvl84Q20": 46752,
+    "slots": 1
   },
   {
     "name": "Mark of the Shaper",
     "baseType": "Opal Ring",
     "dustValIlvl84": 38960,
-    "dustValIlvl84Q20": 46752
+    "dustValIlvl84Q20": 46752,
+    "slots": 1
   },
   {
     "name": "Polaric Devastation",
     "baseType": "Opal Ring",
     "dustValIlvl84": 38960,
-    "dustValIlvl84Q20": 46752
+    "dustValIlvl84Q20": 46752,
+    "slots": 1
   },
   {
     "name": "Replica Soul Strike",
     "baseType": "Spike-Point Arrow Quiver",
     "dustValIlvl84": 38000,
-    "dustValIlvl84Q20": 45600
+    "dustValIlvl84Q20": 45600,
+    "slots": 6
   },
   {
     "name": "Replica Midnight Bargain",
     "baseType": "Engraved Wand",
     "dustValIlvl84": 38000,
-    "dustValIlvl84Q20": 45600
+    "dustValIlvl84Q20": 45600,
+    "slots": 3
   },
   {
     "name": "Brain Rattler",
     "baseType": "Meatgrinder",
     "dustValIlvl84": 37820,
-    "dustValIlvl84Q20": 45384
+    "dustValIlvl84Q20": 45384,
+    "slots": 8
   },
   {
     "name": "Razor of the Seventh Sun",
     "baseType": "Midnight Blade",
     "dustValIlvl84": 37820,
-    "dustValIlvl84Q20": 45384
+    "dustValIlvl84Q20": 45384,
+    "slots": 6
   },
   {
     "name": "Snakepit",
     "baseType": "Sapphire Ring",
     "dustValIlvl84": 37820,
-    "dustValIlvl84Q20": 45384
+    "dustValIlvl84Q20": 45384,
+    "slots": 1
   },
   {
     "name": "The Scourge",
     "baseType": "Terror Claw",
     "dustValIlvl84": 37820,
-    "dustValIlvl84Q20": 45384
+    "dustValIlvl84Q20": 45384,
+    "slots": 4
   },
   {
     "name": "Memory Vault",
     "baseType": "Praetor Crown",
     "dustValIlvl84": 37820,
-    "dustValIlvl84Q20": 45384
+    "dustValIlvl84Q20": 45384,
+    "slots": 4
   },
   {
     "name": "Grelwood Shank",
     "baseType": "Eternal Sword",
     "dustValIlvl84": 37820,
-    "dustValIlvl84Q20": 45384
+    "dustValIlvl84Q20": 45384,
+    "slots": 6
   },
   {
     "name": "Beltimber Blade",
     "baseType": "Eternal Sword",
     "dustValIlvl84": 37820,
-    "dustValIlvl84Q20": 45384
+    "dustValIlvl84Q20": 45384,
+    "slots": 6
   },
   {
     "name": "Vulconus",
     "baseType": "Demon Dagger",
     "dustValIlvl84": 37820,
-    "dustValIlvl84Q20": 45384
+    "dustValIlvl84Q20": 45384,
+    "slots": 3
   },
   {
     "name": "Augyre",
     "baseType": "Void Sceptre",
     "dustValIlvl84": 37820,
-    "dustValIlvl84Q20": 45384
+    "dustValIlvl84Q20": 45384,
+    "slots": 6
   },
   {
     "name": "Gloomfang",
     "baseType": "Blue Pearl Amulet",
     "dustValIlvl84": 37820,
-    "dustValIlvl84Q20": 45384
+    "dustValIlvl84Q20": 45384,
+    "slots": 1
   },
   {
     "name": "The Gull",
     "baseType": "Raven Mask",
     "dustValIlvl84": 35820,
-    "dustValIlvl84Q20": 42984
+    "dustValIlvl84Q20": 42984,
+    "slots": 4
   },
   {
     "name": "Severed in Sleep",
     "baseType": "Cutlass",
     "dustValIlvl84": 35820,
-    "dustValIlvl84Q20": 42984
+    "dustValIlvl84Q20": 42984,
+    "slots": 3
   },
   {
     "name": "United in Dream",
     "baseType": "Cutlass",
     "dustValIlvl84": 35820,
-    "dustValIlvl84Q20": 42984
+    "dustValIlvl84Q20": 42984,
+    "slots": 3
   },
   {
     "name": "Blackflame",
     "baseType": "Amethyst Ring",
     "dustValIlvl84": 35820,
-    "dustValIlvl84Q20": 42984
+    "dustValIlvl84Q20": 42984,
+    "slots": 1
   },
   {
     "name": "Maligaro's Virtuosity",
     "baseType": "Deerskin Gloves",
     "dustValIlvl84": 35640,
-    "dustValIlvl84Q20": 42768
+    "dustValIlvl84Q20": 42768,
+    "slots": 4
   },
   {
     "name": "Asenath's Gentle Touch",
     "baseType": "Silk Gloves",
     "dustValIlvl84": 35640,
-    "dustValIlvl84Q20": 42768
+    "dustValIlvl84Q20": 42768,
+    "slots": 4
   },
   {
     "name": "Perandus Signet",
     "baseType": "Paua Ring",
     "dustValIlvl84": 35640,
-    "dustValIlvl84Q20": 42768
+    "dustValIlvl84Q20": 42768,
+    "slots": 1
   },
   {
     "name": "Nebuloch",
     "baseType": "Nightmare Mace",
     "dustValIlvl84": 35640,
-    "dustValIlvl84Q20": 42768
+    "dustValIlvl84Q20": 42768,
+    "slots": 6
   },
   {
     "name": "Hopeshredder",
     "baseType": "Ranger Bow",
     "dustValIlvl84": 35640,
-    "dustValIlvl84Q20": 42768
+    "dustValIlvl84Q20": 42768,
+    "slots": 8
   },
   {
     "name": "Shimmeron",
     "baseType": "Tornado Wand",
     "dustValIlvl84": 35640,
-    "dustValIlvl84Q20": 42768
+    "dustValIlvl84Q20": 42768,
+    "slots": 3
   },
   {
     "name": "Beacon of Madness",
     "baseType": "Two-Toned Boots",
     "dustValIlvl84": 35640,
-    "dustValIlvl84Q20": 42768
+    "dustValIlvl84Q20": 42768,
+    "slots": 4
   },
   {
     "name": "Sunblast",
     "baseType": "Cloth Belt",
     "dustValIlvl84": 34780,
-    "dustValIlvl84Q20": 41736
+    "dustValIlvl84Q20": 41736,
+    "slots": 2
   },
   {
     "name": "Doon Cuebiyari",
     "baseType": "Vaal Sceptre",
     "dustValIlvl84": 34600,
-    "dustValIlvl84Q20": 41520
+    "dustValIlvl84Q20": 41520,
+    "slots": 6
   },
   {
     "name": "Death's Door",
     "baseType": "Crusader Boots",
     "dustValIlvl84": 34600,
-    "dustValIlvl84Q20": 41520
+    "dustValIlvl84Q20": 41520,
+    "slots": 4
   },
   {
     "name": "Auxium",
     "baseType": "Crystal Belt",
     "dustValIlvl84": 33600,
-    "dustValIlvl84Q20": 40320
+    "dustValIlvl84Q20": 40320,
+    "slots": 2
   },
   {
     "name": "Flamesight",
     "baseType": "Solaris Circlet",
     "dustValIlvl84": 33600,
-    "dustValIlvl84Q20": 40320
+    "dustValIlvl84Q20": 40320,
+    "slots": 4
   },
   {
     "name": "Galesight",
     "baseType": "Solaris Circlet",
     "dustValIlvl84": 33600,
-    "dustValIlvl84Q20": 40320
+    "dustValIlvl84Q20": 40320,
+    "slots": 4
   },
   {
     "name": "Thundersight",
     "baseType": "Solaris Circlet",
     "dustValIlvl84": 33600,
-    "dustValIlvl84Q20": 40320
+    "dustValIlvl84Q20": 40320,
+    "slots": 4
   },
   {
     "name": "The Ivory Tower",
     "baseType": "Saint's Hauberk",
     "dustValIlvl84": 33600,
-    "dustValIlvl84Q20": 40320
+    "dustValIlvl84Q20": 40320,
+    "slots": 6
   },
   {
     "name": "Leash of Oblation",
     "baseType": "Leather Belt",
     "dustValIlvl84": 33600,
-    "dustValIlvl84Q20": 40320
+    "dustValIlvl84Q20": 40320,
+    "slots": 2
   },
   {
     "name": "Mistwall",
     "baseType": "Lacquered Buckler",
     "dustValIlvl84": 33600,
-    "dustValIlvl84Q20": 40320
+    "dustValIlvl84Q20": 40320,
+    "slots": 4
   },
   {
     "name": "Maw of Mischief",
     "baseType": "Bone Helmet",
     "dustValIlvl84": 33600,
-    "dustValIlvl84Q20": 40320
+    "dustValIlvl84Q20": 40320,
+    "slots": 4
   },
   {
     "name": "The Burden of Truth",
     "baseType": "Crystal Belt",
     "dustValIlvl84": 33600,
-    "dustValIlvl84Q20": 40320
+    "dustValIlvl84Q20": 40320,
+    "slots": 2
   },
   {
     "name": "Shadowstitch",
     "baseType": "Sacrificial Garb",
     "dustValIlvl84": 32620,
-    "dustValIlvl84Q20": 39144
+    "dustValIlvl84Q20": 39144,
+    "slots": 6
   },
   {
     "name": "Hegemony's Era",
     "baseType": "Judgement Staff",
     "dustValIlvl84": 31680,
-    "dustValIlvl84Q20": 38016
+    "dustValIlvl84Q20": 38016,
+    "slots": 8
   },
   {
     "name": "Replica Restless Ward",
     "baseType": "Carnal Armour",
     "dustValIlvl84": 31680,
-    "dustValIlvl84Q20": 38016
+    "dustValIlvl84Q20": 38016,
+    "slots": 6
   },
   {
     "name": "Lioneye's Remorse",
     "baseType": "Pinnacle Tower Shield",
     "dustValIlvl84": 30740,
-    "dustValIlvl84Q20": 36888
+    "dustValIlvl84Q20": 36888,
+    "slots": 8
   },
   {
     "name": "Incandescent Heart",
     "baseType": "Saintly Chainmail",
     "dustValIlvl84": 30740,
-    "dustValIlvl84Q20": 36888
+    "dustValIlvl84Q20": 36888,
+    "slots": 6
   },
   {
     "name": "The Hungry Loop",
     "baseType": "Unset Ring",
     "dustValIlvl84": 30740,
-    "dustValIlvl84Q20": 36888
+    "dustValIlvl84Q20": 36888,
+    "slots": 1
   },
   {
     "name": "Chains of Command",
     "baseType": "Saintly Chainmail",
     "dustValIlvl84": 30740,
-    "dustValIlvl84Q20": 36888
+    "dustValIlvl84Q20": 36888,
+    "slots": 6
   },
   {
     "name": "Black Zenith",
     "baseType": "Fingerless Silk Gloves",
     "dustValIlvl84": 30740,
-    "dustValIlvl84Q20": 36888
+    "dustValIlvl84Q20": 36888,
+    "slots": 4
   },
   {
     "name": "Crown of Eyes",
     "baseType": "Hubris Circlet",
     "dustValIlvl84": 29860,
-    "dustValIlvl84Q20": 35832
+    "dustValIlvl84Q20": 35832,
+    "slots": 4
   },
   {
     "name": "Ylfeban's Trickery",
     "baseType": "Hubris Circlet",
     "dustValIlvl84": 29860,
-    "dustValIlvl84Q20": 35832
+    "dustValIlvl84Q20": 35832,
+    "slots": 4
   },
   {
     "name": "Voidwalker",
     "baseType": "Murder Boots",
     "dustValIlvl84": 29860,
-    "dustValIlvl84Q20": 35832
+    "dustValIlvl84Q20": 35832,
+    "slots": 4
   },
   {
     "name": "Bubonic Trail",
     "baseType": "Murder Boots",
     "dustValIlvl84": 29860,
-    "dustValIlvl84Q20": 35832
+    "dustValIlvl84Q20": 35832,
+    "slots": 4
   },
   {
     "name": "Craiceann's Pincers",
     "baseType": "Titan Gauntlets",
     "dustValIlvl84": 29860,
-    "dustValIlvl84Q20": 35832
+    "dustValIlvl84Q20": 35832,
+    "slots": 4
   },
   {
     "name": "Usurper's Penance",
     "baseType": "Eternal Burgonet",
     "dustValIlvl84": 29860,
-    "dustValIlvl84Q20": 35832
+    "dustValIlvl84Q20": 35832,
+    "slots": 4
   },
   {
     "name": "Replica Voidwalker",
     "baseType": "Murder Boots",
     "dustValIlvl84": 29860,
-    "dustValIlvl84Q20": 35832
+    "dustValIlvl84Q20": 35832,
+    "slots": 4
   },
   {
     "name": "Vorana's March",
     "baseType": "Runic Sabatons",
     "dustValIlvl84": 29860,
-    "dustValIlvl84Q20": 35832
+    "dustValIlvl84Q20": 35832,
+    "slots": 4
   },
   {
     "name": "Kaom's Spirit",
     "baseType": "Titan Gauntlets",
     "dustValIlvl84": 29860,
-    "dustValIlvl84Q20": 35832
+    "dustValIlvl84Q20": 35832,
+    "slots": 4
   },
   {
     "name": "The Shattered Divinity",
     "baseType": "Blunt Arrow Quiver",
     "dustValIlvl84": 29120,
-    "dustValIlvl84Q20": 34944
+    "dustValIlvl84Q20": 34944,
+    "slots": 6
   },
   {
     "name": "Mon'tregul's Grasp",
     "baseType": "Void Sceptre",
     "dustValIlvl84": 28980,
-    "dustValIlvl84Q20": 34776
+    "dustValIlvl84Q20": 34776,
+    "slots": 6
   },
   {
     "name": "Pledge of Hands",
     "baseType": "Judgement Staff",
     "dustValIlvl84": 28980,
-    "dustValIlvl84Q20": 34776
+    "dustValIlvl84Q20": 34776,
+    "slots": 8
   },
   {
     "name": "Kaom's Roots",
     "baseType": "Titan Greaves",
     "dustValIlvl84": 28980,
-    "dustValIlvl84Q20": 34776
+    "dustValIlvl84Q20": 34776,
+    "slots": 4
   },
   {
     "name": "Voll's Vision",
     "baseType": "Praetor Crown",
     "dustValIlvl84": 28980,
-    "dustValIlvl84Q20": 34776
+    "dustValIlvl84Q20": 34776,
+    "slots": 4
   },
   {
     "name": "Malachai's Vision",
     "baseType": "Praetor Crown",
     "dustValIlvl84": 28980,
-    "dustValIlvl84Q20": 34776
+    "dustValIlvl84Q20": 34776,
+    "slots": 4
   },
   {
     "name": "Cospri's Will",
     "baseType": "Assassin's Garb",
     "dustValIlvl84": 28980,
-    "dustValIlvl84Q20": 34776
+    "dustValIlvl84Q20": 34776,
+    "slots": 6
   },
   {
     "name": "Tinkerskin",
     "baseType": "Sadist Garb",
     "dustValIlvl84": 28980,
-    "dustValIlvl84Q20": 34776
+    "dustValIlvl84Q20": 34776,
+    "slots": 6
   },
   {
     "name": "Hand of Thought and Motion",
     "baseType": "Imperial Claw",
     "dustValIlvl84": 28980,
-    "dustValIlvl84Q20": 34776
+    "dustValIlvl84Q20": 34776,
+    "slots": 4
   },
   {
     "name": "The Infinite Pursuit",
     "baseType": "Titan Greaves",
     "dustValIlvl84": 28980,
-    "dustValIlvl84Q20": 34776
+    "dustValIlvl84Q20": 34776,
+    "slots": 4
   },
   {
     "name": "The Unshattered Will",
     "baseType": "Archon Kite Shield",
     "dustValIlvl84": 28980,
-    "dustValIlvl84Q20": 34776
+    "dustValIlvl84Q20": 34776,
+    "slots": 6
   },
   {
     "name": "Invictus Solaris",
     "baseType": "Archon Kite Shield",
     "dustValIlvl84": 28980,
-    "dustValIlvl84Q20": 34776
+    "dustValIlvl84Q20": 34776,
+    "slots": 6
   },
   {
     "name": "Cyclopean Coil",
     "baseType": "Leather Belt",
     "dustValIlvl84": 28980,
-    "dustValIlvl84Q20": 34776
+    "dustValIlvl84Q20": 34776,
+    "slots": 2
   },
   {
     "name": "Blasphemer's Grasp",
     "baseType": "Assassin's Mitts",
     "dustValIlvl84": 28980,
-    "dustValIlvl84Q20": 34776
+    "dustValIlvl84Q20": 34776,
+    "slots": 4
   },
   {
     "name": "The Grey Spire",
     "baseType": "Judgement Staff",
     "dustValIlvl84": 28980,
-    "dustValIlvl84Q20": 34776
+    "dustValIlvl84Q20": 34776,
+    "slots": 8
   },
   {
     "name": "Bitterbind Point",
     "baseType": "Titanium Spirit Shield",
     "dustValIlvl84": 28980,
-    "dustValIlvl84Q20": 34776
+    "dustValIlvl84Q20": 34776,
+    "slots": 4
   },
   {
     "name": "Nebulis",
     "baseType": "Void Sceptre",
     "dustValIlvl84": 28980,
-    "dustValIlvl84Q20": 34776
+    "dustValIlvl84Q20": 34776,
+    "slots": 6
   },
   {
     "name": "Atziri's Rule",
     "baseType": "Judgement Staff",
     "dustValIlvl84": 28980,
-    "dustValIlvl84Q20": 34776
+    "dustValIlvl84Q20": 34776,
+    "slots": 8
   },
   {
     "name": "Cadigan's Crown",
     "baseType": "Runic Crown",
     "dustValIlvl84": 28980,
-    "dustValIlvl84Q20": 34776
+    "dustValIlvl84Q20": 34776,
+    "slots": 4
   },
   {
     "name": "The Taming",
     "baseType": "Prismatic Ring",
     "dustValIlvl84": 28280,
-    "dustValIlvl84Q20": 33936
+    "dustValIlvl84Q20": 33936,
+    "slots": 1
   },
   {
     "name": "The Bringer of Rain",
     "baseType": "Nightmare Bascinet",
     "dustValIlvl84": 28140,
-    "dustValIlvl84Q20": 33768
+    "dustValIlvl84Q20": 33768,
+    "slots": 4
   },
   {
     "name": "Replica Oro's Sacrifice",
     "baseType": "Infernal Sword",
     "dustValIlvl84": 28140,
-    "dustValIlvl84Q20": 33768
+    "dustValIlvl84Q20": 33768,
+    "slots": 8
   },
   {
     "name": "Dawnbreaker",
     "baseType": "Colossal Tower Shield",
     "dustValIlvl84": 28140,
-    "dustValIlvl84Q20": 33768
+    "dustValIlvl84Q20": 33768,
+    "slots": 8
   },
   {
     "name": "Dreamfeather",
     "baseType": "Eternal Sword",
     "dustValIlvl84": 27320,
-    "dustValIlvl84Q20": 32784
+    "dustValIlvl84Q20": 32784,
+    "slots": 6
   },
   {
     "name": "Repentance",
     "baseType": "Crusader Gloves",
     "dustValIlvl84": 27320,
-    "dustValIlvl84Q20": 32784
+    "dustValIlvl84Q20": 32784,
+    "slots": 4
   },
   {
     "name": "Shaper's Touch",
     "baseType": "Crusader Gloves",
     "dustValIlvl84": 27320,
-    "dustValIlvl84Q20": 32784
+    "dustValIlvl84Q20": 32784,
+    "slots": 4
   },
   {
     "name": "The Enmity Divine",
     "baseType": "Imperial Staff",
     "dustValIlvl84": 27320,
-    "dustValIlvl84Q20": 32784
+    "dustValIlvl84Q20": 32784,
+    "slots": 8
   },
   {
     "name": "Vix Lunaris",
     "baseType": "Cardinal Round Shield",
     "dustValIlvl84": 27320,
-    "dustValIlvl84Q20": 32784
+    "dustValIlvl84Q20": 32784,
+    "slots": 6
   },
   {
     "name": "Voidfletcher",
     "baseType": "Primal Arrow Quiver",
     "dustValIlvl84": 27320,
-    "dustValIlvl84Q20": 32784
+    "dustValIlvl84Q20": 32784,
+    "slots": 6
   },
   {
     "name": "Hands of the High Templar",
     "baseType": "Crusader Gloves",
     "dustValIlvl84": 27320,
-    "dustValIlvl84Q20": 32784
+    "dustValIlvl84Q20": 32784,
+    "slots": 4
   },
   {
     "name": "Font of Thunder",
     "baseType": "Mirrored Spiked Shield",
     "dustValIlvl84": 27320,
-    "dustValIlvl84Q20": 32784
+    "dustValIlvl84Q20": 32784,
+    "slots": 4
   },
   {
     "name": "Replica Dreamfeather",
     "baseType": "Eternal Sword",
     "dustValIlvl84": 27320,
-    "dustValIlvl84Q20": 32784
+    "dustValIlvl84Q20": 32784,
+    "slots": 6
   },
   {
     "name": "The Goddess Scorned",
     "baseType": "Elegant Sword",
     "dustValIlvl84": 26660,
-    "dustValIlvl84Q20": 31992
+    "dustValIlvl84Q20": 31992,
+    "slots": 6
   },
   {
     "name": "Rime Gaze",
     "baseType": "Mind Cage",
     "dustValIlvl84": 26520,
-    "dustValIlvl84Q20": 31824
+    "dustValIlvl84Q20": 31824,
+    "slots": 4
   },
   {
     "name": "Infernal Mantle",
     "baseType": "Widowsilk Robe",
     "dustValIlvl84": 26520,
-    "dustValIlvl84Q20": 31824
+    "dustValIlvl84Q20": 31824,
+    "slots": 6
   },
   {
     "name": "Ming's Heart",
     "baseType": "Amethyst Ring",
     "dustValIlvl84": 26520,
-    "dustValIlvl84Q20": 31824
+    "dustValIlvl84Q20": 31824,
+    "slots": 1
   },
   {
     "name": "Jack, the Axe",
     "baseType": "Vaal Hatchet",
     "dustValIlvl84": 26520,
-    "dustValIlvl84Q20": 31824
+    "dustValIlvl84Q20": 31824,
+    "slots": 6
   },
   {
     "name": "Doomsower",
     "baseType": "Lion Sword",
     "dustValIlvl84": 26520,
-    "dustValIlvl84Q20": 31824
+    "dustValIlvl84Q20": 31824,
+    "slots": 8
   },
   {
     "name": "Scold's Bridle",
     "baseType": "Mind Cage",
     "dustValIlvl84": 26520,
-    "dustValIlvl84Q20": 31824
+    "dustValIlvl84Q20": 31824,
+    "slots": 4
   },
   {
     "name": "The Formless Flame",
     "baseType": "Royal Burgonet",
     "dustValIlvl84": 26520,
-    "dustValIlvl84Q20": 31824
+    "dustValIlvl84Q20": 31824,
+    "slots": 4
   },
   {
     "name": "The Snowblind Grace",
     "baseType": "Zodiac Leather",
     "dustValIlvl84": 26520,
-    "dustValIlvl84Q20": 31824
+    "dustValIlvl84Q20": 31824,
+    "slots": 6
   },
   {
     "name": "Saqawal's Nest",
     "baseType": "Blood Raiment",
     "dustValIlvl84": 26520,
-    "dustValIlvl84Q20": 31824
+    "dustValIlvl84Q20": 31824,
+    "slots": 6
   },
   {
     "name": "Fenumus' Shroud",
     "baseType": "Widowsilk Robe",
     "dustValIlvl84": 26520,
-    "dustValIlvl84Q20": 31824
+    "dustValIlvl84Q20": 31824,
+    "slots": 6
   },
   {
     "name": "Hale Negator",
     "baseType": "Mind Cage",
     "dustValIlvl84": 26520,
-    "dustValIlvl84Q20": 31824
+    "dustValIlvl84Q20": 31824,
+    "slots": 4
   },
   {
     "name": "Echoes of Creation",
     "baseType": "Royal Burgonet",
     "dustValIlvl84": 26520,
-    "dustValIlvl84Q20": 31824
+    "dustValIlvl84Q20": 31824,
+    "slots": 4
   },
   {
     "name": "Taryn's Shiver",
     "baseType": "Maelström Staff",
     "dustValIlvl84": 25760,
-    "dustValIlvl84Q20": 30912
+    "dustValIlvl84Q20": 30912,
+    "slots": 8
   },
   {
     "name": "Alpha's Howl",
     "baseType": "Sinner Tricorne",
     "dustValIlvl84": 25760,
-    "dustValIlvl84Q20": 30912
+    "dustValIlvl84Q20": 30912,
+    "slots": 4
   },
   {
     "name": "Rebuke of the Vaal",
     "baseType": "Vaal Blade",
     "dustValIlvl84": 25760,
-    "dustValIlvl84Q20": 30912
+    "dustValIlvl84Q20": 30912,
+    "slots": 6
   },
   {
     "name": "Hezmana's Bloodlust",
     "baseType": "Vaal Axe",
     "dustValIlvl84": 25760,
-    "dustValIlvl84Q20": 30912
+    "dustValIlvl84Q20": 30912,
+    "slots": 8
   },
   {
     "name": "Reach of the Council",
     "baseType": "Spine Bow",
     "dustValIlvl84": 25760,
-    "dustValIlvl84Q20": 30912
+    "dustValIlvl84Q20": 30912,
+    "slots": 8
   },
   {
     "name": "Uul-Netol's Kiss",
     "baseType": "Vaal Axe",
     "dustValIlvl84": 25760,
-    "dustValIlvl84Q20": 30912
+    "dustValIlvl84Q20": 30912,
+    "slots": 8
   },
   {
     "name": "The Anticipation",
     "baseType": "Ezomyte Tower Shield",
     "dustValIlvl84": 25760,
-    "dustValIlvl84Q20": 30912
+    "dustValIlvl84Q20": 30912,
+    "slots": 8
   },
   {
     "name": "Replica Alpha's Howl",
     "baseType": "Sinner Tricorne",
     "dustValIlvl84": 25760,
-    "dustValIlvl84Q20": 30912
+    "dustValIlvl84Q20": 30912,
+    "slots": 4
   },
   {
     "name": "Daresso's Defiance",
     "baseType": "Full Dragonscale",
     "dustValIlvl84": 25000,
-    "dustValIlvl84Q20": 30000
+    "dustValIlvl84Q20": 30000,
+    "slots": 6
   },
   {
     "name": "Atziri's Acuity",
     "baseType": "Vaal Gauntlets",
     "dustValIlvl84": 25000,
-    "dustValIlvl84Q20": 30000
+    "dustValIlvl84Q20": 30000,
+    "slots": 4
   },
   {
     "name": "Fenumus' Spinnerets",
     "baseType": "Assassin's Boots",
     "dustValIlvl84": 25000,
-    "dustValIlvl84Q20": 30000
+    "dustValIlvl84Q20": 30000,
+    "slots": 4
   },
   {
     "name": "Crown of the Inward Eye",
     "baseType": "Prophet Crown",
     "dustValIlvl84": 25000,
-    "dustValIlvl84Q20": 30000
+    "dustValIlvl84Q20": 30000,
+    "slots": 4
   },
   {
     "name": "Astramentis",
     "baseType": "Onyx Amulet",
     "dustValIlvl84": 24400,
-    "dustValIlvl84Q20": 29280
+    "dustValIlvl84Q20": 29280,
+    "slots": 1
   },
   {
     "name": "Presence of Chayula",
     "baseType": "Onyx Amulet",
     "dustValIlvl84": 24400,
-    "dustValIlvl84Q20": 29280
+    "dustValIlvl84Q20": 29280,
+    "slots": 1
   },
   {
     "name": "Aul's Uprising",
     "baseType": "Onyx Amulet",
     "dustValIlvl84": 24400,
-    "dustValIlvl84Q20": 29280
+    "dustValIlvl84Q20": 29280,
+    "slots": 1
   },
   {
     "name": "Solstice Vigil",
     "baseType": "Onyx Amulet",
     "dustValIlvl84": 24400,
-    "dustValIlvl84Q20": 29280
+    "dustValIlvl84Q20": 29280,
+    "slots": 1
   },
   {
     "name": "Leadership's Price",
     "baseType": "Onyx Amulet",
     "dustValIlvl84": 24400,
-    "dustValIlvl84Q20": 29280
+    "dustValIlvl84Q20": 29280,
+    "slots": 1
   },
   {
     "name": "Crystallised Omniscience",
     "baseType": "Onyx Amulet",
     "dustValIlvl84": 24400,
-    "dustValIlvl84Q20": 29280
+    "dustValIlvl84Q20": 29280,
+    "slots": 1
   },
   {
     "name": "Ashes of the Stars",
     "baseType": "Onyx Amulet",
     "dustValIlvl84": 24400,
-    "dustValIlvl84Q20": 29280
+    "dustValIlvl84Q20": 29280,
+    "slots": 1
   },
   {
     "name": "Stormfire",
     "baseType": "Opal Ring",
     "dustValIlvl84": 24340,
-    "dustValIlvl84Q20": 29208
+    "dustValIlvl84Q20": 29208,
+    "slots": 1
   },
   {
     "name": "The Searing Touch",
     "baseType": "Lathi",
     "dustValIlvl84": 24280,
-    "dustValIlvl84Q20": 29136
+    "dustValIlvl84Q20": 29136,
+    "slots": 8
   },
   {
     "name": "Carcass Jack",
     "baseType": "Varnished Coat",
     "dustValIlvl84": 24280,
-    "dustValIlvl84Q20": 29136
+    "dustValIlvl84Q20": 29136,
+    "slots": 6
   },
   {
     "name": "Death's Oath",
     "baseType": "Astral Plate",
     "dustValIlvl84": 24280,
-    "dustValIlvl84Q20": 29136
+    "dustValIlvl84Q20": 29136,
+    "slots": 6
   },
   {
     "name": "The Vertex",
     "baseType": "Vaal Mask",
     "dustValIlvl84": 24280,
-    "dustValIlvl84Q20": 29136
+    "dustValIlvl84Q20": 29136,
+    "slots": 4
   },
   {
     "name": "Tulborn",
     "baseType": "Opal Wand",
     "dustValIlvl84": 24280,
-    "dustValIlvl84Q20": 29136
+    "dustValIlvl84Q20": 29136,
+    "slots": 3
   },
   {
     "name": "Esh's Mirror",
     "baseType": "Vaal Spirit Shield",
     "dustValIlvl84": 24280,
-    "dustValIlvl84Q20": 29136
+    "dustValIlvl84Q20": 29136,
+    "slots": 4
   },
   {
     "name": "Yriel's Fostering",
     "baseType": "Exquisite Leather",
     "dustValIlvl84": 24280,
-    "dustValIlvl84Q20": 29136
+    "dustValIlvl84Q20": 29136,
+    "slots": 6
   },
   {
     "name": "The Rippling Thoughts",
     "baseType": "Legion Sword",
     "dustValIlvl84": 24280,
-    "dustValIlvl84Q20": 29136
+    "dustValIlvl84Q20": 29136,
+    "slots": 6
   },
   {
     "name": "Perepiteia",
     "baseType": "Ezomyte Spiked Shield",
     "dustValIlvl84": 24280,
-    "dustValIlvl84Q20": 29136
+    "dustValIlvl84Q20": 29136,
+    "slots": 4
   },
   {
     "name": "Fractal Thoughts",
     "baseType": "Vaal Mask",
     "dustValIlvl84": 24280,
-    "dustValIlvl84Q20": 29136
+    "dustValIlvl84Q20": 29136,
+    "slots": 4
   },
   {
     "name": "Cold Iron Point",
     "baseType": "Ezomyte Dagger",
     "dustValIlvl84": 24280,
-    "dustValIlvl84Q20": 29136
+    "dustValIlvl84Q20": 29136,
+    "slots": 3
   },
   {
     "name": "Law of the Wilds",
     "baseType": "Hellion's Paw",
     "dustValIlvl84": 24280,
-    "dustValIlvl84Q20": 29136
+    "dustValIlvl84Q20": 29136,
+    "slots": 4
   },
   {
     "name": "Blunderbore",
     "baseType": "Astral Plate",
     "dustValIlvl84": 24280,
-    "dustValIlvl84Q20": 29136
+    "dustValIlvl84Q20": 29136,
+    "slots": 6
   },
   {
     "name": "Replica Wings of Entropy",
     "baseType": "Ezomyte Axe",
     "dustValIlvl84": 24280,
-    "dustValIlvl84Q20": 29136
+    "dustValIlvl84Q20": 29136,
+    "slots": 8
   },
   {
     "name": "Glimpse of Chaos",
     "baseType": "Vaal Mask",
     "dustValIlvl84": 24280,
-    "dustValIlvl84Q20": 29136
+    "dustValIlvl84Q20": 29136,
+    "slots": 4
   },
   {
     "name": "Dawnstrider",
     "baseType": "Vaal Greaves",
     "dustValIlvl84": 24280,
-    "dustValIlvl84Q20": 29136
+    "dustValIlvl84Q20": 29136,
+    "slots": 4
   },
   {
     "name": "Rigwald's Savagery",
     "baseType": "Royal Axe",
     "dustValIlvl84": 23640,
-    "dustValIlvl84Q20": 28368
+    "dustValIlvl84Q20": 28368,
+    "slots": 6
   },
   {
     "name": "Rigwald's Command",
     "baseType": "Midnight Blade",
     "dustValIlvl84": 23640,
-    "dustValIlvl84Q20": 28368
+    "dustValIlvl84Q20": 28368,
+    "slots": 6
   },
   {
     "name": "Slivertongue",
     "baseType": "Harbinger Bow",
     "dustValIlvl84": 23640,
-    "dustValIlvl84Q20": 28368
+    "dustValIlvl84Q20": 28368,
+    "slots": 8
   },
   {
     "name": "Obscurantis",
     "baseType": "Lion Pelt",
     "dustValIlvl84": 23640,
-    "dustValIlvl84Q20": 28368
+    "dustValIlvl84Q20": 28368,
+    "slots": 4
   },
   {
     "name": "Inya's Epiphany",
     "baseType": "Arcanist Slippers",
     "dustValIlvl84": 23560,
-    "dustValIlvl84Q20": 28272
+    "dustValIlvl84Q20": 28272,
+    "slots": 4
   },
   {
     "name": "Replica Inya's Epiphany",
     "baseType": "Arcanist Slippers",
     "dustValIlvl84": 23560,
-    "dustValIlvl84Q20": 28272
+    "dustValIlvl84Q20": 28272,
+    "slots": 4
   },
   {
     "name": "Abyssus",
     "baseType": "Ezomyte Burgonet",
     "dustValIlvl84": 22880,
-    "dustValIlvl84Q20": 27456
+    "dustValIlvl84Q20": 27456,
+    "slots": 4
   },
   {
     "name": "Lightning Coil",
     "baseType": "Desert Brigandine",
     "dustValIlvl84": 22880,
-    "dustValIlvl84Q20": 27456
+    "dustValIlvl84Q20": 27456,
+    "slots": 6
   },
   {
     "name": "Null's Inclination",
     "baseType": "Ranger Bow",
     "dustValIlvl84": 22880,
-    "dustValIlvl84Q20": 27456
+    "dustValIlvl84Q20": 27456,
+    "slots": 8
   },
   {
     "name": "Dyadian Dawn",
     "baseType": "Heavy Belt",
     "dustValIlvl84": 22880,
-    "dustValIlvl84Q20": 27456
+    "dustValIlvl84Q20": 27456,
+    "slots": 2
   },
   {
     "name": "Rigwald's Curse",
     "baseType": "Wereclaw Talisman",
     "dustValIlvl84": 22880,
-    "dustValIlvl84Q20": 27456
+    "dustValIlvl84Q20": 27456,
+    "slots": 1
   },
   {
     "name": "Grip of the Council",
     "baseType": "Arcanist Gloves",
     "dustValIlvl84": 22880,
-    "dustValIlvl84Q20": 27456
+    "dustValIlvl84Q20": 27456,
+    "slots": 4
   },
   {
     "name": "Saqawal's Flock",
     "baseType": "Silken Hood",
     "dustValIlvl84": 22880,
-    "dustValIlvl84Q20": 27456
+    "dustValIlvl84Q20": 27456,
+    "slots": 4
   },
   {
     "name": "The Iron Mass",
     "baseType": "Gladius",
     "dustValIlvl84": 22880,
-    "dustValIlvl84Q20": 27456
+    "dustValIlvl84Q20": 27456,
+    "slots": 6
   },
   {
     "name": "The Hidden Blade",
     "baseType": "Ambusher",
     "dustValIlvl84": 22880,
-    "dustValIlvl84Q20": 27456
+    "dustValIlvl84Q20": 27456,
+    "slots": 3
   },
   {
     "name": "The Fulcrum",
     "baseType": "Ezomyte Staff",
     "dustValIlvl84": 22880,
-    "dustValIlvl84Q20": 27456
+    "dustValIlvl84Q20": 27456,
+    "slots": 8
   },
   {
     "name": "Replica Grip of the Council",
     "baseType": "Arcanist Gloves",
     "dustValIlvl84": 22880,
-    "dustValIlvl84Q20": 27456
+    "dustValIlvl84Q20": 27456,
+    "slots": 4
   },
   {
     "name": "Cameria's Avarice",
     "baseType": "Gavel",
     "dustValIlvl84": 22880,
-    "dustValIlvl84Q20": 27456
+    "dustValIlvl84Q20": 27456,
+    "slots": 6
   },
   {
     "name": "Contract: The Twins",
     "baseType": "Vengeful Contract",
     "dustValIlvl84": 22580,
-    "dustValIlvl84Q20": 27096
+    "dustValIlvl84Q20": 27096,
+    "slots": 1
   },
   {
     "name": "Algor Mortis",
     "baseType": "Carnal Mitts",
     "dustValIlvl84": 22280,
-    "dustValIlvl84Q20": 26736
+    "dustValIlvl84Q20": 26736,
+    "slots": 4
   },
   {
     "name": "Saffell's Frame",
     "baseType": "Branded Kite Shield",
     "dustValIlvl84": 22220,
-    "dustValIlvl84Q20": 26664
+    "dustValIlvl84Q20": 26664,
+    "slots": 6
   },
   {
     "name": "Queen of the Forest",
     "baseType": "Destiny Leather",
     "dustValIlvl84": 22220,
-    "dustValIlvl84Q20": 26664
+    "dustValIlvl84Q20": 26664,
+    "slots": 6
   },
   {
     "name": "Saqawal's Talons",
     "baseType": "Hydrascale Boots",
     "dustValIlvl84": 22220,
-    "dustValIlvl84Q20": 26664
+    "dustValIlvl84Q20": 26664,
+    "slots": 4
   },
   {
     "name": "Breathstealer",
     "baseType": "Hydrascale Gauntlets",
     "dustValIlvl84": 22220,
-    "dustValIlvl84Q20": 26664
+    "dustValIlvl84Q20": 26664,
+    "slots": 4
   },
   {
     "name": "Expedition's End",
     "baseType": "Sentinel Jacket",
     "dustValIlvl84": 22220,
-    "dustValIlvl84Q20": 26664
+    "dustValIlvl84Q20": 26664,
+    "slots": 6
   },
   {
     "name": "Wilma's Requital",
     "baseType": "Solaris Circlet",
     "dustValIlvl84": 22220,
-    "dustValIlvl84Q20": 26664
+    "dustValIlvl84Q20": 26664,
+    "slots": 4
   },
   {
     "name": "Gamblesprint",
     "baseType": "Hydrascale Boots",
     "dustValIlvl84": 22220,
-    "dustValIlvl84Q20": 26664
+    "dustValIlvl84Q20": 26664,
+    "slots": 4
   },
   {
     "name": "First Piece of Focus",
     "baseType": "Archon Kite Shield Piece",
     "dustValIlvl84": 21920,
-    "dustValIlvl84Q20": 26304
+    "dustValIlvl84Q20": 26304,
+    "slots": 2
   },
   {
     "name": "Second Piece of Focus",
     "baseType": "Archon Kite Shield Piece",
     "dustValIlvl84": 21920,
-    "dustValIlvl84Q20": 26304
+    "dustValIlvl84Q20": 26304,
+    "slots": 2
   },
   {
     "name": "Third Piece of Focus",
     "baseType": "Archon Kite Shield Piece",
     "dustValIlvl84": 21920,
-    "dustValIlvl84Q20": 26304
+    "dustValIlvl84Q20": 26304,
+    "slots": 1
   },
   {
     "name": "Fourth Piece of Focus",
     "baseType": "Archon Kite Shield Piece",
     "dustValIlvl84": 21920,
-    "dustValIlvl84Q20": 26304
+    "dustValIlvl84Q20": 26304,
+    "slots": 1
   },
   {
     "name": "First Piece of Storms",
     "baseType": "Callous Mask Piece",
     "dustValIlvl84": 21920,
-    "dustValIlvl84Q20": 26304
+    "dustValIlvl84Q20": 26304,
+    "slots": 1
   },
   {
     "name": "Second Piece of Storms",
     "baseType": "Callous Mask Piece",
     "dustValIlvl84": 21920,
-    "dustValIlvl84Q20": 26304
+    "dustValIlvl84Q20": 26304,
+    "slots": 1
   },
   {
     "name": "Third Piece of Storms",
     "baseType": "Callous Mask Piece",
     "dustValIlvl84": 21920,
-    "dustValIlvl84Q20": 26304
+    "dustValIlvl84Q20": 26304,
+    "slots": 2
   },
   {
     "name": "Contract: Death to Darnaw",
     "baseType": "Naval Contract",
     "dustValIlvl84": 21920,
-    "dustValIlvl84Q20": 26304
+    "dustValIlvl84Q20": 26304,
+    "slots": 1
   },
   {
     "name": "Unyielding Flame",
     "baseType": "Archon Kite Shield",
     "dustValIlvl84": 21640,
-    "dustValIlvl84Q20": 25968
+    "dustValIlvl84Q20": 25968,
+    "slots": 6
   },
   {
     "name": "Xoph's Inception",
     "baseType": "Citadel Bow",
     "dustValIlvl84": 21560,
-    "dustValIlvl84Q20": 25872
+    "dustValIlvl84Q20": 25872,
+    "slots": 8
   },
   {
     "name": "Craiceann's Chitin",
     "baseType": "Magistrate Crown",
     "dustValIlvl84": 21560,
-    "dustValIlvl84Q20": 25872
+    "dustValIlvl84Q20": 25872,
+    "slots": 4
   },
   {
     "name": "Mask of the Stitched Demon",
     "baseType": "Magistrate Crown",
     "dustValIlvl84": 21560,
-    "dustValIlvl84Q20": 25872
+    "dustValIlvl84Q20": 25872,
+    "slots": 4
   },
   {
     "name": "Storm's Gift",
     "baseType": "Assassin's Mitts",
     "dustValIlvl84": 21560,
-    "dustValIlvl84Q20": 25872
+    "dustValIlvl84Q20": 25872,
+    "slots": 4
   },
   {
     "name": "Mask of the Tribunal",
     "baseType": "Magistrate Crown",
     "dustValIlvl84": 21560,
-    "dustValIlvl84Q20": 25872
+    "dustValIlvl84Q20": 25872,
+    "slots": 4
   },
   {
     "name": "Contract: Heart of Glory",
     "baseType": "Familial Contract",
     "dustValIlvl84": 21280,
-    "dustValIlvl84Q20": 25536
+    "dustValIlvl84Q20": 25536,
+    "slots": 1
   },
   {
     "name": "The Magnate",
     "baseType": "Studded Belt",
     "dustValIlvl84": 21040,
-    "dustValIlvl84Q20": 25248
+    "dustValIlvl84Q20": 25248,
+    "slots": 2
   },
   {
     "name": "The Torrent's Reclamation",
     "baseType": "Cloth Belt",
     "dustValIlvl84": 21040,
-    "dustValIlvl84Q20": 25248
+    "dustValIlvl84Q20": 25248,
+    "slots": 2
   },
   {
     "name": "Replica Soul Tether",
     "baseType": "Cloth Belt",
     "dustValIlvl84": 21040,
-    "dustValIlvl84Q20": 25248
+    "dustValIlvl84Q20": 25248,
+    "slots": 2
   },
   {
     "name": "Replica Ungil's Gauche",
     "baseType": "Boot Knife",
     "dustValIlvl84": 21040,
-    "dustValIlvl84Q20": 25248
+    "dustValIlvl84Q20": 25248,
+    "slots": 3
   },
   {
     "name": "Replica Badge of the Brotherhood",
     "baseType": "Turquoise Amulet",
     "dustValIlvl84": 21040,
-    "dustValIlvl84Q20": 25248
+    "dustValIlvl84Q20": 25248,
+    "slots": 1
   },
   {
     "name": "Perseverance",
     "baseType": "Vanguard Belt",
     "dustValIlvl84": 21000,
-    "dustValIlvl84Q20": 25200
+    "dustValIlvl84Q20": 25200,
+    "slots": 2
   },
   {
     "name": "The Black Cane",
     "baseType": "Royal Sceptre",
     "dustValIlvl84": 21000,
-    "dustValIlvl84Q20": 25200
+    "dustValIlvl84Q20": 25200,
+    "slots": 6
   },
   {
     "name": "Willowgift",
     "baseType": "Jade Amulet",
     "dustValIlvl84": 21000,
-    "dustValIlvl84Q20": 25200
+    "dustValIlvl84Q20": 25200,
+    "slots": 1
   },
   {
     "name": "Eye of Malice",
     "baseType": "Callous Mask",
     "dustValIlvl84": 21000,
-    "dustValIlvl84Q20": 25200
+    "dustValIlvl84Q20": 25200,
+    "slots": 4
   },
   {
     "name": "Ancient Skull",
     "baseType": "Bone Helmet",
     "dustValIlvl84": 21000,
-    "dustValIlvl84Q20": 25200
+    "dustValIlvl84Q20": 25200,
+    "slots": 4
   },
   {
     "name": "Mind of the Council",
     "baseType": "Harlequin Mask",
     "dustValIlvl84": 20940,
-    "dustValIlvl84Q20": 25128
+    "dustValIlvl84Q20": 25128,
+    "slots": 4
   },
   {
     "name": "The Crimson Storm",
     "baseType": "Steelwood Bow",
     "dustValIlvl84": 20940,
-    "dustValIlvl84Q20": 25128
+    "dustValIlvl84Q20": 25128,
+    "slots": 8
   },
   {
     "name": "Kaom's Binding",
     "baseType": "Heavy Belt",
     "dustValIlvl84": 20940,
-    "dustValIlvl84Q20": 25128
+    "dustValIlvl84Q20": 25128,
+    "slots": 2
   },
   {
     "name": "Contract: Breaking the Unbreakable",
     "baseType": "Preventative Contract",
     "dustValIlvl84": 20660,
-    "dustValIlvl84Q20": 24792
+    "dustValIlvl84Q20": 24792,
+    "slots": 1
   },
   {
     "name": "Contract: The Slaver King",
     "baseType": "Vigilante Contract",
     "dustValIlvl84": 20660,
-    "dustValIlvl84Q20": 24792
+    "dustValIlvl84Q20": 24792,
+    "slots": 1
   },
   {
     "name": "The Rat Cage",
     "baseType": "Sharkskin Tunic",
     "dustValIlvl84": 20320,
-    "dustValIlvl84Q20": 24384
+    "dustValIlvl84Q20": 24384,
+    "slots": 6
   },
   {
     "name": "Craiceann's Carapace",
     "baseType": "Golden Plate",
     "dustValIlvl84": 20320,
-    "dustValIlvl84Q20": 24384
+    "dustValIlvl84Q20": 24384,
+    "slots": 6
   },
   {
     "name": "Fate of the Vaal",
     "baseType": "Gemstone Sword",
     "dustValIlvl84": 20320,
-    "dustValIlvl84Q20": 24384
+    "dustValIlvl84Q20": 24384,
+    "slots": 3
   },
   {
     "name": "Replica Dragonfang's Flight",
     "baseType": "Onyx Amulet",
     "dustValIlvl84": 20320,
-    "dustValIlvl84Q20": 24384
+    "dustValIlvl84Q20": 24384,
+    "slots": 1
   },
   {
     "name": "Lioneye's Vision",
     "baseType": "Crusader Plate",
     "dustValIlvl84": 19800,
-    "dustValIlvl84Q20": 23760
+    "dustValIlvl84Q20": 23760,
+    "slots": 6
   },
   {
     "name": "Brinerot Mark",
     "baseType": "Unset Ring",
     "dustValIlvl84": 19740,
-    "dustValIlvl84Q20": 23688
+    "dustValIlvl84Q20": 23688,
+    "slots": 1
   },
   {
     "name": "Redblade Band",
     "baseType": "Unset Ring",
     "dustValIlvl84": 19740,
-    "dustValIlvl84Q20": 23688
+    "dustValIlvl84Q20": 23688,
+    "slots": 1
   },
   {
     "name": "Mutewind Seal",
     "baseType": "Unset Ring",
     "dustValIlvl84": 19740,
-    "dustValIlvl84Q20": 23688
+    "dustValIlvl84Q20": 23688,
+    "slots": 1
   },
   {
     "name": "Ngamahu's Flame",
     "baseType": "Abyssal Axe",
     "dustValIlvl84": 19740,
-    "dustValIlvl84Q20": 23688
+    "dustValIlvl84Q20": 23688,
+    "slots": 8
   },
   {
     "name": "Omeyocan",
     "baseType": "Carnal Boots",
     "dustValIlvl84": 19740,
-    "dustValIlvl84Q20": 23688
+    "dustValIlvl84Q20": 23688,
+    "slots": 4
   },
   {
     "name": "Tavukai",
     "baseType": "Coral Amulet",
     "dustValIlvl84": 19740,
-    "dustValIlvl84Q20": 23688
+    "dustValIlvl84Q20": 23688,
+    "slots": 1
   },
   {
     "name": "Replica Three-step Assault",
     "baseType": "Shagreen Boots",
     "dustValIlvl84": 19740,
-    "dustValIlvl84Q20": 23688
+    "dustValIlvl84Q20": 23688,
+    "slots": 4
   },
   {
     "name": "Temptation Step",
     "baseType": "Shagreen Boots",
     "dustValIlvl84": 19740,
-    "dustValIlvl84Q20": 23688
+    "dustValIlvl84Q20": 23688,
+    "slots": 4
   },
   {
     "name": "Great Old One's Tentacles",
     "baseType": "Eelskin Gloves",
     "dustValIlvl84": 19220,
-    "dustValIlvl84Q20": 23064
+    "dustValIlvl84Q20": 23064,
+    "slots": 4
   },
   {
     "name": "Ceaseless Feast",
     "baseType": "Spiked Gloves",
     "dustValIlvl84": 19220,
-    "dustValIlvl84Q20": 23064
+    "dustValIlvl84Q20": 23064,
+    "slots": 4
   },
   {
     "name": "Inextricable Fate",
     "baseType": "Fugitive Boots",
     "dustValIlvl84": 19220,
-    "dustValIlvl84Q20": 23064
+    "dustValIlvl84Q20": 23064,
+    "slots": 4
   },
   {
     "name": "Chitus' Apex",
     "baseType": "Necromancer Circlet",
     "dustValIlvl84": 19160,
-    "dustValIlvl84Q20": 22992
+    "dustValIlvl84Q20": 22992,
+    "slots": 4
   },
   {
     "name": "Daresso's Courage",
     "baseType": "Baroque Round Shield",
     "dustValIlvl84": 19160,
-    "dustValIlvl84Q20": 22992
+    "dustValIlvl84Q20": 22992,
+    "slots": 6
   },
   {
     "name": "Craiceann's Tracks",
     "baseType": "Goliath Greaves",
     "dustValIlvl84": 19160,
-    "dustValIlvl84Q20": 22992
+    "dustValIlvl84Q20": 22992,
+    "slots": 4
   },
   {
     "name": "Fenumus' Toxins",
     "baseType": "Necromancer Circlet",
     "dustValIlvl84": 19160,
-    "dustValIlvl84Q20": 22992
+    "dustValIlvl84Q20": 22992,
+    "slots": 4
   },
   {
     "name": "Eye of Innocence",
     "baseType": "Citrine Amulet",
     "dustValIlvl84": 18900,
-    "dustValIlvl84Q20": 22680
+    "dustValIlvl84Q20": 22680,
+    "slots": 1
   },
   {
     "name": "First Piece of Brutality",
     "baseType": "Imperial Staff Piece",
     "dustValIlvl84": 18900,
-    "dustValIlvl84Q20": 22680
+    "dustValIlvl84Q20": 22680,
+    "slots": 2
   },
   {
     "name": "Second Piece of Brutality",
     "baseType": "Imperial Staff Piece",
     "dustValIlvl84": 18900,
-    "dustValIlvl84Q20": 22680
+    "dustValIlvl84Q20": 22680,
+    "slots": 2
   },
   {
     "name": "Third Piece of Brutality",
     "baseType": "Imperial Staff Piece",
     "dustValIlvl84": 18900,
-    "dustValIlvl84Q20": 22680
+    "dustValIlvl84Q20": 22680,
+    "slots": 4
   },
   {
     "name": "First Piece of Directions",
     "baseType": "Blunt Arrow Quiver Piece",
     "dustValIlvl84": 18900,
-    "dustValIlvl84Q20": 22680
+    "dustValIlvl84Q20": 22680,
+    "slots": 2
   },
   {
     "name": "Second Piece of Directions",
     "baseType": "Blunt Arrow Quiver Piece",
     "dustValIlvl84": 18900,
-    "dustValIlvl84Q20": 22680
+    "dustValIlvl84Q20": 22680,
+    "slots": 2
   },
   {
     "name": "Third Piece of Directions",
     "baseType": "Blunt Arrow Quiver Piece",
     "dustValIlvl84": 18900,
-    "dustValIlvl84Q20": 22680
+    "dustValIlvl84Q20": 22680,
+    "slots": 2
   },
   {
     "name": "Leper's Alms",
     "baseType": "Mirrored Spiked Shield",
     "dustValIlvl84": 18900,
-    "dustValIlvl84Q20": 22680
+    "dustValIlvl84Q20": 22680,
+    "slots": 4
   },
   {
     "name": "Atziri's Foible",
     "baseType": "Paua Amulet",
     "dustValIlvl84": 18700,
-    "dustValIlvl84Q20": 22440
+    "dustValIlvl84Q20": 22440,
+    "slots": 1
   },
   {
     "name": "Ahkeli's Meadow",
     "baseType": "Ruby Ring",
     "dustValIlvl84": 18700,
-    "dustValIlvl84Q20": 22440
+    "dustValIlvl84Q20": 22440,
+    "slots": 1
   },
   {
     "name": "Replica Emberwake",
     "baseType": "Ruby Ring",
     "dustValIlvl84": 18700,
-    "dustValIlvl84Q20": 22440
+    "dustValIlvl84Q20": 22440,
+    "slots": 1
   },
   {
     "name": "Dyadus",
     "baseType": "Infernal Axe",
     "dustValIlvl84": 18660,
-    "dustValIlvl84Q20": 22392
+    "dustValIlvl84Q20": 22392,
+    "slots": 6
   },
   {
     "name": "Atziri's Step",
     "baseType": "Slink Boots",
     "dustValIlvl84": 18660,
-    "dustValIlvl84Q20": 22392
+    "dustValIlvl84Q20": 22392,
+    "slots": 4
   },
   {
     "name": "Cherrubim's Maleficence",
     "baseType": "Triumphant Lamellar",
     "dustValIlvl84": 18660,
-    "dustValIlvl84Q20": 22392
+    "dustValIlvl84Q20": 22392,
+    "slots": 6
   },
   {
     "name": "Eber's Unification",
     "baseType": "Hubris Circlet",
     "dustValIlvl84": 18660,
-    "dustValIlvl84Q20": 22392
+    "dustValIlvl84Q20": 22392,
+    "slots": 4
   },
   {
     "name": "Medved's Challenge",
     "baseType": "Runic Gauntlets",
     "dustValIlvl84": 18660,
-    "dustValIlvl84Q20": 22392
+    "dustValIlvl84Q20": 22392,
+    "slots": 4
   },
   {
     "name": "Rainbowstride",
     "baseType": "Conjurer Boots",
     "dustValIlvl84": 18600,
-    "dustValIlvl84Q20": 22320
+    "dustValIlvl84Q20": 22320,
+    "slots": 4
   },
   {
     "name": "Apep's Rage",
     "baseType": "Omen Wand",
     "dustValIlvl84": 18600,
-    "dustValIlvl84Q20": 22320
+    "dustValIlvl84Q20": 22320,
+    "slots": 3
   },
   {
     "name": "Lightpoacher",
     "baseType": "Great Crown",
     "dustValIlvl84": 18600,
-    "dustValIlvl84Q20": 22320
+    "dustValIlvl84Q20": 22320,
+    "slots": 4
   },
   {
     "name": "Forbidden Shako",
     "baseType": "Great Crown",
     "dustValIlvl84": 18600,
-    "dustValIlvl84Q20": 22320
+    "dustValIlvl84Q20": 22320,
+    "slots": 4
   },
   {
     "name": "Replica Infractem",
     "baseType": "Decimation Bow",
     "dustValIlvl84": 18600,
-    "dustValIlvl84Q20": 22320
+    "dustValIlvl84Q20": 22320,
+    "slots": 8
   },
   {
     "name": "The Beast Fur Shawl",
     "baseType": "Vaal Regalia",
     "dustValIlvl84": 18120,
-    "dustValIlvl84Q20": 21744
+    "dustValIlvl84Q20": 21744,
+    "slots": 6
   },
   {
     "name": "Touch of Anguish",
     "baseType": "Imperial Claw",
     "dustValIlvl84": 18120,
-    "dustValIlvl84Q20": 21744
+    "dustValIlvl84Q20": 21744,
+    "slots": 4
   },
   {
     "name": "Ahn's Contempt",
     "baseType": "Praetor Crown",
     "dustValIlvl84": 18120,
-    "dustValIlvl84Q20": 21744
+    "dustValIlvl84Q20": 21744,
+    "slots": 4
   },
   {
     "name": "Ahn's Might",
     "baseType": "Midnight Blade",
     "dustValIlvl84": 18120,
-    "dustValIlvl84Q20": 21744
+    "dustValIlvl84Q20": 21744,
+    "slots": 6
   },
   {
     "name": "Gorgon's Gaze",
     "baseType": "Regicide Mask",
     "dustValIlvl84": 18060,
-    "dustValIlvl84Q20": 21672
+    "dustValIlvl84Q20": 21672,
+    "slots": 4
   },
   {
     "name": "Profane Proxy",
     "baseType": "Unset Ring",
     "dustValIlvl84": 18060,
-    "dustValIlvl84Q20": 21672
+    "dustValIlvl84Q20": 21672,
+    "slots": 1
   },
   {
     "name": "Witchhunter's Judgment",
     "baseType": "Highborn Staff",
     "dustValIlvl84": 18060,
-    "dustValIlvl84Q20": 21672
+    "dustValIlvl84Q20": 21672,
+    "slots": 8
   },
   {
     "name": "Akoya's Gaze",
     "baseType": "Regicide Mask",
     "dustValIlvl84": 18060,
-    "dustValIlvl84Q20": 21672
+    "dustValIlvl84Q20": 21672,
+    "slots": 4
   },
   {
     "name": "The Ephemeral Bond",
     "baseType": "Lapis Amulet",
     "dustValIlvl84": 17820,
-    "dustValIlvl84Q20": 21384
+    "dustValIlvl84Q20": 21384,
+    "slots": 1
   },
   {
     "name": "Kongor's Undying Rage",
     "baseType": "Terror Maul",
     "dustValIlvl84": 17580,
-    "dustValIlvl84Q20": 21096
+    "dustValIlvl84Q20": 21096,
+    "slots": 8
   },
   {
     "name": "Ahn's Heritage",
     "baseType": "Colossal Tower Shield",
     "dustValIlvl84": 17580,
-    "dustValIlvl84Q20": 21096
+    "dustValIlvl84Q20": 21096,
+    "slots": 8
   },
   {
     "name": "Saqawal's Winds",
     "baseType": "Soldier Gloves",
     "dustValIlvl84": 17540,
-    "dustValIlvl84Q20": 21048
+    "dustValIlvl84Q20": 21048,
+    "slots": 4
   },
   {
     "name": "Legacy of Fury",
     "baseType": "Wyrmscale Boots",
     "dustValIlvl84": 17540,
-    "dustValIlvl84Q20": 21048
+    "dustValIlvl84Q20": 21048,
+    "slots": 4
   },
   {
     "name": "Devoto's Devotion",
     "baseType": "Nightmare Bascinet",
     "dustValIlvl84": 17300,
-    "dustValIlvl84Q20": 20760
+    "dustValIlvl84Q20": 20760,
+    "slots": 4
   },
   {
     "name": "Bloodgrip",
     "baseType": "Marble Amulet",
     "dustValIlvl84": 17300,
-    "dustValIlvl84Q20": 20760
+    "dustValIlvl84Q20": 20760,
+    "slots": 1
   },
   {
     "name": "Agnerod East",
     "baseType": "Imperial Staff",
     "dustValIlvl84": 17080,
-    "dustValIlvl84Q20": 20496
+    "dustValIlvl84Q20": 20496,
+    "slots": 8
   },
   {
     "name": "Agnerod North",
     "baseType": "Imperial Staff",
     "dustValIlvl84": 17080,
-    "dustValIlvl84Q20": 20496
+    "dustValIlvl84Q20": 20496,
+    "slots": 8
   },
   {
     "name": "Agnerod South",
     "baseType": "Imperial Staff",
     "dustValIlvl84": 17080,
-    "dustValIlvl84Q20": 20496
+    "dustValIlvl84Q20": 20496,
+    "slots": 8
   },
   {
     "name": "Agnerod West",
     "baseType": "Imperial Staff",
     "dustValIlvl84": 17080,
-    "dustValIlvl84Q20": 20496
+    "dustValIlvl84Q20": 20496,
+    "slots": 8
   },
   {
     "name": "Breath of the Council",
     "baseType": "Carnal Sceptre",
     "dustValIlvl84": 17080,
-    "dustValIlvl84Q20": 20496
+    "dustValIlvl84Q20": 20496,
+    "slots": 6
   },
   {
     "name": "The Poised Prism",
     "baseType": "Primal Arrow Quiver",
     "dustValIlvl84": 17080,
-    "dustValIlvl84Q20": 20496
+    "dustValIlvl84Q20": 20496,
+    "slots": 6
   },
   {
     "name": "Andvarius",
     "baseType": "Gold Ring",
     "dustValIlvl84": 17020,
-    "dustValIlvl84Q20": 20424
+    "dustValIlvl84Q20": 20424,
+    "slots": 1
   },
   {
     "name": "Star of Wraeclast",
     "baseType": "Ruby Amulet",
     "dustValIlvl84": 17020,
-    "dustValIlvl84Q20": 20424
+    "dustValIlvl84Q20": 20424,
+    "slots": 1
   },
   {
     "name": "Fenumus' Weave",
     "baseType": "Carnal Mitts",
     "dustValIlvl84": 17020,
-    "dustValIlvl84Q20": 20424
+    "dustValIlvl84Q20": 20424,
+    "slots": 4
   },
   {
     "name": "Replica Victario's Charity",
     "baseType": "Laminated Kite Shield",
     "dustValIlvl84": 17020,
-    "dustValIlvl84Q20": 20424
+    "dustValIlvl84Q20": 20424,
+    "slots": 6
   },
   {
     "name": "Replica Heartbreaker",
     "baseType": "Royal Skean",
     "dustValIlvl84": 17020,
-    "dustValIlvl84Q20": 20424
+    "dustValIlvl84Q20": 20424,
+    "slots": 3
   },
   {
     "name": "Worldcarver",
     "baseType": "Dragonscale Gauntlets",
     "dustValIlvl84": 16800,
-    "dustValIlvl84Q20": 20160
+    "dustValIlvl84Q20": 20160,
+    "slots": 4
   },
   {
     "name": "Painseeker",
     "baseType": "Shagreen Gloves",
     "dustValIlvl84": 16800,
-    "dustValIlvl84Q20": 20160
+    "dustValIlvl84Q20": 20160,
+    "slots": 4
   },
   {
     "name": "The Poet's Pen",
     "baseType": "Carved Wand",
     "dustValIlvl84": 16620,
-    "dustValIlvl84Q20": 19944
+    "dustValIlvl84Q20": 19944,
+    "slots": 3
   },
   {
     "name": "Putembo's Mountain",
     "baseType": "Topaz Ring",
     "dustValIlvl84": 16620,
-    "dustValIlvl84Q20": 19944
+    "dustValIlvl84Q20": 19944,
+    "slots": 1
   },
   {
     "name": "Rise of the Phoenix",
     "baseType": "Mosaic Kite Shield",
     "dustValIlvl84": 16580,
-    "dustValIlvl84Q20": 19896
+    "dustValIlvl84Q20": 19896,
+    "slots": 6
   },
   {
     "name": "Darkray Vectors",
     "baseType": "Dragonscale Boots",
     "dustValIlvl84": 16580,
-    "dustValIlvl84Q20": 19896
+    "dustValIlvl84Q20": 19896,
+    "slots": 4
   },
   {
     "name": "Vis Mortis",
     "baseType": "Necromancer Silks",
     "dustValIlvl84": 16580,
-    "dustValIlvl84Q20": 19896
+    "dustValIlvl84Q20": 19896,
+    "slots": 6
   },
   {
     "name": "Ventor's Gamble",
     "baseType": "Gold Ring",
     "dustValIlvl84": 16580,
-    "dustValIlvl84Q20": 19896
+    "dustValIlvl84Q20": 19896,
+    "slots": 1
   },
   {
     "name": "Malachai's Loop",
     "baseType": "Harmonic Spirit Shield",
     "dustValIlvl84": 16580,
-    "dustValIlvl84Q20": 19896
+    "dustValIlvl84Q20": 19896,
+    "slots": 4
   },
   {
     "name": "Cane of Kulemak",
     "baseType": "Serpentine Staff",
     "dustValIlvl84": 16520,
-    "dustValIlvl84Q20": 19824
+    "dustValIlvl84Q20": 19824,
+    "slots": 8
   },
   {
     "name": "The Scales of Justice",
     "baseType": "Chiming Spirit Shield",
     "dustValIlvl84": 16520,
-    "dustValIlvl84Q20": 19824
+    "dustValIlvl84Q20": 19824,
+    "slots": 4
   },
   {
     "name": "Bound Fate",
     "baseType": "Cloth Belt",
     "dustValIlvl84": 16520,
-    "dustValIlvl84Q20": 19824
+    "dustValIlvl84Q20": 19824,
+    "slots": 2
   },
   {
     "name": "Death's Hand",
     "baseType": "Karui Sceptre",
     "dustValIlvl84": 16320,
-    "dustValIlvl84Q20": 19584
+    "dustValIlvl84Q20": 19584,
+    "slots": 6
   },
   {
     "name": "Doryani's Catalyst",
     "baseType": "Vaal Sceptre",
     "dustValIlvl84": 16100,
-    "dustValIlvl84Q20": 19320
+    "dustValIlvl84Q20": 19320,
+    "slots": 6
   },
   {
     "name": "Soul Strike",
     "baseType": "Spike-Point Arrow Quiver",
     "dustValIlvl84": 16100,
-    "dustValIlvl84Q20": 19320
+    "dustValIlvl84Q20": 19320,
+    "slots": 6
   },
   {
     "name": "Geofri's Sanctuary",
     "baseType": "Elegant Ringmail",
     "dustValIlvl84": 16100,
-    "dustValIlvl84Q20": 19320
+    "dustValIlvl84Q20": 19320,
+    "slots": 6
   },
   {
     "name": "Hyrri's Truth",
     "baseType": "Jade Amulet",
     "dustValIlvl84": 16100,
-    "dustValIlvl84Q20": 19320
+    "dustValIlvl84Q20": 19320,
+    "slots": 1
   },
   {
     "name": "Rashkaldor's Patience",
     "baseType": "Jade Amulet",
     "dustValIlvl84": 16040,
-    "dustValIlvl84Q20": 19248
+    "dustValIlvl84Q20": 19248,
+    "slots": 1
   },
   {
     "name": "Maw of Conquest",
     "baseType": "Steel Circlet",
     "dustValIlvl84": 16040,
-    "dustValIlvl84Q20": 19248
+    "dustValIlvl84Q20": 19248,
+    "slots": 4
   },
   {
     "name": "The Jinxed Juju",
     "baseType": "Citrine Amulet",
     "dustValIlvl84": 16040,
-    "dustValIlvl84Q20": 19248
+    "dustValIlvl84Q20": 19248,
+    "slots": 1
   },
   {
     "name": "The Restless Ward",
     "baseType": "Carnal Armour",
     "dustValIlvl84": 15840,
-    "dustValIlvl84Q20": 19008
+    "dustValIlvl84Q20": 19008,
+    "slots": 6
   },
   {
     "name": "Replica Siegebreaker",
     "baseType": "Heavy Belt",
     "dustValIlvl84": 15660,
-    "dustValIlvl84Q20": 18792
+    "dustValIlvl84Q20": 18792,
+    "slots": 2
   },
   {
     "name": "Speaker's Wreath",
     "baseType": "Prophet Crown",
     "dustValIlvl84": 15620,
-    "dustValIlvl84Q20": 18744
+    "dustValIlvl84Q20": 18744,
+    "slots": 4
   },
   {
     "name": "The Stampede",
     "baseType": "Assassin's Boots",
     "dustValIlvl84": 15620,
-    "dustValIlvl84Q20": 18744
+    "dustValIlvl84Q20": 18744,
+    "slots": 4
   },
   {
     "name": "Actum",
     "baseType": "Butcher Axe",
     "dustValIlvl84": 15620,
-    "dustValIlvl84Q20": 18744
+    "dustValIlvl84Q20": 18744,
+    "slots": 6
   },
   {
     "name": "Cerberus Limb",
     "baseType": "Blood Sceptre",
     "dustValIlvl84": 15580,
-    "dustValIlvl84Q20": 18696
+    "dustValIlvl84Q20": 18696,
+    "slots": 6
   },
   {
     "name": "Replica Kalisa's Grace",
     "baseType": "Samite Gloves",
     "dustValIlvl84": 15580,
-    "dustValIlvl84Q20": 18696
+    "dustValIlvl84Q20": 18696,
+    "slots": 4
   },
   {
     "name": "Replica Innsbury Edge",
     "baseType": "Elder Sword",
     "dustValIlvl84": 15580,
-    "dustValIlvl84Q20": 18696
+    "dustValIlvl84Q20": 18696,
+    "slots": 6
   },
   {
     "name": "Jaws of Agony",
     "baseType": "Supreme Spiked Shield",
     "dustValIlvl84": 15380,
-    "dustValIlvl84Q20": 18456
+    "dustValIlvl84Q20": 18456,
+    "slots": 4
   },
   {
     "name": "Rive",
     "baseType": "Terror Claw",
     "dustValIlvl84": 15380,
-    "dustValIlvl84Q20": 18456
+    "dustValIlvl84Q20": 18456,
+    "slots": 4
   },
   {
     "name": "Mercenary's Lot",
     "baseType": "Slink Gloves",
     "dustValIlvl84": 15380,
-    "dustValIlvl84Q20": 18456
+    "dustValIlvl84Q20": 18456,
+    "slots": 4
   },
   {
     "name": "The Oppressor",
     "baseType": "Elegant Round Shield",
     "dustValIlvl84": 15380,
-    "dustValIlvl84Q20": 18456
+    "dustValIlvl84Q20": 18456,
+    "slots": 6
   },
   {
     "name": "Hyaon's Fury",
     "baseType": "Legion Sword",
     "dustValIlvl84": 15180,
-    "dustValIlvl84Q20": 18216
+    "dustValIlvl84Q20": 18216,
+    "slots": 6
   },
   {
     "name": "Singularity",
     "baseType": "Platinum Sceptre",
     "dustValIlvl84": 15180,
-    "dustValIlvl84Q20": 18216
+    "dustValIlvl84Q20": 18216,
+    "slots": 6
   },
   {
     "name": "Apep's Slumber",
     "baseType": "Vaal Spirit Shield",
     "dustValIlvl84": 15180,
-    "dustValIlvl84Q20": 18216
+    "dustValIlvl84Q20": 18216,
+    "slots": 4
   },
   {
     "name": "Belly of the Beast",
     "baseType": "Full Wyrmscale",
     "dustValIlvl84": 15120,
-    "dustValIlvl84Q20": 18144
+    "dustValIlvl84Q20": 18144,
+    "slots": 6
   },
   {
     "name": "Redblade Tramplers",
     "baseType": "Ancient Greaves",
     "dustValIlvl84": 15120,
-    "dustValIlvl84Q20": 18144
+    "dustValIlvl84Q20": 18144,
+    "slots": 4
   },
   {
     "name": "Veruso's Battering Rams",
     "baseType": "Titan Gauntlets",
     "dustValIlvl84": 14920,
-    "dustValIlvl84Q20": 17904
+    "dustValIlvl84Q20": 17904,
+    "slots": 4
   },
   {
     "name": "Asenath's Mark",
     "baseType": "Iron Circlet",
     "dustValIlvl84": 14760,
-    "dustValIlvl84Q20": 17712
+    "dustValIlvl84Q20": 17712,
+    "slots": 4
   },
   {
     "name": "Uzaza's Valley",
     "baseType": "Sapphire Ring",
     "dustValIlvl84": 14760,
-    "dustValIlvl84Q20": 17712
+    "dustValIlvl84Q20": 17712,
+    "slots": 1
   },
   {
     "name": "Scorpion's Call",
     "baseType": "Heavy Arrow Quiver",
     "dustValIlvl84": 14720,
-    "dustValIlvl84Q20": 17664
+    "dustValIlvl84Q20": 17664,
+    "slots": 6
   },
   {
     "name": "Soulthirst",
     "baseType": "Cloth Belt",
     "dustValIlvl84": 14680,
-    "dustValIlvl84Q20": 17616
+    "dustValIlvl84Q20": 17616,
+    "slots": 2
   },
   {
     "name": "The Tempest's Binding",
     "baseType": "Callous Mask",
     "dustValIlvl84": 14680,
-    "dustValIlvl84Q20": 17616
+    "dustValIlvl84Q20": 17616,
+    "slots": 4
   },
   {
     "name": "Slavedriver's Hand",
     "baseType": "Ambush Mitts",
     "dustValIlvl84": 14680,
-    "dustValIlvl84Q20": 17616
+    "dustValIlvl84Q20": 17616,
+    "slots": 4
   },
   {
     "name": "Vivinsect",
     "baseType": "Unset Ring",
     "dustValIlvl84": 14680,
-    "dustValIlvl84Q20": 17616
+    "dustValIlvl84Q20": 17616,
+    "slots": 1
   },
   {
     "name": "Replica Malachai's Artifice",
     "baseType": "Unset Ring",
     "dustValIlvl84": 14680,
-    "dustValIlvl84Q20": 17616
+    "dustValIlvl84Q20": 17616,
+    "slots": 1
   },
   {
     "name": "Replica Voideye",
     "baseType": "Unset Ring",
     "dustValIlvl84": 14680,
-    "dustValIlvl84Q20": 17616
+    "dustValIlvl84Q20": 17616,
+    "slots": 1
   },
   {
     "name": "Rotblood Promise",
     "baseType": "Unset Ring",
     "dustValIlvl84": 14680,
-    "dustValIlvl84Q20": 17616
+    "dustValIlvl84Q20": 17616,
+    "slots": 1
   },
   {
     "name": "Triumvirate Authority",
     "baseType": "Unset Ring",
     "dustValIlvl84": 14680,
-    "dustValIlvl84Q20": 17616
+    "dustValIlvl84Q20": 17616,
+    "slots": 1
   },
   {
     "name": "Izaro's Dilemma",
     "baseType": "Imperial Claw",
     "dustValIlvl84": 14500,
-    "dustValIlvl84Q20": 17400
+    "dustValIlvl84Q20": 17400,
+    "slots": 4
   },
   {
     "name": "Nuro's Harp",
     "baseType": "Harbinger Bow",
     "dustValIlvl84": 14500,
-    "dustValIlvl84Q20": 17400
+    "dustValIlvl84Q20": 17400,
+    "slots": 8
   },
   {
     "name": "Xoph's Blood",
     "baseType": "Amber Amulet",
     "dustValIlvl84": 14320,
-    "dustValIlvl84Q20": 17184
+    "dustValIlvl84Q20": 17184,
+    "slots": 1
   },
   {
     "name": "The Pandemonius",
     "baseType": "Jade Amulet",
     "dustValIlvl84": 14320,
-    "dustValIlvl84Q20": 17184
+    "dustValIlvl84Q20": 17184,
+    "slots": 1
   },
   {
     "name": "Choir of the Storm",
     "baseType": "Lapis Amulet",
     "dustValIlvl84": 14320,
-    "dustValIlvl84Q20": 17184
+    "dustValIlvl84Q20": 17184,
+    "slots": 1
   },
   {
     "name": "Replica Hyrri's Truth",
     "baseType": "Jade Amulet",
     "dustValIlvl84": 14320,
-    "dustValIlvl84Q20": 17184
+    "dustValIlvl84Q20": 17184,
+    "slots": 1
   },
   {
     "name": "Starkonja's Head",
     "baseType": "Silken Hood",
     "dustValIlvl84": 14300,
-    "dustValIlvl84Q20": 17160
+    "dustValIlvl84Q20": 17160,
+    "slots": 4
   },
   {
     "name": "Romira's Banquet",
     "baseType": "Diamond Ring",
     "dustValIlvl84": 14300,
-    "dustValIlvl84Q20": 17160
+    "dustValIlvl84Q20": 17160,
+    "slots": 1
   },
   {
     "name": "Scaeva",
     "baseType": "Gladius",
     "dustValIlvl84": 14300,
-    "dustValIlvl84Q20": 17160
+    "dustValIlvl84Q20": 17160,
+    "slots": 6
   },
   {
     "name": "Cane of Unravelling",
     "baseType": "Ezomyte Staff",
     "dustValIlvl84": 14300,
-    "dustValIlvl84Q20": 17160
+    "dustValIlvl84Q20": 17160,
+    "slots": 8
   },
   {
     "name": "Soulwrest",
     "baseType": "Ezomyte Staff",
     "dustValIlvl84": 14300,
-    "dustValIlvl84Q20": 17160
+    "dustValIlvl84Q20": 17160,
+    "slots": 8
   },
   {
     "name": "Cowl of the Thermophile",
     "baseType": "Ezomyte Burgonet",
     "dustValIlvl84": 14300,
-    "dustValIlvl84Q20": 17160
+    "dustValIlvl84Q20": 17160,
+    "slots": 4
   },
   {
     "name": "Cowl of the Cryophile",
     "baseType": "Silken Hood",
     "dustValIlvl84": 14300,
-    "dustValIlvl84Q20": 17160
+    "dustValIlvl84Q20": 17160,
+    "slots": 4
   },
   {
     "name": "The Blood Dance",
     "baseType": "Sharkskin Boots",
     "dustValIlvl84": 14260,
-    "dustValIlvl84Q20": 17112
+    "dustValIlvl84Q20": 17112,
+    "slots": 4
   },
   {
     "name": "Hinekora's Sight",
     "baseType": "Onyx Amulet",
     "dustValIlvl84": 14260,
-    "dustValIlvl84Q20": 17112
+    "dustValIlvl84Q20": 17112,
+    "slots": 1
   },
   {
     "name": "Replica Hinekora's Sight",
     "baseType": "Onyx Amulet",
     "dustValIlvl84": 14260,
-    "dustValIlvl84Q20": 17112
+    "dustValIlvl84Q20": 17112,
+    "slots": 1
   },
   {
     "name": "Oro's Sacrifice",
     "baseType": "Infernal Sword",
     "dustValIlvl84": 14060,
-    "dustValIlvl84Q20": 16872
+    "dustValIlvl84Q20": 16872,
+    "slots": 8
   },
   {
     "name": "Surgebinders",
     "baseType": "Dragonscale Gauntlets",
     "dustValIlvl84": 14060,
-    "dustValIlvl84Q20": 16872
+    "dustValIlvl84Q20": 16872,
+    "slots": 4
   },
   {
     "name": "Piscator's Vigil",
     "baseType": "Imbued Wand",
     "dustValIlvl84": 13880,
-    "dustValIlvl84Q20": 16656
+    "dustValIlvl84Q20": 16656,
+    "slots": 3
   },
   {
     "name": "The Dancing Dervish",
     "baseType": "Reaver Sword",
     "dustValIlvl84": 13880,
-    "dustValIlvl84Q20": 16656
+    "dustValIlvl84Q20": 16656,
+    "slots": 8
   },
   {
     "name": "Hiltless",
     "baseType": "Reaver Sword",
     "dustValIlvl84": 13880,
-    "dustValIlvl84Q20": 16656
+    "dustValIlvl84Q20": 16656,
+    "slots": 8
   },
   {
     "name": "Dendrobate",
     "baseType": "Sentinel Jacket",
     "dustValIlvl84": 13880,
-    "dustValIlvl84Q20": 16656
+    "dustValIlvl84Q20": 16656,
+    "slots": 6
   },
   {
     "name": "Cowl of the Ceraunophile",
     "baseType": "Solaris Circlet",
     "dustValIlvl84": 13880,
-    "dustValIlvl84Q20": 16656
+    "dustValIlvl84Q20": 16656,
+    "slots": 4
   },
   {
     "name": "Haemophilia",
     "baseType": "Serpentscale Gauntlets",
     "dustValIlvl84": 13840,
-    "dustValIlvl84Q20": 16608
+    "dustValIlvl84Q20": 16608,
+    "slots": 4
   },
   {
     "name": "Volkuur's Guidance",
     "baseType": "Zealot Gloves",
     "dustValIlvl84": 13840,
-    "dustValIlvl84Q20": 16608
+    "dustValIlvl84Q20": 16608,
+    "slots": 4
   },
   {
     "name": "Replica Volkuur's Guidance",
     "baseType": "Zealot Gloves",
     "dustValIlvl84": 13840,
-    "dustValIlvl84Q20": 16608
+    "dustValIlvl84Q20": 16608,
+    "slots": 4
   },
   {
     "name": "Callinellus Malleus",
     "baseType": "Auric Mace",
     "dustValIlvl84": 13660,
-    "dustValIlvl84Q20": 16392
+    "dustValIlvl84Q20": 16392,
+    "slots": 6
   },
   {
     "name": "The Goddess Unleashed",
     "baseType": "Eternal Sword",
     "dustValIlvl84": 13660,
-    "dustValIlvl84Q20": 16392
+    "dustValIlvl84Q20": 16392,
+    "slots": 6
   },
   {
     "name": "Allure",
     "baseType": "Vaal Claw",
     "dustValIlvl84": 13660,
-    "dustValIlvl84Q20": 16392
+    "dustValIlvl84Q20": 16392,
+    "slots": 4
   },
   {
     "name": "Debeon's Dirge",
     "baseType": "Despot Axe",
     "dustValIlvl84": 13660,
-    "dustValIlvl84Q20": 16392
+    "dustValIlvl84Q20": 16392,
+    "slots": 8
   },
   {
     "name": "White Wind",
     "baseType": "Imperial Skean",
     "dustValIlvl84": 13660,
-    "dustValIlvl84Q20": 16392
+    "dustValIlvl84Q20": 16392,
+    "slots": 3
   },
   {
     "name": "Kaom's Primacy",
     "baseType": "Karui Chopper",
     "dustValIlvl84": 13480,
-    "dustValIlvl84Q20": 16176
+    "dustValIlvl84Q20": 16176,
+    "slots": 8
   },
   {
     "name": "Snakebite",
     "baseType": "Assassin's Mitts",
     "dustValIlvl84": 13480,
-    "dustValIlvl84Q20": 16176
+    "dustValIlvl84Q20": 16176,
+    "slots": 4
   },
   {
     "name": "Ichimonji",
     "baseType": "Corsair Sword",
     "dustValIlvl84": 13480,
-    "dustValIlvl84Q20": 16176
+    "dustValIlvl84Q20": 16176,
+    "slots": 3
   },
   {
     "name": "Mask of the Spirit Drinker",
     "baseType": "Magistrate Crown",
     "dustValIlvl84": 13480,
-    "dustValIlvl84Q20": 16176
+    "dustValIlvl84Q20": 16176,
+    "slots": 4
   },
   {
     "name": "The Ghastly Theatre",
     "baseType": "Teak Round Shield",
     "dustValIlvl84": 13480,
-    "dustValIlvl84Q20": 16176
+    "dustValIlvl84Q20": 16176,
+    "slots": 6
   },
   {
     "name": "The Gluttonous Tide",
     "baseType": "Citadel Bow",
     "dustValIlvl84": 13480,
-    "dustValIlvl84Q20": 16176
+    "dustValIlvl84Q20": 16176,
+    "slots": 8
   },
   {
     "name": "Mutewind Pennant",
     "baseType": "Enameled Buckler",
     "dustValIlvl84": 13440,
-    "dustValIlvl84Q20": 16128
+    "dustValIlvl84Q20": 16128,
+    "slots": 4
   },
   {
     "name": "Mutewind Whispersteps",
     "baseType": "Serpentscale Boots",
     "dustValIlvl84": 13440,
-    "dustValIlvl84Q20": 16128
+    "dustValIlvl84Q20": 16128,
+    "slots": 4
   },
   {
     "name": "Tainted Pact",
     "baseType": "Coral Amulet",
     "dustValIlvl84": 13440,
-    "dustValIlvl84Q20": 16128
+    "dustValIlvl84Q20": 16128,
+    "slots": 1
   },
   {
     "name": "Null and Void",
     "baseType": "Legion Gloves",
     "dustValIlvl84": 13080,
-    "dustValIlvl84Q20": 15696
+    "dustValIlvl84Q20": 15696,
+    "slots": 4
   },
   {
     "name": "Kiloava's Bluster",
     "baseType": "Ironwood Buckler",
     "dustValIlvl84": 13080,
-    "dustValIlvl84Q20": 15696
+    "dustValIlvl84Q20": 15696,
+    "slots": 4
   },
   {
     "name": "The Supreme Truth",
     "baseType": "Crystal Sceptre",
     "dustValIlvl84": 13040,
-    "dustValIlvl84Q20": 15648
+    "dustValIlvl84Q20": 15648,
+    "slots": 6
   },
   {
     "name": "Nycta's Lantern",
     "baseType": "Crystal Sceptre",
     "dustValIlvl84": 13040,
-    "dustValIlvl84Q20": 15648
+    "dustValIlvl84Q20": 15648,
+    "slots": 6
   },
   {
     "name": "Tremor Rod",
     "baseType": "Military Staff",
     "dustValIlvl84": 13040,
-    "dustValIlvl84Q20": 15648
+    "dustValIlvl84Q20": 15648,
+    "slots": 8
   },
   {
     "name": "Brinerot Whalers",
     "baseType": "Trapper Boots",
     "dustValIlvl84": 13040,
-    "dustValIlvl84Q20": 15648
+    "dustValIlvl84Q20": 15648,
+    "slots": 4
   },
   {
     "name": "Allelopathy",
     "baseType": "Satin Gloves",
     "dustValIlvl84": 13040,
-    "dustValIlvl84Q20": 15648
+    "dustValIlvl84Q20": 15648,
+    "slots": 4
   },
   {
     "name": "Replica Allelopathy",
     "baseType": "Satin Gloves",
     "dustValIlvl84": 13040,
-    "dustValIlvl84Q20": 15648
+    "dustValIlvl84Q20": 15648,
+    "slots": 4
   },
   {
     "name": "Mark of the Doubting Knight",
     "baseType": "Platinum Kris",
     "dustValIlvl84": 12880,
-    "dustValIlvl84Q20": 15456
+    "dustValIlvl84Q20": 15456,
+    "slots": 3
   },
   {
     "name": "Skin of the Loyal",
     "baseType": "Simple Robe",
     "dustValIlvl84": 12740,
-    "dustValIlvl84Q20": 15288
+    "dustValIlvl84Q20": 15288,
+    "slots": 6
   },
   {
     "name": "Replica Atziri's Foible",
     "baseType": "Paua Amulet",
     "dustValIlvl84": 12740,
-    "dustValIlvl84Q20": 15288
+    "dustValIlvl84Q20": 15288,
+    "slots": 1
   },
   {
     "name": "Greed's Embrace",
     "baseType": "Golden Plate",
     "dustValIlvl84": 12700,
-    "dustValIlvl84Q20": 15240
+    "dustValIlvl84Q20": 15240,
+    "slots": 6
   },
   {
     "name": "Story of the Vaal",
     "baseType": "Gemstone Sword",
     "dustValIlvl84": 12700,
-    "dustValIlvl84Q20": 15240
+    "dustValIlvl84Q20": 15240,
+    "slots": 3
   },
   {
     "name": "Storm Secret",
     "baseType": "Topaz Ring",
     "dustValIlvl84": 12700,
-    "dustValIlvl84Q20": 15240
+    "dustValIlvl84Q20": 15240,
+    "slots": 1
   },
   {
     "name": "Ahuana's Bite",
     "baseType": "Sharktooth Arrow Quiver",
     "dustValIlvl84": 12700,
-    "dustValIlvl84Q20": 15240
+    "dustValIlvl84Q20": 15240,
+    "slots": 6
   },
   {
     "name": "Marylene's Fallacy",
     "baseType": "Lapis Amulet",
     "dustValIlvl84": 12660,
-    "dustValIlvl84Q20": 15192
+    "dustValIlvl84Q20": 15192,
+    "slots": 1
   },
   {
     "name": "Call of the Brotherhood",
     "baseType": "Two-Stone Ring",
     "dustValIlvl84": 12660,
-    "dustValIlvl84Q20": 15192
+    "dustValIlvl84Q20": 15192,
+    "slots": 1
   },
   {
     "name": "Emberwake",
     "baseType": "Ruby Ring",
     "dustValIlvl84": 12660,
-    "dustValIlvl84Q20": 15192
+    "dustValIlvl84Q20": 15192,
+    "slots": 1
   },
   {
     "name": "Trypanon",
     "baseType": "Great Mallet",
     "dustValIlvl84": 12660,
-    "dustValIlvl84Q20": 15192
+    "dustValIlvl84Q20": 15192,
+    "slots": 8
   },
   {
     "name": "Voice of the Storm",
     "baseType": "Lapis Amulet",
     "dustValIlvl84": 12660,
-    "dustValIlvl84Q20": 15192
+    "dustValIlvl84Q20": 15192,
+    "slots": 1
   },
   {
     "name": "Fury Valve",
     "baseType": "Turquoise Amulet",
     "dustValIlvl84": 12660,
-    "dustValIlvl84Q20": 15192
+    "dustValIlvl84Q20": 15192,
+    "slots": 1
   },
   {
     "name": "Mother's Embrace",
     "baseType": "Heavy Belt",
     "dustValIlvl84": 12660,
-    "dustValIlvl84Q20": 15192
+    "dustValIlvl84Q20": 15192,
+    "slots": 2
   },
   {
     "name": "Blood Price",
     "baseType": "Reaver Helmet",
     "dustValIlvl84": 12660,
-    "dustValIlvl84Q20": 15192
+    "dustValIlvl84Q20": 15192,
+    "slots": 4
   },
   {
     "name": "Thousand Teeth Temu",
     "baseType": "Vaal Buckler",
     "dustValIlvl84": 12500,
-    "dustValIlvl84Q20": 15000
+    "dustValIlvl84Q20": 15000,
+    "slots": 4
   },
   {
     "name": "The Broken Crown",
     "baseType": "Prophet Crown",
     "dustValIlvl84": 12500,
-    "dustValIlvl84Q20": 15000
+    "dustValIlvl84Q20": 15000,
+    "slots": 4
   },
   {
     "name": "The Retch",
     "baseType": "Rustic Sash",
     "dustValIlvl84": 12360,
-    "dustValIlvl84Q20": 14832
+    "dustValIlvl84Q20": 14832,
+    "slots": 2
   },
   {
     "name": "Voidbringer",
     "baseType": "Conjurer Gloves",
     "dustValIlvl84": 12340,
-    "dustValIlvl84Q20": 14808
+    "dustValIlvl84Q20": 14808,
+    "slots": 4
   },
   {
     "name": "Dance of the Offered",
     "baseType": "Carnal Boots",
     "dustValIlvl84": 12340,
-    "dustValIlvl84Q20": 14808
+    "dustValIlvl84Q20": 14808,
+    "slots": 4
   },
   {
     "name": "Sin Trek",
     "baseType": "Stealth Boots",
     "dustValIlvl84": 12140,
-    "dustValIlvl84Q20": 14568
+    "dustValIlvl84Q20": 14568,
+    "slots": 4
   },
   {
     "name": "Chin Sol",
     "baseType": "Assassin Bow",
     "dustValIlvl84": 12140,
-    "dustValIlvl84Q20": 14568
+    "dustValIlvl84Q20": 14568,
+    "slots": 8
   },
   {
     "name": "Wings of Entropy",
     "baseType": "Ezomyte Axe",
     "dustValIlvl84": 12140,
-    "dustValIlvl84Q20": 14568
+    "dustValIlvl84Q20": 14568,
+    "slots": 8
   },
   {
     "name": "Sinvicta's Mettle",
     "baseType": "Ezomyte Axe",
     "dustValIlvl84": 12140,
-    "dustValIlvl84Q20": 14568
+    "dustValIlvl84Q20": 14568,
+    "slots": 8
   },
   {
     "name": "Voidhome",
     "baseType": "Dread Maul",
     "dustValIlvl84": 11980,
-    "dustValIlvl84Q20": 14376
+    "dustValIlvl84Q20": 14376,
+    "slots": 8
   },
   {
     "name": "Pyroshock Clasp",
     "baseType": "Leather Belt",
     "dustValIlvl84": 11980,
-    "dustValIlvl84Q20": 14376
+    "dustValIlvl84Q20": 14376,
+    "slots": 2
   },
   {
     "name": "Circle of Nostalgia",
     "baseType": "Amethyst Ring",
     "dustValIlvl84": 11940,
-    "dustValIlvl84Q20": 14328
+    "dustValIlvl84Q20": 14328,
+    "slots": 1
   },
   {
     "name": "Chernobog's Pillar",
     "baseType": "Ebony Tower Shield",
     "dustValIlvl84": 11780,
-    "dustValIlvl84Q20": 14136
+    "dustValIlvl84Q20": 14136,
+    "slots": 8
   },
   {
     "name": "Kingsguard",
     "baseType": "Conquest Chainmail",
     "dustValIlvl84": 11780,
-    "dustValIlvl84Q20": 14136
+    "dustValIlvl84Q20": 14136,
+    "slots": 6
   },
   {
     "name": "Kondo's Pride",
     "baseType": "Ezomyte Blade",
     "dustValIlvl84": 11780,
-    "dustValIlvl84Q20": 14136
+    "dustValIlvl84Q20": 14136,
+    "slots": 8
   },
   {
     "name": "Geofri's Crest",
     "baseType": "Great Crown",
     "dustValIlvl84": 11620,
-    "dustValIlvl84Q20": 13944
+    "dustValIlvl84Q20": 13944,
+    "slots": 4
   },
   {
     "name": "Bronn's Lithe",
     "baseType": "Cutthroat's Garb",
     "dustValIlvl84": 11620,
-    "dustValIlvl84Q20": 13944
+    "dustValIlvl84Q20": 13944,
+    "slots": 6
   },
   {
     "name": "The Consuming Dark",
     "baseType": "Fiend Dagger",
     "dustValIlvl84": 11620,
-    "dustValIlvl84Q20": 13944
+    "dustValIlvl84Q20": 13944,
+    "slots": 3
   },
   {
     "name": "The Coming Calamity",
     "baseType": "Destroyer Regalia",
     "dustValIlvl84": 11620,
-    "dustValIlvl84Q20": 13944
+    "dustValIlvl84Q20": 13944,
+    "slots": 6
   },
   {
     "name": "Command of the Pit",
     "baseType": "Riveted Gloves",
     "dustValIlvl84": 11600,
-    "dustValIlvl84Q20": 13920
+    "dustValIlvl84Q20": 13920,
+    "slots": 4
   },
   {
     "name": "Replica Harvest",
     "baseType": "Jasper Chopper",
     "dustValIlvl84": 11600,
-    "dustValIlvl84Q20": 13920
+    "dustValIlvl84Q20": 13920,
+    "slots": 8
   },
   {
     "name": "Cameria's Maul",
     "baseType": "Gavel",
     "dustValIlvl84": 11440,
-    "dustValIlvl84Q20": 13728
+    "dustValIlvl84Q20": 13728,
+    "slots": 6
   },
   {
     "name": "Balefire",
     "baseType": "Opal Sceptre",
     "dustValIlvl84": 11440,
-    "dustValIlvl84Q20": 13728
+    "dustValIlvl84Q20": 13728,
+    "slots": 6
   },
   {
     "name": "The Wasp Nest",
     "baseType": "Throat Stabber",
     "dustValIlvl84": 11440,
-    "dustValIlvl84Q20": 13728
+    "dustValIlvl84Q20": 13728,
+    "slots": 4
   },
   {
     "name": "Taproot",
     "baseType": "Ambusher",
     "dustValIlvl84": 11440,
-    "dustValIlvl84Q20": 13728
+    "dustValIlvl84Q20": 13728,
+    "slots": 3
   },
   {
     "name": "The Druggery",
     "baseType": "Cloth Belt",
     "dustValIlvl84": 11440,
-    "dustValIlvl84Q20": 13728
+    "dustValIlvl84Q20": 13728,
+    "slots": 2
   },
   {
     "name": "Goblinedge",
     "baseType": "Ambusher",
     "dustValIlvl84": 11440,
-    "dustValIlvl84Q20": 13728
+    "dustValIlvl84Q20": 13728,
+    "slots": 3
   },
   {
     "name": "The Redblade",
     "baseType": "Gladius",
     "dustValIlvl84": 11440,
-    "dustValIlvl84Q20": 13728
+    "dustValIlvl84Q20": 13728,
+    "slots": 6
   },
   {
     "name": "Victario's Influence",
     "baseType": "Lacquered Garb",
     "dustValIlvl84": 11280,
-    "dustValIlvl84Q20": 13536
+    "dustValIlvl84Q20": 13536,
+    "slots": 6
   },
   {
     "name": "Crown of the Pale King",
     "baseType": "Regicide Mask",
     "dustValIlvl84": 11280,
-    "dustValIlvl84Q20": 13536
+    "dustValIlvl84Q20": 13536,
+    "slots": 4
   },
   {
     "name": "Oskarm",
     "baseType": "Nubuck Gloves",
     "dustValIlvl84": 11280,
-    "dustValIlvl84Q20": 13536
+    "dustValIlvl84Q20": 13536,
+    "slots": 4
   },
   {
     "name": "Aurseize",
     "baseType": "Steelscale Gauntlets",
     "dustValIlvl84": 11260,
-    "dustValIlvl84Q20": 13512
+    "dustValIlvl84Q20": 13512,
+    "slots": 4
   },
   {
     "name": "Tombfist",
     "baseType": "Steelscale Gauntlets",
     "dustValIlvl84": 11260,
-    "dustValIlvl84Q20": 13512
+    "dustValIlvl84Q20": 13512,
+    "slots": 4
   },
   {
     "name": "Vixen's Entrapment",
     "baseType": "Embroidered Gloves",
     "dustValIlvl84": 11260,
-    "dustValIlvl84Q20": 13512
+    "dustValIlvl84Q20": 13512,
+    "slots": 4
   },
   {
     "name": "Moonsorrow",
     "baseType": "Imbued Wand",
     "dustValIlvl84": 11100,
-    "dustValIlvl84Q20": 13320
+    "dustValIlvl84Q20": 13320,
+    "slots": 3
   },
   {
     "name": "Obliteration",
     "baseType": "Imbued Wand",
     "dustValIlvl84": 11100,
-    "dustValIlvl84Q20": 13320
+    "dustValIlvl84Q20": 13320,
+    "slots": 3
   },
   {
     "name": "Replica Soul Taker",
     "baseType": "Siege Axe",
     "dustValIlvl84": 11100,
-    "dustValIlvl84Q20": 13320
+    "dustValIlvl84Q20": 13320,
+    "slots": 6
   },
   {
     "name": "The Dancing Duo",
     "baseType": "Reaver Sword",
     "dustValIlvl84": 11100,
-    "dustValIlvl84Q20": 13320
+    "dustValIlvl84Q20": 13320,
+    "slots": 8
   },
   {
     "name": "The Fledgling",
     "baseType": "Lacquered Helmet",
     "dustValIlvl84": 10960,
-    "dustValIlvl84Q20": 13152
+    "dustValIlvl84Q20": 13152,
+    "slots": 4
   },
   {
     "name": "Voll's Protector",
     "baseType": "Holy Chainmail",
     "dustValIlvl84": 10920,
-    "dustValIlvl84Q20": 13104
+    "dustValIlvl84Q20": 13104,
+    "slots": 6
   },
   {
     "name": "Meginord's Vise",
     "baseType": "Steel Gauntlets",
     "dustValIlvl84": 10920,
-    "dustValIlvl84Q20": 13104
+    "dustValIlvl84Q20": 13104,
+    "slots": 4
   },
   {
     "name": "Redblade Banner",
     "baseType": "Painted Tower Shield",
     "dustValIlvl84": 10920,
-    "dustValIlvl84Q20": 13104
+    "dustValIlvl84Q20": 13104,
+    "slots": 8
   },
   {
     "name": "Xoph's Heart",
     "baseType": "Amber Amulet",
     "dustValIlvl84": 10920,
-    "dustValIlvl84Q20": 13104
+    "dustValIlvl84Q20": 13104,
+    "slots": 1
   },
   {
     "name": "The Halcyon",
     "baseType": "Jade Amulet",
     "dustValIlvl84": 10920,
-    "dustValIlvl84Q20": 13104
+    "dustValIlvl84Q20": 13104,
+    "slots": 1
   },
   {
     "name": "Replica Earendel's Embrace",
     "baseType": "Grinning Fetish",
     "dustValIlvl84": 10920,
-    "dustValIlvl84Q20": 13104
+    "dustValIlvl84Q20": 13104,
+    "slots": 6
   },
   {
     "name": "Gang's Momentum",
     "baseType": "Legion Boots",
     "dustValIlvl84": 10780,
-    "dustValIlvl84Q20": 12936
+    "dustValIlvl84Q20": 12936,
+    "slots": 4
   },
   {
     "name": "Femurs of the Saints",
     "baseType": "Primordial Staff",
     "dustValIlvl84": 10780,
-    "dustValIlvl84Q20": 12936
+    "dustValIlvl84Q20": 12936,
+    "slots": 8
   },
   {
     "name": "March of the Legion",
     "baseType": "Legion Boots",
     "dustValIlvl84": 10780,
-    "dustValIlvl84Q20": 12936
+    "dustValIlvl84Q20": 12936,
+    "slots": 4
   },
   {
     "name": "Sign of the Sin Eater",
     "baseType": "Tyrant's Sekhem",
     "dustValIlvl84": 10780,
-    "dustValIlvl84Q20": 12936
+    "dustValIlvl84Q20": 12936,
+    "slots": 6
   },
   {
     "name": "Rotting Legion",
     "baseType": "Loricated Ringmail",
     "dustValIlvl84": 10780,
-    "dustValIlvl84Q20": 12936
+    "dustValIlvl84Q20": 12936,
+    "slots": 6
   },
   {
     "name": "The Burden of Shadows",
     "baseType": "Primordial Staff",
     "dustValIlvl84": 10780,
-    "dustValIlvl84Q20": 12936
+    "dustValIlvl84Q20": 12936,
+    "slots": 8
   },
   {
     "name": "Warped Timepiece",
     "baseType": "Turquoise Amulet",
     "dustValIlvl84": 10640,
-    "dustValIlvl84Q20": 12768
+    "dustValIlvl84Q20": 12768,
+    "slots": 1
   },
   {
     "name": "Heartbound Loop",
     "baseType": "Moonstone Ring",
     "dustValIlvl84": 10640,
-    "dustValIlvl84Q20": 12768
+    "dustValIlvl84Q20": 12768,
+    "slots": 1
   },
   {
     "name": "Frostbreath",
     "baseType": "Ornate Mace",
     "dustValIlvl84": 10640,
-    "dustValIlvl84Q20": 12768
+    "dustValIlvl84Q20": 12768,
+    "slots": 6
   },
   {
     "name": "Darkness Enthroned",
     "baseType": "Stygian Vise",
     "dustValIlvl84": 10640,
-    "dustValIlvl84Q20": 12768
+    "dustValIlvl84Q20": 12768,
+    "slots": 2
   },
   {
     "name": "Perquil's Toe",
     "baseType": "Gold Amulet",
     "dustValIlvl84": 10640,
-    "dustValIlvl84Q20": 12768
+    "dustValIlvl84Q20": 12768,
+    "slots": 1
   },
   {
     "name": "Nametaker",
     "baseType": "Graceful Sword",
     "dustValIlvl84": 10640,
-    "dustValIlvl84Q20": 12768
+    "dustValIlvl84Q20": 12768,
+    "slots": 6
   },
   {
     "name": "Soul Mantle",
     "baseType": "Spidersilk Robe",
     "dustValIlvl84": 10340,
-    "dustValIlvl84Q20": 12408
+    "dustValIlvl84Q20": 12408,
+    "slots": 6
   },
   {
     "name": "Alberon's Warpath",
     "baseType": "Soldier Boots",
     "dustValIlvl84": 10340,
-    "dustValIlvl84Q20": 12408
+    "dustValIlvl84Q20": 12408,
+    "slots": 4
   },
   {
     "name": "Sire of Shards",
     "baseType": "Serpentine Staff",
     "dustValIlvl84": 10340,
-    "dustValIlvl84Q20": 12408
+    "dustValIlvl84Q20": 12408,
+    "slots": 8
   },
   {
     "name": "Wyrmsign",
     "baseType": "Wyrmscale Gauntlets",
     "dustValIlvl84": 10340,
-    "dustValIlvl84Q20": 12408
+    "dustValIlvl84Q20": 12408,
+    "slots": 4
   },
   {
     "name": "Venopuncture",
     "baseType": "Iron Ring",
     "dustValIlvl84": 10340,
-    "dustValIlvl84Q20": 12408
+    "dustValIlvl84Q20": 12408,
+    "slots": 1
   },
   {
     "name": "Icefang Orbit",
     "baseType": "Iron Ring",
     "dustValIlvl84": 10340,
-    "dustValIlvl84Q20": 12408
+    "dustValIlvl84Q20": 12408,
+    "slots": 1
   },
   {
     "name": "Shattershard",
     "baseType": "Crimson Round Shield",
     "dustValIlvl84": 10340,
-    "dustValIlvl84Q20": 12408
+    "dustValIlvl84Q20": 12408,
+    "slots": 6
   },
   {
     "name": "Steelworm",
     "baseType": "Broadhead Arrow Quiver",
     "dustValIlvl84": 10340,
-    "dustValIlvl84Q20": 12408
+    "dustValIlvl84Q20": 12408,
+    "slots": 6
   },
   {
     "name": "Tanu Ahi",
     "baseType": "Wyrmscale Gauntlets",
     "dustValIlvl84": 10340,
-    "dustValIlvl84Q20": 12408
+    "dustValIlvl84Q20": 12408,
+    "slots": 4
   },
   {
     "name": "Bloodsoaked Medallion",
     "baseType": "Amber Amulet",
     "dustValIlvl84": 10340,
-    "dustValIlvl84Q20": 12408
+    "dustValIlvl84Q20": 12408,
+    "slots": 1
   },
   {
     "name": "Windscream",
     "baseType": "Reinforced Greaves",
     "dustValIlvl84": 10300,
-    "dustValIlvl84Q20": 12360
+    "dustValIlvl84Q20": 12360,
+    "slots": 4
   },
   {
     "name": "Deidbell",
     "baseType": "Gilded Sallet",
     "dustValIlvl84": 10300,
-    "dustValIlvl84Q20": 12360
+    "dustValIlvl84Q20": 12360,
+    "slots": 4
   },
   {
     "name": "The Whispering Ice",
     "baseType": "Vile Staff",
     "dustValIlvl84": 10300,
-    "dustValIlvl84Q20": 12360
+    "dustValIlvl84Q20": 12360,
+    "slots": 8
   },
   {
     "name": "Gluttony",
     "baseType": "Leather Belt",
     "dustValIlvl84": 10020,
-    "dustValIlvl84Q20": 12024
+    "dustValIlvl84Q20": 12024,
+    "slots": 2
   },
   {
     "name": "Nightgrip",
     "baseType": "Runic Gages",
     "dustValIlvl84": 10020,
-    "dustValIlvl84Q20": 12024
+    "dustValIlvl84Q20": 12024,
+    "slots": 4
   },
   {
     "name": "Olroth's Charge",
     "baseType": "Runic Sollerets",
     "dustValIlvl84": 10020,
-    "dustValIlvl84Q20": 12024
+    "dustValIlvl84Q20": 12024,
+    "slots": 4
   },
   {
     "name": "Sudden Dawn",
     "baseType": "Steel Circlet",
     "dustValIlvl84": 10020,
-    "dustValIlvl84Q20": 12024
+    "dustValIlvl84Q20": 12024,
+    "slots": 4
   },
   {
     "name": "Ephemeral Edge",
     "baseType": "Dusk Blade",
     "dustValIlvl84": 10000,
-    "dustValIlvl84Q20": 12000
+    "dustValIlvl84Q20": 12000,
+    "slots": 6
   },
   {
     "name": "Death's Harp",
     "baseType": "Death Bow",
     "dustValIlvl84": 10000,
-    "dustValIlvl84Q20": 12000
+    "dustValIlvl84Q20": 12000,
+    "slots": 8
   },
   {
     "name": "Bitterdream",
     "baseType": "Shadow Sceptre",
     "dustValIlvl84": 10000,
-    "dustValIlvl84Q20": 12000
+    "dustValIlvl84Q20": 12000,
+    "slots": 6
   },
   {
     "name": "Replica Iron Commander",
     "baseType": "Death Bow",
     "dustValIlvl84": 10000,
-    "dustValIlvl84Q20": 12000
+    "dustValIlvl84Q20": 12000,
+    "slots": 8
   },
   {
     "name": "Hrimnor's Resolve",
     "baseType": "Samnite Helmet",
     "dustValIlvl84": 9860,
-    "dustValIlvl84Q20": 11832
+    "dustValIlvl84Q20": 11832,
+    "slots": 4
   },
   {
     "name": "Rat's Nest",
     "baseType": "Ursine Pelt",
     "dustValIlvl84": 9860,
-    "dustValIlvl84Q20": 11832
+    "dustValIlvl84Q20": 11832,
+    "slots": 4
   },
   {
     "name": "Maloney's Nightfall",
     "baseType": "Vile Arrow Quiver",
     "dustValIlvl84": 9860,
-    "dustValIlvl84Q20": 11832
+    "dustValIlvl84Q20": 11832,
+    "slots": 6
   },
   {
     "name": "Three-step Assault",
     "baseType": "Shagreen Boots",
     "dustValIlvl84": 9860,
-    "dustValIlvl84Q20": 11832
+    "dustValIlvl84Q20": 11832,
+    "slots": 4
   },
   {
     "name": "The Ascetic",
     "baseType": "Gold Amulet",
     "dustValIlvl84": 9860,
-    "dustValIlvl84Q20": 11832
+    "dustValIlvl84Q20": 11832,
+    "slots": 1
   },
   {
     "name": "The Highwayman",
     "baseType": "Gold Ring",
     "dustValIlvl84": 9860,
-    "dustValIlvl84Q20": 11832
+    "dustValIlvl84Q20": 11832,
+    "slots": 1
   },
   {
     "name": "Innsbury Edge",
     "baseType": "Elder Sword",
     "dustValIlvl84": 9740,
-    "dustValIlvl84Q20": 11688
+    "dustValIlvl84Q20": 11688,
+    "slots": 6
   },
   {
     "name": "The Fracturing Spinner",
     "baseType": "Blunt Arrow Quiver",
     "dustValIlvl84": 9700,
-    "dustValIlvl84Q20": 11640
+    "dustValIlvl84Q20": 11640,
+    "slots": 6
   },
   {
     "name": "Atziri's Mirror",
     "baseType": "Golden Buckler",
     "dustValIlvl84": 9580,
-    "dustValIlvl84Q20": 11496
+    "dustValIlvl84Q20": 11496,
+    "slots": 4
   },
   {
     "name": "Great Old One's Ward",
     "baseType": "Corrugated Buckler",
     "dustValIlvl84": 9460,
-    "dustValIlvl84Q20": 11352
+    "dustValIlvl84Q20": 11352,
+    "slots": 4
   },
   {
     "name": "Replica Advancing Fortress",
     "baseType": "Gut Ripper",
     "dustValIlvl84": 9460,
-    "dustValIlvl84Q20": 11352
+    "dustValIlvl84Q20": 11352,
+    "slots": 4
   },
   {
     "name": "Kahuturoa's Certainty",
     "baseType": "Ancient Greaves",
     "dustValIlvl84": 9460,
-    "dustValIlvl84Q20": 11352
+    "dustValIlvl84Q20": 11352,
+    "slots": 4
   },
   {
     "name": "Umbilicus Immortalis",
     "baseType": "Leather Belt",
     "dustValIlvl84": 9420,
-    "dustValIlvl84Q20": 11304
+    "dustValIlvl84Q20": 11304,
+    "slots": 2
   },
   {
     "name": "Xirgil's Crank",
     "baseType": "Coiled Staff",
     "dustValIlvl84": 9420,
-    "dustValIlvl84Q20": 11304
+    "dustValIlvl84Q20": 11304,
+    "slots": 8
   },
   {
     "name": "Bisco's Collar",
     "baseType": "Gold Amulet",
     "dustValIlvl84": 9420,
-    "dustValIlvl84Q20": 11304
+    "dustValIlvl84Q20": 11304,
+    "slots": 1
   },
   {
     "name": "Bisco's Leash",
     "baseType": "Heavy Belt",
     "dustValIlvl84": 9420,
-    "dustValIlvl84Q20": 11304
+    "dustValIlvl84Q20": 11304,
+    "slots": 2
   },
   {
     "name": "Replica Lioneye's Paws",
     "baseType": "Bronzescale Boots",
     "dustValIlvl84": 9420,
-    "dustValIlvl84Q20": 11304
+    "dustValIlvl84Q20": 11304,
+    "slots": 4
   },
   {
     "name": "Relic of the Pact",
     "baseType": "Sage Wand",
     "dustValIlvl84": 9420,
-    "dustValIlvl84Q20": 11304
+    "dustValIlvl84Q20": 11304,
+    "slots": 3
   },
   {
     "name": "Infractem",
     "baseType": "Decimation Bow",
     "dustValIlvl84": 9300,
-    "dustValIlvl84Q20": 11160
+    "dustValIlvl84Q20": 11160,
+    "slots": 8
   },
   {
     "name": "Prismatic Eclipse",
     "baseType": "Twilight Blade",
     "dustValIlvl84": 9300,
-    "dustValIlvl84Q20": 11160
+    "dustValIlvl84Q20": 11160,
+    "slots": 6
   },
   {
     "name": "Empire's Grasp",
     "baseType": "Goliath Gauntlets",
     "dustValIlvl84": 9300,
-    "dustValIlvl84Q20": 11160
+    "dustValIlvl84Q20": 11160,
+    "slots": 4
   },
   {
     "name": "Replica Forbidden Shako",
     "baseType": "Great Crown",
     "dustValIlvl84": 9300,
-    "dustValIlvl84Q20": 11160
+    "dustValIlvl84Q20": 11160,
+    "slots": 4
   },
   {
     "name": "Geofri's Legacy",
     "baseType": "Great Crown",
     "dustValIlvl84": 9300,
-    "dustValIlvl84Q20": 11160
+    "dustValIlvl84Q20": 11160,
+    "slots": 4
   },
   {
     "name": "Voideye",
     "baseType": "Unset Ring",
     "dustValIlvl84": 9180,
-    "dustValIlvl84Q20": 11016
+    "dustValIlvl84Q20": 11016,
+    "slots": 1
   },
   {
     "name": "Malachai's Artifice",
     "baseType": "Unset Ring",
     "dustValIlvl84": 9180,
-    "dustValIlvl84Q20": 11016
+    "dustValIlvl84Q20": 11016,
+    "slots": 1
   },
   {
     "name": "Kongming's Stratagem",
     "baseType": "Ancient Spirit Shield",
     "dustValIlvl84": 9180,
-    "dustValIlvl84Q20": 11016
+    "dustValIlvl84Q20": 11016,
+    "slots": 4
   },
   {
     "name": "Essence Worm",
     "baseType": "Unset Ring",
     "dustValIlvl84": 9180,
-    "dustValIlvl84Q20": 11016
+    "dustValIlvl84Q20": 11016,
+    "slots": 1
   },
   {
     "name": "Architect's Hand",
     "baseType": "Ambush Mitts",
     "dustValIlvl84": 9180,
-    "dustValIlvl84Q20": 11016
+    "dustValIlvl84Q20": 11016,
+    "slots": 4
   },
   {
     "name": "The Annihilating Light",
     "baseType": "Quarterstaff",
     "dustValIlvl84": 9180,
-    "dustValIlvl84Q20": 11016
+    "dustValIlvl84Q20": 11016,
+    "slots": 8
   },
   {
     "name": "Stormseeker",
     "baseType": "Ambush Mitts",
     "dustValIlvl84": 9180,
-    "dustValIlvl84Q20": 11016
+    "dustValIlvl84Q20": 11016,
+    "slots": 4
   },
   {
     "name": "The Geomantic Gyre",
     "baseType": "Highborn Staff",
     "dustValIlvl84": 9040,
-    "dustValIlvl84Q20": 10848
+    "dustValIlvl84Q20": 10848,
+    "slots": 8
   },
   {
     "name": "Maligaro's Restraint",
     "baseType": "Chain Belt",
     "dustValIlvl84": 8920,
-    "dustValIlvl84Q20": 10704
+    "dustValIlvl84Q20": 10704,
+    "slots": 2
   },
   {
     "name": "Jorrhast's Blacksteel",
     "baseType": "Steelhead",
     "dustValIlvl84": 8920,
-    "dustValIlvl84Q20": 10704
+    "dustValIlvl84Q20": 10704,
+    "slots": 8
   },
   {
     "name": "Natural Hierarchy",
     "baseType": "Rotfeather Talisman",
     "dustValIlvl84": 8920,
-    "dustValIlvl84Q20": 10704
+    "dustValIlvl84Q20": 10704,
+    "slots": 1
   },
   {
     "name": "Ascent From Flesh",
     "baseType": "Chain Belt",
     "dustValIlvl84": 8920,
-    "dustValIlvl84Q20": 10704
+    "dustValIlvl84Q20": 10704,
+    "slots": 2
   },
   {
     "name": "Kitava's Thirst",
     "baseType": "Zealot Helmet",
     "dustValIlvl84": 8920,
-    "dustValIlvl84Q20": 10704
+    "dustValIlvl84Q20": 10704,
+    "slots": 4
   },
   {
     "name": "Soulbound",
     "baseType": "Paua Ring",
     "dustValIlvl84": 8920,
-    "dustValIlvl84Q20": 10704
+    "dustValIlvl84Q20": 10704,
+    "slots": 1
   },
   {
     "name": "Doomfletch",
     "baseType": "Royal Bow",
     "dustValIlvl84": 8880,
-    "dustValIlvl84Q20": 10656
+    "dustValIlvl84Q20": 10656,
+    "slots": 8
   },
   {
     "name": "Brutus' Lead Sprinkler",
     "baseType": "Ritual Sceptre",
     "dustValIlvl84": 8880,
-    "dustValIlvl84Q20": 10656
+    "dustValIlvl84Q20": 10656,
+    "slots": 6
   },
   {
     "name": "Terminus Est",
     "baseType": "Tiger Sword",
     "dustValIlvl84": 8760,
-    "dustValIlvl84Q20": 10512
+    "dustValIlvl84Q20": 10512,
+    "slots": 8
   },
   {
     "name": "Black Sun Crest",
     "baseType": "Lacquered Helmet",
     "dustValIlvl84": 8760,
-    "dustValIlvl84Q20": 10512
+    "dustValIlvl84Q20": 10512,
+    "slots": 4
   },
   {
     "name": "Southbound",
     "baseType": "Soldier Gloves",
     "dustValIlvl84": 8760,
-    "dustValIlvl84Q20": 10512
+    "dustValIlvl84Q20": 10512,
+    "slots": 4
   },
   {
     "name": "Ambu's Charge",
     "baseType": "Crusader Chainmail",
     "dustValIlvl84": 8660,
-    "dustValIlvl84Q20": 10392
+    "dustValIlvl84Q20": 10392,
+    "slots": 6
   },
   {
     "name": "Replica Ambu's Charge",
     "baseType": "Crusader Chainmail",
     "dustValIlvl84": 8660,
-    "dustValIlvl84Q20": 10392
+    "dustValIlvl84Q20": 10392,
+    "slots": 6
   },
   {
     "name": "Vaal Caress",
     "baseType": "Bronzescale Gauntlets",
     "dustValIlvl84": 8620,
-    "dustValIlvl84Q20": 10344
+    "dustValIlvl84Q20": 10344,
+    "slots": 4
   },
   {
     "name": "Heartbreaker",
     "baseType": "Royal Skean",
     "dustValIlvl84": 8520,
-    "dustValIlvl84Q20": 10224
+    "dustValIlvl84Q20": 10224,
+    "slots": 3
   },
   {
     "name": "Immortal Flesh",
     "baseType": "Leather Belt",
     "dustValIlvl84": 8520,
-    "dustValIlvl84Q20": 10224
+    "dustValIlvl84Q20": 10224,
+    "slots": 2
   },
   {
     "name": "Victario's Charity",
     "baseType": "Laminated Kite Shield",
     "dustValIlvl84": 8520,
-    "dustValIlvl84Q20": 10224
+    "dustValIlvl84Q20": 10224,
+    "slots": 6
   },
   {
     "name": "The Embalmer",
     "baseType": "Carnal Mitts",
     "dustValIlvl84": 8520,
-    "dustValIlvl84Q20": 10224
+    "dustValIlvl84Q20": 10224,
+    "slots": 4
   },
   {
     "name": "Zeel's Amplifier",
     "baseType": "Polished Spiked Shield",
     "dustValIlvl84": 8260,
-    "dustValIlvl84Q20": 9912
+    "dustValIlvl84Q20": 9912,
+    "slots": 4
   },
   {
     "name": "The Eternal Apple",
     "baseType": "Chiming Spirit Shield",
     "dustValIlvl84": 8260,
-    "dustValIlvl84Q20": 9912
+    "dustValIlvl84Q20": 9912,
+    "slots": 4
   },
   {
     "name": "Pragmatism",
     "baseType": "Colosseum Plate",
     "dustValIlvl84": 8260,
-    "dustValIlvl84Q20": 9912
+    "dustValIlvl84Q20": 9912,
+    "slots": 6
   },
   {
     "name": "Demon Stitcher",
     "baseType": "Satin Gloves",
     "dustValIlvl84": 8160,
-    "dustValIlvl84Q20": 9792
+    "dustValIlvl84Q20": 9792,
+    "slots": 4
   },
   {
     "name": "Eye of Chayula",
     "baseType": "Onyx Amulet",
     "dustValIlvl84": 8140,
-    "dustValIlvl84Q20": 9768
+    "dustValIlvl84Q20": 9768,
+    "slots": 1
   },
   {
     "name": "The Eternal Struggle",
     "baseType": "Onyx Amulet",
     "dustValIlvl84": 8140,
-    "dustValIlvl84Q20": 9768
+    "dustValIlvl84Q20": 9768,
+    "slots": 1
   },
   {
     "name": "Midnight Bargain",
     "baseType": "Engraved Wand",
     "dustValIlvl84": 7920,
-    "dustValIlvl84Q20": 9504
+    "dustValIlvl84Q20": 9504,
+    "slots": 3
   },
   {
     "name": "Ceinture of Benevolence",
     "baseType": "Cloth Belt",
     "dustValIlvl84": 7920,
-    "dustValIlvl84Q20": 9504
+    "dustValIlvl84Q20": 9504,
+    "slots": 2
   },
   {
     "name": "Dream Fragments",
     "baseType": "Sapphire Ring",
     "dustValIlvl84": 7900,
-    "dustValIlvl84Q20": 9480
+    "dustValIlvl84Q20": 9480,
+    "slots": 1
   },
   {
     "name": "Reverberation Rod",
     "baseType": "Spiraled Wand",
     "dustValIlvl84": 7900,
-    "dustValIlvl84Q20": 9480
+    "dustValIlvl84Q20": 9480,
+    "slots": 3
   },
   {
     "name": "Winterweave",
     "baseType": "Coral Ring",
     "dustValIlvl84": 7900,
-    "dustValIlvl84Q20": 9480
+    "dustValIlvl84Q20": 9480,
+    "slots": 1
   },
   {
     "name": "Bloodboil",
     "baseType": "Coral Ring",
     "dustValIlvl84": 7900,
-    "dustValIlvl84Q20": 9480
+    "dustValIlvl84Q20": 9480,
+    "slots": 1
   },
   {
     "name": "Doedre's Tongue",
     "baseType": "Lapis Amulet",
     "dustValIlvl84": 7900,
-    "dustValIlvl84Q20": 9480
+    "dustValIlvl84Q20": 9480,
+    "slots": 1
   },
   {
     "name": "Kalisa's Grace",
     "baseType": "Samite Gloves",
     "dustValIlvl84": 7800,
-    "dustValIlvl84Q20": 9360
+    "dustValIlvl84Q20": 9360,
+    "slots": 4
   },
   {
     "name": "Lightbane Raiment",
     "baseType": "Ornate Ringmail",
     "dustValIlvl84": 7800,
-    "dustValIlvl84Q20": 9360
+    "dustValIlvl84Q20": 9360,
+    "slots": 6
   },
   {
     "name": "Doedre's Scorn",
     "baseType": "Lunaris Circlet",
     "dustValIlvl84": 7680,
-    "dustValIlvl84Q20": 9216
+    "dustValIlvl84Q20": 9216,
+    "slots": 4
   },
   {
     "name": "Moonbender's Wing",
     "baseType": "Tomahawk",
     "dustValIlvl84": 7680,
-    "dustValIlvl84Q20": 9216
+    "dustValIlvl84Q20": 9216,
+    "slots": 6
   },
   {
     "name": "The Flawed Refuge",
     "baseType": "Maple Round Shield",
     "dustValIlvl84": 7680,
-    "dustValIlvl84Q20": 9216
+    "dustValIlvl84Q20": 9216,
+    "slots": 6
   },
   {
     "name": "Ungil's Harmony",
     "baseType": "Turquoise Amulet",
     "dustValIlvl84": 7660,
-    "dustValIlvl84Q20": 9192
+    "dustValIlvl84Q20": 9192,
+    "slots": 1
   },
   {
     "name": "Brinerot Flag",
     "baseType": "Tarnished Spirit Shield",
     "dustValIlvl84": 7660,
-    "dustValIlvl84Q20": 9192
+    "dustValIlvl84Q20": 9192,
+    "slots": 4
   },
   {
     "name": "Ornament of the East",
     "baseType": "Gut Ripper",
     "dustValIlvl84": 7560,
-    "dustValIlvl84Q20": 9072
+    "dustValIlvl84Q20": 9072,
+    "slots": 4
   },
   {
     "name": "Advancing Fortress",
     "baseType": "Gut Ripper",
     "dustValIlvl84": 7560,
-    "dustValIlvl84Q20": 9072
+    "dustValIlvl84Q20": 9072,
+    "slots": 4
   },
   {
     "name": "Valako's Sign",
     "baseType": "Topaz Ring",
     "dustValIlvl84": 7460,
-    "dustValIlvl84Q20": 8952
+    "dustValIlvl84Q20": 8952,
+    "slots": 1
   },
   {
     "name": "Replica Bones of Ullr",
     "baseType": "Silk Slippers",
     "dustValIlvl84": 7440,
-    "dustValIlvl84Q20": 8928
+    "dustValIlvl84Q20": 8928,
+    "slots": 4
   },
   {
     "name": "The Blood Reaper",
     "baseType": "Headsman Axe",
     "dustValIlvl84": 7340,
-    "dustValIlvl84Q20": 8808
+    "dustValIlvl84Q20": 8808,
+    "slots": 8
   },
   {
     "name": "Sibyl's Lament",
     "baseType": "Coral Ring",
     "dustValIlvl84": 7340,
-    "dustValIlvl84Q20": 8808
+    "dustValIlvl84Q20": 8808,
+    "slots": 1
   },
   {
     "name": "The Anvil",
     "baseType": "Amber Amulet",
     "dustValIlvl84": 7340,
-    "dustValIlvl84Q20": 8808
+    "dustValIlvl84Q20": 8808,
+    "slots": 1
   },
   {
     "name": "Maligaro's Lens",
     "baseType": "Compound Spiked Shield",
     "dustValIlvl84": 7340,
-    "dustValIlvl84Q20": 8808
+    "dustValIlvl84Q20": 8808,
+    "slots": 4
   },
   {
     "name": "Mark of Submission",
     "baseType": "Unset Ring",
     "dustValIlvl84": 7340,
-    "dustValIlvl84Q20": 8808
+    "dustValIlvl84Q20": 8808,
+    "slots": 1
   },
   {
     "name": "The Signal Fire",
     "baseType": "Blazing Arrow Quiver",
     "dustValIlvl84": 7340,
-    "dustValIlvl84Q20": 8808
+    "dustValIlvl84Q20": 8808,
+    "slots": 6
   },
   {
     "name": "Corona Solaris",
     "baseType": "Crystal Wand",
     "dustValIlvl84": 7340,
-    "dustValIlvl84Q20": 8808
+    "dustValIlvl84Q20": 8808,
+    "slots": 3
   },
   {
     "name": "The Harvest",
     "baseType": "Jasper Chopper",
     "dustValIlvl84": 7240,
-    "dustValIlvl84Q20": 8688
+    "dustValIlvl84Q20": 8688,
+    "slots": 8
   },
   {
     "name": "Rigwald's Charge",
     "baseType": "Highland Blade",
     "dustValIlvl84": 7120,
-    "dustValIlvl84Q20": 8544
+    "dustValIlvl84Q20": 8544,
+    "slots": 8
   },
   {
     "name": "Widowmaker",
     "baseType": "Boot Blade",
     "dustValIlvl84": 7120,
-    "dustValIlvl84Q20": 8544
+    "dustValIlvl84Q20": 8544,
+    "slots": 3
   },
   {
     "name": "Siegebreaker",
     "baseType": "Heavy Belt",
     "dustValIlvl84": 7120,
-    "dustValIlvl84Q20": 8544
+    "dustValIlvl84Q20": 8544,
+    "slots": 2
   },
   {
     "name": "Tawhanuku's Timing",
     "baseType": "Moonstone Ring",
     "dustValIlvl84": 7120,
-    "dustValIlvl84Q20": 8544
+    "dustValIlvl84Q20": 8544,
+    "slots": 1
   },
   {
     "name": "Heatshiver",
     "baseType": "Leather Hood",
     "dustValIlvl84": 7020,
-    "dustValIlvl84Q20": 8424
+    "dustValIlvl84Q20": 8424,
+    "slots": 4
   },
   {
     "name": "Berek's Respite",
     "baseType": "Two-Stone Ring",
     "dustValIlvl84": 7020,
-    "dustValIlvl84Q20": 8424
+    "dustValIlvl84Q20": 8424,
+    "slots": 1
   },
   {
     "name": "Rigwald's Crest",
     "baseType": "Two-Stone Ring",
     "dustValIlvl84": 7020,
-    "dustValIlvl84Q20": 8424
+    "dustValIlvl84Q20": 8424,
+    "slots": 1
   },
   {
     "name": "The Flow Untethered",
     "baseType": "Cloth Belt",
     "dustValIlvl84": 7020,
-    "dustValIlvl84Q20": 8424
+    "dustValIlvl84Q20": 8424,
+    "slots": 2
   },
   {
     "name": "Replica Tempestuous Steel",
     "baseType": "War Sword",
     "dustValIlvl84": 7020,
-    "dustValIlvl84Q20": 8424
+    "dustValIlvl84Q20": 8424,
+    "slots": 6
   },
   {
     "name": "Arn's Anguish",
     "baseType": "Cloth Belt",
     "dustValIlvl84": 7020,
-    "dustValIlvl84Q20": 8424
+    "dustValIlvl84Q20": 8424,
+    "slots": 2
   },
   {
     "name": "Olesya's Delight",
     "baseType": "Cloth Belt",
     "dustValIlvl84": 7020,
-    "dustValIlvl84Q20": 8424
+    "dustValIlvl84Q20": 8424,
+    "slots": 2
   },
   {
     "name": "Graven's Secret",
     "baseType": "Cloth Belt",
     "dustValIlvl84": 7020,
-    "dustValIlvl84Q20": 8424
+    "dustValIlvl84Q20": 8424,
+    "slots": 2
   },
   {
     "name": "Ixchel's Temptation",
     "baseType": "Gold Ring",
     "dustValIlvl84": 7020,
-    "dustValIlvl84Q20": 8424
+    "dustValIlvl84Q20": 8424,
+    "slots": 1
   },
   {
     "name": "Replica Heatshiver",
     "baseType": "Leather Hood",
     "dustValIlvl84": 7020,
-    "dustValIlvl84Q20": 8424
+    "dustValIlvl84Q20": 8424,
+    "slots": 4
   },
   {
     "name": "Daresso's Passion",
     "baseType": "Estoc",
     "dustValIlvl84": 6920,
-    "dustValIlvl84Q20": 8304
+    "dustValIlvl84Q20": 8304,
+    "slots": 4
   },
   {
     "name": "El'Abin's Visage",
     "baseType": "Fencer Helm",
     "dustValIlvl84": 6920,
-    "dustValIlvl84Q20": 8304
+    "dustValIlvl84Q20": 8304,
+    "slots": 4
   },
   {
     "name": "Bloodbond",
     "baseType": "Bone Armour",
     "dustValIlvl84": 6820,
-    "dustValIlvl84Q20": 8184
+    "dustValIlvl84Q20": 8184,
+    "slots": 6
   },
   {
     "name": "Wurm's Molt",
     "baseType": "Leather Belt",
     "dustValIlvl84": 6720,
-    "dustValIlvl84Q20": 8064
+    "dustValIlvl84Q20": 8064,
+    "slots": 2
   },
   {
     "name": "Winterheart",
     "baseType": "Gold Amulet",
     "dustValIlvl84": 6720,
-    "dustValIlvl84Q20": 8064
+    "dustValIlvl84Q20": 8064,
+    "slots": 1
   },
   {
     "name": "Goldwyrm",
     "baseType": "Nubuck Boots",
     "dustValIlvl84": 6640,
-    "dustValIlvl84Q20": 7968
+    "dustValIlvl84Q20": 7968,
+    "slots": 4
   },
   {
     "name": "The Primordial Chain",
     "baseType": "Coral Amulet",
     "dustValIlvl84": 6640,
-    "dustValIlvl84Q20": 7968
+    "dustValIlvl84Q20": 7968,
+    "slots": 1
   },
   {
     "name": "Plume of Pursuit",
     "baseType": "Bone Circlet",
     "dustValIlvl84": 6640,
-    "dustValIlvl84Q20": 7968
+    "dustValIlvl84Q20": 7968,
+    "slots": 4
   },
   {
     "name": "Cloak of Flame",
     "baseType": "Scholar's Robe",
     "dustValIlvl84": 6620,
-    "dustValIlvl84Q20": 7944
+    "dustValIlvl84Q20": 7944,
+    "slots": 6
   },
   {
     "name": "Clayshaper",
     "baseType": "Rock Breaker",
     "dustValIlvl84": 6520,
-    "dustValIlvl84Q20": 7824
+    "dustValIlvl84Q20": 7824,
+    "slots": 6
   },
   {
     "name": "Sentari's Answer",
     "baseType": "Brass Spirit Shield",
     "dustValIlvl84": 6440,
-    "dustValIlvl84Q20": 7728
+    "dustValIlvl84Q20": 7728,
+    "slots": 4
   },
   {
     "name": "Chober Chaber",
     "baseType": "Great Mallet",
     "dustValIlvl84": 6340,
-    "dustValIlvl84Q20": 7608
+    "dustValIlvl84Q20": 7608,
+    "slots": 8
   },
   {
     "name": "Eclipse Solaris",
     "baseType": "Engraved Wand",
     "dustValIlvl84": 6340,
-    "dustValIlvl84Q20": 7608
+    "dustValIlvl84Q20": 7608,
+    "slots": 3
   },
   {
     "name": "Chaber Cairn",
     "baseType": "Great Mallet",
     "dustValIlvl84": 6340,
-    "dustValIlvl84Q20": 7608
+    "dustValIlvl84Q20": 7608,
+    "slots": 8
   },
   {
     "name": "The Aylardex",
     "baseType": "Agate Amulet",
     "dustValIlvl84": 6260,
-    "dustValIlvl84Q20": 7512
+    "dustValIlvl84Q20": 7512,
+    "slots": 1
   },
   {
     "name": "Iron Commander",
     "baseType": "Death Bow",
     "dustValIlvl84": 6260,
-    "dustValIlvl84Q20": 7512
+    "dustValIlvl84Q20": 7512,
+    "slots": 8
   },
   {
     "name": "Replica Bitterdream",
     "baseType": "Shadow Sceptre",
     "dustValIlvl84": 6260,
-    "dustValIlvl84Q20": 7512
+    "dustValIlvl84Q20": 7512,
+    "slots": 6
   },
   {
     "name": "Ahkeli's Valley",
     "baseType": "Ruby Ring",
     "dustValIlvl84": 6240,
-    "dustValIlvl84Q20": 7488
+    "dustValIlvl84Q20": 7488,
+    "slots": 1
   },
   {
     "name": "Precursor's Emblem",
     "baseType": "Ruby Ring",
     "dustValIlvl84": 6240,
-    "dustValIlvl84Q20": 7488
+    "dustValIlvl84Q20": 7488,
+    "slots": 1
   },
   {
     "name": "Circle of Anguish",
     "baseType": "Ruby Ring",
     "dustValIlvl84": 6240,
-    "dustValIlvl84Q20": 7488
+    "dustValIlvl84Q20": 7488,
+    "slots": 1
   },
   {
     "name": "Icetomb",
     "baseType": "Latticed Ringmail",
     "dustValIlvl84": 6140,
-    "dustValIlvl84Q20": 7368
+    "dustValIlvl84Q20": 7368,
+    "slots": 6
   },
   {
     "name": "Crystal Vault",
     "baseType": "Latticed Ringmail",
     "dustValIlvl84": 6140,
-    "dustValIlvl84Q20": 7368
+    "dustValIlvl84Q20": 7368,
+    "slots": 6
   },
   {
     "name": "Orbala's Stand",
     "baseType": "Eelskin Boots",
     "dustValIlvl84": 6140,
-    "dustValIlvl84Q20": 7368
+    "dustValIlvl84Q20": 7368,
+    "slots": 4
   },
   {
     "name": "Rearguard",
     "baseType": "Blunt Arrow Quiver",
     "dustValIlvl84": 6060,
-    "dustValIlvl84Q20": 7272
+    "dustValIlvl84Q20": 7272,
+    "slots": 6
   },
   {
     "name": "Shadows and Dust",
     "baseType": "Clasped Mitts",
     "dustValIlvl84": 6060,
-    "dustValIlvl84Q20": 7272
+    "dustValIlvl84Q20": 7272,
+    "slots": 4
   },
   {
     "name": "Demigod's Beacon",
     "baseType": "Golden Flame",
     "dustValIlvl84": 6060,
-    "dustValIlvl84Q20": 7272
+    "dustValIlvl84Q20": 7272,
+    "slots": 6
   },
   {
     "name": "Aukuna's Will",
     "baseType": "Clasped Mitts",
     "dustValIlvl84": 6060,
-    "dustValIlvl84Q20": 7272
+    "dustValIlvl84Q20": 7272,
+    "slots": 4
   },
   {
     "name": "Replica Winterheart",
     "baseType": "Gold Amulet",
     "dustValIlvl84": 6060,
-    "dustValIlvl84Q20": 7272
+    "dustValIlvl84Q20": 7272,
+    "slots": 1
   },
   {
     "name": "Valyrium",
     "baseType": "Moonstone Ring",
     "dustValIlvl84": 5980,
-    "dustValIlvl84Q20": 7176
+    "dustValIlvl84Q20": 7176,
+    "slots": 1
   },
   {
     "name": "Lioneye's Paws",
     "baseType": "Bronzescale Boots",
     "dustValIlvl84": 5900,
-    "dustValIlvl84Q20": 7080
+    "dustValIlvl84Q20": 7080,
+    "slots": 4
   },
   {
     "name": "Thief's Torment",
     "baseType": "Prismatic Ring",
     "dustValIlvl84": 5900,
-    "dustValIlvl84Q20": 7080
+    "dustValIlvl84Q20": 7080,
+    "slots": 1
   },
   {
     "name": "Lori's Lantern",
     "baseType": "Prismatic Ring",
     "dustValIlvl84": 5900,
-    "dustValIlvl84Q20": 7080
+    "dustValIlvl84Q20": 7080,
+    "slots": 1
   },
   {
     "name": "Replica Twyzel",
     "baseType": "Sage Wand",
     "dustValIlvl84": 5900,
-    "dustValIlvl84Q20": 7080
+    "dustValIlvl84Q20": 7080,
+    "slots": 3
   },
   {
     "name": "Zahndethus' Cassock",
     "baseType": "Sage's Robe",
     "dustValIlvl84": 5800,
-    "dustValIlvl84Q20": 6960
+    "dustValIlvl84Q20": 6960,
+    "slots": 6
   },
   {
     "name": "Mindspiral",
     "baseType": "Aventail Helmet",
     "dustValIlvl84": 5800,
-    "dustValIlvl84Q20": 6960
+    "dustValIlvl84Q20": 6960,
+    "slots": 4
   },
   {
     "name": "Cybil's Paw",
     "baseType": "Thresher Claw",
     "dustValIlvl84": 5800,
-    "dustValIlvl84Q20": 6960
+    "dustValIlvl84Q20": 6960,
+    "slots": 4
   },
   {
     "name": "Torchoak Step",
     "baseType": "Antique Greaves",
     "dustValIlvl84": 5800,
-    "dustValIlvl84Q20": 6960
+    "dustValIlvl84Q20": 6960,
+    "slots": 4
   },
   {
     "name": "Chalice of Horrors",
     "baseType": "War Buckler",
     "dustValIlvl84": 5720,
-    "dustValIlvl84Q20": 6864
+    "dustValIlvl84Q20": 6864,
+    "slots": 4
   },
   {
     "name": "Ngamahu's Sign",
     "baseType": "Ruby Ring",
     "dustValIlvl84": 5720,
-    "dustValIlvl84Q20": 6864
+    "dustValIlvl84Q20": 6864,
+    "slots": 1
   },
   {
     "name": "Skullhead",
     "baseType": "Secutor Helm",
     "dustValIlvl84": 5620,
-    "dustValIlvl84Q20": 6744
+    "dustValIlvl84Q20": 6744,
+    "slots": 4
   },
   {
     "name": "Skirmish",
     "baseType": "Two-Point Arrow Quiver",
     "dustValIlvl84": 5620,
-    "dustValIlvl84Q20": 6744
+    "dustValIlvl84Q20": 6744,
+    "slots": 6
   },
   {
     "name": "Gifts from Above",
     "baseType": "Diamond Ring",
     "dustValIlvl84": 5560,
-    "dustValIlvl84Q20": 6672
+    "dustValIlvl84Q20": 6672,
+    "slots": 1
   },
   {
     "name": "Blightwell",
     "baseType": "Clutching Talisman",
     "dustValIlvl84": 5560,
-    "dustValIlvl84Q20": 6672
+    "dustValIlvl84Q20": 6672,
+    "slots": 1
   },
   {
     "name": "Replica Leer Cast",
     "baseType": "Festival Mask",
     "dustValIlvl84": 5560,
-    "dustValIlvl84Q20": 6672
+    "dustValIlvl84Q20": 6672,
+    "slots": 4
   },
   {
     "name": "Putembo's Meadow",
     "baseType": "Topaz Ring",
     "dustValIlvl84": 5540,
-    "dustValIlvl84Q20": 6648
+    "dustValIlvl84Q20": 6648,
+    "slots": 1
   },
   {
     "name": "Circle of Regret",
     "baseType": "Topaz Ring",
     "dustValIlvl84": 5540,
-    "dustValIlvl84Q20": 6648
+    "dustValIlvl84Q20": 6648,
+    "slots": 1
   },
   {
     "name": "The Three Dragons",
     "baseType": "Golden Mask",
     "dustValIlvl84": 5460,
-    "dustValIlvl84Q20": 6552
+    "dustValIlvl84Q20": 6552,
+    "slots": 4
   },
   {
     "name": "Earendel's Embrace",
     "baseType": "Grinning Fetish",
     "dustValIlvl84": 5460,
-    "dustValIlvl84Q20": 6552
+    "dustValIlvl84Q20": 6552,
+    "slots": 6
   },
   {
     "name": "Willclash",
     "baseType": "Golden Mask",
     "dustValIlvl84": 5460,
-    "dustValIlvl84Q20": 6552
+    "dustValIlvl84Q20": 6552,
+    "slots": 4
   },
   {
     "name": "Lycosidae",
     "baseType": "Rawhide Tower Shield",
     "dustValIlvl84": 5380,
-    "dustValIlvl84Q20": 6456
+    "dustValIlvl84Q20": 6456,
+    "slots": 8
   },
   {
     "name": "Mortem Morsu",
     "baseType": "Fright Claw",
     "dustValIlvl84": 5300,
-    "dustValIlvl84Q20": 6360
+    "dustValIlvl84Q20": 6360,
+    "slots": 4
   },
   {
     "name": "Al Dhih",
     "baseType": "Timeworn Claw",
     "dustValIlvl84": 5240,
-    "dustValIlvl84Q20": 6288
+    "dustValIlvl84Q20": 6288,
+    "slots": 4
   },
   {
     "name": "The Baron",
     "baseType": "Close Helmet",
     "dustValIlvl84": 5240,
-    "dustValIlvl84Q20": 6288
+    "dustValIlvl84Q20": 6288,
+    "slots": 4
   },
   {
     "name": "Fairgraves' Tricorne",
     "baseType": "Tricorne",
     "dustValIlvl84": 5220,
-    "dustValIlvl84Q20": 6264
+    "dustValIlvl84Q20": 6264,
+    "slots": 4
   },
   {
     "name": "Hyperboreus",
     "baseType": "Leather Belt",
     "dustValIlvl84": 5220,
-    "dustValIlvl84Q20": 6264
+    "dustValIlvl84Q20": 6264,
+    "slots": 2
   },
   {
     "name": "Survivor's Guilt",
     "baseType": "Heavy Belt",
     "dustValIlvl84": 5220,
-    "dustValIlvl84Q20": 6264
+    "dustValIlvl84Q20": 6264,
+    "slots": 2
   },
   {
     "name": "Reaper's Pursuit",
     "baseType": "Shadow Axe",
     "dustValIlvl84": 5160,
-    "dustValIlvl84Q20": 6192
+    "dustValIlvl84Q20": 6192,
+    "slots": 8
   },
   {
     "name": "Deidbellow",
     "baseType": "Gilded Sallet",
     "dustValIlvl84": 5160,
-    "dustValIlvl84Q20": 6192
+    "dustValIlvl84Q20": 6192,
+    "slots": 4
   },
   {
     "name": "Windshriek",
     "baseType": "Reinforced Greaves",
     "dustValIlvl84": 5160,
-    "dustValIlvl84Q20": 6192
+    "dustValIlvl84Q20": 6192,
+    "slots": 4
   },
   {
     "name": "Drillneck",
     "baseType": "Penetrating Arrow Quiver",
     "dustValIlvl84": 5080,
-    "dustValIlvl84Q20": 6096
+    "dustValIlvl84Q20": 6096,
+    "slots": 6
   },
   {
     "name": "Timeclasp",
     "baseType": "Moonstone Ring",
     "dustValIlvl84": 5080,
-    "dustValIlvl84Q20": 6096
+    "dustValIlvl84Q20": 6096,
+    "slots": 1
   },
   {
     "name": "Faithguard",
     "baseType": "Runic Helm",
     "dustValIlvl84": 5080,
-    "dustValIlvl84Q20": 6096
+    "dustValIlvl84Q20": 6096,
+    "slots": 4
   },
   {
     "name": "Shavronne's Pace",
     "baseType": "Scholar Boots",
     "dustValIlvl84": 5000,
-    "dustValIlvl84Q20": 6000
+    "dustValIlvl84Q20": 6000,
+    "slots": 4
   },
   {
     "name": "Briskwrap",
     "baseType": "Sun Leather",
     "dustValIlvl84": 5000,
-    "dustValIlvl84Q20": 6000
+    "dustValIlvl84Q20": 6000,
+    "slots": 6
   },
   {
     "name": "Flesh-Eater",
     "baseType": "Dream Mace",
     "dustValIlvl84": 5000,
-    "dustValIlvl84Q20": 6000
+    "dustValIlvl84Q20": 6000,
+    "slots": 6
   },
   {
     "name": "Triad Grip",
     "baseType": "Mesh Gloves",
     "dustValIlvl84": 5000,
-    "dustValIlvl84Q20": 6000
+    "dustValIlvl84Q20": 6000,
+    "slots": 4
   },
   {
     "name": "Shavronne's Gambit",
     "baseType": "Scholar Boots",
     "dustValIlvl84": 5000,
-    "dustValIlvl84Q20": 6000
+    "dustValIlvl84Q20": 6000,
+    "slots": 4
   },
   {
     "name": "Death's Opus",
     "baseType": "Death Bow",
     "dustValIlvl84": 5000,
-    "dustValIlvl84Q20": 6000
+    "dustValIlvl84Q20": 6000,
+    "slots": 8
   },
   {
     "name": "Le Heup of All",
     "baseType": "Iron Ring",
     "dustValIlvl84": 4940,
-    "dustValIlvl84Q20": 5928
+    "dustValIlvl84Q20": 5928,
+    "slots": 1
   },
   {
     "name": "Pyre",
     "baseType": "Sapphire Ring",
     "dustValIlvl84": 4920,
-    "dustValIlvl84Q20": 5904
+    "dustValIlvl84Q20": 5904,
+    "slots": 1
   },
   {
     "name": "Uzaza's Mountain",
     "baseType": "Sapphire Ring",
     "dustValIlvl84": 4920,
-    "dustValIlvl84Q20": 5904
+    "dustValIlvl84Q20": 5904,
+    "slots": 1
   },
   {
     "name": "Circle of Fear",
     "baseType": "Sapphire Ring",
     "dustValIlvl84": 4920,
-    "dustValIlvl84Q20": 5904
+    "dustValIlvl84Q20": 5904,
+    "slots": 1
   },
   {
     "name": "Replica Tasalio's Sign",
     "baseType": "Sapphire Ring",
     "dustValIlvl84": 4920,
-    "dustValIlvl84Q20": 5904
+    "dustValIlvl84Q20": 5904,
+    "slots": 1
   },
   {
     "name": "Call of the Void",
     "baseType": "Sapphire Ring",
     "dustValIlvl84": 4920,
-    "dustValIlvl84Q20": 5904
+    "dustValIlvl84Q20": 5904,
+    "slots": 1
   },
   {
     "name": "Ikiaho's Promise",
     "baseType": "Coral Amulet",
     "dustValIlvl84": 4860,
-    "dustValIlvl84Q20": 5832
+    "dustValIlvl84Q20": 5832,
+    "slots": 1
   },
   {
     "name": "Matua Tupuna",
     "baseType": "Tarnished Spirit Shield",
     "dustValIlvl84": 4800,
-    "dustValIlvl84Q20": 5760
+    "dustValIlvl84Q20": 5760,
+    "slots": 4
   },
   {
     "name": "The Trickster's Smile",
     "baseType": "Visored Sallet",
     "dustValIlvl84": 4800,
-    "dustValIlvl84Q20": 5760
+    "dustValIlvl84Q20": 5760,
+    "slots": 4
   },
   {
     "name": "Blood of Corruption",
     "baseType": "Amber Amulet",
     "dustValIlvl84": 4780,
-    "dustValIlvl84Q20": 5736
+    "dustValIlvl84Q20": 5736,
+    "slots": 1
   },
   {
     "name": "Replica Karui Ward",
     "baseType": "Jade Amulet",
     "dustValIlvl84": 4780,
-    "dustValIlvl84Q20": 5736
+    "dustValIlvl84Q20": 5736,
+    "slots": 1
   },
   {
     "name": "Mightflay",
     "baseType": "Flaying Knife",
     "dustValIlvl84": 4720,
-    "dustValIlvl84Q20": 5664
+    "dustValIlvl84Q20": 5664,
+    "slots": 3
   },
   {
     "name": "Titucius' Span",
     "baseType": "Reinforced Tower Shield",
     "dustValIlvl84": 4720,
-    "dustValIlvl84Q20": 5664
+    "dustValIlvl84Q20": 5664,
+    "slots": 8
   },
   {
     "name": "Twyzel",
     "baseType": "Sage Wand",
     "dustValIlvl84": 4720,
-    "dustValIlvl84Q20": 5664
+    "dustValIlvl84Q20": 5664,
+    "slots": 3
   },
   {
     "name": "Chitus' Needle",
     "baseType": "Elegant Foil",
     "dustValIlvl84": 4720,
-    "dustValIlvl84Q20": 5664
+    "dustValIlvl84Q20": 5664,
+    "slots": 4
   },
   {
     "name": "The Warden's Brand",
     "baseType": "Iron Ring",
     "dustValIlvl84": 4720,
-    "dustValIlvl84Q20": 5664
+    "dustValIlvl84Q20": 5664,
+    "slots": 1
   },
   {
     "name": "Retaliation Charm",
     "baseType": "Citrine Amulet",
     "dustValIlvl84": 4720,
-    "dustValIlvl84Q20": 5664
+    "dustValIlvl84Q20": 5664,
+    "slots": 1
   },
   {
     "name": "Elevore",
     "baseType": "Wolf Pelt",
     "dustValIlvl84": 4720,
-    "dustValIlvl84Q20": 5664
+    "dustValIlvl84Q20": 5664,
+    "slots": 4
   },
   {
     "name": "Veil of the Night",
     "baseType": "Great Helmet",
     "dustValIlvl84": 4660,
-    "dustValIlvl84Q20": 5592
+    "dustValIlvl84Q20": 5592,
+    "slots": 4
   },
   {
     "name": "Edge of Madness",
     "baseType": "Etched Greatsword",
     "dustValIlvl84": 4660,
-    "dustValIlvl84Q20": 5592
+    "dustValIlvl84Q20": 5592,
+    "slots": 8
   },
   {
     "name": "Replica Veil of the Night",
     "baseType": "Great Helmet",
     "dustValIlvl84": 4660,
-    "dustValIlvl84Q20": 5592
+    "dustValIlvl84Q20": 5592,
+    "slots": 4
   },
   {
     "name": "Relentless Fury",
     "baseType": "Decorative Axe",
     "dustValIlvl84": 4580,
-    "dustValIlvl84Q20": 5496
+    "dustValIlvl84Q20": 5496,
+    "slots": 6
   },
   {
     "name": "Thirst for Horrors",
     "baseType": "War Buckler",
     "dustValIlvl84": 4580,
-    "dustValIlvl84Q20": 5496
+    "dustValIlvl84Q20": 5496,
+    "slots": 4
   },
   {
     "name": "Fated End",
     "baseType": "Paua Ring",
     "dustValIlvl84": 4500,
-    "dustValIlvl84Q20": 5400
+    "dustValIlvl84Q20": 5400,
+    "slots": 1
   },
   {
     "name": "Replica Doedre's Damning",
     "baseType": "Paua Ring",
     "dustValIlvl84": 4500,
-    "dustValIlvl84Q20": 5400
+    "dustValIlvl84Q20": 5400,
+    "slots": 1
   },
   {
     "name": "Wake of Destruction",
     "baseType": "Mesh Boots",
     "dustValIlvl84": 4440,
-    "dustValIlvl84Q20": 5328
+    "dustValIlvl84Q20": 5328,
+    "slots": 4
   },
   {
     "name": "Leer Cast",
     "baseType": "Festival Mask",
     "dustValIlvl84": 4440,
-    "dustValIlvl84Q20": 5328
+    "dustValIlvl84Q20": 5328,
+    "slots": 4
   },
   {
     "name": "Lakishu's Blade",
     "baseType": "Elegant Sword",
     "dustValIlvl84": 4440,
-    "dustValIlvl84Q20": 5328
+    "dustValIlvl84Q20": 5328,
+    "slots": 6
   },
   {
     "name": "The Stormheart",
     "baseType": "Royal Staff",
     "dustValIlvl84": 4440,
-    "dustValIlvl84Q20": 5328
+    "dustValIlvl84Q20": 5328,
+    "slots": 8
   },
   {
     "name": "Viper's Scales",
     "baseType": "Full Scale Armour",
     "dustValIlvl84": 4440,
-    "dustValIlvl84Q20": 5328
+    "dustValIlvl84Q20": 5328,
+    "slots": 6
   },
   {
     "name": "Doomfletch's Prism",
     "baseType": "Royal Bow",
     "dustValIlvl84": 4440,
-    "dustValIlvl84Q20": 5328
+    "dustValIlvl84Q20": 5328,
+    "slots": 8
   },
   {
     "name": "The Stormwall",
     "baseType": "Royal Staff",
     "dustValIlvl84": 4440,
-    "dustValIlvl84Q20": 5328
+    "dustValIlvl84Q20": 5328,
+    "slots": 8
   },
   {
     "name": "Meginord's Girdle",
     "baseType": "Heavy Belt",
     "dustValIlvl84": 4380,
-    "dustValIlvl84Q20": 5256
+    "dustValIlvl84Q20": 5256,
+    "slots": 2
   },
   {
     "name": "Berek's Pass",
     "baseType": "Two-Stone Ring",
     "dustValIlvl84": 4380,
-    "dustValIlvl84Q20": 5256
+    "dustValIlvl84Q20": 5256,
+    "slots": 1
   },
   {
     "name": "Berek's Grip",
     "baseType": "Two-Stone Ring",
     "dustValIlvl84": 4380,
-    "dustValIlvl84Q20": 5256
+    "dustValIlvl84Q20": 5256,
+    "slots": 1
   },
   {
     "name": "Kikazaru",
     "baseType": "Topaz Ring",
     "dustValIlvl84": 4380,
-    "dustValIlvl84Q20": 5256
+    "dustValIlvl84Q20": 5256,
+    "slots": 1
   },
   {
     "name": "Belt of the Deceiver",
     "baseType": "Heavy Belt",
     "dustValIlvl84": 4380,
-    "dustValIlvl84Q20": 5256
+    "dustValIlvl84Q20": 5256,
+    "slots": 2
   },
   {
     "name": "Tasalio's Sign",
     "baseType": "Sapphire Ring",
     "dustValIlvl84": 4380,
-    "dustValIlvl84Q20": 5256
+    "dustValIlvl84Q20": 5256,
+    "slots": 1
   },
   {
     "name": "Maligaro's Cruelty",
     "baseType": "Turquoise Amulet",
     "dustValIlvl84": 4380,
-    "dustValIlvl84Q20": 5256
+    "dustValIlvl84Q20": 5256,
+    "slots": 1
   },
   {
     "name": "Curtain Call",
     "baseType": "Plague Mask",
     "dustValIlvl84": 4380,
-    "dustValIlvl84Q20": 5256
+    "dustValIlvl84Q20": 5256,
+    "slots": 4
   },
   {
     "name": "The Felbog Fang",
     "baseType": "Citrine Amulet",
     "dustValIlvl84": 4380,
-    "dustValIlvl84Q20": 5256
+    "dustValIlvl84Q20": 5256,
+    "slots": 1
   },
   {
     "name": "Honoured Alliance",
     "baseType": "Coral Ring",
     "dustValIlvl84": 4380,
-    "dustValIlvl84Q20": 5256
+    "dustValIlvl84Q20": 5256,
+    "slots": 1
   },
   {
     "name": "Geofri's Baptism",
     "baseType": "Brass Maul",
     "dustValIlvl84": 4320,
-    "dustValIlvl84Q20": 5184
+    "dustValIlvl84Q20": 5184,
+    "slots": 8
   },
   {
     "name": "Sundance",
     "baseType": "Clasped Boots",
     "dustValIlvl84": 4320,
-    "dustValIlvl84Q20": 5184
+    "dustValIlvl84Q20": 5184,
+    "slots": 4
   },
   {
     "name": "Slitherpinch",
     "baseType": "Bronzescale Gauntlets",
     "dustValIlvl84": 4320,
-    "dustValIlvl84Q20": 5184
+    "dustValIlvl84Q20": 5184,
+    "slots": 4
   },
   {
     "name": "Queen's Decree",
     "baseType": "Ornate Sword",
     "dustValIlvl84": 4320,
-    "dustValIlvl84Q20": 5184
+    "dustValIlvl84Q20": 5184,
+    "slots": 8
   },
   {
     "name": "Glitterdisc",
     "baseType": "Burnished Spiked Shield",
     "dustValIlvl84": 4320,
-    "dustValIlvl84Q20": 5184
+    "dustValIlvl84Q20": 5184,
+    "slots": 4
   },
   {
     "name": "Queen's Escape",
     "baseType": "Ornate Sword",
     "dustValIlvl84": 4320,
-    "dustValIlvl84Q20": 5184
+    "dustValIlvl84Q20": 5184,
+    "slots": 8
   },
   {
     "name": "Sunspite",
     "baseType": "Clasped Boots",
     "dustValIlvl84": 4320,
-    "dustValIlvl84Q20": 5184
+    "dustValIlvl84Q20": 5184,
+    "slots": 4
   },
   {
     "name": "Geofri's Devotion",
     "baseType": "Brass Maul",
     "dustValIlvl84": 4320,
-    "dustValIlvl84Q20": 5184
+    "dustValIlvl84Q20": 5184,
+    "slots": 8
   },
   {
     "name": "Thousand Ribbons",
     "baseType": "Simple Robe",
     "dustValIlvl84": 4240,
-    "dustValIlvl84Q20": 5088
+    "dustValIlvl84Q20": 5088,
+    "slots": 6
   },
   {
     "name": "Tabula Rasa",
     "baseType": "Simple Robe",
     "dustValIlvl84": 4240,
-    "dustValIlvl84Q20": 5088
+    "dustValIlvl84Q20": 5088,
+    "slots": 6
   },
   {
     "name": "Ewar's Mirage",
     "baseType": "Antique Rapier",
     "dustValIlvl84": 4180,
-    "dustValIlvl84Q20": 5016
+    "dustValIlvl84Q20": 5016,
+    "slots": 4
   },
   {
     "name": "Mark of the Red Covenant",
     "baseType": "Tribal Circlet",
     "dustValIlvl84": 4180,
-    "dustValIlvl84Q20": 5016
+    "dustValIlvl84Q20": 5016,
+    "slots": 4
   },
   {
     "name": "Coward's Legacy",
     "baseType": "Chain Belt",
     "dustValIlvl84": 4120,
-    "dustValIlvl84Q20": 4944
+    "dustValIlvl84Q20": 4944,
+    "slots": 2
   },
   {
     "name": "Circle of Guilt",
     "baseType": "Iron Ring",
     "dustValIlvl84": 4120,
-    "dustValIlvl84Q20": 4944
+    "dustValIlvl84Q20": 4944,
+    "slots": 1
   },
   {
     "name": "Chains of Emancipation",
     "baseType": "Chain Belt",
     "dustValIlvl84": 4120,
-    "dustValIlvl84Q20": 4944
+    "dustValIlvl84Q20": 4944,
+    "slots": 2
   },
   {
     "name": "Carnage Heart",
     "baseType": "Onyx Amulet",
     "dustValIlvl84": 4060,
-    "dustValIlvl84Q20": 4872
+    "dustValIlvl84Q20": 4872,
+    "slots": 1
   },
   {
     "name": "Foxshade",
     "baseType": "Wild Leather",
     "dustValIlvl84": 4060,
-    "dustValIlvl84Q20": 4872
+    "dustValIlvl84Q20": 4872,
+    "slots": 6
   },
   {
     "name": "Prismweave",
     "baseType": "Rustic Sash",
     "dustValIlvl84": 4060,
-    "dustValIlvl84Q20": 4872
+    "dustValIlvl84Q20": 4872,
+    "slots": 2
   },
   {
     "name": "Duskwing",
     "baseType": "Saqawine Vulture",
     "dustValIlvl84": 4060,
-    "dustValIlvl84Q20": 4872
+    "dustValIlvl84Q20": 4872,
+    "slots": 1
   },
   {
     "name": "Timetwist",
     "baseType": "Moonstone Ring",
     "dustValIlvl84": 4060,
-    "dustValIlvl84Q20": 4872
+    "dustValIlvl84Q20": 4872,
+    "slots": 1
   },
   {
     "name": "Fox's Fortune",
     "baseType": "Wild Leather",
     "dustValIlvl84": 4060,
-    "dustValIlvl84Q20": 4872
+    "dustValIlvl84Q20": 4872,
+    "slots": 6
   },
   {
     "name": "Malachai's Simula",
     "baseType": "Iron Mask",
     "dustValIlvl84": 4020,
-    "dustValIlvl84Q20": 4824
+    "dustValIlvl84Q20": 4824,
+    "slots": 4
   },
   {
     "name": "Ashrend",
     "baseType": "Buckskin Tunic",
     "dustValIlvl84": 4020,
-    "dustValIlvl84Q20": 4824
+    "dustValIlvl84Q20": 4824,
+    "slots": 6
   },
   {
     "name": "Solaris Lorica",
     "baseType": "Copper Plate",
     "dustValIlvl84": 4020,
-    "dustValIlvl84Q20": 4824
+    "dustValIlvl84Q20": 4824,
+    "slots": 6
   },
   {
     "name": "Trolltimber Spire",
     "baseType": "Cedar Tower Shield",
     "dustValIlvl84": 4020,
-    "dustValIlvl84Q20": 4824
+    "dustValIlvl84Q20": 4824,
+    "slots": 8
   },
   {
     "name": "Widowhail",
     "baseType": "Crude Bow",
     "dustValIlvl84": 4000,
-    "dustValIlvl84Q20": 4800
+    "dustValIlvl84Q20": 4800,
+    "slots": 6
   },
   {
     "name": "Storm Prison",
     "baseType": "Spiraled Wand",
     "dustValIlvl84": 3940,
-    "dustValIlvl84Q20": 4728
+    "dustValIlvl84Q20": 4728,
+    "slots": 3
   },
   {
     "name": "Amplification Rod",
     "baseType": "Spiraled Wand",
     "dustValIlvl84": 3940,
-    "dustValIlvl84Q20": 4728
+    "dustValIlvl84Q20": 4728,
+    "slots": 3
   },
   {
     "name": "Facebreaker",
     "baseType": "Strapped Mitts",
     "dustValIlvl84": 3900,
-    "dustValIlvl84Q20": 4680
+    "dustValIlvl84Q20": 4680,
+    "slots": 4
   },
   {
     "name": "Mokou's Embrace",
     "baseType": "Ruby Ring",
     "dustValIlvl84": 3900,
-    "dustValIlvl84Q20": 4680
+    "dustValIlvl84Q20": 4680,
+    "slots": 1
   },
   {
     "name": "Ahkeli's Mountain",
     "baseType": "Ruby Ring",
     "dustValIlvl84": 3900,
-    "dustValIlvl84Q20": 4680
+    "dustValIlvl84Q20": 4680,
+    "slots": 1
   },
   {
     "name": "The Peregrine",
     "baseType": "Visored Sallet",
     "dustValIlvl84": 3840,
-    "dustValIlvl84Q20": 4608
+    "dustValIlvl84Q20": 4608,
+    "slots": 4
   },
   {
     "name": "Stormcharger",
     "baseType": "Plated Greaves",
     "dustValIlvl84": 3840,
-    "dustValIlvl84Q20": 4608
+    "dustValIlvl84Q20": 4608,
+    "slots": 4
   },
   {
     "name": "Giantsbane",
     "baseType": "Bronze Gauntlets",
     "dustValIlvl84": 3840,
-    "dustValIlvl84Q20": 4608
+    "dustValIlvl84Q20": 4608,
+    "slots": 4
   },
   {
     "name": "Whakatutuki o Matua",
     "baseType": "Tarnished Spirit Shield",
     "dustValIlvl84": 3840,
-    "dustValIlvl84Q20": 4608
+    "dustValIlvl84Q20": 4608,
+    "slots": 4
   },
   {
     "name": "Flesh and Spirit",
     "baseType": "Ironscale Gauntlets",
     "dustValIlvl84": 3780,
-    "dustValIlvl84Q20": 4536
+    "dustValIlvl84Q20": 4536,
+    "slots": 4
   },
   {
     "name": "Replica Bloodplay",
     "baseType": "Stiletto",
     "dustValIlvl84": 3780,
-    "dustValIlvl84Q20": 4536
+    "dustValIlvl84Q20": 4536,
+    "slots": 3
   },
   {
     "name": "Bones of Ullr",
     "baseType": "Silk Slippers",
     "dustValIlvl84": 3720,
-    "dustValIlvl84Q20": 4464
+    "dustValIlvl84Q20": 4464,
+    "slots": 4
   },
   {
     "name": "Quecholli",
     "baseType": "Jagged Maul",
     "dustValIlvl84": 3720,
-    "dustValIlvl84Q20": 4464
+    "dustValIlvl84Q20": 4464,
+    "slots": 8
   },
   {
     "name": "Deerstalker",
     "baseType": "Deerskin Boots",
     "dustValIlvl84": 3720,
-    "dustValIlvl84Q20": 4464
+    "dustValIlvl84Q20": 4464,
+    "slots": 4
   },
   {
     "name": "Fidelitas' Spike",
     "baseType": "Jagged Foil",
     "dustValIlvl84": 3720,
-    "dustValIlvl84Q20": 4464
+    "dustValIlvl84Q20": 4464,
+    "slots": 4
   },
   {
     "name": "Bated Breath",
     "baseType": "Chain Belt",
     "dustValIlvl84": 3720,
-    "dustValIlvl84Q20": 4464
+    "dustValIlvl84Q20": 4464,
+    "slots": 2
   },
   {
     "name": "Praxis",
     "baseType": "Paua Ring",
     "dustValIlvl84": 3720,
-    "dustValIlvl84Q20": 4464
+    "dustValIlvl84Q20": 4464,
+    "slots": 1
   },
   {
     "name": "Panquetzaliztli",
     "baseType": "Jagged Maul",
     "dustValIlvl84": 3720,
-    "dustValIlvl84Q20": 4464
+    "dustValIlvl84Q20": 4464,
+    "slots": 8
   },
   {
     "name": "Perandus Blazon",
     "baseType": "Cloth Belt",
     "dustValIlvl84": 3500,
-    "dustValIlvl84Q20": 4200
+    "dustValIlvl84Q20": 4200,
+    "slots": 2
   },
   {
     "name": "Ungil's Gauche",
     "baseType": "Boot Knife",
     "dustValIlvl84": 3500,
-    "dustValIlvl84Q20": 4200
+    "dustValIlvl84Q20": 4200,
+    "slots": 3
   },
   {
     "name": "Brightbeak",
     "baseType": "War Hammer",
     "dustValIlvl84": 3500,
-    "dustValIlvl84Q20": 4200
+    "dustValIlvl84Q20": 4200,
+    "slots": 6
   },
   {
     "name": "Daresso's Salute",
     "baseType": "Citrine Amulet",
     "dustValIlvl84": 3500,
-    "dustValIlvl84Q20": 4200
+    "dustValIlvl84Q20": 4200,
+    "slots": 1
   },
   {
     "name": "Victario's Acuity",
     "baseType": "Turquoise Amulet",
     "dustValIlvl84": 3500,
-    "dustValIlvl84Q20": 4200
+    "dustValIlvl84Q20": 4200,
+    "slots": 1
   },
   {
     "name": "Asphyxia's Wrath",
     "baseType": "Feathered Arrow Quiver",
     "dustValIlvl84": 3500,
-    "dustValIlvl84Q20": 4200
+    "dustValIlvl84Q20": 4200,
+    "slots": 6
   },
   {
     "name": "Shaper's Seed",
     "baseType": "Agate Amulet",
     "dustValIlvl84": 3500,
-    "dustValIlvl84Q20": 4200
+    "dustValIlvl84Q20": 4200,
+    "slots": 1
   },
   {
     "name": "The Deep One's Hide",
     "baseType": "Studded Round Shield",
     "dustValIlvl84": 3500,
-    "dustValIlvl84Q20": 4200
+    "dustValIlvl84Q20": 4200,
+    "slots": 6
   },
   {
     "name": "Lavianga's Wisdom",
     "baseType": "War Hammer",
     "dustValIlvl84": 3500,
-    "dustValIlvl84Q20": 4200
+    "dustValIlvl84Q20": 4200,
+    "slots": 6
   },
   {
     "name": "Spine of the First Claimant",
     "baseType": "Iron Sceptre",
     "dustValIlvl84": 3500,
-    "dustValIlvl84Q20": 4200
+    "dustValIlvl84Q20": 4200,
+    "slots": 6
   },
   {
     "name": "Extractor Mentis",
     "baseType": "Agate Amulet",
     "dustValIlvl84": 3500,
-    "dustValIlvl84Q20": 4200
+    "dustValIlvl84Q20": 4200,
+    "slots": 1
   },
   {
     "name": "Demigod's Dominance",
     "baseType": "Golden Mantle",
     "dustValIlvl84": 3500,
-    "dustValIlvl84Q20": 4200
+    "dustValIlvl84Q20": 4200,
+    "slots": 6
   },
   {
     "name": "The Tempestuous Steel",
     "baseType": "War Sword",
     "dustValIlvl84": 3500,
-    "dustValIlvl84Q20": 4200
+    "dustValIlvl84Q20": 4200,
+    "slots": 6
   },
   {
     "name": "Saemus' Gift",
     "baseType": "Feathered Arrow Quiver",
     "dustValIlvl84": 3500,
-    "dustValIlvl84Q20": 4200
+    "dustValIlvl84Q20": 4200,
+    "slots": 6
   },
   {
     "name": "Frostferno",
     "baseType": "Leather Hood",
     "dustValIlvl84": 3500,
-    "dustValIlvl84Q20": 4200
+    "dustValIlvl84Q20": 4200,
+    "slots": 4
   },
   {
     "name": "The Tactician",
     "baseType": "Studded Belt",
     "dustValIlvl84": 3500,
-    "dustValIlvl84Q20": 4200
+    "dustValIlvl84Q20": 4200,
+    "slots": 2
   },
   {
     "name": "The Nomad",
     "baseType": "Studded Belt",
     "dustValIlvl84": 3500,
-    "dustValIlvl84Q20": 4200
+    "dustValIlvl84Q20": 4200,
+    "slots": 2
   },
   {
     "name": "Victario's Flight",
     "baseType": "Goathide Boots",
     "dustValIlvl84": 3460,
-    "dustValIlvl84Q20": 4152
+    "dustValIlvl84Q20": 4152,
+    "slots": 4
   },
   {
     "name": "Ashcaller",
     "baseType": "Carved Wand",
     "dustValIlvl84": 3460,
-    "dustValIlvl84Q20": 4152
+    "dustValIlvl84Q20": 4152,
+    "slots": 3
   },
   {
     "name": "Putembo's Valley",
     "baseType": "Topaz Ring",
     "dustValIlvl84": 3460,
-    "dustValIlvl84Q20": 4152
+    "dustValIlvl84Q20": 4152,
+    "slots": 1
   },
   {
     "name": "Ghostwrithe",
     "baseType": "Silken Vest",
     "dustValIlvl84": 3360,
-    "dustValIlvl84Q20": 4032
+    "dustValIlvl84Q20": 4032,
+    "slots": 6
   },
   {
     "name": "Dusktoe",
     "baseType": "Ironscale Boots",
     "dustValIlvl84": 3300,
-    "dustValIlvl84Q20": 3960
+    "dustValIlvl84Q20": 3960,
+    "slots": 4
   },
   {
     "name": "Wideswing",
     "baseType": "Poleaxe",
     "dustValIlvl84": 3300,
-    "dustValIlvl84Q20": 3960
+    "dustValIlvl84Q20": 3960,
+    "slots": 8
   },
   {
     "name": "Faminebind",
     "baseType": "Rustic Sash",
     "dustValIlvl84": 3300,
-    "dustValIlvl84Q20": 3960
+    "dustValIlvl84Q20": 3960,
+    "slots": 2
   },
   {
     "name": "Roth's Reach",
     "baseType": "Recurve Bow",
     "dustValIlvl84": 3300,
-    "dustValIlvl84Q20": 3960
+    "dustValIlvl84Q20": 3960,
+    "slots": 8
   },
   {
     "name": "Duskblight",
     "baseType": "Ironscale Boots",
     "dustValIlvl84": 3300,
-    "dustValIlvl84Q20": 3960
+    "dustValIlvl84Q20": 3960,
+    "slots": 4
   },
   {
     "name": "Thrillsteel",
     "baseType": "Barbute Helmet",
     "dustValIlvl84": 3300,
-    "dustValIlvl84Q20": 3960
+    "dustValIlvl84Q20": 3960,
+    "slots": 4
   },
   {
     "name": "Doryani's Invitation",
     "baseType": "Heavy Belt",
     "dustValIlvl84": 3260,
-    "dustValIlvl84Q20": 3912
+    "dustValIlvl84Q20": 3912,
+    "slots": 2
   },
   {
     "name": "Night's Hold",
     "baseType": "Black Maw Talisman",
     "dustValIlvl84": 3260,
-    "dustValIlvl84Q20": 3912
+    "dustValIlvl84Q20": 3912,
+    "slots": 1
   },
   {
     "name": "String of Servitude",
     "baseType": "Heavy Belt",
     "dustValIlvl84": 3260,
-    "dustValIlvl84Q20": 3912
+    "dustValIlvl84Q20": 3912,
+    "slots": 2
   },
   {
     "name": "Bear's Girdle",
     "baseType": "Leather Belt",
     "dustValIlvl84": 3260,
-    "dustValIlvl84Q20": 3912
+    "dustValIlvl84Q20": 3912,
+    "slots": 2
   },
   {
     "name": "Hrimnor's Hymn",
     "baseType": "Sledgehammer",
     "dustValIlvl84": 3200,
-    "dustValIlvl84Q20": 3840
+    "dustValIlvl84Q20": 3840,
+    "slots": 8
   },
   {
     "name": "Aurumvorax",
     "baseType": "Basket Rapier",
     "dustValIlvl84": 3200,
-    "dustValIlvl84Q20": 3840
+    "dustValIlvl84Q20": 3840,
+    "slots": 4
   },
   {
     "name": "Hrimnor's Dirge",
     "baseType": "Sledgehammer",
     "dustValIlvl84": 3200,
-    "dustValIlvl84Q20": 3840
+    "dustValIlvl84Q20": 3840,
+    "slots": 8
   },
   {
     "name": "Malachai's Awakening",
     "baseType": "Iron Mask",
     "dustValIlvl84": 3200,
-    "dustValIlvl84Q20": 3840
+    "dustValIlvl84Q20": 3840,
+    "slots": 4
   },
   {
     "name": "Kaltenhalt",
     "baseType": "Painted Buckler",
     "dustValIlvl84": 3120,
-    "dustValIlvl84Q20": 3744
+    "dustValIlvl84Q20": 3744,
+    "slots": 4
   },
   {
     "name": "Nomic's Storm",
     "baseType": "Strapped Boots",
     "dustValIlvl84": 3120,
-    "dustValIlvl84Q20": 3744
+    "dustValIlvl84Q20": 3744,
+    "slots": 4
   },
   {
     "name": "Dreadarc",
     "baseType": "Cleaver",
     "dustValIlvl84": 3120,
-    "dustValIlvl84Q20": 3744
+    "dustValIlvl84Q20": 3744,
+    "slots": 6
   },
   {
     "name": "Kaltensoul",
     "baseType": "Painted Buckler",
     "dustValIlvl84": 3120,
-    "dustValIlvl84Q20": 3744
+    "dustValIlvl84Q20": 3744,
+    "slots": 4
   },
   {
     "name": "Dreadsurge",
     "baseType": "Cleaver",
     "dustValIlvl84": 3120,
-    "dustValIlvl84Q20": 3744
+    "dustValIlvl84Q20": 3744,
+    "slots": 6
   },
   {
     "name": "Uzaza's Meadow",
     "baseType": "Sapphire Ring",
     "dustValIlvl84": 3080,
-    "dustValIlvl84Q20": 3696
+    "dustValIlvl84Q20": 3696,
+    "slots": 1
   },
   {
     "name": "Wreath of Phrecia",
     "baseType": "Iron Circlet",
     "dustValIlvl84": 3080,
-    "dustValIlvl84Q20": 3696
+    "dustValIlvl84Q20": 3696,
+    "slots": 4
   },
   {
     "name": "Demigod's Presence",
     "baseType": "Gold Amulet",
     "dustValIlvl84": 3020,
-    "dustValIlvl84Q20": 3624
+    "dustValIlvl84Q20": 3624,
+    "slots": 1
   },
   {
     "name": "The Ignomon",
     "baseType": "Gold Amulet",
     "dustValIlvl84": 3020,
-    "dustValIlvl84Q20": 3624
+    "dustValIlvl84Q20": 3624,
+    "slots": 1
   },
   {
     "name": "Bloodplay",
     "baseType": "Stiletto",
     "dustValIlvl84": 3020,
-    "dustValIlvl84Q20": 3624
+    "dustValIlvl84Q20": 3624,
+    "slots": 3
   },
   {
     "name": "The Effigon",
     "baseType": "Gold Amulet",
     "dustValIlvl84": 3020,
-    "dustValIlvl84Q20": 3624
+    "dustValIlvl84Q20": 3624,
+    "slots": 1
   },
   {
     "name": "The Untouched Soul",
     "baseType": "Gold Amulet",
     "dustValIlvl84": 3020,
-    "dustValIlvl84Q20": 3624
+    "dustValIlvl84Q20": 3624,
+    "slots": 1
   },
   {
     "name": "Tipua Kaikohuru",
     "baseType": "Whalebone Rapier",
     "dustValIlvl84": 2980,
-    "dustValIlvl84Q20": 3576
+    "dustValIlvl84Q20": 3576,
+    "slots": 4
   },
   {
     "name": "The Goddess Bound",
     "baseType": "Whalebone Rapier",
     "dustValIlvl84": 2980,
-    "dustValIlvl84Q20": 3576
+    "dustValIlvl84Q20": 3576,
+    "slots": 4
   },
   {
     "name": "Shackles of the Wretched",
     "baseType": "Chain Gloves",
     "dustValIlvl84": 2980,
-    "dustValIlvl84Q20": 3576
+    "dustValIlvl84Q20": 3576,
+    "slots": 4
   },
   {
     "name": "Hyrri's Bite",
     "baseType": "Sharktooth Arrow Quiver",
     "dustValIlvl84": 2940,
-    "dustValIlvl84Q20": 3528
+    "dustValIlvl84Q20": 3528,
+    "slots": 6
   },
   {
     "name": "Hyrri's Demise",
     "baseType": "Sharktooth Arrow Quiver",
     "dustValIlvl84": 2940,
-    "dustValIlvl84Q20": 3528
+    "dustValIlvl84Q20": 3528,
+    "slots": 6
   },
   {
     "name": "Chain of Endurance",
     "baseType": "Chain Belt",
     "dustValIlvl84": 2940,
-    "dustValIlvl84Q20": 3528
+    "dustValIlvl84Q20": 3528,
+    "slots": 2
   },
   {
     "name": "Limbsplit",
     "baseType": "Woodsplitter",
     "dustValIlvl84": 2860,
-    "dustValIlvl84Q20": 3432
+    "dustValIlvl84Q20": 3432,
+    "slots": 8
   },
   {
     "name": "Pillar of the Caged God",
     "baseType": "Iron Staff",
     "dustValIlvl84": 2860,
-    "dustValIlvl84Q20": 3432
+    "dustValIlvl84Q20": 3432,
+    "slots": 8
   },
   {
     "name": "Dying Breath",
     "baseType": "Iron Staff",
     "dustValIlvl84": 2860,
-    "dustValIlvl84Q20": 3432
+    "dustValIlvl84Q20": 3432,
+    "slots": 8
   },
   {
     "name": "Realmshaper",
     "baseType": "Iron Staff",
     "dustValIlvl84": 2860,
-    "dustValIlvl84Q20": 3432
+    "dustValIlvl84Q20": 3432,
+    "slots": 8
   },
   {
     "name": "The Cauteriser",
     "baseType": "Woodsplitter",
     "dustValIlvl84": 2860,
-    "dustValIlvl84Q20": 3432
+    "dustValIlvl84Q20": 3432,
+    "slots": 8
   },
   {
     "name": "Realm Ender",
     "baseType": "Iron Staff",
     "dustValIlvl84": 2860,
-    "dustValIlvl84Q20": 3432
+    "dustValIlvl84Q20": 3432,
+    "slots": 8
   },
   {
     "name": "Doedre's Damning",
     "baseType": "Paua Ring",
     "dustValIlvl84": 2820,
-    "dustValIlvl84Q20": 3384
+    "dustValIlvl84Q20": 3384,
+    "slots": 1
   },
   {
     "name": "Quill Rain",
     "baseType": "Short Bow",
     "dustValIlvl84": 2820,
-    "dustValIlvl84Q20": 3384
+    "dustValIlvl84Q20": 3384,
+    "slots": 6
   },
   {
     "name": "Replica Quill Rain",
     "baseType": "Short Bow",
     "dustValIlvl84": 2820,
-    "dustValIlvl84Q20": 3384
+    "dustValIlvl84Q20": 3384,
+    "slots": 6
   },
   {
     "name": "Shiversting",
     "baseType": "Bastard Sword",
     "dustValIlvl84": 2760,
-    "dustValIlvl84Q20": 3312
+    "dustValIlvl84Q20": 3312,
+    "slots": 8
   },
   {
     "name": "Honourhome",
     "baseType": "Soldier Helmet",
     "dustValIlvl84": 2760,
-    "dustValIlvl84Q20": 3312
+    "dustValIlvl84Q20": 3312,
+    "slots": 4
   },
   {
     "name": "Doedre's Tenure",
     "baseType": "Velvet Gloves",
     "dustValIlvl84": 2760,
-    "dustValIlvl84Q20": 3312
+    "dustValIlvl84Q20": 3312,
+    "slots": 4
   },
   {
     "name": "Demigod's Triumph",
     "baseType": "Golden Wreath",
     "dustValIlvl84": 2760,
-    "dustValIlvl84Q20": 3312
+    "dustValIlvl84Q20": 3312,
+    "slots": 4
   },
   {
     "name": "Demigod's Stride",
     "baseType": "Golden Caligae",
     "dustValIlvl84": 2760,
-    "dustValIlvl84Q20": 3312
+    "dustValIlvl84Q20": 3312,
+    "slots": 4
   },
   {
     "name": "Demigod's Touch",
     "baseType": "Golden Bracers",
     "dustValIlvl84": 2760,
-    "dustValIlvl84Q20": 3312
+    "dustValIlvl84Q20": 3312,
+    "slots": 4
   },
   {
     "name": "Demigod's Bounty",
     "baseType": "Golden Obi",
     "dustValIlvl84": 2760,
-    "dustValIlvl84Q20": 3312
+    "dustValIlvl84Q20": 3312,
+    "slots": 2
   },
   {
     "name": "Demigod's Eye",
     "baseType": "Golden Hoop",
     "dustValIlvl84": 2760,
-    "dustValIlvl84Q20": 3312
+    "dustValIlvl84Q20": 3312,
+    "slots": 1
   },
   {
     "name": "Wildslash",
     "baseType": "Awl",
     "dustValIlvl84": 2760,
-    "dustValIlvl84Q20": 3312
+    "dustValIlvl84Q20": 3312,
+    "slots": 4
   },
   {
     "name": "Demigod's Immortality",
     "baseType": "Golden Visage",
     "dustValIlvl84": 2760,
-    "dustValIlvl84Q20": 3312
+    "dustValIlvl84Q20": 3312,
+    "slots": 4
   },
   {
     "name": "Doedre's Malevolence",
     "baseType": "Velvet Gloves",
     "dustValIlvl84": 2760,
-    "dustValIlvl84Q20": 3312
+    "dustValIlvl84Q20": 3312,
+    "slots": 4
   },
   {
     "name": "Kaom's Sign",
     "baseType": "Coral Ring",
     "dustValIlvl84": 2740,
-    "dustValIlvl84Q20": 3288
+    "dustValIlvl84Q20": 3288,
+    "slots": 1
   },
   {
     "name": "Replica Blood Thorn",
     "baseType": "Gnarled Branch",
     "dustValIlvl84": 2740,
-    "dustValIlvl84Q20": 3288
+    "dustValIlvl84Q20": 3288,
+    "slots": 4
   },
   {
     "name": "Replica Fencoil",
     "baseType": "Gnarled Branch",
     "dustValIlvl84": 2740,
-    "dustValIlvl84Q20": 3288
+    "dustValIlvl84Q20": 3288,
+    "slots": 4
   },
   {
     "name": "Feastbind",
     "baseType": "Rustic Sash",
     "dustValIlvl84": 2680,
-    "dustValIlvl84Q20": 3216
+    "dustValIlvl84Q20": 3216,
+    "slots": 2
   },
   {
     "name": "Sadima's Touch",
     "baseType": "Wool Gloves",
     "dustValIlvl84": 2660,
-    "dustValIlvl84Q20": 3192
+    "dustValIlvl84Q20": 3192,
+    "slots": 4
   },
   {
     "name": "Goldrim",
     "baseType": "Leather Cap",
     "dustValIlvl84": 2660,
-    "dustValIlvl84Q20": 3192
+    "dustValIlvl84Q20": 3192,
+    "slots": 4
   },
   {
     "name": "Sacrificial Heart",
     "baseType": "Paua Amulet",
     "dustValIlvl84": 2660,
-    "dustValIlvl84Q20": 3192
+    "dustValIlvl84Q20": 3192,
+    "slots": 1
   },
   {
     "name": "Replica Last Resort",
     "baseType": "Nailed Fist",
     "dustValIlvl84": 2660,
-    "dustValIlvl84Q20": 3192
+    "dustValIlvl84Q20": 3192,
+    "slots": 4
   },
   {
     "name": "The Princess",
     "baseType": "Sabre",
     "dustValIlvl84": 2600,
-    "dustValIlvl84Q20": 3120
+    "dustValIlvl84Q20": 3120,
+    "slots": 3
   },
   {
     "name": "Gorebreaker",
     "baseType": "Spiked Club",
     "dustValIlvl84": 2600,
-    "dustValIlvl84Q20": 3120
+    "dustValIlvl84Q20": 3120,
+    "slots": 3
   },
   {
     "name": "Axiom Perpetuum",
     "baseType": "Bronze Sceptre",
     "dustValIlvl84": 2600,
-    "dustValIlvl84Q20": 3120
+    "dustValIlvl84Q20": 3120,
+    "slots": 6
   },
   {
     "name": "Coward's Chains",
     "baseType": "Chain Belt",
     "dustValIlvl84": 2580,
-    "dustValIlvl84Q20": 3096
+    "dustValIlvl84Q20": 3096,
+    "slots": 2
   },
   {
     "name": "Replica Prismweave",
     "baseType": "Rustic Sash",
     "dustValIlvl84": 2580,
-    "dustValIlvl84Q20": 3096
+    "dustValIlvl84Q20": 3096,
+    "slots": 2
   },
   {
     "name": "Wondertrap",
     "baseType": "Velvet Slippers",
     "dustValIlvl84": 2540,
-    "dustValIlvl84Q20": 3048
+    "dustValIlvl84Q20": 3048,
+    "slots": 4
   },
   {
     "name": "Hrimsorrow",
     "baseType": "Goathide Gloves",
     "dustValIlvl84": 2540,
-    "dustValIlvl84Q20": 3048
+    "dustValIlvl84Q20": 3048,
+    "slots": 4
   },
   {
     "name": "Storm Cloud",
     "baseType": "Long Bow",
     "dustValIlvl84": 2540,
-    "dustValIlvl84Q20": 3048
+    "dustValIlvl84Q20": 3048,
+    "slots": 8
   },
   {
     "name": "Hrimburn",
     "baseType": "Goathide Gloves",
     "dustValIlvl84": 2540,
-    "dustValIlvl84Q20": 3048
+    "dustValIlvl84Q20": 3048,
+    "slots": 4
   },
   {
     "name": "Greedtrap",
     "baseType": "Velvet Slippers",
     "dustValIlvl84": 2540,
-    "dustValIlvl84Q20": 3048
+    "dustValIlvl84Q20": 3048,
+    "slots": 4
   },
   {
     "name": "Wildwrap",
     "baseType": "Strapped Leather",
     "dustValIlvl84": 2540,
-    "dustValIlvl84Q20": 3048
+    "dustValIlvl84Q20": 3048,
+    "slots": 6
   },
   {
     "name": "Bramblejack",
     "baseType": "Plate Vest",
     "dustValIlvl84": 2500,
-    "dustValIlvl84Q20": 3000
+    "dustValIlvl84Q20": 3000,
+    "slots": 6
   },
   {
     "name": "Crest of Perandus",
     "baseType": "Pine Buckler",
     "dustValIlvl84": 2460,
-    "dustValIlvl84Q20": 2952
+    "dustValIlvl84Q20": 2952,
+    "slots": 4
   },
   {
     "name": "Asenath's Chant",
     "baseType": "Iron Circlet",
     "dustValIlvl84": 2460,
-    "dustValIlvl84Q20": 2952
+    "dustValIlvl84Q20": 2952,
+    "slots": 4
   },
   {
     "name": "Stone of Lazhwar",
     "baseType": "Lapis Amulet",
     "dustValIlvl84": 2380,
-    "dustValIlvl84Q20": 2856
+    "dustValIlvl84Q20": 2856,
+    "slots": 1
   },
   {
     "name": "Karui Ward",
     "baseType": "Jade Amulet",
     "dustValIlvl84": 2380,
-    "dustValIlvl84Q20": 2856
+    "dustValIlvl84Q20": 2856,
+    "slots": 1
   },
   {
     "name": "Springleaf",
     "baseType": "Plank Kite Shield",
     "dustValIlvl84": 2380,
-    "dustValIlvl84Q20": 2856
+    "dustValIlvl84Q20": 2856,
+    "slots": 6
   },
   {
     "name": "Tear of Purity",
     "baseType": "Lapis Amulet",
     "dustValIlvl84": 2380,
-    "dustValIlvl84Q20": 2856
+    "dustValIlvl84Q20": 2856,
+    "slots": 1
   },
   {
     "name": "Karui Charge",
     "baseType": "Jade Amulet",
     "dustValIlvl84": 2380,
-    "dustValIlvl84Q20": 2856
+    "dustValIlvl84Q20": 2856,
+    "slots": 1
   },
   {
     "name": "The Oak",
     "baseType": "Plank Kite Shield",
     "dustValIlvl84": 2380,
-    "dustValIlvl84Q20": 2856
+    "dustValIlvl84Q20": 2856,
+    "slots": 6
   },
   {
     "name": "The Screaming Eagle",
     "baseType": "Jade Hatchet",
     "dustValIlvl84": 2320,
-    "dustValIlvl84Q20": 2784
+    "dustValIlvl84Q20": 2784,
+    "slots": 6
   },
   {
     "name": "Abberath's Horn",
     "baseType": "Goat's Horn",
     "dustValIlvl84": 2320,
-    "dustValIlvl84Q20": 2784
+    "dustValIlvl84Q20": 2784,
+    "slots": 3
   },
   {
     "name": "The Gryphon",
     "baseType": "Jade Hatchet",
     "dustValIlvl84": 2320,
-    "dustValIlvl84Q20": 2784
+    "dustValIlvl84Q20": 2784,
+    "slots": 6
   },
   {
     "name": "Ondar's Clasp",
     "baseType": "Wrapped Mitts",
     "dustValIlvl84": 2260,
-    "dustValIlvl84Q20": 2712
+    "dustValIlvl84Q20": 2712,
+    "slots": 4
   },
   {
     "name": "Wheel of the Stormsail",
     "baseType": "Rotted Round Shield",
     "dustValIlvl84": 2260,
-    "dustValIlvl84Q20": 2712
+    "dustValIlvl84Q20": 2712,
+    "slots": 6
   },
   {
     "name": "Goredrill",
     "baseType": "Skinning Knife",
     "dustValIlvl84": 2260,
-    "dustValIlvl84Q20": 2712
+    "dustValIlvl84Q20": 2712,
+    "slots": 3
   },
   {
     "name": "Sanguine Gambol",
     "baseType": "Skinning Knife",
     "dustValIlvl84": 2260,
-    "dustValIlvl84Q20": 2712
+    "dustValIlvl84Q20": 2712,
+    "slots": 3
   },
   {
     "name": "The Megalomaniac",
     "baseType": "Bronze Stalker Sentinel",
     "dustValIlvl84": 2260,
-    "dustValIlvl84Q20": 2712
+    "dustValIlvl84Q20": 2712,
+    "slots": 4
   },
   {
     "name": "Fencoil",
     "baseType": "Gnarled Branch",
     "dustValIlvl84": 2180,
-    "dustValIlvl84Q20": 2616
+    "dustValIlvl84Q20": 2616,
+    "slots": 4
   },
   {
     "name": "Craghead",
     "baseType": "Serrated Arrow Quiver",
     "dustValIlvl84": 2180,
-    "dustValIlvl84Q20": 2616
+    "dustValIlvl84Q20": 2616,
+    "slots": 6
   },
   {
     "name": "The Blood Thorn",
     "baseType": "Gnarled Branch",
     "dustValIlvl84": 2180,
-    "dustValIlvl84Q20": 2616
+    "dustValIlvl84Q20": 2616,
+    "slots": 4
   },
   {
     "name": "Kaom's Way",
     "baseType": "Coral Ring",
     "dustValIlvl84": 2180,
-    "dustValIlvl84Q20": 2616
+    "dustValIlvl84Q20": 2616,
+    "slots": 1
   },
   {
     "name": "Cragfall",
     "baseType": "Serrated Arrow Quiver",
     "dustValIlvl84": 2180,
-    "dustValIlvl84Q20": 2616
+    "dustValIlvl84Q20": 2616,
+    "slots": 6
   },
   {
     "name": "Mirebough",
     "baseType": "Gnarled Branch",
     "dustValIlvl84": 2180,
-    "dustValIlvl84Q20": 2616
+    "dustValIlvl84Q20": 2616,
+    "slots": 4
   },
   {
     "name": "Sidhebreath",
     "baseType": "Paua Amulet",
     "dustValIlvl84": 2120,
-    "dustValIlvl84Q20": 2544
+    "dustValIlvl84Q20": 2544,
+    "slots": 1
   },
   {
     "name": "Crown of Thorns",
     "baseType": "Vine Circlet",
     "dustValIlvl84": 2120,
-    "dustValIlvl84Q20": 2544
+    "dustValIlvl84Q20": 2544,
+    "slots": 4
   },
   {
     "name": "Araku Tiki",
     "baseType": "Coral Amulet",
     "dustValIlvl84": 2120,
-    "dustValIlvl84Q20": 2544
+    "dustValIlvl84Q20": 2544,
+    "slots": 1
   },
   {
     "name": "Wanderlust",
     "baseType": "Wool Shoes",
     "dustValIlvl84": 2120,
-    "dustValIlvl84Q20": 2544
+    "dustValIlvl84Q20": 2544,
+    "slots": 4
   },
   {
     "name": "Last Resort",
     "baseType": "Nailed Fist",
     "dustValIlvl84": 2120,
-    "dustValIlvl84Q20": 2544
+    "dustValIlvl84Q20": 2544,
+    "slots": 4
   },
   {
     "name": "Ngamahu Tiki",
     "baseType": "Coral Amulet",
     "dustValIlvl84": 2120,
-    "dustValIlvl84Q20": 2544
+    "dustValIlvl84Q20": 2544,
+    "slots": 1
   },
   {
     "name": "Martyr's Crown",
     "baseType": "Vine Circlet",
     "dustValIlvl84": 2120,
-    "dustValIlvl84Q20": 2544
+    "dustValIlvl84Q20": 2544,
+    "slots": 4
   },
   {
     "name": "Blackheart",
     "baseType": "Iron Ring",
     "dustValIlvl84": 2060,
-    "dustValIlvl84Q20": 2472
+    "dustValIlvl84Q20": 2472,
+    "slots": 1
   },
   {
     "name": "Blackgleam",
     "baseType": "Blazing Arrow Quiver",
     "dustValIlvl84": 2060,
-    "dustValIlvl84Q20": 2472
+    "dustValIlvl84Q20": 2472,
+    "slots": 6
   },
   {
     "name": "Voidheart",
     "baseType": "Iron Ring",
     "dustValIlvl84": 2060,
-    "dustValIlvl84Q20": 2472
+    "dustValIlvl84Q20": 2472,
+    "slots": 1
   },
   {
     "name": "Oni-Goroshi",
     "baseType": "Charan's Sword",
     "dustValIlvl84": 2060,
-    "dustValIlvl84Q20": 2472
+    "dustValIlvl84Q20": 2472,
+    "slots": 6
   },
   {
     "name": "Redbeak",
     "baseType": "Rusted Sword",
     "dustValIlvl84": 2000,
-    "dustValIlvl84Q20": 2400
+    "dustValIlvl84Q20": 2400,
+    "slots": 3
   },
   {
     "name": "Silverbranch",
     "baseType": "Crude Bow",
     "dustValIlvl84": 2000,
-    "dustValIlvl84Q20": 2400
+    "dustValIlvl84Q20": 2400,
+    "slots": 6
   },
   {
     "name": "Ezomyte Peak",
     "baseType": "Iron Hat",
     "dustValIlvl84": 2000,
-    "dustValIlvl84Q20": 2400
+    "dustValIlvl84Q20": 2400,
+    "slots": 4
   },
   {
     "name": "Lochtonial Caress",
     "baseType": "Iron Gauntlets",
     "dustValIlvl84": 2000,
-    "dustValIlvl84Q20": 2400
+    "dustValIlvl84Q20": 2400,
+    "slots": 4
   },
   {
     "name": "Lifesprig",
     "baseType": "Driftwood Wand",
     "dustValIlvl84": 2000,
-    "dustValIlvl84Q20": 2400
+    "dustValIlvl84Q20": 2400,
+    "slots": 3
   },
   {
     "name": "Talisman of the Victor",
     "baseType": "Jet Amulet",
     "dustValIlvl84": 2000,
-    "dustValIlvl84Q20": 2400
+    "dustValIlvl84Q20": 2400,
+    "slots": 1
   },
   {
     "name": "First Piece of the Arcane",
     "baseType": "Legion Sword Piece",
     "dustValIlvl84": 2000,
-    "dustValIlvl84Q20": 2400
+    "dustValIlvl84Q20": 2400,
+    "slots": 2
   },
   {
     "name": "Second Piece of the Arcane",
     "baseType": "Legion Sword Piece",
     "dustValIlvl84": 2000,
-    "dustValIlvl84Q20": 2400
+    "dustValIlvl84Q20": 2400,
+    "slots": 2
   },
   {
     "name": "Third Piece of the Arcane",
     "baseType": "Legion Sword Piece",
     "dustValIlvl84": 2000,
-    "dustValIlvl84Q20": 2400
+    "dustValIlvl84Q20": 2400,
+    "slots": 2
   },
   {
     "name": "First Piece of Time",
     "baseType": "Cloth Belt Piece",
     "dustValIlvl84": 2000,
-    "dustValIlvl84Q20": 2400
+    "dustValIlvl84Q20": 2400,
+    "slots": 1
   },
   {
     "name": "Second Piece of Time",
     "baseType": "Cloth Belt Piece",
     "dustValIlvl84": 2000,
-    "dustValIlvl84Q20": 2400
+    "dustValIlvl84Q20": 2400,
+    "slots": 1
   },
   {
     "name": "Demigod's Authority",
     "baseType": "Golden Blade",
     "dustValIlvl84": 2000,
-    "dustValIlvl84Q20": 2400
+    "dustValIlvl84Q20": 2400,
+    "slots": 6
   },
   {
     "name": "Wall of Brambles",
     "baseType": "Plate Vest",
     "dustValIlvl84": 2000,
-    "dustValIlvl84Q20": 2400
+    "dustValIlvl84Q20": 2400,
+    "slots": 6
   },
   {
     "name": "Ezomyte Hold",
     "baseType": "Iron Hat",
     "dustValIlvl84": 2000,
-    "dustValIlvl84Q20": 2400
+    "dustValIlvl84Q20": 2400,
+    "slots": 4
   },
   {
     "name": "Silverbough",
     "baseType": "Crude Bow",
     "dustValIlvl84": 2000,
-    "dustValIlvl84Q20": 2400
+    "dustValIlvl84Q20": 2400,
+    "slots": 6
   },
   {
     "name": "Dreadbeak",
     "baseType": "Rusted Sword",
     "dustValIlvl84": 2000,
-    "dustValIlvl84Q20": 2400
+    "dustValIlvl84Q20": 2400,
+    "slots": 3
   },
   {
     "name": "Grace of the Goddess",
     "baseType": "Prophecy Wand",
     "dustValIlvl84": 86960,
-    "dustValIlvl84Q20": 104352
+    "dustValIlvl84Q20": 104352,
+    "slots": 3
   },
   {
     "name": "Starcaller",
     "baseType": "Abyssal Axe",
     "dustValIlvl84": 279060,
-    "dustValIlvl84Q20": 334872
+    "dustValIlvl84Q20": 334872,
+    "slots": 6
   },
   {
     "name": "Legacy of the Rose",
     "baseType": "Judgement Staff",
     "dustValIlvl84": 279060,
-    "dustValIlvl84Q20": 334872
+    "dustValIlvl84Q20": 334872,
+    "slots": 6
   },
   {
     "name": "The Living Blade",
     "baseType": "Ezomyte Blade",
     "dustValIlvl84": 23560,
-    "dustValIlvl84Q20": 28272
+    "dustValIlvl84Q20": 28272,
+    "slots": 6
   },
   {
     "name": "Tawhoa's Felling",
     "baseType": "Piledriver",
     "dustValIlvl84": 14720,
-    "dustValIlvl84Q20": 17664
+    "dustValIlvl84Q20": 17664,
+    "slots": 6
   },
   {
     "name": "Cadigan's Authority",
     "baseType": "Platinum Sceptre",
     "dustValIlvl84": 24280,
-    "dustValIlvl84Q20": 29136
+    "dustValIlvl84Q20": 29136,
+    "slots": 3
   },
   {
     "name": "Mystic Refractor",
     "baseType": "Pagan Wand",
     "dustValIlvl84": 127320,
-    "dustValIlvl84Q20": 152784
+    "dustValIlvl84Q20": 152784,
+    "slots": 3
   },
   {
     "name": "Ynda's Stand",
     "baseType": "Studded Belt",
     "dustValIlvl84": 18060,
-    "dustValIlvl84Q20": 21672
+    "dustValIlvl84Q20": 21672,
+    "slots": 2
   },
   {
     "name": "The Tides of Time",
     "baseType": "Vanguard Belt",
     "dustValIlvl84": 100800,
-    "dustValIlvl84Q20": 120960
+    "dustValIlvl84Q20": 120960,
+    "slots": 2
   },
   {
     "name": "Venarius' Astrolabe",
     "baseType": "Astrolabe Amulet",
     "dustValIlvl84": 106940,
-    "dustValIlvl84Q20": 128328
+    "dustValIlvl84Q20": 128328,
+    "slots": 1
   },
   {
     "name": "Coiling Whisper",
     "baseType": "Amethyst Ring",
     "dustValIlvl84": 119400,
-    "dustValIlvl84Q20": 143280
+    "dustValIlvl84Q20": 143280,
+    "slots": 1
   },
   {
     "name": "Enmity's Embrace",
     "baseType": "Vermillion Ring",
     "dustValIlvl84": 123980,
-    "dustValIlvl84Q20": 148776
+    "dustValIlvl84Q20": 148776,
+    "slots": 1
   },
   {
     "name": "Binds of Bloody Vengeance",
     "baseType": "Vanguard Belt",
     "dustValIlvl84": 201600,
-    "dustValIlvl84Q20": 241920
+    "dustValIlvl84Q20": 241920,
+    "slots": 2
   },
   {
     "name": "Circle of Ambition",
     "baseType": "Prismatic Ring",
     "dustValIlvl84": 28280,
-    "dustValIlvl84Q20": 33936
+    "dustValIlvl84Q20": 33936,
+    "slots": 1
   },
   {
     "name": "Whispers of Infinity",
     "baseType": "Seaglass Amulet",
     "dustValIlvl84": 103820,
-    "dustValIlvl84Q20": 124584
+    "dustValIlvl84Q20": 124584,
+    "slots": 1
   },
   {
     "name": "The Hateful Accuser",
     "baseType": "Nameless Ring",
     "dustValIlvl84": 14500,
-    "dustValIlvl84Q20": 17400
+    "dustValIlvl84Q20": 17400,
+    "slots": 1
   },
   {
     "name": "Betrayal's Sting",
     "baseType": "Steel Ring",
     "dustValIlvl84": 116860,
-    "dustValIlvl84Q20": 140232
+    "dustValIlvl84Q20": 140232,
+    "slots": 1
   },
   {
     "name": "The Arkhon's Tools",
     "baseType": "Cloth Belt",
     "dustValIlvl84": 105220,
-    "dustValIlvl84Q20": 126264
+    "dustValIlvl84Q20": 126264,
+    "slots": 2
   },
   {
     "name": "Squirming Terror",
     "baseType": "Unset Ring",
     "dustValIlvl84": 29380,
-    "dustValIlvl84Q20": 35256
+    "dustValIlvl84Q20": 35256,
+    "slots": 1
   },
   {
     "name": "The Queller of Minds",
     "baseType": "Nameless Ring",
     "dustValIlvl84": 14500,
-    "dustValIlvl84Q20": 17400
+    "dustValIlvl84Q20": 17400,
+    "slots": 1
   },
   {
     "name": "The Selfish Shepherd",
     "baseType": "Nameless Ring",
     "dustValIlvl84": 14500,
-    "dustValIlvl84Q20": 17400
+    "dustValIlvl84Q20": 17400,
+    "slots": 1
   },
   {
     "name": "Soul Tether",
     "baseType": "Cloth Belt",
     "dustValIlvl84": 16040,
-    "dustValIlvl84Q20": 19248
+    "dustValIlvl84Q20": 19248,
+    "slots": 2
   },
   {
     "name": "Prospero's Protection",
     "baseType": "Iron Ring",
     "dustValIlvl84": 12500,
-    "dustValIlvl84Q20": 15000
+    "dustValIlvl84Q20": 15000,
+    "slots": 1
   },
   {
     "name": "Nevalius Inheritance",
     "baseType": "Cloth Belt",
     "dustValIlvl84": 7020,
-    "dustValIlvl84Q20": 8424
+    "dustValIlvl84Q20": 8424,
+    "slots": 2
   },
   {
     "name": "Grattus Signet",
     "baseType": "Diamond Ring",
     "dustValIlvl84": 5080,
-    "dustValIlvl84Q20": 6096
+    "dustValIlvl84Q20": 6096,
+    "slots": 1
   },
   {
     "name": "The Tempest",
     "baseType": "Long Bow",
     "dustValIlvl84": 2540,
-    "dustValIlvl84Q20": 3048
+    "dustValIlvl84Q20": 3048,
+    "slots": 6
   },
   {
     "name": "Serle's Masterwork",
     "baseType": "Phantom Mace",
     "dustValIlvl84": 11620,
-    "dustValIlvl84Q20": 13944
+    "dustValIlvl84Q20": 13944,
+    "slots": 6
   },
   {
     "name": "Svalinn",
     "baseType": "Girded Tower Shield",
     "dustValIlvl84": 52600,
-    "dustValIlvl84Q20": 63120
+    "dustValIlvl84Q20": 63120,
+    "slots": 8
   },
   {
     "name": "The Celestial Brace",
     "baseType": "Goliath Gauntlets",
     "dustValIlvl84": 55820,
-    "dustValIlvl84Q20": 66984
+    "dustValIlvl84Q20": 66984,
+    "slots": 4
   },
   {
     "name": "The Apostate",
     "baseType": "Cabalist Regalia",
     "dustValIlvl84": 32780,
-    "dustValIlvl84Q20": 39336
+    "dustValIlvl84Q20": 39336,
+    "slots": 6
   },
   {
     "name": "Spinehail",
     "baseType": "Vile Arrow Quiver",
     "dustValIlvl84": 98680,
-    "dustValIlvl84Q20": 118416
+    "dustValIlvl84Q20": 118416,
+    "slots": 6
   },
   {
     "name": "Seven Teachings",
     "baseType": "Waxed Garb",
     "dustValIlvl84": 100000,
-    "dustValIlvl84Q20": 120000
+    "dustValIlvl84Q20": 120000,
+    "slots": 6
   },
   {
     "name": "Kaom's Command",
     "baseType": "Siege Helmet",
     "dustValIlvl84": 16040,
-    "dustValIlvl84Q20": 19248
+    "dustValIlvl84Q20": 19248,
+    "slots": 4
   },
   {
     "name": "Hand of Heresy",
     "baseType": "Martyr Gloves",
     "dustValIlvl84": 233720,
-    "dustValIlvl84Q20": 280464
+    "dustValIlvl84Q20": 280464,
+    "slots": 4
   },
   {
     "name": "Servant of Decay",
     "baseType": "Torturer Garb",
     "dustValIlvl84": 116860,
-    "dustValIlvl84Q20": 140232
+    "dustValIlvl84Q20": 140232,
+    "slots": 6
   },
   {
     "name": "The Devourer of Minds",
     "baseType": "Pig-Faced Bascinet",
     "dustValIlvl84": 75000,
-    "dustValIlvl84Q20": 90000
+    "dustValIlvl84Q20": 90000,
+    "slots": 4
   },
   {
     "name": "Ravenous Passion",
     "baseType": "Zealot Helmet",
     "dustValIlvl84": 42780,
-    "dustValIlvl84Q20": 51336
+    "dustValIlvl84Q20": 51336,
+    "slots": 4
   },
   {
     "name": "Azadi Crest",
     "baseType": "Lacquered Buckler",
     "dustValIlvl84": 18120,
-    "dustValIlvl84Q20": 21744
+    "dustValIlvl84Q20": 21744,
+    "slots": 4
   },
   {
     "name": "The Tempest Rising",
     "baseType": "Goliath Greaves",
     "dustValIlvl84": 57480,
-    "dustValIlvl84Q20": 68976
+    "dustValIlvl84Q20": 68976,
+    "slots": 4
   },
   {
     "name": "Admiral's Arrogance",
     "baseType": "Antique Gauntlets",
     "dustValIlvl84": 12300,
-    "dustValIlvl84Q20": 14760
+    "dustValIlvl84Q20": 14760,
+    "slots": 4
   },
   {
     "name": "The Dark Monarch",
     "baseType": "Lich's Circlet",
     "dustValIlvl84": 93020,
-    "dustValIlvl84Q20": 111624
+    "dustValIlvl84Q20": 111624,
+    "slots": 4
   },
   {
     "name": "The Hand of Phrecia",
     "baseType": "Mesh Gloves",
     "dustValIlvl84": 10000,
-    "dustValIlvl84Q20": 12000
+    "dustValIlvl84Q20": 12000,
+    "slots": 4
   },
   {
     "name": "Howlcrack",
     "baseType": "Ezomyte Burgonet",
     "dustValIlvl84": 28980,
-    "dustValIlvl84Q20": 34776
+    "dustValIlvl84Q20": 34776,
+    "slots": 4
   },
   {
     "name": "Scornflux",
     "baseType": "Satin Slippers",
     "dustValIlvl84": 18120,
-    "dustValIlvl84Q20": 21744
+    "dustValIlvl84Q20": 21744,
+    "slots": 4
   },
   {
     "name": "Veruso's Ambition",
     "baseType": "Shackled Boots",
     "dustValIlvl84": 6640,
-    "dustValIlvl84Q20": 7968
+    "dustValIlvl84Q20": 7968,
+    "slots": 4
   },
   {
     "name": "Broadstroke",
     "baseType": "Shackled Boots",
     "dustValIlvl84": 2380,
-    "dustValIlvl84Q20": 2856
+    "dustValIlvl84Q20": 2856,
+    "slots": 6
   }
 ]

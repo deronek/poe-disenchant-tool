@@ -12,6 +12,8 @@ export type Item = {
   variant?: string;
   calculatedDustValue: number;
   dustPerChaos: number;
+  slots: number;
+  dustPerChaosPerSlot: number;
   type: AllowedUnique;
   icon: string;
 };
@@ -57,6 +59,8 @@ const uncached__getItems = async (league: League) => {
         variant: priceItem.baseType,
         calculatedDustValue,
         dustPerChaos: dustPerChaos,
+        slots: dustItem.slots,
+        dustPerChaosPerSlot: Math.round(dustPerChaos / dustItem.slots),
         type: priceItem.type,
         icon: priceItem.icon,
       });

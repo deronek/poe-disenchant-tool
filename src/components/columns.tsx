@@ -71,6 +71,7 @@ export const COLUMN_IDS = {
   CHAOS: "chaos",
   CALCULATED_DUST_VALUE: "calculatedDustValue",
   DUST_PER_CHAOS: "dustPerChaos",
+  DUST_PER_CHAOS_PER_SLOT: "dustPerChaosPerSlot",
   TRADE_LINK: "tradeLink",
   SELECT: "select",
 } as const;
@@ -174,8 +175,8 @@ export const createColumns = (
   },
   {
     accessorKey: COLUMN_IDS.DUST_PER_CHAOS,
-    header: () => <span>Dust per Chaos</span>,
-    size: 140,
+    header: () => <span>Dust / Chaos</span>,
+    size: 130,
     meta: {
       className:
         "text-right tabular-nums relative " +
@@ -199,9 +200,40 @@ export const createColumns = (
     },
   },
   {
+    accessorKey: COLUMN_IDS.DUST_PER_CHAOS_PER_SLOT,
+    header: () => <span>Dust / Chaos / Slot</span>,
+    size: 160,
+    meta: {
+      className:
+        "text-right tabular-nums relative " +
+        "bg-primary/3 dark:bg-primary/5 " +
+        "shadow-[inset_10px_0_12px_-14px_rgba(0,0,0,0.12)] " +
+        "dark:shadow-[inset_10px_0_12px_-12px_rgba(0,0,0,0.8)] " +
+        "after:content-[''] after:absolute after:inset-y-0 after:right-0 after:w-px after:bg-border",
+    },
+    cell: ({ row }) => {
+      const value = row.getValue(COLUMN_IDS.DUST_PER_CHAOS_PER_SLOT) as number;
+      const slots = row.original.slots;
+      return (
+        <span className="block w-full">
+          <span className="float-right inline-flex items-center gap-1 align-baseline">
+            <span>{value}</span>
+            <DustIcon />
+            <span className="text-muted-foreground">/</span>
+            <ChaosOrbIcon />
+            <span className="text-muted-foreground">/</span>
+            <span className="min-w-9 text-left text-xs">
+              {slots} slot{slots !== 1 ? "s" : ""}
+            </span>
+          </span>
+        </span>
+      );
+    },
+  },
+  {
     id: COLUMN_IDS.TRADE_LINK,
     header: "Trade Link",
-    size: 160,
+    size: 100,
     enableSorting: false,
     cell: ({ row }) => {
       const name = row.getValue(COLUMN_IDS.NAME) as string;
