@@ -26,6 +26,31 @@ import { LowStockInfo } from "./low-stock-info";
 
 import type { AdvancedSettings } from "./advanced-settings-panel";
 
+const compactFormatter = new Intl.NumberFormat("en", {
+  notation: "compact",
+  compactDisplay: "short",
+  maximumFractionDigits: 1,
+});
+
+export function renderCompactNumber(value: number) {
+  const parts = compactFormatter.formatToParts(value);
+
+  return (
+    <>
+      {parts.map(({ type, value }, index) => {
+        if (type === "compact") {
+          return (
+            <span key={index} className="text-muted-foreground ml-1 text-xs">
+              {value}
+            </span>
+          );
+        }
+        return <span key={index}>{value}</span>;
+      })}
+    </>
+  );
+}
+
 const DustValueHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
   React.memo(
     function DustValueHeaderComponent() {
@@ -148,9 +173,10 @@ export const createColumns = (
     },
     cell: ({ row }) => {
       const value = row.getValue(COLUMN_IDS.CHAOS) as number;
+
       return (
         <span className="inline-flex w-full justify-end gap-1">
-          <span>{value}</span>
+          <span>{renderCompactNumber(value)}</span>
           <ChaosOrbIcon />
         </span>
       );
@@ -166,7 +192,7 @@ export const createColumns = (
       return (
         <span className="block w-full">
           <span className="float-right inline-flex items-center gap-1">
-            <span>{value}</span>
+            <span>{renderCompactNumber(value)}</span>
             <DustIcon />
           </span>
         </span>
@@ -190,7 +216,7 @@ export const createColumns = (
       return (
         <span className="block w-full">
           <span className="float-right inline-flex items-center gap-1 align-baseline">
-            <span>{value}</span>
+            <span>{renderCompactNumber(value)}</span>
             <DustIcon />
             <span className="text-muted-foreground">/</span>
             <ChaosOrbIcon />
@@ -214,10 +240,11 @@ export const createColumns = (
     cell: ({ row }) => {
       const value = row.getValue(COLUMN_IDS.DUST_PER_CHAOS_PER_SLOT) as number;
       const slots = row.original.slots;
+
       return (
         <span className="block w-full">
           <span className="float-right inline-flex items-center gap-1 align-baseline">
-            <span>{value}</span>
+            <span>{renderCompactNumber(value)}</span>
             <DustIcon />
             <span className="text-muted-foreground">/</span>
             <ChaosOrbIcon />
