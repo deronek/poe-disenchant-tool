@@ -50,7 +50,7 @@ export const createNormalizedFilterValue = <TData extends Item>(
   const { min, max } = range;
 
   // Clear filter if range equals defaults
-  if (min === context.min && (!max || max === context.max)) {
+  if (min === context.min && (max === undefined || max === context.max)) {
     return undefined;
   }
 
