@@ -18,6 +18,13 @@ import * as React from "react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { COLUMN_IDS } from "./columns";
 import { DustIcon } from "./dust-icon";
+
+// Compact number formatter for mobile cards
+const compactFormatter = new Intl.NumberFormat("en", {
+  notation: "standard",
+  maximumFractionDigits: 1,
+});
+
 import { DustInfo } from "./dust-info";
 import { Icon } from "./icon";
 import { ItemMarkingInfo } from "./item-marking-info";
@@ -173,7 +180,7 @@ function MobileCardComponent<TData extends Item>({
             <p className="text-muted-foreground">Price</p>
           </div>
           <div className="flex items-center gap-1 text-sm font-semibold">
-            <span>{chaos}</span>
+            <span>{compactFormatter.format(chaos)}</span>
             <ChaosOrbIcon className="h-4 w-4" />
           </div>
         </div>
@@ -181,7 +188,7 @@ function MobileCardComponent<TData extends Item>({
           <div className="space-y-2">
             <p className="text-muted-foreground text-sm">Dust Value</p>
             <div className="flex items-center gap-1 text-sm font-semibold">
-              <span>{calculatedDustValue}</span>
+              <span>{compactFormatter.format(calculatedDustValue)}</span>
               <DustIcon className="h-4 w-4" />
             </div>
           </div>
@@ -195,7 +202,9 @@ function MobileCardComponent<TData extends Item>({
           <p className="text-muted-foreground text-sm">Dust per Chaos</p>
 
           <div className="text-primary flex items-center gap-1 text-lg font-bold">
-            <span className="truncate">{dustPerChaos}</span>
+            <span className="truncate">
+              {compactFormatter.format(dustPerChaos)}
+            </span>
             <DustIcon className="h-5 w-5" />
             <span className="text-muted-foreground">/</span>
             <ChaosOrbIcon className="h-5 w-5" />
@@ -232,7 +241,9 @@ function MobileCardComponent<TData extends Item>({
       <div className="space-y-2">
         <p className="text-muted-foreground text-sm">Dust per Chaos per Slot</p>
         <div className="flex items-center gap-1 text-sm">
-          <span className="font-semibold">{dustPerChaosPerSlot}</span>
+          <span className="font-semibold">
+            {compactFormatter.format(dustPerChaosPerSlot)}
+          </span>
           <DustIcon className="h-4 w-4" />
           <span className="text-muted-foreground">/</span>
           <ChaosOrbIcon className="h-4 w-4" />
