@@ -23,7 +23,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { Item } from "@/lib/itemData";
-import { ChevronUp } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import * as React from "react";
 import { DataTablePagination } from "./data-table-pagination";
 import { useDataTableState } from "./data-table-state-context";
@@ -196,9 +196,9 @@ export function DataTable<TData extends Item, TValue>({
                           {canSort ? (
                             <span
                               aria-hidden="true"
-                              className={`ml-1 inline-flex h-4 w-4 items-center justify-center transition-all ${isSorted ? "text-primary" : "text-muted-foreground"} ${isSorted === "desc" ? "rotate-180" : ""} ${isSorted === false ? "opacity-80" : ""}`}
+                              className={`ml-1 inline-flex h-4 w-4 items-center justify-center transition-all ${isSorted ? "text-primary" : "text-muted-foreground"} ${isSorted === "asc" ? "rotate-180" : ""} ${isSorted === false ? "opacity-80" : ""}`}
                             >
-                              <ChevronUp className="h-4 w-4" />
+                              <ChevronDown className="h-4 w-4" />
                             </span>
                           ) : null}
                         </div>
