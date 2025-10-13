@@ -37,7 +37,7 @@ export const setFilterValue = <TData extends Item>(
 /**
  * Creates a normalized filter value, clearing the filter if it matches defaults
  */
-export const createNormalizedFilterValue = <TData extends Item>(
+export const createNormalizedFilterValue = (
   range: PriceRange,
   defaults: { min: number; max: number },
 ): PriceFilterValue | undefined => {
