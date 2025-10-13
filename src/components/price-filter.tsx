@@ -168,12 +168,16 @@ export function PriceFilter<TData extends Item>({
                   min={currentRange.min}
                   max={max}
                   step={10}
-                  value={[currentRange.max!]}
+                  value={[
+                    hasMaxFilter(filterContext, currentRange)
+                      ? (currentRange.max as number)
+                      : max,
+                  ]}
                   onValueChange={handleUpperBoundChange}
                   disabled={false}
                   className={cn(
                     "w-full py-1",
-                    !currentRange.max && "opacity-60",
+                    !hasMaxFilter(filterContext, currentRange) && "opacity-60",
                   )}
                   aria-label="Upper bound price filter"
                 />
