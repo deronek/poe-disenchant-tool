@@ -67,7 +67,10 @@ function SortingMenuItem({
   icons,
   onSort,
   sortState,
-}: SortOption & { onSort: (id: ColumnId) => void; sortState: SortState }) {
+}: SortOption & {
+  onSort: (id: ColumnId) => void;
+  sortState: SortState;
+}) {
   return (
     <DropdownMenuItem
       onSelect={() => onSort(id)}
@@ -104,7 +107,7 @@ export function MobileSortingControls<TData>({
     return sort.desc ? "desc" : "asc";
   };
 
-  // Single-column tri-state: new -> desc; desc -> asc; asc -> none
+  // Single-column bi-state: new -> desc; desc -> asc; asc -> desc
   const handleSort = (columnId: ColumnId) => {
     const [prev] = table.getState().sorting;
     if (!prev || prev.id !== columnId) {
@@ -114,7 +117,7 @@ export function MobileSortingControls<TData>({
     if (prev.desc) {
       table.setSorting([{ id: columnId, desc: false }]);
     } else {
-      table.setSorting([]);
+      table.setSorting([{ id: columnId, desc: true }]);
     }
   };
 
