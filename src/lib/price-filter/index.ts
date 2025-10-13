@@ -1,9 +1,5 @@
 // Export all types
-export type {
-  PriceFilterValue,
-  PriceRange,
-  PriceFilterContext,
-} from "./price-filter-logic";
+export type { PriceFilterValue, PriceRange } from "./price-filter-logic";
 
 // Export all business logic functions
 export {
@@ -19,5 +15,4 @@ export {
   resetFilter,
   hasMinFilter,
   hasMaxFilter,
-  applyFilter,
 } from "./price-filter-logic";
