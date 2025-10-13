@@ -198,7 +198,7 @@ export const applyFilter = <TData extends Item>(
     // If current range equals defaults, clear the filter
     if (
       currentRange.min === context.min &&
-      (!currentRange.max || currentRange.max === context.max)
+      (currentRange.max === undefined || currentRange.max === context.max)
     ) {
       setFilterValue(context, undefined);
     }
