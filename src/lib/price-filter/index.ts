@@ -17,4 +17,7 @@ export {
   getLowerBoundLinearValue,
   hasActiveFilter,
   resetFilter,
+  hasMinFilter,
+  hasMaxFilter,
+  applyFilter,
 } from "./price-filter-logic";

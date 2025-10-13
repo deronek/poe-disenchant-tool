@@ -11,10 +11,8 @@ export type PriceFilterValue = {
 };
 
 export type PriceRange = {
-  lower: number;
-  upper?: number;
-  upperEnabled: boolean;
-  lowerEnabled: boolean;
+  min: number;
+  max?: number;
 };
 
 export type PriceFilterContext<TData extends Item> = {
@@ -49,20 +47,16 @@ export const createNormalizedFilterValue = <TData extends Item>(
   context: PriceFilterContext<TData>,
   range: PriceRange,
 ): PriceFilterValue | undefined => {
-  const { lower, upper, upperEnabled, lowerEnabled } = range;
+  const { min, max } = range;
 
   // Clear filter if range equals defaults
-  if (
-    lower === context.min &&
-    !lowerEnabled &&
-    (!upperEnabled || upper === context.max)
-  ) {
+  if (min === context.min && (!max || max === context.max)) {
     return undefined;
   }
 
   return {
-    min: lower,
-    max: upperEnabled ? upper : undefined,
+    min,
+    max,
   };
 };
 
@@ -73,19 +67,12 @@ export const getCurrentRange = <TData extends Item>(
   context: PriceFilterContext<TData>,
 ): PriceRange => {
   const filterValue = getCurrentFilterValue(context);
-  const currentMin = filterValue?.min ?? context.min;
-  const currentMax = filterValue?.max ?? context.max;
-  const upperEnabled =
-    filterValue?.max !== undefined && filterValue.max !== context.max;
-
-  const lowerEnabled =
-    filterValue?.min !== undefined && filterValue.min !== context.min;
+  const min = filterValue?.min ?? context.min;
+  const max = filterValue?.max ?? context.max;
 
   return {
-    lower: currentMin,
-    upper: currentMax,
-    upperEnabled,
-    lowerEnabled,
+    min,
+    max,
   };
 };
 
@@ -94,17 +81,14 @@ export const getCurrentRange = <TData extends Item>(
  */
 export const updateLowerBound = <TData extends Item>(
   context: PriceFilterContext<TData>,
-  newLower: number,
+  newMin: number,
   currentRange: PriceRange,
 ): PriceRange => {
-  const constrainedLower = Math.min(
-    newLower,
-    currentRange.upperEnabled ? currentRange.upper! : context.max,
-  );
+  const constrainedMin = Math.min(newMin, currentRange.max ?? context.max);
 
   return {
     ...currentRange,
-    lower: constrainedLower,
+    min: constrainedMin,
   };
 };
 
@@ -113,15 +97,12 @@ export const updateLowerBound = <TData extends Item>(
  */
 export const updateUpperBound = <TData extends Item>(
   context: PriceFilterContext<TData>,
-  newUpper: number,
+  newMax: number,
   currentRange: PriceRange,
 ): PriceRange => {
-  const shouldEnable = newUpper !== context.max;
-
   return {
     ...currentRange,
-    upper: shouldEnable ? newUpper : context.max,
-    upperEnabled: shouldEnable,
+    max: newMax === context.max ? undefined : newMax,
   };
 };
 
@@ -132,7 +113,7 @@ const getEffectiveMaxForLowerBound = <TData extends Item>(
   context: PriceFilterContext<TData>,
 ): number => {
   const currentRange = getCurrentRange(context);
-  return currentRange.upperEnabled ? currentRange.upper! : context.max;
+  return currentRange.max ?? context.max;
 };
 
 /**
@@ -166,10 +147,9 @@ export const hasActiveFilter = <TData extends Item>(
   const filterValue = getCurrentFilterValue(context);
   if (!filterValue) return false;
 
-  const currentRange = getCurrentRange(context);
   return (
-    currentRange.lowerEnabled ||
-    (currentRange.upperEnabled && filterValue.max !== context.max)
+    filterValue.min !== context.min ||
+    (filterValue.max !== undefined && filterValue.max !== context.max)
   );
 };
 
@@ -183,6 +163,30 @@ export const resetFilter = <TData extends Item>(
 };
 
 /**
+ * Utility functions to derive filter state from PriceRange
+ */
+
+/**
+ * Checks if the lower bound filter is active
+ */
+export const hasMinFilter = <TData extends Item>(
+  context: PriceFilterContext<TData>,
+  range: PriceRange,
+): boolean => {
+  return range.min !== context.min;
+};
+
+/**
+ * Checks if the upper bound filter is active
+ */
+export const hasMaxFilter = <TData extends Item>(
+  context: PriceFilterContext<TData>,
+  range: PriceRange,
+): boolean => {
+  return range.max !== undefined && range.max !== context.max;
+};
+
+/**
  * Applies the current filter state (used for closing the popover)
  */
 export const applyFilter = <TData extends Item>(
@@ -193,9 +197,8 @@ export const applyFilter = <TData extends Item>(
     const currentRange = getCurrentRange(context);
     // If current range equals defaults, clear the filter
     if (
-      currentRange.lower === context.min &&
-      !currentRange.lowerEnabled &&
-      (!currentRange.upperEnabled || currentRange.upper === context.max)
+      currentRange.min === context.min &&
+      (!currentRange.max || currentRange.max === context.max)
     ) {
       setFilterValue(context, undefined);
     }
