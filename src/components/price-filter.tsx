@@ -149,7 +149,9 @@ export function PriceFilter<TData extends Item>({
                   <span className="leading-none">{min}</span>
                   <ChaosOrbIcon />
                 </span>
-                <span className="text-foreground inline-flex items-center gap-1 font-semibold">
+                <span
+                  className={`inline-flex items-center gap-1 font-semibold ${isFilterActive ? "text-foreground" : "text-muted-foreground"}`}
+                >
                   <span className="leading-none">{currentRange.lower}</span>
                   <ChaosOrbIcon />
                 </span>
