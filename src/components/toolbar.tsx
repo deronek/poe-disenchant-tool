@@ -39,7 +39,7 @@ export function DataTableToolbar<TData extends Item>({
           <div className="w-full min-w-0 xl:w-auto xl:shrink-0">
             <PriceFilter
               column={table.getColumn(COLUMN_IDS.CHAOS)}
-              min={0}
+              min={1}
               max={500}
             />
           </div>
