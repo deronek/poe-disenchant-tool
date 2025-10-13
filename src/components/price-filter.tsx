@@ -184,12 +184,20 @@ export function PriceFilter<TData extends Item>({
               </div>
               <div className="text-muted-foreground flex justify-between text-xs">
                 <span
-                  className={`inline-flex items-center gap-1 font-semibold ${hasMaxFilter(filterContext, currentRange) ? "text-foreground" : "text-muted-foreground"}`}
+                  className={`inline-flex items-center gap-1 font-semibold ${
+                    hasMaxFilter(filterContext, currentRange)
+                      ? "text-foreground"
+                      : "text-muted-foreground"
+                  }`}
                 >
                   <span className="leading-none">
-                    {currentRange.max ?? "No limit"}
+                    {hasMaxFilter(filterContext, currentRange)
+                      ? currentRange.max
+                      : "No limit"}
                   </span>
-                  {currentRange.max && <ChaosOrbIcon />}
+                  {hasMaxFilter(filterContext, currentRange) && (
+                    <ChaosOrbIcon />
+                  )}
                 </span>
                 <span className="inline-flex items-center gap-1">
                   <span className="leading-none">{max}</span>
