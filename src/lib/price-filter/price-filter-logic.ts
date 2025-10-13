@@ -14,6 +14,7 @@ export type PriceRange = {
   lower: number;
   upper?: number;
   upperEnabled: boolean;
+  lowerEnabled: boolean;
 };
 
 export type PriceFilterContext<TData extends Item> = {
@@ -48,10 +49,14 @@ export const createNormalizedFilterValue = <TData extends Item>(
   context: PriceFilterContext<TData>,
   range: PriceRange,
 ): PriceFilterValue | undefined => {
-  const { lower, upper, upperEnabled } = range;
+  const { lower, upper, upperEnabled, lowerEnabled } = range;
 
   // Clear filter if range equals defaults
-  if (lower === context.min && (!upperEnabled || upper === context.max)) {
+  if (
+    lower === context.min &&
+    !lowerEnabled &&
+    (!upperEnabled || upper === context.max)
+  ) {
     return undefined;
   }
 
@@ -73,10 +78,14 @@ export const getCurrentRange = <TData extends Item>(
   const upperEnabled =
     filterValue?.max !== undefined && filterValue.max !== context.max;
 
+  const lowerEnabled =
+    filterValue?.min !== undefined && filterValue.min !== context.min;
+
   return {
     lower: currentMin,
     upper: currentMax,
     upperEnabled,
+    lowerEnabled,
   };
 };
 
@@ -159,7 +168,7 @@ export const hasActiveFilter = <TData extends Item>(
 
   const currentRange = getCurrentRange(context);
   return (
-    filterValue.min !== context.min ||
+    currentRange.lowerEnabled ||
     (currentRange.upperEnabled && filterValue.max !== context.max)
   );
 };
@@ -185,6 +194,7 @@ export const applyFilter = <TData extends Item>(
     // If current range equals defaults, clear the filter
     if (
       currentRange.lower === context.min &&
+      !currentRange.lowerEnabled &&
       (!currentRange.upperEnabled || currentRange.upper === context.max)
     ) {
       setFilterValue(context, undefined);
