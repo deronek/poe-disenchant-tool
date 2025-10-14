@@ -32,6 +32,29 @@ const compactFormatter = new Intl.NumberFormat("en", {
   maximumFractionDigits: 1,
 });
 
+const standardFormatter = new Intl.NumberFormat("en", {
+  notation: "standard",
+  maximumFractionDigits: 1,
+});
+
+// Reusable tooltip wrapper for compact numbers
+function CompactNumberTooltip({
+  value,
+  children,
+}: {
+  value: number;
+  children: React.ReactNode;
+}) {
+  return (
+    <Tooltip>
+      <TooltipTrigger>{children}</TooltipTrigger>
+      <TooltipContent variant="popover" className="px-3 py-1.5 text-xs">
+        {standardFormatter.format(value)}
+      </TooltipContent>
+    </Tooltip>
+  );
+}
+
 export function renderCompactNumber(value: number) {
   const parts = compactFormatter.formatToParts(value);
 
@@ -176,7 +199,9 @@ export const createColumns = (
 
       return (
         <span className="inline-flex w-full justify-end gap-1">
-          <span>{renderCompactNumber(value)}</span>
+          <CompactNumberTooltip value={value}>
+            <span>{renderCompactNumber(value)}</span>
+          </CompactNumberTooltip>
           <ChaosOrbIcon />
         </span>
       );
@@ -192,7 +217,9 @@ export const createColumns = (
       return (
         <span className="block w-full">
           <span className="float-right inline-flex items-center gap-1">
-            <span>{renderCompactNumber(value)}</span>
+            <CompactNumberTooltip value={value}>
+              <span>{renderCompactNumber(value)}</span>
+            </CompactNumberTooltip>
             <DustIcon />
           </span>
         </span>
@@ -216,7 +243,9 @@ export const createColumns = (
       return (
         <span className="block w-full">
           <span className="float-right inline-flex items-center gap-1 align-baseline">
-            <span>{renderCompactNumber(value)}</span>
+            <CompactNumberTooltip value={value}>
+              <span>{renderCompactNumber(value)}</span>
+            </CompactNumberTooltip>
             <DustIcon />
             <span className="text-muted-foreground">/</span>
             <ChaosOrbIcon />
@@ -244,7 +273,9 @@ export const createColumns = (
       return (
         <span className="block w-full">
           <span className="float-right inline-flex items-center gap-1 align-baseline">
-            <span>{renderCompactNumber(value)}</span>
+            <CompactNumberTooltip value={value}>
+              <span>{renderCompactNumber(value)}</span>
+            </CompactNumberTooltip>
             <DustIcon />
             <span className="text-muted-foreground">/</span>
             <ChaosOrbIcon />
