@@ -335,7 +335,9 @@ export const createColumns = (
 
       const content = isLowStock ? (
         <Tooltip>
-          <TooltipTrigger asChild>{button}</TooltipTrigger>
+          <TooltipTrigger asChild className="cursor-pointer">
+            {button}
+          </TooltipTrigger>
           <TooltipContent className="max-w-[280px] text-sm" variant="popover">
             <LowStockInfo
               name={name}
