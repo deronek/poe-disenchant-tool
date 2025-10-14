@@ -24,7 +24,7 @@ const tooltipContentVariants = cva(
 );
 
 function TooltipProvider({
-  delayDuration = 0,
+  delayDuration = 300,
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Provider>) {
   return (
