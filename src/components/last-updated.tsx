@@ -144,7 +144,7 @@ export default function LastUpdated({
     <time
       dateTime={timestamp.toISOString()}
       className={
-        "text-muted-foreground inline-flex h-8 cursor-pointer items-center text-sm transition-colors"
+        "text-muted-foreground inline-flex h-8 cursor-help items-center text-sm transition-colors"
       }
     >
       Last updated: {relativeTime}
