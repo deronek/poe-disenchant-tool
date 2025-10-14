@@ -1,4 +1,4 @@
-// Remove unused fields (raw dust value, data related to slots) from the dust data
+// Remove unused fields from the dust data
 
 import { Item } from "@/lib/dust";
 import fs from "fs";
