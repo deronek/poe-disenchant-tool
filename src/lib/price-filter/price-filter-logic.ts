@@ -10,11 +10,6 @@ export type PriceFilterValue = {
   max?: number; // Optional for single bound filtering
 };
 
-export type PriceRange = {
-  min: number;
-  max?: number;
-};
-
 /**
  * Gets the current filter value from the table column
  */
@@ -38,7 +33,7 @@ export const setFilterValue = <TData extends Item>(
  * Creates a normalized filter value, clearing the filter if it matches defaults
  */
 export const createNormalizedFilterValue = (
-  range: PriceRange,
+  range: PriceFilterValue,
   defaults: { min: number; max: number },
 ): PriceFilterValue | undefined => {
   const { min, max } = range;
@@ -60,7 +55,7 @@ export const createNormalizedFilterValue = (
 export const getCurrentRange = <TData extends Item>(
   column: Column<TData, unknown> | undefined,
   defaults: { min: number; max: number },
-): PriceRange => {
+): PriceFilterValue => {
   const filterValue = getCurrentFilterValue(column);
   const min = filterValue?.min ?? defaults.min;
   const max = filterValue?.max ?? defaults.max;
@@ -76,9 +71,9 @@ export const getCurrentRange = <TData extends Item>(
  */
 export const updateLowerBound = (
   newMin: number,
-  currentRange: PriceRange,
+  currentRange: PriceFilterValue,
   defaults: { max: number },
-): PriceRange => {
+): PriceFilterValue => {
   const constrainedMin = Math.min(newMin, currentRange.max ?? defaults.max);
 
   return {
@@ -92,9 +87,9 @@ export const updateLowerBound = (
  */
 export const updateUpperBound = (
   newMax: number,
-  currentRange: PriceRange,
+  currentRange: PriceFilterValue,
   defaults: { max: number },
-): PriceRange => {
+): PriceFilterValue => {
   return {
     ...currentRange,
     max: newMax === defaults.max ? undefined : newMax,
@@ -165,7 +160,7 @@ export const resetFilter = <TData extends Item>(
  * Checks if the lower bound filter is active
  */
 export const hasMinFilter = (
-  range: PriceRange,
+  range: PriceFilterValue,
   defaults: { min: number },
 ): boolean => {
   return range.min !== defaults.min;
@@ -175,7 +170,7 @@ export const hasMinFilter = (
  * Checks if the upper bound filter is active
  */
 export const hasMaxFilter = (
-  range: PriceRange,
+  range: PriceFilterValue,
   defaults: { max: number },
 ): boolean => {
   return range.max !== undefined && range.max !== defaults.max;
