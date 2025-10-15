@@ -168,7 +168,7 @@ export function DataTable<TData extends Item, TValue>({
                         <div
                           role={canSort ? "button" : undefined}
                           tabIndex={canSort ? 0 : -1}
-                          className={`flex w-full items-center justify-between gap-2 rounded-sm py-1 outline-none ${canSort ? "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-offset-background cursor-pointer focus-visible:ring-[3px] focus-visible:ring-offset-2" : ""}`}
+                          className={`flex w-full items-center justify-between gap-2 rounded-sm py-1 outline-none ${canSort ? "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-offset-background focus-visible:ring-[3px] focus-visible:ring-offset-2" : ""}`}
                           onClick={toggleSort}
                           onKeyDown={(e) => {
                             if (!canSort) return;
