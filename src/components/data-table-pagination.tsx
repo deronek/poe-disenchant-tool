@@ -66,11 +66,14 @@ export function DataTablePagination<TData>({
   return (
     <div className="flex items-baseline justify-between px-3 py-2">
       {/* Left caption: start–end of total */}
-      <div className="text-muted-foreground flex-1 text-sm" aria-live="polite">
+      <div
+        className="text-muted-foreground min-w-24 text-sm"
+        aria-live="polite"
+      >
         Showing {start}–{end} of {total} items.
       </div>
 
-      <div className="flex flex-1 items-center justify-end gap-2 md:gap-6 lg:gap-8">
+      <div className="flex flex-1 items-center justify-end gap-2 md:gap-6 lg:gap-10">
         {/* Rows per page */}
         <div className="hidden items-center gap-2 lg:flex">
           <p className="flex-none text-sm font-semibold">Rows per page</p>
@@ -90,7 +93,7 @@ export function DataTablePagination<TData>({
           <Button
             variant="outline"
             size="icon"
-            className="hidden size-8 lg:flex"
+            className="hidden size-8 md:flex"
             onClick={() => table.setPageIndex(0)}
             disabled={!canPrev}
             aria-disabled={!canPrev}
@@ -123,7 +126,7 @@ export function DataTablePagination<TData>({
           <Button
             variant="outline"
             size="icon"
-            className="hidden size-8 lg:flex"
+            className="hidden size-8 md:flex"
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!canNext}
             aria-disabled={!canNext}
