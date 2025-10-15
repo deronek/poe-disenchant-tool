@@ -167,10 +167,7 @@ export function AdvancedSettingsPanel({
               <div className="flex items-center justify-between pb-1">
                 <div className="flex items-center gap-2">
                   <Zap className="h-4 w-4 text-red-600 dark:text-red-400" />
-                  <Label
-                    htmlFor="include-corrupted"
-                    className="cursor-pointer text-sm"
-                  >
+                  <Label htmlFor="include-corrupted" className="text-sm">
                     Include Corrupted Items
                   </Label>
                 </div>
