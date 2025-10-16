@@ -1,4 +1,3 @@
-// src/app/[league]/page.tsx
 import LeagueContentServer from "@/app/[league]/league-content-server";
 import DataViewSkeleton from "@/components/data-view-skeleton";
 import { LeagueSelector } from "@/components/league-selector";

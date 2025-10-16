@@ -2,7 +2,7 @@ import { getItems } from "@/lib/itemData";
 import { SharedDataView } from "@/components/shared-data-view";
 import LastUpdatedClient from "@/components/last-updated";
 import { League } from "@/lib/leagues";
-import { revalidateData } from "@/app/actions/revalidate";
+import { revalidateDataAction } from "@/app/actions/revalidate";
 
 interface LeagueContentServerProps {
   league: League;
@@ -24,7 +24,7 @@ export default async function LeagueContentServer({
         <LastUpdatedClient
           timestamp={lastUpdated}
           league={league}
-          revalidateData={revalidateData}
+          revalidateDataAction={revalidateDataAction}
         />
       </h4>
       <div className="xl:py-4">

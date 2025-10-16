@@ -1,5 +1,3 @@
-"use client";
-
 import type { AdvancedSettings } from "@/components/advanced-settings-panel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

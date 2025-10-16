@@ -25,13 +25,13 @@ import { toast } from "sonner";
 interface LastUpdatedProps {
   timestamp: Date;
   league: string;
-  revalidateData: (origin: string, league: string) => Promise<unknown>;
+  revalidateDataAction: (origin: string, league: string) => Promise<unknown>;
 }
 
 export default function LastUpdated({
   timestamp,
   league,
-  revalidateData,
+  revalidateDataAction,
 }: LastUpdatedProps) {
   const [relativeTime, setRelativeTime] = useState("...");
   const [absoluteTime, setAbsoluteTime] = useState("");
@@ -86,7 +86,7 @@ export default function LastUpdated({
     setIsRefreshing(true);
     try {
       // Call the Server Action to revalidate data
-      const res = await revalidateData(window.location.origin, league);
+      const res = await revalidateDataAction(window.location.origin, league);
       console.debug("revalidateData response:", res);
     } catch (error) {
       console.error("Failed to refresh data:", error);

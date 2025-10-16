@@ -1,5 +1,3 @@
-"use client";
-
 import { Badge } from "@/components/ui/badge";
 import { Sparkles, TrendingDown } from "lucide-react";
 import { Separator } from "./ui/separator";

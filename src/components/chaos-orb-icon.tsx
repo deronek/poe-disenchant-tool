@@ -1,5 +1,3 @@
-"use client";
-
 import { Icon } from "./icon";
 
 type Props = {

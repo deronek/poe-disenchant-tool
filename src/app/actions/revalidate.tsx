@@ -120,7 +120,10 @@ async function warmOrigin(fullWarmUrl: string) {
   return { status: res.status, xVercel };
 }
 
-export async function revalidateData(originFromClient: string, league: string) {
+export async function revalidateDataAction(
+  originFromClient: string,
+  league: string,
+) {
   "use server";
 
   if (!originFromClient) {

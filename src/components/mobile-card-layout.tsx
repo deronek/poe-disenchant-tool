@@ -1,5 +1,3 @@
-"use client";
-
 import { MobileCard } from "./mobile-card";
 import { Table } from "@tanstack/react-table";
 import type { Item } from "@/lib/itemData";

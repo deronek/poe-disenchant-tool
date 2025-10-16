@@ -1,5 +1,3 @@
-"use client";
-
 import type { RowSelectionState, Updater } from "@tanstack/react-table";
 import * as React from "react";
 import { z } from "zod";
