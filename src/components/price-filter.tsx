@@ -11,17 +11,17 @@ import {
 import { Slider } from "@/components/ui/slider";
 import type { Item } from "@/lib/itemData";
 import {
+  createNormalizedFilterValue,
   getCurrentRange,
   getLowerBoundLinearValue,
   getLowerBoundSliderValue,
   hasActiveFilter,
-  hasMinFilter,
   hasMaxFilter,
+  hasMinFilter,
   resetFilter,
-  createNormalizedFilterValue,
+  setFilterValue,
   updateLowerBound,
   updateUpperBound,
-  setFilterValue,
 } from "@/lib/price-filter";
 import { cn } from "@/lib/utils";
 import type { Column } from "@tanstack/react-table";
@@ -51,16 +51,16 @@ export function PriceFilter<TData extends Item>({
 
   const currentRange = getCurrentRange(column, defaults);
 
-  // Handle lower bound changes with logarithmic scaling
-  const handleLowerBoundChange = useCallback(
-    (sliderValue: number[]) => {
-      const newLinearValue = getLowerBoundLinearValue(
-        column,
-        sliderValue[0],
-        defaults,
+  // Shared helper to update lower bound using a linear price value (in chaos)
+  const updateLowerBoundPrice = useCallback(
+    (newPrice: number) => {
+      const effectiveMax = currentRange.max ?? defaults.max;
+      const clamped = Math.round(
+        Math.min(Math.max(newPrice, defaults.min), effectiveMax),
       );
-      const updatedRange = updateLowerBound(newLinearValue, currentRange, {
-        max,
+
+      const updatedRange = updateLowerBound(clamped, currentRange, {
+        max: defaults.max,
       });
       const normalizedFilter = createNormalizedFilterValue(
         updatedRange,
@@ -68,7 +68,20 @@ export function PriceFilter<TData extends Item>({
       );
       setFilterValue(column, normalizedFilter);
     },
-    [column, currentRange, defaults, max],
+    [column, currentRange, defaults],
+  );
+
+  // Handles slider (mouse/touch) interaction — converts from slider value (0–100) to log scale
+  const handleLowerBoundChange = useCallback(
+    (sliderValue: number[]) => {
+      const newLinearValue = getLowerBoundLinearValue(
+        column,
+        sliderValue[0],
+        defaults,
+      );
+      updateLowerBoundPrice(newLinearValue);
+    },
+    [column, defaults, updateLowerBoundPrice],
   );
 
   const handleUpperBoundChange = useCallback(
@@ -99,6 +112,42 @@ export function PriceFilter<TData extends Item>({
   const handleApply = useCallback(() => {
     setIsOpen(false);
   }, []);
+
+  // Handles keyboard events on the slider
+  const handleLowerBoundKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      // let Home/End behave as usual
+      if (e.key === "Home" || e.key === "End") return;
+
+      const SMALL_STEP = 1;
+      const LARGE_STEP = 10;
+
+      let delta = 0;
+      switch (e.key) {
+        case "ArrowRight":
+        case "ArrowUp":
+          delta = e.shiftKey ? LARGE_STEP : SMALL_STEP;
+          break;
+        case "ArrowLeft":
+        case "ArrowDown":
+          delta = e.shiftKey ? -LARGE_STEP : -SMALL_STEP;
+          break;
+        case "PageUp":
+          delta = LARGE_STEP;
+          break;
+        case "PageDown":
+          delta = -LARGE_STEP;
+          break;
+        default:
+          return; // let all other keys pass through
+      }
+
+      e.preventDefault();
+      const newPrice = currentRange.min + delta;
+      updateLowerBoundPrice(newPrice);
+    },
+    [currentRange.min, updateLowerBoundPrice],
+  );
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
@@ -147,6 +196,7 @@ export function PriceFilter<TData extends Item>({
                     ),
                   ]}
                   onValueChange={handleLowerBoundChange}
+                  onKeyDown={handleLowerBoundKeyDown}
                   className="w-full py-1"
                   aria-label="Lower bound price filter"
                 />
