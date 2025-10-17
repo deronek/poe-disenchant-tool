@@ -1,76 +1,65 @@
-// Remove unused fields from the dust data
+// Script to generate dust data for app logic - omit/generate fields
+// Executed manually when source dataset for dust data changes
 
-import { Item } from "@/lib/dust";
+import { calculateDustValue, Item } from "@/lib/dust";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import data from "../src/lib/dust/poe-dust-original.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const sourcePath = path.join(__dirname, "../src/lib/dust/poe-dust.json");
-const backupPath = path.join(
-  __dirname,
-  "../src/lib/dust/poe-dust-original.json",
-);
+const outputJsPath = path.join(__dirname, "../src/lib/dust/poe-dust.js");
 
 try {
-  // Read original file
-  console.log("📖 Reading original file...");
-  const rawData = fs.readFileSync(sourcePath, "utf8");
-  const data = JSON.parse(rawData);
-
   if (!Array.isArray(data) || !data.every((x) => x && typeof x === "object")) {
     throw new Error("Expected data to be an array of objects");
   }
 
-  const originalSize = fs.statSync(sourcePath).size;
   console.log(`✅ Found ${data.length} items to process`);
 
-  // Create backup
-  console.log("💾 Creating backup...");
-  fs.copyFileSync(sourcePath, backupPath);
-  const backupSize = fs.statSync(backupPath).size;
-  console.log(`📁 Backup saved to: ${backupPath}`);
-
-  // Process each item to remove specified fields
+  // Process each item to calculate new fields
   console.log("🔧 Processing items...");
   const processedData = data.map((item: any, idx: number) => {
-    const { name, baseType, dustValIlvl84, dustValIlvl84Q20, slots }: Item =
-      item ?? {};
+    const { name, baseType, dustVal, slots } = item ?? {};
+
     if (
       typeof name !== "string" ||
       typeof baseType !== "string" ||
-      !Number.isFinite(dustValIlvl84) ||
-      !Number.isFinite(dustValIlvl84Q20) ||
+      !Number.isFinite(dustVal) ||
       !Number.isFinite(slots)
     ) {
       throw new Error(
         `Item at index ${idx} is missing required fields or has wrong types`,
       );
     }
-    return { name, baseType, dustValIlvl84, dustValIlvl84Q20, slots };
+
+    // Calculate dust values using the calculateDustValue function
+    const dustValIlvl84 = calculateDustValue(dustVal, 84, 0, 0, 0);
+    const dustValIlvl84Q20 = calculateDustValue(dustVal, 84, 20, 0, 0);
+
+    const outputItem: Item = {
+      name,
+      baseType,
+      dustValIlvl84,
+      dustValIlvl84Q20,
+      slots,
+    };
+
+    return outputItem;
   });
 
-  // Save processed data
-  console.log("💾 Saving processed data...");
-  fs.writeFileSync(sourcePath, JSON.stringify(processedData, null, 2));
-  const newSize = fs.statSync(sourcePath).size;
+  // Save processed data as JS module
+  console.log("💾 Saving processed data as JS module...");
+  const jsContent = `export default ${JSON.stringify(processedData, null, 2)};`;
+  fs.writeFileSync(outputJsPath, jsContent);
+  const jsSize = fs.statSync(outputJsPath).size;
 
   console.log(`✅ Successfully processed ${data.length} items`);
-  console.log(`📝 Removed fields: dustVal, dustPerSlot, w, h, link`);
-  console.log(`📁 Original file updated: ${sourcePath}`);
-  console.log(
-    `📏 Backup file size: ${(backupSize / 1024 / 1024).toFixed(2)} MB`,
-  );
-  console.log(`📏 New file size: ${(newSize / 1024 / 1024).toFixed(2)} MB`);
-
-  const reductionMB = ((originalSize - newSize) / 1024 / 1024).toFixed(2);
-  const reductionPct =
-    originalSize > 0
-      ? (((originalSize - newSize) / originalSize) * 100).toFixed(1)
-      : "0.0";
-  console.log(`📉 Size reduction: ${reductionMB} MB (${reductionPct}%)`);
+  console.log(`📝 Generated fields: dustValIlvl84, dustValIlvl84Q20`);
+  console.log(`📁 JS module file: ${outputJsPath}`);
+  console.log(`📏 JS file size: ${(jsSize / 1024 / 1024).toFixed(2)} MB`);
   console.log(`🎉 Processing complete!`);
 } catch (error) {
   console.error("❌ Error processing dust data:");
