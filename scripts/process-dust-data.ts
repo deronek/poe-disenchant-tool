@@ -52,7 +52,7 @@ try {
 
   // Save processed data as JS module
   console.log("💾 Saving processed data as JS module...");
-  const jsContent = `export default ${JSON.stringify(processedData, null, 2)};`;
+  const jsContent = `const data = ${JSON.stringify(processedData, null, 2)};\nexport default data;\n`;
   fs.writeFileSync(outputJsPath, jsContent);
   const jsSize = fs.statSync(outputJsPath).size;
 

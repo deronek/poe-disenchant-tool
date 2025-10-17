@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Script to generate JS data from JSON data
 // Executed one time during schema conversion
 
@@ -11,7 +12,7 @@ const processedData = data.map((item: any) => {
 });
 
 // Create JS export text
-const output = `export default ${JSON.stringify(processedData, null, 2)};\n`;
+const output = `const data = ${JSON.stringify(processedData, null, 2)};\nexport default data;\n`;
 
 // Write it to a JS file
 writeFileSync("./src/lib/dust/poe-dust-original.js", output, "utf8");
