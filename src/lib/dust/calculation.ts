@@ -16,7 +16,7 @@ export const calculateDustValue = (
   if (!Number.isFinite(baseDust) || baseDust <= 0)
     throw new Error("baseDust is invalid");
   if (!Number.isFinite(ilvl) || ilvl <= 0) throw new Error("ilvl is invalid");
-  if (!Number.isFinite(quality) || quality <= 0)
+  if (!Number.isFinite(quality) || quality < 0)
     throw new Error("quality is invalid");
   const clampedIlvl = Math.min(Math.max(ilvl, 65), 84);
 
@@ -59,11 +59,11 @@ export const calculateDustValueFull = (
   if (!Number.isFinite(baseDust) || baseDust <= 0)
     throw new Error("baseDust is invalid");
   if (!Number.isFinite(ilvl) || ilvl <= 0) throw new Error("ilvl is invalid");
-  if (!Number.isFinite(quality) || quality <= 0)
+  if (!Number.isFinite(quality) || quality < 0)
     throw new Error("quality is invalid");
-  if (!Number.isFinite(influenceCount) || influenceCount <= 0)
+  if (!Number.isFinite(influenceCount) || influenceCount < 0)
     throw new Error("influenceCount is invalid");
-  if (!Number.isFinite(corruptionImplicitCount) || corruptionImplicitCount <= 0)
+  if (!Number.isFinite(corruptionImplicitCount) || corruptionImplicitCount < 0)
     throw new Error("corruptionImplicitCount is invalid");
   const clampedIlvl = Math.min(Math.max(ilvl, 65), 84);
 
