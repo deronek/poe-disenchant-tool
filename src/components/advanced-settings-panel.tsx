@@ -33,7 +33,7 @@ import { ListingTimeFilterSchema } from "@/lib/listing-time-filter";
 import type { ListingTimeFilter } from "@/lib/listing-time-filter";
 import equal from "fast-deep-equal";
 
-export const AdvancedSettingsSchema = z.strictObject({
+export const AdvancedSettingsSchema = z.object({
   minItemLevel: z.int().min(65).max(84).prefault(78),
   includeCorrupted: z.boolean().prefault(true),
   listingTimeFilter: ListingTimeFilterSchema.prefault("3days"),
