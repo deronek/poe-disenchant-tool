@@ -17,8 +17,7 @@ export function useLocalStorage<T>(
   key: string,
   options: {
     debounceDelay?: number;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- schema can be whatever as long as it parses into T
-    schema?: ZodType<T, any>;
+    schema?: ZodType<T>;
   } = {},
 ): [T, React.Dispatch<React.SetStateAction<T>>] {
   if (!key) {
