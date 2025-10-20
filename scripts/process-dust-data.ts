@@ -14,7 +14,7 @@ const __dirname = path.dirname(__filename);
 const outputJsPath = path.join(__dirname, "../src/lib/dust/poe-dust.js");
 
 // Schema for input data
-const InputItemSchema = z.object({
+const InputItemSchema = z.strictObject({
   name: z.string().trim().min(1),
   baseType: z.string().trim().min(1),
   dustVal: z.number().positive(),
