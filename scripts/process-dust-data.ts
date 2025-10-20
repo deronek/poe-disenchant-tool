@@ -36,8 +36,8 @@ try {
     }
 
     // Calculate dust values using the calculateDustValue function
-    const dustValIlvl84 = calculateDustValue(dustVal, 84, 0, 0, 0);
-    const dustValIlvl84Q20 = calculateDustValue(dustVal, 84, 20, 0, 0);
+    const dustValIlvl84 = calculateDustValue(dustVal, 84, 0);
+    const dustValIlvl84Q20 = calculateDustValue(dustVal, 84, 20);
 
     const outputItem: Item = {
       name,
