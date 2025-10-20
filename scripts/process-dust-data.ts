@@ -2,6 +2,7 @@
 // Executed manually when source dataset for dust data changes
 
 import { calculateDustValue, Item } from "@/lib/dust";
+import { z } from "zod";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -12,39 +13,48 @@ const __dirname = path.dirname(__filename);
 
 const outputJsPath = path.join(__dirname, "../src/lib/dust/poe-dust.js");
 
+// Schema for input data
+const InputItemSchema = z.object({
+  name: z.string().trim().min(1),
+  baseType: z.string().trim().min(1),
+  dustVal: z.number().positive(),
+  w: z.number().int().positive(),
+  h: z.number().int().positive(),
+  slots: z.number().int().positive(),
+  link: z.string().url().optional(),
+});
+
+const InputItemDataSchema = z.array(InputItemSchema);
+
+type InputItem = z.infer<typeof InputItemSchema>;
+
 try {
-  if (!Array.isArray(data) || !data.every((x) => x && typeof x === "object")) {
-    throw new Error("Expected data to be an array of objects");
+  // Validate input data using Zod schema
+  console.log("🔍 Validating input data with Zod schema...");
+  const validationResult = InputItemDataSchema.safeParse(data);
+
+  if (!validationResult.success) {
+    console.error("❌ Input data validation failed:");
+    console.error(JSON.stringify(validationResult.error, null, 2));
+    throw new Error("Input data validation failed");
   }
 
-  console.log(`✅ Found ${data.length} items to process`);
+  const validatedData = validationResult.data;
+  console.log(`✅ Successfully validated ${validatedData.length} items`);
 
   // Process each item to calculate new fields
   console.log("🔧 Processing items...");
-  const processedData = data.map((item: any, idx: number) => {
-    const { name, baseType, dustVal, slots } = item ?? {};
-
-    if (
-      typeof name !== "string" ||
-      typeof baseType !== "string" ||
-      !Number.isFinite(dustVal) ||
-      !Number.isFinite(slots)
-    ) {
-      throw new Error(
-        `Item at index ${idx} is missing required fields or has wrong types`,
-      );
-    }
-
+  const processedData = validatedData.map((item: InputItem) => {
     // Calculate dust values using the calculateDustValue function
-    const dustValIlvl84 = calculateDustValue(dustVal, 84, 0);
-    const dustValIlvl84Q20 = calculateDustValue(dustVal, 84, 20);
+    const dustValIlvl84 = calculateDustValue(item.dustVal, 84, 0);
+    const dustValIlvl84Q20 = calculateDustValue(item.dustVal, 84, 20);
 
     const outputItem: Item = {
-      name,
-      baseType,
+      name: item.name,
+      baseType: item.baseType,
       dustValIlvl84,
       dustValIlvl84Q20,
-      slots,
+      slots: item.slots,
     };
 
     return outputItem;
@@ -56,7 +66,7 @@ try {
   fs.writeFileSync(outputJsPath, jsContent);
   const jsSize = fs.statSync(outputJsPath).size;
 
-  console.log(`✅ Successfully processed ${data.length} items`);
+  console.log(`✅ Successfully processed ${validatedData.length} items`);
   console.log(`📝 Generated fields: dustValIlvl84, dustValIlvl84Q20`);
   console.log(`📁 JS module file: ${outputJsPath}`);
   console.log(`📏 JS file size: ${(jsSize / 1024 / 1024).toFixed(2)} MB`);
