@@ -20,8 +20,8 @@ const LineSchema = z.object({
   name: z.string(),
   chaosValue: z.number(),
   baseType: z.string(),
-  icon: z.string().url(),
-  listingCount: z.number().int(),
+  icon: z.url(),
+  listingCount: z.int(),
   detailsId: z.string(),
 });
 

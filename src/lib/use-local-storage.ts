@@ -1,7 +1,7 @@
 // Based on https://gist.github.com/lukemcdonald/021d5584c058dfd570d59586daaefe59
 
 import React from "react";
-import type { ZodType, ZodTypeDef } from "zod";
+import type { ZodType } from "zod";
 
 /**
  * localStorage works just like useState, except it backs up to (and restores from) localStorage.
@@ -18,7 +18,7 @@ export function useLocalStorage<T>(
   options: {
     debounceDelay?: number;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- schema can be whatever as long as it parses into T
-    schema?: ZodType<T, ZodTypeDef, any>;
+    schema?: ZodType<T, any>;
   } = {},
 ): [T, React.Dispatch<React.SetStateAction<T>>] {
   if (!key) {

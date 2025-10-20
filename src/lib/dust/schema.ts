@@ -1,14 +1,12 @@
 import { z } from "zod";
 
-export const ItemSchema = z
-  .object({
-    name: z.string().trim().min(1),
-    baseType: z.string().trim().min(1),
-    dustValIlvl84: z.number().positive(),
-    dustValIlvl84Q20: z.number().positive(),
-    slots: z.number().int().positive(),
-  })
-  .strict();
+export const ItemSchema = z.strictObject({
+  name: z.string().trim().min(1),
+  baseType: z.string().trim().min(1),
+  dustValIlvl84: z.number().positive(),
+  dustValIlvl84Q20: z.number().positive(),
+  slots: z.int().positive(),
+});
 
 export const ItemDataSchema = z.array(ItemSchema);
 
