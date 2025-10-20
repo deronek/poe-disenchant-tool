@@ -9,7 +9,9 @@ try {
   const validatedData = ItemDataSchema.parse(data);
   console.log(`✅ Dust data validated (${validatedData.length} items)`);
 } catch (err) {
-  console.error("❌ Validation failed");
+  console.error(
+    `❌ Validation failed${err instanceof z.ZodError ? ` (${err.errors.length} issue(s))` : ""}`,
+  );
   if (err instanceof z.ZodError) {
     console.error(err.errors);
   } else {
