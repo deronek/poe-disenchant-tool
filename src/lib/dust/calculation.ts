@@ -1,5 +1,5 @@
 /**
- * Calculates the Thaumaturgic Dust multiplier for Kingsmarch disenchanting.
+ * Calculates the final Thaumaturgic Dust value for Kingsmarch disenchanting.
  *
  * @param baseDust - The base dust amount of the item
  * @param ilvl - Item level (0–100)
