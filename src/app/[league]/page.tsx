@@ -2,13 +2,14 @@ import LeagueContentServer from "@/app/[league]/league-content-server";
 import DataViewSkeleton from "@/components/data-view-skeleton";
 import { LeagueSelector } from "@/components/league-selector";
 import { ModeToggle } from "@/components/ui/mode-toggle";
+import { revalidationTime } from "@/lib/constants";
 import { League, LEAGUE_SLUGS } from "@/lib/leagues";
 import { Suspense } from "react";
 
 type Props = { params: Promise<{ league: League }> };
 
 export const dynamicParams = false;
-export const revalidate = 300; // 5 minutes
+export const revalidate = revalidationTime;
 
 export default async function LeaguePage({ params }: Props) {
   const { league } = await params;

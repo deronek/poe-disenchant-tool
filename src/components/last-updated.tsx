@@ -13,6 +13,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { revalidationTime } from "@/lib/constants";
 import {
   calculateTimeDifferences,
   formatAbsoluteTime,
@@ -72,7 +73,7 @@ export default function LastUpdated({
 
       setRelativeTime(relative);
       setAbsoluteTime(absolute);
-      setIsStale(diffInMinutes >= 5);
+      setIsStale(diffInMinutes >= revalidationTime / 60);
       setIsRefreshing(false);
     };
 

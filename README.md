@@ -18,7 +18,7 @@ Path of Exile tool for calculating unique item disenchanting efficiency in Kings
 
 ## Features
 
-- Real-time price data from poe.ninja API (refreshed every 5 minutes)
+- Real-time price data from poe.ninja API (refreshed every 15 minutes)
 - Dust value calculations based on item type and level
 - Filtering (name, price range)
 - Sorting (dust per chaos, dust value, price, name)

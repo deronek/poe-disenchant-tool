@@ -2,6 +2,7 @@ import { unstable_cache } from "next/cache";
 import { getDustData } from "./dust";
 import { League } from "./leagues";
 import { AllowedUnique, getPriceData } from "./prices";
+import { revalidationTime } from "./constants";
 
 export type Item = {
   name: string;
@@ -108,6 +109,6 @@ function calculateLowStockThreshold(items: Item[]) {
 export const getItems = async (league: League) => {
   return unstable_cache(async () => uncached__getItems(league), [league], {
     tags: [`items-${league}`],
-    revalidate: 300, // 5 minutes
+    revalidate: revalidationTime,
   })();
 };
