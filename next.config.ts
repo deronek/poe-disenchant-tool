@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
-const injectWhyDidYouRender = require("./scripts/why-did-you-render");
+//const injectWhyDidYouRender = require("./scripts/why-did-you-render");
 
 const nextConfig: NextConfig = {
   images: {
@@ -10,10 +10,14 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  webpack: (config, context) => {
-    // injectWhyDidYouRender(config, context);
+  // webpack: (config, context) => {
+  //   injectWhyDidYouRender(config, context);
 
-    return config;
+  //   return config;
+  // },
+  // Checks done in CI
+  typescript: {
+    ignoreBuildErrors: true,
   },
 };
 

@@ -53,6 +53,7 @@ export function DataTable<TData extends Item, TValue>({
   league,
   lowStockThreshold,
 }: DataTableProps<TData, TValue>) {
+  "use no memo"; // TanStack Table not yet comptatible with React Compiler
   const {
     sorting,
     columnFilters,
@@ -70,6 +71,7 @@ export function DataTable<TData extends Item, TValue>({
   const { rowSelection, setRowSelection, clearSelection } =
     usePersistentRowSelection(selectionStorageKey);
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data,
     columns,

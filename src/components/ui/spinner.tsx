@@ -7,6 +7,7 @@ type SpinnerProps = React.HTMLAttributes<HTMLDivElement> & {
   size?: number;
   width?: number;
   className?: string;
+  style?: CSSProperties;
 };
 
 const Spinner: React.FC<SpinnerProps> = ({

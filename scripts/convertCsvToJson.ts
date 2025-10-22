@@ -1,3 +1,5 @@
+// @ts-nocheck
+/* eslint-disable */
 const fs = require("fs");
 const parse = require("csv-parse/sync").parse;
 

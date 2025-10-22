@@ -144,7 +144,7 @@ export async function revalidateDataAction(
 
   try {
     // Revalidate specific league page
-    revalidateTag(`items-${league}`);
+    revalidateTag(`items-${league}`, "max");
     revalidatePath(`/${league}`, "page");
     const fullWarmUrl = `${normalizedOrigin}/${league}`;
     const warmResult = await warmOrigin(fullWarmUrl);

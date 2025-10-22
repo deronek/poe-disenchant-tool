@@ -1,4 +1,5 @@
 // @ts-nocheck
+/* eslint-disable */
 const path = require("path");
 
 /** @typedef {Parameters<import('next').NextConfig['webpack']>[1]} WebpackConfigContext */
