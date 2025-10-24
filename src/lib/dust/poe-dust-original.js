@@ -5668,7 +5668,7 @@ const data = [
   {
     name: "Ephemeral Edge",
     baseType: "Dusk Blade",
-    dustVal: 5,
+    dustVal: 39.79,
     w: 2,
     h: 3,
     slots: 6,
