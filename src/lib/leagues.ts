@@ -17,6 +17,10 @@ export function isValidLeague(slug: string): slug is League {
   return Object.hasOwn(LEAGUES, slug);
 }
 
+export function getLeagueName(slug: League) {
+  return LEAGUES[slug].name;
+}
+
 export function getLeagueApiName(slug: League) {
   return LEAGUES[slug].apiName;
 }

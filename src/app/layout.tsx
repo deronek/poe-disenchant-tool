@@ -9,7 +9,10 @@ import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
-  title: "PoE Unique Disenchanting Tool",
+  title: {
+    template: "%s | PoE Unique Disenchant Tool",
+    default: "PoE Unique Disenchant Tool",
+  },
   description:
     "Calculate the efficiency of disenchanting unique items for Thaumaturgic Dust",
 };

@@ -2,7 +2,8 @@ import LeagueContentServer from "@/app/[league]/league-content-server";
 import DataViewSkeleton from "@/components/data-view-skeleton";
 import { LeagueSelector } from "@/components/league-selector";
 import { ModeToggle } from "@/components/ui/mode-toggle";
-import { League, LEAGUE_SLUGS } from "@/lib/leagues";
+import { getLeagueName, League, LEAGUE_SLUGS } from "@/lib/leagues";
+import type { Metadata } from "next";
 import { Suspense } from "react";
 
 type Props = { params: Promise<{ league: League }> };
@@ -35,6 +36,15 @@ export default async function LeaguePage({ params }: Props) {
       </Suspense>
     </div>
   );
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { league } = await params;
+  const leagueName = getLeagueName(league);
+
+  return {
+    title: leagueName,
+  };
 }
 
 // Pre-generate static pages for known leagues
