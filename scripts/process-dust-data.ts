@@ -57,18 +57,15 @@ async function main() {
       return outputItem;
     });
 
-    // Save processed data as JS module
-    console.log("💾 Saving processed data as JS module...");
-    const jsContent = `const data = ${JSON.stringify(processedData, null, 2)};\nexport default data;\n`;
-    fs.writeFileSync(outputJsPath, jsContent);
-
-    // Format with Prettier
+    // Save processed data as JS module with Prettier formatting
     console.log("✨ Formatting with Prettier...");
+    const jsContent = `const data = ${JSON.stringify(processedData, null, 2)};\nexport default data;\n`;
     const prettierConfig = await prettier.resolveConfig(outputJsPath);
     const formatted = await prettier.format(jsContent, {
       ...prettierConfig,
       filepath: outputJsPath,
     });
+    console.log("💾 Saving processed data as JS module...");
     fs.writeFileSync(outputJsPath, formatted);
 
     const size = fs.statSync(outputJsPath).size;
