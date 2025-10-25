@@ -2,6 +2,7 @@ import LeagueContentServer from "@/app/[league]/league-content-server";
 import DataViewSkeleton from "@/components/data-view-skeleton";
 import { LeagueSelector } from "@/components/league-selector";
 import { ModeToggle } from "@/components/ui/mode-toggle";
+import { BASE_URL, DESCRIPTION, TITLE } from "@/lib/constants";
 import { getLeagueName, League, LEAGUE_SLUGS } from "@/lib/leagues";
 import type { Metadata } from "next";
 import { Suspense } from "react";
@@ -18,13 +19,8 @@ export default async function LeaguePage({ params }: Props) {
     <div className="container mx-auto space-y-3 p-4 pb-0 sm:pt-6 sm:pr-6 sm:pb-0 sm:pl-6 md:px-8 lg:space-y-2 xl:pb-4">
       <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
         <div className="">
-          <h1 className="mb-2 text-2xl font-bold sm:mb-4">
-            PoE Unique Disenchanting Tool
-          </h1>
-          <h3 className="text-lg">
-            Calculate the efficiency of disenchanting unique items for
-            Thaumaturgic Dust
-          </h3>
+          <h1 className="mb-2 text-2xl font-bold sm:mb-4">{TITLE}</h1>
+          <h3 className="text-lg">{DESCRIPTION}</h3>
         </div>
         <div className="flex w-full justify-between gap-4 sm:ml-auto sm:w-auto">
           <LeagueSelector currentLeague={league} />
@@ -44,6 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: leagueName,
+    alternates: { canonical: `${BASE_URL}/${league}` },
   };
 }
 
