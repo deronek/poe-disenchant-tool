@@ -1,4 +1,3 @@
-// src/lib/leagues.ts
 export const LEAGUES = {
   standard: { name: "Standard", apiName: "Standard" },
   hardcore: { name: "Hardcore", apiName: "Hardcore" },
