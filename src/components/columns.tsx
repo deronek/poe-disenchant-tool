@@ -231,9 +231,7 @@ export const createColumns = (
     meta: {
       className:
         "text-right tabular-nums relative " +
-        "bg-primary/3 dark:bg-primary/5 " +
-        "shadow-[inset_10px_0_12px_-14px_rgba(0,0,0,0.12)] " +
-        "dark:shadow-[inset_10px_0_12px_-12px_rgba(0,0,0,0.8)] " +
+        "bg-gradient-to-l from-primary/6 to-transparent dark:from-primary/7 dark:to-transparent " +
         "after:content-[''] after:absolute after:inset-y-0 after:right-0 after:w-px after:bg-border",
     },
     cell: ({ row }) => {
@@ -258,11 +256,7 @@ export const createColumns = (
     size: 160,
     meta: {
       className:
-        "text-right tabular-nums relative " +
-        "bg-primary/3 dark:bg-primary/5 " +
-        "shadow-[inset_10px_0_12px_-14px_rgba(0,0,0,0.12)] " +
-        "dark:shadow-[inset_10px_0_12px_-12px_rgba(0,0,0,0.8)] " +
-        "after:content-[''] after:absolute after:inset-y-0 after:right-0 after:w-px after:bg-border",
+        "text-right tabular-nums bg-gradient-to-r from-primary/6 to-transparent dark:from-primary/7 dark:to-transparent",
     },
     cell: ({ row }) => {
       const value = row.getValue(COLUMN_IDS.DUST_PER_CHAOS_PER_SLOT) as number;
