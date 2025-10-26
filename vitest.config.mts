@@ -6,5 +6,6 @@ export default defineConfig({
   plugins: [tsconfigPaths(), react()],
   test: {
     environment: "node",
+    include: ["./src/tests/unit/**/*.{test,spec}.?(c|m)[jt]s?(x)"],
   },
 });

@@ -35,5 +35,5 @@ jobs:
 
       - name: Run Desktop Tests (incl. common)
         run: |
-          pnpm test -- tests/desktop --project="${{ matrix.project }}"
+          pnpm test:desktop -- --project="${{ matrix.project }}"
         #   npx playwright test tests/common --project="${{ matrix.project }}"
