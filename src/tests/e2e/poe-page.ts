@@ -43,6 +43,7 @@ export class PoEDisenchantPage {
   async getTestItems(limit = 10): Promise<TestItem[]> {
     const rows = this.page.locator("tbody tr");
     const count = Math.min(await rows.count(), limit);
+    expect(count).toBeGreaterThanOrEqual(2);
     const items = [];
 
     for (let i = 0; i < count; i++) {
@@ -89,7 +90,8 @@ export class PoEDisenchantPage {
   async selectItem(name: string) {
     const row = this.page.locator("tr").filter({ hasText: name });
     const checkbox = row.getByRole("checkbox");
-    await checkbox.click({ force: true });
+    await checkbox.scrollIntoViewIfNeeded();
+    await checkbox.click();
   }
 
   async selectItems(names: string[]) {
@@ -124,7 +126,6 @@ export class PoEDisenchantPage {
   async clearAllSelections() {
     if (await this.clearMarksButton.isVisible()) {
       await this.clearMarksButton.click();
-      await this.page.waitForTimeout(200);
     }
   }
 
@@ -154,7 +155,7 @@ export class PoEDisenchantPage {
 
   /**
    * Opens the trade link in a new tab and returns the opened Page.
-   * Uses scrolling + visible wait, then clicks. Falls back to force-click if necessary.
+   * Uses scrolling + visible wait, then clicks.
    */
   async openTradeLinkInNewTab(
     itemName: string,
@@ -163,9 +164,7 @@ export class PoEDisenchantPage {
     const a = await this.getTradeLinkLocator(itemName);
 
     await a.scrollIntoViewIfNeeded();
-    await a.waitFor({ state: "visible", timeout: 2000 }).catch(() => {
-      /* continue */
-    });
+    await a.waitFor({ state: "visible", timeout: 2000 });
 
     const newPagePromise = context.waitForEvent("page");
     await a.click();
@@ -236,7 +235,7 @@ export class PoEDisenchantPage {
     const count = await headers.count();
     for (let i = 0; i < count; i++) {
       const text = (await headers.nth(i).innerText()).trim();
-      if (text.includes(columnName)) return i;
+      if (text == columnName) return i;
     }
     throw new Error(`Column "${columnName}" not found`);
   }
@@ -244,8 +243,7 @@ export class PoEDisenchantPage {
   async sortByColumn(columnName: string) {
     const index = await this.getColumnIndex(columnName);
     const header = this.page.locator("thead th").nth(index);
-    await header.click({ force: true });
-    await this.page.waitForTimeout(500); // debounce
+    await header.click();
   }
 
   // ---------------------------
@@ -256,7 +254,7 @@ export class PoEDisenchantPage {
     const input = this.page.locator("input[type='search'], input").first();
     await input.fill(term);
     await input.press("Enter");
-    await this.page.waitForTimeout(300);
+    await this.page.waitForTimeout(300); // debounce
   }
 
   async verifyItemDisplayed(name: string, shouldExist = true) {
