@@ -10,6 +10,12 @@
     "lint": "prettier --check . && eslint . && tsc --noEmit",
     "format": "prettier --write .",
     "test:unit": "vitest",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "test:report": "playwright show-report",
+    "test:update": "playwright test --update-snapshots",
+    "test:install": "playwright install --with-deps",
     "dust:process": "tsx scripts/process-dust-data.ts && tsx scripts/validate-dust-data.ts"
   },
   "dependencies": {
@@ -39,6 +45,7 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
+    "@playwright/test": "^1.54.2",
     "@next/eslint-plugin-next": "16.0.0",
     "@tailwindcss/postcss": "^4.1.15",
     "@testing-library/dom": "^10.4.1",

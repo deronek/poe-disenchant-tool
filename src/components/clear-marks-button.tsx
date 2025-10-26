@@ -22,6 +22,7 @@ export function ClearMarksButton<TData>({
       <Button
         variant="secondary"
         onClick={onClearMarks}
+        name={`Clear marks (${numberOfSelectedrows})`}
         title="Clear all marked rows"
         aria-label="Clear all marked rows"
         disabled={numberOfSelectedrows === 0}

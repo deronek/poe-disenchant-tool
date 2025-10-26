@@ -1,0 +1,39 @@
+name: E2E test
+
+on:
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  desktop:
+    name: Desktop Tests (${{ matrix.project }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: [chromium]
+        # project: [chromium, firefox, webkit]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install Playwright Browsers
+        run: pnpm test:install
+
+      - name: Run Desktop Tests (incl. common)
+        run: |
+          pnpm test -- tests/desktop --project="${{ matrix.project }}"
+        #   npx playwright test tests/common --project="${{ matrix.project }}"

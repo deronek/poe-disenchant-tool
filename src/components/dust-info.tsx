@@ -49,7 +49,7 @@ export function DustInfo() {
         </div>
 
         <p className="text-muted-foreground text-xs leading-relaxed">
-          Quality affects the dust value one-for-one — e.g., 20% quality → +20%
+          Dust scales with quality at a 2:1 ratio - e.g., 20% quality → +40%
           dust.
         </p>
       </div>

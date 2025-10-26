@@ -57,7 +57,7 @@ export function renderCompactNumber(value: number) {
   const parts = compactFormatter.formatToParts(value);
 
   return (
-    <>
+    <span data-full-value={value}>
       {parts.map(({ type, value }, index) => {
         if (type === "compact") {
           return (
@@ -68,7 +68,7 @@ export function renderCompactNumber(value: number) {
         }
         return <span key={index}>{value}</span>;
       })}
-    </>
+    </span>
   );
 }
 
@@ -198,7 +198,7 @@ export const createColumns = (
       return (
         <span className="inline-flex w-full justify-end gap-1">
           <CompactNumberTooltip value={value}>
-            <span>{renderCompactNumber(value)}</span>
+            {renderCompactNumber(value)}
           </CompactNumberTooltip>
           <ChaosOrbIcon />
         </span>
@@ -216,7 +216,7 @@ export const createColumns = (
         <span className="block w-full">
           <span className="float-right inline-flex items-center gap-1">
             <CompactNumberTooltip value={value}>
-              <span>{renderCompactNumber(value)}</span>
+              {renderCompactNumber(value)}
             </CompactNumberTooltip>
             <DustIcon />
           </span>
@@ -240,7 +240,7 @@ export const createColumns = (
         <span className="block w-full">
           <span className="float-right inline-flex items-center gap-1 align-baseline">
             <CompactNumberTooltip value={value}>
-              <span>{renderCompactNumber(value)}</span>
+              {renderCompactNumber(value)}
             </CompactNumberTooltip>
             <DustIcon />
             <span className="text-muted-foreground">/</span>
@@ -266,7 +266,7 @@ export const createColumns = (
         <span className="block w-full">
           <span className="float-right inline-flex items-center gap-1 align-baseline">
             <CompactNumberTooltip value={value}>
-              <span>{renderCompactNumber(value)}</span>
+              {renderCompactNumber(value)}
             </CompactNumberTooltip>
             <DustIcon />
             <span className="text-muted-foreground">/</span>
