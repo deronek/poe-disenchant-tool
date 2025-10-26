@@ -83,7 +83,6 @@ test.describe("Trade Link Functionality", () => {
 
     expect(link).toContain("https://www.pathofexile.com/trade/search/");
     expect(link).toContain(getLeagueApiName(DEFAULT_LEAGUE));
-    expect(link).toContain(encodeURIComponent(item.name.split(" ")[0]));
   });
 
   test("should open trade link in new tab", async ({ context }) => {

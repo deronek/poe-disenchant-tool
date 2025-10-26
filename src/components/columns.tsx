@@ -58,15 +58,15 @@ export function renderCompactNumber(value: number) {
 
   return (
     <span data-full-value={value}>
-      {parts.map(({ type, value }, index) => {
+      {parts.map(({ type, value: partValue }, index) => {
         if (type === "compact") {
           return (
             <span key={index} className="text-muted-foreground ml-1 text-xs">
-              {value}
+              {partValue}
             </span>
           );
         }
-        return <span key={index}>{value}</span>;
+        return <span key={index}>{partValue}</span>;
       })}
     </span>
   );

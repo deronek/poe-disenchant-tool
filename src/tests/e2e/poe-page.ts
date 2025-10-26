@@ -1,5 +1,14 @@
 import { expect, Locator, Page } from "@playwright/test";
 
+type TestItem = {
+  name: string;
+  baseType: string;
+  price: number;
+  dustValue: number;
+  dustPerChaos: number;
+  dustPerChaosPerSlot: number;
+};
+
 export class PoEDisenchantPage {
   readonly page: Page;
 
@@ -31,15 +40,7 @@ export class PoEDisenchantPage {
    * Assumes table columns:
    * [0]=Mark, [1]=Icon, [2]=Name, [3]=Price, [4]=Dust Value, [5]=Dust/Chaos, [6]=Dust/Chaos/Slot
    */
-  async getTestItems(limit = 10): Promise<
-    {
-      name: string;
-      price: number;
-      dustValue: number;
-      dustPerChaos: number;
-      dustPerChaosPerSlot: number;
-    }[]
-  > {
+  async getTestItems(limit = 10): Promise<TestItem[]> {
     const rows = this.page.locator("tbody tr");
     const count = Math.min(await rows.count(), limit);
     const items = [];
