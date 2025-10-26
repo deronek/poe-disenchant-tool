@@ -31,6 +31,11 @@ export class PoEDisenchantPage {
       .waitFor({ state: "visible", timeout });
   }
 
+  async setup() {
+    await this.goto();
+    await this.waitForDataLoad();
+  }
+
   // ---------------------------
   // Test Data Helpers
   // ---------------------------

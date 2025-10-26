@@ -6,8 +6,7 @@ let poePage: PoEDisenchantPage;
 
 test.beforeEach(async ({ page }) => {
   poePage = new PoEDisenchantPage(page);
-  await poePage.goto();
-  await poePage.waitForDataLoad();
+  await poePage.setup();
 });
 
 test.describe("Row Selection & Marking", () => {
