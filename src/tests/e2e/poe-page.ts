@@ -233,7 +233,7 @@ export class PoEDisenchantPage {
     const count = await headers.count();
     for (let i = 0; i < count; i++) {
       const text = (await headers.nth(i).innerText()).trim();
-      if (text == columnName) return i;
+      if (text === columnName) return i;
     }
     throw new Error(`Column "${columnName}" not found`);
   }
