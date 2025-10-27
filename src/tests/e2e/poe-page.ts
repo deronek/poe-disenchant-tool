@@ -42,31 +42,44 @@ export class PoEDisenchantPage {
     const rows = this.page.locator("tbody tr");
     const count = Math.min(await rows.count(), limit);
     expect(count).toBeGreaterThanOrEqual(2);
-    const items = [];
 
-    for (let i = 0; i < count; i++) {
-      const cells = rows.nth(i).locator("td");
+    // Resolve indices by header
+    const headers = [
+      "Name",
+      "Price",
+      "Dust Value",
+      "Dust / Chaos",
+      "Dust / Chaos / Slot",
+    ];
+    const indices = Object.fromEntries(
+      await Promise.all(
+        headers.map(async (h) => [h, await this.getColumnIndex(h)]),
+      ),
+    ) as Record<string, number>;
 
-      const nameCell = cells.nth(1);
-      const { name, baseType } = await nameCell.evaluate((cell) => {
-        const pTags = cell.querySelectorAll("p");
-        const name = pTags[0]?.textContent?.trim() ?? "";
-        const baseType = pTags[1]?.textContent?.trim() ?? "";
-        return { name, baseType };
-      });
+    const items: TestItem[] = [];
+    for (const row of await rows.all()) {
+      const cells = row.locator("td");
 
-      const price = await this.extractFullValue(cells.nth(2));
-      const dustValue = await this.extractFullValue(cells.nth(3));
-      const dustPerChaos = await this.extractFullValue(cells.nth(4));
-      const dustPerChaosPerSlot = await this.extractFullValue(cells.nth(5));
+      const { name, baseType } = await cells
+        .nth(indices["Name"])
+        .evaluate((cell) => {
+          const [nameEl, baseTypeEl] = cell.querySelectorAll("p");
+          return {
+            name: nameEl?.textContent?.trim() ?? "",
+            baseType: baseTypeEl?.textContent?.trim() ?? "",
+          };
+        });
+
+      const extract = (idx: number) => this.extractFullValue(cells.nth(idx));
 
       items.push({
         name,
         baseType,
-        price,
-        dustValue,
-        dustPerChaos,
-        dustPerChaosPerSlot,
+        price: await extract(indices["Price"]),
+        dustValue: await extract(indices["Dust Value"]),
+        dustPerChaos: await extract(indices["Dust / Chaos"]),
+        dustPerChaosPerSlot: await extract(indices["Dust / Chaos / Slot"]),
       });
     }
     return items;
@@ -142,7 +155,7 @@ export class PoEDisenchantPage {
   }
 
   // Returns the Locator for the trade link anchor in the given item row
-  async getTradeLinkLocator(itemName: string) {
+  getTradeLinkLocator(itemName: string) {
     const row = this.page
       .locator("table tbody tr")
       .filter({ hasText: itemName })
@@ -159,7 +172,7 @@ export class PoEDisenchantPage {
     itemName: string,
     context: import("@playwright/test").BrowserContext,
   ) {
-    const a = await this.getTradeLinkLocator(itemName);
+    const a = this.getTradeLinkLocator(itemName);
 
     await a.scrollIntoViewIfNeeded();
     await a.waitFor({ state: "visible", timeout: 2000 });
@@ -229,13 +242,10 @@ export class PoEDisenchantPage {
   }
 
   async getColumnIndex(columnName: string): Promise<number> {
-    const headers = this.page.locator("thead th");
-    const count = await headers.count();
-    for (let i = 0; i < count; i++) {
-      const text = (await headers.nth(i).innerText()).trim();
-      if (text === columnName) return i;
-    }
-    throw new Error(`Column "${columnName}" not found`);
+    const headers = await this.page.locator("thead th").allInnerTexts();
+    const index = headers.findIndex((h) => h.trim() === columnName);
+    if (index === -1) throw new Error(`Column "${columnName}" not found`);
+    return index;
   }
 
   async sortByColumn(columnName: string) {

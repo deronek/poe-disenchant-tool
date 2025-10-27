@@ -7,7 +7,6 @@ import {
   getLeagueName,
   League,
   LEAGUE_SLUGS,
-  LEAGUES,
 } from "@/lib/leagues";
 
 let poePage: PoEDisenchantPage;
@@ -112,6 +111,7 @@ test.describe("League Selector Functionality", () => {
 
     // Move up one league
     await poePage.page.keyboard.press("ArrowUp");
+    await poePage.page.waitForTimeout(100); // wait for input
     const highlightedLeagueLocator = poePage.page.locator(
       "[role='option'][data-highlighted]",
     );
@@ -167,7 +167,7 @@ test.describe("Theme Selector Functionality", () => {
     await button.focus();
     await button.press("Enter");
 
-    const dropdown = poePage.page.locator("[role='menu']");
+    const dropdown = poePage.themeSelector;
     await expect(dropdown).toBeVisible();
 
     // Test closing with Escape
@@ -180,7 +180,7 @@ test.describe("Theme Selector Functionality", () => {
     await button.focus();
     await button.press("Enter");
 
-    const dropdown = poePage.page.locator("[role='menu']");
+    const dropdown = poePage.themeSelector;
     await expect(dropdown).toBeVisible();
 
     // Should automatically focus the first option - light
