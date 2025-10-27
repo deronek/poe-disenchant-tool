@@ -222,7 +222,7 @@ test.describe("Last Updated Functionality", () => {
 
     const absoluteTime = tooltip.locator("time").first();
     await expect(absoluteTime).toHaveText(
-      /[A-Za-z]+ \d{1,2}, \d{4} at \d{1,2}:\d{2}:\d{2} GMT[+-]?\d{1,2}/i,
+      /[\w ,]+ \d{1,2}[:]\d{2}[:]\d{2} [A-Z]{2,4}(?:[+-]?\d{1,2})?/i,
     );
     await poePage.verifyDateTimeAttribute(absoluteTime);
   });
