@@ -366,4 +366,49 @@ export class PoEDisenchantPage {
     const currentTheme = await this.getCurrentTheme();
     expect(currentTheme).toBe(expectedTheme);
   }
+
+  // ---------------------------
+  // Last Updated Functionality
+  // ---------------------------
+
+  get lastUpdatedElement() {
+    return this.page.getByText(/last updated:/i).first();
+  }
+
+  get lastUpdatedRefreshButton() {
+    return this.page
+      .getByRole("button", {
+        name: /refresh data/i,
+      })
+      .first();
+  }
+
+  async getLastUpdatedText(): Promise<string> {
+    return (await this.lastUpdatedElement.innerText()).trim();
+  }
+
+  async getLastUpdatedTooltip() {
+    // Trigger tooltip and get content
+    await this.lastUpdatedElement.hover();
+    await this.page.waitForTimeout(500); // Wait for tooltip to appear
+    const tooltip = this.page.locator("[data-slot='tooltip-content']").first();
+    return tooltip;
+  }
+
+  async verifyDateTimeAttribute(time: Locator) {
+    const dateTime = await time.getAttribute("datetime");
+    expect(dateTime).not.toBeNull();
+    const date = new Date(dateTime!);
+    expect(date.getTime()).not.toBeNaN();
+  }
+
+  async setAlwaysShowRefreshFlag(): Promise<void> {
+    await this.page.evaluate(() => {
+      localStorage.setItem("poe-udt:always-show-refresh:v1", "true");
+    });
+  }
+
+  async clickRefreshButton(): Promise<void> {
+    await this.lastUpdatedRefreshButton.click();
+  }
 }

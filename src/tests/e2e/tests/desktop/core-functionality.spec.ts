@@ -207,3 +207,37 @@ test.describe("Theme Selector Functionality", () => {
     await poePage.verifyThemeApplied("dark");
   });
 });
+
+test.describe("Last Updated Functionality", () => {
+  test("should display last updated text with relative time", async () => {
+    const lastUpdated = poePage.lastUpdatedElement;
+    expect(lastUpdated).toHaveText(/last updated:/i);
+    expect(lastUpdated).toHaveText(/just now|ago/i);
+    await poePage.verifyDateTimeAttribute(lastUpdated);
+  });
+
+  test("should show absolute time in tooltip", async () => {
+    const tooltip = await poePage.getLastUpdatedTooltip();
+    expect(tooltip).toHaveText(/absolute time/i);
+
+    const absoluteTime = tooltip.locator("time").first();
+    await expect(absoluteTime).toHaveText(
+      /[A-Za-z]+ \d{1,2}, \d{4} at \d{1,2}:\d{2}:\d{2} GMT[+-]?\d{1,2}/i,
+    );
+    await poePage.verifyDateTimeAttribute(absoluteTime);
+  });
+
+  test("should handle refresh button click", async () => {
+    await poePage.setAlwaysShowRefreshFlag();
+    await poePage.page.reload();
+    await poePage.waitForDataLoad();
+
+    // Click refresh button
+    await poePage.clickRefreshButton();
+
+    // Wait for refresh process to complete
+    // We should have fresh data
+    const lastUpdated = poePage.lastUpdatedElement;
+    await expect(lastUpdated).toHaveText(/just now/i);
+  });
+});

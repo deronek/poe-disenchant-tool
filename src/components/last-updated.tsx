@@ -122,7 +122,12 @@ export default function LastUpdated({
           <div className="text-muted-foreground text-xs font-semibold">
             Absolute Time
           </div>
-          <div className="text-sm font-semibold">{absoluteTime}</div>
+          <time
+            className="text-sm font-semibold"
+            dateTime={timestamp.toISOString()}
+          >
+            {absoluteTime}
+          </time>
         </div>
       </div>
       {/* Refresh Section - Only shown when data is stale */}
