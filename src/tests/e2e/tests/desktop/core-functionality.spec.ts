@@ -65,11 +65,8 @@ test.describe("League Selector Functionality", () => {
 
   test("should show loading state during league selection", async () => {
     // Get first which key isn't DEFAULT_LEAGUE
-    const leagueToSelect = Object.keys(LEAGUES).find(
-      (key) => key !== DEFAULT_LEAGUE,
-    ) as League;
+    const leagueToSelect = LEAGUE_SLUGS.find((key) => key !== DEFAULT_LEAGUE)!;
     expect(leagueToSelect).toBeDefined();
-
     await poePage.selectLeague(leagueToSelect);
 
     const spinner = poePage.leagueSelectorSpinner;

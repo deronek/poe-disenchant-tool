@@ -25,8 +25,5 @@ export function getLeagueApiName(slug: League) {
 }
 
 export function getLeagueFromName(name: string): League | undefined {
-  const slug = Object.keys(LEAGUES).find((key) => {
-    return LEAGUES[key as League].name === name;
-  });
-  return slug as League | undefined;
+  return LEAGUE_SLUGS.find((slug) => LEAGUES[slug].name === name);
 }
