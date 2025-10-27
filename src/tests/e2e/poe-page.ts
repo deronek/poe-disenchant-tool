@@ -266,15 +266,15 @@ export class PoEDisenchantPage {
   // ---------------------------
 
   async verifyPageTitle(expectedTitle: string) {
-    const title = await this.page.title();
-    expect(title).toBe(expectedTitle);
+    await expect(this.page).toHaveTitle(expectedTitle);
   }
 
   async verifyPageDescription(expectedDescription: string) {
-    const description = await this.page
-      .locator('meta[name="description"]')
-      .getAttribute("content");
-    expect(description).toBe(expectedDescription);
+    const metaDescription = this.page.locator('meta[name="description"]');
+    await expect(metaDescription).toHaveAttribute(
+      "content",
+      expectedDescription,
+    );
   }
 
   // ---------------------------
