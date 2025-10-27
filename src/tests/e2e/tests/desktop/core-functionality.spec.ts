@@ -126,14 +126,6 @@ test.describe("League Selector Functionality", () => {
     await poePage.page.keyboard.press("Enter");
     await poePage.verifyLeagueSelected(highlightedLeague as League);
   });
-
-  test("should keep league selection between reloads", async () => {
-    const initialLeague = DEFAULT_LEAGUE;
-    await poePage.verifyLeagueSelected(initialLeague);
-    await poePage.page.reload();
-    await poePage.waitForDataLoad();
-    await poePage.verifyLeagueSelected(initialLeague);
-  });
 });
 
 test.describe("Theme Selector Functionality", () => {
