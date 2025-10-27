@@ -33,7 +33,10 @@ export function LeagueSelector({ currentLeague }: LeagueSelectorProps) {
     <div className="flex flex-row-reverse gap-3 sm:flex-row">
       {isPending && (
         <>
-          <Spinner className="mb-1 place-self-end" />
+          <Spinner
+            className="mb-1 place-self-end"
+            data-testid="league-selector-spinner"
+          />
           <span className="sr-only" role="status" aria-live="polite">
             Switching league…
           </span>

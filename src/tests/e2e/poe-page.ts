@@ -1,13 +1,6 @@
+import { getLeagueName, League } from "@/lib/leagues";
 import { expect, Locator, Page } from "@playwright/test";
-
-type TestItem = {
-  name: string;
-  baseType: string;
-  price: number;
-  dustValue: number;
-  dustPerChaos: number;
-  dustPerChaosPerSlot: number;
-};
+import type { TestItem, Theme, ThemeOption } from "./types";
 
 export class PoEDisenchantPage {
   readonly page: Page;
@@ -266,5 +259,111 @@ export class PoEDisenchantPage {
     const row = this.page.locator("tr").filter({ hasText: name });
     if (shouldExist) await expect(row).toBeVisible();
     else await expect(row).toHaveCount(0);
+  }
+
+  // ---------------------------
+  // Page Metadata
+  // ---------------------------
+
+  async verifyPageTitle(expectedTitle: string) {
+    const title = await this.page.title();
+    expect(title).toBe(expectedTitle);
+  }
+
+  async verifyPageDescription(expectedDescription: string) {
+    const description = await this.page
+      .locator('meta[name="description"]')
+      .getAttribute("content");
+    expect(description).toBe(expectedDescription);
+  }
+
+  // ---------------------------
+  // League Selector
+  // ---------------------------
+
+  get leagueSelectorTrigger() {
+    return this.page.getByRole("combobox", { name: /league/i });
+  }
+
+  get leagueSelector() {
+    return this.page.locator("[role='listbox']");
+  }
+
+  get leagueSelectorSpinner() {
+    return this.page.getByTestId("league-selector-spinner");
+  }
+
+  // Assumes league selector is open
+  async getLeagueOption(league: League) {
+    const option = this.page.getByRole("option", {
+      name: getLeagueName(league),
+      exact: true,
+    });
+    return option;
+  }
+
+  async selectLeague(league: League) {
+    await this.leagueSelectorTrigger.click();
+    const leagueOption = await this.getLeagueOption(league);
+    await leagueOption.click();
+  }
+
+  async verifyLeagueSelected(league: League) {
+    const expectedLeague = getLeagueName(league);
+    const selectedValueLocator = this.leagueSelectorTrigger.locator(
+      '[data-slot="select-value"]',
+    );
+    await expect(selectedValueLocator).toHaveText(expectedLeague);
+    await expect(this.page).toHaveURL(new RegExp(league), { timeout: 10000 });
+  }
+
+  // ---------------------------
+  // Theme Selector
+  // ---------------------------
+
+  get themeSelectorTrigger() {
+    return this.page.getByRole("button", { name: /theme/i }).first();
+  }
+
+  get themeSelector() {
+    return this.page.getByRole("menu");
+  }
+
+  async getSystemTheme(): Promise<Theme> {
+    const theme = await this.page.evaluate(() => {
+      if (
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      ) {
+        return "dark";
+      }
+      return "light";
+    });
+    return theme;
+  }
+
+  async getCurrentTheme(): Promise<Theme> {
+    // Check for dark mode class on html or body element
+    const html = this.page.locator("html");
+    const classAttribute = await html.getAttribute("class");
+    const hasDarkClass = classAttribute?.includes("dark") ?? false;
+    return hasDarkClass ? "dark" : "light";
+  }
+
+  async selectTheme(theme: ThemeOption) {
+    await this.themeSelectorTrigger.click();
+    const themeOption = this.page.getByRole("menuitem", {
+      name: new RegExp(theme, "i"),
+    });
+    await themeOption.click();
+  }
+
+  async verifyThemeApplied(expectedThemeOption: ThemeOption) {
+    const expectedTheme =
+      expectedThemeOption === "system"
+        ? await this.getSystemTheme()
+        : expectedThemeOption;
+    const currentTheme = await this.getCurrentTheme();
+    expect(currentTheme).toBe(expectedTheme);
   }
 }
