@@ -37,3 +37,11 @@ jobs:
         run: |
           pnpm test:desktop -- --project="${{ matrix.project }}"
         #   npx playwright test tests/common --project="${{ matrix.project }}"
+
+      - name: Upload Desktop Report Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-desktop-${{ matrix.project }}
+          path: playwright-report/
+          retention-days: 7
