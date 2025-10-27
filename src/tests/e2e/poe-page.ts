@@ -314,7 +314,7 @@ export class PoEDisenchantPage {
       '[data-slot="select-value"]',
     );
     await expect(selectedValueLocator).toHaveText(expectedLeague);
-    await expect(this.page).toHaveURL(new RegExp(league), { timeout: 10000 });
+    await expect(this.page).toHaveURL(new RegExp(league));
   }
 
   // ---------------------------
