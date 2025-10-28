@@ -20,7 +20,7 @@ export function ClearMarksButton<TData>({
   return (
     onClearMarks && (
       <Button
-        variant="outline"
+        variant="secondary"
         onClick={onClearMarks}
         title="Clear all marked rows"
         aria-label="Clear all marked rows"
