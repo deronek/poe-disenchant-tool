@@ -33,35 +33,36 @@ const uncached__getItems = async (league: League) => {
     if (ITEMS_TO_IGNORE.includes(priceItem.name)) continue;
     const dustItem = dustData.find((d) => d.name === priceItem.name);
 
-    if (dustItem) {
-      const calculatedDustValue =
-        priceItem.type === "UniqueAccessory"
-          ? dustItem.dustValIlvl84
-          : dustItem.dustValIlvl84Q20;
-
-      const dustPerChaos =
-        priceItem.chaos > 0
-          ? Math.round(calculatedDustValue / priceItem.chaos)
-          : 0;
-
-      merged.push({
-        id: id++,
-        uniqueId: createUniqueId(priceItem.name, priceItem.baseType),
-        name: priceItem.name,
-        chaos: priceItem.chaos,
-        listingCount: priceItem.listingCount,
-        variant: priceItem.baseType,
-        calculatedDustValue,
-        dustPerChaos: dustPerChaos,
-        slots: dustItem.slots,
-        dustPerChaosPerSlot: Math.round(dustPerChaos / dustItem.slots),
-        type: priceItem.type,
-        icon: priceItem.icon,
-      });
-    } else {
+    if (dustItem === undefined) {
       // TODO: need to display this in the UI, as an information that something will be missing
-      console.warn(`No dust data found for ${priceItem.name}`);
+      console.warn(`Warning: No dust data found for ${priceItem.name}`);
+      continue;
     }
+
+    const calculatedDustValue =
+      priceItem.type === "UniqueAccessory"
+        ? dustItem.dustValIlvl84
+        : dustItem.dustValIlvl84Q20;
+
+    const dustPerChaos =
+      priceItem.chaos > 0
+        ? Math.round(calculatedDustValue / priceItem.chaos)
+        : 0;
+
+    merged.push({
+      id: id++,
+      uniqueId: createUniqueId(priceItem.name, priceItem.baseType),
+      name: priceItem.name,
+      chaos: priceItem.chaos,
+      listingCount: priceItem.listingCount,
+      variant: priceItem.baseType,
+      calculatedDustValue,
+      dustPerChaos: dustPerChaos,
+      slots: dustItem.slots,
+      dustPerChaosPerSlot: Math.round(dustPerChaos / dustItem.slots),
+      type: priceItem.type,
+      icon: priceItem.icon,
+    });
   }
 
   // Calculate p10 of listingCounts
