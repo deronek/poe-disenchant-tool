@@ -1,5 +1,6 @@
-// These items cannot be disenchanted
+// These items will be ignored when calculating app data
 export const ITEMS_TO_IGNORE = [
+  // These items cannot be disenchanted
   "Curio of Consumption",
   "Curio of Absorption",
   "Curio of Potential",
@@ -22,4 +23,6 @@ export const ITEMS_TO_IGNORE = [
   "Third Piece of the Arcane",
   "First Piece of Time",
   "Second Piece of Time",
+  // This item is legacy and extremely expensive
+  "Deshret's Vise",
 ];
