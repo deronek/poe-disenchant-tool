@@ -105,7 +105,7 @@ export function DataTable<TData extends Item, TValue>({
   });
 
   return (
-    <div className="mx-auto w-full max-w-md rounded-md border md:max-w-4xl lg:max-w-screen-xl">
+    <div className="bg-background-200 mx-auto w-full max-w-md rounded-md border md:max-w-4xl lg:max-w-screen-xl">
       {/* Desktop Toolbar */}
       <div className="hidden lg:block">
         <DataTableToolbar
@@ -196,7 +196,7 @@ export function DataTable<TData extends Item, TValue>({
                           {canSort ? (
                             <span
                               aria-hidden="true"
-                              className={`ml-1 inline-flex h-4 w-4 items-center justify-center transition-all ${isSorted ? "text-primary" : "text-muted-foreground"} ${isSorted === "asc" ? "rotate-180" : ""} ${isSorted === false ? "opacity-80" : ""}`}
+                              className={`ml-1 inline-flex h-4 w-4 items-center justify-center transition-all ${isSorted ? "" : "text-muted-foreground"} ${isSorted === "asc" ? "rotate-180" : ""} ${isSorted === false ? "opacity-80" : ""}`}
                             >
                               <ChevronDown className="h-4 w-4" />
                             </span>
@@ -216,7 +216,7 @@ export function DataTable<TData extends Item, TValue>({
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                   className={
-                    "even:bg-muted/10 data-[state=selected]:bg-muted/40 h-11 data-[state=selected]:opacity-95"
+                    "data-[state=selected]:bg-muted/40 even:bg-background bg-background-200 h-11 data-[state=selected]:opacity-95"
                   }
                 >
                   {row.getVisibleCells().map((cell) => {
@@ -251,7 +251,7 @@ export function DataTable<TData extends Item, TValue>({
       </div>
 
       {/* Pagination - Show below both layouts */}
-      <div className="border-t p-4">
+      <div className="bg-background-200 border-t p-4">
         <DataTablePagination table={table} />
       </div>
     </div>
