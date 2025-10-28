@@ -18,18 +18,6 @@ export type Item = {
   icon: string;
 };
 
-// These items cannot be disenchanted
-const ITEMS_TO_IGNORE = [
-  "Curio of Consumption",
-  "Curio of Absorption",
-  "Curio of Potential",
-  "Curio of Decay",
-  "First Piece of Focus",
-  "Second Piece of Focus",
-  "Third Piece of Focus",
-  "Fourth Piece of Focus",
-];
-
 const createUniqueId = (name: string, variant?: string) =>
   `${name}${variant ? `-${variant}` : ""}`;
 
@@ -41,7 +29,7 @@ const uncached__getItems = async (league: League) => {
   let id = 0;
 
   for (const priceItem of priceData) {
-    if (ITEMS_TO_IGNORE.includes(priceItem.name)) continue;
+    if (ITEMS_TO_IGNORE.has(priceItem.name)) continue;
     const dustItem = dustData.find((d) => d.name === priceItem.name);
 
     if (dustItem) {
@@ -109,6 +97,30 @@ function calculateLowStockThreshold(items: Item[]) {
 
   return lowStockThreshold;
 }
+
+// These items cannot be disenchanted
+export const ITEMS_TO_IGNORE = new Set([
+  "Curio of Consumption",
+  "Curio of Absorption",
+  "Curio of Potential",
+  "Curio of Decay",
+  "First Piece of Focus",
+  "Second Piece of Focus",
+  "Third Piece of Focus",
+  "Fourth Piece of Focus",
+  "First Piece of Directions",
+  "Second Piece of Directions",
+  "Third Piece of Directions",
+  "First Piece of Brutality",
+  "Second Piece of Brutality",
+  "Third Piece of Brutality",
+  "First Piece of Storms",
+  "Second Piece of Storms",
+  "Third Piece of Storms",
+  "First Piece of the Arcane",
+  "Second Piece of the Arcane",
+  "Third Piece of the Arcane",
+]);
 
 export const getItems = async (league: League) => {
   return unstable_cache(async () => uncached__getItems(league), [league], {
