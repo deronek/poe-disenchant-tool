@@ -241,3 +241,97 @@ test.describe("Last Updated Functionality", () => {
     await expect(lastUpdated).toHaveText(/just now/i);
   });
 });
+test.describe("Data Table Functionality", () => {
+  test("should display correct column headers", async () => {
+    const headers = await poePage.getColumnHeaderNames();
+
+    // Expected headers based on columns.tsx
+    const expectedHeaders = [
+      "Name",
+      "Price",
+      "Dust Value",
+      "Dust / Chaos",
+      "Dust / Chaos / Slot",
+      "Trade Link",
+      "Mark",
+    ];
+
+    expect(headers).toHaveLength(expectedHeaders.length);
+    expectedHeaders.forEach((header) => {
+      expect(headers).toContain(header);
+    });
+  });
+
+  test.describe("Data Rendering and Formatting", () => {
+    // Define all numerical columns to test
+    const numericalColumns = [
+      "Price",
+      "Dust Value",
+      "Dust / Chaos",
+      "Dust / Chaos / Slot",
+    ];
+
+    test("should display compact and full values correctly for all items and numerical columns", async () => {
+      const items = await poePage.getTestItems(10);
+      expect(items.length).toBe(10);
+
+      for (const item of items) {
+        for (const column of numericalColumns) {
+          const data = await poePage.getCompactAndFullValueForCell(
+            item.name,
+            column,
+          );
+
+          // Verify compact value exists and is properly formatted
+          expect(data.compact).toBeTruthy();
+          expect(data.compact).toMatch(/[0-9]+(\.[0-9]+)?[KMBkmb]?/);
+
+          // Verify full value is a valid number greater than 0
+          expect(data.full).toBeGreaterThan(0);
+          expect(data.full).not.toBeNaN();
+
+          // Parse compact value and compare to full value with tolerance
+          expect(
+            poePage.compareCompactAndFullValues(data.compact, data.full),
+          ).toBeTruthy();
+        }
+      }
+    });
+
+    test("should show tooltips on compact numbers", async () => {
+      const [item] = await poePage.getTestItems();
+
+      for (const column of numericalColumns) {
+        const data = await poePage.getCompactAndFullValueForCell(
+          item.name,
+          column,
+        );
+        console.log(data);
+
+        // Hover over compact number to trigger tooltip
+        const colIndex = await poePage.getColumnIndex(column);
+        const cell = poePage.page
+          .locator("tr")
+          .filter({ hasText: item.name })
+          .locator("td")
+          .nth(colIndex);
+
+        const compactNumber = cell.locator("[data-full-value]");
+        await compactNumber.hover();
+        await poePage.page.waitForTimeout(500);
+
+        // Check for tooltip
+        const tooltip = poePage.page.locator("[role='tooltip']").first();
+        await expect(tooltip).toBeVisible();
+
+        // Tooltip should compare full number
+        const tooltipText = await tooltip.innerText();
+        expect(tooltipText).toMatch(/[0-9,]+(\.[0-9]+)?/);
+
+        // Strip thousands separators
+        const tooltipValue = Number.parseFloat(tooltipText.replace(/,/g, ""));
+        expect(tooltipValue).toBe(data.full);
+      }
+    });
+  });
+    });

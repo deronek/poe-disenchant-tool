@@ -421,4 +421,132 @@ export class PoEDisenchantPage {
   async clickRefreshButton(): Promise<void> {
     await this.lastUpdatedRefreshButton.click();
   }
+  // ---------------------------
+  // Data Table Functionality Helpers
+  // ---------------------------
+
+  async getColumnHeaderNames(): Promise<string[]> {
+    const headers = await this.page.locator("thead th").allInnerTexts();
+    return headers.map((h) => h.trim()).filter((h) => h !== "");
+  }
+
+  async getColumnHeaderWithTooltip(
+    columnName: string,
+  ): Promise<{ header: string; tooltip?: string }> {
+    const colIndex = await this.getColumnIndex(columnName);
+    const header = this.page.locator("thead th").nth(colIndex);
+
+    const headerText = await header.innerText();
+    const tooltip = header.locator("[role='tooltip']");
+    const tooltipText =
+      (await tooltip.count()) > 0 ? await tooltip.innerText() : undefined;
+
+    return {
+      header: headerText?.trim() || "",
+      tooltip: tooltipText?.trim(),
+    };
+  }
+
+  async getCompactAndFullValueForCell(
+    itemName: string,
+    columnName: string,
+  ): Promise<{ compact: string; full: number }> {
+    const colIndex = await this.getColumnIndex(columnName);
+    const cell = this.page
+      .locator("tr")
+      .filter({ hasText: itemName })
+      .locator("td")
+      .nth(colIndex);
+
+    const fullValueAttr = await cell
+      .locator("[data-full-value]")
+      .first()
+      .getAttribute("data-full-value");
+    expect(fullValueAttr).not.toBeNull();
+    const fullValue = parseFloat(fullValueAttr!);
+
+    // Extract only the compact number value by targeting the specific span
+    // This avoids capturing "/" separators and icon text
+    const compactNumberSpan = cell.locator("[data-full-value]").first();
+    const compactText = (await compactNumberSpan.innerText()).trim();
+
+    console.log(fullValueAttr, fullValue);
+    return {
+      compact: compactText,
+      full: fullValue,
+    };
+  }
+
+  /**
+   * Parses a compact value string (e.g., "1.2K", "3.5M", "2.1B", "1500") into a number
+   * @param compactValue The compact value string with optional suffix
+   * @returns The parsed number
+   */
+  parseCompactValue(compactValue: string): number {
+    const cleanValue = compactValue.trim().toUpperCase();
+
+    // Extract the numeric part and suffix, ignoring additional formatting characters
+    const match = cleanValue.match(/([0-9]+(?:\.[0-9]+)?)\s*([KMB]?)\b/);
+    if (!match) {
+      throw new Error(`Invalid compact value format: ${compactValue}`);
+    }
+
+    const numericPart = parseFloat(match[1]);
+    const suffix = match[2];
+
+    // Apply multiplier based on suffix
+    switch (suffix) {
+      case "K":
+        return numericPart * 1_000;
+      case "M":
+        return numericPart * 1_000_000;
+      case "B":
+        return numericPart * 1_000_000_000;
+      default:
+        return numericPart;
+    }
+  }
+
+  /**
+   * Compares compact and full values with appropriate tolerance for rounding
+   * @param compactValue The compact value string
+   * @param fullValue The full numeric value
+   * @returns Whether the values match within tolerance
+   */
+  compareCompactAndFullValues(
+    compactValue: string,
+    fullValue: number,
+  ): boolean {
+    try {
+      const parsedCompact = this.parseCompactValue(compactValue);
+      console.log(parsedCompact, fullValue);
+      // Extract the suffix to determine the appropriate tolerance
+      const cleanValue = compactValue.trim().toUpperCase();
+      const match = cleanValue.match(/([0-9]+(?:\.[0-9]+)?)\s*([KMB]?)\b/);
+      const suffix = match?.[2] || "";
+
+      // Calculate tolerance based on suffix-specific rounding loss with 1 decimal place
+      // The tolerance represents half of the smallest unit (0.1 suffix value)
+      let tolerance: number;
+      switch (suffix) {
+        case "K":
+          tolerance = 50;
+          break;
+        case "M":
+          tolerance = 50_000;
+          break;
+        case "B":
+          tolerance = 50_000_000;
+          break;
+        default:
+          tolerance = 0.5;
+      }
+
+      const difference = Math.abs(parsedCompact - fullValue);
+      return difference <= tolerance;
+    } catch (error) {
+      console.error(`Error comparing values: ${error}`);
+      return false;
+    }
+  }
 }
