@@ -2,12 +2,13 @@
 // Executed manually when source dataset for dust data changes
 
 import { calculateDustValue, Item } from "@/lib/dust";
-import { z } from "zod";
 import fs from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
 import prettier from "prettier";
+import { fileURLToPath } from "url";
+import { z } from "zod";
 
+import { ITEMS_TO_IGNORE } from "@/lib/itemData/ignore-list";
 import data from "../src/lib/dust/poe-dust-original.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -40,9 +41,19 @@ async function main() {
     const validatedData = validationResult.data;
     console.log(`✅ ${validatedData.length} items validated`);
 
+    // Filter out ignored items
+    console.log("🚫 Filtering ignored items...");
+    const filteredData = validatedData.filter(
+      (item: InputItem) => !ITEMS_TO_IGNORE.includes(item.name),
+    );
+    const ignoredCount = validatedData.length - filteredData.length;
+    console.log(
+      `🗑️  ${ignoredCount} items ignored, ${filteredData.length} items remaining`,
+    );
+
     // Process each item to calculate new fields
     console.log("🔧 Processing items...");
-    const processedData = validatedData.map((item: InputItem) => {
+    const processedData = filteredData.map((item: InputItem) => {
       // Calculate dust values using the calculateDustValue function
       const dustValIlvl84 = calculateDustValue(item.dustVal, 84, 0);
       const dustValIlvl84Q20 = calculateDustValue(item.dustVal, 84, 20);

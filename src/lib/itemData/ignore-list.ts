@@ -1,0 +1,23 @@
+// These items cannot be disenchanted
+export const ITEMS_TO_IGNORE = [
+  "Curio of Consumption",
+  "Curio of Absorption",
+  "Curio of Potential",
+  "Curio of Decay",
+  "First Piece of Focus",
+  "Second Piece of Focus",
+  "Third Piece of Focus",
+  "Fourth Piece of Focus",
+  "First Piece of Directions",
+  "Second Piece of Directions",
+  "Third Piece of Directions",
+  "First Piece of Brutality",
+  "Second Piece of Brutality",
+  "Third Piece of Brutality",
+  "First Piece of Storms",
+  "Second Piece of Storms",
+  "Third Piece of Storms",
+  "First Piece of the Arcane",
+  "Second Piece of the Arcane",
+  "Third Piece of the Arcane",
+];
