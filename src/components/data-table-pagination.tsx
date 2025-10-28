@@ -31,12 +31,15 @@ const RowsPerPageSelect = React.memo(function RowsPerPageSelect({
         onPageSizeChange(Number(value));
       }}
     >
-      <SelectTrigger className="h-8 w-[70px]">
+      <SelectTrigger
+        className="h-8 w-[70px]"
+        data-testid="rows-per-page-select-trigger"
+      >
         <SelectValue placeholder={pageSize}>{String(pageSize)}</SelectValue>
       </SelectTrigger>
-      <SelectContent side="top">
-        {[10, 20, 25, 30, 40, 50].map((size) => (
-          <SelectItem key={size} value={`${size}`}>
+      <SelectContent side="top" data-testid="rows-per-page-select-content">
+        {[10, 20, 30, 40, 50].map((size) => (
+          <SelectItem key={size} value={`${size}`} data-value={`${size}`}>
             {size}
           </SelectItem>
         ))}
@@ -64,11 +67,15 @@ export function DataTablePagination<TData>({
   const canNext = table.getCanNextPage();
 
   return (
-    <div className="flex items-baseline justify-between px-3 py-2">
+    <div
+      className="flex items-baseline justify-between px-3 py-2"
+      data-testid="pagination-container"
+    >
       {/* Left caption: start–end of total */}
       <div
         className="text-muted-foreground min-w-24 text-sm"
         aria-live="polite"
+        data-testid="pagination-summary"
       >
         Showing {start}–{end} of {total} items.
       </div>
@@ -84,7 +91,10 @@ export function DataTablePagination<TData>({
         </div>
 
         {/* Page x of y */}
-        <div className="flex w-[100px] items-center justify-center text-sm font-semibold">
+        <div
+          className="flex w-[100px] items-center justify-center text-sm font-semibold"
+          data-testid="page-indicator"
+        >
           Page {pageIndex + 1} of {table.getPageCount()}
         </div>
 

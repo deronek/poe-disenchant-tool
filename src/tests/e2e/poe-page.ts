@@ -549,4 +549,115 @@ export class PoEDisenchantPage {
       return false;
     }
   }
+
+  // ---------------------------
+  // Pagination
+  // ---------------------------
+
+  get paginationContainer() {
+    return this.page.locator('[data-testid="pagination-container"]').first();
+  }
+
+  // Showing X–Y of Z items
+  get paginationSummary() {
+    return this.page.locator('[data-testid="pagination-summary"]').first();
+  }
+
+  // Page X of Y
+  get pageIndicator() {
+    return this.page.locator('[data-testid="page-indicator"]').first();
+  }
+
+  get rowsPerPageSelectTrigger() {
+    return this.page
+      .locator('[data-testid="rows-per-page-select-trigger"]')
+      .first();
+  }
+
+  // Assumes menu is open
+  get rowsPerPageSelectContent() {
+    return this.page
+      .locator('[data-testid="rows-per-page-select-content"]')
+      .first();
+  }
+
+  get prevPageButton() {
+    return this.page
+      .locator("button")
+      .filter({ hasText: "Go to previous page" })
+      .first();
+  }
+
+  get nextPageButton() {
+    return this.page
+      .locator("button")
+      .filter({ hasText: "Go to next page" })
+      .first();
+  }
+
+  get firstPageButton() {
+    return this.page
+      .locator("button")
+      .filter({ hasText: "Go to first page" })
+      .first();
+  }
+
+  get lastPageButton() {
+    return this.page
+      .locator("button")
+      .filter({ hasText: "Go to last page" })
+      .first();
+  }
+
+  async getPaginationInfo(): Promise<{
+    start: number;
+    end: number;
+    total: number;
+    currentPage: number;
+    totalPages: number;
+    rowsPerPage: number;
+  }> {
+    const paginationText = await this.paginationSummary.innerText();
+    const pageText = await this.pageIndicator.innerText();
+
+    // Extract "Showing X–Y of Z items"
+    const showingMatch = paginationText.match(
+      /Showing (\d+)[–](\d+) of (\d+) items/,
+    );
+    const start = showingMatch ? parseInt(showingMatch[1]) : 0;
+    const end = showingMatch ? parseInt(showingMatch[2]) : 0;
+    const total = showingMatch ? parseInt(showingMatch[3]) : 0;
+
+    // Extract "Page X of Y"
+    const pageMatch = pageText.match(/Page (\d+) of (\d+)/);
+    const currentPage = pageMatch ? parseInt(pageMatch[1]) : 0;
+    const totalPages = pageMatch ? parseInt(pageMatch[2]) : 0;
+
+    // Extract Rows per page value
+    const rowsPerPage = await this.getCurrentPageSize();
+
+    return { start, end, total, currentPage, totalPages, rowsPerPage };
+  }
+
+  async getPageSizeOptions(): Promise<number[]> {
+    const selectTrigger = this.rowsPerPageSelectTrigger;
+
+    await selectTrigger.click();
+    await this.page.waitForTimeout(200);
+
+    const options = await this.rowsPerPageSelectContent
+      .locator("[data-value]")
+      .allInnerTexts();
+    return options
+      .map((opt) => parseInt(opt.trim()))
+      .filter((num) => !isNaN(num));
+  }
+
+  async getCurrentPageSize(): Promise<number> {
+    const selectValue = await this.rowsPerPageSelectTrigger
+      .locator('[data-slot="select-value"]')
+      .first()
+      .innerText();
+    return parseInt(selectValue.trim());
+  }
 }

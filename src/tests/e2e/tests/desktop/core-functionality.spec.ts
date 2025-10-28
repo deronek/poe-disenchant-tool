@@ -241,6 +241,7 @@ test.describe("Last Updated Functionality", () => {
     await expect(lastUpdated).toHaveText(/just now/i);
   });
 });
+
 test.describe("Data Table Functionality", () => {
   test("should display correct column headers", async () => {
     const headers = await poePage.getColumnHeaderNames();
@@ -334,4 +335,131 @@ test.describe("Data Table Functionality", () => {
       }
     });
   });
+
+  test.describe("Pagination Functionality", () => {
+    test("should display pagination controls", async () => {
+      // Check for pagination container
+      await expect(poePage.paginationContainer).toBeVisible();
+
+      // Check for pagination summary and page indicator
+      await expect(poePage.paginationSummary).toBeVisible();
+      await expect(poePage.pageIndicator).toBeVisible();
+
+      // Check for page navigation buttons
+      await expect(poePage.prevPageButton).toBeVisible();
+      await expect(poePage.nextPageButton).toBeVisible();
+
+      // Check for page size selector
+      await expect(poePage.rowsPerPageSelectTrigger).toBeVisible();
     });
+
+    test("should load the first page by default", async () => {
+      // Prev and first button disabled
+      await expect(poePage.firstPageButton).toBeDisabled();
+      await expect(poePage.prevPageButton).toBeDisabled();
+      await expect(poePage.nextPageButton).toBeEnabled();
+      await expect(poePage.lastPageButton).toBeEnabled();
+
+      // Verify default pagination state
+      const paginationInfo = await poePage.getPaginationInfo();
+      expect(paginationInfo.start).toBe(1);
+      expect(paginationInfo.end).toBe(10);
+      expect(paginationInfo.currentPage).toBe(1);
+      expect(paginationInfo.rowsPerPage).toBe(10);
+
+      expect(paginationInfo.total).toBeGreaterThanOrEqual(1);
+      expect(paginationInfo.totalPages).toBeGreaterThanOrEqual(1);
+    });
+
+    test("should show correct page size options", async () => {
+      const pageSizeOptions = await poePage.getPageSizeOptions();
+
+      expect(pageSizeOptions).toContain(10);
+      expect(pageSizeOptions).toContain(20);
+      expect(pageSizeOptions).toContain(30);
+      expect(pageSizeOptions).toContain(40);
+      expect(pageSizeOptions).toContain(50);
+    });
+
+    test("should navigate using all pagination buttons correctly", async () => {
+      // Get initial state
+      const initialState = await poePage.getPaginationInfo();
+
+      // Test "Go to next page" button
+      const nextButton = poePage.nextPageButton;
+      await nextButton.click();
+      await poePage.page.waitForTimeout(300); // Wait for pagination update
+
+      const nextState = await poePage.getPaginationInfo();
+      expect(nextState.start).toBe(initialState.start + nextState.rowsPerPage);
+      expect(nextState.end).toBe(initialState.end + nextState.rowsPerPage);
+      expect(nextState.total).toBe(initialState.total);
+      expect(nextState.currentPage).toBe(initialState.currentPage + 1);
+      expect(nextState.totalPages).toBe(initialState.totalPages);
+      expect(nextState.rowsPerPage).toBe(initialState.rowsPerPage);
+
+      // Test "Go to previous page" button
+      const prevButton = poePage.prevPageButton;
+      await prevButton.click();
+      await poePage.page.waitForTimeout(300);
+
+      const prevState = await poePage.getPaginationInfo();
+      expect(prevState.start).toBe(initialState.start);
+      expect(prevState.end).toBe(initialState.end);
+      expect(prevState.total).toBe(initialState.total);
+      expect(prevState.currentPage).toBe(initialState.currentPage);
+      expect(prevState.totalPages).toBe(initialState.totalPages);
+      expect(prevState.rowsPerPage).toBe(initialState.rowsPerPage);
+
+      // Test "Go to last page" button
+      const lastButton = poePage.lastPageButton;
+      await lastButton.click();
+      await poePage.page.waitForTimeout(300);
+
+      const lastState = await poePage.getPaginationInfo();
+      expect(lastState.start).toBeGreaterThan(initialState.start);
+      expect(lastState.end).toBeGreaterThan(initialState.end);
+      expect(lastState.total).toBe(initialState.total);
+      expect(lastState.currentPage).toBeGreaterThan(initialState.currentPage);
+      expect(lastState.totalPages).toBe(initialState.totalPages);
+      expect(lastState.rowsPerPage).toBe(initialState.rowsPerPage);
+
+      expect(lastState.end).toBe(lastState.total);
+      expect(lastState.currentPage).toBe(lastState.totalPages);
+
+      // Test "Go to first page" button
+      const firstButton = poePage.firstPageButton;
+      await firstButton.click();
+      await poePage.page.waitForTimeout(300);
+
+      const firstState = await poePage.getPaginationInfo();
+      expect(firstState.start).toBe(1);
+      expect(firstState.end).toBe(10);
+      expect(firstState.total).toBe(initialState.total);
+      expect(firstState.currentPage).toBe(1);
+      expect(firstState.totalPages).toBe(initialState.totalPages);
+    });
+
+    test("should update displayed items when rows-per-page changes", async () => {
+      // Change page size to a different value
+      const pageSizeSelect = poePage.rowsPerPageSelectTrigger;
+      await pageSizeSelect.click();
+      await poePage.page.waitForTimeout(200);
+
+      // Select a different page size (e.g. 20)
+      const newPageSizeOption =
+        poePage.rowsPerPageSelectContent.locator('[data-value="20"]');
+      await newPageSizeOption.click();
+      await poePage.page.waitForTimeout(300); // Wait for pagination update
+
+      // Verify pagination info updated
+      const updatedInfo = await poePage.getPaginationInfo();
+      expect(updatedInfo.start).toBe(1);
+      expect(updatedInfo.end).toBe(20);
+
+      // Verify table rows updated accordingly
+      const updatedRowCount = await poePage.page.locator("tbody tr").count();
+      expect(updatedRowCount).toBe(20);
+    });
+  });
+});
