@@ -18,11 +18,16 @@ export type Item = {
   icon: string;
 };
 
+// These items cannot be disenchanted
 const ITEMS_TO_IGNORE = [
   "Curio of Consumption",
   "Curio of Absorption",
   "Curio of Potential",
   "Curio of Decay",
+  "First Piece of Focus",
+  "Second Piece of Focus",
+  "Third Piece of Focus",
+  "Fourth Piece of Focus",
 ];
 
 const createUniqueId = (name: string, variant?: string) =>
