@@ -24,6 +24,7 @@ const createUniqueId = (name: string, variant?: string) =>
 
 const uncached__getItems = async (league: League) => {
   const dustData = getDustData();
+  const dustMap = new Map(dustData.map((d) => [d.name, d]));
   const priceData = await getPriceData(league);
 
   const merged: Item[] = [];
@@ -31,7 +32,7 @@ const uncached__getItems = async (league: League) => {
 
   for (const priceItem of priceData) {
     if (ITEMS_TO_IGNORE.includes(priceItem.name)) continue;
-    const dustItem = dustData.find((d) => d.name === priceItem.name);
+    const dustItem = dustMap.get(priceItem.name);
 
     if (dustItem === undefined) {
       // TODO: need to display this in the UI, as an information that something will be missing
