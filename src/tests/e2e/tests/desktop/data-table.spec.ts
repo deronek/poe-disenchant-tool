@@ -72,7 +72,6 @@ test.describe("Data Rendering and Formatting", () => {
         item.name,
         column,
       );
-      console.log(data);
 
       // Hover over compact number to trigger tooltip
       const colIndex = await poePage.getColumnIndex(column);

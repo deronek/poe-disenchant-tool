@@ -470,7 +470,6 @@ export class PoEDisenchantPage {
     const compactNumberSpan = cell.locator("[data-full-value]").first();
     const compactText = (await compactNumberSpan.innerText()).trim();
 
-    console.log(fullValueAttr, fullValue);
     return {
       compact: compactText,
       full: fullValue,
@@ -519,7 +518,6 @@ export class PoEDisenchantPage {
   ): boolean {
     try {
       const parsedCompact = this.parseCompactValue(compactValue);
-      console.log(parsedCompact, fullValue);
       // Extract the suffix to determine the appropriate tolerance
       const cleanValue = compactValue.trim().toUpperCase();
       const match = cleanValue.match(/([0-9]+(?:\.[0-9]+)?)\s*([KMB]?)\b/);
