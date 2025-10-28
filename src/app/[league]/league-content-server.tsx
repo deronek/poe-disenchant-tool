@@ -20,20 +20,20 @@ export default async function LeagueContentServer({
 
   return (
     <>
-      <h4 className="font-italic text-muted-foreground text-sm">
+      <div className="font-italic text-muted-foreground text-sm">
         <LastUpdatedClient
           timestamp={lastUpdated}
           league={league}
           revalidateDataAction={revalidateDataAction}
         />
-      </h4>
-      <div>
+      </div>
+      <section>
         <SharedDataView
           items={items}
           league={league}
           lowStockThreshold={lowStockThreshold}
         />
-      </div>
+      </section>
     </>
   );
 }

@@ -17,16 +17,16 @@ export default async function LeaguePage({ params }: Props) {
 
   return (
     <div className="container mx-auto space-y-3 p-4 pb-0 sm:pt-6 sm:pr-6 sm:pb-0 sm:pl-6 md:px-8 lg:space-y-2">
-      <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
+      <header className="flex flex-col items-start justify-between gap-4 sm:flex-row">
         <div className="">
           <h1 className="mb-2 text-2xl font-bold sm:mb-4">{TITLE}</h1>
-          <h3 className="text-lg">{DESCRIPTION}</h3>
+          <p className="text-lg">{DESCRIPTION}</p>
         </div>
-        <div className="flex w-full justify-between gap-4 sm:ml-auto sm:w-auto">
+        <nav className="flex w-full justify-between gap-4 sm:ml-auto sm:w-auto">
           <LeagueSelector currentLeague={league} />
           <ModeToggle />
-        </div>
-      </div>
+        </nav>
+      </header>
       <Suspense fallback={<DataViewSkeleton />}>
         <LeagueContentServer key={league} league={league} />
       </Suspense>
