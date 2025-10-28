@@ -68,24 +68,26 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased">
-        <TooltipProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <ErrorHandler />
-            <Toaster richColors />
-            <CleanupOldLeagueMarks />
-            <DataTableStateProvider>
-              {children}
-              <Footer />
-            </DataTableStateProvider>
-          </ThemeProvider>
-        </TooltipProvider>
-        <Analytics />
-        <SpeedInsights />
+        <div className="flex min-h-screen flex-col">
+          <TooltipProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <ErrorHandler />
+              <Toaster richColors />
+              <CleanupOldLeagueMarks />
+              <DataTableStateProvider>
+                <main className="grow">{children}</main>
+                <Footer />
+              </DataTableStateProvider>
+            </ThemeProvider>
+          </TooltipProvider>
+          <Analytics />
+          <SpeedInsights />
+        </div>
       </body>
     </html>
   );

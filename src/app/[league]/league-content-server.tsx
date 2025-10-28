@@ -27,7 +27,7 @@ export default async function LeagueContentServer({
           revalidateDataAction={revalidateDataAction}
         />
       </h4>
-      <div className="xl:py-4">
+      <div>
         <SharedDataView
           items={items}
           league={league}
