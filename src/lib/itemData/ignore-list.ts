@@ -20,4 +20,6 @@ export const ITEMS_TO_IGNORE = [
   "First Piece of the Arcane",
   "Second Piece of the Arcane",
   "Third Piece of the Arcane",
+  "First Piece of Time",
+  "Second Piece of Time",
 ];
