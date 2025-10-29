@@ -18,8 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: [chromium]
-        # project: [chromium, firefox, webkit]
+        project: [chromium, firefox, webkit]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
