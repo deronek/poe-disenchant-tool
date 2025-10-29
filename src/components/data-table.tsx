@@ -105,9 +105,9 @@ export function DataTable<TData extends Item, TValue>({
   });
 
   return (
-    <div className="bg-background-200 mx-auto w-full max-w-md rounded-md border md:max-w-4xl lg:max-w-screen-xl">
+    <div className="mx-auto w-full max-w-md rounded-md border md:max-w-4xl lg:max-w-screen-xl">
       {/* Desktop Toolbar */}
-      <div className="hidden lg:block">
+      <div className="bg-background-200 hidden lg:block">
         <DataTableToolbar
           table={table}
           onClearMarks={clearSelection}
@@ -117,7 +117,7 @@ export function DataTable<TData extends Item, TValue>({
       </div>
 
       {/* Mobile Toolbar */}
-      <div className="lg:hidden">
+      <div className="bg-background-200 lg:hidden">
         <MobileToolbar
           table={table}
           onClearMarks={clearSelection}
@@ -137,11 +137,11 @@ export function DataTable<TData extends Item, TValue>({
       </div>
 
       {/* Desktop Table Layout */}
-      <div className="hidden overflow-x-auto px-1 lg:block">
+      <div className="hidden overflow-x-auto lg:block">
         <Table className="w-full table-fixed text-sm">
-          <TableHeader>
+          <TableHeader className="">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className="hover:bg-transparent">
+              <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   const width = header.getSize();
                   const isSorted = header.column.getIsSorted();
