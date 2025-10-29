@@ -60,10 +60,10 @@ test.describe("Name Filter Functionality", () => {
         (item) => /[^\w\s]/.test(item.name) || /\s/.test(item.name),
       );
 
-      if (specialCharItems.length === 0) {
-        test.skip(true, "No items with special characters found");
-        return;
-      }
+      test.skip(
+        specialCharItems.length === 0,
+        "No items with special characters found",
+      );
 
       const targetItem = specialCharItems[0];
       await poePage.setNameFilter(targetItem.name);
