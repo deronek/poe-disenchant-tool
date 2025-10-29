@@ -41,6 +41,7 @@ export function NameFilter<TData extends Item>({
         }}
         aria-label="Filter by name or variant"
         className="pr-8"
+        maxLength={50}
       />
       {value.length > 0 && (
         <XButton

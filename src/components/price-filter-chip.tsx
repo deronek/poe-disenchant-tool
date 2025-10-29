@@ -21,7 +21,11 @@ export function PriceFilterChip({ value, onClear }: PriceFilterChipProps) {
   };
 
   return (
-    <Badge variant="outline" className="inline-flex items-center gap-1 px-3">
+    <Badge
+      variant="outline"
+      className="inline-flex items-center gap-1 px-3"
+      data-testid="price-filter-chip"
+    >
       <span className="inline-flex min-w-0 flex-shrink-0 items-center gap-1 truncate">
         Price: {formatPriceRange()}
         <span className="flex-shrink-0">

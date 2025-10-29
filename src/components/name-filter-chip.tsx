@@ -7,12 +7,13 @@ interface NameFilterChipProps {
 }
 
 export function NameFilterChip({ value, onClear }: NameFilterChipProps) {
-  if (value === "") {
+  // Ignores whitespace-only or empty filter
+  if (value.trim() === "") {
     return null;
   }
 
   return (
-    <Badge variant="outline" className="px-3">
+    <Badge variant="outline" className="px-3" data-testid="name-filter-chip">
       Name: {value}
       <XButton
         onClick={onClear}

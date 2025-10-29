@@ -187,10 +187,12 @@ export function PriceFilter<TData extends Item>({
                   max={100}
                   step={1}
                   value={[
-                    getLowerBoundSliderValue(
-                      column,
-                      currentRange.min,
-                      defaults,
+                    Math.round(
+                      getLowerBoundSliderValue(
+                        column,
+                        currentRange.min,
+                        defaults,
+                      ),
                     ),
                   ]}
                   onValueChange={handleLowerBoundChange}

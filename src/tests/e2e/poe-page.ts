@@ -30,8 +30,40 @@ export class PoEDisenchantPage {
   }
 
   // ---------------------------
+  // Console Helpers
+  // ---------------------------
+
+  async verifyNoConsoleErrors() {
+    const consoleMessages = await this.page.consoleMessages();
+    expect(consoleMessages.filter((m) => m.type() === "error")).toHaveLength(0);
+  }
+
+  // ---------------------------
   // Test Data Helpers
   // ---------------------------
+
+  get dataTableRows() {
+    return this.page.locator("tbody tr");
+  }
+
+  get dataTableHeaders() {
+    return this.page.locator("thead th");
+  }
+
+  dataColumnHeaders = [
+    "Name",
+    "Price",
+    "Dust Value",
+    "Dust / Chaos",
+    "Dust / Chaos / Slot",
+  ] as const;
+
+  numericalDataColumnHeaders = [
+    "Price",
+    "Dust Value",
+    "Dust / Chaos",
+    "Dust / Chaos / Slot",
+  ] as const;
 
   /**
    * Extracts table data into structured test items.
@@ -39,21 +71,18 @@ export class PoEDisenchantPage {
    * [0]=Mark, [1]=Icon, [2]=Name, [3]=Price, [4]=Dust Value, [5]=Dust/Chaos, [6]=Dust/Chaos/Slot
    */
   async getTestItems(limit = 10): Promise<TestItem[]> {
-    const rows = this.page.locator("tbody tr");
+    const rows = this.dataTableRows;
     const count = Math.min(await rows.count(), limit);
     expect(count).toBeGreaterThanOrEqual(2);
 
     // Resolve indices by header
-    const headers = [
-      "Name",
-      "Price",
-      "Dust Value",
-      "Dust / Chaos",
-      "Dust / Chaos / Slot",
-    ];
+
     const indices = Object.fromEntries(
       await Promise.all(
-        headers.map(async (h) => [h, await this.getColumnIndex(h)]),
+        this.dataColumnHeaders.map(async (h) => [
+          h,
+          await this.getColumnIndex(h),
+        ]),
       ),
     ) as Record<string, number>;
 
@@ -92,6 +121,23 @@ export class PoEDisenchantPage {
       .getAttribute("data-full-value");
     const text = (await cell.innerText()).trim();
     return parseFloat(attr ?? text);
+  }
+
+  getItemFieldFromHeaderName(item: TestItem, headerName: string) {
+    switch (headerName) {
+      case "Name":
+        return item.name;
+      case "Price":
+        return item.price;
+      case "Dust Value":
+        return item.dustValue;
+      case "Dust / Chaos":
+        return item.dustPerChaos;
+      case "Dust / Chaos / Slot":
+        return item.dustPerChaosPerSlot;
+      default:
+        throw new Error(`Unknown header name: ${headerName}`);
+    }
   }
 
   // ---------------------------
@@ -242,33 +288,10 @@ export class PoEDisenchantPage {
   }
 
   async getColumnIndex(columnName: string): Promise<number> {
-    const headers = await this.page.locator("thead th").allInnerTexts();
+    const headers = await this.dataTableHeaders.allInnerTexts();
     const index = headers.findIndex((h) => h.trim() === columnName);
     if (index === -1) throw new Error(`Column "${columnName}" not found`);
     return index;
-  }
-
-  async sortByColumn(columnName: string) {
-    const index = await this.getColumnIndex(columnName);
-    const header = this.page.locator("thead th").nth(index);
-    await header.click();
-  }
-
-  // ---------------------------
-  // Keyboard / Search
-  // ---------------------------
-
-  async searchItem(term: string) {
-    const input = this.page.locator("input[type='search'], input").first();
-    await input.fill(term);
-    await input.press("Enter");
-    await this.page.waitForTimeout(300); // debounce
-  }
-
-  async verifyItemDisplayed(name: string, shouldExist = true) {
-    const row = this.page.locator("tr").filter({ hasText: name });
-    if (shouldExist) await expect(row).toBeVisible();
-    else await expect(row).toHaveCount(0);
   }
 
   // ---------------------------
@@ -657,5 +680,269 @@ export class PoEDisenchantPage {
       .first()
       .innerText();
     return parseInt(selectValue.trim());
+  }
+
+  // ---------------------------
+  // Name Filter Functionality
+  // ---------------------------
+
+  get nameFilterInput() {
+    return this.page
+      .getByRole("textbox", { name: "Filter by name or variant" })
+      .first();
+  }
+
+  get nameFilterClearButton() {
+    return this.page.getByRole("button", { name: "Clear name filter" }).first();
+  }
+
+  get nameFilterChip() {
+    return this.page.getByTestId("name-filter-chip").first();
+  }
+
+  async setNameFilter(value: string): Promise<void> {
+    await this.nameFilterInput.fill(value);
+  }
+
+  async clearNameFilter(): Promise<void> {
+    // If button is not visible, filter should be empty
+    if (await this.nameFilterClearButton.isVisible())
+      await this.nameFilterClearButton.click();
+  }
+
+  async getNameFilterValue(): Promise<string> {
+    return await this.nameFilterInput.inputValue();
+  }
+
+  async verifyItemDisplayed(name: string, shouldExist = true) {
+    const row = this.page.locator("tr").filter({ hasText: name });
+    if (shouldExist) await expect(row).toBeVisible();
+    else await expect(row).toHaveCount(0);
+  }
+
+  async verifyItemsDisplayed(
+    names: string[],
+    shouldExist = true,
+  ): Promise<void> {
+    for (const itemName of names) {
+      await this.verifyItemDisplayed(itemName, shouldExist);
+    }
+  }
+
+  async verifyNoNameFilterActive(): Promise<void> {
+    await expect(this.nameFilterChip).not.toBeVisible();
+    const filterValue = await this.getNameFilterValue();
+    expect(filterValue).toBe("");
+  }
+
+  async verifyNoItemsDisplayed(): Promise<void> {
+    const visibleRows = await this.dataTableRows.count();
+    expect(visibleRows).toBe(1);
+    expect(this.dataTableRows).toHaveText(/No results/);
+  }
+
+  // ---------------------------
+  // Filtering Helpers
+  // ---------------------------
+
+  async waitForFilterDebounce(timeout = 300): Promise<void> {
+    await this.page.waitForTimeout(timeout);
+  }
+
+  async verifyFilterChipVisible(
+    type: "name" | "price",
+    visible: boolean = true,
+  ): Promise<void> {
+    const chip = type === "name" ? this.nameFilterChip : this.priceFilterChip;
+
+    if (visible) await expect(chip).toBeVisible();
+    else await expect(chip).not.toBeVisible();
+  }
+
+  // ---------------------------
+  // Price Filter Functionality
+  // ---------------------------
+
+  get priceFilterButton() {
+    return this.page.getByRole("button", { name: "Price", exact: true });
+  }
+
+  get priceFilterChip() {
+    return this.page.getByTestId("price-filter-chip").first();
+  }
+
+  get priceFilterPopover() {
+    return this.page
+      .locator('[role="dialog"]')
+      .filter({ hasText: /price filter/i });
+  }
+
+  // All below assume price filter is open
+  get priceFilterLowerBoundSliderTrack() {
+    return this.page.getByLabel("Lower bound price filter");
+  }
+
+  get priceFilterUpperBoundSliderTrack() {
+    return this.page.getByLabel("Upper bound price filter");
+  }
+
+  get priceFilterLowerBoundSliderThumb() {
+    return this.priceFilterUpperBoundSliderTrack.getByRole("slider");
+  }
+
+  get priceFilterUpperBoundSliderThumb() {
+    return this.priceFilterUpperBoundSliderTrack.getByRole("slider");
+  }
+
+  get priceFilterResetButton() {
+    return this.priceFilterPopover.getByRole("button", { name: "Reset" });
+  }
+
+  get priceFilterCloseButton() {
+    return this.priceFilterPopover.getByRole("button", { name: "Close" });
+  }
+
+  async openPriceFilter(): Promise<void> {
+    await this.priceFilterButton.click();
+    await expect(this.priceFilterPopover).toBeVisible();
+  }
+
+  async closePriceFilter(): Promise<void> {
+    await this.priceFilterCloseButton.click();
+    await expect(this.priceFilterPopover).not.toBeVisible();
+  }
+
+  async getPriceFilterRange(): Promise<{ min: number; max: number }> {
+    const chipText = await this.priceFilterChip.innerText();
+    const match = chipText.match(/(\d+)–(\d+)/);
+    if (!match) {
+      throw new Error("Price filter chip not found");
+    }
+    const [, min, max] = match;
+    return { min: parseInt(min), max: parseInt(max) };
+  }
+
+  async verifyPriceFilterRange(min: number, max: number): Promise<void> {
+    const range = await this.getPriceFilterRange();
+    expect(range.min).toBe(min);
+    expect(range.max).toBe(max);
+  }
+
+  // Percent should be between 0 and 100
+  async setPriceFilterValuePercent(
+    bound: "lower" | "upper",
+    percent: number,
+  ): Promise<void> {
+    if (percent < 0 || percent > 100) {
+      throw new Error("Percent must be between 0 and 100");
+    }
+    const track =
+      bound === "lower"
+        ? this.priceFilterLowerBoundSliderTrack
+        : this.priceFilterUpperBoundSliderTrack;
+
+    await this.openPriceFilter();
+    const boundingBox = (await track.boundingBox())!;
+
+    // Calculate press point based on percent
+    const clickX = Math.round((percent * boundingBox.width) / 100);
+    const clickY = boundingBox.height / 2;
+
+    await track.focus();
+    await track.hover({ force: true, position: { x: 0, y: clickY } });
+    await this.page.mouse.down();
+    await track.hover({ force: true, position: { x: clickX, y: clickY } });
+    await this.page.mouse.up();
+
+    await this.closePriceFilter();
+  }
+
+  async resetPriceFilter(): Promise<void> {
+    await this.openPriceFilter();
+    await this.priceFilterResetButton.click();
+    await this.closePriceFilter();
+  }
+
+  // ---------------------------
+  // Column Sorting Functionality
+  // ---------------------------
+
+  async getColumnSortState(
+    columnName: string,
+  ): Promise<"none" | "asc" | "desc"> {
+    const colIndex = await this.getColumnIndex(columnName);
+    const header = this.dataTableHeaders.nth(colIndex);
+
+    const ariaSort = await header.getAttribute("aria-sort");
+    switch (ariaSort) {
+      case "ascending":
+        return "asc";
+      case "descending":
+        return "desc";
+      default:
+        return "none";
+    }
+  }
+
+  async sortByColumn(
+    columnName: string,
+    direction?: "asc" | "desc",
+  ): Promise<void> {
+    const colIndex = await this.getColumnIndex(columnName);
+    const header = this.dataTableHeaders.nth(colIndex);
+
+    // Click header to initiate sorting
+    await header.click();
+
+    // If specific direction requested, cycle until we get it
+    if (direction) {
+      let currentDirection = await this.getColumnSortState(columnName);
+      while (currentDirection !== direction) {
+        await header.click();
+        currentDirection = await this.getColumnSortState(columnName);
+        await this.page.waitForTimeout(100);
+      }
+    }
+
+    await this.page.waitForTimeout(300); // Wait for sort animation
+  }
+
+  async verifyColumnSorted(
+    columnName: string,
+    direction: "asc" | "desc",
+    type: "number" | "string" = "number",
+  ): Promise<void> {
+    const sortState = await this.getColumnSortState(columnName);
+    expect(sortState).toBe(direction);
+
+    // Verify values are in order
+    await this.verifyColumnValuesOrdered(columnName, direction, type);
+  }
+
+  async verifyColumnValuesOrdered(
+    columnName: string,
+    direction: "asc" | "desc" = "asc",
+    type: "number" | "string" = "number",
+  ): Promise<void> {
+    const tableData = await this.getTestItems();
+
+    // Extract numeric values for the target column
+    const rawValues = tableData.map((item) =>
+      this.getItemFieldFromHeaderName(item, columnName),
+    );
+    // Normalize based on explicit type
+    const values =
+      type === "number"
+        ? rawValues.map((v) => Number(v))
+        : rawValues.map((v) => String(v).toLowerCase().trim());
+
+    // Sort copy for comparison
+    const sortedValues = [...values].sort((a, b) => {
+      if (a === b) return 0;
+      if (direction === "asc") return a > b ? 1 : -1;
+      return a < b ? 1 : -1;
+    });
+
+    expect(values).toEqual(sortedValues);
   }
 }
