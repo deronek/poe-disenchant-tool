@@ -139,7 +139,7 @@ export function DataTable<TData extends Item, TValue>({
       {/* Desktop Table Layout */}
       <div className="hidden overflow-x-auto lg:block">
         <Table className="w-full table-fixed text-sm">
-          <TableHeader className="">
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
