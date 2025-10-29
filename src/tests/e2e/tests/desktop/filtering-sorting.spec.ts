@@ -207,6 +207,11 @@ test.describe("Name Filter Functionality", () => {
       await poePage.setNameFilter(longFilter);
       await poePage.waitForFilterDebounce();
 
+      // Verify that only 50 characters are actually in the input
+      const actualFilterValue = await poePage.getNameFilterValue();
+      expect(actualFilterValue.length).toBe(50);
+      expect(actualFilterValue).toBe("a".repeat(50));
+
       await poePage.verifyNoConsoleErrors();
       await poePage.verifyNoItemsDisplayed();
     });
