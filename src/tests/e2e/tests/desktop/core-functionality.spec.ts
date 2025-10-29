@@ -6,28 +6,20 @@ import {
   League,
   LEAGUE_SLUGS,
 } from "@/lib/leagues";
-import { expect, test } from "@playwright/test";
-import { PoEDisenchantPage } from "../../poe-page";
-
-let poePage: PoEDisenchantPage;
-
-test.beforeEach(async ({ page }) => {
-  poePage = new PoEDisenchantPage(page);
-  await poePage.setup();
-});
+import { test, expect } from "../../fixtures";
 
 test.describe("Page Metadata", () => {
-  test("should display correct default page title", async () => {
+  test("should display correct default page title", async ({ poePage }) => {
     await poePage.verifyPageTitle(
       getLeagueName(DEFAULT_LEAGUE) + " | " + TITLE,
     );
   });
 
-  test("should have correct page description meta tag", async () => {
+  test("should have correct page description meta tag", async ({ poePage }) => {
     await poePage.verifyPageDescription(DESCRIPTION);
   });
 
-  test("should display page header and description", async () => {
+  test("should display page header and description", async ({ poePage }) => {
     const pageHeader = poePage.page.locator("h1").first();
     const pageDescription = poePage.page.locator("h3").first();
 
@@ -39,7 +31,9 @@ test.describe("Page Metadata", () => {
 });
 
 test.describe("League Selector Functionality", () => {
-  test("should display league selector with correct options", async () => {
+  test("should display league selector with correct options", async ({
+    poePage,
+  }) => {
     await poePage.leagueSelectorTrigger.click();
 
     const options = poePage.page.getByRole("option");
@@ -52,7 +46,7 @@ test.describe("League Selector Functionality", () => {
     }
   });
 
-  test("should allow selecting different leagues", async () => {
+  test("should allow selecting different leagues", async ({ poePage }) => {
     for (const league of LEAGUE_SLUGS) {
       await poePage.selectLeague(league);
       await poePage.verifyLeagueSelected(league);
@@ -62,7 +56,9 @@ test.describe("League Selector Functionality", () => {
     }
   });
 
-  test("should show loading state during league selection", async () => {
+  test("should show loading state during league selection", async ({
+    poePage,
+  }) => {
     // Get first which key isn't DEFAULT_LEAGUE
     const leagueToSelect = LEAGUE_SLUGS.find((key) => key !== DEFAULT_LEAGUE)!;
     expect(leagueToSelect).toBeDefined();
@@ -75,6 +71,7 @@ test.describe("League Selector Functionality", () => {
   });
 
   test("should persist league selection across page reloads", async ({
+    poePage,
     page,
   }) => {
     const initialLeague = DEFAULT_LEAGUE;
@@ -84,7 +81,9 @@ test.describe("League Selector Functionality", () => {
     await poePage.verifyLeagueSelected(initialLeague);
   });
 
-  test("should support keyboard open/close in league selector", async () => {
+  test("should support keyboard open/close in league selector", async ({
+    poePage,
+  }) => {
     const selector = poePage.leagueSelectorTrigger;
     await selector.focus();
     await selector.press("Enter");
@@ -97,7 +96,9 @@ test.describe("League Selector Functionality", () => {
     await expect(dropdown).not.toBeVisible();
   });
 
-  test("should support selecting league using keyboard", async () => {
+  test("should support selecting league using keyboard", async ({
+    poePage,
+  }) => {
     const selector = poePage.leagueSelectorTrigger;
     await selector.focus();
     await selector.press("Enter");
@@ -126,12 +127,14 @@ test.describe("League Selector Functionality", () => {
 });
 
 test.describe("Theme Selector Functionality", () => {
-  test("should display theme selector button", async () => {
+  test("should display theme selector button", async ({ poePage }) => {
     await expect(poePage.themeSelectorTrigger).toBeVisible();
     await expect(poePage.themeSelectorTrigger).toBeEnabled();
   });
 
-  test("should allow switching between light, dark and system themes", async () => {
+  test("should allow switching between light, dark and system themes", async ({
+    poePage,
+  }) => {
     await poePage.selectTheme("light");
     await poePage.verifyThemeApplied("light");
 
@@ -143,6 +146,7 @@ test.describe("Theme Selector Functionality", () => {
   });
 
   test("should persist theme selection across page reloads", async ({
+    poePage,
     page,
   }) => {
     const initialTheme = await poePage.getCurrentTheme();
@@ -152,7 +156,9 @@ test.describe("Theme Selector Functionality", () => {
     expect(currentTheme).toBe(initialTheme);
   });
 
-  test("should maintain visual consistency across theme changes", async () => {
+  test("should maintain visual consistency across theme changes", async ({
+    poePage,
+  }) => {
     await poePage.selectTheme("light");
     await expect(poePage.page.locator("h1")).toBeVisible();
     await expect(poePage.page.locator("table")).toBeVisible();
@@ -162,7 +168,9 @@ test.describe("Theme Selector Functionality", () => {
     await expect(poePage.page.locator("table")).toBeVisible();
   });
 
-  test("should support keyboard open/close in theme selector", async () => {
+  test("should support keyboard open/close in theme selector", async ({
+    poePage,
+  }) => {
     const button = poePage.themeSelectorTrigger;
     await button.focus();
     await button.press("Enter");
@@ -175,7 +183,9 @@ test.describe("Theme Selector Functionality", () => {
     await expect(dropdown).not.toBeVisible();
   });
 
-  test("should support selecting first theme using keyboard", async () => {
+  test("should support selecting first theme using keyboard", async ({
+    poePage,
+  }) => {
     const button = poePage.themeSelectorTrigger;
     await button.focus();
     await button.press("Enter");
@@ -190,7 +200,9 @@ test.describe("Theme Selector Functionality", () => {
     await poePage.verifyThemeApplied("light");
   });
 
-  test("should support selecting second theme using keyboard", async () => {
+  test("should support selecting second theme using keyboard", async ({
+    poePage,
+  }) => {
     const button = poePage.themeSelectorTrigger;
     await button.focus();
     await button.press("Enter");
@@ -209,14 +221,16 @@ test.describe("Theme Selector Functionality", () => {
 });
 
 test.describe("Last Updated Functionality", () => {
-  test("should display last updated text with relative time", async () => {
+  test("should display last updated text with relative time", async ({
+    poePage,
+  }) => {
     const lastUpdated = poePage.lastUpdatedElement;
     expect(lastUpdated).toHaveText(/last updated:/i);
     expect(lastUpdated).toHaveText(/just now|ago/i);
     await poePage.verifyDateTimeAttribute(lastUpdated);
   });
 
-  test("should show absolute time in tooltip", async () => {
+  test("should show absolute time in tooltip", async ({ poePage }) => {
     const tooltip = await poePage.getLastUpdatedTooltip();
     expect(tooltip).toHaveText(/absolute time/i);
 
@@ -227,7 +241,7 @@ test.describe("Last Updated Functionality", () => {
     await poePage.verifyDateTimeAttribute(absoluteTime);
   });
 
-  test("should handle refresh button click", async () => {
+  test("should handle refresh button click", async ({ poePage }) => {
     await poePage.setAlwaysShowRefreshFlag();
     await poePage.page.reload();
     await poePage.waitForDataLoad();

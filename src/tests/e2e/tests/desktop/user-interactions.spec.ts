@@ -1,16 +1,10 @@
-import { test, expect } from "@playwright/test";
-import { PoEDisenchantPage } from "../../poe-page";
+import { test, expect } from "../../fixtures";
 import { DEFAULT_LEAGUE, getLeagueApiName } from "@/lib/leagues";
 
-let poePage: PoEDisenchantPage;
-
-test.beforeEach(async ({ page }) => {
-  poePage = new PoEDisenchantPage(page);
-  await poePage.setup();
-});
-
 test.describe("Row Selection & Marking", () => {
-  test("should allow selecting, deselecting, and visual feedback", async () => {
+  test("should allow selecting, deselecting, and visual feedback", async ({
+    poePage,
+  }) => {
     const [first, second] = await poePage.getTestItems();
 
     await poePage.selectItems([first.name, second.name]);
@@ -23,14 +17,16 @@ test.describe("Row Selection & Marking", () => {
     await poePage.expectRowSelectedStyle(second.name, true);
   });
 
-  test("should support checkbox selection with keyboard", async () => {
+  test("should support checkbox selection with keyboard", async ({
+    poePage,
+  }) => {
     const firstCheckbox = poePage.page.getByRole("checkbox").first();
     await firstCheckbox.focus();
     await firstCheckbox.press("Space");
     await expect(firstCheckbox).toBeChecked();
   });
 
-  test("should clear all marks and disable button", async () => {
+  test("should clear all marks and disable button", async ({ poePage }) => {
     const [first, second] = await poePage.getTestItems();
 
     await poePage.selectItems([first.name, second.name]);
@@ -43,7 +39,10 @@ test.describe("Row Selection & Marking", () => {
     await expect(poePage.clearMarksButton).toBeDisabled();
   });
 
-  test("should persist selections across reloads", async ({ page }) => {
+  test("should persist selections across reloads", async ({
+    poePage,
+    page,
+  }) => {
     const [item] = await poePage.getTestItems();
     await poePage.selectItem(item.name);
 
@@ -53,6 +52,7 @@ test.describe("Row Selection & Marking", () => {
   });
 
   test("should clear persisted selections when cleared manually", async ({
+    poePage,
     page,
   }) => {
     const [item] = await poePage.getTestItems();
@@ -64,7 +64,7 @@ test.describe("Row Selection & Marking", () => {
     await poePage.verifyItemSelected(item.name, false);
   });
 
-  test("should clear marks via keyboard", async () => {
+  test("should clear marks via keyboard", async ({ poePage }) => {
     const [item] = await poePage.getTestItems();
     await poePage.selectItem(item.name);
 
@@ -76,7 +76,7 @@ test.describe("Row Selection & Marking", () => {
 });
 
 test.describe("Trade Link Functionality", () => {
-  test("should generate valid PoE trade links", async () => {
+  test("should generate valid PoE trade links", async ({ poePage }) => {
     const [item] = await poePage.getTestItems();
     const link = await poePage.getTradeLink(item.name);
 
@@ -84,7 +84,7 @@ test.describe("Trade Link Functionality", () => {
     expect(link).toContain(getLeagueApiName(DEFAULT_LEAGUE));
   });
 
-  test("should open trade link in new tab", async ({ context }) => {
+  test("should open trade link in new tab", async ({ poePage, context }) => {
     const [item] = await poePage.getTestItems();
     expect(item).toBeTruthy();
 
@@ -96,7 +96,7 @@ test.describe("Trade Link Functionality", () => {
     await tradePage.close();
   });
 
-  test("should include default options in trade link", async () => {
+  test("should include default options in trade link", async ({ poePage }) => {
     const [item] = await poePage.getTestItems();
     const tradeLink = await poePage.getTradeLink(item.name);
     const payload = JSON.parse(decodeURIComponent(tradeLink.split("q=")[1]));

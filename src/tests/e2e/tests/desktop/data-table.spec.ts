@@ -1,14 +1,6 @@
-import { expect, test } from "@playwright/test";
-import { PoEDisenchantPage } from "../../poe-page";
+import { test, expect } from "../../fixtures";
 
-let poePage: PoEDisenchantPage;
-
-test.beforeEach(async ({ page }) => {
-  poePage = new PoEDisenchantPage(page);
-  await poePage.setup();
-});
-
-test("should display correct column headers", async () => {
+test("should display correct column headers", async ({ poePage }) => {
   const headers = await poePage.getColumnHeaderNames();
 
   // Expected headers based on columns.tsx
@@ -37,7 +29,9 @@ test.describe("Data Rendering and Formatting", () => {
     "Dust / Chaos / Slot",
   ];
 
-  test("should display compact and full values correctly for all items and numerical columns", async () => {
+  test("should display compact and full values correctly for all items and numerical columns", async ({
+    poePage,
+  }) => {
     const items = await poePage.getTestItems(10);
     expect(items.length).toBe(10);
 
@@ -64,7 +58,7 @@ test.describe("Data Rendering and Formatting", () => {
     }
   });
 
-  test("should show tooltips on compact numbers", async () => {
+  test("should show tooltips on compact numbers", async ({ poePage }) => {
     const [item] = await poePage.getTestItems();
 
     for (const column of numericalColumns) {
@@ -101,7 +95,7 @@ test.describe("Data Rendering and Formatting", () => {
 });
 
 test.describe("Pagination Functionality", () => {
-  test("should display pagination controls", async () => {
+  test("should display pagination controls", async ({ poePage }) => {
     // Check for pagination container
     await expect(poePage.paginationContainer).toBeVisible();
 
@@ -117,7 +111,7 @@ test.describe("Pagination Functionality", () => {
     await expect(poePage.rowsPerPageSelectTrigger).toBeVisible();
   });
 
-  test("should load the first page by default", async () => {
+  test("should load the first page by default", async ({ poePage }) => {
     // Prev and first button disabled
     await expect(poePage.firstPageButton).toBeDisabled();
     await expect(poePage.prevPageButton).toBeDisabled();
@@ -135,7 +129,7 @@ test.describe("Pagination Functionality", () => {
     expect(paginationInfo.totalPages).toBeGreaterThanOrEqual(1);
   });
 
-  test("should show correct page size options", async () => {
+  test("should show correct page size options", async ({ poePage }) => {
     const pageSizeOptions = await poePage.getPageSizeOptions();
 
     expect(pageSizeOptions).toContain(10);
@@ -145,7 +139,9 @@ test.describe("Pagination Functionality", () => {
     expect(pageSizeOptions).toContain(50);
   });
 
-  test("should navigate using all pagination buttons correctly", async () => {
+  test("should navigate using all pagination buttons correctly", async ({
+    poePage,
+  }) => {
     // Get initial state
     const initialState = await poePage.getPaginationInfo();
 
@@ -204,7 +200,9 @@ test.describe("Pagination Functionality", () => {
     expect(firstState.totalPages).toBe(initialState.totalPages);
   });
 
-  test("should update displayed items when rows-per-page changes", async () => {
+  test("should update displayed items when rows-per-page changes", async ({
+    poePage,
+  }) => {
     // Change page size to a different value
     const pageSizeSelect = poePage.rowsPerPageSelectTrigger;
     await pageSizeSelect.click();

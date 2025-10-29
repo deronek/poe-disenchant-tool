@@ -1,14 +1,9 @@
-import { expect, test } from "@playwright/test";
-import { PoEDisenchantPage } from "../../poe-page";
+import { test, expect } from "../../fixtures";
 import type { TestItem } from "../../types";
 
-let poePage: PoEDisenchantPage;
 let initialItems: TestItem[];
 
-test.beforeEach(async ({ page }) => {
-  poePage = new PoEDisenchantPage(page);
-  await poePage.setup();
-
+test.beforeEach(async ({ poePage }) => {
   // Get items for tests
   initialItems = await poePage.getTestItems(10);
   expect(initialItems.length).toBe(10);
@@ -16,7 +11,7 @@ test.beforeEach(async ({ page }) => {
 
 test.describe("Name Filter Functionality", () => {
   test.describe("Positive Testing", () => {
-    test("should filter by exact item name", async () => {
+    test("should filter by exact item name", async ({ poePage }) => {
       const targetItem = initialItems[0];
       expect(targetItem.name).toBeTruthy();
 
@@ -35,7 +30,7 @@ test.describe("Name Filter Functionality", () => {
       }
     });
 
-    test("should filter by partial item name", async () => {
+    test("should filter by partial item name", async ({ poePage }) => {
       const targetItem = initialItems[0];
       const partialName = targetItem.name.substring(
         0,
@@ -49,7 +44,7 @@ test.describe("Name Filter Functionality", () => {
       await poePage.verifyItemDisplayed(targetItem.name);
     });
 
-    test("should filter case-insensitively", async () => {
+    test("should filter case-insensitively", async ({ poePage }) => {
       const targetItem = initialItems[0];
       const uppercaseName = targetItem.name.toUpperCase();
 
@@ -59,7 +54,7 @@ test.describe("Name Filter Functionality", () => {
       await poePage.verifyItemDisplayed(targetItem.name);
     });
 
-    test("should filter items with special characters", async () => {
+    test("should filter items with special characters", async ({ poePage }) => {
       // Find an item with special characters or create a test
       const specialCharItems = initialItems.filter(
         (item) => /[^\w\s]/.test(item.name) || /\s/.test(item.name),
@@ -77,7 +72,7 @@ test.describe("Name Filter Functionality", () => {
       await poePage.verifyItemDisplayed(targetItem.name, true);
     });
 
-    test("should show filter chip when active", async () => {
+    test("should show filter chip when active", async ({ poePage }) => {
       // No filter chip by default
       await poePage.verifyFilterChipVisible("name", false);
 
@@ -88,7 +83,7 @@ test.describe("Name Filter Functionality", () => {
       await poePage.verifyFilterChipVisible("name");
     });
 
-    test("should clear filter using clear button", async () => {
+    test("should clear filter using clear button", async ({ poePage }) => {
       const targetItem = initialItems[0];
       await poePage.setNameFilter(targetItem.name);
       await poePage.waitForFilterDebounce();
@@ -99,7 +94,9 @@ test.describe("Name Filter Functionality", () => {
       await poePage.verifyNoNameFilterActive();
     });
 
-    test("should handle multiple filter changes sequentially", async () => {
+    test("should handle multiple filter changes sequentially", async ({
+      poePage,
+    }) => {
       const items = initialItems.slice(0, 3);
 
       // Filter by first item
@@ -124,7 +121,9 @@ test.describe("Name Filter Functionality", () => {
       );
     });
 
-    test("should maintain filter state during sort operations", async () => {
+    test("should maintain filter state during sort operations", async ({
+      poePage,
+    }) => {
       const targetItem = initialItems[0];
       const filterValue = targetItem.name.substring(0, 3);
 
@@ -141,7 +140,9 @@ test.describe("Name Filter Functionality", () => {
       await poePage.verifyFilterChipVisible("name");
     });
 
-    test("should maintain focus during filter operations", async () => {
+    test("should maintain focus during filter operations", async ({
+      poePage,
+    }) => {
       await poePage.nameFilterInput.focus();
       await expect(poePage.nameFilterInput).toBeFocused();
 
@@ -153,7 +154,7 @@ test.describe("Name Filter Functionality", () => {
       await expect(poePage.nameFilterInput).toBeFocused();
     });
 
-    test("should apply filter within 500ms", async () => {
+    test("should apply filter within 500ms", async ({ poePage }) => {
       const startTime = performance.now();
       const targetItem = initialItems[0];
 
@@ -168,7 +169,7 @@ test.describe("Name Filter Functionality", () => {
   });
 
   test.describe("Negative Testing", () => {
-    test("should handle empty filter input gracefully", async () => {
+    test("should handle empty filter input gracefully", async ({ poePage }) => {
       await poePage.setNameFilter("");
       await poePage.waitForFilterDebounce();
 
@@ -179,7 +180,7 @@ test.describe("Name Filter Functionality", () => {
       await poePage.verifyItemsDisplayed(initialItems.map((i) => i.name));
     });
 
-    test("should handle whitespace-only filter", async () => {
+    test("should handle whitespace-only filter", async ({ poePage }) => {
       await poePage.setNameFilter("   ");
       await poePage.waitForFilterDebounce();
 
@@ -188,7 +189,9 @@ test.describe("Name Filter Functionality", () => {
       await poePage.verifyItemsDisplayed(initialItems.map((i) => i.name));
     });
 
-    test("should handle non-matching filter gracefully", async () => {
+    test("should handle non-matching filter gracefully", async ({
+      poePage,
+    }) => {
       const nonExistentFilter = "ThisItemDefinitelyDoesNotExist12345";
 
       await poePage.setNameFilter(nonExistentFilter);
@@ -198,7 +201,7 @@ test.describe("Name Filter Functionality", () => {
       await poePage.verifyNoItemsDisplayed();
     });
 
-    test("should handle very long filter string", async () => {
+    test("should handle very long filter string", async ({ poePage }) => {
       const longFilter = "a".repeat(1000);
 
       await poePage.setNameFilter(longFilter);
@@ -208,7 +211,7 @@ test.describe("Name Filter Functionality", () => {
       await poePage.verifyNoItemsDisplayed();
     });
 
-    test("should handle special characters in filter", async () => {
+    test("should handle special characters in filter", async ({ poePage }) => {
       const specialCharFilter = "!@#$%^&*(){}[]|\\:;\"'<>?,./";
 
       await poePage.setNameFilter(specialCharFilter);
@@ -218,7 +221,7 @@ test.describe("Name Filter Functionality", () => {
       await poePage.verifyNoItemsDisplayed();
     });
 
-    test("should handle rapid input changes", async () => {
+    test("should handle rapid input changes", async ({ poePage }) => {
       const item = initialItems[0];
       const length = Math.min(5, item.name.length);
       const nameFragment = item.name.substring(0, length);
@@ -240,7 +243,9 @@ test.describe("Name Filter Functionality", () => {
       await poePage.verifyItemDisplayed(item.name);
     });
 
-    test("should handle filter with leading/trailing spaces", async () => {
+    test("should handle filter with leading/trailing spaces", async ({
+      poePage,
+    }) => {
       const targetItem = initialItems[0];
       const spacedFilter = `  ${targetItem.name}  `;
 
@@ -254,7 +259,7 @@ test.describe("Name Filter Functionality", () => {
 });
 
 test.describe("Price Filter Functionality", () => {
-  test("should open and close price filter popover", async () => {
+  test("should open and close price filter popover", async ({ poePage }) => {
     await poePage.openPriceFilter();
     await expect(poePage.priceFilterPopover).toBeVisible();
 
@@ -262,7 +267,9 @@ test.describe("Price Filter Functionality", () => {
     await expect(poePage.priceFilterPopover).not.toBeVisible();
   });
 
-  test("should close price filter popover with escape key", async () => {
+  test("should close price filter popover with escape key", async ({
+    poePage,
+  }) => {
     await poePage.openPriceFilter();
     await expect(poePage.priceFilterPopover).toBeVisible();
 
@@ -270,7 +277,9 @@ test.describe("Price Filter Functionality", () => {
     await expect(poePage.priceFilterPopover).not.toBeVisible();
   });
 
-  test("should close price filter popover with outside click", async () => {
+  test("should close price filter popover with outside click", async ({
+    poePage,
+  }) => {
     await poePage.openPriceFilter();
     await expect(poePage.priceFilterPopover).toBeVisible();
 
@@ -280,19 +289,19 @@ test.describe("Price Filter Functionality", () => {
     await expect(poePage.priceFilterPopover).not.toBeVisible();
   });
 
-  test("should set lower bound price filter value", async () => {
+  test("should set lower bound price filter value", async ({ poePage }) => {
     await poePage.verifyFilterChipVisible("price", false);
     await poePage.setPriceFilterValuePercent("lower", 50);
     await poePage.verifyFilterChipVisible("price", true);
   });
 
-  test("should set upper bound price filter value", async () => {
+  test("should set upper bound price filter value", async ({ poePage }) => {
     await poePage.verifyFilterChipVisible("price", false);
     await poePage.setPriceFilterValuePercent("upper", 50);
     await poePage.verifyFilterChipVisible("price", true);
   });
 
-  test("should set both bounds price filter value", async () => {
+  test("should set both bounds price filter value", async ({ poePage }) => {
     await poePage.verifyFilterChipVisible("price", false);
     await poePage.setPriceFilterValuePercent("lower", 50);
     await poePage.verifyFilterChipVisible("price", true);
@@ -308,7 +317,9 @@ test.describe("Price Filter Functionality", () => {
     expect(rangeBoth.max).not.toBe(range.max);
   });
 
-  test("should reset price filter to default with reset button", async () => {
+  test("should reset price filter to default with reset button", async ({
+    poePage,
+  }) => {
     await poePage.setPriceFilterValuePercent("lower", 50);
     await poePage.verifyFilterChipVisible("price", true);
 
@@ -316,7 +327,9 @@ test.describe("Price Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("price", false);
   });
 
-  test("should maintain price filter during name filter changes", async () => {
+  test("should maintain price filter during name filter changes", async ({
+    poePage,
+  }) => {
     // Set price filter first
     await poePage.setPriceFilterValuePercent("lower", 50);
     await poePage.verifyFilterChipVisible("price", true);
@@ -332,11 +345,13 @@ test.describe("Price Filter Functionality", () => {
 });
 
 test.describe("Column Sorting Functionality", () => {
-  test("should sort by Dust / Chaos column in descending order by default", async () => {
+  test("should sort by Dust / Chaos column in descending order by default", async ({
+    poePage,
+  }) => {
     await poePage.verifyColumnSorted("Dust / Chaos", "desc");
   });
 
-  test("should sort columns in ascending and order", async () => {
+  test("should sort columns in ascending and order", async ({ poePage }) => {
     test.slow();
     for (const column of poePage.numericalDataColumnHeaders) {
       await poePage.sortByColumn(column, "asc");
@@ -352,7 +367,7 @@ test.describe("Column Sorting Functionality", () => {
     await poePage.verifyColumnSorted("Name", "desc", "string");
   });
 
-  test("should cycle through sort states", async () => {
+  test("should cycle through sort states", async ({ poePage }) => {
     // Click on Price column (should start desc)
     await poePage.sortByColumn("Price");
     await poePage.verifyColumnSorted("Price", "desc");
