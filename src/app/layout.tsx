@@ -80,7 +80,7 @@ export default function RootLayout({
               <Toaster richColors />
               <CleanupOldLeagueMarks />
               <DataTableStateProvider>
-                <main className="grow">{children}</main>
+                <main className="flex min-h-0 flex-1 flex-col">{children}</main>
                 <Footer />
               </DataTableStateProvider>
             </ThemeProvider>

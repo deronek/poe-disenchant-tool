@@ -19,7 +19,7 @@ export default async function LeagueContentServer({
   const lastUpdated = new Date(lastUpdatedTimestamp);
 
   return (
-    <>
+    <div className="flex min-h-0 flex-1 flex-col">
       <div className="font-italic text-muted-foreground text-sm">
         <LastUpdatedClient
           timestamp={lastUpdated}
@@ -27,13 +27,13 @@ export default async function LeagueContentServer({
           revalidateDataAction={revalidateDataAction}
         />
       </div>
-      <section>
+      <section className="flex flex-1 flex-col justify-center">
         <SharedDataView
           items={items}
           league={league}
           lowStockThreshold={lowStockThreshold}
         />
       </section>
-    </>
+    </div>
   );
 }
