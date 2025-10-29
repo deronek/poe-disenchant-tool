@@ -39,7 +39,14 @@ jobs:
         run: pnpm install
 
       - name: Install Playwright Browsers
-        run: pnpm test:install
+        run: |
+          if [[ "${{ matrix.project }}" == "chromium" || "${{ matrix.project }}" == "Mobile Chrome" ]]; then
+            npx playwright install chromium --with-deps
+          elif [[ "${{ matrix.project }}" == "firefox" ]]; then
+            npx playwright install firefox --with-deps
+          elif [[ "${{ matrix.project }}" == "webkit" || "${{ matrix.project }}" == "Mobile Safari" ]]; then
+            npx playwright install webkit --with-deps
+          fi
 
       - name: Run Desktop Tests (incl. common)
         run: |
