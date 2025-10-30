@@ -789,11 +789,12 @@ export class PoEDisenchantPage {
   }
 
   get priceFilterLowerBoundSliderThumb() {
-    return this.priceFilterUpperBoundSliderTrack.getByRole("slider");
+    return this.priceFilterLowerBoundSliderTrack.getByRole("slider");
   }
 
   get priceFilterUpperBoundSliderThumb() {
     return this.priceFilterUpperBoundSliderTrack.getByRole("slider");
+  }
   }
 
   get priceFilterResetButton() {
