@@ -120,7 +120,9 @@ export class PoEDisenchantPage {
       .first()
       .getAttribute("data-full-value");
     const text = (await cell.innerText()).trim();
-    return parseFloat(attr ?? text);
+    const value = parseFloat(attr ?? text);
+    expect(value).not.toBeNaN();
+    return value;
   }
 
   getItemFieldFromHeaderName(item: TestItem, headerName: string) {
