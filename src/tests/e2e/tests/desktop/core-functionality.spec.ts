@@ -6,7 +6,7 @@ import {
   League,
   LEAGUE_SLUGS,
 } from "@/lib/leagues";
-import { test, expect } from "../../fixtures";
+import { expect, test } from "../../fixtures";
 
 test.describe("Page Metadata", () => {
   test("should display correct default page title", async ({ poePage }) => {

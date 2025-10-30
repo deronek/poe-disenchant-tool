@@ -1,5 +1,6 @@
-import { Badge } from "@/components/ui/badge";
 import { AlertCircle } from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
 
 interface LowStockInfoProps {
   name: string;

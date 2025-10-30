@@ -1,8 +1,9 @@
-import { Input } from "@/components/ui/input";
 import type { Item } from "@/lib/itemData";
-import { Table } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
+import { Table } from "@tanstack/react-table";
 import { useDebouncedCallback } from "use-debounce";
+
+import { Input } from "@/components/ui/input";
 import { XButton } from "./ui/x-button";
 
 export function NameFilter<TData extends Item>({

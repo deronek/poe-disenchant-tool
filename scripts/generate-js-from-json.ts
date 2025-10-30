@@ -4,6 +4,7 @@
 // Executed one time during schema conversion
 
 import { writeFileSync } from "fs";
+
 import data from "../src/lib/dust/poe-dust-original.json";
 
 // Process data to omit fields which are to be generated during processing

@@ -1,8 +1,8 @@
-import { getItems } from "@/lib/itemData";
-import { SharedDataView } from "@/components/shared-data-view";
-import LastUpdatedClient from "@/components/last-updated";
-import { League } from "@/lib/leagues";
 import { revalidateDataAction } from "@/app/actions/revalidate";
+import LastUpdatedClient from "@/components/last-updated";
+import { SharedDataView } from "@/components/shared-data-view";
+import { getItems } from "@/lib/itemData";
+import { League } from "@/lib/leagues";
 
 interface LeagueContentServerProps {
   league: League;

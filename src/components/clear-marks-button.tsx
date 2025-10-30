@@ -1,6 +1,7 @@
+import type { Table } from "@tanstack/react-table";
+
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { Table } from "@tanstack/react-table";
 
 type ClearMarksButtonProps<TData> = {
   table: Table<TData>;

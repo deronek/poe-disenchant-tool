@@ -1,7 +1,7 @@
 // Based on https://gist.github.com/lukemcdonald/021d5584c058dfd570d59586daaefe59
 
-import React from "react";
 import type { ZodType } from "zod";
+import React from "react";
 
 /**
  * localStorage works just like useState, except it backs up to (and restores from) localStorage.

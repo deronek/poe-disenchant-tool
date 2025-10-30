@@ -1,8 +1,9 @@
-import { MobileCard } from "./mobile-card";
-import { Table } from "@tanstack/react-table";
 import type { Item } from "@/lib/itemData";
+import { Table } from "@tanstack/react-table";
+
 import { League } from "@/lib/leagues";
 import { AdvancedSettings } from "./advanced-settings-panel";
+import { MobileCard } from "./mobile-card";
 
 interface MobileCardLayoutProps<TData extends Item> {
   table: Table<TData>;

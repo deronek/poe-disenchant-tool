@@ -1,5 +1,5 @@
-import { test, expect } from "../../fixtures";
 import { DEFAULT_LEAGUE, getLeagueApiName } from "@/lib/leagues";
+import { expect, test } from "../../fixtures";
 
 test.describe("Row Selection & Marking", () => {
   test("should allow selecting, deselecting, and visual feedback", async ({

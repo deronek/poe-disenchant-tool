@@ -1,6 +1,7 @@
+import type { MetadataRoute } from "next";
+
 import { BASE_URL } from "@/lib/constants";
 import { DEFAULT_LEAGUE, LEAGUE_SLUGS } from "@/lib/leagues";
-import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date().toISOString();

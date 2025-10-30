@@ -1,6 +1,7 @@
-import { getDustData } from "./dust";
+import type { Item, ItemData } from "./schema";
 import { calculateDustValue } from "./calculation";
-import { ItemDataSchema, ItemSchema, type Item, type ItemData } from "./schema";
+import { getDustData } from "./dust";
+import { ItemDataSchema, ItemSchema } from "./schema";
 
 export {
   getDustData,

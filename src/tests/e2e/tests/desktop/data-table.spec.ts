@@ -1,4 +1,4 @@
-import { test, expect } from "../../fixtures";
+import { expect, test } from "../../fixtures";
 
 test("should display correct column headers", async ({ poePage }) => {
   const headers = await poePage.getColumnHeaderNames();

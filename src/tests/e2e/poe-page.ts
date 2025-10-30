@@ -1,6 +1,7 @@
-import { getLeagueName, League } from "@/lib/leagues";
 import { expect, Locator, Page } from "@playwright/test";
+
 import type { TestItem, Theme, ThemeOption } from "./types";
+import { getLeagueName, League } from "@/lib/leagues";
 
 export class PoEDisenchantPage {
   readonly page: Page;

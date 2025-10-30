@@ -1,5 +1,5 @@
-import { test, expect } from "../../fixtures";
 import type { TestItem } from "../../types";
+import { expect, test } from "../../fixtures";
 
 let initialItems: TestItem[];
 

@@ -1,8 +1,9 @@
+import type { PriceFilterValue } from "@/lib/price-filter";
 import type { ColumnFiltersState } from "@tanstack/react-table";
 import * as React from "react";
 import { z } from "zod";
+
 import { useLocalStorage } from "@/lib/use-local-storage";
-import type { PriceFilterValue } from "@/lib/price-filter";
 import { COLUMN_IDS } from "./columns";
 
 const PersistedFiltersSchema = z.object({

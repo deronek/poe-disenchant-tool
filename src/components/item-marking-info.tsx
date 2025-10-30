@@ -1,5 +1,6 @@
-import { Badge } from "@/components/ui/badge";
 import { CheckCircle } from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
 
 interface ItemMarkingInfoProps {
   itemName?: string;

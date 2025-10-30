@@ -1,6 +1,6 @@
-import { JSDOM } from "jsdom";
-import { writeFileSync, mkdirSync } from "fs";
+import { mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
+import { JSDOM } from "jsdom";
 
 interface ItemDust {
   name: string;

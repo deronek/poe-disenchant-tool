@@ -1,3 +1,13 @@
+import type { Item } from "@/lib/itemData";
+import * as React from "react";
+import {
+  ColumnDef,
+  ColumnDefTemplate,
+  HeaderContext,
+} from "@tanstack/react-table";
+import { ExternalLink, Info, PackageMinus } from "lucide-react";
+
+import type { AdvancedSettings } from "./advanced-settings-panel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -6,23 +16,14 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import type { Item } from "@/lib/itemData";
+import { League } from "@/lib/leagues";
 import { createTradeLink } from "@/lib/tradeLink";
-import {
-  ColumnDef,
-  ColumnDefTemplate,
-  HeaderContext,
-} from "@tanstack/react-table";
-import { ExternalLink, Info, PackageMinus } from "lucide-react";
-import * as React from "react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
 import { DustInfo } from "./dust-info";
 import { Icon } from "./icon";
 import { ItemMarkingInfo } from "./item-marking-info";
 import { LowStockInfo } from "./low-stock-info";
-
-import type { AdvancedSettings } from "./advanced-settings-panel";
 
 const compactFormatter = new Intl.NumberFormat("en", {
   notation: "compact",
@@ -123,8 +124,6 @@ export const COLUMN_IDS = {
 } as const;
 
 export type ColumnId = (typeof COLUMN_IDS)[keyof typeof COLUMN_IDS];
-
-import { League } from "@/lib/leagues";
 
 export const createColumns = (
   advancedSettings: AdvancedSettings,

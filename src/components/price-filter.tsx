@@ -1,3 +1,8 @@
+import type { Item } from "@/lib/itemData";
+import type { Column } from "@tanstack/react-table";
+import { useCallback, useMemo, useState } from "react";
+import { ChevronDown, Filter } from "lucide-react";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -7,7 +12,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Slider } from "@/components/ui/slider";
-import type { Item } from "@/lib/itemData";
 import {
   createNormalizedFilterValue,
   getCurrentRange,
@@ -22,9 +26,6 @@ import {
   updateUpperBound,
 } from "@/lib/price-filter";
 import { cn } from "@/lib/utils";
-import type { Column } from "@tanstack/react-table";
-import { ChevronDown, Filter } from "lucide-react";
-import { useCallback, useMemo, useState } from "react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 
 export type { PriceFilterValue } from "@/lib/price-filter";

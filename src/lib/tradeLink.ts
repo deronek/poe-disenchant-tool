@@ -1,5 +1,5 @@
-import { League, LEAGUES } from "./leagues";
 import type { ListingTimeFilter } from "./listing-time-filter";
+import { League, LEAGUES } from "./leagues";
 
 export interface TradeLinkSettings {
   minItemLevel?: number;

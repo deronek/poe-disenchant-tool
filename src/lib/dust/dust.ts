@@ -1,5 +1,5 @@
-import raw from "./poe-dust.js";
 import type { Item } from "./schema";
+import raw from "./poe-dust.js";
 
 type DeepReadonly<T> = T extends readonly (infer R)[]
   ? ReadonlyArray<DeepReadonly<R>>

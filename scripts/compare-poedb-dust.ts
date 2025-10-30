@@ -1,6 +1,7 @@
-import poeDust from "../src/lib/dust/poe-dust-original";
 import fs from "fs";
 import path from "path";
+
+import poeDust from "../src/lib/dust/poe-dust-original";
 
 interface ItemDust {
   name: string;

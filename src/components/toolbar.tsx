@@ -1,12 +1,10 @@
-import {
-  AdvancedSettingsPanel,
-  type AdvancedSettings,
-} from "@/components/advanced-settings-panel";
-import { NameFilter } from "@/components/name-filter";
-import { PriceFilter } from "@/components/price-filter";
+import type { AdvancedSettings } from "@/components/advanced-settings-panel";
 import type { Item } from "@/lib/itemData";
 import { Table } from "@tanstack/react-table";
 
+import { AdvancedSettingsPanel } from "@/components/advanced-settings-panel";
+import { NameFilter } from "@/components/name-filter";
+import { PriceFilter } from "@/components/price-filter";
 import { ClearMarksButton } from "./clear-marks-button";
 import { COLUMN_IDS } from "./columns";
 import { MobileSortingControls } from "./mobile-sorting-controls";

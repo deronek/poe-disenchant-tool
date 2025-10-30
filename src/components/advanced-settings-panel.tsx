@@ -1,13 +1,28 @@
+import type { CheckedState } from "@/components/ui/checkbox";
+import type { ListingTimeFilter } from "@/lib/listing-time-filter";
+import * as React from "react";
+import equal from "fast-deep-equal";
+import {
+  ChevronDown,
+  Clock,
+  Settings,
+  Tally1,
+  Tally2,
+  Tally3,
+  Tally4,
+  Zap,
+} from "lucide-react";
+import { z } from "zod";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
-import { Slider } from "@/components/ui/slider";
-import { Checkbox, type CheckedState } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
 import {
   Select,
   SelectContent,
@@ -15,23 +30,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Settings,
-  ChevronDown,
-  Zap,
-  Tally1,
-  Tally2,
-  Tally3,
-  Tally4,
-  Clock,
-} from "lucide-react";
-import * as React from "react";
-import { Separator } from "./ui/separator";
-import { cn } from "@/lib/utils";
-import { z } from "zod";
+import { Slider } from "@/components/ui/slider";
 import { ListingTimeFilterSchema } from "@/lib/listing-time-filter";
-import type { ListingTimeFilter } from "@/lib/listing-time-filter";
-import equal from "fast-deep-equal";
+import { cn } from "@/lib/utils";
+import { Separator } from "./ui/separator";
 
 export const AdvancedSettingsSchema = z.object({
   minItemLevel: z.int().min(65).max(84).prefault(78),

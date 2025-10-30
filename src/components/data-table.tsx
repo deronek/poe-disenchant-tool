@@ -1,3 +1,5 @@
+import type { Item } from "@/lib/itemData";
+import * as React from "react";
 import {
   ColumnDef,
   flexRender,
@@ -8,6 +10,7 @@ import {
   RowData,
   useReactTable,
 } from "@tanstack/react-table";
+import { ChevronDown } from "lucide-react";
 
 import { type AdvancedSettings } from "@/components/advanced-settings-panel";
 import { MobileToolbar } from "@/components/mobile-toolbar";
@@ -20,9 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { Item } from "@/lib/itemData";
-import { ChevronDown } from "lucide-react";
-import * as React from "react";
+import { League } from "@/lib/leagues";
 import { DataTablePagination } from "./data-table-pagination";
 import { useDataTableState } from "./data-table-state-context";
 import { MobileCardLayout } from "./mobile-card-layout";
@@ -34,7 +35,6 @@ declare module "@tanstack/react-table" {
     className?: string;
   }
 }
-import { League } from "@/lib/leagues";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

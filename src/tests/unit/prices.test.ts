@@ -1,6 +1,8 @@
 // Import necessary Vitest functions and the function to test
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { dedupeCheapestVariants, type InternalItem } from "@/lib/prices/prices";
+import type { InternalItem } from "@/lib/prices/prices";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+import { dedupeCheapestVariants } from "@/lib/prices/prices";
 
 // Mock server-only module
 vi.mock("server-only", () => {

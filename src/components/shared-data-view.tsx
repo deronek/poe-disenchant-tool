@@ -1,14 +1,14 @@
 "use client";
 
-import { createColumns } from "@/components/columns";
-import { DataTable } from "@/components/data-table";
+import type { AdvancedSettings } from "@/components/advanced-settings-panel";
+import type { Item } from "@/lib/itemData";
 
 import {
-  type AdvancedSettings,
   AdvancedSettingsSchema,
   DEFAULT_ADVANCED_SETTINGS,
 } from "@/components/advanced-settings-panel";
-import type { Item } from "@/lib/itemData";
+import { createColumns } from "@/components/columns";
+import { DataTable } from "@/components/data-table";
 import { League } from "@/lib/leagues";
 import { useLocalStorage } from "@/lib/use-local-storage";
 

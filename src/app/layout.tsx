@@ -1,15 +1,17 @@
 import "./globals.css";
-import { CleanupOldLeagueMarks } from "@/components/cleanup-old-league-marks";
-import { DataTableStateProvider } from "@/components/data-table-state-context";
-import { Footer } from "@/components/footer";
-import { ErrorHandler } from "@/components/error-handler";
-import { ThemeProvider } from "@/components/theme-provider";
-import { TooltipProvider } from "@/components/ui/tooltip";
+
 import type { Metadata } from "next";
-import { Toaster } from "@/components/ui/sonner";
-import { BASE_URL, DESCRIPTION, TITLE } from "@/lib/constants";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+
+import { CleanupOldLeagueMarks } from "@/components/cleanup-old-league-marks";
+import { DataTableStateProvider } from "@/components/data-table-state-context";
+import { ErrorHandler } from "@/components/error-handler";
+import { Footer } from "@/components/footer";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { BASE_URL, DESCRIPTION, TITLE } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: {

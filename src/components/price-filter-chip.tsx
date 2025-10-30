@@ -1,7 +1,8 @@
-import { XButton } from "@/components/ui/x-button";
-import { Badge } from "@/components/ui/badge";
-import { ChaosOrbIcon } from "@/components/chaos-orb-icon";
 import type { PriceFilterValue } from "@/components/price-filter";
+
+import { ChaosOrbIcon } from "@/components/chaos-orb-icon";
+import { Badge } from "@/components/ui/badge";
+import { XButton } from "@/components/ui/x-button";
 
 interface PriceFilterChipProps {
   value?: PriceFilterValue;

@@ -1,7 +1,8 @@
 "use client";
 
-import { isValidLeague } from "@/lib/leagues";
 import { useEffect } from "react";
+
+import { isValidLeague } from "@/lib/leagues";
 
 /**
  * Cleanup component that removes localStorage keys for leagues that no longer exist.

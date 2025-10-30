@@ -1,13 +1,13 @@
 // Script to generate dust data for app logic - omit/generate fields
 // Executed manually when source dataset for dust data changes
 
-import { calculateDustValue, Item } from "@/lib/dust";
 import fs from "fs";
 import path from "path";
-import prettier from "prettier";
 import { fileURLToPath } from "url";
+import prettier from "prettier";
 import { z } from "zod";
 
+import { calculateDustValue, Item } from "@/lib/dust";
 import { ITEMS_TO_IGNORE } from "@/lib/itemData/ignore-list";
 import data from "../src/lib/dust/poe-dust-original.js";
 

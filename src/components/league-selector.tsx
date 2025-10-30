@@ -2,15 +2,16 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+
+import { Label } from "@/components/ui/label";
 import {
   Select,
-  SelectTrigger,
-  SelectValue,
   SelectContent,
   SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
-import { LEAGUES, LEAGUE_SLUGS, League } from "@/lib/leagues";
+import { League, LEAGUE_SLUGS, LEAGUES } from "@/lib/leagues";
 import Spinner from "./ui/spinner";
 
 interface LeagueSelectorProps {

@@ -1,6 +1,7 @@
-import { isValidLeague } from "@/lib/leagues";
-import { revalidateTag, revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
+
+import { isValidLeague } from "@/lib/leagues";
 
 function normalizeOrigin(origin: string) {
   return origin.replace(/\/$/, "");

@@ -1,8 +1,9 @@
-import type { Column } from "@tanstack/react-table";
 import type { Item } from "@/lib/itemData";
+import type { Column } from "@tanstack/react-table";
+
 import {
-  createLowerBoundSliderValue,
   createLowerBoundLinearValue,
+  createLowerBoundSliderValue,
 } from "./price-transforms";
 
 export type PriceFilterValue = {

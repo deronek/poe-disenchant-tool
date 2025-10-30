@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+
 //const injectWhyDidYouRender = require("./scripts/why-did-you-render");
 
 const nextConfig: NextConfig = {

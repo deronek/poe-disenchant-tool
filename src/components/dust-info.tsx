@@ -1,5 +1,6 @@
-import { Badge } from "@/components/ui/badge";
 import { Sparkles, TrendingDown } from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
 import { Separator } from "./ui/separator";
 
 export function DustInfo() {

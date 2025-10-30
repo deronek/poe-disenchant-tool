@@ -1,5 +1,5 @@
-import { XButton } from "@/components/ui/x-button";
 import { Badge } from "@/components/ui/badge";
+import { XButton } from "@/components/ui/x-button";
 
 interface NameFilterChipProps {
   value: string;

@@ -1,4 +1,5 @@
 import { test as base } from "@playwright/test";
+
 import { PoEDisenchantPage } from "./poe-page";
 
 export const test = base.extend<{ poePage: PoEDisenchantPage }>({

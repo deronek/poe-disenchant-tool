@@ -1,4 +1,10 @@
 import type { AdvancedSettings } from "@/components/advanced-settings-panel";
+import type { Item } from "@/lib/itemData";
+import type { League } from "@/lib/leagues";
+import * as React from "react";
+import { Row } from "@tanstack/react-table";
+import { ExternalLink, Info, PackageMinus } from "lucide-react";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -7,26 +13,20 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import type { Item } from "@/lib/itemData";
-import type { League } from "@/lib/leagues";
 import { createTradeLink } from "@/lib/tradeLink";
-import { Row } from "@tanstack/react-table";
-import { ExternalLink, Info, PackageMinus } from "lucide-react";
-import * as React from "react";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { COLUMN_IDS } from "./columns";
 import { DustIcon } from "./dust-icon";
+import { DustInfo } from "./dust-info";
+import { Icon } from "./icon";
+import { ItemMarkingInfo } from "./item-marking-info";
+import { LowStockInfo } from "./low-stock-info";
 
 // Compact number formatter for mobile cards
 const compactFormatter = new Intl.NumberFormat("en", {
   notation: "standard",
   maximumFractionDigits: 1,
 });
-
-import { DustInfo } from "./dust-info";
-import { Icon } from "./icon";
-import { ItemMarkingInfo } from "./item-marking-info";
-import { LowStockInfo } from "./low-stock-info";
 
 // Checkbox with memo
 const SelectionCheckbox = React.memo(function SelectionCheckbox({

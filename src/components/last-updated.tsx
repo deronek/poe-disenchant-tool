@@ -1,5 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { Clock, RefreshCw } from "lucide-react";
+import { toast } from "sonner";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,9 +22,6 @@ import {
   formatAbsoluteTime,
   formatRelativeTime,
 } from "@/lib/dateUtils";
-import { Clock, RefreshCw } from "lucide-react";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
 
 interface LastUpdatedProps {
   timestamp: Date;

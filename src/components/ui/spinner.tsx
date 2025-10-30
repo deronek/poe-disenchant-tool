@@ -1,5 +1,6 @@
-import { cn } from "@/lib/utils";
 import React, { CSSProperties } from "react";
+
+import { cn } from "@/lib/utils";
 
 type SpinnerProps = React.HTMLAttributes<HTMLDivElement> & {
   value?: number | null;
