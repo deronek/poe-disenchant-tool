@@ -70,7 +70,7 @@ test.describe("League Selector Functionality", () => {
     await poePage.verifyLeagueSelected(leagueToSelect);
   });
 
-  test("should persist league selection across page reloads", async ({
+  test("should persist default league selection across page reloads", async ({
     poePage,
     page,
   }) => {
@@ -79,6 +79,18 @@ test.describe("League Selector Functionality", () => {
     await page.reload();
     await poePage.waitForDataLoad();
     await poePage.verifyLeagueSelected(initialLeague);
+  });
+
+  test("should persist non-default league selection across page reloads", async ({
+    poePage,
+    page,
+  }) => {
+    const selectedLeague = "standard";
+    await poePage.selectLeague(selectedLeague);
+    await poePage.verifyLeagueSelected(selectedLeague);
+    await page.reload();
+    await poePage.waitForDataLoad();
+    await poePage.verifyLeagueSelected(selectedLeague);
   });
 
   test("should support keyboard open/close in league selector", async ({
