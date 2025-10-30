@@ -795,7 +795,6 @@ export class PoEDisenchantPage {
   get priceFilterUpperBoundSliderThumb() {
     return this.priceFilterUpperBoundSliderTrack.getByRole("slider");
   }
-  }
 
   get priceFilterResetButton() {
     return this.priceFilterPopover.getByRole("button", { name: "Reset" });
