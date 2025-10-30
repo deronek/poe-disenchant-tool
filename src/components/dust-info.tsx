@@ -89,7 +89,7 @@ export function DustInfo() {
             </div>
 
             <div className="col-start-3 row-start-2 lg:col-start-2 lg:row-start-2">
-              <Badge variant="destructive">ilvl 65</Badge>
+              <Badge variant="red">ilvl 65</Badge>
             </div>
 
             <div className="col-start-3 row-start-3 lg:col-start-3 lg:row-start-2">

@@ -18,10 +18,11 @@ const badgeVariants = cva(
         outline:
           "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
         amber:
-          "text-amber-600 bg-amber-50 dark:text-amber-400 dark:bg-amber-950 dark:border-amber-900 border-amber-200",
+          "text-amber-600 bg-amber-50 dark:text-amber-400 dark:bg-amber-950 dark:border-amber-900 border-amber-300",
         green:
-          "text-green-600 bg-green-50 dark:text-green-400 dark:bg-green-950 dark:border-green-900 border-green-200",
-        blue: "text-blue-600 bg-blue-50 dark:text-blue-400 dark:bg-blue-950 dark:border-blue-900 border-blue-200",
+          "text-green-600 bg-green-50 dark:text-green-400 dark:bg-green-950 dark:border-green-900 border-green-300",
+        blue: "text-blue-600 bg-blue-50 dark:text-blue-400 dark:bg-blue-950 dark:border-blue-900 border-blue-300",
+        red: "text-red-600 bg-red-50 dark:text-red-400 dark:bg-red-950 dark:border-red-900 border-red-300",
       },
     },
     defaultVariants: {

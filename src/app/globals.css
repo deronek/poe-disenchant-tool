@@ -60,7 +60,7 @@
   --accent: oklch(0.967 0.001 286.375); /* color-zinc-100 */
   --accent-foreground: oklch(0.21 0.006 285.885);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.92 0.004 286.32);
+  --border: oklch(0.92 0.004 286.32); /* color-zinc-200 */
   --input: oklch(0.92 0.004 286.32); /* color-zinc-200 */
   --ring: oklch(0.75 0.183 55.934);
   --chart-1: oklch(0.837 0.128 66.29);
