@@ -20,13 +20,11 @@ test.describe("Page Metadata", () => {
   });
 
   test("should display page header and description", async ({ poePage }) => {
-    const pageHeader = poePage.page.getByRole("heading", { name: TITLE });
-    const pageDescription = poePage.page.getByRole("heading", {
-      name: DESCRIPTION,
-    });
+    const pageTitle = poePage.page.getByTestId("page-title");
+    const pageDescription = poePage.page.getByTestId("page-description");
 
-    await expect(pageHeader).toBeVisible();
-    await expect(pageHeader).toHaveText(TITLE);
+    await expect(pageTitle).toBeVisible();
+    await expect(pageTitle).toHaveText(TITLE);
     await expect(pageDescription).toBeVisible();
     await expect(pageDescription).toHaveText(DESCRIPTION);
   });

@@ -19,8 +19,15 @@ export default async function LeaguePage({ params }: Props) {
     <div className="container mx-auto flex min-h-0 flex-1 flex-col p-4 pb-0 sm:pt-6 sm:pr-6 sm:pb-0 sm:pl-6 md:px-8">
       <header className="flex flex-col items-start justify-between gap-4 pb-3 sm:flex-row lg:pb-2">
         <div className="">
-          <h1 className="mb-2 text-2xl font-bold sm:mb-4">{TITLE}</h1>
-          <p className="text-lg">{DESCRIPTION}</p>
+          <h1
+            className="mb-2 text-2xl font-bold sm:mb-4"
+            data-testid="page-title"
+          >
+            {TITLE}
+          </h1>
+          <p className="text-lg" data-testid="page-description">
+            {DESCRIPTION}
+          </p>
         </div>
         <nav className="flex w-full justify-between gap-4 sm:ml-auto sm:w-auto">
           <LeagueSelector currentLeague={league} />
