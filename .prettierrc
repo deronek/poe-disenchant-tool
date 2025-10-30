@@ -1,4 +1,5 @@
 {
   "plugins": ["prettier-plugin-tailwindcss"],
-  "endOfLine": "auto"
+  "endOfLine": "auto",
+  "tailwindFunctions": ["tw", "clsx", "tw\\.[a-z-]+", "cn", "cva"]
 }
