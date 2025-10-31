@@ -10,6 +10,7 @@ import {
   Tally2,
   Tally3,
   Tally4,
+  Users,
   Zap,
 } from "lucide-react";
 import { z } from "zod";
@@ -32,6 +33,7 @@ import {
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { ListingTimeFilterSchema } from "@/lib/listing-time-filter";
+import { OnlineStatus, OnlineStatusSchema } from "@/lib/online-status";
 import { cn } from "@/lib/utils";
 import { Separator } from "./ui/separator";
 
@@ -39,6 +41,7 @@ export const AdvancedSettingsSchema = z.object({
   minItemLevel: z.int().min(65).max(84).prefault(78),
   includeCorrupted: z.boolean().prefault(true),
   listingTimeFilter: ListingTimeFilterSchema.prefault("3days"),
+  onlineStatus: OnlineStatusSchema.prefault("available"),
 });
 
 export type AdvancedSettings = z.infer<typeof AdvancedSettingsSchema>;
@@ -89,6 +92,13 @@ export function AdvancedSettingsPanel({
     onSettingsChange({
       ...settings,
       listingTimeFilter: value as ListingTimeFilter,
+    });
+  };
+
+  const handleOnlineStatusChange = (value: string) => {
+    onSettingsChange({
+      ...settings,
+      onlineStatus: value as OnlineStatus,
     });
   };
 
@@ -195,32 +205,62 @@ export function AdvancedSettingsPanel({
 
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                <Label htmlFor="listing-time-filter" className="text-sm">
-                  Listing Time
+                <Users className="h-4 w-4 text-green-600 dark:text-green-400" />
+                <Label htmlFor="online-status-filter" className="text-sm">
+                  Online Status
                 </Label>
               </div>
               <Select
-                value={settings.listingTimeFilter}
-                onValueChange={handleListingTimeFilterChange}
+                value={settings.onlineStatus}
+                onValueChange={handleOnlineStatusChange}
               >
-                <SelectTrigger id="listing-time-filter">
-                  <SelectValue placeholder="Select time filter" />
+                <SelectTrigger id="online-status-filter">
+                  <SelectValue placeholder="Select online status" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="any">Any time</SelectItem>
-                  <SelectItem value="1hour">Up to an hour ago</SelectItem>
-                  <SelectItem value="3hours">Up to 3 hours ago</SelectItem>
-                  <SelectItem value="12hours">Up to 12 hours ago</SelectItem>
-                  <SelectItem value="1day">Up to a day ago</SelectItem>
-                  <SelectItem value="3days">Up to 3 days ago</SelectItem>
-                  <SelectItem value="1week">Up to a week ago</SelectItem>
+                  <SelectItem value="available">
+                    Instant Buyout & In-Person
+                  </SelectItem>
+                  <SelectItem value="securable">Instant Buyout Only</SelectItem>
+                  <SelectItem value="online">In-Person Only</SelectItem>
+                  <SelectItem value="any">Any (Possibly Offline)</SelectItem>
                 </SelectContent>
               </Select>
               <p className="text-muted-foreground text-xs">
-                Filter trade listings by when they were posted.
+                Filter trade listings by seller online status.
               </p>
             </div>
+          </div>
+
+          <Separator />
+
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <Clock className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+              <Label htmlFor="listing-time-filter" className="text-sm">
+                Listing Time
+              </Label>
+            </div>
+            <Select
+              value={settings.listingTimeFilter}
+              onValueChange={handleListingTimeFilterChange}
+            >
+              <SelectTrigger id="listing-time-filter">
+                <SelectValue placeholder="Select time filter" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="any">Any time</SelectItem>
+                <SelectItem value="1hour">Up to an hour ago</SelectItem>
+                <SelectItem value="3hours">Up to 3 hours ago</SelectItem>
+                <SelectItem value="12hours">Up to 12 hours ago</SelectItem>
+                <SelectItem value="1day">Up to a day ago</SelectItem>
+                <SelectItem value="3days">Up to 3 days ago</SelectItem>
+                <SelectItem value="1week">Up to a week ago</SelectItem>
+              </SelectContent>
+            </Select>
+            <p className="text-muted-foreground text-xs">
+              Filter trade listings by when they were posted.
+            </p>
           </div>
 
           <div className="flex gap-2 pt-2">

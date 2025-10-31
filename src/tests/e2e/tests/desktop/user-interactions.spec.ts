@@ -102,7 +102,7 @@ test.describe("Trade Link Functionality", () => {
     const payload = JSON.parse(decodeURIComponent(tradeLink.split("q=")[1]));
 
     expect(payload.query.name).toBe(item.name);
-    expect(payload.query.status.option).toBe("online");
+    expect(payload.query.status.option).toBe("available");
     expect(payload.query.filters.trade_filters.filters.indexed.option).toBe(
       "3days",
     );
