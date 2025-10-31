@@ -73,38 +73,35 @@ const getMinimumItemLevelIcon: (iLvl: number) => React.ReactNode = (iLvl) => {
 const ListingTimeFilterSelector = React.memo<{
   value: ListingTimeFilter;
   onChange: (value: string) => void;
-}>(
-  function ListingTimeFilterSelector({ value, onChange }) {
-    return (
-      <div className="space-y-2">
-        <div className="flex items-center gap-2">
-          <Clock className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-          <Label htmlFor="listing-time-filter" className="text-sm">
-            Listing Time
-          </Label>
-        </div>
-        <Select value={value} onValueChange={onChange}>
-          <SelectTrigger id="listing-time-filter">
-            <SelectValue placeholder="Select time filter" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="any">Any time</SelectItem>
-            <SelectItem value="1hour">Up to an hour ago</SelectItem>
-            <SelectItem value="3hours">Up to 3 hours ago</SelectItem>
-            <SelectItem value="12hours">Up to 12 hours ago</SelectItem>
-            <SelectItem value="1day">Up to a day ago</SelectItem>
-            <SelectItem value="3days">Up to 3 days ago</SelectItem>
-            <SelectItem value="1week">Up to a week ago</SelectItem>
-          </SelectContent>
-        </Select>
-        <p className="text-muted-foreground text-xs">
-          Filter trade listings by when they were posted.
-        </p>
+}>(function ListingTimeFilterSelector({ value, onChange }) {
+  return (
+    <div className="space-y-2">
+      <div className="flex items-center gap-2">
+        <Clock className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+        <Label htmlFor="listing-time-filter" className="text-sm">
+          Listing Time
+        </Label>
       </div>
-    );
-  },
-  (prev, next) => prev.value === next.value && prev.onChange === next.onChange,
-);
+      <Select value={value} onValueChange={onChange}>
+        <SelectTrigger id="listing-time-filter">
+          <SelectValue placeholder="Select time filter" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="any">Any time</SelectItem>
+          <SelectItem value="1hour">Up to an hour ago</SelectItem>
+          <SelectItem value="3hours">Up to 3 hours ago</SelectItem>
+          <SelectItem value="12hours">Up to 12 hours ago</SelectItem>
+          <SelectItem value="1day">Up to a day ago</SelectItem>
+          <SelectItem value="3days">Up to 3 days ago</SelectItem>
+          <SelectItem value="1week">Up to a week ago</SelectItem>
+        </SelectContent>
+      </Select>
+      <p className="text-muted-foreground text-xs">
+        Filter trade listings by when they were posted.
+      </p>
+    </div>
+  );
+});
 
 export function AdvancedSettingsPanel({
   settings,
