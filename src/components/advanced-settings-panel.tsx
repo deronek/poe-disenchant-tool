@@ -175,13 +175,13 @@ export function AdvancedSettingsPanel({
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 {getMinimumItemLevelIcon(settings.minItemLevel)}
-                <Label htmlFor="min-item-level" className="text-sm">
+                <Label id="min-item-level" className="text-sm">
                   Minimum Item Level
                 </Label>
               </div>
               <div className="px-2">
                 <Slider
-                  id="min-item-level"
+                  aria-labelledby="min-item-level"
                   min={65}
                   max={84}
                   step={1}
