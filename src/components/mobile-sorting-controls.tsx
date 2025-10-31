@@ -125,7 +125,8 @@ export function MobileSortingControls<TData>({
   table,
   className,
 }: MobileSortingControlsProps<TData>) {
-  const sorting = table.getState().sorting;
+  "use memo";
+  const sorting = table.options.state?.sorting ?? [];
   const currentSort = sorting[0];
 
   // Get sort state for a column

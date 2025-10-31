@@ -15,7 +15,9 @@ type ToolbarProps<TData extends Item> = {
   table: Table<TData>;
   onClearMarks?: () => void;
   advancedSettings: AdvancedSettings;
-  onAdvancedSettingsChange: (settings: AdvancedSettings) => void;
+  onAdvancedSettingsChange: (
+    update: AdvancedSettings | ((prev: AdvancedSettings) => AdvancedSettings),
+  ) => void;
 };
 
 export function DataTableToolbar<TData extends Item>({

@@ -144,6 +144,7 @@ test.describe("Pagination Functionality", () => {
   }) => {
     // Get initial state
     const initialState = await poePage.getPaginationInfo();
+    const initialItems = await poePage.getTestItems(10);
 
     // Test "Go to next page" button
     const nextButton = poePage.nextPageButton;
@@ -151,12 +152,14 @@ test.describe("Pagination Functionality", () => {
     await poePage.page.waitForTimeout(300); // Wait for pagination update
 
     const nextState = await poePage.getPaginationInfo();
+    const nextItems = await poePage.getTestItems(10);
     expect(nextState.start).toBe(initialState.start + nextState.rowsPerPage);
     expect(nextState.end).toBe(initialState.end + nextState.rowsPerPage);
     expect(nextState.total).toBe(initialState.total);
     expect(nextState.currentPage).toBe(initialState.currentPage + 1);
     expect(nextState.totalPages).toBe(initialState.totalPages);
     expect(nextState.rowsPerPage).toBe(initialState.rowsPerPage);
+    expect(nextItems).not.toEqual(initialItems);
 
     // Test "Go to previous page" button
     const prevButton = poePage.prevPageButton;
@@ -164,12 +167,14 @@ test.describe("Pagination Functionality", () => {
     await poePage.page.waitForTimeout(300);
 
     const prevState = await poePage.getPaginationInfo();
+    const prevItems = await poePage.getTestItems(10);
     expect(prevState.start).toBe(initialState.start);
     expect(prevState.end).toBe(initialState.end);
     expect(prevState.total).toBe(initialState.total);
     expect(prevState.currentPage).toBe(initialState.currentPage);
     expect(prevState.totalPages).toBe(initialState.totalPages);
     expect(prevState.rowsPerPage).toBe(initialState.rowsPerPage);
+    expect(prevItems).toEqual(initialItems);
 
     // Test "Go to last page" button
     const lastButton = poePage.lastPageButton;
@@ -177,12 +182,14 @@ test.describe("Pagination Functionality", () => {
     await poePage.page.waitForTimeout(300);
 
     const lastState = await poePage.getPaginationInfo();
+    const lastItems = await poePage.getTestItems(10);
     expect(lastState.start).toBeGreaterThan(initialState.start);
     expect(lastState.end).toBeGreaterThan(initialState.end);
     expect(lastState.total).toBe(initialState.total);
     expect(lastState.currentPage).toBeGreaterThan(initialState.currentPage);
     expect(lastState.totalPages).toBe(initialState.totalPages);
     expect(lastState.rowsPerPage).toBe(initialState.rowsPerPage);
+    expect(lastItems).not.toEqual(initialItems);
 
     expect(lastState.end).toBe(lastState.total);
     expect(lastState.currentPage).toBe(lastState.totalPages);
@@ -193,11 +200,13 @@ test.describe("Pagination Functionality", () => {
     await poePage.page.waitForTimeout(300);
 
     const firstState = await poePage.getPaginationInfo();
+    const firstItems = await poePage.getTestItems(10);
     expect(firstState.start).toBe(1);
     expect(firstState.end).toBe(10);
     expect(firstState.total).toBe(initialState.total);
     expect(firstState.currentPage).toBe(1);
     expect(firstState.totalPages).toBe(initialState.totalPages);
+    expect(firstItems).toEqual(initialItems);
   });
 
   test("should update displayed items when rows-per-page changes", async ({

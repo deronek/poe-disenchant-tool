@@ -16,7 +16,9 @@ type MobileToolbarProps<TData extends Item> = {
   table: Table<TData>;
   onClearMarks?: () => void;
   advancedSettings: AdvancedSettings;
-  onAdvancedSettingsChange: (settings: AdvancedSettings) => void;
+  onAdvancedSettingsChange: (
+    update: AdvancedSettings | ((prev: AdvancedSettings) => AdvancedSettings),
+  ) => void;
 };
 
 export function MobileToolbar<TData extends Item>({

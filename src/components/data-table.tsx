@@ -40,7 +40,9 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   advancedSettings: AdvancedSettings;
-  onAdvancedSettingsChange: (settings: AdvancedSettings) => void;
+  onAdvancedSettingsChange: (
+    update: AdvancedSettings | ((prev: AdvancedSettings) => AdvancedSettings),
+  ) => void;
   league: League;
   lowStockThreshold: number;
 }

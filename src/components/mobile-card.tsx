@@ -5,6 +5,7 @@ import * as React from "react";
 import { Row } from "@tanstack/react-table";
 import { ExternalLink, Info, PackageMinus } from "lucide-react";
 
+import { advancedSettingsDeepEqual } from "@/components/advanced-settings-panel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -97,6 +98,222 @@ const DustInfoPopover = React.memo(function DustInfoPopover() {
   );
 });
 
+// Low stock badge with popover
+function LowStockBadge({
+  name,
+  listingCount,
+  lowStockThreshold,
+}: {
+  name: string;
+  listingCount: number;
+  lowStockThreshold: number;
+}) {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Badge variant="amber" asChild>
+          <Button
+            className="mb-1 inline-flex place-self-end"
+            size="sm"
+            aria-label={`Low stock details for ${name}`}
+          >
+            <PackageMinus className="mr-1" />
+            Low Stock
+          </Button>
+        </Badge>
+      </PopoverTrigger>
+
+      <PopoverContent className="max-w-[280px] text-sm">
+        <LowStockInfo
+          name={name}
+          listingCount={listingCount}
+          lowStockThreshold={lowStockThreshold}
+        />
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+// Header section with icon, name, variant, selection and info
+function HeaderSection({
+  name,
+  variant,
+  icon,
+  isSelected,
+  onSelect,
+}: {
+  name: string;
+  variant?: string;
+  icon: string;
+  isSelected: boolean;
+  onSelect: (v: boolean) => void;
+}) {
+  return (
+    <div className="flex items-start justify-between gap-3">
+      <div className="flex min-w-0 flex-1 items-center gap-3">
+        <Icon
+          src={icon}
+          size={56}
+          loading="lazy"
+          className="flex-shrink-0 rounded-sm"
+        />
+        <div className="min-w-0 flex-1">
+          <h3
+            className="truncate font-semibold tracking-[0.015em]"
+            title={name}
+          >
+            {name}
+          </h3>
+          {variant && (
+            <p
+              className="text-muted-foreground truncate text-sm"
+              title={variant}
+            >
+              {variant}
+            </p>
+          )}
+        </div>
+      </div>
+      <div className="flex items-center gap-3 pt-1.5">
+        <SelectionCheckbox
+          checked={isSelected}
+          onChange={onSelect}
+          label={`Mark ${name} as completed`}
+        />
+        <MarkInfoPopover name={name}></MarkInfoPopover>
+      </div>
+    </div>
+  );
+}
+
+// Price and dust value display
+function PriceAndDustSection({
+  chaos,
+  calculatedDustValue,
+}: {
+  chaos: number;
+  calculatedDustValue: number;
+}) {
+  return (
+    <div className="grid grid-cols-2 gap-3">
+      <div className="space-y-2">
+        <div className="flex items-center gap-1 text-sm">
+          <p className="text-muted-foreground">Price</p>
+        </div>
+        <div className="flex items-center gap-1 text-sm font-semibold">
+          <span>{compactFormatter.format(chaos)}</span>
+          <ChaosOrbIcon className="h-4 w-4" />
+        </div>
+      </div>
+      <div className="flex items-center justify-between">
+        <div className="space-y-2">
+          <p className="text-muted-foreground text-sm">Dust Value</p>
+          <div className="flex items-center gap-1 text-sm font-semibold">
+            <span>{compactFormatter.format(calculatedDustValue)}</span>
+            <DustIcon className="h-4 w-4" />
+          </div>
+        </div>
+        <DustInfoPopover />
+      </div>
+    </div>
+  );
+}
+
+// Primary metric section (dust per chaos) with optional low stock badge
+function DustPerChaosSection({
+  name,
+  dustPerChaos,
+  listingCount,
+  lowStockThreshold,
+}: {
+  name: string;
+  dustPerChaos: number;
+  listingCount: number;
+  lowStockThreshold: number;
+}) {
+  return (
+    <div className="flex justify-between">
+      <div className="min-w-0 flex-1 space-y-2">
+        <p className="text-muted-foreground text-sm">Dust per Chaos</p>
+
+        <div className="text-primary flex items-center gap-1 text-lg font-bold">
+          <span className="truncate">
+            {compactFormatter.format(dustPerChaos)}
+          </span>
+          <DustIcon className="h-5 w-5" />
+          <span className="text-muted-foreground">/</span>
+          <ChaosOrbIcon className="h-5 w-5" />
+        </div>
+      </div>
+
+      {listingCount < lowStockThreshold && (
+        <LowStockBadge
+          name={name}
+          listingCount={listingCount}
+          lowStockThreshold={lowStockThreshold}
+        />
+      )}
+    </div>
+  );
+}
+
+// Secondary metric section (dust per chaos per slot)
+function DustPerChaosPerSlotSection({
+  dustPerChaosPerSlot,
+  slots,
+}: {
+  dustPerChaosPerSlot: number;
+  slots: number;
+}) {
+  return (
+    <div className="space-y-2">
+      <p className="text-muted-foreground text-sm">Dust per Chaos per Slot</p>
+      <div className="flex items-center gap-1 text-sm">
+        <span className="font-semibold">
+          {compactFormatter.format(dustPerChaosPerSlot)}
+        </span>
+        <DustIcon className="h-4 w-4" />
+        <span className="text-muted-foreground">/</span>
+        <ChaosOrbIcon className="h-4 w-4" />
+        <span className="text-muted-foreground">/</span>
+        <span className="text-xs">
+          {slots} slot{slots !== 1 ? "s" : ""}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+// Trade button section
+function TradeButtonSection({
+  name,
+  tradeLink,
+}: {
+  name: string;
+  tradeLink: string;
+}) {
+  return (
+    <div className="pt-3">
+      <Button
+        asChild
+        variant="default"
+        className="bg-primary/10 hover:bg-primary/20 text-foreground border-input w-full justify-center gap-2 border border-solid"
+      >
+        <a
+          href={tradeLink}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`Open trade search for ${name} in new tab`}
+          className="inline-flex items-center gap-2"
+        >
+          <ExternalLink className="size-4" />
+          Trade Search
+        </a>
+      </Button>
+    </div>
+  );
+}
+
 interface MobileCardProps<TData extends Item> {
   row: Row<TData>;
   isSelected: boolean;
@@ -112,6 +329,7 @@ function MobileCardComponent<TData extends Item>({
   league,
   lowStockThreshold,
 }: MobileCardProps<TData>) {
+  "use memo";
   const name = row.getValue<string>(COLUMN_IDS.NAME);
   const variant = row.original.variant;
   const icon = row.getValue<string>(COLUMN_IDS.ICON);
@@ -135,142 +353,32 @@ function MobileCardComponent<TData extends Item>({
         isSelected ? "bg-muted/60 border-primary/30 opacity-95" : "bg-card"
       } transition-all`}
     >
-      {/* Header with selection and name */}
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex min-w-0 flex-1 items-center gap-3">
-          <Icon
-            src={icon}
-            size={56}
-            loading="lazy"
-            className="flex-shrink-0 rounded-sm"
-          />
-          <div className="min-w-0 flex-1">
-            <h3
-              className="truncate font-semibold tracking-[0.015em]"
-              title={name}
-            >
-              {name}
-            </h3>
-            {variant && (
-              <p
-                className="text-muted-foreground truncate text-sm"
-                title={variant}
-              >
-                {variant}
-              </p>
-            )}
-          </div>
-        </div>
-        <div className="flex items-center gap-3 pt-1.5">
-          <SelectionCheckbox
-            checked={isSelected}
-            onChange={handleSelect}
-            label={`Mark ${name} as completed`}
-          />
-          <MarkInfoPopover name={name}></MarkInfoPopover>
-        </div>
-      </div>
+      <HeaderSection
+        name={name}
+        variant={variant}
+        icon={icon}
+        isSelected={isSelected}
+        onSelect={handleSelect}
+      />
 
-      {/* Price and Dust Value */}
-      <div className="grid grid-cols-2 gap-3">
-        <div className="space-y-2">
-          <div className="flex items-center gap-1 text-sm">
-            <p className="text-muted-foreground">Price</p>
-          </div>
-          <div className="flex items-center gap-1 text-sm font-semibold">
-            <span>{compactFormatter.format(chaos)}</span>
-            <ChaosOrbIcon className="h-4 w-4" />
-          </div>
-        </div>
-        <div className="flex items-center justify-between">
-          <div className="space-y-2">
-            <p className="text-muted-foreground text-sm">Dust Value</p>
-            <div className="flex items-center gap-1 text-sm font-semibold">
-              <span>{compactFormatter.format(calculatedDustValue)}</span>
-              <DustIcon className="h-4 w-4" />
-            </div>
-          </div>
-          <DustInfoPopover />
-        </div>
-      </div>
+      <PriceAndDustSection
+        chaos={chaos}
+        calculatedDustValue={calculatedDustValue}
+      />
 
-      {/* Dust per Chaos (Primary metric) with low stock badge */}
-      <div className="flex justify-between">
-        <div className="min-w-0 flex-1 space-y-2">
-          <p className="text-muted-foreground text-sm">Dust per Chaos</p>
+      <DustPerChaosSection
+        name={name}
+        dustPerChaos={dustPerChaos}
+        listingCount={row.original.listingCount}
+        lowStockThreshold={lowStockThreshold}
+      />
 
-          <div className="text-primary flex items-center gap-1 text-lg font-bold">
-            <span className="truncate">
-              {compactFormatter.format(dustPerChaos)}
-            </span>
-            <DustIcon className="h-5 w-5" />
-            <span className="text-muted-foreground">/</span>
-            <ChaosOrbIcon className="h-5 w-5" />
-          </div>
-        </div>
+      <DustPerChaosPerSlotSection
+        dustPerChaosPerSlot={dustPerChaosPerSlot}
+        slots={slots}
+      />
 
-        {row.original.listingCount < lowStockThreshold && (
-          <Popover>
-            <PopoverTrigger asChild>
-              <Badge variant="amber" asChild>
-                <Button
-                  className="mb-1 inline-flex place-self-end"
-                  size="sm"
-                  aria-label={`Low stock details for ${name}`}
-                >
-                  <PackageMinus className="mr-1" />
-                  Low Stock
-                </Button>
-              </Badge>
-            </PopoverTrigger>
-
-            <PopoverContent className="max-w-[280px] text-sm">
-              <LowStockInfo
-                name={name}
-                listingCount={row.original.listingCount}
-                lowStockThreshold={lowStockThreshold}
-              />
-            </PopoverContent>
-          </Popover>
-        )}
-      </div>
-
-      {/* Dust per Chaos per Slot */}
-      <div className="space-y-2">
-        <p className="text-muted-foreground text-sm">Dust per Chaos per Slot</p>
-        <div className="flex items-center gap-1 text-sm">
-          <span className="font-semibold">
-            {compactFormatter.format(dustPerChaosPerSlot)}
-          </span>
-          <DustIcon className="h-4 w-4" />
-          <span className="text-muted-foreground">/</span>
-          <ChaosOrbIcon className="h-4 w-4" />
-          <span className="text-muted-foreground">/</span>
-          <span className="text-xs">
-            {slots} slot{slots !== 1 ? "s" : ""}
-          </span>
-        </div>
-      </div>
-
-      {/* Trade Link */}
-      <div className="pt-3">
-        <Button
-          asChild
-          variant="default"
-          className="bg-primary/10 hover:bg-primary/20 text-foreground border-input w-full justify-center gap-2 border border-solid"
-        >
-          <a
-            href={tradeLink}
-            target="_blank"
-            rel="noreferrer"
-            aria-label={`Open trade search for ${name} in new tab`}
-            className="inline-flex items-center gap-2"
-          >
-            <ExternalLink className="size-4" />
-            Trade Search
-          </a>
-        </Button>
-      </div>
+      <TradeButtonSection name={name} tradeLink={tradeLink} />
     </div>
   );
 }
@@ -283,8 +391,10 @@ export const MobileCard = React.memo(
       prevProps.isSelected === nextProps.isSelected &&
       prevProps.league === nextProps.league &&
       prevProps.lowStockThreshold === nextProps.lowStockThreshold &&
-      JSON.stringify(prevProps.advancedSettings) ===
-        JSON.stringify(nextProps.advancedSettings)
+      advancedSettingsDeepEqual(
+        prevProps.advancedSettings,
+        nextProps.advancedSettings,
+      )
     );
   },
 ) as typeof MobileCardComponent;
