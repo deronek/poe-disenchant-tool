@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import { Icon } from "./icon";
 
 type Props = {
@@ -9,7 +11,11 @@ type Props = {
 const DUST_URL =
   "https://web.poecdn.com/image/Art/2DItems/Currency/Settlers/DisenchantedMagicDust.png";
 
-function DustIcon({ className, size = 18, alt = "Thaumaturgic Dust" }: Props) {
+const DustIconComponent = ({
+  className,
+  size = 18,
+  alt = "Thaumaturgic Dust",
+}: Props) => {
   return (
     <Icon
       src={DUST_URL}
@@ -19,6 +25,8 @@ function DustIcon({ className, size = 18, alt = "Thaumaturgic Dust" }: Props) {
       className={className}
     />
   );
-}
+};
+
+const DustIcon = memo(DustIconComponent);
 
 export { DustIcon };

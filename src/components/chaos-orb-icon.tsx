@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import { Icon } from "./icon";
 
 type Props = {
@@ -9,7 +11,11 @@ type Props = {
 const CHAOS_ORB_URL =
   "https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyRerollRare.png";
 
-function ChaosOrbIcon({ className, size = 18, alt = "Chaos Orb" }: Props) {
+const ChaosOrbIconComponent = ({
+  className,
+  size = 18,
+  alt = "Chaos Orb",
+}: Props) => {
   return (
     <Icon
       src={CHAOS_ORB_URL}
@@ -19,6 +25,8 @@ function ChaosOrbIcon({ className, size = 18, alt = "Chaos Orb" }: Props) {
       className={className}
     />
   );
-}
+};
+
+const ChaosOrbIcon = memo(ChaosOrbIconComponent);
 
 export { ChaosOrbIcon };
