@@ -185,7 +185,6 @@ export function AdvancedSettingsPanel({
                   value={[settings.minItemLevel]}
                   onValueChange={handleMinItemLevelChange}
                   className="w-full py-1"
-                  aria-label="Minimum item level"
                 />
               </div>
               <div className="text-muted-foreground flex justify-between text-xs">
