@@ -158,6 +158,14 @@ const CompactNumberTooltip = React.memo(function CompactNumberTooltip({
   );
 });
 
+const ItemIcon = React.memo(function ItemIcon({ src }: { src: string }) {
+  return (
+    <div className="flex items-center justify-center">
+      <Icon src={src} size={36} loading="lazy" className="rounded-sm" />
+    </div>
+  );
+});
+
 export function renderCompactNumber(value: number) {
   const parts = compactFormatter.formatToParts(value);
 
@@ -204,11 +212,7 @@ export const createColumns = (
       enableHiding: false,
       cell: ({ row }) => {
         const icon = row.getValue(COLUMN_IDS.ICON) as string;
-        return (
-          <div className="flex items-center justify-center">
-            <Icon src={icon} size={36} loading="lazy" className="rounded-sm" />
-          </div>
-        );
+        return <ItemIcon src={icon} />;
       },
     },
     {
