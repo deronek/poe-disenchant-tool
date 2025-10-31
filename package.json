@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "scan": "next dev --turbopack && pnpx react-scan@latest localhost:3000",
+    "scan": "pnpx react-scan@latest localhost:3000",
     "prebuild": "tsx scripts/validate-dust-data.ts",
     "build": "next build --turbopack",
     "start": "next start",
