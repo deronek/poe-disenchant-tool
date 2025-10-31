@@ -42,6 +42,8 @@ const DustValueHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
         </div>
       );
     },
+    // Force memoization as we don't use header context,
+    // and tooltip context is static
     () => true,
   );
 
@@ -122,6 +124,8 @@ const MarkHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> = React.memo(
       </div>
     );
   },
+  // Force memoization as we don't use header context,
+  // and tooltip context is static
   () => true,
 );
 
