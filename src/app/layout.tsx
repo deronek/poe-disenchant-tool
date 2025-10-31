@@ -62,6 +62,25 @@ export const metadata: Metadata = {
   category: "game utility",
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: TITLE,
+  url: BASE_URL,
+  description: DESCRIPTION,
+  applicationCategory: "GameUtility",
+  operatingSystem: "All",
+  offers: {
+    "@type": "Offer",
+    price: 0,
+  },
+  author: {
+    "@type": "Person",
+    name: "deronek",
+    url: "https://github.com/deronek",
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -69,6 +88,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
+      </head>
       <body className="antialiased">
         <div className="flex min-h-screen flex-col">
           <TooltipProvider>
