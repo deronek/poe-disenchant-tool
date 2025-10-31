@@ -45,19 +45,19 @@ const DustValueHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
     () => true,
   );
 
-const ChaosCell: ColumnDef<Item>["cell"] = React.memo(
-  function ChaosCellComponent({ row }) {
-    const value = row.getValue(COLUMN_IDS.CHAOS) as number;
-    return (
-      <span className="inline-flex w-full justify-end gap-1">
-        <CompactNumberTooltip value={value} />
-        <ChaosOrbIcon />
-      </span>
-    );
-  },
-);
+const ChaosCell: ColumnDef<Item>["cell"] = function ChaosCellComponent({
+  row,
+}) {
+  const value = row.getValue(COLUMN_IDS.CHAOS) as number;
+  return (
+    <span className="inline-flex w-full justify-end gap-1">
+      <CompactNumberTooltip value={value} />
+      <ChaosOrbIcon />
+    </span>
+  );
+};
 
-const CalculatedDustValueCell: ColumnDef<Item>["cell"] = React.memo(
+const CalculatedDustValueCell: ColumnDef<Item>["cell"] =
   function CalculatedDustValueCellComponent({ row }) {
     const value = row.getValue(COLUMN_IDS.CALCULATED_DUST_VALUE) as number;
     return (
@@ -68,10 +68,9 @@ const CalculatedDustValueCell: ColumnDef<Item>["cell"] = React.memo(
         </span>
       </span>
     );
-  },
-);
+  };
 
-const DustPerChaosCell: ColumnDef<Item>["cell"] = React.memo(
+const DustPerChaosCell: ColumnDef<Item>["cell"] =
   function DustPerChaosCellComponent({ row }) {
     const value = row.getValue(COLUMN_IDS.DUST_PER_CHAOS) as number;
     return (
@@ -84,10 +83,9 @@ const DustPerChaosCell: ColumnDef<Item>["cell"] = React.memo(
         </span>
       </span>
     );
-  },
-);
+  };
 
-const DustPerChaosPerSlotCell: ColumnDef<Item>["cell"] = React.memo(
+const DustPerChaosPerSlotCell: ColumnDef<Item>["cell"] =
   function DustPerChaosPerSlotCellComponent({ row }) {
     const value = row.getValue(COLUMN_IDS.DUST_PER_CHAOS_PER_SLOT) as number;
     const slots = row.original.slots;
@@ -106,8 +104,7 @@ const DustPerChaosPerSlotCell: ColumnDef<Item>["cell"] = React.memo(
         </span>
       </span>
     );
-  },
-);
+  };
 
 const MarkHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> = React.memo(
   function MarkHeaderComponent() {
