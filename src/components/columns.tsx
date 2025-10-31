@@ -146,8 +146,8 @@ const CompactNumberTooltip = React.memo(function CompactNumberTooltip({
 }: {
   value: number;
 }) {
-  const compact = React.useMemo(() => renderCompactNumber(value), [value]);
-  const full = React.useMemo(() => standardFormatter.format(value), [value]);
+  const compact = renderCompactNumber(value);
+  const full = standardFormatter.format(value);
 
   return (
     <Tooltip>
