@@ -2,6 +2,7 @@
 
 import type { AdvancedSettings } from "@/components/advanced-settings-panel";
 import type { Item } from "@/lib/itemData";
+import * as React from "react";
 
 import {
   AdvancedSettingsSchema,
@@ -34,7 +35,10 @@ export function SharedDataView({
     );
 
   // Generate columns with current settings and league
-  const columns = createColumns(advancedSettings, lowStockThreshold, league);
+  const columns = React.useMemo(
+    () => createColumns(advancedSettings, lowStockThreshold, league),
+    [advancedSettings, lowStockThreshold, league],
+  );
 
   return (
     <DataTable
