@@ -30,10 +30,7 @@ export const formatRelativeTime = (
 };
 
 export const formatAbsoluteTime = (timestamp: Date) => {
-  const clientLocale = navigator.language || "en-US";
-  const localeForFormatting = clientLocale.startsWith("en")
-    ? clientLocale
-    : `en-${clientLocale.split("-")[1] || "US"}`;
+  const localeForFormatting = navigator.language;
 
   return new Intl.DateTimeFormat(localeForFormatting, {
     year: "numeric",
@@ -42,7 +39,6 @@ export const formatAbsoluteTime = (timestamp: Date) => {
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
-    hour12: false,
     timeZoneName: "short",
   }).format(timestamp);
 };
