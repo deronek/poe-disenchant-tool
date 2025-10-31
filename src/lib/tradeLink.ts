@@ -17,7 +17,7 @@ export const createTradeLink = (
   const payload = {
     query: {
       status: {
-        option: settings?.onlineStatus || "online",
+        option: settings?.onlineStatus || "available",
       },
       name: name,
       stats: [
