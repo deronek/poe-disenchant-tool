@@ -10,7 +10,7 @@ export function ItemMarkingInfo({ itemName }: ItemMarkingInfoProps) {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-2">
-        <CheckCircle className="h-4 w-4 text-green-500 dark:text-green-400" />
+        <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
         <h4 className="text-sm font-semibold">Item Marking</h4>
       </div>
       <div className="flex flex-col gap-2">

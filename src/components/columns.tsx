@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/tooltip";
 import { League } from "@/lib/leagues";
 import { createTradeLink } from "@/lib/tradeLink";
+import { CatalystIcon } from "./catalyst-icon";
+import { CatalystInfo } from "./catalyst-info";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
 import { DustInfo } from "./dust-info";
@@ -62,13 +64,36 @@ const ChaosCell: ColumnDef<Item>["cell"] = function ChaosCellComponent({
 const CalculatedDustValueCell: ColumnDef<Item>["cell"] =
   function CalculatedDustValueCellComponent({ row }) {
     const value = row.getValue(COLUMN_IDS.CALCULATED_DUST_VALUE) as number;
+    const shouldCatalyst = row.original.shouldCatalyst;
+    if (shouldCatalyst) {
+      return (
+        <Tooltip>
+          <TooltipTrigger asChild className="ml-auto">
+            <div
+              className={
+                "flex w-full justify-between bg-radial from-purple-400/30 to-transparent to-80%"
+              }
+            >
+              <CatalystIcon size={24} />
+              <span className="ml-auto inline-flex items-center gap-1">
+                <CompactNumberTooltip value={value} />
+                <DustIcon />
+              </span>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent className="max-w-[290px]" variant="popover">
+            <CatalystInfo />
+          </TooltipContent>
+        </Tooltip>
+      );
+    }
     return (
-      <span className="block w-full">
-        <span className="float-right inline-flex items-center gap-1">
+      <div className={"flex w-full justify-between"}>
+        <span className="ml-auto inline-flex items-center gap-1">
           <CompactNumberTooltip value={value} />
           <DustIcon />
         </span>
-      </span>
+      </div>
     );
   };
 
