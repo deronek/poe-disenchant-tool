@@ -1,10 +1,12 @@
 import type { ListingTimeFilter } from "./listing-time-filter";
+import type { OnlineStatus } from "./online-status";
 import { League, LEAGUES } from "./leagues";
 
 export interface TradeLinkSettings {
   minItemLevel?: number;
   includeCorrupted?: boolean;
   listingTimeFilter?: ListingTimeFilter;
+  onlineStatus?: OnlineStatus;
 }
 
 export const createTradeLink = (
@@ -15,7 +17,7 @@ export const createTradeLink = (
   const payload = {
     query: {
       status: {
-        option: "online",
+        option: settings?.onlineStatus || "available",
       },
       name: name,
       stats: [

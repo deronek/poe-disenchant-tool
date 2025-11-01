@@ -1,3 +1,5 @@
+import { TITLE } from "@/lib/constants";
+
 export function Footer() {
   return (
     <footer className="bg-background-200 border-t">
@@ -40,8 +42,7 @@ export function Footer() {
           {/* Disclaimer Section */}
           <div className="text-center md:text-right">
             <p className="text-muted-foreground text-xs">
-              PoE Unique Disenchanting Tool is not affiliated with or endorsed
-              by Grinding Gear Games.
+              {TITLE} is not affiliated with or endorsed by Grinding Gear Games.
             </p>
           </div>
         </div>

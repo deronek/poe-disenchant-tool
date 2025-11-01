@@ -11,6 +11,7 @@ import {
   Tally2,
   Tally3,
   Tally4,
+  Users,
   Zap,
 } from "lucide-react";
 import { z } from "zod";
@@ -33,6 +34,7 @@ import {
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { ListingTimeFilterSchema } from "@/lib/listing-time-filter";
+import { OnlineStatus, OnlineStatusSchema } from "@/lib/online-status";
 import { cn } from "@/lib/utils";
 import { Separator } from "./ui/separator";
 
@@ -40,6 +42,7 @@ export const AdvancedSettingsSchema = z.object({
   minItemLevel: z.int().min(65).max(84).prefault(78),
   includeCorrupted: z.boolean().prefault(true),
   listingTimeFilter: ListingTimeFilterSchema.prefault("3days"),
+  onlineStatus: OnlineStatusSchema.prefault("available"),
 });
 
 export const advancedSettingsDeepEqual = zx.deepEqual(AdvancedSettingsSchema);
@@ -141,6 +144,13 @@ export function AdvancedSettingsPanel({
     [onSettingsChange],
   );
 
+  const handleOnlineStatusChange = (value: string) => {
+    onSettingsChange({
+      ...settings,
+      onlineStatus: value as OnlineStatus,
+    });
+  };
+
   const dustValueLoss =
     (84 - Math.min(Math.max(settings.minItemLevel, 65), 84)) * 5;
 
@@ -241,11 +251,41 @@ export function AdvancedSettingsPanel({
 
             <Separator />
 
-            <ListingTimeFilterSelector
-              value={settings.listingTimeFilter}
-              onChange={handleListingTimeFilterChange}
-            />
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <Users className="h-4 w-4 text-green-600 dark:text-green-400" />
+                <Label htmlFor="online-status-filter" className="text-sm">
+                  Online Status
+                </Label>
+              </div>
+              <Select
+                value={settings.onlineStatus}
+                onValueChange={handleOnlineStatusChange}
+              >
+                <SelectTrigger id="online-status-filter">
+                  <SelectValue placeholder="Select online status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="available">
+                    Instant Buyout & In-Person
+                  </SelectItem>
+                  <SelectItem value="securable">Instant Buyout Only</SelectItem>
+                  <SelectItem value="online">In-Person Only</SelectItem>
+                  <SelectItem value="any">Any (Possibly Offline)</SelectItem>
+                </SelectContent>
+              </Select>
+              <p className="text-muted-foreground text-xs">
+                Filter trade listings by seller online status.
+              </p>
+            </div>
           </div>
+
+          <Separator />
+
+          <ListingTimeFilterSelector
+            value={settings.listingTimeFilter}
+            onChange={handleListingTimeFilterChange}
+          />
 
           <div className="flex gap-2 pt-2">
             <Button
