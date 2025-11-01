@@ -1,8 +1,8 @@
 import { unstable_cache } from "next/cache";
 
-import { getDustData } from "@/lib/dust";
+import { Item as DustItem, getDustData } from "@/lib/dust";
 import { League } from "@/lib/leagues";
-import { AllowedUnique, getPriceData } from "@/lib/prices";
+import { AllowedUnique, getPriceData, Item as PriceItem } from "@/lib/prices";
 import { ITEMS_TO_IGNORE } from "./ignore-list";
 
 export type Item = {
@@ -41,10 +41,7 @@ const uncached__getItems = async (league: League) => {
       continue;
     }
 
-    const calculatedDustValue =
-      priceItem.type === "UniqueAccessory"
-        ? dustItem.dustValIlvl84
-        : dustItem.dustValIlvl84Q20;
+    const calculatedDustValue = calculateDustValue(priceItem, dustItem);
 
     const dustPerChaos =
       priceItem.chaos > 0
@@ -75,6 +72,12 @@ const uncached__getItems = async (league: League) => {
     lowStockThreshold,
   };
 };
+
+function calculateDustValue(priceItem: PriceItem, dustItem: DustItem) {
+  return priceItem.type === "UniqueAccessory"
+    ? dustItem.dustValIlvl84
+    : dustItem.dustValIlvl84Q20;
+}
 
 /**
  * Calculates the low stock threshold as the 10th percentile of listing counts across items.
