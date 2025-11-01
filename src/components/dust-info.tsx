@@ -12,7 +12,7 @@ export function DustInfo() {
 
       <div className="flex flex-col gap-2">
         <p className="text-sm leading-relaxed">
-          Dust value is based on item type, and whether it is worth to use
+          Dust value is based on item type, and whether it is worth using
           catalysts to improve the quality of the item.
         </p>
 
