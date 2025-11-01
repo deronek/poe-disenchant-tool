@@ -114,7 +114,7 @@ function LowStockBadge({
       <PopoverTrigger asChild>
         <Badge variant="amber" asChild>
           <Button
-            className="mb-1 inline-flex place-self-end"
+            className="mb-1 inline-flex place-self-end hover:bg-amber-100 hover:dark:bg-amber-900"
             size="sm"
             aria-label={`Low stock details for ${name}`}
           >
@@ -142,7 +142,7 @@ function CatalystBadge() {
       <PopoverTrigger asChild>
         <Badge variant="purple" asChild>
           <Button
-            className="mb-1 inline-flex place-self-end"
+            className="mb-1 inline-flex place-self-end hover:bg-purple-100 hover:dark:bg-purple-900"
             size="sm"
             aria-label="Catalyst recommendation details"
           >
