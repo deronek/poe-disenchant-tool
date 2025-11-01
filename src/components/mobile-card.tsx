@@ -3,7 +3,7 @@ import type { Item } from "@/lib/itemData";
 import type { League } from "@/lib/leagues";
 import * as React from "react";
 import { Row } from "@tanstack/react-table";
-import { ExternalLink, Info, PackageMinus } from "lucide-react";
+import { ExternalLink, Info, Orbit, PackageMinus } from "lucide-react";
 
 import { advancedSettingsDeepEqual } from "@/components/advanced-settings-panel";
 import { Badge } from "@/components/ui/badge";
@@ -15,6 +15,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { createTradeLink } from "@/lib/tradeLink";
+import { CatalystInfo } from "./catalyst-info";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { COLUMN_IDS } from "./columns";
 import { DustIcon } from "./dust-icon";
@@ -134,6 +135,30 @@ function LowStockBadge({
   );
 }
 
+// Catalyst badge with popover
+function CatalystBadge() {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Badge variant="purple" asChild>
+          <Button
+            className="mb-1 inline-flex place-self-end"
+            size="sm"
+            aria-label="Catalyst recommendation details"
+          >
+            <Orbit className="mr-1" />
+            Catalyst
+          </Button>
+        </Badge>
+      </PopoverTrigger>
+
+      <PopoverContent className="max-w-[280px] text-sm">
+        <CatalystInfo />
+      </PopoverContent>
+    </Popover>
+  );
+}
+
 // Header section with icon, name, variant, selection and info
 function HeaderSection({
   name,
@@ -219,17 +244,13 @@ function PriceAndDustSection({
   );
 }
 
-// Primary metric section (dust per chaos) with optional low stock badge
+// Primary metric section (dust per chaos) with optional catalyst badge
 function DustPerChaosSection({
-  name,
   dustPerChaos,
-  listingCount,
-  lowStockThreshold,
+  shouldCatalyst,
 }: {
-  name: string;
   dustPerChaos: number;
-  listingCount: number;
-  lowStockThreshold: number;
+  shouldCatalyst: boolean;
 }) {
   return (
     <div className="flex justify-between">
@@ -246,6 +267,43 @@ function DustPerChaosSection({
         </div>
       </div>
 
+      {shouldCatalyst && <CatalystBadge />}
+    </div>
+  );
+}
+
+// Secondary metric section (dust per chaos per slot) with optional low stock badge
+function DustPerChaosPerSlotSection({
+  dustPerChaosPerSlot,
+  slots,
+  name,
+  listingCount,
+  lowStockThreshold,
+}: {
+  dustPerChaosPerSlot: number;
+  slots: number;
+  name: string;
+  listingCount: number;
+  lowStockThreshold: number;
+}) {
+  return (
+    <div className="flex justify-between">
+      <div className="min-w-0 flex-1 space-y-2">
+        <p className="text-muted-foreground text-sm">Dust per Chaos per Slot</p>
+        <div className="flex items-center gap-1 text-sm">
+          <span className="font-semibold">
+            {compactFormatter.format(dustPerChaosPerSlot)}
+          </span>
+          <DustIcon className="h-4 w-4" />
+          <span className="text-muted-foreground">/</span>
+          <ChaosOrbIcon className="h-4 w-4" />
+          <span className="text-muted-foreground">/</span>
+          <span className="text-xs">
+            {slots} slot{slots !== 1 ? "s" : ""}
+          </span>
+        </div>
+      </div>
+
       {listingCount < lowStockThreshold && (
         <LowStockBadge
           name={name}
@@ -253,33 +311,6 @@ function DustPerChaosSection({
           lowStockThreshold={lowStockThreshold}
         />
       )}
-    </div>
-  );
-}
-
-// Secondary metric section (dust per chaos per slot)
-function DustPerChaosPerSlotSection({
-  dustPerChaosPerSlot,
-  slots,
-}: {
-  dustPerChaosPerSlot: number;
-  slots: number;
-}) {
-  return (
-    <div className="space-y-2">
-      <p className="text-muted-foreground text-sm">Dust per Chaos per Slot</p>
-      <div className="flex items-center gap-1 text-sm">
-        <span className="font-semibold">
-          {compactFormatter.format(dustPerChaosPerSlot)}
-        </span>
-        <DustIcon className="h-4 w-4" />
-        <span className="text-muted-foreground">/</span>
-        <ChaosOrbIcon className="h-4 w-4" />
-        <span className="text-muted-foreground">/</span>
-        <span className="text-xs">
-          {slots} slot{slots !== 1 ? "s" : ""}
-        </span>
-      </div>
     </div>
   );
 }
@@ -367,15 +398,16 @@ function MobileCardComponent<TData extends Item>({
       />
 
       <DustPerChaosSection
-        name={name}
         dustPerChaos={dustPerChaos}
-        listingCount={row.original.listingCount}
-        lowStockThreshold={lowStockThreshold}
+        shouldCatalyst={row.original.shouldCatalyst}
       />
 
       <DustPerChaosPerSlotSection
         dustPerChaosPerSlot={dustPerChaosPerSlot}
         slots={slots}
+        name={name}
+        listingCount={row.original.listingCount}
+        lowStockThreshold={lowStockThreshold}
       />
 
       <TradeButtonSection name={name} tradeLink={tradeLink} />
