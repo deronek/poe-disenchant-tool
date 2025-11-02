@@ -68,7 +68,7 @@ const MarkInfoPopover = React.memo(function InfoPopover({
           <Info className="size-5" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="max-w-[280px] text-sm" side="left">
+      <PopoverContent className="max-w-[290px] text-sm" side="left">
         <ItemMarkingInfo itemName={name} />
       </PopoverContent>
     </Popover>
