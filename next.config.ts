@@ -1,6 +1,12 @@
+import { readFileSync } from "fs";
+import { join } from "path";
 import type { NextConfig } from "next";
 
 //const injectWhyDidYouRender = require("./scripts/why-did-you-render");
+
+const packageJson = JSON.parse(
+  readFileSync(join(__dirname, "package.json"), "utf-8"),
+);
 
 const nextConfig: NextConfig = {
   images: {
@@ -22,6 +28,10 @@ const nextConfig: NextConfig = {
   },
   reactCompiler: {
     compilationMode: "annotation",
+  },
+  env: {
+    PDT_APP_VERSION: packageJson.version,
+    PDT_APP_NAME: packageJson.name,
   },
 };
 
