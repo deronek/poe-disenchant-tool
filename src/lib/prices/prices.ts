@@ -101,7 +101,6 @@ const getProductionDataForType = async (
   leagueApiName: string,
 ): Promise<InternalItem[]> => {
   const url = `https://poe.ninja/api/data/itemoverview?type=${encodeURIComponent(type)}&league=${encodeURIComponent(leagueApiName)}`;
-  console.debug("User agent:", USER_AGENT);
   try {
     const response = await fetch(url, {
       headers: {
