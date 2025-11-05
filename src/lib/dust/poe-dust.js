@@ -653,15 +653,15 @@ const data = [
   {
     name: "Hand of Wisdom and Action",
     baseType: "Imperial Claw",
-    dustValIlvl84: 108700,
-    dustValIlvl84Q20: 152180,
+    dustValIlvl84: 3500,
+    dustValIlvl84Q20: 4900,
     slots: 4,
   },
   {
     name: "The Red Trail",
     baseType: "Titan Greaves",
-    dustValIlvl84: 108700,
-    dustValIlvl84Q20: 152180,
+    dustValIlvl84: 3500,
+    dustValIlvl84Q20: 4900,
     slots: 4,
   },
   {
@@ -807,15 +807,15 @@ const data = [
   {
     name: "The Formless Inferno",
     baseType: "Royal Burgonet",
-    dustValIlvl84: 99475,
-    dustValIlvl84Q20: 139265,
+    dustValIlvl84: 17400,
+    dustValIlvl84Q20: 24360,
     slots: 4,
   },
   {
     name: "The Perfect Form",
     baseType: "Zodiac Leather",
-    dustValIlvl84: 99475,
-    dustValIlvl84Q20: 139265,
+    dustValIlvl84: 17400,
+    dustValIlvl84Q20: 24360,
     slots: 6,
   },
   {
@@ -849,15 +849,15 @@ const data = [
   {
     name: "Varunastra",
     baseType: "Vaal Blade",
-    dustValIlvl84: 96575,
-    dustValIlvl84Q20: 135205,
+    dustValIlvl84: 1609475,
+    dustValIlvl84Q20: 2253265,
     slots: 6,
   },
   {
     name: "Uul-Netol's Embrace",
     baseType: "Vaal Axe",
-    dustValIlvl84: 96575,
-    dustValIlvl84Q20: 135205,
+    dustValIlvl84: 16900,
+    dustValIlvl84Q20: 23660,
     slots: 8,
   },
   {
@@ -926,15 +926,15 @@ const data = [
   {
     name: "Tulfall",
     baseType: "Opal Wand",
-    dustValIlvl84: 91025,
-    dustValIlvl84Q20: 127435,
+    dustValIlvl84: 2925,
+    dustValIlvl84Q20: 4095,
     slots: 3,
   },
   {
     name: "Esh's Visage",
     baseType: "Vaal Spirit Shield",
-    dustValIlvl84: 91025,
-    dustValIlvl84Q20: 127435,
+    dustValIlvl84: 15925,
+    dustValIlvl84Q20: 22295,
     slots: 4,
   },
   {
@@ -1045,8 +1045,8 @@ const data = [
   {
     name: "Xoph's Nurture",
     baseType: "Citadel Bow",
-    dustValIlvl84: 80875,
-    dustValIlvl84Q20: 113225,
+    dustValIlvl84: 2600,
+    dustValIlvl84Q20: 3640,
     slots: 8,
   },
   {
@@ -1150,8 +1150,8 @@ const data = [
   {
     name: "Skin of the Lords",
     baseType: "Simple Robe",
-    dustValIlvl84: 66300,
-    dustValIlvl84Q20: 92820,
+    dustValIlvl84: 33150,
+    dustValIlvl84Q20: 46410,
     slots: 6,
   },
   {
@@ -1381,15 +1381,15 @@ const data = [
   {
     name: "Severed in Sleep",
     baseType: "Cutlass",
-    dustValIlvl84: 44775,
-    dustValIlvl84Q20: 62685,
+    dustValIlvl84: 1450,
+    dustValIlvl84Q20: 2030,
     slots: 3,
   },
   {
     name: "United in Dream",
     baseType: "Cutlass",
-    dustValIlvl84: 44775,
-    dustValIlvl84Q20: 62685,
+    dustValIlvl84: 7825,
+    dustValIlvl84Q20: 10955,
     slots: 3,
   },
   {
@@ -1710,15 +1710,15 @@ const data = [
   {
     name: "Hand of Thought and Motion",
     baseType: "Imperial Claw",
-    dustValIlvl84: 36225,
-    dustValIlvl84Q20: 50715,
+    dustValIlvl84: 5100,
+    dustValIlvl84Q20: 7140,
     slots: 4,
   },
   {
     name: "The Infinite Pursuit",
     baseType: "Titan Greaves",
-    dustValIlvl84: 36225,
-    dustValIlvl84Q20: 50715,
+    dustValIlvl84: 5100,
+    dustValIlvl84Q20: 7140,
     slots: 4,
   },
   {
@@ -1927,15 +1927,15 @@ const data = [
   {
     name: "The Formless Flame",
     baseType: "Royal Burgonet",
-    dustValIlvl84: 33150,
-    dustValIlvl84Q20: 46410,
+    dustValIlvl84: 6100,
+    dustValIlvl84Q20: 8540,
     slots: 4,
   },
   {
     name: "The Snowblind Grace",
     baseType: "Zodiac Leather",
-    dustValIlvl84: 33150,
-    dustValIlvl84Q20: 46410,
+    dustValIlvl84: 6100,
+    dustValIlvl84Q20: 8540,
     slots: 6,
   },
   {
@@ -2004,8 +2004,8 @@ const data = [
   {
     name: "Uul-Netol's Kiss",
     baseType: "Vaal Axe",
-    dustValIlvl84: 32200,
-    dustValIlvl84Q20: 45080,
+    dustValIlvl84: 5925,
+    dustValIlvl84Q20: 8295,
     slots: 8,
   },
   {
@@ -2137,15 +2137,15 @@ const data = [
   {
     name: "Tulborn",
     baseType: "Opal Wand",
-    dustValIlvl84: 30350,
-    dustValIlvl84Q20: 42490,
+    dustValIlvl84: 4275,
+    dustValIlvl84Q20: 5985,
     slots: 3,
   },
   {
     name: "Esh's Mirror",
     baseType: "Vaal Spirit Shield",
-    dustValIlvl84: 30350,
-    dustValIlvl84Q20: 42490,
+    dustValIlvl84: 5600,
+    dustValIlvl84Q20: 7840,
     slots: 4,
   },
   {
@@ -2424,8 +2424,8 @@ const data = [
   {
     name: "Xoph's Inception",
     baseType: "Citadel Bow",
-    dustValIlvl84: 26950,
-    dustValIlvl84Q20: 37730,
+    dustValIlvl84: 3775,
+    dustValIlvl84Q20: 5285,
     slots: 8,
   },
   {
@@ -3558,8 +3558,8 @@ const data = [
   {
     name: "Kaom's Primacy",
     baseType: "Karui Chopper",
-    dustValIlvl84: 16850,
-    dustValIlvl84Q20: 23590,
+    dustValIlvl84: 80875,
+    dustValIlvl84Q20: 113225,
     slots: 8,
   },
   {
@@ -3684,8 +3684,8 @@ const data = [
   {
     name: "Skin of the Loyal",
     baseType: "Simple Robe",
-    dustValIlvl84: 15925,
-    dustValIlvl84Q20: 22295,
+    dustValIlvl84: 2775,
+    dustValIlvl84Q20: 3885,
     slots: 6,
   },
   {
@@ -4300,8 +4300,8 @@ const data = [
   {
     name: "Ephemeral Edge",
     baseType: "Dusk Blade",
-    dustValIlvl84: 99475,
-    dustValIlvl84Q20: 139265,
+    dustValIlvl84: 625025,
+    dustValIlvl84Q20: 875035,
     slots: 6,
   },
   {
@@ -5077,8 +5077,8 @@ const data = [
   {
     name: "Eclipse Solaris",
     baseType: "Engraved Wand",
-    dustValIlvl84: 7925,
-    dustValIlvl84Q20: 11095,
+    dustValIlvl84: 290675,
+    dustValIlvl84Q20: 406945,
     slots: 3,
   },
   {
@@ -6993,20 +6993,6 @@ const data = [
     slots: 1,
   },
   {
-    name: "First Piece of Time",
-    baseType: "Cloth Belt Piece",
-    dustValIlvl84: 2500,
-    dustValIlvl84Q20: 3500,
-    slots: 1,
-  },
-  {
-    name: "Second Piece of Time",
-    baseType: "Cloth Belt Piece",
-    dustValIlvl84: 2500,
-    dustValIlvl84Q20: 3500,
-    slots: 1,
-  },
-  {
     name: "Demigod's Authority",
     baseType: "Golden Blade",
     dustValIlvl84: 2500,
@@ -7086,8 +7072,8 @@ const data = [
   {
     name: "Mystic Refractor",
     baseType: "Pagan Wand",
-    dustValIlvl84: 159150,
-    dustValIlvl84Q20: 222810,
+    dustValIlvl84: 53050,
+    dustValIlvl84Q20: 74270,
     slots: 3,
   },
   {

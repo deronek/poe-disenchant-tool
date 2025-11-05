@@ -845,7 +845,7 @@ const data = [
   {
     name: "Hand of Wisdom and Action",
     baseType: "Imperial Claw",
-    dustVal: 43.48,
+    dustVal: 1.4,
     w: 2,
     h: 2,
     slots: 4,
@@ -854,7 +854,7 @@ const data = [
   {
     name: "The Red Trail",
     baseType: "Titan Greaves",
-    dustVal: 43.48,
+    dustVal: 1.4,
     w: 2,
     h: 2,
     slots: 4,
@@ -1043,7 +1043,7 @@ const data = [
   {
     name: "The Formless Inferno",
     baseType: "Royal Burgonet",
-    dustVal: 39.79,
+    dustVal: 6.96,
     w: 2,
     h: 2,
     slots: 4,
@@ -1052,7 +1052,7 @@ const data = [
   {
     name: "The Perfect Form",
     baseType: "Zodiac Leather",
-    dustVal: 39.79,
+    dustVal: 6.96,
     w: 2,
     h: 3,
     slots: 6,
@@ -1098,7 +1098,7 @@ const data = [
   {
     name: "Varunastra",
     baseType: "Vaal Blade",
-    dustVal: 38.63,
+    dustVal: 643.79,
     w: 2,
     h: 3,
     slots: 6,
@@ -1107,7 +1107,7 @@ const data = [
   {
     name: "Uul-Netol's Embrace",
     baseType: "Vaal Axe",
-    dustVal: 38.63,
+    dustVal: 6.76,
     w: 2,
     h: 4,
     slots: 8,
@@ -1198,7 +1198,7 @@ const data = [
   {
     name: "Tulfall",
     baseType: "Opal Wand",
-    dustVal: 36.41,
+    dustVal: 1.17,
     w: 1,
     h: 3,
     slots: 3,
@@ -1207,7 +1207,7 @@ const data = [
   {
     name: "Esh's Visage",
     baseType: "Vaal Spirit Shield",
-    dustVal: 36.41,
+    dustVal: 6.37,
     w: 2,
     h: 2,
     slots: 4,
@@ -1351,7 +1351,7 @@ const data = [
   {
     name: "Xoph's Nurture",
     baseType: "Citadel Bow",
-    dustVal: 32.35,
+    dustVal: 1.04,
     w: 2,
     h: 4,
     slots: 8,
@@ -1486,7 +1486,7 @@ const data = [
   {
     name: "Skin of the Lords",
     baseType: "Simple Robe",
-    dustVal: 26.52,
+    dustVal: 13.26,
     w: 2,
     h: 3,
     slots: 6,
@@ -1787,7 +1787,7 @@ const data = [
   {
     name: "Severed in Sleep",
     baseType: "Cutlass",
-    dustVal: 17.91,
+    dustVal: 0.58,
     w: 1,
     h: 3,
     slots: 3,
@@ -1796,7 +1796,7 @@ const data = [
   {
     name: "United in Dream",
     baseType: "Cutlass",
-    dustVal: 17.91,
+    dustVal: 3.13,
     w: 1,
     h: 3,
     slots: 3,
@@ -2215,7 +2215,7 @@ const data = [
   {
     name: "Hand of Thought and Motion",
     baseType: "Imperial Claw",
-    dustVal: 14.49,
+    dustVal: 2.04,
     w: 2,
     h: 2,
     slots: 4,
@@ -2224,7 +2224,7 @@ const data = [
   {
     name: "The Infinite Pursuit",
     baseType: "Titan Greaves",
-    dustVal: 14.49,
+    dustVal: 2.04,
     w: 2,
     h: 2,
     slots: 4,
@@ -2498,7 +2498,7 @@ const data = [
   {
     name: "The Formless Flame",
     baseType: "Royal Burgonet",
-    dustVal: 13.26,
+    dustVal: 2.44,
     w: 2,
     h: 2,
     slots: 4,
@@ -2507,7 +2507,7 @@ const data = [
   {
     name: "The Snowblind Grace",
     baseType: "Zodiac Leather",
-    dustVal: 13.26,
+    dustVal: 2.44,
     w: 2,
     h: 3,
     slots: 6,
@@ -2598,7 +2598,7 @@ const data = [
   {
     name: "Uul-Netol's Kiss",
     baseType: "Vaal Axe",
-    dustVal: 12.88,
+    dustVal: 2.37,
     w: 2,
     h: 4,
     slots: 8,
@@ -2770,7 +2770,7 @@ const data = [
   {
     name: "Tulborn",
     baseType: "Opal Wand",
-    dustVal: 12.14,
+    dustVal: 1.71,
     w: 1,
     h: 3,
     slots: 3,
@@ -2779,7 +2779,7 @@ const data = [
   {
     name: "Esh's Mirror",
     baseType: "Vaal Spirit Shield",
-    dustVal: 12.14,
+    dustVal: 2.24,
     w: 2,
     h: 2,
     slots: 4,
@@ -3202,7 +3202,7 @@ const data = [
   {
     name: "Xoph's Inception",
     baseType: "Citadel Bow",
-    dustVal: 10.78,
+    dustVal: 1.51,
     w: 2,
     h: 4,
     slots: 8,
@@ -4714,7 +4714,7 @@ const data = [
   {
     name: "Kaom's Primacy",
     baseType: "Karui Chopper",
-    dustVal: 6.74,
+    dustVal: 32.35,
     w: 2,
     h: 4,
     slots: 8,
@@ -4876,7 +4876,7 @@ const data = [
   {
     name: "Skin of the Loyal",
     baseType: "Simple Robe",
-    dustVal: 6.37,
+    dustVal: 1.11,
     w: 2,
     h: 3,
     slots: 6,
@@ -5668,7 +5668,7 @@ const data = [
   {
     name: "Ephemeral Edge",
     baseType: "Dusk Blade",
-    dustVal: 39.79,
+    dustVal: 250.01,
     w: 2,
     h: 3,
     slots: 6,
@@ -6667,7 +6667,7 @@ const data = [
   {
     name: "Eclipse Solaris",
     baseType: "Engraved Wand",
-    dustVal: 3.17,
+    dustVal: 116.27,
     w: 1,
     h: 3,
     slots: 3,
@@ -9278,7 +9278,7 @@ const data = [
   {
     name: "Mystic Refractor",
     baseType: "Pagan Wand",
-    dustVal: 63.66,
+    dustVal: 21.22,
     w: 1,
     h: 3,
     slots: 3,
