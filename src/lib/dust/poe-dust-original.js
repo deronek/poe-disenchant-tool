@@ -9829,7 +9829,7 @@ const data = [
   },
   {
     name: "The Will of Xoph",
-    baseType: "Cryonic Ring",
+    baseType: "Enthalpic Ring",
     dustVal: 3.96,
     w: 1,
     h: 1,
