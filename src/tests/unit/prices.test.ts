@@ -128,11 +128,9 @@ describe("dedupeCheapestVariants", () => {
         detailsId: "special-item-cool-relic-5l",
       }; // Another special
       const input: InternalItem[] = [item1, item2];
-      const expected: InternalItem = { ...item2, listingCount: 3 }; // Cheapest's count, no sum since all special
+      const expected: InternalItem = { ...item2, listingCount: 3 }; // Cheapest item with its count
       const output = dedupeCheapestVariants(input);
       expect(output).toEqual([expected]);
-      expect(output[0].chaos).toBe(10);
-      expect(output[0].listingCount).toBe(3);
     });
 
     it("prefers non-special over special when mixed in group", () => {
@@ -355,7 +353,6 @@ describe("dedupeCheapestVariants", () => {
       expect(output).toEqual([expected]);
       expect(output[0].chaos).toBe(10);
       expect(output[0].detailsId).toBe("all-specials-item-cool-base-5l");
-      expect(output[0].listingCount).toBe(3);
     });
 
     it("handles mixed non-special + all three specials: prefers non-special, sums only non-specials", () => {
@@ -453,6 +450,267 @@ describe("dedupeCheapestVariants", () => {
       const input: InternalItem[] = [item1, item2];
 
       const output = dedupeCheapestVariants(input);
+      expect(output[0].chaos).toBe(10);
+      expect(output[0].listingCount).toBe(3);
+    });
+  });
+
+  describe("Foulborn Handling", () => {
+    it("detects Foulborn items correctly", () => {
+      const foulbornItem: InternalItem = {
+        type: "UniqueWeapon",
+        name: "Foulborn The Surrender",
+        chaos: 10,
+        baseType: "Claw",
+        icon: "http://example.com/foulborn.png",
+        listingCount: 5,
+        detailsId: "foulborn-the-surrender",
+      };
+      const regularItem: InternalItem = {
+        type: "UniqueWeapon",
+        name: "The Surrender",
+        chaos: 15,
+        baseType: "Claw",
+        icon: "http://example.com/regular.png",
+        listingCount: 3,
+        detailsId: "the-surrender",
+      };
+
+      // Test Foulborn detection
+      const input: InternalItem[] = [foulbornItem, regularItem];
+      const output = dedupeCheapestVariants(input);
+
+      // Should keep regular name but use cheaper price (Foulborn)
+      expect(output).toHaveLength(1);
+      expect(output[0].name).toBe("The Surrender"); // Keep regular name
+      expect(output[0].chaos).toBe(10); // Use Foulborn price (cheaper)
+      expect(output[0].listingCount).toBe(8); // Sum both counts
+    });
+
+    it("prefers regular item when it's cheaper than Foulborn", () => {
+      const regularItem: InternalItem = {
+        type: "UniqueWeapon",
+        name: "The Surrender",
+        chaos: 8,
+        baseType: "Claw",
+        icon: "http://example.com/regular.png",
+        listingCount: 4,
+        detailsId: "the-surrender",
+      };
+      const foulbornItem: InternalItem = {
+        type: "UniqueWeapon",
+        name: "Foulborn The Surrender",
+        chaos: 10,
+        baseType: "Claw",
+        icon: "http://example.com/foulborn.png",
+        listingCount: 2,
+        detailsId: "foulborn-the-surrender",
+      };
+
+      const input: InternalItem[] = [regularItem, foulbornItem];
+      const output = dedupeCheapestVariants(input);
+
+      expect(output).toHaveLength(1);
+      expect(output[0].name).toBe("The Surrender"); // Keep regular name
+      expect(output[0].chaos).toBe(8); // Use regular price (cheaper)
+      expect(output[0].listingCount).toBe(6); // Sum both counts
+    });
+
+    it("handles Foulborn items with special suffixes", () => {
+      const regularItem: InternalItem = {
+        type: "UniqueWeapon",
+        name: "The Surrender",
+        chaos: 20,
+        baseType: "Claw",
+        icon: "http://example.com/regular.png",
+        listingCount: 2,
+        detailsId: "the-surrender",
+      };
+      const foulbornRelic: InternalItem = {
+        type: "UniqueWeapon",
+        name: "Foulborn The Surrender",
+        chaos: 12,
+        baseType: "Claw",
+        icon: "http://example.com/foulborn-relic.png",
+        listingCount: 3,
+        detailsId: "foulborn-the-surrender-relic",
+      };
+      const regularRelic: InternalItem = {
+        type: "UniqueWeapon",
+        name: "The Surrender",
+        chaos: 15,
+        baseType: "Claw",
+        icon: "http://example.com/regular-relic.png",
+        listingCount: 1,
+        detailsId: "the-surrender-relic",
+      };
+
+      const input: InternalItem[] = [regularItem, foulbornRelic, regularRelic];
+      const output = dedupeCheapestVariants(input);
+
+      // Should keep the cheapest
+      expect(output).toHaveLength(1);
+
+      // Use foulborn price, keep regular name
+      const baseResult = output.find((item) => item.name === "The Surrender");
+      expect(baseResult).toBeDefined();
+      expect(baseResult!.chaos).toBe(12); // Use foulborn price (cheaper)
+      expect(baseResult!.listingCount).toBe(5); // Only regular + foulborn listings
+    });
+
+    it("handles multiple Foulborn variants with same base name", () => {
+      const regularItem: InternalItem = {
+        type: "UniqueWeapon",
+        name: "The Surrender",
+        chaos: 25,
+        baseType: "Claw",
+        icon: "http://example.com/regular.png",
+        listingCount: 1,
+        detailsId: "the-surrender",
+      };
+      const foulbornItem1: InternalItem = {
+        type: "UniqueWeapon",
+        name: "Foulborn The Surrender",
+        chaos: 10,
+        baseType: "Claw",
+        icon: "http://example.com/foulborn1.png",
+        listingCount: 2,
+        detailsId: "foulborn-the-surrender",
+      };
+      const foulbornItem2: InternalItem = {
+        type: "UniqueWeapon",
+        name: "Foulborn The Surrender",
+        chaos: 8,
+        baseType: "Claw",
+        icon: "http://example.com/foulborn2.png",
+        listingCount: 3,
+        detailsId: "foulborn-the-surrender-variant",
+      };
+
+      const input: InternalItem[] = [regularItem, foulbornItem1, foulbornItem2];
+      const output = dedupeCheapestVariants(input);
+
+      expect(output).toHaveLength(1);
+      expect(output[0].name).toBe("The Surrender"); // Keep regular name
+      expect(output[0].chaos).toBe(8); // Use cheapest Foulborn price
+      expect(output[0].listingCount).toBe(6); // Sum all counts: 1 + 2 + 3
+    });
+
+    it("handles Foulborn items with different base names", () => {
+      const regularItem1: InternalItem = {
+        type: "UniqueWeapon",
+        name: "The Surrender",
+        chaos: 20,
+        baseType: "Claw",
+        icon: "http://example.com/regular1.png",
+        listingCount: 2,
+        detailsId: "the-surrender",
+      };
+      const foulbornItem1: InternalItem = {
+        type: "UniqueWeapon",
+        name: "Foulborn The Surrender",
+        chaos: 15,
+        baseType: "Claw",
+        icon: "http://example.com/foulborn1.png",
+        listingCount: 3,
+        detailsId: "foulborn-the-surrender",
+      };
+      const regularItem2: InternalItem = {
+        type: "UniqueWeapon",
+        name: "Perseverance",
+        chaos: 30,
+        baseType: "Shield",
+        icon: "http://example.com/regular2.png",
+        listingCount: 1,
+        detailsId: "perseverance",
+      };
+      const foulbornItem2: InternalItem = {
+        type: "UniqueWeapon",
+        name: "Foulborn Perseverance",
+        chaos: 25,
+        baseType: "Shield",
+        icon: "http://example.com/foulborn2.png",
+        listingCount: 4,
+        detailsId: "foulborn-perseverance",
+      };
+
+      const input: InternalItem[] = [
+        regularItem1,
+        foulbornItem1,
+        regularItem2,
+        foulbornItem2,
+      ];
+      const output = dedupeCheapestVariants(input);
+
+      expect(output).toHaveLength(2);
+
+      // Check The Surrender group
+      const surrenderResult = output.find(
+        (item) => item.name === "The Surrender",
+      );
+      expect(surrenderResult).toBeDefined();
+      expect(surrenderResult!.chaos).toBe(15); // Use Foulborn price
+      expect(surrenderResult!.listingCount).toBe(5); // 2 + 3
+
+      // Check Perseverance group
+      const perseveranceResult = output.find(
+        (item) => item.name === "Perseverance",
+      );
+      expect(perseveranceResult).toBeDefined();
+      expect(perseveranceResult!.chaos).toBe(25); // Use Foulborn price
+      expect(perseveranceResult!.listingCount).toBe(5); // 1 + 4
+    });
+
+    it("handles edge case where Foulborn name is exactly 'Foulborn '", () => {
+      const foulbornItem: InternalItem = {
+        type: "UniqueWeapon",
+        name: "Foulborn ",
+        chaos: 10,
+        baseType: "Claw",
+        icon: "http://example.com/foulborn.png",
+        listingCount: 2,
+        detailsId: "foulborn",
+      };
+      const regularItem: InternalItem = {
+        type: "UniqueWeapon",
+        name: "Foulborn ",
+        chaos: 15,
+        baseType: "Claw",
+        icon: "http://example.com/regular.png",
+        listingCount: 3,
+        detailsId: "foulborn-regular",
+      };
+
+      const input: InternalItem[] = [foulbornItem, regularItem];
+      const output = dedupeCheapestVariants(input);
+
+      expect(output).toHaveLength(1);
+      expect(output[0].name).toBe("Foulborn "); // Keep regular name
+      expect(output[0].chaos).toBe(10); // Use Foulborn price
+      expect(output[0].listingCount).toBe(5); // Sum both counts
+    });
+
+    it("keeps only the Foulborn item when no regular version exists", () => {
+      const foulbornOnly: InternalItem = {
+        type: "UniqueWeapon",
+        name: "Foulborn The Surrender",
+        chaos: 10,
+        baseType: "Claw",
+        icon: "http://example.com/foulborn.png",
+        listingCount: 3,
+        detailsId: "foulborn-the-surrender",
+      };
+
+      const input: InternalItem[] = [foulbornOnly];
+      const output = dedupeCheapestVariants(input);
+
+      // Should produce exactly one result
+      expect(output).toHaveLength(1);
+
+      // Should retain the Foulborn name
+      expect(output[0].name).toBe("Foulborn The Surrender");
+
+      // Should keep its own price and listing count
       expect(output[0].chaos).toBe(10);
       expect(output[0].listingCount).toBe(3);
     });
