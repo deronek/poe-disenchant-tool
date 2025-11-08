@@ -41,6 +41,25 @@ async function main() {
     const validatedData = validationResult.data;
     console.log(`✅ ${validatedData.length} items validated`);
 
+    // Verify that w * h == slots for all items
+    console.log("🔍 Verifying w * h == slots...");
+    const invalidItems = validatedData.filter((item: InputItem) => {
+      return item.w * item.h !== item.slots;
+    });
+
+    if (invalidItems.length > 0) {
+      console.error("❌ Found items where w * h != slots:");
+      invalidItems.forEach((item, index) => {
+        console.error(
+          `${index + 1}. ${item.name}: w=${item.w}, h=${item.h}, slots=${item.slots} (${item.w} * ${item.h} = ${item.w * item.h})`,
+        );
+      });
+      throw new Error(
+        `Found ${invalidItems.length} items where w * h != slots`,
+      );
+    }
+    console.log("✅ All items pass w * h == slots verification");
+
     // Filter out ignored items
     console.log("🚫 Filtering ignored items...");
     const filteredData = validatedData.filter(
