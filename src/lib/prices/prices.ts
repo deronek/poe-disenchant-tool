@@ -171,34 +171,52 @@ const getDevDataForType = async (
 
 /**
  * Dedupes items by name, preferring non-special variants where possible.
+ *
  * - Unique names: pass through unchanged.
  * - Duplicates with non-special: select cheapest non-special, sum listingCounts.
  * - Duplicates only special: select cheapest special.
- * Specials detected if detailsId ends with "-relic", "-5l", or "-6l".
+ * - Specials detected if detailsId ends with "-relic", "-5l", or "-6l".
  * For equal chaos, retains the first item's other properties.
+ * - Foulborn handling:
+ *   - "Foulborn " prefix denotes a Foulborn variant.
+ *   - If only Foulborn or non-Foulborn exist → take whichever exists.
+ *   - If both exist:
+ *     - Take cheaper price but keep non-Foulborn name.
+ *     - Listing counts are summed across both variants.
+ *
  * @param lines Array of InternalItem objects
  * @returns Deduped array with modified listingCount where summed.
  * @throws Error if input is null or undefined.
- * @throws Runtime error if array contains null/undefined items (property access).
+ * @throws Runtime error if array contains null/undefined items.
  */
+
+// Helper functions for Foulborn detection
+const isFoulbornItem = (name: string | undefined): boolean =>
+  !!name && name.startsWith("Foulborn ");
+
+const extractBaseName = (name: string | undefined): string =>
+  name && isFoulbornItem(name) ? name.substring(9) : (name ?? "");
+
+const getCheapest = (items: InternalItem[]) =>
+  items.reduce((min, curr) => (curr.chaos < min.chaos ? curr : min));
+
+const sumListings = (items: InternalItem[]) =>
+  items.reduce((sum, i) => sum + i.listingCount, 0);
+
 export const dedupeCheapestVariants = (
   lines: InternalItem[],
 ): InternalItem[] => {
   if (lines.length === 0) return [];
 
   const specialSuffixes = ["-relic", "-5l", "-6l"];
+  const isSpecialSuffix = (item: InternalItem): boolean =>
+    specialSuffixes.some((suffix) => item.detailsId.endsWith(suffix));
 
-  const isSpecialSuffix = (item: InternalItem): boolean => {
-    return specialSuffixes.some((suffix) => item.detailsId.endsWith(suffix));
-  };
-
-  // Group all items by name
+  // Step 1: Group by name and dedupe base + special suffixes
   const groupsByName = new Map<string, InternalItem[]>();
   for (const item of lines) {
     const name = item.name;
-    if (!groupsByName.has(name)) {
-      groupsByName.set(name, []);
-    }
+    if (!groupsByName.has(name)) groupsByName.set(name, []);
     groupsByName.get(name)!.push(item);
   }
 
@@ -208,39 +226,74 @@ export const dedupeCheapestVariants = (
     if (group.length === 1) {
       // Unique name - pass through unchanged
       result.push(group[0]);
-    } else {
-      // Non-unique name - handle duplicates
-      const nonSpecialItems = group.filter((item) => !isSpecialSuffix(item));
-
-      let chosenItem: InternalItem;
-      let totalListingCount: number;
-
-      if (nonSpecialItems.length > 0) {
-        // Keep only non-special items: take cheapest and merge their listing counts
-        chosenItem = nonSpecialItems.reduce((min, curr) =>
-          curr.chaos < min.chaos ? curr : min,
-        );
-        totalListingCount = nonSpecialItems.reduce(
-          (sum, item) => sum + item.listingCount,
-          0,
-        );
-      } else {
-        // Only special suffix items exist: keep cheapest special suffix item
-        chosenItem = group.reduce((min, curr) =>
-          curr.chaos < min.chaos ? curr : min,
-        );
-        totalListingCount = chosenItem.listingCount;
-      }
-
-      // Create the result item
-      result.push({
-        ...chosenItem,
-        listingCount: totalListingCount,
-      });
+      continue;
     }
+
+    const nonSpecialItems = group.filter((item) => !isSpecialSuffix(item));
+    let chosenItem: InternalItem;
+    let totalListingCount: number;
+
+    if (nonSpecialItems.length > 0) {
+      // Keep only non-special items: take cheapest and merge their listing counts
+      chosenItem = getCheapest(nonSpecialItems);
+      totalListingCount = sumListings(nonSpecialItems);
+    } else {
+      // Only special suffix items exist: keep cheapest special's own listing count
+      chosenItem = getCheapest(group);
+      totalListingCount = chosenItem.listingCount;
+    }
+
+    result.push({
+      ...chosenItem,
+      listingCount: totalListingCount,
+    });
   }
 
-  // Dev-only verification
+  // Step 2: Deduplicate Foulborn variants based on base name
+  const hasFoulbornItems = result.some((item) => isFoulbornItem(item.name));
+  if (hasFoulbornItems) {
+    const foulbornGroups = new Map<string, InternalItem[]>();
+    for (const item of result) {
+      const baseName = extractBaseName(item.name);
+      if (!foulbornGroups.has(baseName)) foulbornGroups.set(baseName, []);
+      foulbornGroups.get(baseName)!.push(item);
+    }
+
+    const finalResult: InternalItem[] = [];
+
+    for (const [, items] of foulbornGroups.entries()) {
+      const regulars = items.filter((i) => !isFoulbornItem(i.name));
+      const foulborns = items.filter((i) => isFoulbornItem(i.name));
+
+      // Case 1: Only one type exists → push as is
+      if (regulars.length === 0 || foulborns.length === 0) {
+        finalResult.push(...items);
+        continue;
+      }
+
+      // Case 2: Both exist → merge into one, using cheaper price
+      const cheapestRegular = getCheapest(regulars);
+      const cheapestFoulborn = getCheapest(foulborns);
+      const cheapestChaos = Math.min(
+        cheapestRegular.chaos,
+        cheapestFoulborn.chaos,
+      );
+
+      finalResult.push({
+        ...(cheapestRegular.chaos <= cheapestFoulborn.chaos
+          ? cheapestRegular
+          : cheapestFoulborn),
+        name: cheapestRegular.name, // always keep non-Foulborn name
+        chaos: cheapestChaos,
+        listingCount: sumListings(items), // aggregate listings across both
+      });
+    }
+
+    result.length = 0;
+    result.push(...finalResult);
+  }
+
+  // Step 3: Dev verification
   if (isDevelopment) {
     const names = result.map((i) => i.name);
     const uniqueNames = new Set(names);
