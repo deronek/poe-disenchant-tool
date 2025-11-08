@@ -7357,13 +7357,6 @@ const data = [
     slots: 8,
   },
   {
-    name: "The Golden Charlatan",
-    baseType: "Lion Sword",
-    dustValIlvl84: 298400,
-    dustValIlvl84Q20: 417760,
-    slots: 8,
-  },
-  {
     name: "Wing of the Wyvern",
     baseType: "Imperial Bow",
     dustValIlvl84: 307350,
@@ -7492,6 +7485,20 @@ const data = [
   {
     name: "The Will of Esh",
     baseType: "Synaptic Ring",
+    dustValIlvl84: 9900,
+    dustValIlvl84Q20: 13860,
+    slots: 1,
+  },
+  {
+    name: "The Will of Tul",
+    baseType: "Cryonic Ring",
+    dustValIlvl84: 9900,
+    dustValIlvl84Q20: 13860,
+    slots: 1,
+  },
+  {
+    name: "The Will of Xoph",
+    baseType: "Cryonic Ring",
     dustValIlvl84: 9900,
     dustValIlvl84Q20: 13860,
     slots: 1,

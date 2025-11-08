@@ -9648,15 +9648,6 @@ const data = [
     link: "https://poedb.tw/us/The_Golden_Charlatan",
   },
   {
-    name: "The Golden Charlatan",
-    baseType: "Lion Sword",
-    dustVal: 119.36,
-    w: 2,
-    h: 4,
-    slots: 8,
-    link: "https://poedb.tw/us/The_Golden_Charlatan",
-  },
-  {
     name: "Wing of the Wyvern",
     baseType: "Imperial Bow",
     dustVal: 122.94,
@@ -9826,6 +9817,24 @@ const data = [
     h: 1,
     slots: 1,
     link: "https://poedb.tw/us/The_Will_of_Esh",
+  },
+  {
+    name: "The Will of Tul",
+    baseType: "Cryonic Ring",
+    dustVal: 3.96,
+    w: 1,
+    h: 1,
+    slots: 1,
+    link: "https://poedb.tw/us/The_Will_of_Tul",
+  },
+  {
+    name: "The Will of Xoph",
+    baseType: "Cryonic Ring",
+    dustVal: 3.96,
+    w: 1,
+    h: 1,
+    slots: 1,
+    link: "https://poedb.tw/us/The_Will_of_Xoph",
   },
 ];
 export default data;
