@@ -7503,5 +7503,19 @@ const data = [
     dustValIlvl84Q20: 13860,
     slots: 1,
   },
+  {
+    name: "Cowards' Wail",
+    baseType: "Ezomyte Tower Shield",
+    dustValIlvl84: 32200,
+    dustValIlvl84Q20: 45080,
+    slots: 8,
+  },
+  {
+    name: "Haunting Memories",
+    baseType: "Turquoise Amulet",
+    dustValIlvl84: 26300,
+    dustValIlvl84Q20: 36820,
+    slots: 1,
+  },
 ];
 export default data;

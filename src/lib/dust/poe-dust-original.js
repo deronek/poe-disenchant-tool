@@ -9836,5 +9836,23 @@ const data = [
     slots: 1,
     link: "https://poedb.tw/us/The_Will_of_Xoph",
   },
+  {
+    name: "Cowards' Wail",
+    baseType: "Ezomyte Tower Shield",
+    dustVal: 12.88,
+    w: 2,
+    h: 4,
+    slots: 8,
+    link: "https://poedb.tw/us/Cowards_Wail",
+  },
+  {
+    name: "Haunting Memories",
+    baseType: "Turquoise Amulet",
+    dustVal: 10.52,
+    w: 1,
+    h: 1,
+    slots: 1,
+    link: "https://poedb.tw/us/Haunting_Memories",
+  },
 ];
 export default data;
