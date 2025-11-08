@@ -210,8 +210,12 @@ export function PriceFilter<TData extends Item>({
                 <span
                   className={`inline-flex items-center gap-1 font-semibold ${hasMinFilter(currentRange, { min }) ? "text-foreground" : "text-muted-foreground"}`}
                 >
-                  <span className="leading-none">{currentRange.min}</span>
-                  <ChaosOrbIcon />
+                  <span className="leading-none font-normal">
+                    {hasMinFilter(currentRange, { min })
+                      ? currentRange.min
+                      : "No limit"}
+                  </span>
+                  {hasMinFilter(currentRange, { min }) && <ChaosOrbIcon />}
                 </span>
               </div>
             </div>
@@ -246,7 +250,7 @@ export function PriceFilter<TData extends Item>({
                       : "text-muted-foreground"
                   }`}
                 >
-                  <span className="leading-none">
+                  <span className="leading-none font-normal">
                     {hasMaxFilter(currentRange, { max })
                       ? currentRange.max
                       : "No limit"}
