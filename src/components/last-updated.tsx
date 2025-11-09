@@ -73,7 +73,7 @@ export default function LastUpdated({
 
       setRelativeTime(relative);
       setAbsoluteTime(absolute);
-      setIsStale(diffInMinutes >= 15);
+      setIsStale(diffInMinutes >= 30);
       setIsRefreshing(false);
     };
 
