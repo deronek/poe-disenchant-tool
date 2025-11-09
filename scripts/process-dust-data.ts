@@ -7,7 +7,7 @@ import { fileURLToPath } from "url";
 import prettier from "prettier";
 import { z } from "zod";
 
-import { calculateDustValue, Item } from "@/lib/dust";
+import { calculateDustValueFull, Item } from "@/lib/dust";
 import { ITEMS_TO_IGNORE } from "@/lib/itemData/ignore-list";
 import data from "../src/lib/dust/poe-dust-original.js";
 
@@ -23,6 +23,7 @@ const InputItemSchema = z.strictObject({
   h: z.int().positive(),
   slots: z.int().positive(),
   link: z.url().optional(),
+  influenceCount: z.int().min(0).optional().default(0),
 });
 const InputItemDataSchema = z.array(InputItemSchema);
 type InputItem = z.infer<typeof InputItemSchema>;
@@ -73,9 +74,19 @@ async function main() {
     // Process each item to calculate new fields
     console.log("🔧 Processing items...");
     const processedData = filteredData.map((item: InputItem) => {
-      // Calculate dust values using the calculateDustValue function
-      const dustValIlvl84 = calculateDustValue(item.dustVal, 84, 0);
-      const dustValIlvl84Q20 = calculateDustValue(item.dustVal, 84, 20);
+      // Calculate dust values using the calculateDustValueFull function with influence count
+      const dustValIlvl84 = calculateDustValueFull(
+        item.dustVal,
+        84,
+        0,
+        item.influenceCount,
+      );
+      const dustValIlvl84Q20 = calculateDustValueFull(
+        item.dustVal,
+        84,
+        20,
+        item.influenceCount,
+      );
 
       const outputItem: Item = {
         name: item.name,
