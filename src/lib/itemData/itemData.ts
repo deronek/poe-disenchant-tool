@@ -87,6 +87,10 @@ const uncached__getItems = async (league: League) => {
   };
 };
 
+function isQuiver(item: PriceItem) {
+  return item.itemType === "Quiver";
+}
+
 async function calculateDustEfficiency(
   priceItem: PriceItem,
   dustItem: DustItem,
@@ -97,6 +101,15 @@ async function calculateDustEfficiency(
     return {
       dustValue: dustItem.dustValIlvl84Q20,
       dustPerChaos: dustItem.dustValIlvl84Q20 / priceItem.chaos,
+      catalyst: false,
+    };
+  }
+  if (isQuiver(priceItem)) {
+    // Quivers cannot have quality
+    console.debug("Quiver, ignoring quality", priceItem.name);
+    return {
+      dustValue: dustItem.dustValIlvl84,
+      dustPerChaos: dustItem.dustValIlvl84 / priceItem.chaos,
       catalyst: false,
     };
   }

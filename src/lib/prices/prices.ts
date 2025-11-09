@@ -23,6 +23,7 @@ const LineSchema = z.object({
   icon: z.url(),
   listingCount: z.int(),
   detailsId: z.string(),
+  itemType: z.string(),
 });
 
 const ItemOverviewResponseSchema = z.object({
@@ -39,6 +40,7 @@ export type InternalItem = {
   icon: string;
   listingCount: number;
   detailsId: string;
+  itemType: string;
 };
 
 export type Item = Omit<InternalItem, "detailsId">;
@@ -107,6 +109,7 @@ const getProductionDataForType = async (
       icon: line.icon,
       listingCount: line.listingCount,
       detailsId: line.detailsId,
+      itemType: line.itemType,
     }));
 
     console.log(
@@ -150,6 +153,7 @@ const getDevDataForType = async (
     icon: line.icon,
     listingCount: line.listingCount,
     detailsId: line.detailsId,
+    itemType: line.itemType,
   }));
 };
 
@@ -316,6 +320,7 @@ const uncached__getPriceData = async (league: League): Promise<Item[]> => {
       baseType: item.baseType,
       icon: item.icon,
       listingCount: item.listingCount,
+      itemType: item.itemType,
     }),
   );
 };
