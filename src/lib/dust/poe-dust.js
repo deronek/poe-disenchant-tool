@@ -72,15 +72,15 @@ const data = [
   {
     name: "Starforge",
     baseType: "Infernal Sword",
-    dustValIlvl84: 2638087,
-    dustValIlvl84Q20: 3693322,
+    dustValIlvl84: 2638088,
+    dustValIlvl84Q20: 3341578,
     slots: 8,
   },
   {
     name: "Voidforge",
     baseType: "Infernal Sword",
     dustValIlvl84: 3517450,
-    dustValIlvl84Q20: 4924430,
+    dustValIlvl84Q20: 4220940,
     slots: 8,
   },
   {
@@ -219,8 +219,8 @@ const data = [
   {
     name: "Soul Ascension",
     baseType: "Carnal Mitts",
-    dustValIlvl84: 1187400,
-    dustValIlvl84Q20: 1662360,
+    dustValIlvl84: 1191150,
+    dustValIlvl84Q20: 1508790,
     slots: 4,
   },
   {
@@ -311,7 +311,7 @@ const data = [
     name: "Replica Eternity Shroud",
     baseType: "Blood Raiment",
     dustValIlvl84: 828900,
-    dustValIlvl84Q20: 1160460,
+    dustValIlvl84Q20: 994680,
     slots: 6,
   },
   {
@@ -366,8 +366,8 @@ const data = [
   {
     name: "Entropic Devastation",
     baseType: "Assassin's Mitts",
-    dustValIlvl84: 505463,
-    dustValIlvl84Q20: 707648,
+    dustValIlvl84: 505462,
+    dustValIlvl84Q20: 640253,
     slots: 4,
   },
   {
@@ -591,7 +591,7 @@ const data = [
     name: "Indigon",
     baseType: "Hubris Circlet",
     dustValIlvl84: 223900,
-    dustValIlvl84Q20: 313460,
+    dustValIlvl84Q20: 268680,
     slots: 4,
   },
   {
@@ -829,7 +829,7 @@ const data = [
     name: "The Eternity Shroud",
     baseType: "Blood Raiment",
     dustValIlvl84: 198950,
-    dustValIlvl84Q20: 278530,
+    dustValIlvl84Q20: 238740,
     slots: 6,
   },
   {
@@ -871,7 +871,7 @@ const data = [
     name: "Disintegrator",
     baseType: "Maelström Staff",
     dustValIlvl84: 193150,
-    dustValIlvl84Q20: 270410,
+    dustValIlvl84Q20: 231780,
     slots: 8,
   },
   {
@@ -1256,7 +1256,7 @@ const data = [
     name: "Impresence",
     baseType: "Onyx Amulet",
     dustValIlvl84: 77475,
-    dustValIlvl84Q20: 108465,
+    dustValIlvl84Q20: 98135,
     slots: 1,
   },
   {
@@ -1270,14 +1270,14 @@ const data = [
     name: "Mark of the Elder",
     baseType: "Steel Ring",
     dustValIlvl84: 73050,
-    dustValIlvl84Q20: 102270,
+    dustValIlvl84Q20: 92530,
     slots: 1,
   },
   {
     name: "Mark of the Shaper",
     baseType: "Opal Ring",
     dustValIlvl84: 73050,
-    dustValIlvl84Q20: 102270,
+    dustValIlvl84Q20: 92530,
     slots: 1,
   },
   {
@@ -1424,21 +1424,21 @@ const data = [
     name: "Nebuloch",
     baseType: "Nightmare Mace",
     dustValIlvl84: 66825,
-    dustValIlvl84Q20: 93555,
+    dustValIlvl84Q20: 84645,
     slots: 6,
   },
   {
     name: "Hopeshredder",
     baseType: "Ranger Bow",
-    dustValIlvl84: 66675,
-    dustValIlvl84Q20: 93345,
+    dustValIlvl84: 66825,
+    dustValIlvl84Q20: 84645,
     slots: 8,
   },
   {
     name: "Shimmeron",
     baseType: "Tornado Wand",
     dustValIlvl84: 66825,
-    dustValIlvl84Q20: 93555,
+    dustValIlvl84Q20: 84645,
     slots: 3,
   },
   {
@@ -1606,7 +1606,7 @@ const data = [
     name: "Voidwalker",
     baseType: "Murder Boots",
     dustValIlvl84: 55988,
-    dustValIlvl84Q20: 78383,
+    dustValIlvl84Q20: 70918,
     slots: 4,
   },
   {
@@ -1634,7 +1634,7 @@ const data = [
     name: "Replica Voidwalker",
     baseType: "Murder Boots",
     dustValIlvl84: 55988,
-    dustValIlvl84Q20: 78383,
+    dustValIlvl84Q20: 70918,
     slots: 4,
   },
   {
@@ -1739,14 +1739,14 @@ const data = [
     name: "Cyclopean Coil",
     baseType: "Leather Belt",
     dustValIlvl84: 54338,
-    dustValIlvl84Q20: 76073,
+    dustValIlvl84Q20: 68828,
     slots: 2,
   },
   {
     name: "Blasphemer's Grasp",
     baseType: "Assassin's Mitts",
     dustValIlvl84: 54338,
-    dustValIlvl84Q20: 76073,
+    dustValIlvl84Q20: 68828,
     slots: 4,
   },
   {
@@ -1830,7 +1830,7 @@ const data = [
     name: "Shaper's Touch",
     baseType: "Crusader Gloves",
     dustValIlvl84: 51225,
-    dustValIlvl84Q20: 71715,
+    dustValIlvl84Q20: 64885,
     slots: 4,
   },
   {
@@ -1851,7 +1851,7 @@ const data = [
     name: "Voidfletcher",
     baseType: "Primal Arrow Quiver",
     dustValIlvl84: 68300,
-    dustValIlvl84Q20: 95620,
+    dustValIlvl84Q20: 81960,
     slots: 6,
   },
   {
@@ -1963,7 +1963,7 @@ const data = [
     name: "Echoes of Creation",
     baseType: "Royal Burgonet",
     dustValIlvl84: 49725,
-    dustValIlvl84Q20: 69615,
+    dustValIlvl84Q20: 62985,
     slots: 4,
   },
   {
@@ -2075,7 +2075,7 @@ const data = [
     name: "Solstice Vigil",
     baseType: "Onyx Amulet",
     dustValIlvl84: 45750,
-    dustValIlvl84Q20: 64050,
+    dustValIlvl84Q20: 57950,
     slots: 1,
   },
   {
@@ -5505,7 +5505,7 @@ const data = [
     name: "Call of the Void",
     baseType: "Sapphire Ring",
     dustValIlvl84: 12300,
-    dustValIlvl84Q20: 17220,
+    dustValIlvl84Q20: 14760,
     slots: 1,
   },
   {
@@ -7087,14 +7087,14 @@ const data = [
     name: "The Tides of Time",
     baseType: "Vanguard Belt",
     dustValIlvl84: 189000,
-    dustValIlvl84Q20: 264600,
+    dustValIlvl84Q20: 239400,
     slots: 2,
   },
   {
     name: "Venarius' Astrolabe",
     baseType: "Astrolabe Amulet",
     dustValIlvl84: 534700,
-    dustValIlvl84Q20: 748580,
+    dustValIlvl84Q20: 588170,
     slots: 1,
   },
   {
@@ -7276,7 +7276,7 @@ const data = [
     name: "The Devourer of Minds",
     baseType: "Pig-Faced Bascinet",
     dustValIlvl84: 140625,
-    dustValIlvl84Q20: 196875,
+    dustValIlvl84Q20: 178125,
     slots: 4,
   },
   {
@@ -7498,7 +7498,7 @@ const data = [
   },
   {
     name: "The Will of Xoph",
-    baseType: "Cryonic Ring",
+    baseType: "Enthalpic Ring",
     dustValIlvl84: 9900,
     dustValIlvl84Q20: 13860,
     slots: 1,

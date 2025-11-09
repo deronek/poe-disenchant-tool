@@ -87,11 +87,25 @@ const uncached__getItems = async (league: League) => {
   };
 };
 
+function isQuiver(item: PriceItem) {
+  return item.itemType === "Quiver";
+}
+
 async function calculateDustEfficiency(
   priceItem: PriceItem,
   dustItem: DustItem,
   catalystPrice: number,
 ) {
+  if (isQuiver(priceItem)) {
+    // Quivers cannot have quality
+    console.log("Quiver, ignoring quality", priceItem.name);
+    return {
+      dustValue: dustItem.dustValIlvl84,
+      dustPerChaos: dustItem.dustValIlvl84 / priceItem.chaos,
+      catalyst: false,
+    };
+  }
+
   if (priceItem.type !== "UniqueAccessory") {
     // Weapon or Armor, always cheap to quality up
     return {

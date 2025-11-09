@@ -23,7 +23,12 @@ export function DustInfo() {
           <div>
             <Badge variant="green">Always Quality to 20%</Badge>
           </div>
-
+          <div>
+            <Badge variant="secondary">Quivers</Badge>
+          </div>
+          <div>
+            <Badge variant="amber">Cannot Have Quality</Badge>
+          </div>
           <div>
             <Badge variant="secondary">Jewellery</Badge>
           </div>

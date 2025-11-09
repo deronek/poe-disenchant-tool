@@ -308,18 +308,23 @@ test.describe("Price Filter Functionality", () => {
 
   test("should set both bounds price filter value", async ({ poePage }) => {
     await poePage.verifyFilterChipVisible("price", false);
+
+    // 1) Set only lower bound (upper bound should be disabled / no max)
     await poePage.setPriceFilterValuePercent("lower", 50);
     await poePage.verifyFilterChipVisible("price", true);
 
-    const range = await poePage.getPriceFilterRange();
-    expect(range.max).toBe(500);
+    const lowerOnly = await poePage.getPriceFilterRange();
+    expect(lowerOnly.min).toBeGreaterThan(0);
+    expect(lowerOnly.max).toBeUndefined();
 
+    // 2) Now set upper bound as well, creating a bounded range
     await poePage.setPriceFilterValuePercent("upper", 50);
     await poePage.verifyFilterChipVisible("price", true);
 
     const rangeBoth = await poePage.getPriceFilterRange();
-    expect(rangeBoth.min).toBe(range.min);
-    expect(rangeBoth.max).not.toBe(range.max);
+    expect(rangeBoth.min).toBe(lowerOnly.min);
+    expect(rangeBoth.max).toBeDefined();
+    expect(rangeBoth.max).toBeLessThan(500);
   });
 
   test("should reset price filter to default with reset button", async ({

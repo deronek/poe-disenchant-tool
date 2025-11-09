@@ -815,14 +815,24 @@ export class PoEDisenchantPage {
     await expect(this.priceFilterPopover).not.toBeVisible();
   }
 
-  async getPriceFilterRange(): Promise<{ min: number; max: number }> {
+  async getPriceFilterRange(): Promise<{ min: number; max?: number }> {
     const chipText = await this.priceFilterChip.innerText();
-    const match = chipText.match(/(\d+)–(\d+)/);
-    if (!match) {
-      throw new Error("Price filter chip not found");
+
+    // Pattern 1: "X–Y" (both bounds)
+    const betweenMatch = chipText.match(/(\d+)\s*[–-]\s*(\d+)/);
+    if (betweenMatch) {
+      const [, min, max] = betweenMatch;
+      return { min: parseInt(min, 10), max: parseInt(max, 10) };
     }
-    const [, min, max] = match;
-    return { min: parseInt(min), max: parseInt(max) };
+
+    // Pattern 2: "≥ X" or ">= X" (only lower bound, no upper bound)
+    const lowerOnlyMatch = chipText.match(/≥\s*(\d+)|>=\s*(\d+)/);
+    if (lowerOnlyMatch) {
+      const value = lowerOnlyMatch[1] ?? lowerOnlyMatch[2];
+      return { min: parseInt(value, 10), max: undefined };
+    }
+
+    throw new Error(`Unrecognized price filter chip format: "${chipText}"`);
   }
 
   async verifyPriceFilterRange(min: number, max: number): Promise<void> {

@@ -92,8 +92,8 @@ const data = [
   {
     name: "Starforge",
     baseType: "Infernal Sword",
-    // dustVal: 703.49,
-    dustVal: 1055.235, // 1 influence (Shaper) - +50%
+    dustVal: 703.49,
+    influenceCount: 1,
     w: 2,
     h: 4,
     slots: 8,
@@ -102,8 +102,8 @@ const data = [
   {
     name: "Voidforge",
     baseType: "Infernal Sword",
-    // dustVal: 703.49,
-    dustVal: 1406.98, // 2 influences (Shaper, Elder) - +100%
+    dustVal: 703.49,
+    influenceCount: 2,
     w: 2,
     h: 4,
     slots: 8,
@@ -283,8 +283,8 @@ const data = [
   {
     name: "Soul Ascension",
     baseType: "Carnal Mitts",
-    // dustVal: 317.64,
-    dustVal: 474.96, // 1 influence (Elder) - +50%
+    dustVal: 317.64,
+    influenceCount: 1,
     w: 2,
     h: 2,
     slots: 4,
@@ -401,8 +401,8 @@ const data = [
   {
     name: "Replica Eternity Shroud",
     baseType: "Blood Raiment",
-    // dustVal: 165.78,
-    dustVal: 331.56, // 2 influences (Shaper, Elder) - +100%
+    dustVal: 165.78,
+    influenceCount: 2,
     w: 2,
     h: 3,
     slots: 6,
@@ -474,8 +474,8 @@ const data = [
   {
     name: "Entropic Devastation",
     baseType: "Assassin's Mitts",
-    // dustVal: 134.79,
-    dustVal: 202.185, // 1 influence (Shaper) - +50%
+    dustVal: 134.79,
+    influenceCount: 1,
     w: 2,
     h: 2,
     slots: 4,
@@ -763,8 +763,8 @@ const data = [
   {
     name: "Indigon",
     baseType: "Hubris Circlet",
-    // dustVal: 44.78,
-    dustVal: 89.56, // 2 influences (Shaper, Elder) - +100%
+    dustVal: 44.78,
+    influenceCount: 2,
     w: 2,
     h: 2,
     slots: 4,
@@ -1070,8 +1070,8 @@ const data = [
   {
     name: "The Eternity Shroud",
     baseType: "Blood Raiment",
-    // dustVal: 39.79,
-    dustVal: 79.58, // 2 influences (Shaper, Elder) - +100%
+    dustVal: 39.79,
+    influenceCount: 2,
     w: 2,
     h: 3,
     slots: 6,
@@ -1125,8 +1125,8 @@ const data = [
   {
     name: "Disintegrator",
     baseType: "Maelström Staff",
-    // dustVal: 38.63,
-    dustVal: 77.26, // 2 influences (Shaper, Elder) - +100%
+    dustVal: 38.63,
+    influenceCount: 2,
     w: 2,
     h: 4,
     slots: 8,
@@ -1621,9 +1621,9 @@ const data = [
   {
     name: "Impresence",
     baseType: "Onyx Amulet",
-    // dustVal: 20.66,
-    dustVal: 30.99, // 1 influence (Shaper) - +50%
+    dustVal: 20.66,
     // Expensive version from Uber Uber Elder has 2 influences, not used
+    influenceCount: 1,
     w: 1,
     h: 1,
     slots: 1,
@@ -1641,8 +1641,8 @@ const data = [
   {
     name: "Mark of the Elder",
     baseType: "Steel Ring",
-    // dustVal: 19.48,
-    dustVal: 29.22, // 1 influence (Elder) - +50%
+    dustVal: 19.48,
+    influenceCount: 1,
     w: 1,
     h: 1,
     slots: 1,
@@ -1651,8 +1651,8 @@ const data = [
   {
     name: "Mark of the Shaper",
     baseType: "Opal Ring",
-    // dustVal: 19.48,
-    dustVal: 29.22, // 1 influence (Shaper) - +50%
+    dustVal: 19.48,
+    influenceCount: 1,
     w: 1,
     h: 1,
     slots: 1,
@@ -1841,8 +1841,8 @@ const data = [
   {
     name: "Nebuloch",
     baseType: "Nightmare Mace",
-    // dustVal: 17.82,
-    dustVal: 26.73, // 1 influence (Elder) - +50%
+    dustVal: 17.82,
+    influenceCount: 1,
     w: 2,
     h: 3,
     slots: 6,
@@ -1851,8 +1851,8 @@ const data = [
   {
     name: "Hopeshredder",
     baseType: "Ranger Bow",
-    // dustVal: 17.82,
-    dustVal: 26.67, // 1 influence (Elder) - +50%
+    dustVal: 17.82,
+    influenceCount: 1,
     w: 2,
     h: 4,
     slots: 8,
@@ -1861,8 +1861,8 @@ const data = [
   {
     name: "Shimmeron",
     baseType: "Tornado Wand",
-    // dustVal: 17.82,
-    dustVal: 26.73, // 1 influence (Elder) - +50%
+    dustVal: 17.82,
+    influenceCount: 1,
     w: 1,
     h: 3,
     slots: 3,
@@ -2078,8 +2078,8 @@ const data = [
   {
     name: "Voidwalker",
     baseType: "Murder Boots",
-    // dustVal: 14.93,
-    dustVal: 22.395, // 1 influence (Shaper) - +50%
+    dustVal: 14.93,
+    influenceCount: 1,
     w: 2,
     h: 2,
     slots: 4,
@@ -2115,8 +2115,8 @@ const data = [
   {
     name: "Replica Voidwalker",
     baseType: "Murder Boots",
-    // dustVal: 14.93,
-    dustVal: 22.395, // 1 influence (Shaper) - +50%
+    dustVal: 14.93,
+    influenceCount: 1,
     w: 2,
     h: 2,
     slots: 4,
@@ -2251,8 +2251,8 @@ const data = [
   {
     name: "Cyclopean Coil",
     baseType: "Leather Belt",
-    // dustVal: 14.49,
-    dustVal: 21.735, // 1 influence (Elder) - +50%
+    dustVal: 14.49,
+    influenceCount: 1,
     w: 2,
     h: 1,
     slots: 2,
@@ -2261,8 +2261,8 @@ const data = [
   {
     name: "Blasphemer's Grasp",
     baseType: "Assassin's Mitts",
-    // dustVal: 14.49,
-    dustVal: 21.735, // 1 influence (Elder) - +50%
+    dustVal: 14.49,
+    influenceCount: 1,
     w: 2,
     h: 2,
     slots: 4,
@@ -2370,8 +2370,8 @@ const data = [
   {
     name: "Shaper's Touch",
     baseType: "Crusader Gloves",
-    // dustVal: 13.66,
-    dustVal: 20.49, // 1 influence (Shaper) - +50%
+    dustVal: 13.66,
+    influenceCount: 1,
     w: 2,
     h: 2,
     slots: 4,
@@ -2398,8 +2398,8 @@ const data = [
   {
     name: "Voidfletcher",
     baseType: "Primal Arrow Quiver",
-    // dustVal: 13.66,
-    dustVal: 27.32, // 2 influences (Shaper, Elder) - +100%
+    dustVal: 13.66,
+    influenceCount: 2,
     w: 2,
     h: 3,
     slots: 6,
@@ -2543,8 +2543,8 @@ const data = [
   {
     name: "Echoes of Creation",
     baseType: "Royal Burgonet",
-    // dustVal: 13.26,
-    dustVal: 19.89, // 1 influence (Shaper) - +50%
+    dustVal: 13.26,
+    influenceCount: 1,
     w: 2,
     h: 2,
     slots: 4,
@@ -2688,8 +2688,8 @@ const data = [
   {
     name: "Solstice Vigil",
     baseType: "Onyx Amulet",
-    // dustVal: 12.2,
-    dustVal: 18.3, // 1 influence (Shaper) - +50%
+    dustVal: 12.2,
+    influenceCount: 1,
     w: 1,
     h: 1,
     slots: 1,
@@ -7216,8 +7216,8 @@ const data = [
   {
     name: "Call of the Void",
     baseType: "Sapphire Ring",
-    // dustVal: 2.46,
-    dustVal: 4.92, // 2 influences (Shaper, Elder) - +100%
+    dustVal: 2.46,
+    influenceCount: 2,
     w: 1,
     h: 1,
     slots: 1,
@@ -9296,8 +9296,8 @@ const data = [
   {
     name: "The Tides of Time",
     baseType: "Vanguard Belt",
-    // dustVal: 50.4,
-    dustVal: 75.6, // 1 influence (Shaper) - +50%
+    dustVal: 50.4,
+    influenceCount: 1,
     w: 2,
     h: 1,
     slots: 2,
@@ -9306,8 +9306,8 @@ const data = [
   {
     name: "Venarius' Astrolabe",
     baseType: "Astrolabe Amulet",
-    // dustVal: 53.47,
-    dustVal: 213.88, // 6 influences (Shaper, Elder, Warlord, Redeemer, Crusader, Hunter) - +300%
+    dustVal: 53.47,
+    influenceCount: 6,
     w: 1,
     h: 1,
     slots: 1,
@@ -9541,8 +9541,8 @@ const data = [
   {
     name: "The Devourer of Minds",
     baseType: "Pig-Faced Bascinet",
-    // dustVal: 37.5,
-    dustVal: 56.25, // 1 influence (Elder) - +50%
+    dustVal: 37.5,
+    influenceCount: 1,
     w: 2,
     h: 2,
     slots: 4,

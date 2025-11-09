@@ -32,6 +32,7 @@ describe("dedupeCheapestVariants", () => {
         icon: "http://example.com/icon.png",
         listingCount: 5,
         detailsId: "single-item-cool-type",
+        itemType: "Weapon",
       };
       const input: InternalItem[] = [singleItem];
       const output = dedupeCheapestVariants(input);
@@ -50,6 +51,7 @@ describe("dedupeCheapestVariants", () => {
           icon: "http://example.com/icon1.png",
           listingCount: 5,
           detailsId: "unique-item-one-cool-type-one",
+          itemType: "Weapon",
         },
         {
           type: "UniqueArmour",
@@ -59,6 +61,7 @@ describe("dedupeCheapestVariants", () => {
           icon: "http://example.com/icon2.png",
           listingCount: 3,
           detailsId: "unique-item-two-cool-type-two",
+          itemType: "Armour",
         },
       ];
       const output = dedupeCheapestVariants(items);
@@ -76,6 +79,7 @@ describe("dedupeCheapestVariants", () => {
         baseType: "Cool Base",
         icon: "http://example.com/icon.png",
         detailsId: "duplicate-item-cool-base",
+        itemType: "Weapon",
       };
       const item1: InternalItem = { ...baseItem, chaos: 15, listingCount: 2 };
       const item2: InternalItem = { ...baseItem, chaos: 10, listingCount: 3 }; // Cheaper
@@ -96,6 +100,7 @@ describe("dedupeCheapestVariants", () => {
         baseType: "Cool Base",
         icon: "http://example.com/icon.png",
         detailsId: "tie-item-cool-base",
+        itemType: "Weapon",
       };
       const item1: InternalItem = { ...baseItem, chaos: 10, listingCount: 2 };
       const item2: InternalItem = {
@@ -119,6 +124,7 @@ describe("dedupeCheapestVariants", () => {
         baseType: "Cool Relic",
         icon: "http://example.com/icon.png",
         detailsId: "special-item-cool-relic",
+        itemType: "Weapon",
       };
       const item1: InternalItem = { ...baseItem, chaos: 15, listingCount: 2 };
       const item2: InternalItem = {
@@ -142,6 +148,7 @@ describe("dedupeCheapestVariants", () => {
         name: "Mixed Item",
         baseType: "Cool Base",
         icon: "http://example.com/icon.png",
+        itemType: "Weapon",
       };
       const nonSpecial: InternalItem = {
         ...baseItem,
@@ -170,6 +177,7 @@ describe("dedupeCheapestVariants", () => {
         baseType: "Cool Base",
         icon: "http://example.com/icon.png",
         detailsId: "multi-item-cool-base",
+        itemType: "Weapon",
       };
       const item1: InternalItem = { ...baseItem, chaos: 15, listingCount: 2 };
       const item2: InternalItem = { ...baseItem, chaos: 10, listingCount: 3 }; // Cheapest
@@ -202,6 +210,7 @@ describe("dedupeCheapestVariants", () => {
         icon: "http://example.com/icon.png",
         listingCount: 5,
         detailsId: "valid-item-cool-base",
+        itemType: "Weapon",
       };
       const input: (InternalItem | null)[] = [validItem, null];
       // Since null.name would throw, expect throw
@@ -217,6 +226,7 @@ describe("dedupeCheapestVariants", () => {
         icon: "http://example.com/icon.png",
         listingCount: 5,
         detailsId: "malformed-item-cool-base",
+        itemType: "Weapon",
       }; // No name
       const validItem: InternalItem = {
         ...malformed,
@@ -241,6 +251,7 @@ describe("dedupeCheapestVariants", () => {
         icon: "http://example.com/icon.png",
         listingCount: 5,
         detailsId: "nan-chaos-item-cool-base",
+        itemType: "Weapon",
       };
       const valid: InternalItem = { ...baseItem, chaos: 10 };
       const nanChaos = { ...baseItem, chaos: NaN };
@@ -260,6 +271,7 @@ describe("dedupeCheapestVariants", () => {
         icon: "http://example.com/icon.png",
         listingCount: 5,
         detailsId: "partial-item-cool-base",
+        itemType: "Weapon",
       };
       const numberItem = 123; // Primitive, .name undefined
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -279,6 +291,7 @@ describe("dedupeCheapestVariants", () => {
         baseType: "Cool Base",
         icon: "http://example.com/icon.png",
         detailsId: "large-item-cool-base",
+        itemType: "Weapon",
       };
       const input: InternalItem[] = [];
       for (let group = 0; group < 100; group++) {
@@ -308,6 +321,7 @@ describe("dedupeCheapestVariants", () => {
         baseType: "Cool Base",
         icon: "http://example.com/icon.png",
         detailsId: "suffix-item-cool-base-relic-extra", // suffix not at end
+        itemType: "Weapon",
       };
       const item1: InternalItem = { ...baseItem, chaos: 15, listingCount: 2 };
       const item2: InternalItem = { ...baseItem, chaos: 10, listingCount: 3 }; // Cheaper
@@ -328,6 +342,7 @@ describe("dedupeCheapestVariants", () => {
         name: "All Specials Item",
         baseType: "Cool Base",
         icon: "http://example.com/icon.png",
+        itemType: "Weapon",
       };
       const relic: InternalItem = {
         ...baseItem,
@@ -364,6 +379,7 @@ describe("dedupeCheapestVariants", () => {
         name: "Mixed All Specials Item",
         baseType: "Cool Base",
         icon: "http://example.com/icon.png",
+        itemType: "Weapon",
       };
       const nonSpecial1: InternalItem = {
         ...baseItem,
@@ -419,6 +435,7 @@ describe("dedupeCheapestVariants", () => {
         baseType: "Cool Base",
         icon: "http://example.com/icon.png",
         detailsId: "zero-chaos-item-cool-base",
+        itemType: "Weapon",
       };
       const zeroChaos: InternalItem = {
         ...baseItem,
@@ -444,6 +461,7 @@ describe("dedupeCheapestVariants", () => {
         baseType: "Cool Base",
         icon: "http://example.com/icon.png",
         detailsId: "zero-count-item-cool-base",
+        itemType: "Weapon",
       };
       const item1: InternalItem = { ...baseItem, chaos: 10, listingCount: 0 };
       const item2: InternalItem = { ...baseItem, chaos: 15, listingCount: 3 };
@@ -465,6 +483,7 @@ describe("dedupeCheapestVariants", () => {
         icon: "http://example.com/foulborn.png",
         listingCount: 5,
         detailsId: "foulborn-the-surrender",
+        itemType: "Weapon",
       };
       const regularItem: InternalItem = {
         type: "UniqueWeapon",
@@ -474,6 +493,7 @@ describe("dedupeCheapestVariants", () => {
         icon: "http://example.com/regular.png",
         listingCount: 3,
         detailsId: "the-surrender",
+        itemType: "Weapon",
       };
 
       // Test Foulborn detection
@@ -496,6 +516,7 @@ describe("dedupeCheapestVariants", () => {
         icon: "http://example.com/regular.png",
         listingCount: 4,
         detailsId: "the-surrender",
+        itemType: "Weapon",
       };
       const foulbornItem: InternalItem = {
         type: "UniqueWeapon",
@@ -505,6 +526,7 @@ describe("dedupeCheapestVariants", () => {
         icon: "http://example.com/foulborn.png",
         listingCount: 2,
         detailsId: "foulborn-the-surrender",
+        itemType: "Weapon",
       };
 
       const input: InternalItem[] = [regularItem, foulbornItem];
@@ -525,6 +547,7 @@ describe("dedupeCheapestVariants", () => {
         icon: "http://example.com/regular.png",
         listingCount: 2,
         detailsId: "the-surrender",
+        itemType: "Weapon",
       };
       const foulbornRelic: InternalItem = {
         type: "UniqueWeapon",
@@ -534,6 +557,7 @@ describe("dedupeCheapestVariants", () => {
         icon: "http://example.com/foulborn-relic.png",
         listingCount: 3,
         detailsId: "foulborn-the-surrender-relic",
+        itemType: "Weapon",
       };
       const regularRelic: InternalItem = {
         type: "UniqueWeapon",
@@ -543,6 +567,7 @@ describe("dedupeCheapestVariants", () => {
         icon: "http://example.com/regular-relic.png",
         listingCount: 1,
         detailsId: "the-surrender-relic",
+        itemType: "Weapon",
       };
 
       const input: InternalItem[] = [regularItem, foulbornRelic, regularRelic];
@@ -567,6 +592,7 @@ describe("dedupeCheapestVariants", () => {
         icon: "http://example.com/regular.png",
         listingCount: 1,
         detailsId: "the-surrender",
+        itemType: "Weapon",
       };
       const foulbornItem1: InternalItem = {
         type: "UniqueWeapon",
@@ -576,6 +602,7 @@ describe("dedupeCheapestVariants", () => {
         icon: "http://example.com/foulborn1.png",
         listingCount: 2,
         detailsId: "foulborn-the-surrender",
+        itemType: "Weapon",
       };
       const foulbornItem2: InternalItem = {
         type: "UniqueWeapon",
@@ -585,6 +612,7 @@ describe("dedupeCheapestVariants", () => {
         icon: "http://example.com/foulborn2.png",
         listingCount: 3,
         detailsId: "foulborn-the-surrender-variant",
+        itemType: "Weapon",
       };
 
       const input: InternalItem[] = [regularItem, foulbornItem1, foulbornItem2];
@@ -605,6 +633,7 @@ describe("dedupeCheapestVariants", () => {
         icon: "http://example.com/regular1.png",
         listingCount: 2,
         detailsId: "the-surrender",
+        itemType: "Weapon",
       };
       const foulbornItem1: InternalItem = {
         type: "UniqueWeapon",
@@ -614,6 +643,7 @@ describe("dedupeCheapestVariants", () => {
         icon: "http://example.com/foulborn1.png",
         listingCount: 3,
         detailsId: "foulborn-the-surrender",
+        itemType: "Weapon",
       };
       const regularItem2: InternalItem = {
         type: "UniqueWeapon",
@@ -623,6 +653,7 @@ describe("dedupeCheapestVariants", () => {
         icon: "http://example.com/regular2.png",
         listingCount: 1,
         detailsId: "perseverance",
+        itemType: "Armour",
       };
       const foulbornItem2: InternalItem = {
         type: "UniqueWeapon",
@@ -632,6 +663,7 @@ describe("dedupeCheapestVariants", () => {
         icon: "http://example.com/foulborn2.png",
         listingCount: 4,
         detailsId: "foulborn-perseverance",
+        itemType: "Armour",
       };
 
       const input: InternalItem[] = [
@@ -670,6 +702,7 @@ describe("dedupeCheapestVariants", () => {
         icon: "http://example.com/foulborn.png",
         listingCount: 2,
         detailsId: "foulborn",
+        itemType: "Weapon",
       };
       const regularItem: InternalItem = {
         type: "UniqueWeapon",
@@ -679,6 +712,7 @@ describe("dedupeCheapestVariants", () => {
         icon: "http://example.com/regular.png",
         listingCount: 3,
         detailsId: "foulborn-regular",
+        itemType: "Weapon",
       };
 
       const input: InternalItem[] = [foulbornItem, regularItem];
@@ -699,6 +733,7 @@ describe("dedupeCheapestVariants", () => {
         icon: "http://example.com/foulborn.png",
         listingCount: 3,
         detailsId: "foulborn-the-surrender",
+        itemType: "Weapon",
       };
 
       const input: InternalItem[] = [foulbornOnly];

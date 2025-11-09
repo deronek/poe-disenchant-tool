@@ -12,7 +12,7 @@ export function CatalystInfo() {
 
       <div className="flex flex-col gap-2">
         <p className="text-sm leading-relaxed">
-          This jewelry item should be valuable enough to justify catalyst
+          This jewellery item should be valuable enough to justify catalyst
           investment.
         </p>
 
