@@ -106,7 +106,7 @@ async function calculateDustEfficiency(
   }
   if (isQuiver(priceItem)) {
     // Quivers cannot have quality
-    console.debug("Quiver, ignoring quality", priceItem.name);
+    console.log("Quiver, ignoring quality", priceItem.name);
     return {
       dustValue: dustItem.dustValIlvl84,
       dustPerChaos: dustItem.dustValIlvl84 / priceItem.chaos,
