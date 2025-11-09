@@ -11,16 +11,13 @@ export function NameFilter<TData extends Item>({
   table: Table<TData>;
 }) {
   const column = table.getColumn("name");
+  const getExternal = () => (column?.getFilterValue() as string) ?? "";
 
   // Local controlled state
-  const [value, setValue] = useState<string>(
-    (column?.getFilterValue() as string) ?? "",
-  );
+  const [value, setValue] = useState<string>(getExternal());
 
   // Track what we last wrote into the column from this component
-  const lastPushedValueRef = useRef<string>(
-    (column?.getFilterValue() as string) ?? "",
-  );
+  const lastPushedValueRef = useRef<string>(getExternal());
 
   // Debounced filter setter
   useEffect(() => {
@@ -36,7 +33,7 @@ export function NameFilter<TData extends Item>({
   // Keep local state in sync if external table state changes (e.g., clear from chip),
   // but avoid overwriting active user input with stale values.
   useEffect(() => {
-    const external = (column?.getFilterValue() as string) ?? "";
+    const external = getExternal();
 
     // If the external value matches what we last intentionally pushed,
     // it's just our own update coming back through the table; ignore.
