@@ -1,7 +1,6 @@
 import type { Item } from "@/lib/itemData";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Table } from "@tanstack/react-table";
-import { useDebouncedCallback } from "use-debounce";
 
 import { Input } from "@/components/ui/input";
 import { XButton } from "./ui/x-button";
@@ -13,20 +12,41 @@ export function NameFilter<TData extends Item>({
 }) {
   const column = table.getColumn("name");
 
-  // Local controlled state to avoid stale refs from table.getColumn()
+  // Local controlled state
   const [value, setValue] = useState<string>(
     (column?.getFilterValue() as string) ?? "",
   );
 
-  // Debounced filter setter
-  const debouncedSetFilter = useDebouncedCallback((newValue: string) => {
-    column?.setFilterValue(newValue);
-  }, 250);
+  // Track what we last wrote into the column from this component
+  const lastPushedValueRef = useRef<string>(
+    (column?.getFilterValue() as string) ?? "",
+  );
 
-  // Keep local state in sync if external table state changes (e.g., clear from chip)
+  // Debounced filter setter
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      if (!column) return;
+      column.setFilterValue(value);
+      lastPushedValueRef.current = value;
+    }, 250);
+
+    return () => clearTimeout(handler);
+  }, [value, column]);
+
+  // Keep local state in sync if external table state changes (e.g., clear from chip),
+  // but avoid overwriting active user input with stale values.
   useEffect(() => {
     const external = (column?.getFilterValue() as string) ?? "";
+
+    // If the external value matches what we last intentionally pushed,
+    // it's just our own update coming back through the table; ignore.
+    if (external === lastPushedValueRef.current) {
+      return;
+    }
+
+    // Otherwise, treat as a true external change and adopt it.
     setValue(external);
+    lastPushedValueRef.current = external;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [table.getState().columnFilters]);
 
@@ -38,7 +58,6 @@ export function NameFilter<TData extends Item>({
         onChange={(e) => {
           const v = e.target.value;
           setValue(v);
-          debouncedSetFilter(v);
         }}
         aria-label="Filter by name or variant"
         className="pr-8"
@@ -51,6 +70,7 @@ export function NameFilter<TData extends Item>({
           onClick={() => {
             column?.setFilterValue("");
             setValue("");
+            lastPushedValueRef.current = "";
           }}
         >
           ×
