@@ -33,12 +33,6 @@ const nextConfig: NextConfig = {
     PDT_APP_VERSION: packageJson.version,
     PDT_APP_NAME: packageJson.name,
   },
-  // experimental: {
-  //   staleTimes: {
-  //     dynamic: 180,
-  //     static: 180,
-  //   },
-  // },
 };
 
 export default nextConfig;

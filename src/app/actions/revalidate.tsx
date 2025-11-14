@@ -95,11 +95,8 @@ async function warmOrigin(fullWarmUrl: string) {
 
   const res = await fetch(fullWarmUrl, {
     method: "GET",
-    // cache: "no-store",
     redirect: "manual", // don't follow redirects
     headers: {
-      //   pragma: "no-cache",
-      //   "cache-control": "no-cache",
       cookie: requestCookies,
     },
   });
@@ -150,7 +147,8 @@ export async function revalidateDataAction(
 
   // 30 minutes
   if (age < 30 * 60 * 1000) {
-    console.log("Data was not revalidated");
+    console.debug("Data was not revalidated");
+    // Client will call router.refresh() to get the latest data
     return { shouldRefresh: true };
   }
 
@@ -160,6 +158,7 @@ export async function revalidateDataAction(
     const fullWarmUrl = `${normalizedOrigin}/${league}`;
     await warmOrigin(fullWarmUrl);
     return {
+      // Next.js will automatically deliver newest RSC data to client
       shouldRefresh: false,
     };
   } catch (err) {
