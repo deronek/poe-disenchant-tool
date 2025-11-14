@@ -1,5 +1,6 @@
 "use client";
 
+import type { revalidateDataAction } from "@/app/actions/revalidate";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Clock, RefreshCw } from "lucide-react";
@@ -27,7 +28,7 @@ import {
 interface LastUpdatedProps {
   timestamp: Date;
   league: string;
-  revalidateDataAction: (origin: string, league: string) => Promise<unknown>;
+  revalidateDataAction: typeof revalidateDataAction;
 }
 
 export default function LastUpdated({
@@ -92,9 +93,8 @@ export default function LastUpdated({
       // Call the Server Action to revalidate data
       const res = await revalidateDataAction(window.location.origin, league);
       console.debug("revalidateData response:", res);
-      // @ts-ignore
-      if (res.shouldRefresh) {
-        console.log("Calling router.refresh");
+      if (res && res.shouldRefresh) {
+        // Data was not revalidated in that request. Fetch the newest page.
         router.refresh();
       }
     } catch (error) {
