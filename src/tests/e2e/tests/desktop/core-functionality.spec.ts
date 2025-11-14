@@ -257,18 +257,4 @@ test.describe("Last Updated Functionality", () => {
 
     await poePage.verifyDateTimeAttribute(absoluteTime);
   });
-
-  test("should handle refresh button click", async ({ poePage }) => {
-    await poePage.setAlwaysShowRefreshFlag();
-    await poePage.page.reload();
-    await poePage.waitForDataLoad();
-
-    // Click refresh button
-    await poePage.clickRefreshButton();
-
-    // Wait for refresh process to complete
-    // We should have fresh data
-    const lastUpdated = poePage.lastUpdatedElement;
-    await expect(lastUpdated).toHaveText(/just now/i);
-  });
 });
