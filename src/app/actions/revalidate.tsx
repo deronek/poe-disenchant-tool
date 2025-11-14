@@ -148,15 +148,14 @@ export async function revalidateDataAction(
 
   const age = Date.now() - lastUpdated;
 
-  // 5 minutes
-  if (age < 5 * 60 * 1000) {
+  // 30 minutes
+  if (age < 30 * 60 * 1000) {
     console.log("Data was not revalidated");
     return { shouldRefresh: true };
   }
 
   try {
     // Revalidate specific league page
-    // revalidateTag(`items-${league}`, "max");
     revalidatePath(`/${league}`, "page");
     const fullWarmUrl = `${normalizedOrigin}/${league}`;
     const warmResult = await warmOrigin(fullWarmUrl);

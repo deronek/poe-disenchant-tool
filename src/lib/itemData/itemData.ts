@@ -166,6 +166,6 @@ function calculateLowStockThreshold(items: Item[]) {
 export const getItems = async (league: League) => {
   return unstable_cache(async () => uncached__getItems(league), [league], {
     tags: [`items-${league}`],
-    revalidate: 300, // 5 minutes
+    revalidate: 1800, // 30 minutes
   })();
 };
