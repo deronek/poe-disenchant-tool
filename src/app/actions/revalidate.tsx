@@ -1,6 +1,7 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
+import { getItems } from "@/lib/itemData";
 import { isValidLeague } from "@/lib/leagues";
 
 function normalizeOrigin(origin: string) {
@@ -143,13 +144,28 @@ export async function revalidateDataAction(
   console.debug("allowlist", allowlist);
   const normalizedOrigin = validateOriginAllowed(originFromClient, allowlist);
 
+  const { lastUpdated } = await getItems(league);
+
+  const age = Date.now() - lastUpdated;
+
+  // 5 minutes
+  if (age < 5 * 60 * 1000) {
+    console.log("Data was not revalidated");
+    return { shouldRefresh: true };
+  }
+
   try {
     // Revalidate specific league page
     revalidateTag(`items-${league}`, "max");
     revalidatePath(`/${league}`, "page");
     const fullWarmUrl = `${normalizedOrigin}/${league}`;
     const warmResult = await warmOrigin(fullWarmUrl);
-    return { ok: true, warmedOrigin: fullWarmUrl, ...warmResult };
+    return {
+      ok: true,
+      warmedOrigin: fullWarmUrl,
+      ...warmResult,
+      shouldRefresh: false,
+    };
   } catch (err) {
     // If we've thrown a Response via throwHttpError, it already propagated as the proper HTTP code.
     // Any other unexpected errors become 500.
