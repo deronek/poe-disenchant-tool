@@ -25,6 +25,16 @@ import {
   formatRelativeTime,
 } from "@/lib/dateUtils";
 
+const ERROR_TITLE = "Failed to refresh data";
+const ERROR_DESCRIPTION =
+  "Unable to refresh the price data. Please try again later.";
+
+const displayErrorToast = () => {
+  toast.error(ERROR_TITLE, {
+    description: ERROR_DESCRIPTION,
+  });
+};
+
 interface LastUpdatedProps {
   timestamp: Date;
   league: string;
@@ -100,26 +110,38 @@ export default function LastUpdated({
     const currentTs = timestamp.getTime();
     const expectedTs = expectedLastUpdated;
 
-    // If RSC delivered stale data → retry refresh
-    if (currentTs < expectedTs) {
-      const attempt = retryRef.current++;
-      const delay = Math.min(200 * Math.pow(2, attempt), 2000); // exponential, max 2s
-
-      console.debug(
-        `RSC stale after refresh (current=${currentTs}, expected=${expectedTs}), retry in ${delay}ms`,
-      );
-
-      const t = setTimeout(() => {
-        router.refresh();
-      }, delay);
-
-      return () => clearTimeout(t);
+    // Timestamp has caught up — success!
+    if (currentTs >= expectedTs) {
+      cleanUpManualRefresh();
+      return;
     }
 
-    // Once RSC catches up → reset tracking
-    retryRef.current = 0;
-    setExpectedLastUpdated(null);
-    setIsRefreshing(false);
+    // Stale — need another retry
+    const attempt = retryRef.current;
+
+    // Bail out after 5 attempts
+    if (attempt >= 5) {
+      console.error(
+        `RSC still stale after ${attempt} retries (current=${currentTs}, expected=${expectedTs})`,
+      );
+
+      displayErrorToast();
+      cleanUpManualRefresh();
+      return;
+    }
+
+    // Exponential backoff, max 2s
+    const delay = Math.min(200 * Math.pow(2, attempt), 2000);
+    console.debug(
+      `RSC stale after refresh (current=${currentTs}, expected=${expectedTs}), retry #${attempt} in ${delay}ms`,
+    );
+
+    const timer = setTimeout(() => {
+      retryRef.current++;
+      router.refresh();
+    }, delay);
+
+    return () => clearTimeout(timer);
   }, [timestamp, expectedLastUpdated, router]);
 
   const handleRefresh = async () => {
@@ -137,9 +159,8 @@ export default function LastUpdated({
       }
     } catch (error) {
       console.error("Failed to refresh data:", error);
-      toast.error("Failed to refresh data", {
-        description:
-          "Unable to refresh the price data. Please try again later.",
+      toast.error(ERROR_TITLE, {
+        description: ERROR_DESCRIPTION,
       });
       // Remove the loading state, since we don't get the updated data
       setIsRefreshing(false);
@@ -150,6 +171,12 @@ export default function LastUpdated({
       // If for some reason we get the same data from the server (e.g. because of Data Cache),
       // this will keep the "revalidating" state until next time update.
     }
+  };
+
+  const cleanUpManualRefresh = () => {
+    retryRef.current = 0;
+    setExpectedLastUpdated(null);
+    setIsRefreshing(false);
   };
 
   const tooltipContent = (
