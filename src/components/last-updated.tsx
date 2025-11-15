@@ -56,6 +56,8 @@ export default function LastUpdated({
     null,
   );
   const retryRef = useRef(0);
+  const [waitingForInitialRefresh, setWaitingForInitialRefresh] =
+    useState(false);
 
   const router = useRouter();
 
@@ -107,6 +109,12 @@ export default function LastUpdated({
   useEffect(() => {
     if (expectedLastUpdated == null) return;
 
+    // Skip the first effect run right after calling router.refresh() in revalidation handler
+    if (waitingForInitialRefresh) {
+      setWaitingForInitialRefresh(false);
+      return;
+    }
+
     const currentTs = timestamp.getTime();
     const expectedTs = expectedLastUpdated;
 
@@ -153,6 +161,7 @@ export default function LastUpdated({
 
       // If no revalidation occurred, just refresh once
       if (res.shouldRefresh) {
+        setWaitingForInitialRefresh(true);
         setExpectedLastUpdated(res.lastUpdated);
         router.refresh();
         return;
