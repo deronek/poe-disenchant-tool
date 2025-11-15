@@ -145,7 +145,7 @@ export async function revalidateDataAction(
   if (age < 30 * 60 * 1000) {
     console.debug("Data was not revalidated");
     // Client will call router.refresh() to get the latest data
-    return { shouldRefresh: true, oldLastUpdated: lastUpdated, age: age };
+    return { shouldRefresh: true, lastUpdated: lastUpdated };
   }
 
   try {
@@ -160,8 +160,7 @@ export async function revalidateDataAction(
     return {
       // Next.js will automatically deliver newest RSC data to client
       shouldRefresh: false,
-      oldLastUpdated: lastUpdated,
-      age: age,
+      lastUpdated: lastUpdated,
     };
   } catch (err) {
     // If we've thrown a Response via throwHttpError, it already propagated as the proper HTTP code.

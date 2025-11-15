@@ -1,7 +1,7 @@
 "use client";
 
 import type { revalidateDataAction } from "@/app/actions/revalidate";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Clock, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
@@ -40,6 +40,12 @@ export default function LastUpdated({
   const [absoluteTime, setAbsoluteTime] = useState("");
   const [isStale, setIsStale] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+
+  // Expected last updated timestamp, only for retrying refresh after manual revalidation
+  const [expectedLastUpdated, setExpectedLastUpdated] = useState<number | null>(
+    null,
+  );
+  const retryRef = useRef(0);
 
   const router = useRouter();
 
@@ -88,15 +94,46 @@ export default function LastUpdated({
     return () => clearInterval(interval);
   }, [timestamp]);
 
+  useEffect(() => {
+    if (expectedLastUpdated == null) return;
+
+    const currentTs = timestamp.getTime();
+    const expectedTs = expectedLastUpdated;
+
+    // If RSC delivered stale data → retry refresh
+    if (currentTs < expectedTs) {
+      const attempt = retryRef.current++;
+      const delay = Math.min(200 * Math.pow(2, attempt), 2000); // exponential, max 2s
+
+      console.debug(
+        `RSC stale after refresh (current=${currentTs}, expected=${expectedTs}), retry in ${delay}ms`,
+      );
+
+      const t = setTimeout(() => {
+        router.refresh();
+      }, delay);
+
+      return () => clearTimeout(t);
+    }
+
+    // Once RSC catches up → reset tracking
+    retryRef.current = 0;
+    setExpectedLastUpdated(null);
+    setIsRefreshing(false);
+  }, [timestamp, expectedLastUpdated, router]);
+
   const handleRefresh = async () => {
     setIsRefreshing(true);
     try {
       // Call the Server Action to revalidate data
       const res = await revalidateDataAction(window.location.origin, league);
       console.debug("revalidateData response:", res);
-      if (res && res.shouldRefresh) {
-        // Data was not revalidated in that request. Fetch the newest page.
+
+      // If no revalidation occurred, just refresh once
+      if (res.shouldRefresh) {
+        setExpectedLastUpdated(res.lastUpdated);
         router.refresh();
+        return;
       }
     } catch (error) {
       console.error("Failed to refresh data:", error);
