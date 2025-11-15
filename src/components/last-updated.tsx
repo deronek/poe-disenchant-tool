@@ -65,6 +65,7 @@ export default function LastUpdated({
 
   useEffect(() => {
     const updateTime = () => {
+      console.debug("Updating with new timestamp: ", timestamp);
       const now = new Date();
       const { diffInMinutes, diffInHours, diffInDays } =
         calculateTimeDifferences(timestamp, now);

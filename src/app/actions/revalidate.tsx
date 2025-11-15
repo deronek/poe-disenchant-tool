@@ -137,10 +137,6 @@ export async function revalidateDataAction(
     throwHttpError(`Invalid league parameter: ${league}`, 400);
   }
 
-  const allowlist = buildAllowlistOrigins();
-  console.debug("allowlist", allowlist);
-  const normalizedOrigin = validateOriginAllowed(originFromClient, allowlist);
-
   const { lastUpdated } = await getItems(league);
 
   const age = Date.now() - lastUpdated;
@@ -149,10 +145,14 @@ export async function revalidateDataAction(
   if (age < 30 * 60 * 1000) {
     console.debug("Data was not revalidated");
     // Client will call router.refresh() to get the latest data
-    return { shouldRefresh: true };
+    return { shouldRefresh: true, oldLastUpdated: lastUpdated, age: age };
   }
 
   try {
+    const allowlist = buildAllowlistOrigins();
+    console.debug("allowlist", allowlist);
+    const normalizedOrigin = validateOriginAllowed(originFromClient, allowlist);
+
     // Revalidate specific league page
     revalidatePath(`/${league}`, "page");
     const fullWarmUrl = `${normalizedOrigin}/${league}`;
@@ -160,6 +160,8 @@ export async function revalidateDataAction(
     return {
       // Next.js will automatically deliver newest RSC data to client
       shouldRefresh: false,
+      oldLastUpdated: lastUpdated,
+      age: age,
     };
   } catch (err) {
     // If we've thrown a Response via throwHttpError, it already propagated as the proper HTTP code.
