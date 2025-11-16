@@ -148,7 +148,7 @@ export default function LastUpdated({
       // If below condition is false, we are currently retrying the refresh
       // and should keep the refreshing state
       if (retryRef.current === 0) {
-        console.log(
+        console.debug(
           "setIsRefreshing(false) in updateTime",
           retryRef.current,
           waitingForInitialRefreshRef.current,
@@ -170,13 +170,10 @@ export default function LastUpdated({
       const res = await revalidateDataAction(window.location.origin, league);
       console.debug("revalidateData response:", res);
 
-      // If no revalidation occurred, just refresh once
-      if (res.shouldRefresh) {
-        waitingForInitialRefreshRef.current = true;
-        setExpectedLastUpdated(res.lastUpdated);
-        router.refresh();
-        return;
-      }
+      // Even if server should refresh automatically if revalidation happened,
+      // handle manual refresh in case it doesn't
+      waitingForInitialRefreshRef.current = true;
+      setExpectedLastUpdated(res.lastUpdated);
       router.refresh();
     } catch (error) {
       console.error("Failed to refresh data:", error);
@@ -186,9 +183,7 @@ export default function LastUpdated({
     } finally {
       // Not removing the loading state here, since there's a gap between setting this
       // and revalidation being reflected in the UI.
-      // Updated date will hide the button.
-      // If for some reason we get the same data from the server (e.g. because of Data Cache),
-      // this will keep the "revalidating" state until next time update.
+      // Updating timestamp from parent will hide the button.
     }
   };
 
