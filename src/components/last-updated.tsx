@@ -95,6 +95,7 @@ export default function LastUpdated({
 
     // Timestamp has caught up — success!
     if (currentTs >= expectedTs) {
+      console.debug("RSC caught up, cleaning up", currentTs, expectedTs);
       cleanUpManualRefresh();
       return;
     }
