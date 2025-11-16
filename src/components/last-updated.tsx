@@ -130,6 +130,12 @@ export default function LastUpdated({
   }, [timestamp, expectedLastUpdated, router]);
 
   useEffect(() => {
+    console.debug(
+      "useEffect updateTime",
+      timestamp,
+      retryRef.current,
+      waitingForInitialRefreshRef.current,
+    );
     const updateTime = () => {
       console.debug("Updating with new timestamp: ", timestamp);
       const now = new Date();
