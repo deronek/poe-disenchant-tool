@@ -146,7 +146,7 @@ export default function LastUpdated({
 
       // If below condition is false, we are currently retrying the refresh
       // and should keep the refreshing state
-      if (retryRef.current !== 0) {
+      if (retryRef.current === 0) {
         console.log(
           "setIsRefreshing(false) in updateTime",
           retryRef.current,
