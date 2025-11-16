@@ -110,6 +110,7 @@ export default function LastUpdated({
 
       displayErrorToast();
       cleanUpManualRefresh();
+      setIsRefreshing(false);
       return;
     }
 
@@ -198,7 +199,6 @@ export default function LastUpdated({
     );
     retryRef.current = 0;
     setExpectedLastUpdated(null);
-    setIsRefreshing(false);
   };
 
   const tooltipContent = (
