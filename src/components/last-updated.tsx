@@ -83,10 +83,9 @@ export default function LastUpdated({
   useEffect(() => {
     if (expectedLastUpdated == null) return;
 
-    retryRef.current = 1;
-
     // Skip the first effect run right after calling router.refresh() in revalidation handler
     if (waitingForInitialRefreshRef.current) {
+      retryRef.current = 1;
       waitingForInitialRefreshRef.current = false;
       return;
     }
@@ -148,6 +147,11 @@ export default function LastUpdated({
       // If below condition is false, we are currently retrying the refresh
       // and should keep the refreshing state
       if (retryRef.current !== 0) {
+        console.log(
+          "setIsRefreshing(false) in updateTime",
+          retryRef.current,
+          waitingForInitialRefreshRef.current,
+        );
         setIsRefreshing(false);
       }
     };
@@ -189,6 +193,11 @@ export default function LastUpdated({
   };
 
   const cleanUpManualRefresh = () => {
+    console.log(
+      "cleanUpManualRefresh",
+      retryRef.current,
+      waitingForInitialRefreshRef.current,
+    );
     retryRef.current = 0;
     setExpectedLastUpdated(null);
     setIsRefreshing(false);
