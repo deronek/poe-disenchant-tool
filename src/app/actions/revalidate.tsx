@@ -145,7 +145,7 @@ export async function revalidateDataAction(
   if (age < 30 * 60 * 1000) {
     console.debug("Data was not revalidated");
     // Client will call router.refresh() to get the latest data
-    return { shouldRefresh: true, lastUpdated: lastUpdated };
+    return { didRevalidate: false, lastUpdated: lastUpdated };
   }
 
   try {
@@ -157,10 +157,12 @@ export async function revalidateDataAction(
     revalidatePath(`/${league}`, "page");
     const fullWarmUrl = `${normalizedOrigin}/${league}`;
     await warmOrigin(fullWarmUrl);
+
+    const { lastUpdated: newLastUpdated } = await getItems(league);
     return {
-      // Next.js will automatically deliver newest RSC data to client
-      shouldRefresh: false,
-      lastUpdated: lastUpdated,
+      // Next.js should automatically deliver newest RSC data to client, but sometimes doesn't
+      didRevalidate: true,
+      lastUpdated: newLastUpdated,
     };
   } catch (err) {
     // If we've thrown a Response via throwHttpError, it already propagated as the proper HTTP code.
