@@ -91,7 +91,7 @@ export default function LastUpdated({
     }
 
     const currentTs = timestamp.getTime();
-    const expectedTs = expectedLastUpdated;
+    const expectedTs = expectedLastUpdated - 5 * 1000; // Tolerance is 5 seconds
 
     // Timestamp has caught up — success!
     if (currentTs >= expectedTs) {
