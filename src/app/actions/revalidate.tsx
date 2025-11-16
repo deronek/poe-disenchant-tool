@@ -137,9 +137,10 @@ export async function revalidateDataAction(
     throwHttpError(`Invalid league parameter: ${league}`, 400);
   }
 
+  const now = Date.now();
   const { lastUpdated } = await getItems(league);
 
-  const age = Date.now() - lastUpdated;
+  const age = now - lastUpdated;
 
   // 30 minutes
   if (age < 30 * 60 * 1000) {
@@ -162,7 +163,7 @@ export async function revalidateDataAction(
     return {
       // Next.js should automatically deliver newest RSC data to client, but sometimes doesn't
       didRevalidate: true,
-      lastUpdated: newLastUpdated,
+      lastUpdated: now,
     };
   } catch (err) {
     // If we've thrown a Response via throwHttpError, it already propagated as the proper HTTP code.
