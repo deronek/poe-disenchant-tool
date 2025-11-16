@@ -178,9 +178,7 @@ export default function LastUpdated({
       }
     } catch (error) {
       console.error("Failed to refresh data:", error);
-      toast.error(ERROR_TITLE, {
-        description: ERROR_DESCRIPTION,
-      });
+      displayErrorToast();
       // Remove the loading state, since we don't get the updated data
       setIsRefreshing(false);
     } finally {
