@@ -142,7 +142,12 @@ export default function LastUpdated({
       setRelativeTime(relative);
       setAbsoluteTime(absolute);
       setIsStale(diffInMinutes >= 30);
-      setIsRefreshing(false);
+
+      // If below condition is false, we are currently retrying the refresh
+      // and should keep the refreshing state
+      if (expectedLastUpdated === null) {
+        setIsRefreshing(false);
+      }
     };
 
     updateTime();
