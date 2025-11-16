@@ -56,8 +56,7 @@ export default function LastUpdated({
     null,
   );
   const retryRef = useRef(0);
-  const [waitingForInitialRefresh, setWaitingForInitialRefresh] =
-    useState(false);
+  const waitingForInitialRefreshRef = useRef(false);
 
   const router = useRouter();
 
@@ -82,36 +81,11 @@ export default function LastUpdated({
   }, []);
 
   useEffect(() => {
-    const updateTime = () => {
-      console.debug("Updating with new timestamp: ", timestamp);
-      const now = new Date();
-      const { diffInMinutes, diffInHours, diffInDays } =
-        calculateTimeDifferences(timestamp, now);
-      const relative = formatRelativeTime(
-        diffInMinutes,
-        diffInHours,
-        diffInDays,
-      );
-      const absolute = formatAbsoluteTime(timestamp);
-
-      setRelativeTime(relative);
-      setAbsoluteTime(absolute);
-      setIsStale(diffInMinutes >= 30);
-      setIsRefreshing(false);
-    };
-
-    updateTime();
-    const interval = setInterval(updateTime, 30000);
-
-    return () => clearInterval(interval);
-  }, [timestamp]);
-
-  useEffect(() => {
     if (expectedLastUpdated == null) return;
 
     // Skip the first effect run right after calling router.refresh() in revalidation handler
-    if (waitingForInitialRefresh) {
-      setWaitingForInitialRefresh(false);
+    if (waitingForInitialRefreshRef.current) {
+      waitingForInitialRefreshRef.current = false;
       return;
     }
 
@@ -152,6 +126,31 @@ export default function LastUpdated({
     return () => clearTimeout(timer);
   }, [timestamp, expectedLastUpdated, router]);
 
+  useEffect(() => {
+    const updateTime = () => {
+      console.debug("Updating with new timestamp: ", timestamp);
+      const now = new Date();
+      const { diffInMinutes, diffInHours, diffInDays } =
+        calculateTimeDifferences(timestamp, now);
+      const relative = formatRelativeTime(
+        diffInMinutes,
+        diffInHours,
+        diffInDays,
+      );
+      const absolute = formatAbsoluteTime(timestamp);
+
+      setRelativeTime(relative);
+      setAbsoluteTime(absolute);
+      setIsStale(diffInMinutes >= 30);
+      setIsRefreshing(false);
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 30000);
+
+    return () => clearInterval(interval);
+  }, [timestamp]);
+
   const handleRefresh = async () => {
     setIsRefreshing(true);
     try {
@@ -161,7 +160,7 @@ export default function LastUpdated({
 
       // If no revalidation occurred, just refresh once
       if (res.shouldRefresh) {
-        setWaitingForInitialRefresh(true);
+        waitingForInitialRefreshRef.current = true;
         setExpectedLastUpdated(res.lastUpdated);
         router.refresh();
         return;
