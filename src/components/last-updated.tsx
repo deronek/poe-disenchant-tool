@@ -177,6 +177,7 @@ export default function LastUpdated({
         router.refresh();
         return;
       }
+      router.refresh();
     } catch (error) {
       console.error("Failed to refresh data:", error);
       displayErrorToast();
