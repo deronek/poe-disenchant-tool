@@ -159,10 +159,11 @@ export async function revalidateDataAction(
     const fullWarmUrl = `${normalizedOrigin}/${league}`;
     await warmOrigin(fullWarmUrl);
 
-    const { lastUpdated: newLastUpdated } = await getItems(league);
     return {
       // Next.js should automatically deliver newest RSC data to client, but sometimes doesn't
       didRevalidate: true,
+      // Below timestamp is not exactly the data timestamp, but we can't retrieve it at this point
+      // because cache can still be stale
       lastUpdated: now,
     };
   } catch (err) {

@@ -130,14 +130,7 @@ export default function LastUpdated({
   }, [timestamp, expectedLastUpdated, router]);
 
   useEffect(() => {
-    console.debug(
-      "useEffect updateTime",
-      timestamp,
-      retryRef.current,
-      waitingForInitialRefreshRef.current,
-    );
     const updateTime = () => {
-      console.debug("Updating with new timestamp: ", timestamp);
       const now = new Date();
       const { diffInMinutes, diffInHours, diffInDays } =
         calculateTimeDifferences(timestamp, now);
@@ -155,11 +148,6 @@ export default function LastUpdated({
       // If below condition is false, we are currently retrying the refresh
       // and should keep the refreshing state
       if (retryRef.current === 0) {
-        console.debug(
-          "setIsRefreshing(false) in updateTime",
-          retryRef.current,
-          waitingForInitialRefreshRef.current,
-        );
         setIsRefreshing(false);
       }
     };
@@ -195,11 +183,6 @@ export default function LastUpdated({
   };
 
   const cleanUpManualRefresh = () => {
-    console.log(
-      "cleanUpManualRefresh",
-      retryRef.current,
-      waitingForInitialRefreshRef.current,
-    );
     retryRef.current = 0;
     setExpectedLastUpdated(null);
   };
