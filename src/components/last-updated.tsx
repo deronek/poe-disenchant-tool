@@ -27,7 +27,7 @@ import {
 
 const ERROR_TITLE = "Failed to refresh data";
 const ERROR_DESCRIPTION =
-  "Unable to refresh the price data. Please try again later.";
+  "Unable to refresh the price data. Please try again later or try refreshing the page.";
 
 const displayErrorToast = () => {
   toast.error(ERROR_TITLE, {
