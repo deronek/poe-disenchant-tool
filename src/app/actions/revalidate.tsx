@@ -142,8 +142,8 @@ export async function revalidateDataAction(
 
   const age = now - lastUpdated;
 
-  // 30 minutes
-  if (age < 30 * 60 * 1000) {
+  // 31 minutes
+  if (age < 31 * 60 * 1000) {
     console.debug("Data was not revalidated");
     // Client will call router.refresh() to get the latest data
     return { didRevalidate: false, lastUpdated: lastUpdated };

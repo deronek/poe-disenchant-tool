@@ -91,7 +91,7 @@ export default function LastUpdated({
     }
 
     const currentTs = timestamp.getTime();
-    const expectedTs = expectedLastUpdated - 5 * 1000; // Tolerance is 5 seconds
+    const expectedTs = expectedLastUpdated - 30 * 1000; // Tolerance is 30 seconds
 
     // Timestamp has caught up — success!
     if (currentTs >= expectedTs) {
@@ -143,7 +143,7 @@ export default function LastUpdated({
 
       setRelativeTime(relative);
       setAbsoluteTime(absolute);
-      setIsStale(diffInMinutes >= 30);
+      setIsStale(diffInMinutes >= 31);
 
       // If below condition is false, we are currently retrying the refresh
       // and should keep the refreshing state
