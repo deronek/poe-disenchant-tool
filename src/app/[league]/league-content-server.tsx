@@ -1,4 +1,3 @@
-import { revalidateDataAction } from "@/app/actions/revalidate";
 import LastUpdatedClient from "@/components/last-updated";
 import { SharedDataView } from "@/components/shared-data-view";
 import { getItems } from "@/lib/itemData";
@@ -21,11 +20,7 @@ export default async function LeagueContentServer({
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       <div className="font-italic text-muted-foreground text-sm">
-        <LastUpdatedClient
-          timestamp={lastUpdated}
-          league={league}
-          revalidateDataAction={revalidateDataAction}
-        />
+        <LastUpdatedClient timestamp={lastUpdated} />
       </div>
       <section className="py-1">
         <SharedDataView
