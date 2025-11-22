@@ -32,18 +32,19 @@ const createUniqueId = (name: string, variant?: string) =>
 const uncached__getItems = async (league: League) => {
   const dustData = getDustData();
   const dustMap = new Map(dustData.map((d) => [d.name, d]));
-  const priceData = await getPriceData(league);
 
-  const merged: Item[] = [];
-  let id = 0;
-
-  // For jewelery, we need to calculate if it's worth it to add quality
-  const maybeCatalystPrice = await getCheapestCatalyst(league);
+  const [priceData, maybeCatalystPrice] = await Promise.all([
+    getPriceData(league),
+    getCheapestCatalyst(league),
+  ]);
 
   // Fallback to 1c if no data
   const catalystPrice = maybeCatalystPrice
     ? maybeCatalystPrice.primaryValue
     : 1;
+
+  const merged: Item[] = [];
+  let id = 0;
 
   for (const priceItem of priceData) {
     if (ITEMS_TO_IGNORE.includes(priceItem.name)) continue;
@@ -59,7 +60,7 @@ const uncached__getItems = async (league: League) => {
       dustValue: calculatedDustValue,
       dustPerChaos,
       catalyst: shouldCatalyst,
-    } = await calculateDustEfficiency(priceItem, dustItem, catalystPrice);
+    } = calculateDustEfficiency(priceItem, dustItem, catalystPrice);
 
     merged.push({
       id: id++,
@@ -91,7 +92,7 @@ function isQuiver(item: PriceItem) {
   return item.itemType === "Quiver";
 }
 
-async function calculateDustEfficiency(
+function calculateDustEfficiency(
   priceItem: PriceItem,
   dustItem: DustItem,
   catalystPrice: number,
