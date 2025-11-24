@@ -10,7 +10,7 @@ import { USER_AGENT } from "./utils";
 // TypeScript interfaces for poe.ninja API response
 const CurrencyLineSchema = z.object({
   id: z.string(),
-  primaryValue: z.number().nonnegative(),
+  primaryValue: z.number().nonnegative().nullable().optional(),
 });
 
 const CurrencyOverviewResponseSchema = z.object({
@@ -59,16 +59,20 @@ const getCatalystItems = async (league: League): Promise<CatalystItem[]> => {
     return [];
   }
 
-  return currencyData.lines
-    .filter(
-      (line) =>
-        line.id.toLowerCase().endsWith("-catalyst") &&
-        line.id.toLowerCase() !== "tainted-catalyst",
-    )
-    .map((line) => ({
-      id: line.id,
-      primaryValue: line.primaryValue,
-    }));
+  return (
+    currencyData.lines
+      .filter(
+        (line) =>
+          line.id.toLowerCase().endsWith("-catalyst") &&
+          line.id.toLowerCase() !== "tainted-catalyst",
+      )
+      // Handles both null and undefined cases here
+      .filter((line) => line.primaryValue != null)
+      .map((line) => ({
+        id: line.id,
+        primaryValue: line.primaryValue!,
+      }))
+  );
 };
 
 // Function to find cheapest catalyst
