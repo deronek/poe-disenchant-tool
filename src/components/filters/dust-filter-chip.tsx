@@ -1,9 +1,9 @@
 import type { RangeFilterValue } from "@/lib/range-filter";
 
+import { DustIcon } from "@/components/dust-icon";
 import { Badge } from "@/components/ui/badge";
 import { XButton } from "@/components/ui/x-button";
-import { hasMaxFilter, hasMinFilter } from "../../lib/range-filter";
-import { DustIcon } from "../dust-icon";
+import { hasMaxFilter, hasMinFilter } from "@/lib/range-filter";
 
 interface DustFilterChipProps {
   value?: RangeFilterValue;
@@ -33,7 +33,7 @@ export function DustFilterChip({ value, onClear }: DustFilterChipProps) {
     <Badge
       variant="outline"
       className="inline-flex items-center gap-1 px-3"
-      data-testid="price-filter-chip"
+      data-testid="dust-filter-chip"
     >
       <span className="inline-flex min-w-0 flex-shrink-0 items-center gap-1 truncate">
         Dust {formatDustRange()}
@@ -43,7 +43,7 @@ export function DustFilterChip({ value, onClear }: DustFilterChipProps) {
       </span>
       <XButton
         onClick={onClear}
-        aria-label="Clear price filter"
+        aria-label="Clear dust filter"
         className="text-foreground/90"
       />
     </Badge>
