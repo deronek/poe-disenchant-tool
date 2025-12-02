@@ -753,34 +753,61 @@ export class PoEDisenchantPage {
   }
 
   async verifyFilterChipVisible(
-    type: "name" | "price",
+    type: "name" | "price" | "dust",
     visible: boolean = true,
   ): Promise<void> {
-    const chip = type === "name" ? this.nameFilterChip : this.priceFilterChip;
+    let chip;
+    switch (type) {
+      case "name":
+        chip = this.nameFilterChip;
+        break;
+      case "price":
+        chip = this.priceFilterChip;
+        break;
+      case "dust":
+        chip = this.dustFilterChip;
+        break;
+    }
 
     if (visible) await expect(chip).toBeVisible();
     else await expect(chip).not.toBeVisible();
   }
 
+  async verifyDustFilterChipVisible(visible: boolean = true): Promise<void> {
+    await this.verifyFilterChipVisible("dust", visible);
+  }
+
   // ---------------------------
-  // Price Filter Functionality
+  // Tabbed Filter Functionality
   // ---------------------------
 
-  get priceFilterButton() {
-    return this.page.getByRole("button", { name: "Price", exact: true });
+  get tabbedFilterButton() {
+    return this.page.getByRole("button", { name: "Filter", exact: true });
+  }
+
+  get tabbedFilterPopover() {
+    return this.page
+      .locator('[role="dialog"]')
+      .filter({ hasText: /price filter/i });
+  }
+
+  get priceTab() {
+    return this.page.getByRole("tab", { name: "Price" });
+  }
+
+  get dustValueTab() {
+    return this.page.getByRole("tab", { name: "Dust Value" });
   }
 
   get priceFilterChip() {
     return this.page.getByTestId("price-filter-chip").first();
   }
 
-  get priceFilterPopover() {
-    return this.page
-      .locator('[role="dialog"]')
-      .filter({ hasText: /price filter/i });
+  get dustFilterChip() {
+    return this.page.getByTestId("dust-filter-chip").first();
   }
 
-  // All below assume price filter is open
+  // All below assume tabbed filter is open and correct tab is active
   get priceFilterLowerBoundSliderTrack() {
     return this.page.getByLabel("Lower bound price filter");
   }
@@ -789,30 +816,55 @@ export class PoEDisenchantPage {
     return this.page.getByLabel("Upper bound price filter");
   }
 
-  get priceFilterLowerBoundSliderThumb() {
-    return this.priceFilterLowerBoundSliderTrack.getByRole("slider");
+  get dustFilterLowerBoundSliderTrack() {
+    return this.page.getByLabel("Lower bound dust value filter");
   }
 
-  get priceFilterUpperBoundSliderThumb() {
-    return this.priceFilterUpperBoundSliderTrack.getByRole("slider");
+  get dustFilterUpperBoundSliderTrack() {
+    return this.page.getByLabel("Upper bound dust value filter");
   }
 
-  get priceFilterResetButton() {
-    return this.priceFilterPopover.getByRole("button", { name: "Reset" });
+  get tabbedFilterResetButton() {
+    return this.tabbedFilterPopover.getByRole("button", { name: "Reset" });
   }
 
-  get priceFilterCloseButton() {
-    return this.priceFilterPopover.getByRole("button", { name: "Close" });
+  get tabbedFilterCloseButton() {
+    return this.tabbedFilterPopover.getByRole("button", { name: "Close" });
+  }
+
+  async openTabbedFilter(): Promise<void> {
+    await this.tabbedFilterButton.click();
+    await expect(this.tabbedFilterPopover).toBeVisible();
+  }
+
+  async closeTabbedFilter(): Promise<void> {
+    await this.tabbedFilterCloseButton.click();
+    await expect(this.tabbedFilterPopover).not.toBeVisible();
+  }
+
+  async switchToTab(tabName: "price" | "dustValue"): Promise<void> {
+    await this.openTabbedFilter();
+    const tab = tabName === "price" ? this.priceTab : this.dustValueTab;
+    await tab.click();
+    await expect(tab).toHaveAttribute("data-state", "active");
+  }
+
+  async verifyTabActive(tabName: "price" | "dustValue"): Promise<void> {
+    const tab = tabName === "price" ? this.priceTab : this.dustValueTab;
+    await expect(tab).toHaveAttribute("data-state", "active");
+  }
+
+  // Legacy methods for backward compatibility
+  get priceFilterButton() {
+    return this.tabbedFilterButton;
   }
 
   async openPriceFilter(): Promise<void> {
-    await this.priceFilterButton.click();
-    await expect(this.priceFilterPopover).toBeVisible();
+    await this.switchToTab("price");
   }
 
   async closePriceFilter(): Promise<void> {
-    await this.priceFilterCloseButton.click();
-    await expect(this.priceFilterPopover).not.toBeVisible();
+    await this.closeTabbedFilter();
   }
 
   async getPriceFilterRange(): Promise<{ min: number; max?: number }> {
@@ -835,8 +887,34 @@ export class PoEDisenchantPage {
     throw new Error(`Unrecognized price filter chip format: "${chipText}"`);
   }
 
+  async getDustFilterRange(): Promise<{ min: number; max?: number }> {
+    const chipText = await this.dustFilterChip.innerText();
+
+    // Pattern 1: "X–Y" (both bounds)
+    const betweenMatch = chipText.match(/(\d+)\s*[–-]\s*(\d+)/);
+    if (betweenMatch) {
+      const [, min, max] = betweenMatch;
+      return { min: parseInt(min, 10), max: parseInt(max, 10) };
+    }
+
+    // Pattern 2: "≥ X" or ">= X" (only lower bound, no upper bound)
+    const lowerOnlyMatch = chipText.match(/≥\s*(\d+)|>=\s*(\d+)/);
+    if (lowerOnlyMatch) {
+      const value = lowerOnlyMatch[1] ?? lowerOnlyMatch[2];
+      return { min: parseInt(value, 10), max: undefined };
+    }
+
+    throw new Error(`Unrecognized dust filter chip format: "${chipText}"`);
+  }
+
   async verifyPriceFilterRange(min: number, max: number): Promise<void> {
     const range = await this.getPriceFilterRange();
+    expect(range.min).toBe(min);
+    expect(range.max).toBe(max);
+  }
+
+  async verifyDustFilterRange(min: number, max: number): Promise<void> {
+    const range = await this.getDustFilterRange();
     expect(range.min).toBe(min);
     expect(range.max).toBe(max);
   }
@@ -849,12 +927,13 @@ export class PoEDisenchantPage {
     if (percent < 0 || percent > 100) {
       throw new Error("Percent must be between 0 and 100");
     }
+    await this.switchToTab("price");
+
     const track =
       bound === "lower"
         ? this.priceFilterLowerBoundSliderTrack
         : this.priceFilterUpperBoundSliderTrack;
 
-    await this.openPriceFilter();
     const boundingBox = (await track.boundingBox())!;
 
     // Calculate press point based on percent
@@ -867,13 +946,55 @@ export class PoEDisenchantPage {
     await track.hover({ force: true, position: { x: clickX, y: clickY } });
     await this.page.mouse.up();
 
-    await this.closePriceFilter();
+    await this.closeTabbedFilter();
+  }
+
+  // Percent should be between 0 and 100
+  async setDustFilterValuePercent(
+    bound: "lower" | "upper",
+    percent: number,
+  ): Promise<void> {
+    if (percent < 0 || percent > 100) {
+      throw new Error("Percent must be between 0 and 100");
+    }
+    await this.switchToTab("dustValue");
+
+    const track =
+      bound === "lower"
+        ? this.dustFilterLowerBoundSliderTrack
+        : this.dustFilterUpperBoundSliderTrack;
+
+    const boundingBox = (await track.boundingBox())!;
+
+    // Calculate press point based on percent
+    const clickX = Math.round((percent * boundingBox.width) / 100);
+    const clickY = boundingBox.height / 2;
+
+    await track.focus();
+    await track.hover({ force: true, position: { x: 0, y: clickY } });
+    await this.page.mouse.down();
+    await track.hover({ force: true, position: { x: clickX, y: clickY } });
+    await this.page.mouse.up();
+
+    await this.closeTabbedFilter();
   }
 
   async resetPriceFilter(): Promise<void> {
-    await this.openPriceFilter();
-    await this.priceFilterResetButton.click();
-    await this.closePriceFilter();
+    await this.switchToTab("price");
+    await this.tabbedFilterResetButton.click();
+    await this.closeTabbedFilter();
+  }
+
+  async resetDustFilter(): Promise<void> {
+    await this.switchToTab("dustValue");
+    await this.tabbedFilterResetButton.click();
+    await this.closeTabbedFilter();
+  }
+
+  async resetTabbedFilter(): Promise<void> {
+    await this.openTabbedFilter();
+    await this.tabbedFilterResetButton.click();
+    await this.closeTabbedFilter();
   }
 
   // ---------------------------
