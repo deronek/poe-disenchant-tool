@@ -1,6 +1,6 @@
 /**
- * Utility functions for price value transformations and scaling
- * Used by price filter components to handle logarithmic scaling for better precision.
+ * Utility functions for range value transformations and scaling
+ * Used by range filter components to handle different scaling requirements.
  */
 
 /**

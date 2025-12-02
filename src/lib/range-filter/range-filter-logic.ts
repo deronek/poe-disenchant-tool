@@ -1,13 +1,13 @@
 import type { Item } from "@/lib/itemData";
-import type { Column } from "@tanstack/react-table";
+import type { Column, Row } from "@tanstack/react-table";
 
 import {
   createLowerBoundLinearValue,
   createLowerBoundSliderValue,
-} from "./price-transforms";
+} from "./range-transforms";
 
 // undefined means filter is disabled
-export type PriceFilterValue = {
+export type RangeFilterValue = {
   min?: number;
   max?: number;
 };
@@ -17,8 +17,8 @@ export type PriceFilterValue = {
  */
 export const getCurrentFilterValue = <TData extends Item>(
   column: Column<TData, unknown> | undefined,
-): PriceFilterValue => {
-  const value = column?.getFilterValue() as PriceFilterValue | undefined;
+): RangeFilterValue => {
+  const value = column?.getFilterValue() as RangeFilterValue | undefined;
   if (value === undefined)
     return {
       min: undefined,
@@ -32,7 +32,7 @@ export const getCurrentFilterValue = <TData extends Item>(
  */
 export const setFilterValue = <TData extends Item>(
   column: Column<TData, unknown> | undefined,
-  value: PriceFilterValue | undefined,
+  value: RangeFilterValue | undefined,
 ): void => {
   if (!column) return;
   column.setFilterValue(value);
@@ -42,9 +42,9 @@ export const setFilterValue = <TData extends Item>(
  * Creates a normalized filter value against defaults.
  */
 export const createNormalizedFilterValue = (
-  range: PriceFilterValue,
+  range: RangeFilterValue,
   defaults: { min: number; max: number },
-): PriceFilterValue | undefined => {
+): RangeFilterValue | undefined => {
   const rawMin = range.min;
   const rawMax = range.max;
 
@@ -67,9 +67,9 @@ export const createNormalizedFilterValue = (
  */
 export const updateLowerBound = (
   newMin: number,
-  currentRange: PriceFilterValue,
+  currentRange: RangeFilterValue,
   defaults: { max: number },
-): PriceFilterValue => {
+): RangeFilterValue => {
   const effectiveMax = currentRange.max ?? defaults.max;
   const min = Math.min(newMin, effectiveMax);
 
@@ -84,9 +84,9 @@ export const updateLowerBound = (
  */
 export const updateUpperBound = (
   newMax: number,
-  currentRange: PriceFilterValue,
+  currentRange: RangeFilterValue,
   defaults: { max: number },
-): PriceFilterValue => {
+): RangeFilterValue => {
   if (newMax >= defaults.max) {
     return { ...currentRange, max: undefined };
   }
@@ -142,13 +142,27 @@ export const resetFilter = <TData extends Item>(
 /**
  * Checks if the lower bound filter is active.
  */
-export const hasMinFilter = (range: PriceFilterValue): boolean => {
+export const hasMinFilter = (range: RangeFilterValue): boolean => {
   return range.min !== undefined;
 };
 
 /**
  * Checks if the upper bound filter is active.
  */
-export const hasMaxFilter = (range: PriceFilterValue): boolean => {
+export const hasMaxFilter = (range: RangeFilterValue): boolean => {
   return range.max !== undefined;
+};
+
+export const rangeFilterFn = (
+  row: Row<Item>,
+  columnId: string,
+  filterValue: RangeFilterValue,
+) => {
+  if (!filterValue) return true;
+
+  const value = row.getValue(columnId) as number;
+  const minCheck = filterValue.min === undefined || value >= filterValue.min;
+  const maxCheck = filterValue.max === undefined || value <= filterValue.max;
+
+  return minCheck && maxCheck;
 };

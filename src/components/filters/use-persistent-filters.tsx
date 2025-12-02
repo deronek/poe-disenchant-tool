@@ -1,13 +1,19 @@
-import type { PriceFilterValue } from "@/lib/price-filter";
+import type { RangeFilterValue } from "@/lib/range-filter";
 import type { ColumnFiltersState } from "@tanstack/react-table";
 import * as React from "react";
 import { z } from "zod";
 
+import { COLUMN_IDS } from "@/components/columns";
 import { useLocalStorage } from "@/lib/use-local-storage";
-import { COLUMN_IDS } from "./columns";
 
 const PersistedFiltersSchema = z.object({
   price: z
+    .object({
+      min: z.number().optional(),
+      max: z.number().optional(),
+    })
+    .optional(),
+  dust: z
     .object({
       min: z.number().optional(),
       max: z.number().optional(),
@@ -19,7 +25,7 @@ type PersistedFilters = z.infer<typeof PersistedFiltersSchema>;
 
 /**
  * Hook to persist and restore column filters.
- * Only persists price filter, ignores name filter and other filters.
+ * Persists both price and dust value filters, ignores name filter and other filters.
  */
 export function usePersistentFilters(storageKey: string) {
   if (!storageKey) {
@@ -38,13 +44,26 @@ export function usePersistentFilters(storageKey: string) {
         (filter) => filter.id === COLUMN_IDS.CHAOS && filter.value,
       );
 
+      const dustFilter = columnFilters.find(
+        (filter) =>
+          filter.id === COLUMN_IDS.CALCULATED_DUST_VALUE && filter.value,
+      );
+
+      const filtersToUpdate: PersistedFilters = {};
+
       if (priceFilter?.value) {
-        // Set the persisted filters with the price filter
-        setPersistedFilters({
-          price: priceFilter.value as PriceFilterValue,
-        });
+        filtersToUpdate.price = priceFilter.value as RangeFilterValue;
+      }
+
+      if (dustFilter?.value) {
+        filtersToUpdate.dust = dustFilter.value as RangeFilterValue;
+      }
+
+      if (Object.keys(filtersToUpdate).length > 0) {
+        // Set the persisted filters with the active filters
+        setPersistedFilters(filtersToUpdate);
       } else {
-        // Clear persisted filters if there's no price filter
+        // Clear persisted filters if there are no active filters
         setPersistedFilters({});
       }
     },

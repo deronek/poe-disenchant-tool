@@ -8,8 +8,8 @@ import type {
 } from "@tanstack/react-table";
 import React, { createContext, useCallback, useContext, useState } from "react";
 
+import { usePersistentFilters } from "@/components/filters";
 import { COLUMN_IDS } from "./columns";
-import { usePersistentFilters } from "./use-persistent-filters";
 
 interface DataTableState {
   sorting: SortingState;

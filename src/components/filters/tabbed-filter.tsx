@@ -1,0 +1,194 @@
+import type { Item } from "@/lib/itemData";
+import type { Column } from "@tanstack/react-table";
+import { useCallback, useState } from "react";
+import { ChevronDown, Filter } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  getCurrentFilterValue,
+  hasMaxFilter,
+  hasMinFilter,
+} from "@/lib/range-filter";
+import { cn } from "@/lib/utils";
+import { ChaosOrbIcon } from "../chaos-orb-icon";
+import { DustIcon } from "../dust-icon";
+import { RangeFilter } from "./range-filter";
+
+interface TabbedFilterProps<TData> {
+  priceColumn: Column<TData, unknown> | undefined;
+  dustColumn: Column<TData, unknown> | undefined;
+  priceMin: number;
+  priceMax: number;
+  dustMin: number;
+  dustMax: number;
+  className?: string;
+}
+
+export function TabbedFilter<TData extends Item>({
+  priceColumn,
+  dustColumn,
+  priceMin,
+  priceMax,
+  dustMin,
+  dustMax,
+  className,
+}: TabbedFilterProps<TData>) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("price");
+
+  const priceRange = getCurrentFilterValue(priceColumn);
+  const dustRange = getCurrentFilterValue(dustColumn);
+
+  const priceHasMin = hasMinFilter(priceRange);
+  const priceHasMax = hasMaxFilter(priceRange);
+  const dustHasMin = hasMinFilter(dustRange);
+  const dustHasMax = hasMaxFilter(dustRange);
+
+  const isPriceFilterActive = priceHasMin || priceHasMax;
+  const isDustFilterActive = dustHasMin || dustHasMax;
+  const isFilterActive = isPriceFilterActive || isDustFilterActive;
+  const numberofActiveFilters =
+    (isPriceFilterActive ? 1 : 0) + (isDustFilterActive ? 1 : 0);
+
+  const handleReset = () => {
+    if (priceColumn) {
+      priceColumn.setFilterValue(undefined);
+    }
+    if (dustColumn) {
+      dustColumn.setFilterValue(undefined);
+    }
+  };
+
+  const handleApply = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  const dotColor =
+    activeTab === "price"
+      ? "bg-radial-[var(--color-amber-900)_1px,transparent_1px] dark:bg-radial-[var(--color-amber-300)_1px,transparent_1px]"
+      : "bg-radial-[var(--color-purple-900)_1px,transparent_1px] dark:bg-radial-[var(--color-purple-300)_1px,transparent_1px]";
+
+  return (
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          className={cn(
+            "group relative gap-2 has-[>svg]:px-2 has-[>svg]:pr-3",
+            className,
+          )}
+        >
+          <span
+            className={`mr-1 rounded-full p-1 transition-colors ${isFilterActive ? "bg-primary/80" : ""}`}
+          >
+            <Filter className="h-4 w-4" />
+          </span>
+          <span className="">Filter</span>
+          <ChevronDown className="ml-1 h-3 w-3 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-80" align="start">
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <h4 className="font-semibold">Apply Filter</h4>
+            </div>
+            <p className="text-muted-foreground text-sm text-pretty">
+              Filter items by price or dust value. Saved locally.
+            </p>
+          </div>
+
+          <Tabs
+            value={activeTab}
+            onValueChange={setActiveTab}
+            className="relative"
+          >
+            {activeTab === "price" && (
+              <div
+                className={`pointer-events-none absolute inset-0 z-0 -mx-1 -my-1.5 ${dotColor} mask-repeat-no-repeat mask-[radial-gradient(circle_at_center,white_0%,rgba(255,255,255,0.3)_60%,rgba(255,255,255,0.12)_80%,transparent_100%)] bg-size-[3px_3px] opacity-40`}
+              />
+            )}
+            {activeTab === "dust" && (
+              <div
+                className={`pointer-events-none absolute inset-0 z-0 -mx-1 -my-1.5 ${dotColor} mask-[radial-gradient(circle_at_center,white_0%,rgba(255,255,255,0.3)_60%,rgba(255,255,255,0.12)_80%,transparent_100%)] bg-size-[3px_3px] opacity-40`}
+              />
+            )}
+
+            <TabsList className="z-10 grid w-full grid-cols-2">
+              <TabsTrigger value="price">
+                <span
+                  className={`text-foreground rounded-full p-1 transition-colors ${isPriceFilterActive ? "bg-primary/80" : ""}`}
+                >
+                  <Filter className="h-4 w-4" />
+                </span>
+                <ChaosOrbIcon
+                  className={`${isPriceFilterActive ? "" : "grayscale-80"}`}
+                />
+                Price
+              </TabsTrigger>
+              <TabsTrigger value="dust">
+                <span
+                  className={`text-foreground rounded-full p-1 transition-colors ${isDustFilterActive ? "bg-primary/80" : ""}`}
+                >
+                  <Filter className="h-4 w-4" />
+                </span>
+                <DustIcon
+                  className={`${isDustFilterActive ? "" : "grayscale-80"}`}
+                />{" "}
+                Dust Value
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="price" className="z-10 space-y-4">
+              <RangeFilter
+                column={priceColumn}
+                min={priceMin}
+                max={priceMax}
+                step={10}
+                smallStep={1}
+                largeStep={10}
+                icon={<ChaosOrbIcon />}
+                title="Price"
+              />
+            </TabsContent>
+
+            <TabsContent value="dust" className="z-10 space-y-4">
+              <RangeFilter
+                column={dustColumn}
+                min={dustMin}
+                max={dustMax}
+                step={50000}
+                smallStep={10000}
+                largeStep={100000}
+                formatValue={(value) => value.toLocaleString()}
+                icon={<DustIcon />}
+                title="Dust Value"
+              />
+            </TabsContent>
+          </Tabs>
+
+          <div className="flex gap-2 pt-2">
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={handleReset}
+              className="flex-1 tabular-nums"
+              disabled={!isFilterActive}
+            >
+              Reset All ({numberofActiveFilters})
+            </Button>
+            <Button size="sm" onClick={handleApply} className="flex-1">
+              Close
+            </Button>
+          </div>
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+}

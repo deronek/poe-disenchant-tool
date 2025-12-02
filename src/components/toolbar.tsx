@@ -3,14 +3,14 @@ import type { Item } from "@/lib/itemData";
 import { Table } from "@tanstack/react-table";
 
 import { AdvancedSettingsPanel } from "@/components/advanced-settings-panel";
-import { NameFilter } from "@/components/name-filter";
-import { PriceFilter } from "@/components/price-filter";
-import { PriceFilterValue } from "@/lib/price-filter";
+import { NameFilterChip, PriceFilterChip } from "@/components/filters";
+import { DustFilterChip } from "@/components/filters/dust-filter-chip";
+import { TabbedFilter } from "@/components/filters/tabbed-filter";
+import { RangeFilterValue } from "@/lib/range-filter";
 import { ClearMarksButton } from "./clear-marks-button";
 import { COLUMN_IDS } from "./columns";
 import { MobileSortingControls } from "./mobile-sorting-controls";
-import { NameFilterChip } from "./name-filter-chip";
-import { PriceFilterChip } from "./price-filter-chip";
+import { NameFilter } from "./name-filter";
 
 type ToolbarProps<TData extends Item> = {
   table: Table<TData>;
@@ -36,10 +36,13 @@ export function DataTableToolbar<TData extends Item>({
           </div>
 
           <div className="w-full min-w-0 xl:w-auto xl:shrink-0">
-            <PriceFilter
-              column={table.getColumn(COLUMN_IDS.CHAOS)}
-              min={0}
-              max={500}
+            <TabbedFilter
+              priceColumn={table.getColumn(COLUMN_IDS.CHAOS)}
+              dustColumn={table.getColumn(COLUMN_IDS.CALCULATED_DUST_VALUE)}
+              priceMin={0}
+              priceMax={500}
+              dustMin={2000}
+              dustMax={5000000}
             />
           </div>
 
@@ -49,7 +52,10 @@ export function DataTableToolbar<TData extends Item>({
               "";
             const chaosRange = table
               .getColumn(COLUMN_IDS.CHAOS)
-              ?.getFilterValue() as PriceFilterValue | undefined;
+              ?.getFilterValue() as RangeFilterValue | undefined;
+            const dustRange = table
+              .getColumn(COLUMN_IDS.CALCULATED_DUST_VALUE)
+              ?.getFilterValue() as RangeFilterValue | undefined;
 
             return (
               <>
@@ -64,16 +70,31 @@ export function DataTableToolbar<TData extends Item>({
                   </div>
                 )}
 
-                <div className="w-auto min-w-0 xl:shrink-0">
-                  <PriceFilterChip
-                    value={chaosRange}
-                    onClear={() =>
-                      table
-                        .getColumn(COLUMN_IDS.CHAOS)
-                        ?.setFilterValue(undefined)
-                    }
-                  />
-                </div>
+                {chaosRange && (
+                  <div className="w-auto min-w-0 xl:shrink-0">
+                    <PriceFilterChip
+                      value={chaosRange}
+                      onClear={() =>
+                        table
+                          .getColumn(COLUMN_IDS.CHAOS)
+                          ?.setFilterValue(undefined)
+                      }
+                    />
+                  </div>
+                )}
+
+                {dustRange && (
+                  <div className="w-auto min-w-0 xl:shrink-0">
+                    <DustFilterChip
+                      value={dustRange}
+                      onClear={() =>
+                        table
+                          .getColumn(COLUMN_IDS.CALCULATED_DUST_VALUE)
+                          ?.setFilterValue(undefined)
+                      }
+                    />
+                  </div>
+                )}
               </>
             );
           })()}
