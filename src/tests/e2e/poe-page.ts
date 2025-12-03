@@ -62,6 +62,7 @@ export class PoEDisenchantPage {
     "Dust Value",
     "Dust / Chaos",
     "Dust / Chaos / Slot",
+    "Gold Fee",
   ] as const;
 
   numericalDataColumnHeaders = [
@@ -69,6 +70,7 @@ export class PoEDisenchantPage {
     "Dust Value",
     "Dust / Chaos",
     "Dust / Chaos / Slot",
+    "Gold Fee",
   ] as const;
 
   /**
@@ -115,6 +117,7 @@ export class PoEDisenchantPage {
         dustValue: await extract(indices["Dust Value"]),
         dustPerChaos: await extract(indices["Dust / Chaos"]),
         dustPerChaosPerSlot: await extract(indices["Dust / Chaos / Slot"]),
+        goldFee: await extract(indices["Gold Fee"]),
       });
     }
     return items;
@@ -143,6 +146,8 @@ export class PoEDisenchantPage {
         return item.dustPerChaos;
       case "Dust / Chaos / Slot":
         return item.dustPerChaosPerSlot;
+      case "Gold Fee":
+        return item.goldFee;
       default:
         throw new Error(`Unknown header name: ${headerName}`);
     }
@@ -758,7 +763,7 @@ export class PoEDisenchantPage {
   }
 
   async verifyFilterChipVisible(
-    type: "name" | "price" | "dust",
+    type: "name" | "price" | "dust" | "gold",
     visible: boolean = true,
   ): Promise<void> {
     let chip;
@@ -771,6 +776,9 @@ export class PoEDisenchantPage {
         break;
       case "dust":
         chip = this.dustFilterChip;
+        break;
+      case "gold":
+        chip = this.goldFilterChip;
         break;
     }
 
@@ -804,12 +812,20 @@ export class PoEDisenchantPage {
     return this.page.getByRole("tab", { name: "Open dust value filter tab" });
   }
 
+  get goldFeeTabTrigger() {
+    return this.page.getByRole("tab", { name: "Open gold fee filter tab" });
+  }
+
   get priceFilterChip() {
     return this.page.getByTestId("price-filter-chip").first();
   }
 
   get dustFilterChip() {
     return this.page.getByTestId("dust-filter-chip").first();
+  }
+
+  get goldFilterChip() {
+    return this.page.getByTestId("gold-filter-chip").first();
   }
 
   // All below assume tabbed filter is open and correct tab is active
@@ -827,6 +843,14 @@ export class PoEDisenchantPage {
 
   get dustFilterUpperBoundSliderTrack() {
     return this.page.getByLabel("Upper bound dust value filter");
+  }
+
+  get goldFilterLowerBoundSliderTrack() {
+    return this.page.getByLabel("Lower bound gold fee filter");
+  }
+
+  get goldFilterUpperBoundSliderTrack() {
+    return this.page.getByLabel("Upper bound gold fee filter");
   }
 
   get tabbedFilterResetAllButton() {
@@ -848,17 +872,27 @@ export class PoEDisenchantPage {
   }
 
   // Assumes popover is open
-  async switchToTab(tabName: "price" | "dustValue"): Promise<void> {
+  async switchToTab(tabName: "price" | "dustValue" | "goldFee"): Promise<void> {
     const tab =
-      tabName === "price" ? this.priceTabTrigger : this.dustValueTabTrigger;
+      tabName === "price"
+        ? this.priceTabTrigger
+        : tabName === "dustValue"
+          ? this.dustValueTabTrigger
+          : this.goldFeeTabTrigger;
     await tab.click();
     await expect(tab).toHaveAttribute("data-state", "active");
   }
 
   // Assumes popover is open
-  async verifyTabActive(tabName: "price" | "dustValue"): Promise<void> {
+  async verifyTabActive(
+    tabName: "price" | "dustValue" | "goldFee",
+  ): Promise<void> {
     const tab =
-      tabName === "price" ? this.priceTabTrigger : this.dustValueTabTrigger;
+      tabName === "price"
+        ? this.priceTabTrigger
+        : tabName === "dustValue"
+          ? this.dustValueTabTrigger
+          : this.goldFeeTabTrigger;
     await expect(tab).toHaveAttribute("data-state", "active");
   }
 
@@ -904,6 +938,12 @@ export class PoEDisenchantPage {
 
   async getDustFilterRange(): Promise<{ min?: number; max?: number }> {
     const chipText = await this.dustFilterChip.innerText();
+
+    return this.getRangeFilterRange(chipText);
+  }
+
+  async getGoldFilterRange(): Promise<{ min?: number; max?: number }> {
+    const chipText = await this.goldFilterChip.innerText();
 
     return this.getRangeFilterRange(chipText);
   }
@@ -976,6 +1016,34 @@ export class PoEDisenchantPage {
     await this.page.mouse.up();
   }
 
+  // Percent should be between 0 and 100
+  async setGoldFilterValuePercent(
+    bound: "lower" | "upper",
+    percent: number,
+  ): Promise<void> {
+    if (percent < 0 || percent > 100) {
+      throw new Error("Percent must be between 0 and 100");
+    }
+    await this.switchToTab("goldFee");
+
+    const track =
+      bound === "lower"
+        ? this.goldFilterLowerBoundSliderTrack
+        : this.goldFilterUpperBoundSliderTrack;
+
+    const boundingBox = (await track.boundingBox())!;
+
+    // Calculate press point based on percent
+    const clickX = Math.round((percent * boundingBox.width) / 100);
+    const clickY = boundingBox.height / 2;
+
+    await track.focus();
+    await track.hover({ force: true, position: { x: 0, y: clickY } });
+    await this.page.mouse.down();
+    await track.hover({ force: true, position: { x: clickX, y: clickY } });
+    await this.page.mouse.up();
+  }
+
   async resetPriceFilter(): Promise<void> {
     await this.switchToTab("price");
     await this.tabbedFilterResetAllButton.click();
@@ -984,6 +1052,12 @@ export class PoEDisenchantPage {
 
   async resetDustFilter(): Promise<void> {
     await this.switchToTab("dustValue");
+    await this.tabbedFilterResetAllButton.click();
+    await this.closeTabbedFilter();
+  }
+
+  async resetGoldFilter(): Promise<void> {
+    await this.switchToTab("goldFee");
     await this.tabbedFilterResetAllButton.click();
     await this.closeTabbedFilter();
   }

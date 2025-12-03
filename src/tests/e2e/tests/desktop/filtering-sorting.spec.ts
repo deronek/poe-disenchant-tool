@@ -292,9 +292,7 @@ test.describe("Tabbed Filter Functionality", () => {
     await expect(poePage.tabbedFilterPopover).not.toBeVisible();
   });
 
-  test("should switch between price and dust value tabs", async ({
-    poePage,
-  }) => {
+  test("should switch between all tabs", async ({ poePage }) => {
     await poePage.openTabbedFilter();
 
     // Verify price tab is active by default
@@ -304,6 +302,10 @@ test.describe("Tabbed Filter Functionality", () => {
       "active",
     );
     await expect(poePage.dustValueTabTrigger).toHaveAttribute(
+      "data-state",
+      "inactive",
+    );
+    await expect(poePage.goldFeeTabTrigger).toHaveAttribute(
       "data-state",
       "inactive",
     );
@@ -318,6 +320,25 @@ test.describe("Tabbed Filter Functionality", () => {
       "data-state",
       "inactive",
     );
+    await expect(poePage.goldFeeTabTrigger).toHaveAttribute(
+      "data-state",
+      "inactive",
+    );
+
+    // Switch to gold fee tab
+    await poePage.goldFeeTabTrigger.click();
+    await expect(poePage.goldFeeTabTrigger).toHaveAttribute(
+      "data-state",
+      "active",
+    );
+    await expect(poePage.priceTabTrigger).toHaveAttribute(
+      "data-state",
+      "inactive",
+    );
+    await expect(poePage.dustValueTabTrigger).toHaveAttribute(
+      "data-state",
+      "inactive",
+    );
 
     // Switch back to price tab
     await poePage.priceTabTrigger.click();
@@ -326,6 +347,10 @@ test.describe("Tabbed Filter Functionality", () => {
       "active",
     );
     await expect(poePage.dustValueTabTrigger).toHaveAttribute(
+      "data-state",
+      "inactive",
+    );
+    await expect(poePage.goldFeeTabTrigger).toHaveAttribute(
       "data-state",
       "inactive",
     );
@@ -344,6 +369,16 @@ test.describe("Tabbed Filter Functionality", () => {
     await poePage.openTabbedFilter();
     await poePage.verifyTabActive("dustValue");
     await poePage.closeTabbedFilter();
+
+    // Reopen and verify gold fee tab is still active
+    await poePage.openTabbedFilter();
+    await poePage.switchToTab("goldFee");
+    await poePage.closeTabbedFilter();
+
+    // Reopen and verify gold fee tab is still active
+    await poePage.openTabbedFilter();
+    await poePage.verifyTabActive("goldFee");
+    await poePage.closeTabbedFilter();
   });
 
   test("should reset all filters with reset all button", async ({
@@ -358,10 +393,15 @@ test.describe("Tabbed Filter Functionality", () => {
     await poePage.setDustFilterValuePercent("lower", 30);
     await poePage.verifyFilterChipVisible("dust", true);
 
+    // Set gold fee filter
+    await poePage.setGoldFilterValuePercent("lower", 25);
+    await poePage.verifyFilterChipVisible("gold", true);
+
     // Reset all
     await poePage.tabbedFilterResetAllButton.click();
     await poePage.verifyFilterChipVisible("price", false);
     await poePage.verifyFilterChipVisible("dust", false);
+    await poePage.verifyFilterChipVisible("gold", false);
   });
 });
 
@@ -578,6 +618,123 @@ test.describe("Dust Value Filter Functionality", () => {
 
     // Verify the filter range is the same as before refresh
     const filterRangeAfter = await poePage.getDustFilterRange();
+    expect(filterRangeAfter.min).toBe(filterRangeBefore.min);
+    expect(filterRangeAfter.max).toBe(filterRangeBefore.max);
+  });
+});
+
+test.describe("Gold Fee Filter Functionality", () => {
+  test("should set lower bound gold fee filter value", async ({ poePage }) => {
+    await poePage.verifyFilterChipVisible("gold", false);
+    await poePage.openTabbedFilter();
+
+    await poePage.setGoldFilterValuePercent("lower", 25);
+    await poePage.verifyFilterChipVisible("gold", true);
+  });
+
+  test("should set upper bound gold fee filter value", async ({ poePage }) => {
+    await poePage.verifyFilterChipVisible("gold", false);
+    await poePage.openTabbedFilter();
+
+    await poePage.setGoldFilterValuePercent("upper", 75);
+    await poePage.verifyFilterChipVisible("gold", true);
+  });
+
+  test("should set both bounds gold fee filter value", async ({ poePage }) => {
+    await poePage.verifyFilterChipVisible("gold", false);
+    await poePage.openTabbedFilter();
+
+    // 1) Set only lower bound
+    await poePage.setGoldFilterValuePercent("lower", 25);
+    await poePage.verifyFilterChipVisible("gold", true);
+
+    const lowerOnly = await poePage.getGoldFilterRange();
+    expect(lowerOnly.min).toBeGreaterThan(1500); // Min gold fee value
+    expect(lowerOnly.max).toBeUndefined();
+
+    // 2) Now set upper bound as well, creating a bounded range
+    await poePage.setGoldFilterValuePercent("upper", 75);
+    await poePage.verifyFilterChipVisible("gold", true);
+
+    const rangeBoth = await poePage.getGoldFilterRange();
+    expect(rangeBoth.min).toBe(lowerOnly.min);
+    expect(rangeBoth.max).toBeDefined();
+    expect(rangeBoth.max).toBeLessThan(80000); // Max gold fee value
+  });
+
+  test("should maintain gold fee filter during name filter changes", async ({
+    poePage,
+  }) => {
+    await poePage.openTabbedFilter();
+
+    // Set gold fee filter first
+    await poePage.setGoldFilterValuePercent("lower", 25);
+    await poePage.verifyFilterChipVisible("gold", true);
+
+    // Apply name filter
+    const targetItem = initialItems[0];
+    await poePage.setNameFilter(targetItem.name);
+    await poePage.waitForFilterDebounce();
+
+    // Verify gold fee filter is still active
+    await poePage.verifyFilterChipVisible("gold", true);
+  });
+
+  test("should maintain gold fee filter during price filter changes", async ({
+    poePage,
+  }) => {
+    await poePage.openTabbedFilter();
+
+    // Set gold fee filter first
+    await poePage.setGoldFilterValuePercent("lower", 25);
+    await poePage.verifyFilterChipVisible("gold", true);
+
+    // Apply price filter
+    await poePage.setPriceFilterValuePercent("lower", 50);
+    await poePage.verifyFilterChipVisible("price", true);
+
+    // Verify gold fee filter is still active
+    await poePage.verifyFilterChipVisible("gold", true);
+  });
+
+  test("should maintain gold fee filter during dust value filter changes", async ({
+    poePage,
+  }) => {
+    await poePage.openTabbedFilter();
+
+    // Set gold fee filter first
+    await poePage.setGoldFilterValuePercent("lower", 25);
+    await poePage.verifyFilterChipVisible("gold", true);
+
+    // Apply dust value filter
+    await poePage.setDustFilterValuePercent("lower", 30);
+    await poePage.verifyFilterChipVisible("dust", true);
+
+    // Verify gold fee filter is still active
+    await poePage.verifyFilterChipVisible("gold", true);
+  });
+
+  test("should persist gold fee filter state after page refresh", async ({
+    poePage,
+  }) => {
+    // Set a gold fee filter
+    await poePage.openTabbedFilter();
+    await poePage.setGoldFilterValuePercent("lower", 25);
+    await poePage.verifyFilterChipVisible("gold", true);
+
+    // Get the filter range before refresh
+    const filterRangeBefore = await poePage.getGoldFilterRange();
+    expect(filterRangeBefore.min).toBeDefined();
+    expect(filterRangeBefore.min).toBeGreaterThan(1500);
+
+    // Refresh the page
+    await poePage.refreshPage();
+
+    // Verify the gold fee filter is still active after refresh
+    await poePage.verifyFilterChipVisible("gold", true);
+
+    // Verify the filter range is the same as before refresh
+    const filterRangeAfter = await poePage.getGoldFilterRange();
     expect(filterRangeAfter.min).toBe(filterRangeBefore.min);
     expect(filterRangeAfter.max).toBe(filterRangeBefore.max);
   });
