@@ -20,6 +20,8 @@ import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { COLUMN_IDS } from "./columns";
 import { DustIcon } from "./dust-icon";
 import { DustInfo } from "./dust-info";
+import { GoldIcon } from "./gold-icon";
+import { GoldInfo } from "./gold-info";
 import { Icon } from "./icon";
 import { ItemMarkingInfo } from "./item-marking-info";
 import { LowStockInfo } from "./low-stock-info";
@@ -94,6 +96,30 @@ const DustInfoPopover = React.memo(function DustInfoPopover() {
         side="left"
       >
         <DustInfo />
+      </PopoverContent>
+    </Popover>
+  );
+});
+
+// Gold info button + popover as memo
+const GoldInfoPopover = React.memo(function GoldInfoPopover() {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="hover:text-foreground size-5 p-0 text-blue-500 dark:text-blue-400"
+          aria-label="Learn more about gold fee calculation"
+        >
+          <Info className="size-5" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent
+        className="w-[min(var(--radix-popover-content-available-width,9999px),calc(var(--spacing)*84))] min-w-77 text-sm"
+        side="left"
+      >
+        <GoldInfo />
       </PopoverContent>
     </Popover>
   );
@@ -215,30 +241,42 @@ function HeaderSection({
 function PriceAndDustSection({
   chaos,
   calculatedDustValue,
+  goldCost,
 }: {
   chaos: number;
   calculatedDustValue: number;
+  goldCost: number;
 }) {
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="flex w-full justify-between gap-2">
       <div className="space-y-2">
-        <div className="flex items-center gap-1 text-sm">
+        <div className="flex items-center gap-1 text-xs">
           <p className="text-muted-foreground">Price</p>
         </div>
-        <div className="flex items-center gap-1 text-sm font-semibold">
+        <div className="flex items-center gap-1 text-xs font-semibold">
           <span>{compactFormatter.format(chaos)}</span>
-          <ChaosOrbIcon className="h-4 w-4" />
+          <ChaosOrbIcon className="h-3 w-3" />
         </div>
       </div>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-1">
         <div className="space-y-2">
-          <p className="text-muted-foreground text-sm">Dust Value</p>
-          <div className="flex items-center gap-1 text-sm font-semibold">
+          <p className="text-muted-foreground text-xs">Dust Value</p>
+          <div className="flex items-center gap-1 text-xs font-semibold">
             <span>{compactFormatter.format(calculatedDustValue)}</span>
-            <DustIcon className="h-4 w-4" />
+            <DustIcon className="h-3 w-3" />
           </div>
         </div>
         <DustInfoPopover />
+      </div>
+      <div className="flex items-center justify-between gap-1">
+        <div className="space-y-2">
+          <p className="text-muted-foreground text-xs">Gold Fee</p>
+          <div className="flex items-center gap-1 text-xs font-semibold">
+            <span>{compactFormatter.format(goldCost)}</span>
+            <GoldIcon className="h-3 w-3" />
+          </div>
+        </div>
+        <GoldInfoPopover />
       </div>
     </div>
   );
@@ -372,6 +410,7 @@ function MobileCardComponent<TData extends Item>({
   const slots = row.original.slots;
   const tradeLink = createTradeLink(name, league, advancedSettings);
   const calculatedDustValue = row.original.calculatedDustValue;
+  const goldCost = row.original.goldCost;
 
   const handleSelect = React.useCallback(
     (v: boolean) => row.toggleSelected(!!v),
@@ -395,6 +434,7 @@ function MobileCardComponent<TData extends Item>({
       <PriceAndDustSection
         chaos={chaos}
         calculatedDustValue={calculatedDustValue}
+        goldCost={goldCost}
       />
 
       <DustPerChaosSection
