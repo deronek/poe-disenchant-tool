@@ -89,7 +89,7 @@ export function TabbedFilter<TData extends Item>({
           >
             <Filter className="h-4 w-4" />
           </span>
-          <span className="">Filter</span>
+          <span className="">Filters</span>
           <ChevronDown className="ml-1 h-3 w-3 transition-transform duration-200 group-data-[state=open]:rotate-180" />
         </Button>
       </PopoverTrigger>
