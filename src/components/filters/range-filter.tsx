@@ -51,7 +51,7 @@ export function RangeFilterStatus({
   if (hasMin && hasMax) {
     return (
       <>
-        Showing items between <span className="">{format(range.min!)}</span>
+        Showing items between <span className="">{format(range.min!)}</span>{" "}
         {icon} and{" "}
         <span className="inline-flex items-center gap-1">
           <span className="">{format(range.max!)}</span>
