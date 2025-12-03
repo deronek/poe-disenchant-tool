@@ -970,20 +970,38 @@ export class PoEDisenchantPage {
     expect(range.max).toBe(max);
   }
 
-  // Percent should be between 0 and 100
-  async setPriceFilterValuePercent(
+  // Private helper method to set filter value by percentage
+  private async setFilterValuePercent(
+    filterType: "price" | "dust" | "gold",
     bound: "lower" | "upper",
     percent: number,
   ): Promise<void> {
     if (percent < 0 || percent > 100) {
       throw new Error("Percent must be between 0 and 100");
     }
-    await this.switchToTab("price");
+    await this.switchToTab(filterType);
 
-    const track =
-      bound === "lower"
-        ? this.priceFilterLowerBoundSliderTrack
-        : this.priceFilterUpperBoundSliderTrack;
+    let track: Locator;
+    switch (filterType) {
+      case "price":
+        track =
+          bound === "lower"
+            ? this.priceFilterLowerBoundSliderTrack
+            : this.priceFilterUpperBoundSliderTrack;
+        break;
+      case "dust":
+        track =
+          bound === "lower"
+            ? this.dustFilterLowerBoundSliderTrack
+            : this.dustFilterUpperBoundSliderTrack;
+        break;
+      case "gold":
+        track =
+          bound === "lower"
+            ? this.goldFilterLowerBoundSliderTrack
+            : this.goldFilterUpperBoundSliderTrack;
+        break;
+    }
 
     const boundingBox = (await track.boundingBox())!;
 
@@ -996,6 +1014,14 @@ export class PoEDisenchantPage {
     await this.page.mouse.down();
     await track.hover({ force: true, position: { x: clickX, y: clickY } });
     await this.page.mouse.up();
+  }
+
+  // Percent should be between 0 and 100
+  async setPriceFilterValuePercent(
+    bound: "lower" | "upper",
+    percent: number,
+  ): Promise<void> {
+    await this.setFilterValuePercent("price", bound, percent);
   }
 
   // Percent should be between 0 and 100
@@ -1003,27 +1029,7 @@ export class PoEDisenchantPage {
     bound: "lower" | "upper",
     percent: number,
   ): Promise<void> {
-    if (percent < 0 || percent > 100) {
-      throw new Error("Percent must be between 0 and 100");
-    }
-    await this.switchToTab("dust");
-
-    const track =
-      bound === "lower"
-        ? this.dustFilterLowerBoundSliderTrack
-        : this.dustFilterUpperBoundSliderTrack;
-
-    const boundingBox = (await track.boundingBox())!;
-
-    // Calculate press point based on percent
-    const clickX = Math.round((percent * boundingBox.width) / 100);
-    const clickY = boundingBox.height / 2;
-
-    await track.focus();
-    await track.hover({ force: true, position: { x: 0, y: clickY } });
-    await this.page.mouse.down();
-    await track.hover({ force: true, position: { x: clickX, y: clickY } });
-    await this.page.mouse.up();
+    await this.setFilterValuePercent("dust", bound, percent);
   }
 
   // Percent should be between 0 and 100
@@ -1031,27 +1037,7 @@ export class PoEDisenchantPage {
     bound: "lower" | "upper",
     percent: number,
   ): Promise<void> {
-    if (percent < 0 || percent > 100) {
-      throw new Error("Percent must be between 0 and 100");
-    }
-    await this.switchToTab("gold");
-
-    const track =
-      bound === "lower"
-        ? this.goldFilterLowerBoundSliderTrack
-        : this.goldFilterUpperBoundSliderTrack;
-
-    const boundingBox = (await track.boundingBox())!;
-
-    // Calculate press point based on percent
-    const clickX = Math.round((percent * boundingBox.width) / 100);
-    const clickY = boundingBox.height / 2;
-
-    await track.focus();
-    await track.hover({ force: true, position: { x: 0, y: clickY } });
-    await this.page.mouse.down();
-    await track.hover({ force: true, position: { x: clickX, y: clickY } });
-    await this.page.mouse.up();
+    await this.setFilterValuePercent("gold", bound, percent);
   }
 
   async setAllFilters(): Promise<void> {
