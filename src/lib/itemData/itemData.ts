@@ -21,6 +21,7 @@ export type Item = {
   dustPerChaos: number;
   slots: number;
   dustPerChaosPerSlot: number;
+  goldCost: number;
   type: AllowedUnique;
   icon: string;
   shouldCatalyst: boolean;
@@ -73,6 +74,7 @@ const uncached__getItems = async (league: League) => {
       dustPerChaos: Math.round(dustPerChaos),
       slots: dustItem.slots,
       dustPerChaosPerSlot: Math.round(dustPerChaos / dustItem.slots),
+      goldCost: dustItem.goldCost,
       type: priceItem.type,
       icon: priceItem.icon,
       shouldCatalyst: shouldCatalyst,

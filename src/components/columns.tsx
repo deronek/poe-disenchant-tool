@@ -24,6 +24,8 @@ import { CatalystInfo } from "./catalyst-info";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
 import { DustIcon } from "./dust-icon";
 import { DustInfo } from "./dust-info";
+import { GoldIcon } from "./gold-icon";
+import { GoldInfo } from "./gold-info";
 import { Icon } from "./icon";
 import { ItemMarkingInfo } from "./item-marking-info";
 import { LowStockInfo } from "./low-stock-info";
@@ -35,7 +37,7 @@ const DustValueHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
         <div className="flex w-full flex-1 items-center">
           <p>Dust Value</p>
           <Tooltip>
-            <TooltipTrigger className="ml-auto">
+            <TooltipTrigger className="ml-auto pl-1">
               <Info className="size-5 text-blue-500 dark:text-blue-400" />
             </TooltipTrigger>
             <TooltipContent className="max-w-[460px] text-sm" variant="popover">
@@ -58,6 +60,38 @@ const ChaosCell: ColumnDef<Item>["cell"] = function ChaosCellComponent({
     <span className="inline-flex w-full justify-end gap-1">
       <CompactNumberTooltip value={value} />
       <ChaosOrbIcon />
+    </span>
+  );
+};
+
+const GoldFeeHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
+  React.memo(
+    function GoldCostHeaderComponent() {
+      return (
+        <div className="flex w-full flex-1 items-center">
+          <p>Gold Fee</p>
+          <Tooltip>
+            <TooltipTrigger className="ml-auto pl-1">
+              <Info className="size-5 text-blue-500 dark:text-blue-400" />
+            </TooltipTrigger>
+            <TooltipContent className="max-w-[460px] text-sm" variant="popover">
+              <GoldInfo />
+            </TooltipContent>
+          </Tooltip>
+        </div>
+      );
+    },
+    // Force memoization as we don't use header context,
+    // and tooltip context is static
+    () => true,
+  );
+
+const GoldCell: ColumnDef<Item>["cell"] = function GoldCellComponent({ row }) {
+  const value = row.getValue(COLUMN_IDS.GOLD_FEE) as number;
+  return (
+    <span className="inline-flex w-full justify-end gap-1">
+      <CompactNumberTooltip value={value} />
+      <GoldIcon />
     </span>
   );
 };
@@ -219,6 +253,7 @@ export const COLUMN_IDS = {
   CALCULATED_DUST_VALUE: "calculatedDustValue",
   DUST_PER_CHAOS: "dustPerChaos",
   DUST_PER_CHAOS_PER_SLOT: "dustPerChaosPerSlot",
+  GOLD_FEE: "goldCost",
   TRADE_LINK: "tradeLink",
   SELECT: "select",
 } as const;
@@ -245,7 +280,7 @@ export const createColumns = (
     {
       accessorKey: COLUMN_IDS.NAME,
       header: "Name",
-      size: 180, // Reduced from 210 to account for icon column
+      size: 140,
       filterFn: (row, _columnId, filterValue) => {
         const query = String(filterValue ?? "")
           .trim()
@@ -280,7 +315,7 @@ export const createColumns = (
     {
       accessorKey: COLUMN_IDS.CHAOS,
       header: () => <span>Price</span>,
-      size: 100,
+      size: 85,
       meta: { className: "text-right tabular-nums" },
       filterFn: rangeFilterFn,
       cell: ChaosCell,
@@ -288,7 +323,7 @@ export const createColumns = (
     {
       accessorKey: COLUMN_IDS.CALCULATED_DUST_VALUE,
       header: DustValueHeader,
-      size: 140,
+      size: 130,
       meta: { className: "text-right tabular-nums" },
       filterFn: rangeFilterFn,
       cell: CalculatedDustValueCell,
@@ -296,7 +331,7 @@ export const createColumns = (
     {
       accessorKey: COLUMN_IDS.DUST_PER_CHAOS,
       header: () => <span>Dust / Chaos</span>,
-      size: 130,
+      size: 115,
       meta: {
         className:
           "text-right tabular-nums relative " +
@@ -308,7 +343,7 @@ export const createColumns = (
     {
       accessorKey: COLUMN_IDS.DUST_PER_CHAOS_PER_SLOT,
       header: () => <span>Dust / Chaos / Slot</span>,
-      size: 160,
+      size: 155,
       meta: {
         className:
           "text-right tabular-nums bg-gradient-to-r from-primary/6 to-transparent dark:from-primary/7 dark:to-transparent",
@@ -316,9 +351,16 @@ export const createColumns = (
       cell: DustPerChaosPerSlotCell,
     },
     {
+      accessorKey: COLUMN_IDS.GOLD_FEE,
+      header: GoldFeeHeader,
+      size: 115,
+      meta: { className: "text-right tabular-nums" },
+      cell: GoldCell,
+    },
+    {
       id: COLUMN_IDS.TRADE_LINK,
       header: "Trade Link",
-      size: 100,
+      size: 80,
       enableSorting: false,
       cell: ({ row }) => {
         const name = row.getValue(COLUMN_IDS.NAME) as string;
@@ -383,7 +425,7 @@ export const createColumns = (
     {
       id: COLUMN_IDS.SELECT,
       header: MarkHeader,
-      size: 80,
+      size: 75,
       enableSorting: false,
       enableHiding: false,
       cell: ({ row }) => {

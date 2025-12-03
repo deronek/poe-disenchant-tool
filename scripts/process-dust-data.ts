@@ -8,6 +8,7 @@ import prettier from "prettier";
 import { z } from "zod";
 
 import { calculateDustValueFull, Item } from "@/lib/dust";
+import { calculateGoldCost } from "@/lib/gold";
 import { ITEMS_TO_IGNORE } from "@/lib/itemData/ignore-list";
 import data from "../src/lib/dust/poe-dust-original.js";
 
@@ -88,11 +89,20 @@ async function main() {
         item.influenceCount,
       );
 
+      // Calculate gold costs using the calculateGoldCost function
+      const goldCost = calculateGoldCost(
+        item.dustVal,
+        0,
+        item.influenceCount,
+        0,
+      );
+
       const outputItem: Item = {
         name: item.name,
         baseType: item.baseType,
         dustValIlvl84,
         dustValIlvl84Q20,
+        goldCost,
         slots: item.slots,
       };
       return outputItem;

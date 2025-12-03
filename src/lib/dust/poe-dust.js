@@ -4,6 +4,7 @@ const data = [
     baseType: "Amethyst Ring",
     dustValIlvl84: 2822225,
     dustValIlvl84Q20: 3951115,
+    goldCost: 47280,
     slots: 1,
   },
   {
@@ -11,6 +12,7 @@ const data = [
     baseType: "Leather Belt",
     dustValIlvl84: 2227900,
     dustValIlvl84Q20: 3119060,
+    goldCost: 42500,
     slots: 2,
   },
   {
@@ -18,6 +20,7 @@ const data = [
     baseType: "Heavy Belt",
     dustValIlvl84: 2227900,
     dustValIlvl84Q20: 3119060,
+    goldCost: 42500,
     slots: 2,
   },
   {
@@ -25,6 +28,7 @@ const data = [
     baseType: "Paua Amulet",
     dustValIlvl84: 2227900,
     dustValIlvl84Q20: 3119060,
+    goldCost: 42500,
     slots: 1,
   },
   {
@@ -32,6 +36,7 @@ const data = [
     baseType: "Fishing Rod",
     dustValIlvl84: 2128100,
     dustValIlvl84Q20: 2979340,
+    goldCost: 41640,
     slots: 4,
   },
   {
@@ -39,6 +44,7 @@ const data = [
     baseType: "Carnal Armour",
     dustValIlvl84: 1979450,
     dustValIlvl84Q20: 2771230,
+    goldCost: 40300,
     slots: 6,
   },
   {
@@ -46,6 +52,7 @@ const data = [
     baseType: "Carnal Armour",
     dustValIlvl84: 1979450,
     dustValIlvl84Q20: 2771230,
+    goldCost: 40300,
     slots: 6,
   },
   {
@@ -53,6 +60,7 @@ const data = [
     baseType: "Elegant Round Shield",
     dustValIlvl84: 1921800,
     dustValIlvl84Q20: 2690520,
+    goldCost: 39760,
     slots: 6,
   },
   {
@@ -60,6 +68,7 @@ const data = [
     baseType: "Engraved Greatsword",
     dustValIlvl84: 1921800,
     dustValIlvl84Q20: 2690520,
+    goldCost: 39760,
     slots: 8,
   },
   {
@@ -67,6 +76,7 @@ const data = [
     baseType: "Unset Ring",
     dustValIlvl84: 1835725,
     dustValIlvl84Q20: 2570015,
+    goldCost: 38960,
     slots: 1,
   },
   {
@@ -74,6 +84,7 @@ const data = [
     baseType: "Infernal Sword",
     dustValIlvl84: 2638088,
     dustValIlvl84Q20: 3341578,
+    goldCost: 57330,
     slots: 8,
   },
   {
@@ -81,6 +92,7 @@ const data = [
     baseType: "Infernal Sword",
     dustValIlvl84: 3517450,
     dustValIlvl84Q20: 4220940,
+    goldCost: 76440,
     slots: 8,
   },
   {
@@ -88,6 +100,7 @@ const data = [
     baseType: "Terror Maul",
     dustValIlvl84: 1758725,
     dustValIlvl84Q20: 2462215,
+    goldCost: 38220,
     slots: 8,
   },
   {
@@ -95,6 +108,7 @@ const data = [
     baseType: "Infernal Sword",
     dustValIlvl84: 1758725,
     dustValIlvl84Q20: 2462215,
+    goldCost: 38220,
     slots: 8,
   },
   {
@@ -102,6 +116,7 @@ const data = [
     baseType: "Imperial Bow",
     dustValIlvl84: 1707500,
     dustValIlvl84Q20: 2390500,
+    goldCost: 37700,
     slots: 8,
   },
   {
@@ -109,6 +124,7 @@ const data = [
     baseType: "Imperial Skean",
     dustValIlvl84: 1707500,
     dustValIlvl84Q20: 2390500,
+    goldCost: 37700,
     slots: 3,
   },
   {
@@ -116,6 +132,7 @@ const data = [
     baseType: "Vaal Claw",
     dustValIlvl84: 1707500,
     dustValIlvl84Q20: 2390500,
+    goldCost: 37700,
     slots: 4,
   },
   {
@@ -123,6 +140,7 @@ const data = [
     baseType: "Despot Axe",
     dustValIlvl84: 1707500,
     dustValIlvl84Q20: 2390500,
+    goldCost: 37700,
     slots: 8,
   },
   {
@@ -130,6 +148,7 @@ const data = [
     baseType: "Siege Axe",
     dustValIlvl84: 1657775,
     dustValIlvl84Q20: 2320885,
+    goldCost: 37200,
     slots: 6,
   },
   {
@@ -137,6 +156,7 @@ const data = [
     baseType: "Spine Bow",
     dustValIlvl84: 1609475,
     dustValIlvl84Q20: 2253265,
+    goldCost: 36720,
     slots: 8,
   },
   {
@@ -144,6 +164,7 @@ const data = [
     baseType: "Vaal Axe",
     dustValIlvl84: 1609475,
     dustValIlvl84Q20: 2253265,
+    goldCost: 36720,
     slots: 8,
   },
   {
@@ -151,6 +172,7 @@ const data = [
     baseType: "Maelström Staff",
     dustValIlvl84: 1609475,
     dustValIlvl84Q20: 2253265,
+    goldCost: 36720,
     slots: 8,
   },
   {
@@ -158,6 +180,7 @@ const data = [
     baseType: "Hellion's Paw",
     dustValIlvl84: 1517100,
     dustValIlvl84Q20: 2123940,
+    goldCost: 35760,
     slots: 4,
   },
   {
@@ -165,6 +188,7 @@ const data = [
     baseType: "Legion Sword",
     dustValIlvl84: 1517100,
     dustValIlvl84Q20: 2123940,
+    goldCost: 35760,
     slots: 6,
   },
   {
@@ -172,6 +196,7 @@ const data = [
     baseType: "Ebony Tower Shield",
     dustValIlvl84: 1472900,
     dustValIlvl84Q20: 2062060,
+    goldCost: 35280,
     slots: 8,
   },
   {
@@ -179,6 +204,7 @@ const data = [
     baseType: "Ring",
     dustValIlvl84: 1430000,
     dustValIlvl84Q20: 2002000,
+    goldCost: 34820,
     slots: 1,
   },
   {
@@ -186,6 +212,7 @@ const data = [
     baseType: "Slaughter Knife",
     dustValIlvl84: 1347925,
     dustValIlvl84Q20: 1887095,
+    goldCost: 33900,
     slots: 3,
   },
   {
@@ -193,6 +220,7 @@ const data = [
     baseType: "Karui Maul",
     dustValIlvl84: 1308650,
     dustValIlvl84Q20: 1832110,
+    goldCost: 33460,
     slots: 8,
   },
   {
@@ -200,6 +228,7 @@ const data = [
     baseType: "Foul Staff",
     dustValIlvl84: 1233525,
     dustValIlvl84Q20: 1726935,
+    goldCost: 32580,
     slots: 8,
   },
   {
@@ -207,6 +236,7 @@ const data = [
     baseType: "Ancient Gauntlets",
     dustValIlvl84: 973750,
     dustValIlvl84Q20: 1363250,
+    goldCost: 29280,
     slots: 4,
   },
   {
@@ -214,6 +244,7 @@ const data = [
     baseType: "Unset Amulet",
     dustValIlvl84: 917875,
     dustValIlvl84Q20: 1285025,
+    goldCost: 28520,
     slots: 1,
   },
   {
@@ -221,6 +252,7 @@ const data = [
     baseType: "Carnal Mitts",
     dustValIlvl84: 1191150,
     dustValIlvl84Q20: 1508790,
+    goldCost: 40080,
     slots: 4,
   },
   {
@@ -228,6 +260,7 @@ const data = [
     baseType: "Topaz Ring",
     dustValIlvl84: 794100,
     dustValIlvl84Q20: 1111740,
+    goldCost: 26720,
     slots: 1,
   },
   {
@@ -235,6 +268,7 @@ const data = [
     baseType: "Leather Belt",
     dustValIlvl84: 791750,
     dustValIlvl84Q20: 1108450,
+    goldCost: 26680,
     slots: 2,
   },
   {
@@ -242,6 +276,7 @@ const data = [
     baseType: "Onyx Amulet",
     dustValIlvl84: 590900,
     dustValIlvl84Q20: 827260,
+    goldCost: 23380,
     slots: 1,
   },
   {
@@ -249,6 +284,7 @@ const data = [
     baseType: "Lacewood Spirit Shield",
     dustValIlvl84: 525000,
     dustValIlvl84Q20: 735000,
+    goldCost: 22180,
     slots: 4,
   },
   {
@@ -256,6 +292,7 @@ const data = [
     baseType: "Chain Belt",
     dustValIlvl84: 515000,
     dustValIlvl84Q20: 721000,
+    goldCost: 21980,
     slots: 2,
   },
   {
@@ -263,6 +300,7 @@ const data = [
     baseType: "Onyx Amulet",
     dustValIlvl84: 508200,
     dustValIlvl84Q20: 711480,
+    goldCost: 21860,
     slots: 1,
   },
   {
@@ -270,6 +308,7 @@ const data = [
     baseType: "Triumphant Lamellar",
     dustValIlvl84: 466450,
     dustValIlvl84Q20: 653030,
+    goldCost: 21020,
     slots: 6,
   },
   {
@@ -277,6 +316,7 @@ const data = [
     baseType: "Void Axe",
     dustValIlvl84: 452875,
     dustValIlvl84Q20: 634025,
+    goldCost: 20740,
     slots: 8,
   },
   {
@@ -284,6 +324,7 @@ const data = [
     baseType: "Void Sceptre",
     dustValIlvl84: 452875,
     dustValIlvl84Q20: 634025,
+    goldCost: 20740,
     slots: 6,
   },
   {
@@ -291,6 +332,7 @@ const data = [
     baseType: "Murder Mitts",
     dustValIlvl84: 439675,
     dustValIlvl84Q20: 615545,
+    goldCost: 20480,
     slots: 4,
   },
   {
@@ -298,6 +340,7 @@ const data = [
     baseType: "Imperial Bow",
     dustValIlvl84: 426875,
     dustValIlvl84Q20: 597625,
+    goldCost: 20200,
     slots: 8,
   },
   {
@@ -305,6 +348,7 @@ const data = [
     baseType: "Imperial Maul",
     dustValIlvl84: 414450,
     dustValIlvl84Q20: 580230,
+    goldCost: 19940,
     slots: 8,
   },
   {
@@ -312,6 +356,7 @@ const data = [
     baseType: "Blood Raiment",
     dustValIlvl84: 828900,
     dustValIlvl84Q20: 994680,
+    goldCost: 39880,
     slots: 6,
   },
   {
@@ -319,6 +364,7 @@ const data = [
     baseType: "Dragonscale Boots",
     dustValIlvl84: 414450,
     dustValIlvl84Q20: 580230,
+    goldCost: 19940,
     slots: 4,
   },
   {
@@ -326,6 +372,7 @@ const data = [
     baseType: "Agate Amulet",
     dustValIlvl84: 414450,
     dustValIlvl84Q20: 580230,
+    goldCost: 19940,
     slots: 1,
   },
   {
@@ -333,6 +380,7 @@ const data = [
     baseType: "Maelström Staff",
     dustValIlvl84: 402375,
     dustValIlvl84Q20: 563325,
+    goldCost: 19680,
     slots: 8,
   },
   {
@@ -340,6 +388,7 @@ const data = [
     baseType: "Prophet Crown",
     dustValIlvl84: 390650,
     dustValIlvl84Q20: 546910,
+    goldCost: 19420,
     slots: 4,
   },
   {
@@ -347,6 +396,7 @@ const data = [
     baseType: "Vaal Gauntlets",
     dustValIlvl84: 390650,
     dustValIlvl84Q20: 546910,
+    goldCost: 19420,
     slots: 4,
   },
   {
@@ -354,6 +404,7 @@ const data = [
     baseType: "Stealth Boots",
     dustValIlvl84: 379275,
     dustValIlvl84Q20: 530985,
+    goldCost: 19160,
     slots: 4,
   },
   {
@@ -361,6 +412,7 @@ const data = [
     baseType: "Ebony Tower Shield",
     dustValIlvl84: 368225,
     dustValIlvl84Q20: 515515,
+    goldCost: 18900,
     slots: 8,
   },
   {
@@ -368,6 +420,7 @@ const data = [
     baseType: "Assassin's Mitts",
     dustValIlvl84: 505462,
     dustValIlvl84Q20: 640253,
+    goldCost: 27240,
     slots: 4,
   },
   {
@@ -375,6 +428,7 @@ const data = [
     baseType: "Savant's Robe",
     dustValIlvl84: 317625,
     dustValIlvl84Q20: 444675,
+    goldCost: 17680,
     slots: 6,
   },
   {
@@ -382,6 +436,7 @@ const data = [
     baseType: "Fiend Dagger",
     dustValIlvl84: 290675,
     dustValIlvl84Q20: 406945,
+    goldCost: 17000,
     slots: 3,
   },
   {
@@ -389,6 +444,7 @@ const data = [
     baseType: "Highborn Staff",
     dustValIlvl84: 282225,
     dustValIlvl84Q20: 395115,
+    goldCost: 16760,
     slots: 8,
   },
   {
@@ -396,6 +452,7 @@ const data = [
     baseType: "Fishing Rod",
     dustValIlvl84: 279875,
     dustValIlvl84Q20: 391825,
+    goldCost: 16700,
     slots: 4,
   },
   {
@@ -403,6 +460,7 @@ const data = [
     baseType: "Soldier Boots",
     dustValIlvl84: 258275,
     dustValIlvl84Q20: 361585,
+    goldCost: 16120,
     slots: 4,
   },
   {
@@ -410,6 +468,7 @@ const data = [
     baseType: "Ornate Quiver",
     dustValIlvl84: 229475,
     dustValIlvl84Q20: 321265,
+    goldCost: 15280,
     slots: 6,
   },
   {
@@ -417,6 +476,7 @@ const data = [
     baseType: "Great Mallet",
     dustValIlvl84: 197950,
     dustValIlvl84Q20: 277130,
+    goldCost: 14300,
     slots: 8,
   },
   {
@@ -424,6 +484,7 @@ const data = [
     baseType: "Wyrmscale Doublet",
     dustValIlvl84: 186575,
     dustValIlvl84Q20: 261205,
+    goldCost: 13920,
     slots: 6,
   },
   {
@@ -431,6 +492,7 @@ const data = [
     baseType: "Sage's Robe",
     dustValIlvl84: 181150,
     dustValIlvl84Q20: 253610,
+    goldCost: 13740,
     slots: 6,
   },
   {
@@ -438,6 +500,7 @@ const data = [
     baseType: "Riveted Boots",
     dustValIlvl84: 175875,
     dustValIlvl84Q20: 246225,
+    goldCost: 13560,
     slots: 4,
   },
   {
@@ -445,6 +508,7 @@ const data = [
     baseType: "Sorcerer Boots",
     dustValIlvl84: 174425,
     dustValIlvl84Q20: 244195,
+    goldCost: 13500,
     slots: 4,
   },
   {
@@ -452,6 +516,7 @@ const data = [
     baseType: "Bone Circlet",
     dustValIlvl84: 165775,
     dustValIlvl84Q20: 232085,
+    goldCost: 13200,
     slots: 4,
   },
   {
@@ -459,6 +524,7 @@ const data = [
     baseType: "Greatwolf Talisman",
     dustValIlvl84: 164400,
     dustValIlvl84Q20: 230160,
+    goldCost: 13140,
     slots: 1,
   },
   {
@@ -466,6 +532,7 @@ const data = [
     baseType: "Shadow Sceptre",
     dustValIlvl84: 156250,
     dustValIlvl84Q20: 218750,
+    goldCost: 12840,
     slots: 6,
   },
   {
@@ -473,6 +540,7 @@ const data = [
     baseType: "Studded Belt",
     dustValIlvl84: 156250,
     dustValIlvl84Q20: 218750,
+    goldCost: 12840,
     slots: 2,
   },
   {
@@ -480,6 +548,7 @@ const data = [
     baseType: "Sage Wand",
     dustValIlvl84: 147275,
     dustValIlvl84Q20: 206185,
+    goldCost: 12520,
     slots: 3,
   },
   {
@@ -487,6 +556,7 @@ const data = [
     baseType: "Prophecy Wand",
     dustValIlvl84: 141825,
     dustValIlvl84Q20: 198555,
+    goldCost: 12300,
     slots: 3,
   },
   {
@@ -494,6 +564,7 @@ const data = [
     baseType: "Two-Point Arrow Quiver",
     dustValIlvl84: 141825,
     dustValIlvl84Q20: 198555,
+    goldCost: 12300,
     slots: 6,
   },
   {
@@ -501,6 +572,7 @@ const data = [
     baseType: "Gladiator Plate",
     dustValIlvl84: 141825,
     dustValIlvl84Q20: 198555,
+    goldCost: 12300,
     slots: 6,
   },
   {
@@ -508,6 +580,7 @@ const data = [
     baseType: "Jingling Spirit Shield",
     dustValIlvl84: 138825,
     dustValIlvl84Q20: 194355,
+    goldCost: 12180,
     slots: 4,
   },
   {
@@ -515,6 +588,7 @@ const data = [
     baseType: "Rawhide Boots",
     dustValIlvl84: 133675,
     dustValIlvl84Q20: 187145,
+    goldCost: 11980,
     slots: 4,
   },
   {
@@ -522,6 +596,7 @@ const data = [
     baseType: "Ruby Ring",
     dustValIlvl84: 133675,
     dustValIlvl84Q20: 187145,
+    goldCost: 11980,
     slots: 1,
   },
   {
@@ -529,6 +604,7 @@ const data = [
     baseType: "Topaz Ring",
     dustValIlvl84: 133675,
     dustValIlvl84Q20: 187145,
+    goldCost: 11980,
     slots: 1,
   },
   {
@@ -536,6 +612,7 @@ const data = [
     baseType: "Champion Kite Shield",
     dustValIlvl84: 126000,
     dustValIlvl84Q20: 176400,
+    goldCost: 11660,
     slots: 6,
   },
   {
@@ -543,6 +620,7 @@ const data = [
     baseType: "Sacrificial Garb",
     dustValIlvl84: 122325,
     dustValIlvl84Q20: 171255,
+    goldCost: 11500,
     slots: 6,
   },
   {
@@ -550,6 +628,7 @@ const data = [
     baseType: "Carnal Armour",
     dustValIlvl84: 118775,
     dustValIlvl84Q20: 166285,
+    goldCost: 11360,
     slots: 6,
   },
   {
@@ -557,6 +636,7 @@ const data = [
     baseType: "Agate Amulet",
     dustValIlvl84: 115300,
     dustValIlvl84Q20: 161420,
+    goldCost: 11200,
     slots: 1,
   },
   {
@@ -564,6 +644,7 @@ const data = [
     baseType: "Moonstone Ring",
     dustValIlvl84: 115300,
     dustValIlvl84Q20: 161420,
+    goldCost: 11200,
     slots: 1,
   },
   {
@@ -571,6 +652,7 @@ const data = [
     baseType: "Imperial Bow",
     dustValIlvl84: 115300,
     dustValIlvl84Q20: 161420,
+    goldCost: 11200,
     slots: 8,
   },
   {
@@ -578,6 +660,7 @@ const data = [
     baseType: "Pinnacle Tower Shield",
     dustValIlvl84: 115300,
     dustValIlvl84Q20: 161420,
+    goldCost: 11200,
     slots: 8,
   },
   {
@@ -585,6 +668,7 @@ const data = [
     baseType: "Vaal Gauntlets",
     dustValIlvl84: 111950,
     dustValIlvl84Q20: 156730,
+    goldCost: 11060,
     slots: 4,
   },
   {
@@ -592,6 +676,7 @@ const data = [
     baseType: "Hubris Circlet",
     dustValIlvl84: 223900,
     dustValIlvl84Q20: 268680,
+    goldCost: 22120,
     slots: 4,
   },
   {
@@ -599,6 +684,7 @@ const data = [
     baseType: "Triumphant Lamellar",
     dustValIlvl84: 111950,
     dustValIlvl84Q20: 156730,
+    goldCost: 11060,
     slots: 6,
   },
   {
@@ -606,6 +692,7 @@ const data = [
     baseType: "Slink Boots",
     dustValIlvl84: 111950,
     dustValIlvl84Q20: 156730,
+    goldCost: 11060,
     slots: 4,
   },
   {
@@ -613,6 +700,7 @@ const data = [
     baseType: "Glorious Plate",
     dustValIlvl84: 108700,
     dustValIlvl84Q20: 152180,
+    goldCost: 10920,
     slots: 6,
   },
   {
@@ -620,6 +708,7 @@ const data = [
     baseType: "Titanium Spirit Shield",
     dustValIlvl84: 108700,
     dustValIlvl84Q20: 152180,
+    goldCost: 10920,
     slots: 4,
   },
   {
@@ -627,6 +716,7 @@ const data = [
     baseType: "Archon Kite Shield",
     dustValIlvl84: 108700,
     dustValIlvl84Q20: 152180,
+    goldCost: 10920,
     slots: 6,
   },
   {
@@ -634,6 +724,7 @@ const data = [
     baseType: "Archon Kite Shield",
     dustValIlvl84: 108700,
     dustValIlvl84Q20: 152180,
+    goldCost: 10920,
     slots: 6,
   },
   {
@@ -641,6 +732,7 @@ const data = [
     baseType: "Jewelled Foil",
     dustValIlvl84: 108700,
     dustValIlvl84Q20: 152180,
+    goldCost: 10920,
     slots: 4,
   },
   {
@@ -648,6 +740,7 @@ const data = [
     baseType: "Sadist Garb",
     dustValIlvl84: 108700,
     dustValIlvl84Q20: 152180,
+    goldCost: 10920,
     slots: 6,
   },
   {
@@ -655,6 +748,7 @@ const data = [
     baseType: "Imperial Claw",
     dustValIlvl84: 3500,
     dustValIlvl84Q20: 4900,
+    goldCost: 2320,
     slots: 4,
   },
   {
@@ -662,6 +756,7 @@ const data = [
     baseType: "Titan Greaves",
     dustValIlvl84: 3500,
     dustValIlvl84Q20: 4900,
+    goldCost: 2320,
     slots: 4,
   },
   {
@@ -669,6 +764,7 @@ const data = [
     baseType: "Sorcerer Boots",
     dustValIlvl84: 108700,
     dustValIlvl84Q20: 152180,
+    goldCost: 10920,
     slots: 4,
   },
   {
@@ -676,6 +772,7 @@ const data = [
     baseType: "Vaal Regalia",
     dustValIlvl84: 108700,
     dustValIlvl84Q20: 152180,
+    goldCost: 10920,
     slots: 6,
   },
   {
@@ -683,6 +780,7 @@ const data = [
     baseType: "Ornate Quiver",
     dustValIlvl84: 108700,
     dustValIlvl84Q20: 152180,
+    goldCost: 10920,
     slots: 6,
   },
   {
@@ -690,6 +788,7 @@ const data = [
     baseType: "Turquoise Amulet",
     dustValIlvl84: 108700,
     dustValIlvl84Q20: 152180,
+    goldCost: 10920,
     slots: 1,
   },
   {
@@ -697,6 +796,7 @@ const data = [
     baseType: "Archon Kite Shield",
     dustValIlvl84: 108700,
     dustValIlvl84Q20: 152180,
+    goldCost: 10920,
     slots: 6,
   },
   {
@@ -704,6 +804,7 @@ const data = [
     baseType: "Glorious Plate",
     dustValIlvl84: 108700,
     dustValIlvl84Q20: 152180,
+    goldCost: 10920,
     slots: 6,
   },
   {
@@ -711,6 +812,7 @@ const data = [
     baseType: "Titan Greaves",
     dustValIlvl84: 108700,
     dustValIlvl84Q20: 152180,
+    goldCost: 10920,
     slots: 4,
   },
   {
@@ -718,6 +820,7 @@ const data = [
     baseType: "Praetor Crown",
     dustValIlvl84: 108700,
     dustValIlvl84Q20: 152180,
+    goldCost: 10920,
     slots: 4,
   },
   {
@@ -725,6 +828,7 @@ const data = [
     baseType: "Sadist Garb",
     dustValIlvl84: 108700,
     dustValIlvl84Q20: 152180,
+    goldCost: 10920,
     slots: 6,
   },
   {
@@ -732,6 +836,7 @@ const data = [
     baseType: "Murder Mitts",
     dustValIlvl84: 105525,
     dustValIlvl84Q20: 147735,
+    goldCost: 10760,
     slots: 4,
   },
   {
@@ -739,6 +844,7 @@ const data = [
     baseType: "Sorcerer Boots",
     dustValIlvl84: 105525,
     dustValIlvl84Q20: 147735,
+    goldCost: 10760,
     slots: 4,
   },
   {
@@ -746,6 +852,7 @@ const data = [
     baseType: "Deicide Mask",
     dustValIlvl84: 105525,
     dustValIlvl84Q20: 147735,
+    goldCost: 10760,
     slots: 4,
   },
   {
@@ -753,6 +860,7 @@ const data = [
     baseType: "Murder Mitts",
     dustValIlvl84: 105525,
     dustValIlvl84Q20: 147735,
+    goldCost: 10760,
     slots: 4,
   },
   {
@@ -760,6 +868,7 @@ const data = [
     baseType: "Saint's Hauberk",
     dustValIlvl84: 105525,
     dustValIlvl84Q20: 147735,
+    goldCost: 10760,
     slots: 6,
   },
   {
@@ -767,6 +876,7 @@ const data = [
     baseType: "Saint's Hauberk",
     dustValIlvl84: 105525,
     dustValIlvl84Q20: 147735,
+    goldCost: 10760,
     slots: 6,
   },
   {
@@ -774,6 +884,7 @@ const data = [
     baseType: "Vaal Rapier",
     dustValIlvl84: 102450,
     dustValIlvl84Q20: 143430,
+    goldCost: 10620,
     slots: 4,
   },
   {
@@ -781,6 +892,7 @@ const data = [
     baseType: "Imperial Staff",
     dustValIlvl84: 102450,
     dustValIlvl84Q20: 143430,
+    goldCost: 10620,
     slots: 8,
   },
   {
@@ -788,6 +900,7 @@ const data = [
     baseType: "Vaal Rapier",
     dustValIlvl84: 102450,
     dustValIlvl84Q20: 143430,
+    goldCost: 10620,
     slots: 4,
   },
   {
@@ -795,6 +908,7 @@ const data = [
     baseType: "Vaal Claw",
     dustValIlvl84: 102450,
     dustValIlvl84Q20: 143430,
+    goldCost: 10620,
     slots: 4,
   },
   {
@@ -802,6 +916,7 @@ const data = [
     baseType: "Zodiac Leather",
     dustValIlvl84: 99475,
     dustValIlvl84Q20: 139265,
+    goldCost: 10480,
     slots: 6,
   },
   {
@@ -809,6 +924,7 @@ const data = [
     baseType: "Royal Burgonet",
     dustValIlvl84: 17400,
     dustValIlvl84Q20: 24360,
+    goldCost: 4780,
     slots: 4,
   },
   {
@@ -816,6 +932,7 @@ const data = [
     baseType: "Zodiac Leather",
     dustValIlvl84: 17400,
     dustValIlvl84Q20: 24360,
+    goldCost: 4780,
     slots: 6,
   },
   {
@@ -823,6 +940,7 @@ const data = [
     baseType: "Widowsilk Robe",
     dustValIlvl84: 99475,
     dustValIlvl84Q20: 139265,
+    goldCost: 10480,
     slots: 6,
   },
   {
@@ -830,6 +948,7 @@ const data = [
     baseType: "Blood Raiment",
     dustValIlvl84: 198950,
     dustValIlvl84Q20: 238740,
+    goldCost: 20960,
     slots: 6,
   },
   {
@@ -837,6 +956,7 @@ const data = [
     baseType: "Zodiac Leather",
     dustValIlvl84: 99475,
     dustValIlvl84Q20: 139265,
+    goldCost: 10480,
     slots: 6,
   },
   {
@@ -844,6 +964,7 @@ const data = [
     baseType: "Zodiac Leather",
     dustValIlvl84: 99475,
     dustValIlvl84Q20: 139265,
+    goldCost: 10480,
     slots: 6,
   },
   {
@@ -851,6 +972,7 @@ const data = [
     baseType: "Vaal Blade",
     dustValIlvl84: 1609475,
     dustValIlvl84Q20: 2253265,
+    goldCost: 36720,
     slots: 6,
   },
   {
@@ -858,6 +980,7 @@ const data = [
     baseType: "Vaal Axe",
     dustValIlvl84: 16900,
     dustValIlvl84Q20: 23660,
+    goldCost: 4720,
     slots: 8,
   },
   {
@@ -865,6 +988,7 @@ const data = [
     baseType: "Ezomyte Tower Shield",
     dustValIlvl84: 96575,
     dustValIlvl84Q20: 135205,
+    goldCost: 10340,
     slots: 8,
   },
   {
@@ -872,6 +996,7 @@ const data = [
     baseType: "Maelström Staff",
     dustValIlvl84: 193150,
     dustValIlvl84Q20: 231780,
+    goldCost: 20680,
     slots: 8,
   },
   {
@@ -879,6 +1004,7 @@ const data = [
     baseType: "Elegant Ringmail",
     dustValIlvl84: 96575,
     dustValIlvl84Q20: 135205,
+    goldCost: 10340,
     slots: 6,
   },
   {
@@ -886,6 +1012,7 @@ const data = [
     baseType: "Elegant Ringmail",
     dustValIlvl84: 96575,
     dustValIlvl84Q20: 135205,
+    goldCost: 10340,
     slots: 6,
   },
   {
@@ -893,6 +1020,7 @@ const data = [
     baseType: "Vaal Sceptre",
     dustValIlvl84: 96575,
     dustValIlvl84Q20: 135205,
+    goldCost: 10340,
     slots: 6,
   },
   {
@@ -900,6 +1028,7 @@ const data = [
     baseType: "Assassin's Boots",
     dustValIlvl84: 93750,
     dustValIlvl84Q20: 131250,
+    goldCost: 10200,
     slots: 4,
   },
   {
@@ -907,6 +1036,7 @@ const data = [
     baseType: "Occultist's Vestment",
     dustValIlvl84: 91025,
     dustValIlvl84Q20: 127435,
+    goldCost: 10080,
     slots: 6,
   },
   {
@@ -914,6 +1044,7 @@ const data = [
     baseType: "Assassin Bow",
     dustValIlvl84: 91025,
     dustValIlvl84Q20: 127435,
+    goldCost: 10080,
     slots: 8,
   },
   {
@@ -921,6 +1052,7 @@ const data = [
     baseType: "Exquisite Leather",
     dustValIlvl84: 91025,
     dustValIlvl84Q20: 127435,
+    goldCost: 10080,
     slots: 6,
   },
   {
@@ -928,6 +1060,7 @@ const data = [
     baseType: "Opal Wand",
     dustValIlvl84: 2925,
     dustValIlvl84Q20: 4095,
+    goldCost: 2140,
     slots: 3,
   },
   {
@@ -935,6 +1068,7 @@ const data = [
     baseType: "Vaal Spirit Shield",
     dustValIlvl84: 15925,
     dustValIlvl84Q20: 22295,
+    goldCost: 4600,
     slots: 4,
   },
   {
@@ -942,6 +1076,7 @@ const data = [
     baseType: "Assassin Bow",
     dustValIlvl84: 91025,
     dustValIlvl84Q20: 127435,
+    goldCost: 10080,
     slots: 8,
   },
   {
@@ -949,6 +1084,7 @@ const data = [
     baseType: "Vaal Spirit Shield",
     dustValIlvl84: 91025,
     dustValIlvl84Q20: 127435,
+    goldCost: 10080,
     slots: 4,
   },
   {
@@ -956,6 +1092,7 @@ const data = [
     baseType: "Legion Sword",
     dustValIlvl84: 91025,
     dustValIlvl84Q20: 127435,
+    goldCost: 10080,
     slots: 6,
   },
   {
@@ -963,6 +1100,7 @@ const data = [
     baseType: "Varnished Coat",
     dustValIlvl84: 91025,
     dustValIlvl84Q20: 127435,
+    goldCost: 10080,
     slots: 6,
   },
   {
@@ -970,6 +1108,7 @@ const data = [
     baseType: "Ezomyte Dagger",
     dustValIlvl84: 91025,
     dustValIlvl84Q20: 127435,
+    goldCost: 10080,
     slots: 3,
   },
   {
@@ -977,6 +1116,7 @@ const data = [
     baseType: "Opal Wand",
     dustValIlvl84: 91025,
     dustValIlvl84Q20: 127435,
+    goldCost: 10080,
     slots: 3,
   },
   {
@@ -984,6 +1124,7 @@ const data = [
     baseType: "Goathide Boots",
     dustValIlvl84: 86525,
     dustValIlvl84Q20: 121135,
+    goldCost: 9840,
     slots: 4,
   },
   {
@@ -991,6 +1132,7 @@ const data = [
     baseType: "Gavel",
     dustValIlvl84: 85800,
     dustValIlvl84Q20: 120120,
+    goldCost: 9800,
     slots: 6,
   },
   {
@@ -998,6 +1140,7 @@ const data = [
     baseType: "Ezomyte Burgonet",
     dustValIlvl84: 85800,
     dustValIlvl84Q20: 120120,
+    goldCost: 9800,
     slots: 4,
   },
   {
@@ -1005,6 +1148,7 @@ const data = [
     baseType: "Lacquered Buckler",
     dustValIlvl84: 85800,
     dustValIlvl84Q20: 120120,
+    goldCost: 9800,
     slots: 4,
   },
   {
@@ -1012,6 +1156,7 @@ const data = [
     baseType: "Crusader Plate",
     dustValIlvl84: 83300,
     dustValIlvl84Q20: 116620,
+    goldCost: 9680,
     slots: 6,
   },
   {
@@ -1019,6 +1164,7 @@ const data = [
     baseType: "Crusader Plate",
     dustValIlvl84: 83300,
     dustValIlvl84Q20: 116620,
+    goldCost: 9680,
     slots: 6,
   },
   {
@@ -1026,6 +1172,7 @@ const data = [
     baseType: "Hydrascale Gauntlets",
     dustValIlvl84: 83300,
     dustValIlvl84Q20: 116620,
+    goldCost: 9680,
     slots: 4,
   },
   {
@@ -1033,6 +1180,7 @@ const data = [
     baseType: "Necromancer Silks",
     dustValIlvl84: 83300,
     dustValIlvl84Q20: 116620,
+    goldCost: 9680,
     slots: 6,
   },
   {
@@ -1040,6 +1188,7 @@ const data = [
     baseType: "Hydrascale Gauntlets",
     dustValIlvl84: 83300,
     dustValIlvl84Q20: 116620,
+    goldCost: 9680,
     slots: 4,
   },
   {
@@ -1047,6 +1196,7 @@ const data = [
     baseType: "Citadel Bow",
     dustValIlvl84: 2600,
     dustValIlvl84Q20: 3640,
+    goldCost: 2020,
     slots: 8,
   },
   {
@@ -1054,6 +1204,7 @@ const data = [
     baseType: "Magistrate Crown",
     dustValIlvl84: 80875,
     dustValIlvl84Q20: 113225,
+    goldCost: 9560,
     slots: 4,
   },
   {
@@ -1061,6 +1212,7 @@ const data = [
     baseType: "Fluted Bascinet",
     dustValIlvl84: 80875,
     dustValIlvl84Q20: 113225,
+    goldCost: 9560,
     slots: 4,
   },
   {
@@ -1068,6 +1220,7 @@ const data = [
     baseType: "Harlequin Mask",
     dustValIlvl84: 78525,
     dustValIlvl84Q20: 109935,
+    goldCost: 9420,
     slots: 4,
   },
   {
@@ -1075,6 +1228,7 @@ const data = [
     baseType: "Legion Gloves",
     dustValIlvl84: 78525,
     dustValIlvl84Q20: 109935,
+    goldCost: 9420,
     slots: 4,
   },
   {
@@ -1082,6 +1236,7 @@ const data = [
     baseType: "Savant's Robe",
     dustValIlvl84: 76225,
     dustValIlvl84Q20: 106715,
+    goldCost: 9300,
     slots: 6,
   },
   {
@@ -1089,6 +1244,7 @@ const data = [
     baseType: "Karui Sceptre",
     dustValIlvl84: 76225,
     dustValIlvl84Q20: 106715,
+    goldCost: 9300,
     slots: 6,
   },
   {
@@ -1096,6 +1252,7 @@ const data = [
     baseType: "Carnal Boots",
     dustValIlvl84: 74000,
     dustValIlvl84Q20: 103600,
+    goldCost: 9180,
     slots: 4,
   },
   {
@@ -1103,6 +1260,7 @@ const data = [
     baseType: "Devout Chainmail",
     dustValIlvl84: 74000,
     dustValIlvl84Q20: 103600,
+    goldCost: 9180,
     slots: 6,
   },
   {
@@ -1110,6 +1268,7 @@ const data = [
     baseType: "Necromancer Circlet",
     dustValIlvl84: 71850,
     dustValIlvl84Q20: 100590,
+    goldCost: 9060,
     slots: 4,
   },
   {
@@ -1117,6 +1276,7 @@ const data = [
     baseType: "Sovereign Spiked Shield",
     dustValIlvl84: 71850,
     dustValIlvl84Q20: 100590,
+    goldCost: 9060,
     slots: 4,
   },
   {
@@ -1124,6 +1284,7 @@ const data = [
     baseType: "Golden Buckler",
     dustValIlvl84: 71850,
     dustValIlvl84Q20: 100590,
+    goldCost: 9060,
     slots: 4,
   },
   {
@@ -1131,6 +1292,7 @@ const data = [
     baseType: "Necromancer Circlet",
     dustValIlvl84: 71850,
     dustValIlvl84Q20: 100590,
+    goldCost: 9060,
     slots: 4,
   },
   {
@@ -1138,6 +1300,7 @@ const data = [
     baseType: "Majestic Plate",
     dustValIlvl84: 69775,
     dustValIlvl84Q20: 97685,
+    goldCost: 8940,
     slots: 6,
   },
   {
@@ -1145,6 +1308,7 @@ const data = [
     baseType: "Lacquered Garb",
     dustValIlvl84: 67725,
     dustValIlvl84Q20: 94815,
+    goldCost: 8820,
     slots: 6,
   },
   {
@@ -1152,6 +1316,7 @@ const data = [
     baseType: "Simple Robe",
     dustValIlvl84: 33150,
     dustValIlvl84Q20: 46410,
+    goldCost: 6380,
     slots: 6,
   },
   {
@@ -1159,6 +1324,7 @@ const data = [
     baseType: "Paua Amulet",
     dustValIlvl84: 66300,
     dustValIlvl84Q20: 92820,
+    goldCost: 8740,
     slots: 1,
   },
   {
@@ -1166,6 +1332,7 @@ const data = [
     baseType: "Ornate Mace",
     dustValIlvl84: 63850,
     dustValIlvl84Q20: 89390,
+    goldCost: 8580,
     slots: 6,
   },
   {
@@ -1173,6 +1340,7 @@ const data = [
     baseType: "Spidersilk Robe",
     dustValIlvl84: 61975,
     dustValIlvl84Q20: 86765,
+    goldCost: 8480,
     slots: 6,
   },
   {
@@ -1180,6 +1348,7 @@ const data = [
     baseType: "Moonstone Ring",
     dustValIlvl84: 61975,
     dustValIlvl84Q20: 86765,
+    goldCost: 8480,
     slots: 1,
   },
   {
@@ -1187,6 +1356,7 @@ const data = [
     baseType: "Spidersilk Robe",
     dustValIlvl84: 61975,
     dustValIlvl84Q20: 86765,
+    goldCost: 8480,
     slots: 6,
   },
   {
@@ -1194,6 +1364,7 @@ const data = [
     baseType: "Ancient Gauntlets",
     dustValIlvl84: 58425,
     dustValIlvl84Q20: 81795,
+    goldCost: 8240,
     slots: 4,
   },
   {
@@ -1201,6 +1372,7 @@ const data = [
     baseType: "Amethyst Ring",
     dustValIlvl84: 56725,
     dustValIlvl84Q20: 79415,
+    goldCost: 8140,
     slots: 1,
   },
   {
@@ -1208,6 +1380,7 @@ const data = [
     baseType: "Steel Kite Shield",
     dustValIlvl84: 56725,
     dustValIlvl84Q20: 79415,
+    goldCost: 8140,
     slots: 6,
   },
   {
@@ -1215,6 +1388,7 @@ const data = [
     baseType: "Steel Kite Shield",
     dustValIlvl84: 56725,
     dustValIlvl84Q20: 79415,
+    goldCost: 8140,
     slots: 6,
   },
   {
@@ -1222,6 +1396,7 @@ const data = [
     baseType: "Unset Ring",
     dustValIlvl84: 55075,
     dustValIlvl84Q20: 77105,
+    goldCost: 8040,
     slots: 1,
   },
   {
@@ -1229,6 +1404,7 @@ const data = [
     baseType: "Ambush Mitts",
     dustValIlvl84: 55075,
     dustValIlvl84Q20: 77105,
+    goldCost: 8040,
     slots: 4,
   },
   {
@@ -1236,6 +1412,7 @@ const data = [
     baseType: "Callous Mask",
     dustValIlvl84: 55075,
     dustValIlvl84Q20: 77105,
+    goldCost: 8040,
     slots: 4,
   },
   {
@@ -1243,6 +1420,7 @@ const data = [
     baseType: "Glorious Plate",
     dustValIlvl84: 54800,
     dustValIlvl84Q20: 76720,
+    goldCost: 8020,
     slots: 6,
   },
   {
@@ -1250,6 +1428,7 @@ const data = [
     baseType: "Zealot Gloves",
     dustValIlvl84: 51900,
     dustValIlvl84Q20: 72660,
+    goldCost: 7820,
     slots: 4,
   },
   {
@@ -1257,6 +1436,7 @@ const data = [
     baseType: "Onyx Amulet",
     dustValIlvl84: 77475,
     dustValIlvl84Q20: 98135,
+    goldCost: 11700,
     slots: 1,
   },
   {
@@ -1264,6 +1444,7 @@ const data = [
     baseType: "Sinner Tricorne",
     dustValIlvl84: 51650,
     dustValIlvl84Q20: 72310,
+    goldCost: 7800,
     slots: 4,
   },
   {
@@ -1271,6 +1452,7 @@ const data = [
     baseType: "Steel Ring",
     dustValIlvl84: 73050,
     dustValIlvl84Q20: 92530,
+    goldCost: 11400,
     slots: 1,
   },
   {
@@ -1278,6 +1460,7 @@ const data = [
     baseType: "Opal Ring",
     dustValIlvl84: 73050,
     dustValIlvl84Q20: 92530,
+    goldCost: 11400,
     slots: 1,
   },
   {
@@ -1285,6 +1468,7 @@ const data = [
     baseType: "Opal Ring",
     dustValIlvl84: 48700,
     dustValIlvl84Q20: 68180,
+    goldCost: 7600,
     slots: 1,
   },
   {
@@ -1292,6 +1476,7 @@ const data = [
     baseType: "Spike-Point Arrow Quiver",
     dustValIlvl84: 47500,
     dustValIlvl84Q20: 66500,
+    goldCost: 7520,
     slots: 6,
   },
   {
@@ -1299,6 +1484,7 @@ const data = [
     baseType: "Engraved Wand",
     dustValIlvl84: 47500,
     dustValIlvl84Q20: 66500,
+    goldCost: 7520,
     slots: 3,
   },
   {
@@ -1306,6 +1492,7 @@ const data = [
     baseType: "Meatgrinder",
     dustValIlvl84: 47275,
     dustValIlvl84Q20: 66185,
+    goldCost: 7500,
     slots: 8,
   },
   {
@@ -1313,6 +1500,7 @@ const data = [
     baseType: "Midnight Blade",
     dustValIlvl84: 47275,
     dustValIlvl84Q20: 66185,
+    goldCost: 7500,
     slots: 6,
   },
   {
@@ -1320,6 +1508,7 @@ const data = [
     baseType: "Sapphire Ring",
     dustValIlvl84: 47275,
     dustValIlvl84Q20: 66185,
+    goldCost: 7500,
     slots: 1,
   },
   {
@@ -1327,6 +1516,7 @@ const data = [
     baseType: "Terror Claw",
     dustValIlvl84: 47275,
     dustValIlvl84Q20: 66185,
+    goldCost: 7500,
     slots: 4,
   },
   {
@@ -1334,6 +1524,7 @@ const data = [
     baseType: "Praetor Crown",
     dustValIlvl84: 47275,
     dustValIlvl84Q20: 66185,
+    goldCost: 7500,
     slots: 4,
   },
   {
@@ -1341,6 +1532,7 @@ const data = [
     baseType: "Eternal Sword",
     dustValIlvl84: 47275,
     dustValIlvl84Q20: 66185,
+    goldCost: 7500,
     slots: 6,
   },
   {
@@ -1348,6 +1540,7 @@ const data = [
     baseType: "Eternal Sword",
     dustValIlvl84: 47275,
     dustValIlvl84Q20: 66185,
+    goldCost: 7500,
     slots: 6,
   },
   {
@@ -1355,6 +1548,7 @@ const data = [
     baseType: "Demon Dagger",
     dustValIlvl84: 47275,
     dustValIlvl84Q20: 66185,
+    goldCost: 7500,
     slots: 3,
   },
   {
@@ -1362,6 +1556,7 @@ const data = [
     baseType: "Void Sceptre",
     dustValIlvl84: 47275,
     dustValIlvl84Q20: 66185,
+    goldCost: 7500,
     slots: 6,
   },
   {
@@ -1369,6 +1564,7 @@ const data = [
     baseType: "Blue Pearl Amulet",
     dustValIlvl84: 47275,
     dustValIlvl84Q20: 66185,
+    goldCost: 7500,
     slots: 1,
   },
   {
@@ -1376,6 +1572,7 @@ const data = [
     baseType: "Raven Mask",
     dustValIlvl84: 44775,
     dustValIlvl84Q20: 62685,
+    goldCost: 7320,
     slots: 4,
   },
   {
@@ -1383,6 +1580,7 @@ const data = [
     baseType: "Cutlass",
     dustValIlvl84: 1450,
     dustValIlvl84Q20: 2030,
+    goldCost: 1560,
     slots: 3,
   },
   {
@@ -1390,6 +1588,7 @@ const data = [
     baseType: "Cutlass",
     dustValIlvl84: 7825,
     dustValIlvl84Q20: 10955,
+    goldCost: 3340,
     slots: 3,
   },
   {
@@ -1397,6 +1596,7 @@ const data = [
     baseType: "Amethyst Ring",
     dustValIlvl84: 44775,
     dustValIlvl84Q20: 62685,
+    goldCost: 7320,
     slots: 1,
   },
   {
@@ -1404,6 +1604,7 @@ const data = [
     baseType: "Deerskin Gloves",
     dustValIlvl84: 44550,
     dustValIlvl84Q20: 62370,
+    goldCost: 7300,
     slots: 4,
   },
   {
@@ -1411,6 +1612,7 @@ const data = [
     baseType: "Silk Gloves",
     dustValIlvl84: 44550,
     dustValIlvl84Q20: 62370,
+    goldCost: 7300,
     slots: 4,
   },
   {
@@ -1418,6 +1620,7 @@ const data = [
     baseType: "Paua Ring",
     dustValIlvl84: 44550,
     dustValIlvl84Q20: 62370,
+    goldCost: 7300,
     slots: 1,
   },
   {
@@ -1425,6 +1628,7 @@ const data = [
     baseType: "Nightmare Mace",
     dustValIlvl84: 66825,
     dustValIlvl84Q20: 84645,
+    goldCost: 10950,
     slots: 6,
   },
   {
@@ -1432,6 +1636,7 @@ const data = [
     baseType: "Ranger Bow",
     dustValIlvl84: 66825,
     dustValIlvl84Q20: 84645,
+    goldCost: 10950,
     slots: 8,
   },
   {
@@ -1439,6 +1644,7 @@ const data = [
     baseType: "Tornado Wand",
     dustValIlvl84: 66825,
     dustValIlvl84Q20: 84645,
+    goldCost: 10950,
     slots: 3,
   },
   {
@@ -1446,6 +1652,7 @@ const data = [
     baseType: "Two-Toned Boots",
     dustValIlvl84: 44550,
     dustValIlvl84Q20: 62370,
+    goldCost: 7300,
     slots: 4,
   },
   {
@@ -1453,6 +1660,7 @@ const data = [
     baseType: "Cloth Belt",
     dustValIlvl84: 43475,
     dustValIlvl84Q20: 60865,
+    goldCost: 7220,
     slots: 2,
   },
   {
@@ -1460,6 +1668,7 @@ const data = [
     baseType: "Vaal Sceptre",
     dustValIlvl84: 43250,
     dustValIlvl84Q20: 60550,
+    goldCost: 7200,
     slots: 6,
   },
   {
@@ -1467,6 +1676,7 @@ const data = [
     baseType: "Crusader Boots",
     dustValIlvl84: 43250,
     dustValIlvl84Q20: 60550,
+    goldCost: 7200,
     slots: 4,
   },
   {
@@ -1474,6 +1684,7 @@ const data = [
     baseType: "Crystal Belt",
     dustValIlvl84: 42000,
     dustValIlvl84Q20: 58800,
+    goldCost: 7100,
     slots: 2,
   },
   {
@@ -1481,6 +1692,7 @@ const data = [
     baseType: "Solaris Circlet",
     dustValIlvl84: 42000,
     dustValIlvl84Q20: 58800,
+    goldCost: 7100,
     slots: 4,
   },
   {
@@ -1488,6 +1700,7 @@ const data = [
     baseType: "Solaris Circlet",
     dustValIlvl84: 42000,
     dustValIlvl84Q20: 58800,
+    goldCost: 7100,
     slots: 4,
   },
   {
@@ -1495,6 +1708,7 @@ const data = [
     baseType: "Solaris Circlet",
     dustValIlvl84: 42000,
     dustValIlvl84Q20: 58800,
+    goldCost: 7100,
     slots: 4,
   },
   {
@@ -1502,6 +1716,7 @@ const data = [
     baseType: "Saint's Hauberk",
     dustValIlvl84: 42000,
     dustValIlvl84Q20: 58800,
+    goldCost: 7100,
     slots: 6,
   },
   {
@@ -1509,6 +1724,7 @@ const data = [
     baseType: "Leather Belt",
     dustValIlvl84: 42000,
     dustValIlvl84Q20: 58800,
+    goldCost: 7100,
     slots: 2,
   },
   {
@@ -1516,6 +1732,7 @@ const data = [
     baseType: "Lacquered Buckler",
     dustValIlvl84: 42000,
     dustValIlvl84Q20: 58800,
+    goldCost: 7100,
     slots: 4,
   },
   {
@@ -1523,6 +1740,7 @@ const data = [
     baseType: "Bone Helmet",
     dustValIlvl84: 42000,
     dustValIlvl84Q20: 58800,
+    goldCost: 7100,
     slots: 4,
   },
   {
@@ -1530,6 +1748,7 @@ const data = [
     baseType: "Crystal Belt",
     dustValIlvl84: 42000,
     dustValIlvl84Q20: 58800,
+    goldCost: 7100,
     slots: 2,
   },
   {
@@ -1537,6 +1756,7 @@ const data = [
     baseType: "Sacrificial Garb",
     dustValIlvl84: 40775,
     dustValIlvl84Q20: 57085,
+    goldCost: 7020,
     slots: 6,
   },
   {
@@ -1544,6 +1764,7 @@ const data = [
     baseType: "Judgement Staff",
     dustValIlvl84: 39600,
     dustValIlvl84Q20: 55440,
+    goldCost: 6920,
     slots: 8,
   },
   {
@@ -1551,6 +1772,7 @@ const data = [
     baseType: "Carnal Armour",
     dustValIlvl84: 39600,
     dustValIlvl84Q20: 55440,
+    goldCost: 6920,
     slots: 6,
   },
   {
@@ -1558,6 +1780,7 @@ const data = [
     baseType: "Pinnacle Tower Shield",
     dustValIlvl84: 38425,
     dustValIlvl84Q20: 53795,
+    goldCost: 6820,
     slots: 8,
   },
   {
@@ -1565,6 +1788,7 @@ const data = [
     baseType: "Saintly Chainmail",
     dustValIlvl84: 38425,
     dustValIlvl84Q20: 53795,
+    goldCost: 6820,
     slots: 6,
   },
   {
@@ -1572,6 +1796,7 @@ const data = [
     baseType: "Unset Ring",
     dustValIlvl84: 38425,
     dustValIlvl84Q20: 53795,
+    goldCost: 6820,
     slots: 1,
   },
   {
@@ -1579,6 +1804,7 @@ const data = [
     baseType: "Saintly Chainmail",
     dustValIlvl84: 38425,
     dustValIlvl84Q20: 53795,
+    goldCost: 6820,
     slots: 6,
   },
   {
@@ -1586,6 +1812,7 @@ const data = [
     baseType: "Fingerless Silk Gloves",
     dustValIlvl84: 38425,
     dustValIlvl84Q20: 53795,
+    goldCost: 6820,
     slots: 4,
   },
   {
@@ -1593,6 +1820,7 @@ const data = [
     baseType: "Hubris Circlet",
     dustValIlvl84: 37325,
     dustValIlvl84Q20: 52255,
+    goldCost: 6740,
     slots: 4,
   },
   {
@@ -1600,6 +1828,7 @@ const data = [
     baseType: "Hubris Circlet",
     dustValIlvl84: 37325,
     dustValIlvl84Q20: 52255,
+    goldCost: 6740,
     slots: 4,
   },
   {
@@ -1607,6 +1836,7 @@ const data = [
     baseType: "Murder Boots",
     dustValIlvl84: 55988,
     dustValIlvl84Q20: 70918,
+    goldCost: 10110,
     slots: 4,
   },
   {
@@ -1614,6 +1844,7 @@ const data = [
     baseType: "Murder Boots",
     dustValIlvl84: 37325,
     dustValIlvl84Q20: 52255,
+    goldCost: 6740,
     slots: 4,
   },
   {
@@ -1621,6 +1852,7 @@ const data = [
     baseType: "Titan Gauntlets",
     dustValIlvl84: 37325,
     dustValIlvl84Q20: 52255,
+    goldCost: 6740,
     slots: 4,
   },
   {
@@ -1628,6 +1860,7 @@ const data = [
     baseType: "Eternal Burgonet",
     dustValIlvl84: 37325,
     dustValIlvl84Q20: 52255,
+    goldCost: 6740,
     slots: 4,
   },
   {
@@ -1635,6 +1868,7 @@ const data = [
     baseType: "Murder Boots",
     dustValIlvl84: 55988,
     dustValIlvl84Q20: 70918,
+    goldCost: 10110,
     slots: 4,
   },
   {
@@ -1642,6 +1876,7 @@ const data = [
     baseType: "Runic Sabatons",
     dustValIlvl84: 37325,
     dustValIlvl84Q20: 52255,
+    goldCost: 6740,
     slots: 4,
   },
   {
@@ -1649,6 +1884,7 @@ const data = [
     baseType: "Titan Gauntlets",
     dustValIlvl84: 37325,
     dustValIlvl84Q20: 52255,
+    goldCost: 6740,
     slots: 4,
   },
   {
@@ -1656,6 +1892,7 @@ const data = [
     baseType: "Blunt Arrow Quiver",
     dustValIlvl84: 36400,
     dustValIlvl84Q20: 50960,
+    goldCost: 6660,
     slots: 6,
   },
   {
@@ -1663,6 +1900,7 @@ const data = [
     baseType: "Void Sceptre",
     dustValIlvl84: 36225,
     dustValIlvl84Q20: 50715,
+    goldCost: 6660,
     slots: 6,
   },
   {
@@ -1670,6 +1908,7 @@ const data = [
     baseType: "Judgement Staff",
     dustValIlvl84: 36225,
     dustValIlvl84Q20: 50715,
+    goldCost: 6660,
     slots: 8,
   },
   {
@@ -1677,6 +1916,7 @@ const data = [
     baseType: "Titan Greaves",
     dustValIlvl84: 36225,
     dustValIlvl84Q20: 50715,
+    goldCost: 6660,
     slots: 4,
   },
   {
@@ -1684,6 +1924,7 @@ const data = [
     baseType: "Praetor Crown",
     dustValIlvl84: 36225,
     dustValIlvl84Q20: 50715,
+    goldCost: 6660,
     slots: 4,
   },
   {
@@ -1691,6 +1932,7 @@ const data = [
     baseType: "Praetor Crown",
     dustValIlvl84: 36225,
     dustValIlvl84Q20: 50715,
+    goldCost: 6660,
     slots: 4,
   },
   {
@@ -1698,6 +1940,7 @@ const data = [
     baseType: "Assassin's Garb",
     dustValIlvl84: 36225,
     dustValIlvl84Q20: 50715,
+    goldCost: 6660,
     slots: 6,
   },
   {
@@ -1705,6 +1948,7 @@ const data = [
     baseType: "Sadist Garb",
     dustValIlvl84: 36225,
     dustValIlvl84Q20: 50715,
+    goldCost: 6660,
     slots: 6,
   },
   {
@@ -1712,6 +1956,7 @@ const data = [
     baseType: "Imperial Claw",
     dustValIlvl84: 5100,
     dustValIlvl84Q20: 7140,
+    goldCost: 2740,
     slots: 4,
   },
   {
@@ -1719,6 +1964,7 @@ const data = [
     baseType: "Titan Greaves",
     dustValIlvl84: 5100,
     dustValIlvl84Q20: 7140,
+    goldCost: 2740,
     slots: 4,
   },
   {
@@ -1726,6 +1972,7 @@ const data = [
     baseType: "Archon Kite Shield",
     dustValIlvl84: 36225,
     dustValIlvl84Q20: 50715,
+    goldCost: 6660,
     slots: 6,
   },
   {
@@ -1733,6 +1980,7 @@ const data = [
     baseType: "Archon Kite Shield",
     dustValIlvl84: 36225,
     dustValIlvl84Q20: 50715,
+    goldCost: 6660,
     slots: 6,
   },
   {
@@ -1740,6 +1988,7 @@ const data = [
     baseType: "Leather Belt",
     dustValIlvl84: 54338,
     dustValIlvl84Q20: 68828,
+    goldCost: 9990,
     slots: 2,
   },
   {
@@ -1747,6 +1996,7 @@ const data = [
     baseType: "Assassin's Mitts",
     dustValIlvl84: 54338,
     dustValIlvl84Q20: 68828,
+    goldCost: 9990,
     slots: 4,
   },
   {
@@ -1754,6 +2004,7 @@ const data = [
     baseType: "Judgement Staff",
     dustValIlvl84: 36225,
     dustValIlvl84Q20: 50715,
+    goldCost: 6660,
     slots: 8,
   },
   {
@@ -1761,6 +2012,7 @@ const data = [
     baseType: "Titanium Spirit Shield",
     dustValIlvl84: 36225,
     dustValIlvl84Q20: 50715,
+    goldCost: 6660,
     slots: 4,
   },
   {
@@ -1768,6 +2020,7 @@ const data = [
     baseType: "Void Sceptre",
     dustValIlvl84: 36225,
     dustValIlvl84Q20: 50715,
+    goldCost: 6660,
     slots: 6,
   },
   {
@@ -1775,6 +2028,7 @@ const data = [
     baseType: "Judgement Staff",
     dustValIlvl84: 36225,
     dustValIlvl84Q20: 50715,
+    goldCost: 6660,
     slots: 8,
   },
   {
@@ -1782,6 +2036,7 @@ const data = [
     baseType: "Runic Crown",
     dustValIlvl84: 36225,
     dustValIlvl84Q20: 50715,
+    goldCost: 6660,
     slots: 4,
   },
   {
@@ -1789,6 +2044,7 @@ const data = [
     baseType: "Prismatic Ring",
     dustValIlvl84: 35350,
     dustValIlvl84Q20: 49490,
+    goldCost: 6580,
     slots: 1,
   },
   {
@@ -1796,6 +2052,7 @@ const data = [
     baseType: "Nightmare Bascinet",
     dustValIlvl84: 35175,
     dustValIlvl84Q20: 49245,
+    goldCost: 6560,
     slots: 4,
   },
   {
@@ -1803,6 +2060,7 @@ const data = [
     baseType: "Infernal Sword",
     dustValIlvl84: 35175,
     dustValIlvl84Q20: 49245,
+    goldCost: 6560,
     slots: 8,
   },
   {
@@ -1810,6 +2068,7 @@ const data = [
     baseType: "Colossal Tower Shield",
     dustValIlvl84: 35175,
     dustValIlvl84Q20: 49245,
+    goldCost: 6560,
     slots: 8,
   },
   {
@@ -1817,6 +2076,7 @@ const data = [
     baseType: "Eternal Sword",
     dustValIlvl84: 34150,
     dustValIlvl84Q20: 47810,
+    goldCost: 6480,
     slots: 6,
   },
   {
@@ -1824,6 +2084,7 @@ const data = [
     baseType: "Crusader Gloves",
     dustValIlvl84: 34150,
     dustValIlvl84Q20: 47810,
+    goldCost: 6480,
     slots: 4,
   },
   {
@@ -1831,6 +2092,7 @@ const data = [
     baseType: "Crusader Gloves",
     dustValIlvl84: 51225,
     dustValIlvl84Q20: 64885,
+    goldCost: 9720,
     slots: 4,
   },
   {
@@ -1838,6 +2100,7 @@ const data = [
     baseType: "Imperial Staff",
     dustValIlvl84: 34150,
     dustValIlvl84Q20: 47810,
+    goldCost: 6480,
     slots: 8,
   },
   {
@@ -1845,6 +2108,7 @@ const data = [
     baseType: "Cardinal Round Shield",
     dustValIlvl84: 34150,
     dustValIlvl84Q20: 47810,
+    goldCost: 6480,
     slots: 6,
   },
   {
@@ -1852,6 +2116,7 @@ const data = [
     baseType: "Primal Arrow Quiver",
     dustValIlvl84: 68300,
     dustValIlvl84Q20: 81960,
+    goldCost: 12960,
     slots: 6,
   },
   {
@@ -1859,6 +2124,7 @@ const data = [
     baseType: "Crusader Gloves",
     dustValIlvl84: 34150,
     dustValIlvl84Q20: 47810,
+    goldCost: 6480,
     slots: 4,
   },
   {
@@ -1866,6 +2132,7 @@ const data = [
     baseType: "Mirrored Spiked Shield",
     dustValIlvl84: 34150,
     dustValIlvl84Q20: 47810,
+    goldCost: 6480,
     slots: 4,
   },
   {
@@ -1873,6 +2140,7 @@ const data = [
     baseType: "Eternal Sword",
     dustValIlvl84: 34150,
     dustValIlvl84Q20: 47810,
+    goldCost: 6480,
     slots: 6,
   },
   {
@@ -1880,6 +2148,7 @@ const data = [
     baseType: "Elegant Sword",
     dustValIlvl84: 33325,
     dustValIlvl84Q20: 46655,
+    goldCost: 6400,
     slots: 6,
   },
   {
@@ -1887,6 +2156,7 @@ const data = [
     baseType: "Mind Cage",
     dustValIlvl84: 33150,
     dustValIlvl84Q20: 46410,
+    goldCost: 6380,
     slots: 4,
   },
   {
@@ -1894,6 +2164,7 @@ const data = [
     baseType: "Widowsilk Robe",
     dustValIlvl84: 33150,
     dustValIlvl84Q20: 46410,
+    goldCost: 6380,
     slots: 6,
   },
   {
@@ -1901,6 +2172,7 @@ const data = [
     baseType: "Amethyst Ring",
     dustValIlvl84: 33150,
     dustValIlvl84Q20: 46410,
+    goldCost: 6380,
     slots: 1,
   },
   {
@@ -1908,6 +2180,7 @@ const data = [
     baseType: "Vaal Hatchet",
     dustValIlvl84: 33150,
     dustValIlvl84Q20: 46410,
+    goldCost: 6380,
     slots: 6,
   },
   {
@@ -1915,6 +2188,7 @@ const data = [
     baseType: "Lion Sword",
     dustValIlvl84: 33150,
     dustValIlvl84Q20: 46410,
+    goldCost: 6380,
     slots: 8,
   },
   {
@@ -1922,6 +2196,7 @@ const data = [
     baseType: "Mind Cage",
     dustValIlvl84: 33150,
     dustValIlvl84Q20: 46410,
+    goldCost: 6380,
     slots: 4,
   },
   {
@@ -1929,6 +2204,7 @@ const data = [
     baseType: "Royal Burgonet",
     dustValIlvl84: 6100,
     dustValIlvl84Q20: 8540,
+    goldCost: 2980,
     slots: 4,
   },
   {
@@ -1936,6 +2212,7 @@ const data = [
     baseType: "Zodiac Leather",
     dustValIlvl84: 6100,
     dustValIlvl84Q20: 8540,
+    goldCost: 2980,
     slots: 6,
   },
   {
@@ -1943,6 +2220,7 @@ const data = [
     baseType: "Blood Raiment",
     dustValIlvl84: 33150,
     dustValIlvl84Q20: 46410,
+    goldCost: 6380,
     slots: 6,
   },
   {
@@ -1950,6 +2228,7 @@ const data = [
     baseType: "Widowsilk Robe",
     dustValIlvl84: 33150,
     dustValIlvl84Q20: 46410,
+    goldCost: 6380,
     slots: 6,
   },
   {
@@ -1957,6 +2236,7 @@ const data = [
     baseType: "Mind Cage",
     dustValIlvl84: 33150,
     dustValIlvl84Q20: 46410,
+    goldCost: 6380,
     slots: 4,
   },
   {
@@ -1964,6 +2244,7 @@ const data = [
     baseType: "Royal Burgonet",
     dustValIlvl84: 49725,
     dustValIlvl84Q20: 62985,
+    goldCost: 9570,
     slots: 4,
   },
   {
@@ -1971,6 +2252,7 @@ const data = [
     baseType: "Maelström Staff",
     dustValIlvl84: 32200,
     dustValIlvl84Q20: 45080,
+    goldCost: 6300,
     slots: 8,
   },
   {
@@ -1978,6 +2260,7 @@ const data = [
     baseType: "Sinner Tricorne",
     dustValIlvl84: 32200,
     dustValIlvl84Q20: 45080,
+    goldCost: 6300,
     slots: 4,
   },
   {
@@ -1985,6 +2268,7 @@ const data = [
     baseType: "Vaal Blade",
     dustValIlvl84: 32200,
     dustValIlvl84Q20: 45080,
+    goldCost: 6300,
     slots: 6,
   },
   {
@@ -1992,6 +2276,7 @@ const data = [
     baseType: "Vaal Axe",
     dustValIlvl84: 32200,
     dustValIlvl84Q20: 45080,
+    goldCost: 6300,
     slots: 8,
   },
   {
@@ -1999,6 +2284,7 @@ const data = [
     baseType: "Spine Bow",
     dustValIlvl84: 32200,
     dustValIlvl84Q20: 45080,
+    goldCost: 6300,
     slots: 8,
   },
   {
@@ -2006,6 +2292,7 @@ const data = [
     baseType: "Vaal Axe",
     dustValIlvl84: 5925,
     dustValIlvl84Q20: 8295,
+    goldCost: 2940,
     slots: 8,
   },
   {
@@ -2013,6 +2300,7 @@ const data = [
     baseType: "Ezomyte Tower Shield",
     dustValIlvl84: 32200,
     dustValIlvl84Q20: 45080,
+    goldCost: 6300,
     slots: 8,
   },
   {
@@ -2020,6 +2308,7 @@ const data = [
     baseType: "Sinner Tricorne",
     dustValIlvl84: 32200,
     dustValIlvl84Q20: 45080,
+    goldCost: 6300,
     slots: 4,
   },
   {
@@ -2027,6 +2316,7 @@ const data = [
     baseType: "Full Dragonscale",
     dustValIlvl84: 31250,
     dustValIlvl84Q20: 43750,
+    goldCost: 6220,
     slots: 6,
   },
   {
@@ -2034,6 +2324,7 @@ const data = [
     baseType: "Vaal Gauntlets",
     dustValIlvl84: 31250,
     dustValIlvl84Q20: 43750,
+    goldCost: 6220,
     slots: 4,
   },
   {
@@ -2041,6 +2332,7 @@ const data = [
     baseType: "Assassin's Boots",
     dustValIlvl84: 31250,
     dustValIlvl84Q20: 43750,
+    goldCost: 6220,
     slots: 4,
   },
   {
@@ -2048,6 +2340,7 @@ const data = [
     baseType: "Prophet Crown",
     dustValIlvl84: 31250,
     dustValIlvl84Q20: 43750,
+    goldCost: 6220,
     slots: 4,
   },
   {
@@ -2055,6 +2348,7 @@ const data = [
     baseType: "Onyx Amulet",
     dustValIlvl84: 30500,
     dustValIlvl84Q20: 42700,
+    goldCost: 6160,
     slots: 1,
   },
   {
@@ -2062,6 +2356,7 @@ const data = [
     baseType: "Onyx Amulet",
     dustValIlvl84: 30500,
     dustValIlvl84Q20: 42700,
+    goldCost: 6160,
     slots: 1,
   },
   {
@@ -2069,6 +2364,7 @@ const data = [
     baseType: "Onyx Amulet",
     dustValIlvl84: 30500,
     dustValIlvl84Q20: 42700,
+    goldCost: 6160,
     slots: 1,
   },
   {
@@ -2076,6 +2372,7 @@ const data = [
     baseType: "Onyx Amulet",
     dustValIlvl84: 45750,
     dustValIlvl84Q20: 57950,
+    goldCost: 9240,
     slots: 1,
   },
   {
@@ -2083,6 +2380,7 @@ const data = [
     baseType: "Onyx Amulet",
     dustValIlvl84: 30500,
     dustValIlvl84Q20: 42700,
+    goldCost: 6160,
     slots: 1,
   },
   {
@@ -2090,6 +2388,7 @@ const data = [
     baseType: "Onyx Amulet",
     dustValIlvl84: 30500,
     dustValIlvl84Q20: 42700,
+    goldCost: 6160,
     slots: 1,
   },
   {
@@ -2097,6 +2396,7 @@ const data = [
     baseType: "Onyx Amulet",
     dustValIlvl84: 30500,
     dustValIlvl84Q20: 42700,
+    goldCost: 6160,
     slots: 1,
   },
   {
@@ -2104,6 +2404,7 @@ const data = [
     baseType: "Opal Ring",
     dustValIlvl84: 30425,
     dustValIlvl84Q20: 42595,
+    goldCost: 6140,
     slots: 1,
   },
   {
@@ -2111,6 +2412,7 @@ const data = [
     baseType: "Lathi",
     dustValIlvl84: 30350,
     dustValIlvl84Q20: 42490,
+    goldCost: 6140,
     slots: 8,
   },
   {
@@ -2118,6 +2420,7 @@ const data = [
     baseType: "Varnished Coat",
     dustValIlvl84: 30350,
     dustValIlvl84Q20: 42490,
+    goldCost: 6140,
     slots: 6,
   },
   {
@@ -2125,6 +2428,7 @@ const data = [
     baseType: "Astral Plate",
     dustValIlvl84: 30350,
     dustValIlvl84Q20: 42490,
+    goldCost: 6140,
     slots: 6,
   },
   {
@@ -2132,6 +2436,7 @@ const data = [
     baseType: "Vaal Mask",
     dustValIlvl84: 30350,
     dustValIlvl84Q20: 42490,
+    goldCost: 6140,
     slots: 4,
   },
   {
@@ -2139,6 +2444,7 @@ const data = [
     baseType: "Opal Wand",
     dustValIlvl84: 4275,
     dustValIlvl84Q20: 5985,
+    goldCost: 2540,
     slots: 3,
   },
   {
@@ -2146,6 +2452,7 @@ const data = [
     baseType: "Vaal Spirit Shield",
     dustValIlvl84: 5600,
     dustValIlvl84Q20: 7840,
+    goldCost: 2860,
     slots: 4,
   },
   {
@@ -2153,6 +2460,7 @@ const data = [
     baseType: "Exquisite Leather",
     dustValIlvl84: 30350,
     dustValIlvl84Q20: 42490,
+    goldCost: 6140,
     slots: 6,
   },
   {
@@ -2160,6 +2468,7 @@ const data = [
     baseType: "Legion Sword",
     dustValIlvl84: 30350,
     dustValIlvl84Q20: 42490,
+    goldCost: 6140,
     slots: 6,
   },
   {
@@ -2167,6 +2476,7 @@ const data = [
     baseType: "Ezomyte Spiked Shield",
     dustValIlvl84: 30350,
     dustValIlvl84Q20: 42490,
+    goldCost: 6140,
     slots: 4,
   },
   {
@@ -2174,6 +2484,7 @@ const data = [
     baseType: "Vaal Mask",
     dustValIlvl84: 30350,
     dustValIlvl84Q20: 42490,
+    goldCost: 6140,
     slots: 4,
   },
   {
@@ -2181,6 +2492,7 @@ const data = [
     baseType: "Ezomyte Dagger",
     dustValIlvl84: 30350,
     dustValIlvl84Q20: 42490,
+    goldCost: 6140,
     slots: 3,
   },
   {
@@ -2188,6 +2500,7 @@ const data = [
     baseType: "Hellion's Paw",
     dustValIlvl84: 30350,
     dustValIlvl84Q20: 42490,
+    goldCost: 6140,
     slots: 4,
   },
   {
@@ -2195,6 +2508,7 @@ const data = [
     baseType: "Astral Plate",
     dustValIlvl84: 30350,
     dustValIlvl84Q20: 42490,
+    goldCost: 6140,
     slots: 6,
   },
   {
@@ -2202,6 +2516,7 @@ const data = [
     baseType: "Ezomyte Axe",
     dustValIlvl84: 30350,
     dustValIlvl84Q20: 42490,
+    goldCost: 6140,
     slots: 8,
   },
   {
@@ -2209,6 +2524,7 @@ const data = [
     baseType: "Vaal Mask",
     dustValIlvl84: 30350,
     dustValIlvl84Q20: 42490,
+    goldCost: 6140,
     slots: 4,
   },
   {
@@ -2216,6 +2532,7 @@ const data = [
     baseType: "Vaal Greaves",
     dustValIlvl84: 30350,
     dustValIlvl84Q20: 42490,
+    goldCost: 6140,
     slots: 4,
   },
   {
@@ -2223,6 +2540,7 @@ const data = [
     baseType: "Royal Axe",
     dustValIlvl84: 29550,
     dustValIlvl84Q20: 41370,
+    goldCost: 6060,
     slots: 6,
   },
   {
@@ -2230,6 +2548,7 @@ const data = [
     baseType: "Midnight Blade",
     dustValIlvl84: 29550,
     dustValIlvl84Q20: 41370,
+    goldCost: 6060,
     slots: 6,
   },
   {
@@ -2237,6 +2556,7 @@ const data = [
     baseType: "Harbinger Bow",
     dustValIlvl84: 29550,
     dustValIlvl84Q20: 41370,
+    goldCost: 6060,
     slots: 8,
   },
   {
@@ -2244,6 +2564,7 @@ const data = [
     baseType: "Lion Pelt",
     dustValIlvl84: 29550,
     dustValIlvl84Q20: 41370,
+    goldCost: 6060,
     slots: 4,
   },
   {
@@ -2251,6 +2572,7 @@ const data = [
     baseType: "Arcanist Slippers",
     dustValIlvl84: 29450,
     dustValIlvl84Q20: 41230,
+    goldCost: 6060,
     slots: 4,
   },
   {
@@ -2258,6 +2580,7 @@ const data = [
     baseType: "Arcanist Slippers",
     dustValIlvl84: 29450,
     dustValIlvl84Q20: 41230,
+    goldCost: 6060,
     slots: 4,
   },
   {
@@ -2265,6 +2588,7 @@ const data = [
     baseType: "Ezomyte Burgonet",
     dustValIlvl84: 28600,
     dustValIlvl84Q20: 40040,
+    goldCost: 5980,
     slots: 4,
   },
   {
@@ -2272,6 +2596,7 @@ const data = [
     baseType: "Desert Brigandine",
     dustValIlvl84: 28600,
     dustValIlvl84Q20: 40040,
+    goldCost: 5980,
     slots: 6,
   },
   {
@@ -2279,6 +2604,7 @@ const data = [
     baseType: "Ranger Bow",
     dustValIlvl84: 28600,
     dustValIlvl84Q20: 40040,
+    goldCost: 5980,
     slots: 8,
   },
   {
@@ -2286,6 +2612,7 @@ const data = [
     baseType: "Heavy Belt",
     dustValIlvl84: 28600,
     dustValIlvl84Q20: 40040,
+    goldCost: 5980,
     slots: 2,
   },
   {
@@ -2293,6 +2620,7 @@ const data = [
     baseType: "Wereclaw Talisman",
     dustValIlvl84: 28600,
     dustValIlvl84Q20: 40040,
+    goldCost: 5980,
     slots: 1,
   },
   {
@@ -2300,6 +2628,7 @@ const data = [
     baseType: "Arcanist Gloves",
     dustValIlvl84: 28600,
     dustValIlvl84Q20: 40040,
+    goldCost: 5980,
     slots: 4,
   },
   {
@@ -2307,6 +2636,7 @@ const data = [
     baseType: "Silken Hood",
     dustValIlvl84: 28600,
     dustValIlvl84Q20: 40040,
+    goldCost: 5980,
     slots: 4,
   },
   {
@@ -2314,6 +2644,7 @@ const data = [
     baseType: "Gladius",
     dustValIlvl84: 28600,
     dustValIlvl84Q20: 40040,
+    goldCost: 5980,
     slots: 6,
   },
   {
@@ -2321,6 +2652,7 @@ const data = [
     baseType: "Ambusher",
     dustValIlvl84: 28600,
     dustValIlvl84Q20: 40040,
+    goldCost: 5980,
     slots: 3,
   },
   {
@@ -2328,6 +2660,7 @@ const data = [
     baseType: "Ezomyte Staff",
     dustValIlvl84: 28600,
     dustValIlvl84Q20: 40040,
+    goldCost: 5980,
     slots: 8,
   },
   {
@@ -2335,6 +2668,7 @@ const data = [
     baseType: "Arcanist Gloves",
     dustValIlvl84: 28600,
     dustValIlvl84Q20: 40040,
+    goldCost: 5980,
     slots: 4,
   },
   {
@@ -2342,6 +2676,7 @@ const data = [
     baseType: "Gavel",
     dustValIlvl84: 28600,
     dustValIlvl84Q20: 40040,
+    goldCost: 5980,
     slots: 6,
   },
   {
@@ -2349,6 +2684,7 @@ const data = [
     baseType: "Vengeful Contract",
     dustValIlvl84: 28225,
     dustValIlvl84Q20: 39515,
+    goldCost: 5940,
     slots: 1,
   },
   {
@@ -2356,6 +2692,7 @@ const data = [
     baseType: "Carnal Mitts",
     dustValIlvl84: 27850,
     dustValIlvl84Q20: 38990,
+    goldCost: 5900,
     slots: 4,
   },
   {
@@ -2363,6 +2700,7 @@ const data = [
     baseType: "Branded Kite Shield",
     dustValIlvl84: 27775,
     dustValIlvl84Q20: 38885,
+    goldCost: 5900,
     slots: 6,
   },
   {
@@ -2370,6 +2708,7 @@ const data = [
     baseType: "Destiny Leather",
     dustValIlvl84: 27775,
     dustValIlvl84Q20: 38885,
+    goldCost: 5900,
     slots: 6,
   },
   {
@@ -2377,6 +2716,7 @@ const data = [
     baseType: "Hydrascale Boots",
     dustValIlvl84: 27775,
     dustValIlvl84Q20: 38885,
+    goldCost: 5900,
     slots: 4,
   },
   {
@@ -2384,6 +2724,7 @@ const data = [
     baseType: "Hydrascale Gauntlets",
     dustValIlvl84: 27775,
     dustValIlvl84Q20: 38885,
+    goldCost: 5900,
     slots: 4,
   },
   {
@@ -2391,6 +2732,7 @@ const data = [
     baseType: "Sentinel Jacket",
     dustValIlvl84: 27775,
     dustValIlvl84Q20: 38885,
+    goldCost: 5900,
     slots: 6,
   },
   {
@@ -2398,6 +2740,7 @@ const data = [
     baseType: "Solaris Circlet",
     dustValIlvl84: 27775,
     dustValIlvl84Q20: 38885,
+    goldCost: 5900,
     slots: 4,
   },
   {
@@ -2405,6 +2748,7 @@ const data = [
     baseType: "Hydrascale Boots",
     dustValIlvl84: 27775,
     dustValIlvl84Q20: 38885,
+    goldCost: 5900,
     slots: 4,
   },
   {
@@ -2412,6 +2756,7 @@ const data = [
     baseType: "Naval Contract",
     dustValIlvl84: 27400,
     dustValIlvl84Q20: 38360,
+    goldCost: 5860,
     slots: 1,
   },
   {
@@ -2419,6 +2764,7 @@ const data = [
     baseType: "Archon Kite Shield",
     dustValIlvl84: 27050,
     dustValIlvl84Q20: 37870,
+    goldCost: 5840,
     slots: 6,
   },
   {
@@ -2426,6 +2772,7 @@ const data = [
     baseType: "Citadel Bow",
     dustValIlvl84: 3775,
     dustValIlvl84Q20: 5285,
+    goldCost: 2400,
     slots: 8,
   },
   {
@@ -2433,6 +2780,7 @@ const data = [
     baseType: "Magistrate Crown",
     dustValIlvl84: 26950,
     dustValIlvl84Q20: 37730,
+    goldCost: 5820,
     slots: 4,
   },
   {
@@ -2440,6 +2788,7 @@ const data = [
     baseType: "Magistrate Crown",
     dustValIlvl84: 26950,
     dustValIlvl84Q20: 37730,
+    goldCost: 5820,
     slots: 4,
   },
   {
@@ -2447,6 +2796,7 @@ const data = [
     baseType: "Assassin's Mitts",
     dustValIlvl84: 26950,
     dustValIlvl84Q20: 37730,
+    goldCost: 5820,
     slots: 4,
   },
   {
@@ -2454,6 +2804,7 @@ const data = [
     baseType: "Magistrate Crown",
     dustValIlvl84: 26950,
     dustValIlvl84Q20: 37730,
+    goldCost: 5820,
     slots: 4,
   },
   {
@@ -2461,6 +2812,7 @@ const data = [
     baseType: "Familial Contract",
     dustValIlvl84: 26600,
     dustValIlvl84Q20: 37240,
+    goldCost: 5780,
     slots: 1,
   },
   {
@@ -2468,6 +2820,7 @@ const data = [
     baseType: "Studded Belt",
     dustValIlvl84: 26300,
     dustValIlvl84Q20: 36820,
+    goldCost: 5760,
     slots: 2,
   },
   {
@@ -2475,6 +2828,7 @@ const data = [
     baseType: "Cloth Belt",
     dustValIlvl84: 26300,
     dustValIlvl84Q20: 36820,
+    goldCost: 5760,
     slots: 2,
   },
   {
@@ -2482,6 +2836,7 @@ const data = [
     baseType: "Cloth Belt",
     dustValIlvl84: 26300,
     dustValIlvl84Q20: 36820,
+    goldCost: 5760,
     slots: 2,
   },
   {
@@ -2489,6 +2844,7 @@ const data = [
     baseType: "Boot Knife",
     dustValIlvl84: 26300,
     dustValIlvl84Q20: 36820,
+    goldCost: 5760,
     slots: 3,
   },
   {
@@ -2496,6 +2852,7 @@ const data = [
     baseType: "Turquoise Amulet",
     dustValIlvl84: 26300,
     dustValIlvl84Q20: 36820,
+    goldCost: 5760,
     slots: 1,
   },
   {
@@ -2503,6 +2860,7 @@ const data = [
     baseType: "Vanguard Belt",
     dustValIlvl84: 26250,
     dustValIlvl84Q20: 36750,
+    goldCost: 5760,
     slots: 2,
   },
   {
@@ -2510,6 +2868,7 @@ const data = [
     baseType: "Royal Sceptre",
     dustValIlvl84: 26250,
     dustValIlvl84Q20: 36750,
+    goldCost: 5760,
     slots: 6,
   },
   {
@@ -2517,6 +2876,7 @@ const data = [
     baseType: "Jade Amulet",
     dustValIlvl84: 26250,
     dustValIlvl84Q20: 36750,
+    goldCost: 5760,
     slots: 1,
   },
   {
@@ -2524,6 +2884,7 @@ const data = [
     baseType: "Callous Mask",
     dustValIlvl84: 26250,
     dustValIlvl84Q20: 36750,
+    goldCost: 5760,
     slots: 4,
   },
   {
@@ -2531,6 +2892,7 @@ const data = [
     baseType: "Bone Helmet",
     dustValIlvl84: 26250,
     dustValIlvl84Q20: 36750,
+    goldCost: 5760,
     slots: 4,
   },
   {
@@ -2538,6 +2900,7 @@ const data = [
     baseType: "Harlequin Mask",
     dustValIlvl84: 26175,
     dustValIlvl84Q20: 36645,
+    goldCost: 5740,
     slots: 4,
   },
   {
@@ -2545,6 +2908,7 @@ const data = [
     baseType: "Steelwood Bow",
     dustValIlvl84: 26175,
     dustValIlvl84Q20: 36645,
+    goldCost: 5740,
     slots: 8,
   },
   {
@@ -2552,6 +2916,7 @@ const data = [
     baseType: "Heavy Belt",
     dustValIlvl84: 26175,
     dustValIlvl84Q20: 36645,
+    goldCost: 5740,
     slots: 2,
   },
   {
@@ -2559,6 +2924,7 @@ const data = [
     baseType: "Preventative Contract",
     dustValIlvl84: 25825,
     dustValIlvl84Q20: 36155,
+    goldCost: 5700,
     slots: 1,
   },
   {
@@ -2566,6 +2932,7 @@ const data = [
     baseType: "Vigilante Contract",
     dustValIlvl84: 25825,
     dustValIlvl84Q20: 36155,
+    goldCost: 5700,
     slots: 1,
   },
   {
@@ -2573,6 +2940,7 @@ const data = [
     baseType: "Sharkskin Tunic",
     dustValIlvl84: 25400,
     dustValIlvl84Q20: 35560,
+    goldCost: 5660,
     slots: 6,
   },
   {
@@ -2580,6 +2948,7 @@ const data = [
     baseType: "Golden Plate",
     dustValIlvl84: 25400,
     dustValIlvl84Q20: 35560,
+    goldCost: 5660,
     slots: 6,
   },
   {
@@ -2587,6 +2956,7 @@ const data = [
     baseType: "Gemstone Sword",
     dustValIlvl84: 25400,
     dustValIlvl84Q20: 35560,
+    goldCost: 5660,
     slots: 3,
   },
   {
@@ -2594,6 +2964,7 @@ const data = [
     baseType: "Onyx Amulet",
     dustValIlvl84: 25400,
     dustValIlvl84Q20: 35560,
+    goldCost: 5660,
     slots: 1,
   },
   {
@@ -2601,6 +2972,7 @@ const data = [
     baseType: "Crusader Plate",
     dustValIlvl84: 24750,
     dustValIlvl84Q20: 34650,
+    goldCost: 5600,
     slots: 6,
   },
   {
@@ -2608,6 +2980,7 @@ const data = [
     baseType: "Unset Ring",
     dustValIlvl84: 24675,
     dustValIlvl84Q20: 34545,
+    goldCost: 5600,
     slots: 1,
   },
   {
@@ -2615,6 +2988,7 @@ const data = [
     baseType: "Unset Ring",
     dustValIlvl84: 24675,
     dustValIlvl84Q20: 34545,
+    goldCost: 5600,
     slots: 1,
   },
   {
@@ -2622,6 +2996,7 @@ const data = [
     baseType: "Unset Ring",
     dustValIlvl84: 24675,
     dustValIlvl84Q20: 34545,
+    goldCost: 5600,
     slots: 1,
   },
   {
@@ -2629,6 +3004,7 @@ const data = [
     baseType: "Abyssal Axe",
     dustValIlvl84: 24675,
     dustValIlvl84Q20: 34545,
+    goldCost: 5600,
     slots: 8,
   },
   {
@@ -2636,6 +3012,7 @@ const data = [
     baseType: "Carnal Boots",
     dustValIlvl84: 24675,
     dustValIlvl84Q20: 34545,
+    goldCost: 5600,
     slots: 4,
   },
   {
@@ -2643,6 +3020,7 @@ const data = [
     baseType: "Coral Amulet",
     dustValIlvl84: 24675,
     dustValIlvl84Q20: 34545,
+    goldCost: 5600,
     slots: 1,
   },
   {
@@ -2650,6 +3028,7 @@ const data = [
     baseType: "Shagreen Boots",
     dustValIlvl84: 24675,
     dustValIlvl84Q20: 34545,
+    goldCost: 5600,
     slots: 4,
   },
   {
@@ -2657,6 +3036,7 @@ const data = [
     baseType: "Shagreen Boots",
     dustValIlvl84: 24675,
     dustValIlvl84Q20: 34545,
+    goldCost: 5600,
     slots: 4,
   },
   {
@@ -2664,6 +3044,7 @@ const data = [
     baseType: "Eelskin Gloves",
     dustValIlvl84: 24025,
     dustValIlvl84Q20: 33635,
+    goldCost: 5520,
     slots: 4,
   },
   {
@@ -2671,6 +3052,7 @@ const data = [
     baseType: "Spiked Gloves",
     dustValIlvl84: 24025,
     dustValIlvl84Q20: 33635,
+    goldCost: 5520,
     slots: 4,
   },
   {
@@ -2678,6 +3060,7 @@ const data = [
     baseType: "Fugitive Boots",
     dustValIlvl84: 24025,
     dustValIlvl84Q20: 33635,
+    goldCost: 5520,
     slots: 4,
   },
   {
@@ -2685,6 +3068,7 @@ const data = [
     baseType: "Necromancer Circlet",
     dustValIlvl84: 23950,
     dustValIlvl84Q20: 33530,
+    goldCost: 5520,
     slots: 4,
   },
   {
@@ -2692,6 +3076,7 @@ const data = [
     baseType: "Baroque Round Shield",
     dustValIlvl84: 23950,
     dustValIlvl84Q20: 33530,
+    goldCost: 5520,
     slots: 6,
   },
   {
@@ -2699,6 +3084,7 @@ const data = [
     baseType: "Goliath Greaves",
     dustValIlvl84: 23950,
     dustValIlvl84Q20: 33530,
+    goldCost: 5520,
     slots: 4,
   },
   {
@@ -2706,6 +3092,7 @@ const data = [
     baseType: "Necromancer Circlet",
     dustValIlvl84: 23950,
     dustValIlvl84Q20: 33530,
+    goldCost: 5520,
     slots: 4,
   },
   {
@@ -2713,6 +3100,7 @@ const data = [
     baseType: "Citrine Amulet",
     dustValIlvl84: 23625,
     dustValIlvl84Q20: 33075,
+    goldCost: 5480,
     slots: 1,
   },
   {
@@ -2720,6 +3108,7 @@ const data = [
     baseType: "Mirrored Spiked Shield",
     dustValIlvl84: 23625,
     dustValIlvl84Q20: 33075,
+    goldCost: 5480,
     slots: 4,
   },
   {
@@ -2727,6 +3116,7 @@ const data = [
     baseType: "Paua Amulet",
     dustValIlvl84: 23375,
     dustValIlvl84Q20: 32725,
+    goldCost: 5460,
     slots: 1,
   },
   {
@@ -2734,6 +3124,7 @@ const data = [
     baseType: "Ruby Ring",
     dustValIlvl84: 23375,
     dustValIlvl84Q20: 32725,
+    goldCost: 5460,
     slots: 1,
   },
   {
@@ -2741,6 +3132,7 @@ const data = [
     baseType: "Ruby Ring",
     dustValIlvl84: 23375,
     dustValIlvl84Q20: 32725,
+    goldCost: 5460,
     slots: 1,
   },
   {
@@ -2748,6 +3140,7 @@ const data = [
     baseType: "Infernal Axe",
     dustValIlvl84: 23325,
     dustValIlvl84Q20: 32655,
+    goldCost: 5460,
     slots: 6,
   },
   {
@@ -2755,6 +3148,7 @@ const data = [
     baseType: "Slink Boots",
     dustValIlvl84: 23325,
     dustValIlvl84Q20: 32655,
+    goldCost: 5460,
     slots: 4,
   },
   {
@@ -2762,6 +3156,7 @@ const data = [
     baseType: "Triumphant Lamellar",
     dustValIlvl84: 23325,
     dustValIlvl84Q20: 32655,
+    goldCost: 5460,
     slots: 6,
   },
   {
@@ -2769,6 +3164,7 @@ const data = [
     baseType: "Hubris Circlet",
     dustValIlvl84: 23325,
     dustValIlvl84Q20: 32655,
+    goldCost: 5460,
     slots: 4,
   },
   {
@@ -2776,6 +3172,7 @@ const data = [
     baseType: "Runic Gauntlets",
     dustValIlvl84: 23325,
     dustValIlvl84Q20: 32655,
+    goldCost: 5460,
     slots: 4,
   },
   {
@@ -2783,6 +3180,7 @@ const data = [
     baseType: "Conjurer Boots",
     dustValIlvl84: 23250,
     dustValIlvl84Q20: 32550,
+    goldCost: 5440,
     slots: 4,
   },
   {
@@ -2790,6 +3188,7 @@ const data = [
     baseType: "Omen Wand",
     dustValIlvl84: 23250,
     dustValIlvl84Q20: 32550,
+    goldCost: 5440,
     slots: 3,
   },
   {
@@ -2797,6 +3196,7 @@ const data = [
     baseType: "Great Crown",
     dustValIlvl84: 23250,
     dustValIlvl84Q20: 32550,
+    goldCost: 5440,
     slots: 4,
   },
   {
@@ -2804,6 +3204,7 @@ const data = [
     baseType: "Great Crown",
     dustValIlvl84: 23250,
     dustValIlvl84Q20: 32550,
+    goldCost: 5440,
     slots: 4,
   },
   {
@@ -2811,6 +3212,7 @@ const data = [
     baseType: "Decimation Bow",
     dustValIlvl84: 23250,
     dustValIlvl84Q20: 32550,
+    goldCost: 5440,
     slots: 8,
   },
   {
@@ -2818,6 +3220,7 @@ const data = [
     baseType: "Vaal Regalia",
     dustValIlvl84: 22650,
     dustValIlvl84Q20: 31710,
+    goldCost: 5380,
     slots: 6,
   },
   {
@@ -2825,6 +3228,7 @@ const data = [
     baseType: "Imperial Claw",
     dustValIlvl84: 22650,
     dustValIlvl84Q20: 31710,
+    goldCost: 5380,
     slots: 4,
   },
   {
@@ -2832,6 +3236,7 @@ const data = [
     baseType: "Praetor Crown",
     dustValIlvl84: 22650,
     dustValIlvl84Q20: 31710,
+    goldCost: 5380,
     slots: 4,
   },
   {
@@ -2839,6 +3244,7 @@ const data = [
     baseType: "Midnight Blade",
     dustValIlvl84: 22650,
     dustValIlvl84Q20: 31710,
+    goldCost: 5380,
     slots: 6,
   },
   {
@@ -2846,6 +3252,7 @@ const data = [
     baseType: "Regicide Mask",
     dustValIlvl84: 22575,
     dustValIlvl84Q20: 31605,
+    goldCost: 5380,
     slots: 4,
   },
   {
@@ -2853,6 +3260,7 @@ const data = [
     baseType: "Unset Ring",
     dustValIlvl84: 22575,
     dustValIlvl84Q20: 31605,
+    goldCost: 5380,
     slots: 1,
   },
   {
@@ -2860,6 +3268,7 @@ const data = [
     baseType: "Highborn Staff",
     dustValIlvl84: 22575,
     dustValIlvl84Q20: 31605,
+    goldCost: 5380,
     slots: 8,
   },
   {
@@ -2867,6 +3276,7 @@ const data = [
     baseType: "Regicide Mask",
     dustValIlvl84: 22575,
     dustValIlvl84Q20: 31605,
+    goldCost: 5380,
     slots: 4,
   },
   {
@@ -2874,6 +3284,7 @@ const data = [
     baseType: "Lapis Amulet",
     dustValIlvl84: 22275,
     dustValIlvl84Q20: 31185,
+    goldCost: 5340,
     slots: 1,
   },
   {
@@ -2881,6 +3292,7 @@ const data = [
     baseType: "Terror Maul",
     dustValIlvl84: 21975,
     dustValIlvl84Q20: 30765,
+    goldCost: 5300,
     slots: 8,
   },
   {
@@ -2888,6 +3300,7 @@ const data = [
     baseType: "Colossal Tower Shield",
     dustValIlvl84: 21975,
     dustValIlvl84Q20: 30765,
+    goldCost: 5300,
     slots: 8,
   },
   {
@@ -2895,6 +3308,7 @@ const data = [
     baseType: "Soldier Gloves",
     dustValIlvl84: 21925,
     dustValIlvl84Q20: 30695,
+    goldCost: 5300,
     slots: 4,
   },
   {
@@ -2902,6 +3316,7 @@ const data = [
     baseType: "Wyrmscale Boots",
     dustValIlvl84: 21925,
     dustValIlvl84Q20: 30695,
+    goldCost: 5300,
     slots: 4,
   },
   {
@@ -2909,6 +3324,7 @@ const data = [
     baseType: "Nightmare Bascinet",
     dustValIlvl84: 21625,
     dustValIlvl84Q20: 30275,
+    goldCost: 5280,
     slots: 4,
   },
   {
@@ -2916,6 +3332,7 @@ const data = [
     baseType: "Marble Amulet",
     dustValIlvl84: 21625,
     dustValIlvl84Q20: 30275,
+    goldCost: 5280,
     slots: 1,
   },
   {
@@ -2923,6 +3340,7 @@ const data = [
     baseType: "Imperial Staff",
     dustValIlvl84: 21350,
     dustValIlvl84Q20: 29890,
+    goldCost: 5240,
     slots: 8,
   },
   {
@@ -2930,6 +3348,7 @@ const data = [
     baseType: "Imperial Staff",
     dustValIlvl84: 21350,
     dustValIlvl84Q20: 29890,
+    goldCost: 5240,
     slots: 8,
   },
   {
@@ -2937,6 +3356,7 @@ const data = [
     baseType: "Imperial Staff",
     dustValIlvl84: 21350,
     dustValIlvl84Q20: 29890,
+    goldCost: 5240,
     slots: 8,
   },
   {
@@ -2944,6 +3364,7 @@ const data = [
     baseType: "Imperial Staff",
     dustValIlvl84: 21350,
     dustValIlvl84Q20: 29890,
+    goldCost: 5240,
     slots: 8,
   },
   {
@@ -2951,6 +3372,7 @@ const data = [
     baseType: "Carnal Sceptre",
     dustValIlvl84: 21350,
     dustValIlvl84Q20: 29890,
+    goldCost: 5240,
     slots: 6,
   },
   {
@@ -2958,6 +3380,7 @@ const data = [
     baseType: "Primal Arrow Quiver",
     dustValIlvl84: 21350,
     dustValIlvl84Q20: 29890,
+    goldCost: 5240,
     slots: 6,
   },
   {
@@ -2965,6 +3388,7 @@ const data = [
     baseType: "Gold Ring",
     dustValIlvl84: 21275,
     dustValIlvl84Q20: 29785,
+    goldCost: 5240,
     slots: 1,
   },
   {
@@ -2972,6 +3396,7 @@ const data = [
     baseType: "Ruby Amulet",
     dustValIlvl84: 21275,
     dustValIlvl84Q20: 29785,
+    goldCost: 5240,
     slots: 1,
   },
   {
@@ -2979,6 +3404,7 @@ const data = [
     baseType: "Carnal Mitts",
     dustValIlvl84: 21275,
     dustValIlvl84Q20: 29785,
+    goldCost: 5240,
     slots: 4,
   },
   {
@@ -2986,6 +3412,7 @@ const data = [
     baseType: "Laminated Kite Shield",
     dustValIlvl84: 21275,
     dustValIlvl84Q20: 29785,
+    goldCost: 5240,
     slots: 6,
   },
   {
@@ -2993,6 +3420,7 @@ const data = [
     baseType: "Royal Skean",
     dustValIlvl84: 21275,
     dustValIlvl84Q20: 29785,
+    goldCost: 5240,
     slots: 3,
   },
   {
@@ -3000,6 +3428,7 @@ const data = [
     baseType: "Dragonscale Gauntlets",
     dustValIlvl84: 21000,
     dustValIlvl84Q20: 29400,
+    goldCost: 5200,
     slots: 4,
   },
   {
@@ -3007,6 +3436,7 @@ const data = [
     baseType: "Shagreen Gloves",
     dustValIlvl84: 21000,
     dustValIlvl84Q20: 29400,
+    goldCost: 5200,
     slots: 4,
   },
   {
@@ -3014,6 +3444,7 @@ const data = [
     baseType: "Carved Wand",
     dustValIlvl84: 20775,
     dustValIlvl84Q20: 29085,
+    goldCost: 5180,
     slots: 3,
   },
   {
@@ -3021,6 +3452,7 @@ const data = [
     baseType: "Topaz Ring",
     dustValIlvl84: 20775,
     dustValIlvl84Q20: 29085,
+    goldCost: 5180,
     slots: 1,
   },
   {
@@ -3028,6 +3460,7 @@ const data = [
     baseType: "Mosaic Kite Shield",
     dustValIlvl84: 20725,
     dustValIlvl84Q20: 29015,
+    goldCost: 5180,
     slots: 6,
   },
   {
@@ -3035,6 +3468,7 @@ const data = [
     baseType: "Dragonscale Boots",
     dustValIlvl84: 20725,
     dustValIlvl84Q20: 29015,
+    goldCost: 5180,
     slots: 4,
   },
   {
@@ -3042,6 +3476,7 @@ const data = [
     baseType: "Necromancer Silks",
     dustValIlvl84: 20725,
     dustValIlvl84Q20: 29015,
+    goldCost: 5180,
     slots: 6,
   },
   {
@@ -3049,6 +3484,7 @@ const data = [
     baseType: "Gold Ring",
     dustValIlvl84: 20725,
     dustValIlvl84Q20: 29015,
+    goldCost: 5180,
     slots: 1,
   },
   {
@@ -3056,6 +3492,7 @@ const data = [
     baseType: "Harmonic Spirit Shield",
     dustValIlvl84: 20725,
     dustValIlvl84Q20: 29015,
+    goldCost: 5180,
     slots: 4,
   },
   {
@@ -3063,6 +3500,7 @@ const data = [
     baseType: "Serpentine Staff",
     dustValIlvl84: 20650,
     dustValIlvl84Q20: 28910,
+    goldCost: 5160,
     slots: 8,
   },
   {
@@ -3070,6 +3508,7 @@ const data = [
     baseType: "Chiming Spirit Shield",
     dustValIlvl84: 20650,
     dustValIlvl84Q20: 28910,
+    goldCost: 5160,
     slots: 4,
   },
   {
@@ -3077,6 +3516,7 @@ const data = [
     baseType: "Cloth Belt",
     dustValIlvl84: 20650,
     dustValIlvl84Q20: 28910,
+    goldCost: 5160,
     slots: 2,
   },
   {
@@ -3084,6 +3524,7 @@ const data = [
     baseType: "Karui Sceptre",
     dustValIlvl84: 20400,
     dustValIlvl84Q20: 28560,
+    goldCost: 5140,
     slots: 6,
   },
   {
@@ -3091,6 +3532,7 @@ const data = [
     baseType: "Vaal Sceptre",
     dustValIlvl84: 20125,
     dustValIlvl84Q20: 28175,
+    goldCost: 5100,
     slots: 6,
   },
   {
@@ -3098,6 +3540,7 @@ const data = [
     baseType: "Spike-Point Arrow Quiver",
     dustValIlvl84: 20125,
     dustValIlvl84Q20: 28175,
+    goldCost: 5100,
     slots: 6,
   },
   {
@@ -3105,6 +3548,7 @@ const data = [
     baseType: "Elegant Ringmail",
     dustValIlvl84: 20125,
     dustValIlvl84Q20: 28175,
+    goldCost: 5100,
     slots: 6,
   },
   {
@@ -3112,6 +3556,7 @@ const data = [
     baseType: "Jade Amulet",
     dustValIlvl84: 20125,
     dustValIlvl84Q20: 28175,
+    goldCost: 5100,
     slots: 1,
   },
   {
@@ -3119,6 +3564,7 @@ const data = [
     baseType: "Jade Amulet",
     dustValIlvl84: 20050,
     dustValIlvl84Q20: 28070,
+    goldCost: 5100,
     slots: 1,
   },
   {
@@ -3126,6 +3572,7 @@ const data = [
     baseType: "Steel Circlet",
     dustValIlvl84: 20050,
     dustValIlvl84Q20: 28070,
+    goldCost: 5100,
     slots: 4,
   },
   {
@@ -3133,6 +3580,7 @@ const data = [
     baseType: "Citrine Amulet",
     dustValIlvl84: 20050,
     dustValIlvl84Q20: 28070,
+    goldCost: 5100,
     slots: 1,
   },
   {
@@ -3140,6 +3588,7 @@ const data = [
     baseType: "Carnal Armour",
     dustValIlvl84: 19800,
     dustValIlvl84Q20: 27720,
+    goldCost: 5060,
     slots: 6,
   },
   {
@@ -3147,6 +3596,7 @@ const data = [
     baseType: "Heavy Belt",
     dustValIlvl84: 19575,
     dustValIlvl84Q20: 27405,
+    goldCost: 5040,
     slots: 2,
   },
   {
@@ -3154,6 +3604,7 @@ const data = [
     baseType: "Prophet Crown",
     dustValIlvl84: 19525,
     dustValIlvl84Q20: 27335,
+    goldCost: 5040,
     slots: 4,
   },
   {
@@ -3161,6 +3612,7 @@ const data = [
     baseType: "Assassin's Boots",
     dustValIlvl84: 19525,
     dustValIlvl84Q20: 27335,
+    goldCost: 5040,
     slots: 4,
   },
   {
@@ -3168,6 +3620,7 @@ const data = [
     baseType: "Butcher Axe",
     dustValIlvl84: 19525,
     dustValIlvl84Q20: 27335,
+    goldCost: 5040,
     slots: 6,
   },
   {
@@ -3175,6 +3628,7 @@ const data = [
     baseType: "Blood Sceptre",
     dustValIlvl84: 19475,
     dustValIlvl84Q20: 27265,
+    goldCost: 5020,
     slots: 6,
   },
   {
@@ -3182,6 +3636,7 @@ const data = [
     baseType: "Samite Gloves",
     dustValIlvl84: 19475,
     dustValIlvl84Q20: 27265,
+    goldCost: 5020,
     slots: 4,
   },
   {
@@ -3189,6 +3644,7 @@ const data = [
     baseType: "Elder Sword",
     dustValIlvl84: 19475,
     dustValIlvl84Q20: 27265,
+    goldCost: 5020,
     slots: 6,
   },
   {
@@ -3196,6 +3652,7 @@ const data = [
     baseType: "Supreme Spiked Shield",
     dustValIlvl84: 19225,
     dustValIlvl84Q20: 26915,
+    goldCost: 5000,
     slots: 4,
   },
   {
@@ -3203,6 +3660,7 @@ const data = [
     baseType: "Terror Claw",
     dustValIlvl84: 19225,
     dustValIlvl84Q20: 26915,
+    goldCost: 5000,
     slots: 4,
   },
   {
@@ -3210,6 +3668,7 @@ const data = [
     baseType: "Slink Gloves",
     dustValIlvl84: 19225,
     dustValIlvl84Q20: 26915,
+    goldCost: 5000,
     slots: 4,
   },
   {
@@ -3217,6 +3676,7 @@ const data = [
     baseType: "Elegant Round Shield",
     dustValIlvl84: 19225,
     dustValIlvl84Q20: 26915,
+    goldCost: 5000,
     slots: 6,
   },
   {
@@ -3224,6 +3684,7 @@ const data = [
     baseType: "Legion Sword",
     dustValIlvl84: 18975,
     dustValIlvl84Q20: 26565,
+    goldCost: 4960,
     slots: 6,
   },
   {
@@ -3231,6 +3692,7 @@ const data = [
     baseType: "Platinum Sceptre",
     dustValIlvl84: 18975,
     dustValIlvl84Q20: 26565,
+    goldCost: 4960,
     slots: 6,
   },
   {
@@ -3238,6 +3700,7 @@ const data = [
     baseType: "Vaal Spirit Shield",
     dustValIlvl84: 18975,
     dustValIlvl84Q20: 26565,
+    goldCost: 4960,
     slots: 4,
   },
   {
@@ -3245,6 +3708,7 @@ const data = [
     baseType: "Full Wyrmscale",
     dustValIlvl84: 18900,
     dustValIlvl84Q20: 26460,
+    goldCost: 4960,
     slots: 6,
   },
   {
@@ -3252,6 +3716,7 @@ const data = [
     baseType: "Ancient Greaves",
     dustValIlvl84: 18900,
     dustValIlvl84Q20: 26460,
+    goldCost: 4960,
     slots: 4,
   },
   {
@@ -3259,6 +3724,7 @@ const data = [
     baseType: "Titan Gauntlets",
     dustValIlvl84: 18650,
     dustValIlvl84Q20: 26110,
+    goldCost: 4940,
     slots: 4,
   },
   {
@@ -3266,6 +3732,7 @@ const data = [
     baseType: "Iron Circlet",
     dustValIlvl84: 18450,
     dustValIlvl84Q20: 25830,
+    goldCost: 4900,
     slots: 4,
   },
   {
@@ -3273,6 +3740,7 @@ const data = [
     baseType: "Sapphire Ring",
     dustValIlvl84: 18450,
     dustValIlvl84Q20: 25830,
+    goldCost: 4900,
     slots: 1,
   },
   {
@@ -3280,6 +3748,7 @@ const data = [
     baseType: "Heavy Arrow Quiver",
     dustValIlvl84: 18400,
     dustValIlvl84Q20: 25760,
+    goldCost: 4900,
     slots: 6,
   },
   {
@@ -3287,6 +3756,7 @@ const data = [
     baseType: "Cloth Belt",
     dustValIlvl84: 18350,
     dustValIlvl84Q20: 25690,
+    goldCost: 4900,
     slots: 2,
   },
   {
@@ -3294,6 +3764,7 @@ const data = [
     baseType: "Callous Mask",
     dustValIlvl84: 18350,
     dustValIlvl84Q20: 25690,
+    goldCost: 4900,
     slots: 4,
   },
   {
@@ -3301,6 +3772,7 @@ const data = [
     baseType: "Ambush Mitts",
     dustValIlvl84: 18350,
     dustValIlvl84Q20: 25690,
+    goldCost: 4900,
     slots: 4,
   },
   {
@@ -3308,6 +3780,7 @@ const data = [
     baseType: "Unset Ring",
     dustValIlvl84: 18350,
     dustValIlvl84Q20: 25690,
+    goldCost: 4900,
     slots: 1,
   },
   {
@@ -3315,6 +3788,7 @@ const data = [
     baseType: "Unset Ring",
     dustValIlvl84: 18350,
     dustValIlvl84Q20: 25690,
+    goldCost: 4900,
     slots: 1,
   },
   {
@@ -3322,6 +3796,7 @@ const data = [
     baseType: "Unset Ring",
     dustValIlvl84: 18350,
     dustValIlvl84Q20: 25690,
+    goldCost: 4900,
     slots: 1,
   },
   {
@@ -3329,6 +3804,7 @@ const data = [
     baseType: "Unset Ring",
     dustValIlvl84: 18350,
     dustValIlvl84Q20: 25690,
+    goldCost: 4900,
     slots: 1,
   },
   {
@@ -3336,6 +3812,7 @@ const data = [
     baseType: "Unset Ring",
     dustValIlvl84: 18350,
     dustValIlvl84Q20: 25690,
+    goldCost: 4900,
     slots: 1,
   },
   {
@@ -3343,6 +3820,7 @@ const data = [
     baseType: "Imperial Claw",
     dustValIlvl84: 18125,
     dustValIlvl84Q20: 25375,
+    goldCost: 4860,
     slots: 4,
   },
   {
@@ -3350,6 +3828,7 @@ const data = [
     baseType: "Harbinger Bow",
     dustValIlvl84: 18125,
     dustValIlvl84Q20: 25375,
+    goldCost: 4860,
     slots: 8,
   },
   {
@@ -3357,6 +3836,7 @@ const data = [
     baseType: "Amber Amulet",
     dustValIlvl84: 17900,
     dustValIlvl84Q20: 25060,
+    goldCost: 4840,
     slots: 1,
   },
   {
@@ -3364,6 +3844,7 @@ const data = [
     baseType: "Jade Amulet",
     dustValIlvl84: 17900,
     dustValIlvl84Q20: 25060,
+    goldCost: 4840,
     slots: 1,
   },
   {
@@ -3371,6 +3852,7 @@ const data = [
     baseType: "Lapis Amulet",
     dustValIlvl84: 17900,
     dustValIlvl84Q20: 25060,
+    goldCost: 4840,
     slots: 1,
   },
   {
@@ -3378,6 +3860,7 @@ const data = [
     baseType: "Jade Amulet",
     dustValIlvl84: 17900,
     dustValIlvl84Q20: 25060,
+    goldCost: 4840,
     slots: 1,
   },
   {
@@ -3385,6 +3868,7 @@ const data = [
     baseType: "Silken Hood",
     dustValIlvl84: 17875,
     dustValIlvl84Q20: 25025,
+    goldCost: 4840,
     slots: 4,
   },
   {
@@ -3392,6 +3876,7 @@ const data = [
     baseType: "Diamond Ring",
     dustValIlvl84: 17875,
     dustValIlvl84Q20: 25025,
+    goldCost: 4840,
     slots: 1,
   },
   {
@@ -3399,6 +3884,7 @@ const data = [
     baseType: "Gladius",
     dustValIlvl84: 17875,
     dustValIlvl84Q20: 25025,
+    goldCost: 4840,
     slots: 6,
   },
   {
@@ -3406,6 +3892,7 @@ const data = [
     baseType: "Ezomyte Staff",
     dustValIlvl84: 17875,
     dustValIlvl84Q20: 25025,
+    goldCost: 4840,
     slots: 8,
   },
   {
@@ -3413,6 +3900,7 @@ const data = [
     baseType: "Ezomyte Staff",
     dustValIlvl84: 17875,
     dustValIlvl84Q20: 25025,
+    goldCost: 4840,
     slots: 8,
   },
   {
@@ -3420,6 +3908,7 @@ const data = [
     baseType: "Ezomyte Burgonet",
     dustValIlvl84: 17875,
     dustValIlvl84Q20: 25025,
+    goldCost: 4840,
     slots: 4,
   },
   {
@@ -3427,6 +3916,7 @@ const data = [
     baseType: "Silken Hood",
     dustValIlvl84: 17875,
     dustValIlvl84Q20: 25025,
+    goldCost: 4840,
     slots: 4,
   },
   {
@@ -3434,6 +3924,7 @@ const data = [
     baseType: "Sharkskin Boots",
     dustValIlvl84: 17825,
     dustValIlvl84Q20: 24955,
+    goldCost: 4840,
     slots: 4,
   },
   {
@@ -3441,6 +3932,7 @@ const data = [
     baseType: "Onyx Amulet",
     dustValIlvl84: 17825,
     dustValIlvl84Q20: 24955,
+    goldCost: 4840,
     slots: 1,
   },
   {
@@ -3448,6 +3940,7 @@ const data = [
     baseType: "Onyx Amulet",
     dustValIlvl84: 17825,
     dustValIlvl84Q20: 24955,
+    goldCost: 4840,
     slots: 1,
   },
   {
@@ -3455,6 +3948,7 @@ const data = [
     baseType: "Infernal Sword",
     dustValIlvl84: 17575,
     dustValIlvl84Q20: 24605,
+    goldCost: 4800,
     slots: 8,
   },
   {
@@ -3462,6 +3956,7 @@ const data = [
     baseType: "Dragonscale Gauntlets",
     dustValIlvl84: 17575,
     dustValIlvl84Q20: 24605,
+    goldCost: 4800,
     slots: 4,
   },
   {
@@ -3469,6 +3964,7 @@ const data = [
     baseType: "Imbued Wand",
     dustValIlvl84: 17350,
     dustValIlvl84Q20: 24290,
+    goldCost: 4780,
     slots: 3,
   },
   {
@@ -3476,6 +3972,7 @@ const data = [
     baseType: "Reaver Sword",
     dustValIlvl84: 17350,
     dustValIlvl84Q20: 24290,
+    goldCost: 4780,
     slots: 8,
   },
   {
@@ -3483,6 +3980,7 @@ const data = [
     baseType: "Reaver Sword",
     dustValIlvl84: 17350,
     dustValIlvl84Q20: 24290,
+    goldCost: 4780,
     slots: 8,
   },
   {
@@ -3490,6 +3988,7 @@ const data = [
     baseType: "Sentinel Jacket",
     dustValIlvl84: 17350,
     dustValIlvl84Q20: 24290,
+    goldCost: 4780,
     slots: 6,
   },
   {
@@ -3497,6 +3996,7 @@ const data = [
     baseType: "Solaris Circlet",
     dustValIlvl84: 17350,
     dustValIlvl84Q20: 24290,
+    goldCost: 4780,
     slots: 4,
   },
   {
@@ -3504,6 +4004,7 @@ const data = [
     baseType: "Serpentscale Gauntlets",
     dustValIlvl84: 17300,
     dustValIlvl84Q20: 24220,
+    goldCost: 4760,
     slots: 4,
   },
   {
@@ -3511,6 +4012,7 @@ const data = [
     baseType: "Zealot Gloves",
     dustValIlvl84: 17300,
     dustValIlvl84Q20: 24220,
+    goldCost: 4760,
     slots: 4,
   },
   {
@@ -3518,6 +4020,7 @@ const data = [
     baseType: "Zealot Gloves",
     dustValIlvl84: 17300,
     dustValIlvl84Q20: 24220,
+    goldCost: 4760,
     slots: 4,
   },
   {
@@ -3525,6 +4028,7 @@ const data = [
     baseType: "Auric Mace",
     dustValIlvl84: 17075,
     dustValIlvl84Q20: 23905,
+    goldCost: 4740,
     slots: 6,
   },
   {
@@ -3532,6 +4036,7 @@ const data = [
     baseType: "Eternal Sword",
     dustValIlvl84: 17075,
     dustValIlvl84Q20: 23905,
+    goldCost: 4740,
     slots: 6,
   },
   {
@@ -3539,6 +4044,7 @@ const data = [
     baseType: "Vaal Claw",
     dustValIlvl84: 17075,
     dustValIlvl84Q20: 23905,
+    goldCost: 4740,
     slots: 4,
   },
   {
@@ -3546,6 +4052,7 @@ const data = [
     baseType: "Despot Axe",
     dustValIlvl84: 17075,
     dustValIlvl84Q20: 23905,
+    goldCost: 4740,
     slots: 8,
   },
   {
@@ -3553,6 +4060,7 @@ const data = [
     baseType: "Imperial Skean",
     dustValIlvl84: 17075,
     dustValIlvl84Q20: 23905,
+    goldCost: 4740,
     slots: 3,
   },
   {
@@ -3560,6 +4068,7 @@ const data = [
     baseType: "Karui Chopper",
     dustValIlvl84: 80875,
     dustValIlvl84Q20: 113225,
+    goldCost: 9560,
     slots: 8,
   },
   {
@@ -3567,6 +4076,7 @@ const data = [
     baseType: "Assassin's Mitts",
     dustValIlvl84: 16850,
     dustValIlvl84Q20: 23590,
+    goldCost: 4700,
     slots: 4,
   },
   {
@@ -3574,6 +4084,7 @@ const data = [
     baseType: "Corsair Sword",
     dustValIlvl84: 16850,
     dustValIlvl84Q20: 23590,
+    goldCost: 4700,
     slots: 3,
   },
   {
@@ -3581,6 +4092,7 @@ const data = [
     baseType: "Magistrate Crown",
     dustValIlvl84: 16850,
     dustValIlvl84Q20: 23590,
+    goldCost: 4700,
     slots: 4,
   },
   {
@@ -3588,6 +4100,7 @@ const data = [
     baseType: "Teak Round Shield",
     dustValIlvl84: 16850,
     dustValIlvl84Q20: 23590,
+    goldCost: 4700,
     slots: 6,
   },
   {
@@ -3595,6 +4108,7 @@ const data = [
     baseType: "Citadel Bow",
     dustValIlvl84: 16850,
     dustValIlvl84Q20: 23590,
+    goldCost: 4700,
     slots: 8,
   },
   {
@@ -3602,6 +4116,7 @@ const data = [
     baseType: "Enameled Buckler",
     dustValIlvl84: 16800,
     dustValIlvl84Q20: 23520,
+    goldCost: 4700,
     slots: 4,
   },
   {
@@ -3609,6 +4124,7 @@ const data = [
     baseType: "Serpentscale Boots",
     dustValIlvl84: 16800,
     dustValIlvl84Q20: 23520,
+    goldCost: 4700,
     slots: 4,
   },
   {
@@ -3616,6 +4132,7 @@ const data = [
     baseType: "Coral Amulet",
     dustValIlvl84: 16800,
     dustValIlvl84Q20: 23520,
+    goldCost: 4700,
     slots: 1,
   },
   {
@@ -3623,6 +4140,7 @@ const data = [
     baseType: "Legion Gloves",
     dustValIlvl84: 16350,
     dustValIlvl84Q20: 22890,
+    goldCost: 4640,
     slots: 4,
   },
   {
@@ -3630,6 +4148,7 @@ const data = [
     baseType: "Ironwood Buckler",
     dustValIlvl84: 16350,
     dustValIlvl84Q20: 22890,
+    goldCost: 4640,
     slots: 4,
   },
   {
@@ -3637,6 +4156,7 @@ const data = [
     baseType: "Crystal Sceptre",
     dustValIlvl84: 16300,
     dustValIlvl84Q20: 22820,
+    goldCost: 4640,
     slots: 6,
   },
   {
@@ -3644,6 +4164,7 @@ const data = [
     baseType: "Crystal Sceptre",
     dustValIlvl84: 16300,
     dustValIlvl84Q20: 22820,
+    goldCost: 4640,
     slots: 6,
   },
   {
@@ -3651,6 +4172,7 @@ const data = [
     baseType: "Military Staff",
     dustValIlvl84: 16300,
     dustValIlvl84Q20: 22820,
+    goldCost: 4640,
     slots: 8,
   },
   {
@@ -3658,6 +4180,7 @@ const data = [
     baseType: "Trapper Boots",
     dustValIlvl84: 16300,
     dustValIlvl84Q20: 22820,
+    goldCost: 4640,
     slots: 4,
   },
   {
@@ -3665,6 +4188,7 @@ const data = [
     baseType: "Satin Gloves",
     dustValIlvl84: 16300,
     dustValIlvl84Q20: 22820,
+    goldCost: 4640,
     slots: 4,
   },
   {
@@ -3672,6 +4196,7 @@ const data = [
     baseType: "Satin Gloves",
     dustValIlvl84: 16300,
     dustValIlvl84Q20: 22820,
+    goldCost: 4640,
     slots: 4,
   },
   {
@@ -3679,6 +4204,7 @@ const data = [
     baseType: "Platinum Kris",
     dustValIlvl84: 16100,
     dustValIlvl84Q20: 22540,
+    goldCost: 4620,
     slots: 3,
   },
   {
@@ -3686,6 +4212,7 @@ const data = [
     baseType: "Simple Robe",
     dustValIlvl84: 2775,
     dustValIlvl84Q20: 3885,
+    goldCost: 2080,
     slots: 6,
   },
   {
@@ -3693,6 +4220,7 @@ const data = [
     baseType: "Paua Amulet",
     dustValIlvl84: 15925,
     dustValIlvl84Q20: 22295,
+    goldCost: 4600,
     slots: 1,
   },
   {
@@ -3700,6 +4228,7 @@ const data = [
     baseType: "Golden Plate",
     dustValIlvl84: 15875,
     dustValIlvl84Q20: 22225,
+    goldCost: 4580,
     slots: 6,
   },
   {
@@ -3707,6 +4236,7 @@ const data = [
     baseType: "Gemstone Sword",
     dustValIlvl84: 15875,
     dustValIlvl84Q20: 22225,
+    goldCost: 4580,
     slots: 3,
   },
   {
@@ -3714,6 +4244,7 @@ const data = [
     baseType: "Topaz Ring",
     dustValIlvl84: 15875,
     dustValIlvl84Q20: 22225,
+    goldCost: 4580,
     slots: 1,
   },
   {
@@ -3721,6 +4252,7 @@ const data = [
     baseType: "Sharktooth Arrow Quiver",
     dustValIlvl84: 15875,
     dustValIlvl84Q20: 22225,
+    goldCost: 4580,
     slots: 6,
   },
   {
@@ -3728,6 +4260,7 @@ const data = [
     baseType: "Lapis Amulet",
     dustValIlvl84: 15825,
     dustValIlvl84Q20: 22155,
+    goldCost: 4580,
     slots: 1,
   },
   {
@@ -3735,6 +4268,7 @@ const data = [
     baseType: "Two-Stone Ring",
     dustValIlvl84: 15825,
     dustValIlvl84Q20: 22155,
+    goldCost: 4580,
     slots: 1,
   },
   {
@@ -3742,6 +4276,7 @@ const data = [
     baseType: "Ruby Ring",
     dustValIlvl84: 15825,
     dustValIlvl84Q20: 22155,
+    goldCost: 4580,
     slots: 1,
   },
   {
@@ -3749,6 +4284,7 @@ const data = [
     baseType: "Great Mallet",
     dustValIlvl84: 15825,
     dustValIlvl84Q20: 22155,
+    goldCost: 4580,
     slots: 8,
   },
   {
@@ -3756,6 +4292,7 @@ const data = [
     baseType: "Lapis Amulet",
     dustValIlvl84: 15825,
     dustValIlvl84Q20: 22155,
+    goldCost: 4580,
     slots: 1,
   },
   {
@@ -3763,6 +4300,7 @@ const data = [
     baseType: "Turquoise Amulet",
     dustValIlvl84: 15825,
     dustValIlvl84Q20: 22155,
+    goldCost: 4580,
     slots: 1,
   },
   {
@@ -3770,6 +4308,7 @@ const data = [
     baseType: "Heavy Belt",
     dustValIlvl84: 15825,
     dustValIlvl84Q20: 22155,
+    goldCost: 4580,
     slots: 2,
   },
   {
@@ -3777,6 +4316,7 @@ const data = [
     baseType: "Reaver Helmet",
     dustValIlvl84: 15825,
     dustValIlvl84Q20: 22155,
+    goldCost: 4580,
     slots: 4,
   },
   {
@@ -3784,6 +4324,7 @@ const data = [
     baseType: "Vaal Buckler",
     dustValIlvl84: 15625,
     dustValIlvl84Q20: 21875,
+    goldCost: 4560,
     slots: 4,
   },
   {
@@ -3791,6 +4332,7 @@ const data = [
     baseType: "Prophet Crown",
     dustValIlvl84: 15625,
     dustValIlvl84Q20: 21875,
+    goldCost: 4560,
     slots: 4,
   },
   {
@@ -3798,6 +4340,7 @@ const data = [
     baseType: "Rustic Sash",
     dustValIlvl84: 15450,
     dustValIlvl84Q20: 21630,
+    goldCost: 4520,
     slots: 2,
   },
   {
@@ -3805,6 +4348,7 @@ const data = [
     baseType: "Conjurer Gloves",
     dustValIlvl84: 15425,
     dustValIlvl84Q20: 21595,
+    goldCost: 4520,
     slots: 4,
   },
   {
@@ -3812,6 +4356,7 @@ const data = [
     baseType: "Carnal Boots",
     dustValIlvl84: 15425,
     dustValIlvl84Q20: 21595,
+    goldCost: 4520,
     slots: 4,
   },
   {
@@ -3819,6 +4364,7 @@ const data = [
     baseType: "Stealth Boots",
     dustValIlvl84: 15175,
     dustValIlvl84Q20: 21245,
+    goldCost: 4500,
     slots: 4,
   },
   {
@@ -3826,6 +4372,7 @@ const data = [
     baseType: "Assassin Bow",
     dustValIlvl84: 15175,
     dustValIlvl84Q20: 21245,
+    goldCost: 4500,
     slots: 8,
   },
   {
@@ -3833,6 +4380,7 @@ const data = [
     baseType: "Ezomyte Axe",
     dustValIlvl84: 15175,
     dustValIlvl84Q20: 21245,
+    goldCost: 4500,
     slots: 8,
   },
   {
@@ -3840,6 +4388,7 @@ const data = [
     baseType: "Ezomyte Axe",
     dustValIlvl84: 15175,
     dustValIlvl84Q20: 21245,
+    goldCost: 4500,
     slots: 8,
   },
   {
@@ -3847,6 +4396,7 @@ const data = [
     baseType: "Dread Maul",
     dustValIlvl84: 14975,
     dustValIlvl84Q20: 20965,
+    goldCost: 4460,
     slots: 8,
   },
   {
@@ -3854,6 +4404,7 @@ const data = [
     baseType: "Leather Belt",
     dustValIlvl84: 14975,
     dustValIlvl84Q20: 20965,
+    goldCost: 4460,
     slots: 2,
   },
   {
@@ -3861,6 +4412,7 @@ const data = [
     baseType: "Amethyst Ring",
     dustValIlvl84: 14925,
     dustValIlvl84Q20: 20895,
+    goldCost: 4460,
     slots: 1,
   },
   {
@@ -3868,6 +4420,7 @@ const data = [
     baseType: "Ebony Tower Shield",
     dustValIlvl84: 14725,
     dustValIlvl84Q20: 20615,
+    goldCost: 4440,
     slots: 8,
   },
   {
@@ -3875,6 +4428,7 @@ const data = [
     baseType: "Conquest Chainmail",
     dustValIlvl84: 14725,
     dustValIlvl84Q20: 20615,
+    goldCost: 4440,
     slots: 6,
   },
   {
@@ -3882,6 +4436,7 @@ const data = [
     baseType: "Ezomyte Blade",
     dustValIlvl84: 14725,
     dustValIlvl84Q20: 20615,
+    goldCost: 4440,
     slots: 8,
   },
   {
@@ -3889,6 +4444,7 @@ const data = [
     baseType: "Great Crown",
     dustValIlvl84: 14525,
     dustValIlvl84Q20: 20335,
+    goldCost: 4400,
     slots: 4,
   },
   {
@@ -3896,6 +4452,7 @@ const data = [
     baseType: "Cutthroat's Garb",
     dustValIlvl84: 14525,
     dustValIlvl84Q20: 20335,
+    goldCost: 4400,
     slots: 6,
   },
   {
@@ -3903,6 +4460,7 @@ const data = [
     baseType: "Fiend Dagger",
     dustValIlvl84: 14525,
     dustValIlvl84Q20: 20335,
+    goldCost: 4400,
     slots: 3,
   },
   {
@@ -3910,6 +4468,7 @@ const data = [
     baseType: "Destroyer Regalia",
     dustValIlvl84: 14525,
     dustValIlvl84Q20: 20335,
+    goldCost: 4400,
     slots: 6,
   },
   {
@@ -3917,6 +4476,7 @@ const data = [
     baseType: "Riveted Gloves",
     dustValIlvl84: 14500,
     dustValIlvl84Q20: 20300,
+    goldCost: 4400,
     slots: 4,
   },
   {
@@ -3924,6 +4484,7 @@ const data = [
     baseType: "Jasper Chopper",
     dustValIlvl84: 14500,
     dustValIlvl84Q20: 20300,
+    goldCost: 4400,
     slots: 8,
   },
   {
@@ -3931,6 +4492,7 @@ const data = [
     baseType: "Gavel",
     dustValIlvl84: 14300,
     dustValIlvl84Q20: 20020,
+    goldCost: 4380,
     slots: 6,
   },
   {
@@ -3938,6 +4500,7 @@ const data = [
     baseType: "Opal Sceptre",
     dustValIlvl84: 14300,
     dustValIlvl84Q20: 20020,
+    goldCost: 4380,
     slots: 6,
   },
   {
@@ -3945,6 +4508,7 @@ const data = [
     baseType: "Throat Stabber",
     dustValIlvl84: 14300,
     dustValIlvl84Q20: 20020,
+    goldCost: 4380,
     slots: 4,
   },
   {
@@ -3952,6 +4516,7 @@ const data = [
     baseType: "Ambusher",
     dustValIlvl84: 14300,
     dustValIlvl84Q20: 20020,
+    goldCost: 4380,
     slots: 3,
   },
   {
@@ -3959,6 +4524,7 @@ const data = [
     baseType: "Cloth Belt",
     dustValIlvl84: 14300,
     dustValIlvl84Q20: 20020,
+    goldCost: 4380,
     slots: 2,
   },
   {
@@ -3966,6 +4532,7 @@ const data = [
     baseType: "Ambusher",
     dustValIlvl84: 14300,
     dustValIlvl84Q20: 20020,
+    goldCost: 4380,
     slots: 3,
   },
   {
@@ -3973,6 +4540,7 @@ const data = [
     baseType: "Gladius",
     dustValIlvl84: 14300,
     dustValIlvl84Q20: 20020,
+    goldCost: 4380,
     slots: 6,
   },
   {
@@ -3980,6 +4548,7 @@ const data = [
     baseType: "Lacquered Garb",
     dustValIlvl84: 14100,
     dustValIlvl84Q20: 19740,
+    goldCost: 4340,
     slots: 6,
   },
   {
@@ -3987,6 +4556,7 @@ const data = [
     baseType: "Regicide Mask",
     dustValIlvl84: 14100,
     dustValIlvl84Q20: 19740,
+    goldCost: 4340,
     slots: 4,
   },
   {
@@ -3994,6 +4564,7 @@ const data = [
     baseType: "Nubuck Gloves",
     dustValIlvl84: 14100,
     dustValIlvl84Q20: 19740,
+    goldCost: 4340,
     slots: 4,
   },
   {
@@ -4001,6 +4572,7 @@ const data = [
     baseType: "Steelscale Gauntlets",
     dustValIlvl84: 14075,
     dustValIlvl84Q20: 19705,
+    goldCost: 4340,
     slots: 4,
   },
   {
@@ -4008,6 +4580,7 @@ const data = [
     baseType: "Steelscale Gauntlets",
     dustValIlvl84: 14075,
     dustValIlvl84Q20: 19705,
+    goldCost: 4340,
     slots: 4,
   },
   {
@@ -4015,6 +4588,7 @@ const data = [
     baseType: "Embroidered Gloves",
     dustValIlvl84: 14075,
     dustValIlvl84Q20: 19705,
+    goldCost: 4340,
     slots: 4,
   },
   {
@@ -4022,6 +4596,7 @@ const data = [
     baseType: "Imbued Wand",
     dustValIlvl84: 13875,
     dustValIlvl84Q20: 19425,
+    goldCost: 4320,
     slots: 3,
   },
   {
@@ -4029,6 +4604,7 @@ const data = [
     baseType: "Imbued Wand",
     dustValIlvl84: 13875,
     dustValIlvl84Q20: 19425,
+    goldCost: 4320,
     slots: 3,
   },
   {
@@ -4036,6 +4612,7 @@ const data = [
     baseType: "Siege Axe",
     dustValIlvl84: 13875,
     dustValIlvl84Q20: 19425,
+    goldCost: 4320,
     slots: 6,
   },
   {
@@ -4043,6 +4620,7 @@ const data = [
     baseType: "Reaver Sword",
     dustValIlvl84: 13875,
     dustValIlvl84Q20: 19425,
+    goldCost: 4320,
     slots: 8,
   },
   {
@@ -4050,6 +4628,7 @@ const data = [
     baseType: "Lacquered Helmet",
     dustValIlvl84: 13700,
     dustValIlvl84Q20: 19180,
+    goldCost: 4300,
     slots: 4,
   },
   {
@@ -4057,6 +4636,7 @@ const data = [
     baseType: "Holy Chainmail",
     dustValIlvl84: 13650,
     dustValIlvl84Q20: 19110,
+    goldCost: 4280,
     slots: 6,
   },
   {
@@ -4064,6 +4644,7 @@ const data = [
     baseType: "Steel Gauntlets",
     dustValIlvl84: 13650,
     dustValIlvl84Q20: 19110,
+    goldCost: 4280,
     slots: 4,
   },
   {
@@ -4071,6 +4652,7 @@ const data = [
     baseType: "Painted Tower Shield",
     dustValIlvl84: 13650,
     dustValIlvl84Q20: 19110,
+    goldCost: 4280,
     slots: 8,
   },
   {
@@ -4078,6 +4660,7 @@ const data = [
     baseType: "Amber Amulet",
     dustValIlvl84: 13650,
     dustValIlvl84Q20: 19110,
+    goldCost: 4280,
     slots: 1,
   },
   {
@@ -4085,6 +4668,7 @@ const data = [
     baseType: "Jade Amulet",
     dustValIlvl84: 13650,
     dustValIlvl84Q20: 19110,
+    goldCost: 4280,
     slots: 1,
   },
   {
@@ -4092,6 +4676,7 @@ const data = [
     baseType: "Grinning Fetish",
     dustValIlvl84: 13650,
     dustValIlvl84Q20: 19110,
+    goldCost: 4280,
     slots: 6,
   },
   {
@@ -4099,6 +4684,7 @@ const data = [
     baseType: "Legion Boots",
     dustValIlvl84: 13475,
     dustValIlvl84Q20: 18865,
+    goldCost: 4260,
     slots: 4,
   },
   {
@@ -4106,6 +4692,7 @@ const data = [
     baseType: "Primordial Staff",
     dustValIlvl84: 13475,
     dustValIlvl84Q20: 18865,
+    goldCost: 4260,
     slots: 8,
   },
   {
@@ -4113,6 +4700,7 @@ const data = [
     baseType: "Legion Boots",
     dustValIlvl84: 13475,
     dustValIlvl84Q20: 18865,
+    goldCost: 4260,
     slots: 4,
   },
   {
@@ -4120,6 +4708,7 @@ const data = [
     baseType: "Tyrant's Sekhem",
     dustValIlvl84: 13475,
     dustValIlvl84Q20: 18865,
+    goldCost: 4260,
     slots: 6,
   },
   {
@@ -4127,6 +4716,7 @@ const data = [
     baseType: "Loricated Ringmail",
     dustValIlvl84: 13475,
     dustValIlvl84Q20: 18865,
+    goldCost: 4260,
     slots: 6,
   },
   {
@@ -4134,6 +4724,7 @@ const data = [
     baseType: "Primordial Staff",
     dustValIlvl84: 13475,
     dustValIlvl84Q20: 18865,
+    goldCost: 4260,
     slots: 8,
   },
   {
@@ -4141,6 +4732,7 @@ const data = [
     baseType: "Turquoise Amulet",
     dustValIlvl84: 13300,
     dustValIlvl84Q20: 18620,
+    goldCost: 4240,
     slots: 1,
   },
   {
@@ -4148,6 +4740,7 @@ const data = [
     baseType: "Moonstone Ring",
     dustValIlvl84: 13300,
     dustValIlvl84Q20: 18620,
+    goldCost: 4240,
     slots: 1,
   },
   {
@@ -4155,6 +4748,7 @@ const data = [
     baseType: "Ornate Mace",
     dustValIlvl84: 13300,
     dustValIlvl84Q20: 18620,
+    goldCost: 4240,
     slots: 6,
   },
   {
@@ -4162,6 +4756,7 @@ const data = [
     baseType: "Stygian Vise",
     dustValIlvl84: 13300,
     dustValIlvl84Q20: 18620,
+    goldCost: 4240,
     slots: 2,
   },
   {
@@ -4169,6 +4764,7 @@ const data = [
     baseType: "Gold Amulet",
     dustValIlvl84: 13300,
     dustValIlvl84Q20: 18620,
+    goldCost: 4240,
     slots: 1,
   },
   {
@@ -4176,6 +4772,7 @@ const data = [
     baseType: "Graceful Sword",
     dustValIlvl84: 13300,
     dustValIlvl84Q20: 18620,
+    goldCost: 4240,
     slots: 6,
   },
   {
@@ -4183,6 +4780,7 @@ const data = [
     baseType: "Spidersilk Robe",
     dustValIlvl84: 12925,
     dustValIlvl84Q20: 18095,
+    goldCost: 4180,
     slots: 6,
   },
   {
@@ -4190,6 +4788,7 @@ const data = [
     baseType: "Soldier Boots",
     dustValIlvl84: 12925,
     dustValIlvl84Q20: 18095,
+    goldCost: 4180,
     slots: 4,
   },
   {
@@ -4197,6 +4796,7 @@ const data = [
     baseType: "Serpentine Staff",
     dustValIlvl84: 12925,
     dustValIlvl84Q20: 18095,
+    goldCost: 4180,
     slots: 8,
   },
   {
@@ -4204,6 +4804,7 @@ const data = [
     baseType: "Wyrmscale Gauntlets",
     dustValIlvl84: 12925,
     dustValIlvl84Q20: 18095,
+    goldCost: 4180,
     slots: 4,
   },
   {
@@ -4211,6 +4812,7 @@ const data = [
     baseType: "Iron Ring",
     dustValIlvl84: 12925,
     dustValIlvl84Q20: 18095,
+    goldCost: 4180,
     slots: 1,
   },
   {
@@ -4218,6 +4820,7 @@ const data = [
     baseType: "Iron Ring",
     dustValIlvl84: 12925,
     dustValIlvl84Q20: 18095,
+    goldCost: 4180,
     slots: 1,
   },
   {
@@ -4225,6 +4828,7 @@ const data = [
     baseType: "Crimson Round Shield",
     dustValIlvl84: 12925,
     dustValIlvl84Q20: 18095,
+    goldCost: 4180,
     slots: 6,
   },
   {
@@ -4232,6 +4836,7 @@ const data = [
     baseType: "Broadhead Arrow Quiver",
     dustValIlvl84: 12925,
     dustValIlvl84Q20: 18095,
+    goldCost: 4180,
     slots: 6,
   },
   {
@@ -4239,6 +4844,7 @@ const data = [
     baseType: "Wyrmscale Gauntlets",
     dustValIlvl84: 12925,
     dustValIlvl84Q20: 18095,
+    goldCost: 4180,
     slots: 4,
   },
   {
@@ -4246,6 +4852,7 @@ const data = [
     baseType: "Amber Amulet",
     dustValIlvl84: 12925,
     dustValIlvl84Q20: 18095,
+    goldCost: 4180,
     slots: 1,
   },
   {
@@ -4253,6 +4860,7 @@ const data = [
     baseType: "Reinforced Greaves",
     dustValIlvl84: 12875,
     dustValIlvl84Q20: 18025,
+    goldCost: 4180,
     slots: 4,
   },
   {
@@ -4260,6 +4868,7 @@ const data = [
     baseType: "Gilded Sallet",
     dustValIlvl84: 12875,
     dustValIlvl84Q20: 18025,
+    goldCost: 4180,
     slots: 4,
   },
   {
@@ -4267,6 +4876,7 @@ const data = [
     baseType: "Vile Staff",
     dustValIlvl84: 12875,
     dustValIlvl84Q20: 18025,
+    goldCost: 4180,
     slots: 8,
   },
   {
@@ -4274,6 +4884,7 @@ const data = [
     baseType: "Leather Belt",
     dustValIlvl84: 12525,
     dustValIlvl84Q20: 17535,
+    goldCost: 4120,
     slots: 2,
   },
   {
@@ -4281,6 +4892,7 @@ const data = [
     baseType: "Runic Gages",
     dustValIlvl84: 12525,
     dustValIlvl84Q20: 17535,
+    goldCost: 4120,
     slots: 4,
   },
   {
@@ -4288,6 +4900,7 @@ const data = [
     baseType: "Runic Sollerets",
     dustValIlvl84: 12525,
     dustValIlvl84Q20: 17535,
+    goldCost: 4120,
     slots: 4,
   },
   {
@@ -4295,6 +4908,7 @@ const data = [
     baseType: "Steel Circlet",
     dustValIlvl84: 12525,
     dustValIlvl84Q20: 17535,
+    goldCost: 4120,
     slots: 4,
   },
   {
@@ -4302,6 +4916,7 @@ const data = [
     baseType: "Dusk Blade",
     dustValIlvl84: 625025,
     dustValIlvl84Q20: 875035,
+    goldCost: 23980,
     slots: 6,
   },
   {
@@ -4309,6 +4924,7 @@ const data = [
     baseType: "Death Bow",
     dustValIlvl84: 12500,
     dustValIlvl84Q20: 17500,
+    goldCost: 4120,
     slots: 8,
   },
   {
@@ -4316,6 +4932,7 @@ const data = [
     baseType: "Shadow Sceptre",
     dustValIlvl84: 12500,
     dustValIlvl84Q20: 17500,
+    goldCost: 4120,
     slots: 6,
   },
   {
@@ -4323,6 +4940,7 @@ const data = [
     baseType: "Death Bow",
     dustValIlvl84: 12500,
     dustValIlvl84Q20: 17500,
+    goldCost: 4120,
     slots: 8,
   },
   {
@@ -4330,6 +4948,7 @@ const data = [
     baseType: "Samnite Helmet",
     dustValIlvl84: 12325,
     dustValIlvl84Q20: 17255,
+    goldCost: 4100,
     slots: 4,
   },
   {
@@ -4337,6 +4956,7 @@ const data = [
     baseType: "Ursine Pelt",
     dustValIlvl84: 12325,
     dustValIlvl84Q20: 17255,
+    goldCost: 4100,
     slots: 4,
   },
   {
@@ -4344,6 +4964,7 @@ const data = [
     baseType: "Vile Arrow Quiver",
     dustValIlvl84: 12325,
     dustValIlvl84Q20: 17255,
+    goldCost: 4100,
     slots: 6,
   },
   {
@@ -4351,6 +4972,7 @@ const data = [
     baseType: "Shagreen Boots",
     dustValIlvl84: 12325,
     dustValIlvl84Q20: 17255,
+    goldCost: 4100,
     slots: 4,
   },
   {
@@ -4358,6 +4980,7 @@ const data = [
     baseType: "Gold Amulet",
     dustValIlvl84: 12325,
     dustValIlvl84Q20: 17255,
+    goldCost: 4100,
     slots: 1,
   },
   {
@@ -4365,6 +4988,7 @@ const data = [
     baseType: "Gold Ring",
     dustValIlvl84: 12325,
     dustValIlvl84Q20: 17255,
+    goldCost: 4100,
     slots: 1,
   },
   {
@@ -4372,6 +4996,7 @@ const data = [
     baseType: "Elder Sword",
     dustValIlvl84: 12175,
     dustValIlvl84Q20: 17045,
+    goldCost: 4060,
     slots: 6,
   },
   {
@@ -4379,6 +5004,7 @@ const data = [
     baseType: "Blunt Arrow Quiver",
     dustValIlvl84: 12125,
     dustValIlvl84Q20: 16975,
+    goldCost: 4060,
     slots: 6,
   },
   {
@@ -4386,6 +5012,7 @@ const data = [
     baseType: "Golden Buckler",
     dustValIlvl84: 11975,
     dustValIlvl84Q20: 16765,
+    goldCost: 4040,
     slots: 4,
   },
   {
@@ -4393,6 +5020,7 @@ const data = [
     baseType: "Corrugated Buckler",
     dustValIlvl84: 11825,
     dustValIlvl84Q20: 16555,
+    goldCost: 4020,
     slots: 4,
   },
   {
@@ -4400,6 +5028,7 @@ const data = [
     baseType: "Gut Ripper",
     dustValIlvl84: 11825,
     dustValIlvl84Q20: 16555,
+    goldCost: 4020,
     slots: 4,
   },
   {
@@ -4407,6 +5036,7 @@ const data = [
     baseType: "Ancient Greaves",
     dustValIlvl84: 11825,
     dustValIlvl84Q20: 16555,
+    goldCost: 4020,
     slots: 4,
   },
   {
@@ -4414,6 +5044,7 @@ const data = [
     baseType: "Leather Belt",
     dustValIlvl84: 11775,
     dustValIlvl84Q20: 16485,
+    goldCost: 4000,
     slots: 2,
   },
   {
@@ -4421,6 +5052,7 @@ const data = [
     baseType: "Coiled Staff",
     dustValIlvl84: 11775,
     dustValIlvl84Q20: 16485,
+    goldCost: 4000,
     slots: 8,
   },
   {
@@ -4428,6 +5060,7 @@ const data = [
     baseType: "Gold Amulet",
     dustValIlvl84: 11775,
     dustValIlvl84Q20: 16485,
+    goldCost: 4000,
     slots: 1,
   },
   {
@@ -4435,6 +5068,7 @@ const data = [
     baseType: "Heavy Belt",
     dustValIlvl84: 11775,
     dustValIlvl84Q20: 16485,
+    goldCost: 4000,
     slots: 2,
   },
   {
@@ -4442,6 +5076,7 @@ const data = [
     baseType: "Bronzescale Boots",
     dustValIlvl84: 11775,
     dustValIlvl84Q20: 16485,
+    goldCost: 4000,
     slots: 4,
   },
   {
@@ -4449,6 +5084,7 @@ const data = [
     baseType: "Sage Wand",
     dustValIlvl84: 11775,
     dustValIlvl84Q20: 16485,
+    goldCost: 4000,
     slots: 3,
   },
   {
@@ -4456,6 +5092,7 @@ const data = [
     baseType: "Decimation Bow",
     dustValIlvl84: 11625,
     dustValIlvl84Q20: 16275,
+    goldCost: 3980,
     slots: 8,
   },
   {
@@ -4463,6 +5100,7 @@ const data = [
     baseType: "Twilight Blade",
     dustValIlvl84: 11625,
     dustValIlvl84Q20: 16275,
+    goldCost: 3980,
     slots: 6,
   },
   {
@@ -4470,6 +5108,7 @@ const data = [
     baseType: "Goliath Gauntlets",
     dustValIlvl84: 11625,
     dustValIlvl84Q20: 16275,
+    goldCost: 3980,
     slots: 4,
   },
   {
@@ -4477,6 +5116,7 @@ const data = [
     baseType: "Great Crown",
     dustValIlvl84: 11625,
     dustValIlvl84Q20: 16275,
+    goldCost: 3980,
     slots: 4,
   },
   {
@@ -4484,6 +5124,7 @@ const data = [
     baseType: "Great Crown",
     dustValIlvl84: 11625,
     dustValIlvl84Q20: 16275,
+    goldCost: 3980,
     slots: 4,
   },
   {
@@ -4491,6 +5132,7 @@ const data = [
     baseType: "Unset Ring",
     dustValIlvl84: 11475,
     dustValIlvl84Q20: 16065,
+    goldCost: 3960,
     slots: 1,
   },
   {
@@ -4498,6 +5140,7 @@ const data = [
     baseType: "Unset Ring",
     dustValIlvl84: 11475,
     dustValIlvl84Q20: 16065,
+    goldCost: 3960,
     slots: 1,
   },
   {
@@ -4505,6 +5148,7 @@ const data = [
     baseType: "Ancient Spirit Shield",
     dustValIlvl84: 11475,
     dustValIlvl84Q20: 16065,
+    goldCost: 3960,
     slots: 4,
   },
   {
@@ -4512,6 +5156,7 @@ const data = [
     baseType: "Unset Ring",
     dustValIlvl84: 11475,
     dustValIlvl84Q20: 16065,
+    goldCost: 3960,
     slots: 1,
   },
   {
@@ -4519,6 +5164,7 @@ const data = [
     baseType: "Ambush Mitts",
     dustValIlvl84: 11475,
     dustValIlvl84Q20: 16065,
+    goldCost: 3960,
     slots: 4,
   },
   {
@@ -4526,6 +5172,7 @@ const data = [
     baseType: "Quarterstaff",
     dustValIlvl84: 11475,
     dustValIlvl84Q20: 16065,
+    goldCost: 3960,
     slots: 8,
   },
   {
@@ -4533,6 +5180,7 @@ const data = [
     baseType: "Ambush Mitts",
     dustValIlvl84: 11475,
     dustValIlvl84Q20: 16065,
+    goldCost: 3960,
     slots: 4,
   },
   {
@@ -4540,6 +5188,7 @@ const data = [
     baseType: "Highborn Staff",
     dustValIlvl84: 11300,
     dustValIlvl84Q20: 15820,
+    goldCost: 3940,
     slots: 8,
   },
   {
@@ -4547,6 +5196,7 @@ const data = [
     baseType: "Chain Belt",
     dustValIlvl84: 11150,
     dustValIlvl84Q20: 15610,
+    goldCost: 3900,
     slots: 2,
   },
   {
@@ -4554,6 +5204,7 @@ const data = [
     baseType: "Steelhead",
     dustValIlvl84: 11150,
     dustValIlvl84Q20: 15610,
+    goldCost: 3900,
     slots: 8,
   },
   {
@@ -4561,6 +5212,7 @@ const data = [
     baseType: "Rotfeather Talisman",
     dustValIlvl84: 11150,
     dustValIlvl84Q20: 15610,
+    goldCost: 3900,
     slots: 1,
   },
   {
@@ -4568,6 +5220,7 @@ const data = [
     baseType: "Chain Belt",
     dustValIlvl84: 11150,
     dustValIlvl84Q20: 15610,
+    goldCost: 3900,
     slots: 2,
   },
   {
@@ -4575,6 +5228,7 @@ const data = [
     baseType: "Zealot Helmet",
     dustValIlvl84: 11150,
     dustValIlvl84Q20: 15610,
+    goldCost: 3900,
     slots: 4,
   },
   {
@@ -4582,6 +5236,7 @@ const data = [
     baseType: "Paua Ring",
     dustValIlvl84: 11150,
     dustValIlvl84Q20: 15610,
+    goldCost: 3900,
     slots: 1,
   },
   {
@@ -4589,6 +5244,7 @@ const data = [
     baseType: "Royal Bow",
     dustValIlvl84: 11100,
     dustValIlvl84Q20: 15540,
+    goldCost: 3900,
     slots: 8,
   },
   {
@@ -4596,6 +5252,7 @@ const data = [
     baseType: "Ritual Sceptre",
     dustValIlvl84: 11100,
     dustValIlvl84Q20: 15540,
+    goldCost: 3900,
     slots: 6,
   },
   {
@@ -4603,6 +5260,7 @@ const data = [
     baseType: "Tiger Sword",
     dustValIlvl84: 10950,
     dustValIlvl84Q20: 15330,
+    goldCost: 3880,
     slots: 8,
   },
   {
@@ -4610,6 +5268,7 @@ const data = [
     baseType: "Lacquered Helmet",
     dustValIlvl84: 10950,
     dustValIlvl84Q20: 15330,
+    goldCost: 3880,
     slots: 4,
   },
   {
@@ -4617,6 +5276,7 @@ const data = [
     baseType: "Soldier Gloves",
     dustValIlvl84: 10950,
     dustValIlvl84Q20: 15330,
+    goldCost: 3880,
     slots: 4,
   },
   {
@@ -4624,6 +5284,7 @@ const data = [
     baseType: "Crusader Chainmail",
     dustValIlvl84: 10825,
     dustValIlvl84Q20: 15155,
+    goldCost: 3860,
     slots: 6,
   },
   {
@@ -4631,6 +5292,7 @@ const data = [
     baseType: "Crusader Chainmail",
     dustValIlvl84: 10825,
     dustValIlvl84Q20: 15155,
+    goldCost: 3860,
     slots: 6,
   },
   {
@@ -4638,6 +5300,7 @@ const data = [
     baseType: "Bronzescale Gauntlets",
     dustValIlvl84: 10775,
     dustValIlvl84Q20: 15085,
+    goldCost: 3840,
     slots: 4,
   },
   {
@@ -4645,6 +5308,7 @@ const data = [
     baseType: "Royal Skean",
     dustValIlvl84: 10650,
     dustValIlvl84Q20: 14910,
+    goldCost: 3820,
     slots: 3,
   },
   {
@@ -4652,6 +5316,7 @@ const data = [
     baseType: "Leather Belt",
     dustValIlvl84: 10650,
     dustValIlvl84Q20: 14910,
+    goldCost: 3820,
     slots: 2,
   },
   {
@@ -4659,6 +5324,7 @@ const data = [
     baseType: "Laminated Kite Shield",
     dustValIlvl84: 10650,
     dustValIlvl84Q20: 14910,
+    goldCost: 3820,
     slots: 6,
   },
   {
@@ -4666,6 +5332,7 @@ const data = [
     baseType: "Carnal Mitts",
     dustValIlvl84: 10650,
     dustValIlvl84Q20: 14910,
+    goldCost: 3820,
     slots: 4,
   },
   {
@@ -4673,6 +5340,7 @@ const data = [
     baseType: "Polished Spiked Shield",
     dustValIlvl84: 10325,
     dustValIlvl84Q20: 14455,
+    goldCost: 3780,
     slots: 4,
   },
   {
@@ -4680,6 +5348,7 @@ const data = [
     baseType: "Chiming Spirit Shield",
     dustValIlvl84: 10325,
     dustValIlvl84Q20: 14455,
+    goldCost: 3780,
     slots: 4,
   },
   {
@@ -4687,6 +5356,7 @@ const data = [
     baseType: "Colosseum Plate",
     dustValIlvl84: 10325,
     dustValIlvl84Q20: 14455,
+    goldCost: 3780,
     slots: 6,
   },
   {
@@ -4694,6 +5364,7 @@ const data = [
     baseType: "Satin Gloves",
     dustValIlvl84: 10200,
     dustValIlvl84Q20: 14280,
+    goldCost: 3760,
     slots: 4,
   },
   {
@@ -4701,6 +5372,7 @@ const data = [
     baseType: "Onyx Amulet",
     dustValIlvl84: 10175,
     dustValIlvl84Q20: 14245,
+    goldCost: 3760,
     slots: 1,
   },
   {
@@ -4708,6 +5380,7 @@ const data = [
     baseType: "Onyx Amulet",
     dustValIlvl84: 10175,
     dustValIlvl84Q20: 14245,
+    goldCost: 3760,
     slots: 1,
   },
   {
@@ -4715,6 +5388,7 @@ const data = [
     baseType: "Engraved Wand",
     dustValIlvl84: 9900,
     dustValIlvl84Q20: 13860,
+    goldCost: 3700,
     slots: 3,
   },
   {
@@ -4722,6 +5396,7 @@ const data = [
     baseType: "Cloth Belt",
     dustValIlvl84: 9900,
     dustValIlvl84Q20: 13860,
+    goldCost: 3700,
     slots: 2,
   },
   {
@@ -4729,6 +5404,7 @@ const data = [
     baseType: "Sapphire Ring",
     dustValIlvl84: 9875,
     dustValIlvl84Q20: 13825,
+    goldCost: 3700,
     slots: 1,
   },
   {
@@ -4736,6 +5412,7 @@ const data = [
     baseType: "Spiraled Wand",
     dustValIlvl84: 9875,
     dustValIlvl84Q20: 13825,
+    goldCost: 3700,
     slots: 3,
   },
   {
@@ -4743,6 +5420,7 @@ const data = [
     baseType: "Coral Ring",
     dustValIlvl84: 9875,
     dustValIlvl84Q20: 13825,
+    goldCost: 3700,
     slots: 1,
   },
   {
@@ -4750,6 +5428,7 @@ const data = [
     baseType: "Coral Ring",
     dustValIlvl84: 9875,
     dustValIlvl84Q20: 13825,
+    goldCost: 3700,
     slots: 1,
   },
   {
@@ -4757,6 +5436,7 @@ const data = [
     baseType: "Lapis Amulet",
     dustValIlvl84: 9875,
     dustValIlvl84Q20: 13825,
+    goldCost: 3700,
     slots: 1,
   },
   {
@@ -4764,6 +5444,7 @@ const data = [
     baseType: "Samite Gloves",
     dustValIlvl84: 9750,
     dustValIlvl84Q20: 13650,
+    goldCost: 3680,
     slots: 4,
   },
   {
@@ -4771,6 +5452,7 @@ const data = [
     baseType: "Ornate Ringmail",
     dustValIlvl84: 9750,
     dustValIlvl84Q20: 13650,
+    goldCost: 3680,
     slots: 6,
   },
   {
@@ -4778,6 +5460,7 @@ const data = [
     baseType: "Lunaris Circlet",
     dustValIlvl84: 9600,
     dustValIlvl84Q20: 13440,
+    goldCost: 3660,
     slots: 4,
   },
   {
@@ -4785,6 +5468,7 @@ const data = [
     baseType: "Tomahawk",
     dustValIlvl84: 9600,
     dustValIlvl84Q20: 13440,
+    goldCost: 3660,
     slots: 6,
   },
   {
@@ -4792,6 +5476,7 @@ const data = [
     baseType: "Maple Round Shield",
     dustValIlvl84: 9600,
     dustValIlvl84Q20: 13440,
+    goldCost: 3660,
     slots: 6,
   },
   {
@@ -4799,6 +5484,7 @@ const data = [
     baseType: "Turquoise Amulet",
     dustValIlvl84: 9575,
     dustValIlvl84Q20: 13405,
+    goldCost: 3640,
     slots: 1,
   },
   {
@@ -4806,6 +5492,7 @@ const data = [
     baseType: "Tarnished Spirit Shield",
     dustValIlvl84: 9575,
     dustValIlvl84Q20: 13405,
+    goldCost: 3640,
     slots: 4,
   },
   {
@@ -4813,6 +5500,7 @@ const data = [
     baseType: "Gut Ripper",
     dustValIlvl84: 9450,
     dustValIlvl84Q20: 13230,
+    goldCost: 3620,
     slots: 4,
   },
   {
@@ -4820,6 +5508,7 @@ const data = [
     baseType: "Gut Ripper",
     dustValIlvl84: 9450,
     dustValIlvl84Q20: 13230,
+    goldCost: 3620,
     slots: 4,
   },
   {
@@ -4827,6 +5516,7 @@ const data = [
     baseType: "Topaz Ring",
     dustValIlvl84: 9325,
     dustValIlvl84Q20: 13055,
+    goldCost: 3600,
     slots: 1,
   },
   {
@@ -4834,6 +5524,7 @@ const data = [
     baseType: "Silk Slippers",
     dustValIlvl84: 9300,
     dustValIlvl84Q20: 13020,
+    goldCost: 3600,
     slots: 4,
   },
   {
@@ -4841,6 +5532,7 @@ const data = [
     baseType: "Headsman Axe",
     dustValIlvl84: 9175,
     dustValIlvl84Q20: 12845,
+    goldCost: 3580,
     slots: 8,
   },
   {
@@ -4848,6 +5540,7 @@ const data = [
     baseType: "Coral Ring",
     dustValIlvl84: 9175,
     dustValIlvl84Q20: 12845,
+    goldCost: 3580,
     slots: 1,
   },
   {
@@ -4855,6 +5548,7 @@ const data = [
     baseType: "Amber Amulet",
     dustValIlvl84: 9175,
     dustValIlvl84Q20: 12845,
+    goldCost: 3580,
     slots: 1,
   },
   {
@@ -4862,6 +5556,7 @@ const data = [
     baseType: "Compound Spiked Shield",
     dustValIlvl84: 9175,
     dustValIlvl84Q20: 12845,
+    goldCost: 3580,
     slots: 4,
   },
   {
@@ -4869,6 +5564,7 @@ const data = [
     baseType: "Unset Ring",
     dustValIlvl84: 9175,
     dustValIlvl84Q20: 12845,
+    goldCost: 3580,
     slots: 1,
   },
   {
@@ -4876,6 +5572,7 @@ const data = [
     baseType: "Blazing Arrow Quiver",
     dustValIlvl84: 9175,
     dustValIlvl84Q20: 12845,
+    goldCost: 3580,
     slots: 6,
   },
   {
@@ -4883,6 +5580,7 @@ const data = [
     baseType: "Crystal Wand",
     dustValIlvl84: 9175,
     dustValIlvl84Q20: 12845,
+    goldCost: 3580,
     slots: 3,
   },
   {
@@ -4890,6 +5588,7 @@ const data = [
     baseType: "Jasper Chopper",
     dustValIlvl84: 9050,
     dustValIlvl84Q20: 12670,
+    goldCost: 3560,
     slots: 8,
   },
   {
@@ -4897,6 +5596,7 @@ const data = [
     baseType: "Highland Blade",
     dustValIlvl84: 8900,
     dustValIlvl84Q20: 12460,
+    goldCost: 3540,
     slots: 8,
   },
   {
@@ -4904,6 +5604,7 @@ const data = [
     baseType: "Boot Blade",
     dustValIlvl84: 8900,
     dustValIlvl84Q20: 12460,
+    goldCost: 3540,
     slots: 3,
   },
   {
@@ -4911,6 +5612,7 @@ const data = [
     baseType: "Heavy Belt",
     dustValIlvl84: 8900,
     dustValIlvl84Q20: 12460,
+    goldCost: 3540,
     slots: 2,
   },
   {
@@ -4918,6 +5620,7 @@ const data = [
     baseType: "Moonstone Ring",
     dustValIlvl84: 8900,
     dustValIlvl84Q20: 12460,
+    goldCost: 3540,
     slots: 1,
   },
   {
@@ -4925,6 +5628,7 @@ const data = [
     baseType: "Leather Hood",
     dustValIlvl84: 8775,
     dustValIlvl84Q20: 12285,
+    goldCost: 3500,
     slots: 4,
   },
   {
@@ -4932,6 +5636,7 @@ const data = [
     baseType: "Two-Stone Ring",
     dustValIlvl84: 8775,
     dustValIlvl84Q20: 12285,
+    goldCost: 3500,
     slots: 1,
   },
   {
@@ -4939,6 +5644,7 @@ const data = [
     baseType: "Two-Stone Ring",
     dustValIlvl84: 8775,
     dustValIlvl84Q20: 12285,
+    goldCost: 3500,
     slots: 1,
   },
   {
@@ -4946,6 +5652,7 @@ const data = [
     baseType: "Cloth Belt",
     dustValIlvl84: 8775,
     dustValIlvl84Q20: 12285,
+    goldCost: 3500,
     slots: 2,
   },
   {
@@ -4953,6 +5660,7 @@ const data = [
     baseType: "War Sword",
     dustValIlvl84: 8775,
     dustValIlvl84Q20: 12285,
+    goldCost: 3500,
     slots: 6,
   },
   {
@@ -4960,6 +5668,7 @@ const data = [
     baseType: "Cloth Belt",
     dustValIlvl84: 8775,
     dustValIlvl84Q20: 12285,
+    goldCost: 3500,
     slots: 2,
   },
   {
@@ -4967,6 +5676,7 @@ const data = [
     baseType: "Cloth Belt",
     dustValIlvl84: 8775,
     dustValIlvl84Q20: 12285,
+    goldCost: 3500,
     slots: 2,
   },
   {
@@ -4974,6 +5684,7 @@ const data = [
     baseType: "Cloth Belt",
     dustValIlvl84: 8775,
     dustValIlvl84Q20: 12285,
+    goldCost: 3500,
     slots: 2,
   },
   {
@@ -4981,6 +5692,7 @@ const data = [
     baseType: "Gold Ring",
     dustValIlvl84: 8775,
     dustValIlvl84Q20: 12285,
+    goldCost: 3500,
     slots: 1,
   },
   {
@@ -4988,6 +5700,7 @@ const data = [
     baseType: "Leather Hood",
     dustValIlvl84: 8775,
     dustValIlvl84Q20: 12285,
+    goldCost: 3500,
     slots: 4,
   },
   {
@@ -4995,6 +5708,7 @@ const data = [
     baseType: "Estoc",
     dustValIlvl84: 8650,
     dustValIlvl84Q20: 12110,
+    goldCost: 3480,
     slots: 4,
   },
   {
@@ -5002,6 +5716,7 @@ const data = [
     baseType: "Fencer Helm",
     dustValIlvl84: 8650,
     dustValIlvl84Q20: 12110,
+    goldCost: 3480,
     slots: 4,
   },
   {
@@ -5009,6 +5724,7 @@ const data = [
     baseType: "Bone Armour",
     dustValIlvl84: 8525,
     dustValIlvl84Q20: 11935,
+    goldCost: 3460,
     slots: 6,
   },
   {
@@ -5016,6 +5732,7 @@ const data = [
     baseType: "Leather Belt",
     dustValIlvl84: 8400,
     dustValIlvl84Q20: 11760,
+    goldCost: 3440,
     slots: 2,
   },
   {
@@ -5023,6 +5740,7 @@ const data = [
     baseType: "Gold Amulet",
     dustValIlvl84: 8400,
     dustValIlvl84Q20: 11760,
+    goldCost: 3440,
     slots: 1,
   },
   {
@@ -5030,6 +5748,7 @@ const data = [
     baseType: "Nubuck Boots",
     dustValIlvl84: 8300,
     dustValIlvl84Q20: 11620,
+    goldCost: 3420,
     slots: 4,
   },
   {
@@ -5037,6 +5756,7 @@ const data = [
     baseType: "Coral Amulet",
     dustValIlvl84: 8300,
     dustValIlvl84Q20: 11620,
+    goldCost: 3420,
     slots: 1,
   },
   {
@@ -5044,6 +5764,7 @@ const data = [
     baseType: "Bone Circlet",
     dustValIlvl84: 8300,
     dustValIlvl84Q20: 11620,
+    goldCost: 3420,
     slots: 4,
   },
   {
@@ -5051,6 +5772,7 @@ const data = [
     baseType: "Scholar's Robe",
     dustValIlvl84: 8275,
     dustValIlvl84Q20: 11585,
+    goldCost: 3420,
     slots: 6,
   },
   {
@@ -5058,6 +5780,7 @@ const data = [
     baseType: "Rock Breaker",
     dustValIlvl84: 8150,
     dustValIlvl84Q20: 11410,
+    goldCost: 3400,
     slots: 6,
   },
   {
@@ -5065,6 +5788,7 @@ const data = [
     baseType: "Brass Spirit Shield",
     dustValIlvl84: 8050,
     dustValIlvl84Q20: 11270,
+    goldCost: 3380,
     slots: 4,
   },
   {
@@ -5072,6 +5796,7 @@ const data = [
     baseType: "Great Mallet",
     dustValIlvl84: 7925,
     dustValIlvl84Q20: 11095,
+    goldCost: 3360,
     slots: 8,
   },
   {
@@ -5079,6 +5804,7 @@ const data = [
     baseType: "Engraved Wand",
     dustValIlvl84: 290675,
     dustValIlvl84Q20: 406945,
+    goldCost: 17000,
     slots: 3,
   },
   {
@@ -5086,6 +5812,7 @@ const data = [
     baseType: "Great Mallet",
     dustValIlvl84: 7925,
     dustValIlvl84Q20: 11095,
+    goldCost: 3360,
     slots: 8,
   },
   {
@@ -5093,6 +5820,7 @@ const data = [
     baseType: "Agate Amulet",
     dustValIlvl84: 7825,
     dustValIlvl84Q20: 10955,
+    goldCost: 3340,
     slots: 1,
   },
   {
@@ -5100,6 +5828,7 @@ const data = [
     baseType: "Death Bow",
     dustValIlvl84: 7825,
     dustValIlvl84Q20: 10955,
+    goldCost: 3340,
     slots: 8,
   },
   {
@@ -5107,6 +5836,7 @@ const data = [
     baseType: "Shadow Sceptre",
     dustValIlvl84: 7825,
     dustValIlvl84Q20: 10955,
+    goldCost: 3340,
     slots: 6,
   },
   {
@@ -5114,6 +5844,7 @@ const data = [
     baseType: "Ruby Ring",
     dustValIlvl84: 7800,
     dustValIlvl84Q20: 10920,
+    goldCost: 3320,
     slots: 1,
   },
   {
@@ -5121,6 +5852,7 @@ const data = [
     baseType: "Ruby Ring",
     dustValIlvl84: 7800,
     dustValIlvl84Q20: 10920,
+    goldCost: 3320,
     slots: 1,
   },
   {
@@ -5128,6 +5860,7 @@ const data = [
     baseType: "Ruby Ring",
     dustValIlvl84: 7800,
     dustValIlvl84Q20: 10920,
+    goldCost: 3320,
     slots: 1,
   },
   {
@@ -5135,6 +5868,7 @@ const data = [
     baseType: "Latticed Ringmail",
     dustValIlvl84: 7675,
     dustValIlvl84Q20: 10745,
+    goldCost: 3300,
     slots: 6,
   },
   {
@@ -5142,6 +5876,7 @@ const data = [
     baseType: "Latticed Ringmail",
     dustValIlvl84: 7675,
     dustValIlvl84Q20: 10745,
+    goldCost: 3300,
     slots: 6,
   },
   {
@@ -5149,6 +5884,7 @@ const data = [
     baseType: "Eelskin Boots",
     dustValIlvl84: 7675,
     dustValIlvl84Q20: 10745,
+    goldCost: 3300,
     slots: 4,
   },
   {
@@ -5156,6 +5892,7 @@ const data = [
     baseType: "Blunt Arrow Quiver",
     dustValIlvl84: 7575,
     dustValIlvl84Q20: 10605,
+    goldCost: 3280,
     slots: 6,
   },
   {
@@ -5163,6 +5900,7 @@ const data = [
     baseType: "Clasped Mitts",
     dustValIlvl84: 7575,
     dustValIlvl84Q20: 10605,
+    goldCost: 3280,
     slots: 4,
   },
   {
@@ -5170,6 +5908,7 @@ const data = [
     baseType: "Golden Flame",
     dustValIlvl84: 7575,
     dustValIlvl84Q20: 10605,
+    goldCost: 3280,
     slots: 6,
   },
   {
@@ -5177,6 +5916,7 @@ const data = [
     baseType: "Clasped Mitts",
     dustValIlvl84: 7575,
     dustValIlvl84Q20: 10605,
+    goldCost: 3280,
     slots: 4,
   },
   {
@@ -5184,6 +5924,7 @@ const data = [
     baseType: "Gold Amulet",
     dustValIlvl84: 7575,
     dustValIlvl84Q20: 10605,
+    goldCost: 3280,
     slots: 1,
   },
   {
@@ -5191,6 +5932,7 @@ const data = [
     baseType: "Moonstone Ring",
     dustValIlvl84: 7475,
     dustValIlvl84Q20: 10465,
+    goldCost: 3260,
     slots: 1,
   },
   {
@@ -5198,6 +5940,7 @@ const data = [
     baseType: "Bronzescale Boots",
     dustValIlvl84: 7375,
     dustValIlvl84Q20: 10325,
+    goldCost: 3240,
     slots: 4,
   },
   {
@@ -5205,6 +5948,7 @@ const data = [
     baseType: "Prismatic Ring",
     dustValIlvl84: 7375,
     dustValIlvl84Q20: 10325,
+    goldCost: 3240,
     slots: 1,
   },
   {
@@ -5212,6 +5956,7 @@ const data = [
     baseType: "Prismatic Ring",
     dustValIlvl84: 7375,
     dustValIlvl84Q20: 10325,
+    goldCost: 3240,
     slots: 1,
   },
   {
@@ -5219,6 +5964,7 @@ const data = [
     baseType: "Sage Wand",
     dustValIlvl84: 7375,
     dustValIlvl84Q20: 10325,
+    goldCost: 3240,
     slots: 3,
   },
   {
@@ -5226,6 +5972,7 @@ const data = [
     baseType: "Sage's Robe",
     dustValIlvl84: 7250,
     dustValIlvl84Q20: 10150,
+    goldCost: 3220,
     slots: 6,
   },
   {
@@ -5233,6 +5980,7 @@ const data = [
     baseType: "Aventail Helmet",
     dustValIlvl84: 7250,
     dustValIlvl84Q20: 10150,
+    goldCost: 3220,
     slots: 4,
   },
   {
@@ -5240,6 +5988,7 @@ const data = [
     baseType: "Thresher Claw",
     dustValIlvl84: 7250,
     dustValIlvl84Q20: 10150,
+    goldCost: 3220,
     slots: 4,
   },
   {
@@ -5247,6 +5996,7 @@ const data = [
     baseType: "Antique Greaves",
     dustValIlvl84: 7250,
     dustValIlvl84Q20: 10150,
+    goldCost: 3220,
     slots: 4,
   },
   {
@@ -5254,6 +6004,7 @@ const data = [
     baseType: "War Buckler",
     dustValIlvl84: 7150,
     dustValIlvl84Q20: 10010,
+    goldCost: 3200,
     slots: 4,
   },
   {
@@ -5261,6 +6012,7 @@ const data = [
     baseType: "Ruby Ring",
     dustValIlvl84: 7150,
     dustValIlvl84Q20: 10010,
+    goldCost: 3200,
     slots: 1,
   },
   {
@@ -5268,6 +6020,7 @@ const data = [
     baseType: "Secutor Helm",
     dustValIlvl84: 7025,
     dustValIlvl84Q20: 9835,
+    goldCost: 3180,
     slots: 4,
   },
   {
@@ -5275,6 +6028,7 @@ const data = [
     baseType: "Two-Point Arrow Quiver",
     dustValIlvl84: 7025,
     dustValIlvl84Q20: 9835,
+    goldCost: 3180,
     slots: 6,
   },
   {
@@ -5282,6 +6036,7 @@ const data = [
     baseType: "Diamond Ring",
     dustValIlvl84: 6950,
     dustValIlvl84Q20: 9730,
+    goldCost: 3160,
     slots: 1,
   },
   {
@@ -5289,6 +6044,7 @@ const data = [
     baseType: "Clutching Talisman",
     dustValIlvl84: 6950,
     dustValIlvl84Q20: 9730,
+    goldCost: 3160,
     slots: 1,
   },
   {
@@ -5296,6 +6052,7 @@ const data = [
     baseType: "Festival Mask",
     dustValIlvl84: 6950,
     dustValIlvl84Q20: 9730,
+    goldCost: 3160,
     slots: 4,
   },
   {
@@ -5303,6 +6060,7 @@ const data = [
     baseType: "Topaz Ring",
     dustValIlvl84: 6925,
     dustValIlvl84Q20: 9695,
+    goldCost: 3160,
     slots: 1,
   },
   {
@@ -5310,6 +6068,7 @@ const data = [
     baseType: "Topaz Ring",
     dustValIlvl84: 6925,
     dustValIlvl84Q20: 9695,
+    goldCost: 3160,
     slots: 1,
   },
   {
@@ -5317,6 +6076,7 @@ const data = [
     baseType: "Golden Mask",
     dustValIlvl84: 6825,
     dustValIlvl84Q20: 9555,
+    goldCost: 3140,
     slots: 4,
   },
   {
@@ -5324,6 +6084,7 @@ const data = [
     baseType: "Grinning Fetish",
     dustValIlvl84: 6825,
     dustValIlvl84Q20: 9555,
+    goldCost: 3140,
     slots: 6,
   },
   {
@@ -5331,6 +6092,7 @@ const data = [
     baseType: "Golden Mask",
     dustValIlvl84: 6825,
     dustValIlvl84Q20: 9555,
+    goldCost: 3140,
     slots: 4,
   },
   {
@@ -5338,6 +6100,7 @@ const data = [
     baseType: "Rawhide Tower Shield",
     dustValIlvl84: 6725,
     dustValIlvl84Q20: 9415,
+    goldCost: 3120,
     slots: 8,
   },
   {
@@ -5345,6 +6108,7 @@ const data = [
     baseType: "Fright Claw",
     dustValIlvl84: 6625,
     dustValIlvl84Q20: 9275,
+    goldCost: 3100,
     slots: 4,
   },
   {
@@ -5352,6 +6116,7 @@ const data = [
     baseType: "Timeworn Claw",
     dustValIlvl84: 6550,
     dustValIlvl84Q20: 9170,
+    goldCost: 3080,
     slots: 4,
   },
   {
@@ -5359,6 +6124,7 @@ const data = [
     baseType: "Close Helmet",
     dustValIlvl84: 6550,
     dustValIlvl84Q20: 9170,
+    goldCost: 3080,
     slots: 4,
   },
   {
@@ -5366,6 +6132,7 @@ const data = [
     baseType: "Tricorne",
     dustValIlvl84: 6525,
     dustValIlvl84Q20: 9135,
+    goldCost: 3060,
     slots: 4,
   },
   {
@@ -5373,6 +6140,7 @@ const data = [
     baseType: "Leather Belt",
     dustValIlvl84: 6525,
     dustValIlvl84Q20: 9135,
+    goldCost: 3060,
     slots: 2,
   },
   {
@@ -5380,6 +6148,7 @@ const data = [
     baseType: "Heavy Belt",
     dustValIlvl84: 6525,
     dustValIlvl84Q20: 9135,
+    goldCost: 3060,
     slots: 2,
   },
   {
@@ -5387,6 +6156,7 @@ const data = [
     baseType: "Shadow Axe",
     dustValIlvl84: 6450,
     dustValIlvl84Q20: 9030,
+    goldCost: 3060,
     slots: 8,
   },
   {
@@ -5394,6 +6164,7 @@ const data = [
     baseType: "Gilded Sallet",
     dustValIlvl84: 6450,
     dustValIlvl84Q20: 9030,
+    goldCost: 3060,
     slots: 4,
   },
   {
@@ -5401,6 +6172,7 @@ const data = [
     baseType: "Reinforced Greaves",
     dustValIlvl84: 6450,
     dustValIlvl84Q20: 9030,
+    goldCost: 3060,
     slots: 4,
   },
   {
@@ -5408,6 +6180,7 @@ const data = [
     baseType: "Penetrating Arrow Quiver",
     dustValIlvl84: 6350,
     dustValIlvl84Q20: 8890,
+    goldCost: 3040,
     slots: 6,
   },
   {
@@ -5415,6 +6188,7 @@ const data = [
     baseType: "Moonstone Ring",
     dustValIlvl84: 6350,
     dustValIlvl84Q20: 8890,
+    goldCost: 3040,
     slots: 1,
   },
   {
@@ -5422,6 +6196,7 @@ const data = [
     baseType: "Runic Helm",
     dustValIlvl84: 6350,
     dustValIlvl84Q20: 8890,
+    goldCost: 3040,
     slots: 4,
   },
   {
@@ -5429,6 +6204,7 @@ const data = [
     baseType: "Scholar Boots",
     dustValIlvl84: 6250,
     dustValIlvl84Q20: 8750,
+    goldCost: 3020,
     slots: 4,
   },
   {
@@ -5436,6 +6212,7 @@ const data = [
     baseType: "Sun Leather",
     dustValIlvl84: 6250,
     dustValIlvl84Q20: 8750,
+    goldCost: 3020,
     slots: 6,
   },
   {
@@ -5443,6 +6220,7 @@ const data = [
     baseType: "Dream Mace",
     dustValIlvl84: 6250,
     dustValIlvl84Q20: 8750,
+    goldCost: 3020,
     slots: 6,
   },
   {
@@ -5450,6 +6228,7 @@ const data = [
     baseType: "Mesh Gloves",
     dustValIlvl84: 6250,
     dustValIlvl84Q20: 8750,
+    goldCost: 3020,
     slots: 4,
   },
   {
@@ -5457,6 +6236,7 @@ const data = [
     baseType: "Scholar Boots",
     dustValIlvl84: 6250,
     dustValIlvl84Q20: 8750,
+    goldCost: 3020,
     slots: 4,
   },
   {
@@ -5464,6 +6244,7 @@ const data = [
     baseType: "Death Bow",
     dustValIlvl84: 6250,
     dustValIlvl84Q20: 8750,
+    goldCost: 3020,
     slots: 8,
   },
   {
@@ -5471,6 +6252,7 @@ const data = [
     baseType: "Iron Ring",
     dustValIlvl84: 6175,
     dustValIlvl84Q20: 8645,
+    goldCost: 3000,
     slots: 1,
   },
   {
@@ -5478,6 +6260,7 @@ const data = [
     baseType: "Sapphire Ring",
     dustValIlvl84: 6150,
     dustValIlvl84Q20: 8610,
+    goldCost: 2980,
     slots: 1,
   },
   {
@@ -5485,6 +6268,7 @@ const data = [
     baseType: "Sapphire Ring",
     dustValIlvl84: 6150,
     dustValIlvl84Q20: 8610,
+    goldCost: 2980,
     slots: 1,
   },
   {
@@ -5492,6 +6276,7 @@ const data = [
     baseType: "Sapphire Ring",
     dustValIlvl84: 6150,
     dustValIlvl84Q20: 8610,
+    goldCost: 2980,
     slots: 1,
   },
   {
@@ -5499,6 +6284,7 @@ const data = [
     baseType: "Sapphire Ring",
     dustValIlvl84: 6150,
     dustValIlvl84Q20: 8610,
+    goldCost: 2980,
     slots: 1,
   },
   {
@@ -5506,6 +6292,7 @@ const data = [
     baseType: "Sapphire Ring",
     dustValIlvl84: 12300,
     dustValIlvl84Q20: 14760,
+    goldCost: 5960,
     slots: 1,
   },
   {
@@ -5513,6 +6300,7 @@ const data = [
     baseType: "Coral Amulet",
     dustValIlvl84: 6075,
     dustValIlvl84Q20: 8505,
+    goldCost: 2980,
     slots: 1,
   },
   {
@@ -5520,6 +6308,7 @@ const data = [
     baseType: "Tarnished Spirit Shield",
     dustValIlvl84: 6000,
     dustValIlvl84Q20: 8400,
+    goldCost: 2960,
     slots: 4,
   },
   {
@@ -5527,6 +6316,7 @@ const data = [
     baseType: "Visored Sallet",
     dustValIlvl84: 6000,
     dustValIlvl84Q20: 8400,
+    goldCost: 2960,
     slots: 4,
   },
   {
@@ -5534,6 +6324,7 @@ const data = [
     baseType: "Amber Amulet",
     dustValIlvl84: 5975,
     dustValIlvl84Q20: 8365,
+    goldCost: 2960,
     slots: 1,
   },
   {
@@ -5541,6 +6332,7 @@ const data = [
     baseType: "Jade Amulet",
     dustValIlvl84: 5975,
     dustValIlvl84Q20: 8365,
+    goldCost: 2960,
     slots: 1,
   },
   {
@@ -5548,6 +6340,7 @@ const data = [
     baseType: "Flaying Knife",
     dustValIlvl84: 5900,
     dustValIlvl84Q20: 8260,
+    goldCost: 2940,
     slots: 3,
   },
   {
@@ -5555,6 +6348,7 @@ const data = [
     baseType: "Reinforced Tower Shield",
     dustValIlvl84: 5900,
     dustValIlvl84Q20: 8260,
+    goldCost: 2940,
     slots: 8,
   },
   {
@@ -5562,6 +6356,7 @@ const data = [
     baseType: "Sage Wand",
     dustValIlvl84: 5900,
     dustValIlvl84Q20: 8260,
+    goldCost: 2940,
     slots: 3,
   },
   {
@@ -5569,6 +6364,7 @@ const data = [
     baseType: "Elegant Foil",
     dustValIlvl84: 5900,
     dustValIlvl84Q20: 8260,
+    goldCost: 2940,
     slots: 4,
   },
   {
@@ -5576,6 +6372,7 @@ const data = [
     baseType: "Iron Ring",
     dustValIlvl84: 5900,
     dustValIlvl84Q20: 8260,
+    goldCost: 2940,
     slots: 1,
   },
   {
@@ -5583,6 +6380,7 @@ const data = [
     baseType: "Citrine Amulet",
     dustValIlvl84: 5900,
     dustValIlvl84Q20: 8260,
+    goldCost: 2940,
     slots: 1,
   },
   {
@@ -5590,6 +6388,7 @@ const data = [
     baseType: "Wolf Pelt",
     dustValIlvl84: 5900,
     dustValIlvl84Q20: 8260,
+    goldCost: 2940,
     slots: 4,
   },
   {
@@ -5597,6 +6396,7 @@ const data = [
     baseType: "Great Helmet",
     dustValIlvl84: 5825,
     dustValIlvl84Q20: 8155,
+    goldCost: 2920,
     slots: 4,
   },
   {
@@ -5604,6 +6404,7 @@ const data = [
     baseType: "Etched Greatsword",
     dustValIlvl84: 5825,
     dustValIlvl84Q20: 8155,
+    goldCost: 2920,
     slots: 8,
   },
   {
@@ -5611,6 +6412,7 @@ const data = [
     baseType: "Great Helmet",
     dustValIlvl84: 5825,
     dustValIlvl84Q20: 8155,
+    goldCost: 2920,
     slots: 4,
   },
   {
@@ -5618,6 +6420,7 @@ const data = [
     baseType: "Decorative Axe",
     dustValIlvl84: 5725,
     dustValIlvl84Q20: 8015,
+    goldCost: 2900,
     slots: 6,
   },
   {
@@ -5625,6 +6428,7 @@ const data = [
     baseType: "War Buckler",
     dustValIlvl84: 5725,
     dustValIlvl84Q20: 8015,
+    goldCost: 2900,
     slots: 4,
   },
   {
@@ -5632,6 +6436,7 @@ const data = [
     baseType: "Paua Ring",
     dustValIlvl84: 5625,
     dustValIlvl84Q20: 7875,
+    goldCost: 2880,
     slots: 1,
   },
   {
@@ -5639,6 +6444,7 @@ const data = [
     baseType: "Paua Ring",
     dustValIlvl84: 5625,
     dustValIlvl84Q20: 7875,
+    goldCost: 2880,
     slots: 1,
   },
   {
@@ -5646,6 +6452,7 @@ const data = [
     baseType: "Mesh Boots",
     dustValIlvl84: 5550,
     dustValIlvl84Q20: 7770,
+    goldCost: 2860,
     slots: 4,
   },
   {
@@ -5653,6 +6460,7 @@ const data = [
     baseType: "Festival Mask",
     dustValIlvl84: 5550,
     dustValIlvl84Q20: 7770,
+    goldCost: 2860,
     slots: 4,
   },
   {
@@ -5660,6 +6468,7 @@ const data = [
     baseType: "Elegant Sword",
     dustValIlvl84: 5550,
     dustValIlvl84Q20: 7770,
+    goldCost: 2860,
     slots: 6,
   },
   {
@@ -5667,6 +6476,7 @@ const data = [
     baseType: "Royal Staff",
     dustValIlvl84: 5550,
     dustValIlvl84Q20: 7770,
+    goldCost: 2860,
     slots: 8,
   },
   {
@@ -5674,6 +6484,7 @@ const data = [
     baseType: "Full Scale Armour",
     dustValIlvl84: 5550,
     dustValIlvl84Q20: 7770,
+    goldCost: 2860,
     slots: 6,
   },
   {
@@ -5681,6 +6492,7 @@ const data = [
     baseType: "Royal Bow",
     dustValIlvl84: 5550,
     dustValIlvl84Q20: 7770,
+    goldCost: 2860,
     slots: 8,
   },
   {
@@ -5688,6 +6500,7 @@ const data = [
     baseType: "Royal Staff",
     dustValIlvl84: 5550,
     dustValIlvl84Q20: 7770,
+    goldCost: 2860,
     slots: 8,
   },
   {
@@ -5695,6 +6508,7 @@ const data = [
     baseType: "Heavy Belt",
     dustValIlvl84: 5475,
     dustValIlvl84Q20: 7665,
+    goldCost: 2840,
     slots: 2,
   },
   {
@@ -5702,6 +6516,7 @@ const data = [
     baseType: "Two-Stone Ring",
     dustValIlvl84: 5475,
     dustValIlvl84Q20: 7665,
+    goldCost: 2840,
     slots: 1,
   },
   {
@@ -5709,6 +6524,7 @@ const data = [
     baseType: "Two-Stone Ring",
     dustValIlvl84: 5475,
     dustValIlvl84Q20: 7665,
+    goldCost: 2840,
     slots: 1,
   },
   {
@@ -5716,6 +6532,7 @@ const data = [
     baseType: "Topaz Ring",
     dustValIlvl84: 5475,
     dustValIlvl84Q20: 7665,
+    goldCost: 2840,
     slots: 1,
   },
   {
@@ -5723,6 +6540,7 @@ const data = [
     baseType: "Heavy Belt",
     dustValIlvl84: 5475,
     dustValIlvl84Q20: 7665,
+    goldCost: 2840,
     slots: 2,
   },
   {
@@ -5730,6 +6548,7 @@ const data = [
     baseType: "Sapphire Ring",
     dustValIlvl84: 5475,
     dustValIlvl84Q20: 7665,
+    goldCost: 2840,
     slots: 1,
   },
   {
@@ -5737,6 +6556,7 @@ const data = [
     baseType: "Turquoise Amulet",
     dustValIlvl84: 5475,
     dustValIlvl84Q20: 7665,
+    goldCost: 2840,
     slots: 1,
   },
   {
@@ -5744,6 +6564,7 @@ const data = [
     baseType: "Plague Mask",
     dustValIlvl84: 5475,
     dustValIlvl84Q20: 7665,
+    goldCost: 2840,
     slots: 4,
   },
   {
@@ -5751,6 +6572,7 @@ const data = [
     baseType: "Citrine Amulet",
     dustValIlvl84: 5475,
     dustValIlvl84Q20: 7665,
+    goldCost: 2840,
     slots: 1,
   },
   {
@@ -5758,6 +6580,7 @@ const data = [
     baseType: "Coral Ring",
     dustValIlvl84: 5475,
     dustValIlvl84Q20: 7665,
+    goldCost: 2840,
     slots: 1,
   },
   {
@@ -5765,6 +6588,7 @@ const data = [
     baseType: "Brass Maul",
     dustValIlvl84: 5400,
     dustValIlvl84Q20: 7560,
+    goldCost: 2820,
     slots: 8,
   },
   {
@@ -5772,6 +6596,7 @@ const data = [
     baseType: "Clasped Boots",
     dustValIlvl84: 5400,
     dustValIlvl84Q20: 7560,
+    goldCost: 2820,
     slots: 4,
   },
   {
@@ -5779,6 +6604,7 @@ const data = [
     baseType: "Bronzescale Gauntlets",
     dustValIlvl84: 5400,
     dustValIlvl84Q20: 7560,
+    goldCost: 2820,
     slots: 4,
   },
   {
@@ -5786,6 +6612,7 @@ const data = [
     baseType: "Ornate Sword",
     dustValIlvl84: 5400,
     dustValIlvl84Q20: 7560,
+    goldCost: 2820,
     slots: 8,
   },
   {
@@ -5793,6 +6620,7 @@ const data = [
     baseType: "Burnished Spiked Shield",
     dustValIlvl84: 5400,
     dustValIlvl84Q20: 7560,
+    goldCost: 2820,
     slots: 4,
   },
   {
@@ -5800,6 +6628,7 @@ const data = [
     baseType: "Ornate Sword",
     dustValIlvl84: 5400,
     dustValIlvl84Q20: 7560,
+    goldCost: 2820,
     slots: 8,
   },
   {
@@ -5807,6 +6636,7 @@ const data = [
     baseType: "Clasped Boots",
     dustValIlvl84: 5400,
     dustValIlvl84Q20: 7560,
+    goldCost: 2820,
     slots: 4,
   },
   {
@@ -5814,6 +6644,7 @@ const data = [
     baseType: "Brass Maul",
     dustValIlvl84: 5400,
     dustValIlvl84Q20: 7560,
+    goldCost: 2820,
     slots: 8,
   },
   {
@@ -5821,6 +6652,7 @@ const data = [
     baseType: "Simple Robe",
     dustValIlvl84: 5300,
     dustValIlvl84Q20: 7420,
+    goldCost: 2800,
     slots: 6,
   },
   {
@@ -5828,6 +6660,7 @@ const data = [
     baseType: "Simple Robe",
     dustValIlvl84: 5300,
     dustValIlvl84Q20: 7420,
+    goldCost: 2800,
     slots: 6,
   },
   {
@@ -5835,6 +6668,7 @@ const data = [
     baseType: "Antique Rapier",
     dustValIlvl84: 5225,
     dustValIlvl84Q20: 7315,
+    goldCost: 2780,
     slots: 4,
   },
   {
@@ -5842,6 +6676,7 @@ const data = [
     baseType: "Tribal Circlet",
     dustValIlvl84: 5225,
     dustValIlvl84Q20: 7315,
+    goldCost: 2780,
     slots: 4,
   },
   {
@@ -5849,6 +6684,7 @@ const data = [
     baseType: "Chain Belt",
     dustValIlvl84: 5150,
     dustValIlvl84Q20: 7210,
+    goldCost: 2760,
     slots: 2,
   },
   {
@@ -5856,6 +6692,7 @@ const data = [
     baseType: "Iron Ring",
     dustValIlvl84: 5150,
     dustValIlvl84Q20: 7210,
+    goldCost: 2760,
     slots: 1,
   },
   {
@@ -5863,6 +6700,7 @@ const data = [
     baseType: "Chain Belt",
     dustValIlvl84: 5150,
     dustValIlvl84Q20: 7210,
+    goldCost: 2760,
     slots: 2,
   },
   {
@@ -5870,6 +6708,7 @@ const data = [
     baseType: "Onyx Amulet",
     dustValIlvl84: 5075,
     dustValIlvl84Q20: 7105,
+    goldCost: 2740,
     slots: 1,
   },
   {
@@ -5877,6 +6716,7 @@ const data = [
     baseType: "Wild Leather",
     dustValIlvl84: 5075,
     dustValIlvl84Q20: 7105,
+    goldCost: 2740,
     slots: 6,
   },
   {
@@ -5884,6 +6724,7 @@ const data = [
     baseType: "Rustic Sash",
     dustValIlvl84: 5075,
     dustValIlvl84Q20: 7105,
+    goldCost: 2740,
     slots: 2,
   },
   {
@@ -5891,6 +6732,7 @@ const data = [
     baseType: "Saqawine Vulture",
     dustValIlvl84: 5075,
     dustValIlvl84Q20: 7105,
+    goldCost: 2740,
     slots: 1,
   },
   {
@@ -5898,6 +6740,7 @@ const data = [
     baseType: "Moonstone Ring",
     dustValIlvl84: 5075,
     dustValIlvl84Q20: 7105,
+    goldCost: 2740,
     slots: 1,
   },
   {
@@ -5905,6 +6748,7 @@ const data = [
     baseType: "Wild Leather",
     dustValIlvl84: 5075,
     dustValIlvl84Q20: 7105,
+    goldCost: 2740,
     slots: 6,
   },
   {
@@ -5912,6 +6756,7 @@ const data = [
     baseType: "Iron Mask",
     dustValIlvl84: 5025,
     dustValIlvl84Q20: 7035,
+    goldCost: 2720,
     slots: 4,
   },
   {
@@ -5919,6 +6764,7 @@ const data = [
     baseType: "Buckskin Tunic",
     dustValIlvl84: 5025,
     dustValIlvl84Q20: 7035,
+    goldCost: 2720,
     slots: 6,
   },
   {
@@ -5926,6 +6772,7 @@ const data = [
     baseType: "Copper Plate",
     dustValIlvl84: 5025,
     dustValIlvl84Q20: 7035,
+    goldCost: 2720,
     slots: 6,
   },
   {
@@ -5933,6 +6780,7 @@ const data = [
     baseType: "Cedar Tower Shield",
     dustValIlvl84: 5025,
     dustValIlvl84Q20: 7035,
+    goldCost: 2720,
     slots: 8,
   },
   {
@@ -5940,6 +6788,7 @@ const data = [
     baseType: "Crude Bow",
     dustValIlvl84: 5000,
     dustValIlvl84Q20: 7000,
+    goldCost: 2720,
     slots: 6,
   },
   {
@@ -5947,6 +6796,7 @@ const data = [
     baseType: "Spiraled Wand",
     dustValIlvl84: 4925,
     dustValIlvl84Q20: 6895,
+    goldCost: 2700,
     slots: 3,
   },
   {
@@ -5954,6 +6804,7 @@ const data = [
     baseType: "Spiraled Wand",
     dustValIlvl84: 4925,
     dustValIlvl84Q20: 6895,
+    goldCost: 2700,
     slots: 3,
   },
   {
@@ -5961,6 +6812,7 @@ const data = [
     baseType: "Strapped Mitts",
     dustValIlvl84: 4875,
     dustValIlvl84Q20: 6825,
+    goldCost: 2700,
     slots: 4,
   },
   {
@@ -5968,6 +6820,7 @@ const data = [
     baseType: "Ruby Ring",
     dustValIlvl84: 4875,
     dustValIlvl84Q20: 6825,
+    goldCost: 2700,
     slots: 1,
   },
   {
@@ -5975,6 +6828,7 @@ const data = [
     baseType: "Ruby Ring",
     dustValIlvl84: 4875,
     dustValIlvl84Q20: 6825,
+    goldCost: 2700,
     slots: 1,
   },
   {
@@ -5982,6 +6836,7 @@ const data = [
     baseType: "Visored Sallet",
     dustValIlvl84: 4800,
     dustValIlvl84Q20: 6720,
+    goldCost: 2680,
     slots: 4,
   },
   {
@@ -5989,6 +6844,7 @@ const data = [
     baseType: "Plated Greaves",
     dustValIlvl84: 4800,
     dustValIlvl84Q20: 6720,
+    goldCost: 2680,
     slots: 4,
   },
   {
@@ -5996,6 +6852,7 @@ const data = [
     baseType: "Bronze Gauntlets",
     dustValIlvl84: 4800,
     dustValIlvl84Q20: 6720,
+    goldCost: 2680,
     slots: 4,
   },
   {
@@ -6003,6 +6860,7 @@ const data = [
     baseType: "Tarnished Spirit Shield",
     dustValIlvl84: 4800,
     dustValIlvl84Q20: 6720,
+    goldCost: 2680,
     slots: 4,
   },
   {
@@ -6010,6 +6868,7 @@ const data = [
     baseType: "Ironscale Gauntlets",
     dustValIlvl84: 4725,
     dustValIlvl84Q20: 6615,
+    goldCost: 2660,
     slots: 4,
   },
   {
@@ -6017,6 +6876,7 @@ const data = [
     baseType: "Stiletto",
     dustValIlvl84: 4725,
     dustValIlvl84Q20: 6615,
+    goldCost: 2660,
     slots: 3,
   },
   {
@@ -6024,6 +6884,7 @@ const data = [
     baseType: "Silk Slippers",
     dustValIlvl84: 4650,
     dustValIlvl84Q20: 6510,
+    goldCost: 2640,
     slots: 4,
   },
   {
@@ -6031,6 +6892,7 @@ const data = [
     baseType: "Jagged Maul",
     dustValIlvl84: 4650,
     dustValIlvl84Q20: 6510,
+    goldCost: 2640,
     slots: 8,
   },
   {
@@ -6038,6 +6900,7 @@ const data = [
     baseType: "Deerskin Boots",
     dustValIlvl84: 4650,
     dustValIlvl84Q20: 6510,
+    goldCost: 2640,
     slots: 4,
   },
   {
@@ -6045,6 +6908,7 @@ const data = [
     baseType: "Jagged Foil",
     dustValIlvl84: 4650,
     dustValIlvl84Q20: 6510,
+    goldCost: 2640,
     slots: 4,
   },
   {
@@ -6052,6 +6916,7 @@ const data = [
     baseType: "Chain Belt",
     dustValIlvl84: 4650,
     dustValIlvl84Q20: 6510,
+    goldCost: 2640,
     slots: 2,
   },
   {
@@ -6059,6 +6924,7 @@ const data = [
     baseType: "Paua Ring",
     dustValIlvl84: 4650,
     dustValIlvl84Q20: 6510,
+    goldCost: 2640,
     slots: 1,
   },
   {
@@ -6066,6 +6932,7 @@ const data = [
     baseType: "Jagged Maul",
     dustValIlvl84: 4650,
     dustValIlvl84Q20: 6510,
+    goldCost: 2640,
     slots: 8,
   },
   {
@@ -6073,6 +6940,7 @@ const data = [
     baseType: "Cloth Belt",
     dustValIlvl84: 4375,
     dustValIlvl84Q20: 6125,
+    goldCost: 2560,
     slots: 2,
   },
   {
@@ -6080,6 +6948,7 @@ const data = [
     baseType: "Boot Knife",
     dustValIlvl84: 4375,
     dustValIlvl84Q20: 6125,
+    goldCost: 2560,
     slots: 3,
   },
   {
@@ -6087,6 +6956,7 @@ const data = [
     baseType: "War Hammer",
     dustValIlvl84: 4375,
     dustValIlvl84Q20: 6125,
+    goldCost: 2560,
     slots: 6,
   },
   {
@@ -6094,6 +6964,7 @@ const data = [
     baseType: "Citrine Amulet",
     dustValIlvl84: 4375,
     dustValIlvl84Q20: 6125,
+    goldCost: 2560,
     slots: 1,
   },
   {
@@ -6101,6 +6972,7 @@ const data = [
     baseType: "Turquoise Amulet",
     dustValIlvl84: 4375,
     dustValIlvl84Q20: 6125,
+    goldCost: 2560,
     slots: 1,
   },
   {
@@ -6108,6 +6980,7 @@ const data = [
     baseType: "Feathered Arrow Quiver",
     dustValIlvl84: 4375,
     dustValIlvl84Q20: 6125,
+    goldCost: 2560,
     slots: 6,
   },
   {
@@ -6115,6 +6988,7 @@ const data = [
     baseType: "Agate Amulet",
     dustValIlvl84: 4375,
     dustValIlvl84Q20: 6125,
+    goldCost: 2560,
     slots: 1,
   },
   {
@@ -6122,6 +6996,7 @@ const data = [
     baseType: "Studded Round Shield",
     dustValIlvl84: 4375,
     dustValIlvl84Q20: 6125,
+    goldCost: 2560,
     slots: 6,
   },
   {
@@ -6129,6 +7004,7 @@ const data = [
     baseType: "War Hammer",
     dustValIlvl84: 4375,
     dustValIlvl84Q20: 6125,
+    goldCost: 2560,
     slots: 6,
   },
   {
@@ -6136,6 +7012,7 @@ const data = [
     baseType: "Iron Sceptre",
     dustValIlvl84: 4375,
     dustValIlvl84Q20: 6125,
+    goldCost: 2560,
     slots: 6,
   },
   {
@@ -6143,6 +7020,7 @@ const data = [
     baseType: "Agate Amulet",
     dustValIlvl84: 4375,
     dustValIlvl84Q20: 6125,
+    goldCost: 2560,
     slots: 1,
   },
   {
@@ -6150,6 +7028,7 @@ const data = [
     baseType: "Golden Mantle",
     dustValIlvl84: 4375,
     dustValIlvl84Q20: 6125,
+    goldCost: 2560,
     slots: 6,
   },
   {
@@ -6157,6 +7036,7 @@ const data = [
     baseType: "War Sword",
     dustValIlvl84: 4375,
     dustValIlvl84Q20: 6125,
+    goldCost: 2560,
     slots: 6,
   },
   {
@@ -6164,6 +7044,7 @@ const data = [
     baseType: "Feathered Arrow Quiver",
     dustValIlvl84: 4375,
     dustValIlvl84Q20: 6125,
+    goldCost: 2560,
     slots: 6,
   },
   {
@@ -6171,6 +7052,7 @@ const data = [
     baseType: "Leather Hood",
     dustValIlvl84: 4375,
     dustValIlvl84Q20: 6125,
+    goldCost: 2560,
     slots: 4,
   },
   {
@@ -6178,6 +7060,7 @@ const data = [
     baseType: "Studded Belt",
     dustValIlvl84: 4375,
     dustValIlvl84Q20: 6125,
+    goldCost: 2560,
     slots: 2,
   },
   {
@@ -6185,6 +7068,7 @@ const data = [
     baseType: "Studded Belt",
     dustValIlvl84: 4375,
     dustValIlvl84Q20: 6125,
+    goldCost: 2560,
     slots: 2,
   },
   {
@@ -6192,6 +7076,7 @@ const data = [
     baseType: "Goathide Boots",
     dustValIlvl84: 4325,
     dustValIlvl84Q20: 6055,
+    goldCost: 2540,
     slots: 4,
   },
   {
@@ -6199,6 +7084,7 @@ const data = [
     baseType: "Carved Wand",
     dustValIlvl84: 4325,
     dustValIlvl84Q20: 6055,
+    goldCost: 2540,
     slots: 3,
   },
   {
@@ -6206,6 +7092,7 @@ const data = [
     baseType: "Topaz Ring",
     dustValIlvl84: 4325,
     dustValIlvl84Q20: 6055,
+    goldCost: 2540,
     slots: 1,
   },
   {
@@ -6213,6 +7100,7 @@ const data = [
     baseType: "Silken Vest",
     dustValIlvl84: 4200,
     dustValIlvl84Q20: 5880,
+    goldCost: 2520,
     slots: 6,
   },
   {
@@ -6220,6 +7108,7 @@ const data = [
     baseType: "Ironscale Boots",
     dustValIlvl84: 4125,
     dustValIlvl84Q20: 5775,
+    goldCost: 2500,
     slots: 4,
   },
   {
@@ -6227,6 +7116,7 @@ const data = [
     baseType: "Poleaxe",
     dustValIlvl84: 4125,
     dustValIlvl84Q20: 5775,
+    goldCost: 2500,
     slots: 8,
   },
   {
@@ -6234,6 +7124,7 @@ const data = [
     baseType: "Rustic Sash",
     dustValIlvl84: 4125,
     dustValIlvl84Q20: 5775,
+    goldCost: 2500,
     slots: 2,
   },
   {
@@ -6241,6 +7132,7 @@ const data = [
     baseType: "Recurve Bow",
     dustValIlvl84: 4125,
     dustValIlvl84Q20: 5775,
+    goldCost: 2500,
     slots: 8,
   },
   {
@@ -6248,6 +7140,7 @@ const data = [
     baseType: "Ironscale Boots",
     dustValIlvl84: 4125,
     dustValIlvl84Q20: 5775,
+    goldCost: 2500,
     slots: 4,
   },
   {
@@ -6255,6 +7148,7 @@ const data = [
     baseType: "Barbute Helmet",
     dustValIlvl84: 4125,
     dustValIlvl84Q20: 5775,
+    goldCost: 2500,
     slots: 4,
   },
   {
@@ -6262,6 +7156,7 @@ const data = [
     baseType: "Heavy Belt",
     dustValIlvl84: 4075,
     dustValIlvl84Q20: 5705,
+    goldCost: 2480,
     slots: 2,
   },
   {
@@ -6269,6 +7164,7 @@ const data = [
     baseType: "Black Maw Talisman",
     dustValIlvl84: 4075,
     dustValIlvl84Q20: 5705,
+    goldCost: 2480,
     slots: 1,
   },
   {
@@ -6276,6 +7172,7 @@ const data = [
     baseType: "Heavy Belt",
     dustValIlvl84: 4075,
     dustValIlvl84Q20: 5705,
+    goldCost: 2480,
     slots: 2,
   },
   {
@@ -6283,6 +7180,7 @@ const data = [
     baseType: "Leather Belt",
     dustValIlvl84: 4075,
     dustValIlvl84Q20: 5705,
+    goldCost: 2480,
     slots: 2,
   },
   {
@@ -6290,6 +7188,7 @@ const data = [
     baseType: "Sledgehammer",
     dustValIlvl84: 4000,
     dustValIlvl84Q20: 5600,
+    goldCost: 2460,
     slots: 8,
   },
   {
@@ -6297,6 +7196,7 @@ const data = [
     baseType: "Basket Rapier",
     dustValIlvl84: 4000,
     dustValIlvl84Q20: 5600,
+    goldCost: 2460,
     slots: 4,
   },
   {
@@ -6304,6 +7204,7 @@ const data = [
     baseType: "Sledgehammer",
     dustValIlvl84: 4000,
     dustValIlvl84Q20: 5600,
+    goldCost: 2460,
     slots: 8,
   },
   {
@@ -6311,6 +7212,7 @@ const data = [
     baseType: "Iron Mask",
     dustValIlvl84: 4000,
     dustValIlvl84Q20: 5600,
+    goldCost: 2460,
     slots: 4,
   },
   {
@@ -6318,6 +7220,7 @@ const data = [
     baseType: "Painted Buckler",
     dustValIlvl84: 3900,
     dustValIlvl84Q20: 5460,
+    goldCost: 2440,
     slots: 4,
   },
   {
@@ -6325,6 +7228,7 @@ const data = [
     baseType: "Strapped Boots",
     dustValIlvl84: 3900,
     dustValIlvl84Q20: 5460,
+    goldCost: 2440,
     slots: 4,
   },
   {
@@ -6332,6 +7236,7 @@ const data = [
     baseType: "Cleaver",
     dustValIlvl84: 3900,
     dustValIlvl84Q20: 5460,
+    goldCost: 2440,
     slots: 6,
   },
   {
@@ -6339,6 +7244,7 @@ const data = [
     baseType: "Painted Buckler",
     dustValIlvl84: 3900,
     dustValIlvl84Q20: 5460,
+    goldCost: 2440,
     slots: 4,
   },
   {
@@ -6346,6 +7252,7 @@ const data = [
     baseType: "Cleaver",
     dustValIlvl84: 3900,
     dustValIlvl84Q20: 5460,
+    goldCost: 2440,
     slots: 6,
   },
   {
@@ -6353,6 +7260,7 @@ const data = [
     baseType: "Sapphire Ring",
     dustValIlvl84: 3850,
     dustValIlvl84Q20: 5390,
+    goldCost: 2420,
     slots: 1,
   },
   {
@@ -6360,6 +7268,7 @@ const data = [
     baseType: "Iron Circlet",
     dustValIlvl84: 3850,
     dustValIlvl84Q20: 5390,
+    goldCost: 2420,
     slots: 4,
   },
   {
@@ -6367,6 +7276,7 @@ const data = [
     baseType: "Gold Amulet",
     dustValIlvl84: 3775,
     dustValIlvl84Q20: 5285,
+    goldCost: 2400,
     slots: 1,
   },
   {
@@ -6374,6 +7284,7 @@ const data = [
     baseType: "Gold Amulet",
     dustValIlvl84: 3775,
     dustValIlvl84Q20: 5285,
+    goldCost: 2400,
     slots: 1,
   },
   {
@@ -6381,6 +7292,7 @@ const data = [
     baseType: "Stiletto",
     dustValIlvl84: 3775,
     dustValIlvl84Q20: 5285,
+    goldCost: 2400,
     slots: 3,
   },
   {
@@ -6388,6 +7300,7 @@ const data = [
     baseType: "Gold Amulet",
     dustValIlvl84: 3775,
     dustValIlvl84Q20: 5285,
+    goldCost: 2400,
     slots: 1,
   },
   {
@@ -6395,6 +7308,7 @@ const data = [
     baseType: "Gold Amulet",
     dustValIlvl84: 3775,
     dustValIlvl84Q20: 5285,
+    goldCost: 2400,
     slots: 1,
   },
   {
@@ -6402,6 +7316,7 @@ const data = [
     baseType: "Whalebone Rapier",
     dustValIlvl84: 3725,
     dustValIlvl84Q20: 5215,
+    goldCost: 2380,
     slots: 4,
   },
   {
@@ -6409,6 +7324,7 @@ const data = [
     baseType: "Whalebone Rapier",
     dustValIlvl84: 3725,
     dustValIlvl84Q20: 5215,
+    goldCost: 2380,
     slots: 4,
   },
   {
@@ -6416,6 +7332,7 @@ const data = [
     baseType: "Chain Gloves",
     dustValIlvl84: 3725,
     dustValIlvl84Q20: 5215,
+    goldCost: 2380,
     slots: 4,
   },
   {
@@ -6423,6 +7340,7 @@ const data = [
     baseType: "Sharktooth Arrow Quiver",
     dustValIlvl84: 3675,
     dustValIlvl84Q20: 5145,
+    goldCost: 2360,
     slots: 6,
   },
   {
@@ -6430,6 +7348,7 @@ const data = [
     baseType: "Sharktooth Arrow Quiver",
     dustValIlvl84: 3675,
     dustValIlvl84Q20: 5145,
+    goldCost: 2360,
     slots: 6,
   },
   {
@@ -6437,6 +7356,7 @@ const data = [
     baseType: "Chain Belt",
     dustValIlvl84: 3675,
     dustValIlvl84Q20: 5145,
+    goldCost: 2360,
     slots: 2,
   },
   {
@@ -6444,6 +7364,7 @@ const data = [
     baseType: "Woodsplitter",
     dustValIlvl84: 3575,
     dustValIlvl84Q20: 5005,
+    goldCost: 2340,
     slots: 8,
   },
   {
@@ -6451,6 +7372,7 @@ const data = [
     baseType: "Iron Staff",
     dustValIlvl84: 3575,
     dustValIlvl84Q20: 5005,
+    goldCost: 2340,
     slots: 8,
   },
   {
@@ -6458,6 +7380,7 @@ const data = [
     baseType: "Iron Staff",
     dustValIlvl84: 3575,
     dustValIlvl84Q20: 5005,
+    goldCost: 2340,
     slots: 8,
   },
   {
@@ -6465,6 +7388,7 @@ const data = [
     baseType: "Iron Staff",
     dustValIlvl84: 3575,
     dustValIlvl84Q20: 5005,
+    goldCost: 2340,
     slots: 8,
   },
   {
@@ -6472,6 +7396,7 @@ const data = [
     baseType: "Woodsplitter",
     dustValIlvl84: 3575,
     dustValIlvl84Q20: 5005,
+    goldCost: 2340,
     slots: 8,
   },
   {
@@ -6479,6 +7404,7 @@ const data = [
     baseType: "Iron Staff",
     dustValIlvl84: 3575,
     dustValIlvl84Q20: 5005,
+    goldCost: 2340,
     slots: 8,
   },
   {
@@ -6486,6 +7412,7 @@ const data = [
     baseType: "Paua Ring",
     dustValIlvl84: 3525,
     dustValIlvl84Q20: 4935,
+    goldCost: 2320,
     slots: 1,
   },
   {
@@ -6493,6 +7420,7 @@ const data = [
     baseType: "Short Bow",
     dustValIlvl84: 3525,
     dustValIlvl84Q20: 4935,
+    goldCost: 2320,
     slots: 6,
   },
   {
@@ -6500,6 +7428,7 @@ const data = [
     baseType: "Short Bow",
     dustValIlvl84: 3525,
     dustValIlvl84Q20: 4935,
+    goldCost: 2320,
     slots: 6,
   },
   {
@@ -6507,6 +7436,7 @@ const data = [
     baseType: "Bastard Sword",
     dustValIlvl84: 3450,
     dustValIlvl84Q20: 4830,
+    goldCost: 2300,
     slots: 8,
   },
   {
@@ -6514,6 +7444,7 @@ const data = [
     baseType: "Soldier Helmet",
     dustValIlvl84: 3450,
     dustValIlvl84Q20: 4830,
+    goldCost: 2300,
     slots: 4,
   },
   {
@@ -6521,6 +7452,7 @@ const data = [
     baseType: "Velvet Gloves",
     dustValIlvl84: 3450,
     dustValIlvl84Q20: 4830,
+    goldCost: 2300,
     slots: 4,
   },
   {
@@ -6528,6 +7460,7 @@ const data = [
     baseType: "Golden Wreath",
     dustValIlvl84: 3450,
     dustValIlvl84Q20: 4830,
+    goldCost: 2300,
     slots: 4,
   },
   {
@@ -6535,6 +7468,7 @@ const data = [
     baseType: "Golden Caligae",
     dustValIlvl84: 3450,
     dustValIlvl84Q20: 4830,
+    goldCost: 2300,
     slots: 4,
   },
   {
@@ -6542,6 +7476,7 @@ const data = [
     baseType: "Golden Bracers",
     dustValIlvl84: 3450,
     dustValIlvl84Q20: 4830,
+    goldCost: 2300,
     slots: 4,
   },
   {
@@ -6549,6 +7484,7 @@ const data = [
     baseType: "Golden Obi",
     dustValIlvl84: 3450,
     dustValIlvl84Q20: 4830,
+    goldCost: 2300,
     slots: 2,
   },
   {
@@ -6556,6 +7492,7 @@ const data = [
     baseType: "Golden Hoop",
     dustValIlvl84: 3450,
     dustValIlvl84Q20: 4830,
+    goldCost: 2300,
     slots: 1,
   },
   {
@@ -6563,6 +7500,7 @@ const data = [
     baseType: "Awl",
     dustValIlvl84: 3450,
     dustValIlvl84Q20: 4830,
+    goldCost: 2300,
     slots: 4,
   },
   {
@@ -6570,6 +7508,7 @@ const data = [
     baseType: "Golden Visage",
     dustValIlvl84: 3450,
     dustValIlvl84Q20: 4830,
+    goldCost: 2300,
     slots: 4,
   },
   {
@@ -6577,6 +7516,7 @@ const data = [
     baseType: "Velvet Gloves",
     dustValIlvl84: 3450,
     dustValIlvl84Q20: 4830,
+    goldCost: 2300,
     slots: 4,
   },
   {
@@ -6584,6 +7524,7 @@ const data = [
     baseType: "Coral Ring",
     dustValIlvl84: 3425,
     dustValIlvl84Q20: 4795,
+    goldCost: 2300,
     slots: 1,
   },
   {
@@ -6591,6 +7532,7 @@ const data = [
     baseType: "Gnarled Branch",
     dustValIlvl84: 3425,
     dustValIlvl84Q20: 4795,
+    goldCost: 2300,
     slots: 4,
   },
   {
@@ -6598,6 +7540,7 @@ const data = [
     baseType: "Gnarled Branch",
     dustValIlvl84: 3425,
     dustValIlvl84Q20: 4795,
+    goldCost: 2300,
     slots: 4,
   },
   {
@@ -6605,6 +7548,7 @@ const data = [
     baseType: "Rustic Sash",
     dustValIlvl84: 3350,
     dustValIlvl84Q20: 4690,
+    goldCost: 2280,
     slots: 2,
   },
   {
@@ -6612,6 +7556,7 @@ const data = [
     baseType: "Wool Gloves",
     dustValIlvl84: 3325,
     dustValIlvl84Q20: 4655,
+    goldCost: 2260,
     slots: 4,
   },
   {
@@ -6619,6 +7564,7 @@ const data = [
     baseType: "Leather Cap",
     dustValIlvl84: 3325,
     dustValIlvl84Q20: 4655,
+    goldCost: 2260,
     slots: 4,
   },
   {
@@ -6626,6 +7572,7 @@ const data = [
     baseType: "Paua Amulet",
     dustValIlvl84: 3325,
     dustValIlvl84Q20: 4655,
+    goldCost: 2260,
     slots: 1,
   },
   {
@@ -6633,6 +7580,7 @@ const data = [
     baseType: "Nailed Fist",
     dustValIlvl84: 3325,
     dustValIlvl84Q20: 4655,
+    goldCost: 2260,
     slots: 4,
   },
   {
@@ -6640,6 +7588,7 @@ const data = [
     baseType: "Sabre",
     dustValIlvl84: 3250,
     dustValIlvl84Q20: 4550,
+    goldCost: 2240,
     slots: 3,
   },
   {
@@ -6647,6 +7596,7 @@ const data = [
     baseType: "Spiked Club",
     dustValIlvl84: 3250,
     dustValIlvl84Q20: 4550,
+    goldCost: 2240,
     slots: 3,
   },
   {
@@ -6654,6 +7604,7 @@ const data = [
     baseType: "Bronze Sceptre",
     dustValIlvl84: 3250,
     dustValIlvl84Q20: 4550,
+    goldCost: 2240,
     slots: 6,
   },
   {
@@ -6661,6 +7612,7 @@ const data = [
     baseType: "Chain Belt",
     dustValIlvl84: 3225,
     dustValIlvl84Q20: 4515,
+    goldCost: 2240,
     slots: 2,
   },
   {
@@ -6668,6 +7620,7 @@ const data = [
     baseType: "Rustic Sash",
     dustValIlvl84: 3225,
     dustValIlvl84Q20: 4515,
+    goldCost: 2240,
     slots: 2,
   },
   {
@@ -6675,6 +7628,7 @@ const data = [
     baseType: "Velvet Slippers",
     dustValIlvl84: 3175,
     dustValIlvl84Q20: 4445,
+    goldCost: 2220,
     slots: 4,
   },
   {
@@ -6682,6 +7636,7 @@ const data = [
     baseType: "Goathide Gloves",
     dustValIlvl84: 3175,
     dustValIlvl84Q20: 4445,
+    goldCost: 2220,
     slots: 4,
   },
   {
@@ -6689,6 +7644,7 @@ const data = [
     baseType: "Long Bow",
     dustValIlvl84: 3175,
     dustValIlvl84Q20: 4445,
+    goldCost: 2220,
     slots: 8,
   },
   {
@@ -6696,6 +7652,7 @@ const data = [
     baseType: "Goathide Gloves",
     dustValIlvl84: 3175,
     dustValIlvl84Q20: 4445,
+    goldCost: 2220,
     slots: 4,
   },
   {
@@ -6703,6 +7660,7 @@ const data = [
     baseType: "Velvet Slippers",
     dustValIlvl84: 3175,
     dustValIlvl84Q20: 4445,
+    goldCost: 2220,
     slots: 4,
   },
   {
@@ -6710,6 +7668,7 @@ const data = [
     baseType: "Strapped Leather",
     dustValIlvl84: 3175,
     dustValIlvl84Q20: 4445,
+    goldCost: 2220,
     slots: 6,
   },
   {
@@ -6717,6 +7676,7 @@ const data = [
     baseType: "Plate Vest",
     dustValIlvl84: 3125,
     dustValIlvl84Q20: 4375,
+    goldCost: 2200,
     slots: 6,
   },
   {
@@ -6724,6 +7684,7 @@ const data = [
     baseType: "Pine Buckler",
     dustValIlvl84: 3075,
     dustValIlvl84Q20: 4305,
+    goldCost: 2180,
     slots: 4,
   },
   {
@@ -6731,6 +7692,7 @@ const data = [
     baseType: "Iron Circlet",
     dustValIlvl84: 3075,
     dustValIlvl84Q20: 4305,
+    goldCost: 2180,
     slots: 4,
   },
   {
@@ -6738,6 +7700,7 @@ const data = [
     baseType: "Lapis Amulet",
     dustValIlvl84: 2975,
     dustValIlvl84Q20: 4165,
+    goldCost: 2160,
     slots: 1,
   },
   {
@@ -6745,6 +7708,7 @@ const data = [
     baseType: "Jade Amulet",
     dustValIlvl84: 2975,
     dustValIlvl84Q20: 4165,
+    goldCost: 2160,
     slots: 1,
   },
   {
@@ -6752,6 +7716,7 @@ const data = [
     baseType: "Plank Kite Shield",
     dustValIlvl84: 2975,
     dustValIlvl84Q20: 4165,
+    goldCost: 2160,
     slots: 6,
   },
   {
@@ -6759,6 +7724,7 @@ const data = [
     baseType: "Lapis Amulet",
     dustValIlvl84: 2975,
     dustValIlvl84Q20: 4165,
+    goldCost: 2160,
     slots: 1,
   },
   {
@@ -6766,6 +7732,7 @@ const data = [
     baseType: "Jade Amulet",
     dustValIlvl84: 2975,
     dustValIlvl84Q20: 4165,
+    goldCost: 2160,
     slots: 1,
   },
   {
@@ -6773,6 +7740,7 @@ const data = [
     baseType: "Plank Kite Shield",
     dustValIlvl84: 2975,
     dustValIlvl84Q20: 4165,
+    goldCost: 2160,
     slots: 6,
   },
   {
@@ -6780,6 +7748,7 @@ const data = [
     baseType: "Jade Hatchet",
     dustValIlvl84: 2900,
     dustValIlvl84Q20: 4060,
+    goldCost: 2120,
     slots: 6,
   },
   {
@@ -6787,6 +7756,7 @@ const data = [
     baseType: "Goat's Horn",
     dustValIlvl84: 2900,
     dustValIlvl84Q20: 4060,
+    goldCost: 2120,
     slots: 3,
   },
   {
@@ -6794,6 +7764,7 @@ const data = [
     baseType: "Jade Hatchet",
     dustValIlvl84: 2900,
     dustValIlvl84Q20: 4060,
+    goldCost: 2120,
     slots: 6,
   },
   {
@@ -6801,6 +7772,7 @@ const data = [
     baseType: "Wrapped Mitts",
     dustValIlvl84: 2825,
     dustValIlvl84Q20: 3955,
+    goldCost: 2100,
     slots: 4,
   },
   {
@@ -6808,6 +7780,7 @@ const data = [
     baseType: "Rotted Round Shield",
     dustValIlvl84: 2825,
     dustValIlvl84Q20: 3955,
+    goldCost: 2100,
     slots: 6,
   },
   {
@@ -6815,6 +7788,7 @@ const data = [
     baseType: "Skinning Knife",
     dustValIlvl84: 2825,
     dustValIlvl84Q20: 3955,
+    goldCost: 2100,
     slots: 3,
   },
   {
@@ -6822,6 +7796,7 @@ const data = [
     baseType: "Skinning Knife",
     dustValIlvl84: 2825,
     dustValIlvl84Q20: 3955,
+    goldCost: 2100,
     slots: 3,
   },
   {
@@ -6829,6 +7804,7 @@ const data = [
     baseType: "Bronze Stalker Sentinel",
     dustValIlvl84: 2825,
     dustValIlvl84Q20: 3955,
+    goldCost: 2100,
     slots: 4,
   },
   {
@@ -6836,6 +7812,7 @@ const data = [
     baseType: "Gnarled Branch",
     dustValIlvl84: 2725,
     dustValIlvl84Q20: 3815,
+    goldCost: 2060,
     slots: 4,
   },
   {
@@ -6843,6 +7820,7 @@ const data = [
     baseType: "Serrated Arrow Quiver",
     dustValIlvl84: 2725,
     dustValIlvl84Q20: 3815,
+    goldCost: 2060,
     slots: 6,
   },
   {
@@ -6850,6 +7828,7 @@ const data = [
     baseType: "Gnarled Branch",
     dustValIlvl84: 2725,
     dustValIlvl84Q20: 3815,
+    goldCost: 2060,
     slots: 4,
   },
   {
@@ -6857,6 +7836,7 @@ const data = [
     baseType: "Coral Ring",
     dustValIlvl84: 2725,
     dustValIlvl84Q20: 3815,
+    goldCost: 2060,
     slots: 1,
   },
   {
@@ -6864,6 +7844,7 @@ const data = [
     baseType: "Serrated Arrow Quiver",
     dustValIlvl84: 2725,
     dustValIlvl84Q20: 3815,
+    goldCost: 2060,
     slots: 6,
   },
   {
@@ -6871,6 +7852,7 @@ const data = [
     baseType: "Gnarled Branch",
     dustValIlvl84: 2725,
     dustValIlvl84Q20: 3815,
+    goldCost: 2060,
     slots: 4,
   },
   {
@@ -6878,6 +7860,7 @@ const data = [
     baseType: "Paua Amulet",
     dustValIlvl84: 2650,
     dustValIlvl84Q20: 3710,
+    goldCost: 2040,
     slots: 1,
   },
   {
@@ -6885,6 +7868,7 @@ const data = [
     baseType: "Vine Circlet",
     dustValIlvl84: 2650,
     dustValIlvl84Q20: 3710,
+    goldCost: 2040,
     slots: 4,
   },
   {
@@ -6892,6 +7876,7 @@ const data = [
     baseType: "Coral Amulet",
     dustValIlvl84: 2650,
     dustValIlvl84Q20: 3710,
+    goldCost: 2040,
     slots: 1,
   },
   {
@@ -6899,6 +7884,7 @@ const data = [
     baseType: "Wool Shoes",
     dustValIlvl84: 2650,
     dustValIlvl84Q20: 3710,
+    goldCost: 2040,
     slots: 4,
   },
   {
@@ -6906,6 +7892,7 @@ const data = [
     baseType: "Nailed Fist",
     dustValIlvl84: 2650,
     dustValIlvl84Q20: 3710,
+    goldCost: 2040,
     slots: 4,
   },
   {
@@ -6913,6 +7900,7 @@ const data = [
     baseType: "Coral Amulet",
     dustValIlvl84: 2650,
     dustValIlvl84Q20: 3710,
+    goldCost: 2040,
     slots: 1,
   },
   {
@@ -6920,6 +7908,7 @@ const data = [
     baseType: "Vine Circlet",
     dustValIlvl84: 2650,
     dustValIlvl84Q20: 3710,
+    goldCost: 2040,
     slots: 4,
   },
   {
@@ -6927,6 +7916,7 @@ const data = [
     baseType: "Iron Ring",
     dustValIlvl84: 2575,
     dustValIlvl84Q20: 3605,
+    goldCost: 2020,
     slots: 1,
   },
   {
@@ -6934,6 +7924,7 @@ const data = [
     baseType: "Blazing Arrow Quiver",
     dustValIlvl84: 2575,
     dustValIlvl84Q20: 3605,
+    goldCost: 2020,
     slots: 6,
   },
   {
@@ -6941,6 +7932,7 @@ const data = [
     baseType: "Iron Ring",
     dustValIlvl84: 2575,
     dustValIlvl84Q20: 3605,
+    goldCost: 2020,
     slots: 1,
   },
   {
@@ -6948,6 +7940,7 @@ const data = [
     baseType: "Charan's Sword",
     dustValIlvl84: 2575,
     dustValIlvl84Q20: 3605,
+    goldCost: 2020,
     slots: 6,
   },
   {
@@ -6955,6 +7948,7 @@ const data = [
     baseType: "Rusted Sword",
     dustValIlvl84: 2500,
     dustValIlvl84Q20: 3500,
+    goldCost: 2000,
     slots: 3,
   },
   {
@@ -6962,6 +7956,7 @@ const data = [
     baseType: "Crude Bow",
     dustValIlvl84: 2500,
     dustValIlvl84Q20: 3500,
+    goldCost: 2000,
     slots: 6,
   },
   {
@@ -6969,6 +7964,7 @@ const data = [
     baseType: "Iron Hat",
     dustValIlvl84: 2500,
     dustValIlvl84Q20: 3500,
+    goldCost: 2000,
     slots: 4,
   },
   {
@@ -6976,6 +7972,7 @@ const data = [
     baseType: "Iron Gauntlets",
     dustValIlvl84: 2500,
     dustValIlvl84Q20: 3500,
+    goldCost: 2000,
     slots: 4,
   },
   {
@@ -6983,6 +7980,7 @@ const data = [
     baseType: "Driftwood Wand",
     dustValIlvl84: 2500,
     dustValIlvl84Q20: 3500,
+    goldCost: 2000,
     slots: 3,
   },
   {
@@ -6990,6 +7988,7 @@ const data = [
     baseType: "Jet Amulet",
     dustValIlvl84: 2500,
     dustValIlvl84Q20: 3500,
+    goldCost: 2000,
     slots: 1,
   },
   {
@@ -6997,6 +7996,7 @@ const data = [
     baseType: "Golden Blade",
     dustValIlvl84: 2500,
     dustValIlvl84Q20: 3500,
+    goldCost: 2000,
     slots: 6,
   },
   {
@@ -7004,6 +8004,7 @@ const data = [
     baseType: "Plate Vest",
     dustValIlvl84: 2500,
     dustValIlvl84Q20: 3500,
+    goldCost: 2000,
     slots: 6,
   },
   {
@@ -7011,6 +8012,7 @@ const data = [
     baseType: "Iron Hat",
     dustValIlvl84: 2500,
     dustValIlvl84Q20: 3500,
+    goldCost: 2000,
     slots: 4,
   },
   {
@@ -7018,6 +8020,7 @@ const data = [
     baseType: "Crude Bow",
     dustValIlvl84: 2500,
     dustValIlvl84Q20: 3500,
+    goldCost: 2000,
     slots: 6,
   },
   {
@@ -7025,6 +8028,7 @@ const data = [
     baseType: "Rusted Sword",
     dustValIlvl84: 2500,
     dustValIlvl84Q20: 3500,
+    goldCost: 2000,
     slots: 3,
   },
   {
@@ -7032,6 +8036,7 @@ const data = [
     baseType: "Prophecy Wand",
     dustValIlvl84: 108700,
     dustValIlvl84Q20: 152180,
+    goldCost: 10920,
     slots: 3,
   },
   {
@@ -7039,6 +8044,7 @@ const data = [
     baseType: "Abyssal Axe",
     dustValIlvl84: 348825,
     dustValIlvl84Q20: 488355,
+    goldCost: 18440,
     slots: 8,
   },
   {
@@ -7046,6 +8052,7 @@ const data = [
     baseType: "Judgement Staff",
     dustValIlvl84: 348825,
     dustValIlvl84Q20: 488355,
+    goldCost: 18440,
     slots: 8,
   },
   {
@@ -7053,6 +8060,7 @@ const data = [
     baseType: "Ezomyte Blade",
     dustValIlvl84: 29450,
     dustValIlvl84Q20: 41230,
+    goldCost: 6060,
     slots: 8,
   },
   {
@@ -7060,6 +8068,7 @@ const data = [
     baseType: "Piledriver",
     dustValIlvl84: 18400,
     dustValIlvl84Q20: 25760,
+    goldCost: 4900,
     slots: 8,
   },
   {
@@ -7067,6 +8076,7 @@ const data = [
     baseType: "Platinum Sceptre",
     dustValIlvl84: 30350,
     dustValIlvl84Q20: 42490,
+    goldCost: 6140,
     slots: 3,
   },
   {
@@ -7074,6 +8084,7 @@ const data = [
     baseType: "Pagan Wand",
     dustValIlvl84: 53050,
     dustValIlvl84Q20: 74270,
+    goldCost: 7900,
     slots: 3,
   },
   {
@@ -7081,6 +8092,7 @@ const data = [
     baseType: "Studded Belt",
     dustValIlvl84: 22575,
     dustValIlvl84Q20: 31605,
+    goldCost: 5380,
     slots: 2,
   },
   {
@@ -7088,6 +8100,7 @@ const data = [
     baseType: "Vanguard Belt",
     dustValIlvl84: 189000,
     dustValIlvl84Q20: 239400,
+    goldCost: 17490,
     slots: 2,
   },
   {
@@ -7095,6 +8108,7 @@ const data = [
     baseType: "Astrolabe Amulet",
     dustValIlvl84: 534700,
     dustValIlvl84Q20: 588170,
+    goldCost: 47920,
     slots: 1,
   },
   {
@@ -7102,6 +8116,7 @@ const data = [
     baseType: "Amethyst Ring",
     dustValIlvl84: 149250,
     dustValIlvl84Q20: 208950,
+    goldCost: 12580,
     slots: 1,
   },
   {
@@ -7109,6 +8124,7 @@ const data = [
     baseType: "Vermillion Ring",
     dustValIlvl84: 154975,
     dustValIlvl84Q20: 216965,
+    goldCost: 12800,
     slots: 1,
   },
   {
@@ -7116,6 +8132,7 @@ const data = [
     baseType: "Vanguard Belt",
     dustValIlvl84: 252000,
     dustValIlvl84Q20: 352800,
+    goldCost: 15940,
     slots: 2,
   },
   {
@@ -7123,6 +8140,7 @@ const data = [
     baseType: "Prismatic Ring",
     dustValIlvl84: 35350,
     dustValIlvl84Q20: 49490,
+    goldCost: 6580,
     slots: 1,
   },
   {
@@ -7130,6 +8148,7 @@ const data = [
     baseType: "Seaglass Amulet",
     dustValIlvl84: 129775,
     dustValIlvl84Q20: 181685,
+    goldCost: 11820,
     slots: 1,
   },
   {
@@ -7137,6 +8156,7 @@ const data = [
     baseType: "Nameless Ring",
     dustValIlvl84: 18125,
     dustValIlvl84Q20: 25375,
+    goldCost: 4860,
     slots: 1,
   },
   {
@@ -7144,6 +8164,7 @@ const data = [
     baseType: "Steel Ring",
     dustValIlvl84: 146075,
     dustValIlvl84Q20: 204505,
+    goldCost: 12460,
     slots: 1,
   },
   {
@@ -7151,6 +8172,7 @@ const data = [
     baseType: "Cloth Belt",
     dustValIlvl84: 131525,
     dustValIlvl84Q20: 184135,
+    goldCost: 11880,
     slots: 2,
   },
   {
@@ -7158,6 +8180,7 @@ const data = [
     baseType: "Unset Ring",
     dustValIlvl84: 36725,
     dustValIlvl84Q20: 51415,
+    goldCost: 6700,
     slots: 1,
   },
   {
@@ -7165,6 +8188,7 @@ const data = [
     baseType: "Nameless Ring",
     dustValIlvl84: 18125,
     dustValIlvl84Q20: 25375,
+    goldCost: 4860,
     slots: 1,
   },
   {
@@ -7172,6 +8196,7 @@ const data = [
     baseType: "Nameless Ring",
     dustValIlvl84: 18125,
     dustValIlvl84Q20: 25375,
+    goldCost: 4860,
     slots: 1,
   },
   {
@@ -7179,6 +8204,7 @@ const data = [
     baseType: "Cloth Belt",
     dustValIlvl84: 20050,
     dustValIlvl84Q20: 28070,
+    goldCost: 5100,
     slots: 2,
   },
   {
@@ -7186,6 +8212,7 @@ const data = [
     baseType: "Iron Ring",
     dustValIlvl84: 15625,
     dustValIlvl84Q20: 21875,
+    goldCost: 4560,
     slots: 1,
   },
   {
@@ -7193,6 +8220,7 @@ const data = [
     baseType: "Cloth Belt",
     dustValIlvl84: 8775,
     dustValIlvl84Q20: 12285,
+    goldCost: 3500,
     slots: 2,
   },
   {
@@ -7200,6 +8228,7 @@ const data = [
     baseType: "Diamond Ring",
     dustValIlvl84: 6350,
     dustValIlvl84Q20: 8890,
+    goldCost: 3040,
     slots: 1,
   },
   {
@@ -7207,6 +8236,7 @@ const data = [
     baseType: "Long Bow",
     dustValIlvl84: 3175,
     dustValIlvl84Q20: 4445,
+    goldCost: 2220,
     slots: 8,
   },
   {
@@ -7214,6 +8244,7 @@ const data = [
     baseType: "Phantom Mace",
     dustValIlvl84: 14525,
     dustValIlvl84Q20: 20335,
+    goldCost: 4400,
     slots: 6,
   },
   {
@@ -7221,6 +8252,7 @@ const data = [
     baseType: "Girded Tower Shield",
     dustValIlvl84: 65750,
     dustValIlvl84Q20: 92050,
+    goldCost: 8700,
     slots: 8,
   },
   {
@@ -7228,6 +8260,7 @@ const data = [
     baseType: "Goliath Gauntlets",
     dustValIlvl84: 69775,
     dustValIlvl84Q20: 97685,
+    goldCost: 8940,
     slots: 4,
   },
   {
@@ -7235,6 +8268,7 @@ const data = [
     baseType: "Cabalist Regalia",
     dustValIlvl84: 40975,
     dustValIlvl84Q20: 57365,
+    goldCost: 7040,
     slots: 6,
   },
   {
@@ -7242,6 +8276,7 @@ const data = [
     baseType: "Vile Arrow Quiver",
     dustValIlvl84: 123350,
     dustValIlvl84Q20: 172690,
+    goldCost: 11560,
     slots: 6,
   },
   {
@@ -7249,6 +8284,7 @@ const data = [
     baseType: "Waxed Garb",
     dustValIlvl84: 125000,
     dustValIlvl84Q20: 175000,
+    goldCost: 11620,
     slots: 6,
   },
   {
@@ -7256,6 +8292,7 @@ const data = [
     baseType: "Siege Helmet",
     dustValIlvl84: 20050,
     dustValIlvl84Q20: 28070,
+    goldCost: 5100,
     slots: 4,
   },
   {
@@ -7263,6 +8300,7 @@ const data = [
     baseType: "Martyr Gloves",
     dustValIlvl84: 292150,
     dustValIlvl84Q20: 409010,
+    goldCost: 17040,
     slots: 4,
   },
   {
@@ -7270,6 +8308,7 @@ const data = [
     baseType: "Torturer Garb",
     dustValIlvl84: 146075,
     dustValIlvl84Q20: 204505,
+    goldCost: 12460,
     slots: 6,
   },
   {
@@ -7277,6 +8316,7 @@ const data = [
     baseType: "Pig-Faced Bascinet",
     dustValIlvl84: 140625,
     dustValIlvl84Q20: 178125,
+    goldCost: 15300,
     slots: 4,
   },
   {
@@ -7284,6 +8324,7 @@ const data = [
     baseType: "Zealot Helmet",
     dustValIlvl84: 53475,
     dustValIlvl84Q20: 74865,
+    goldCost: 7920,
     slots: 4,
   },
   {
@@ -7291,6 +8332,7 @@ const data = [
     baseType: "Lacquered Buckler",
     dustValIlvl84: 22650,
     dustValIlvl84Q20: 31710,
+    goldCost: 5380,
     slots: 4,
   },
   {
@@ -7298,6 +8340,7 @@ const data = [
     baseType: "Goliath Greaves",
     dustValIlvl84: 71850,
     dustValIlvl84Q20: 100590,
+    goldCost: 9060,
     slots: 4,
   },
   {
@@ -7305,6 +8348,7 @@ const data = [
     baseType: "Antique Gauntlets",
     dustValIlvl84: 15375,
     dustValIlvl84Q20: 21525,
+    goldCost: 4520,
     slots: 4,
   },
   {
@@ -7312,6 +8356,7 @@ const data = [
     baseType: "Lich's Circlet",
     dustValIlvl84: 116275,
     dustValIlvl84Q20: 162785,
+    goldCost: 11240,
     slots: 4,
   },
   {
@@ -7319,6 +8364,7 @@ const data = [
     baseType: "Mesh Gloves",
     dustValIlvl84: 12500,
     dustValIlvl84Q20: 17500,
+    goldCost: 4120,
     slots: 4,
   },
   {
@@ -7326,6 +8372,7 @@ const data = [
     baseType: "Ezomyte Burgonet",
     dustValIlvl84: 36225,
     dustValIlvl84Q20: 50715,
+    goldCost: 6660,
     slots: 4,
   },
   {
@@ -7333,6 +8380,7 @@ const data = [
     baseType: "Satin Slippers",
     dustValIlvl84: 22650,
     dustValIlvl84Q20: 31710,
+    goldCost: 5380,
     slots: 4,
   },
   {
@@ -7340,6 +8388,7 @@ const data = [
     baseType: "Shackled Boots",
     dustValIlvl84: 8300,
     dustValIlvl84Q20: 11620,
+    goldCost: 3420,
     slots: 4,
   },
   {
@@ -7347,6 +8396,7 @@ const data = [
     baseType: "Shackled Boots",
     dustValIlvl84: 2975,
     dustValIlvl84Q20: 4165,
+    goldCost: 2160,
     slots: 6,
   },
   {
@@ -7354,6 +8404,7 @@ const data = [
     baseType: "Lion Sword",
     dustValIlvl84: 298400,
     dustValIlvl84Q20: 417760,
+    goldCost: 17200,
     slots: 8,
   },
   {
@@ -7361,6 +8412,7 @@ const data = [
     baseType: "Imperial Bow",
     dustValIlvl84: 307350,
     dustValIlvl84Q20: 430290,
+    goldCost: 17420,
     slots: 8,
   },
   {
@@ -7368,6 +8420,7 @@ const data = [
     baseType: "Demon Dagger",
     dustValIlvl84: 326075,
     dustValIlvl84Q20: 456505,
+    goldCost: 17900,
     slots: 3,
   },
   {
@@ -7375,6 +8428,7 @@ const data = [
     baseType: "Imperial Staff",
     dustValIlvl84: 34150,
     dustValIlvl84Q20: 47810,
+    goldCost: 6480,
     slots: 8,
   },
   {
@@ -7382,6 +8436,7 @@ const data = [
     baseType: "Spectral Axe",
     dustValIlvl84: 12875,
     dustValIlvl84Q20: 18025,
+    goldCost: 4180,
     slots: 6,
   },
   {
@@ -7389,6 +8444,7 @@ const data = [
     baseType: "Sage Wand",
     dustValIlvl84: 7375,
     dustValIlvl84Q20: 10325,
+    goldCost: 3240,
     slots: 3,
   },
   {
@@ -7396,6 +8452,7 @@ const data = [
     baseType: "Dream Mace",
     dustValIlvl84: 7825,
     dustValIlvl84Q20: 10955,
+    goldCost: 3340,
     slots: 6,
   },
   {
@@ -7403,6 +8460,7 @@ const data = [
     baseType: "Spiny Round Shield",
     dustValIlvl84: 30350,
     dustValIlvl84Q20: 42490,
+    goldCost: 6140,
     slots: 6,
   },
   {
@@ -7410,6 +8468,7 @@ const data = [
     baseType: "General's Brigandine",
     dustValIlvl84: 102450,
     dustValIlvl84Q20: 143430,
+    goldCost: 10620,
     slots: 6,
   },
   {
@@ -7417,6 +8476,7 @@ const data = [
     baseType: "Faithful Helmet",
     dustValIlvl84: 42000,
     dustValIlvl84Q20: 58800,
+    goldCost: 7100,
     slots: 4,
   },
   {
@@ -7424,6 +8484,7 @@ const data = [
     baseType: "Carnal Mitts",
     dustValIlvl84: 63850,
     dustValIlvl84Q20: 89390,
+    goldCost: 8580,
     slots: 4,
   },
   {
@@ -7431,6 +8492,7 @@ const data = [
     baseType: "Antique Gauntlets",
     dustValIlvl84: 15375,
     dustValIlvl84Q20: 21525,
+    goldCost: 4520,
     slots: 4,
   },
   {
@@ -7438,6 +8500,7 @@ const data = [
     baseType: "Paladin Crown",
     dustValIlvl84: 48700,
     dustValIlvl84Q20: 68180,
+    goldCost: 7600,
     slots: 4,
   },
   {
@@ -7445,6 +8508,7 @@ const data = [
     baseType: "Formless Ring",
     dustValIlvl84: 79175,
     dustValIlvl84Q20: 110845,
+    goldCost: 9460,
     slots: 1,
   },
   {
@@ -7452,6 +8516,7 @@ const data = [
     baseType: "Steel Ring",
     dustValIlvl84: 48700,
     dustValIlvl84Q20: 68180,
+    goldCost: 7600,
     slots: 1,
   },
   {
@@ -7459,6 +8524,7 @@ const data = [
     baseType: "Opal Ring",
     dustValIlvl84: 48700,
     dustValIlvl84Q20: 68180,
+    goldCost: 7600,
     slots: 1,
   },
   {
@@ -7466,6 +8532,7 @@ const data = [
     baseType: "Fugitive Ring",
     dustValIlvl84: 9900,
     dustValIlvl84Q20: 13860,
+    goldCost: 3700,
     slots: 1,
   },
   {
@@ -7473,6 +8540,7 @@ const data = [
     baseType: "Marble Amulet",
     dustValIlvl84: 43250,
     dustValIlvl84Q20: 60550,
+    goldCost: 7200,
     slots: 1,
   },
   {
@@ -7480,6 +8548,7 @@ const data = [
     baseType: "Organic Ring",
     dustValIlvl84: 9900,
     dustValIlvl84Q20: 13860,
+    goldCost: 3700,
     slots: 1,
   },
   {
@@ -7487,6 +8556,7 @@ const data = [
     baseType: "Synaptic Ring",
     dustValIlvl84: 9900,
     dustValIlvl84Q20: 13860,
+    goldCost: 3700,
     slots: 1,
   },
   {
@@ -7494,6 +8564,7 @@ const data = [
     baseType: "Cryonic Ring",
     dustValIlvl84: 9900,
     dustValIlvl84Q20: 13860,
+    goldCost: 3700,
     slots: 1,
   },
   {
@@ -7501,6 +8572,7 @@ const data = [
     baseType: "Enthalpic Ring",
     dustValIlvl84: 9900,
     dustValIlvl84Q20: 13860,
+    goldCost: 3700,
     slots: 1,
   },
   {
@@ -7508,6 +8580,7 @@ const data = [
     baseType: "Ezomyte Tower Shield",
     dustValIlvl84: 32200,
     dustValIlvl84Q20: 45080,
+    goldCost: 6300,
     slots: 8,
   },
   {
@@ -7515,6 +8588,7 @@ const data = [
     baseType: "Turquoise Amulet",
     dustValIlvl84: 26300,
     dustValIlvl84Q20: 36820,
+    goldCost: 5760,
     slots: 1,
   },
 ];

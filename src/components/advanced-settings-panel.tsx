@@ -244,8 +244,8 @@ export function AdvancedSettingsPanel({
                 </Badge>
               </div>
               <p className="text-muted-foreground text-xs">
-                Corrupted items cannot have quality added cheaply, but may have
-                higher value from corruption implicits.
+                Corruption prevents cheap quality addition, but items with
+                corruption implicits have higher dust value.
               </p>
             </div>
 

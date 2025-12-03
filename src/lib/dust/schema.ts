@@ -5,6 +5,7 @@ export const ItemSchema = z.strictObject({
   baseType: z.string().trim().min(1),
   dustValIlvl84: z.number().positive(),
   dustValIlvl84Q20: z.number().positive(),
+  goldCost: z.number().positive(),
   slots: z.int().positive(),
 });
 
