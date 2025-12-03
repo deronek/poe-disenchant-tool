@@ -11,6 +11,7 @@ import {
 import type { ColumnId } from "./columns";
 import { ChaosOrbIcon } from "@/components/chaos-orb-icon";
 import { DustIcon } from "@/components/dust-icon";
+import { GoldIcon } from "@/components/gold-icon";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -84,6 +85,11 @@ const sortOptions: SortOption[] = [
     id: COLUMN_IDS.CALCULATED_DUST_VALUE,
     label: "Dust Value",
     icons: <DustIcon className="h-4 w-4" aria-hidden="true" alt="" />,
+  },
+  {
+    id: COLUMN_IDS.GOLD_FEE,
+    label: "Gold Fee",
+    icons: <GoldIcon className="h-4 w-4" aria-hidden="true" alt="" />,
   },
 ];
 
