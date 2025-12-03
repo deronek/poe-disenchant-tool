@@ -76,7 +76,8 @@ export class PoEDisenchantPage {
   /**
    * Extracts table data into structured test items.
    * Assumes table columns:
-   * [0]=Mark, [1]=Icon, [2]=Name, [3]=Price, [4]=Dust Value, [5]=Dust/Chaos, [6]=Dust/Chaos/Slot
+   * [0]=Mark, [1]=Icon, [2]=Name, [3]=Price, [4]=Dust Value,
+   * [5]=Dust/Chaos, [6]=Dust/Chaos/Slot, [7]=Gold Fee
    */
   async getTestItems(limit = 10): Promise<TestItem[]> {
     const rows = this.dataTableRows;
@@ -937,7 +938,7 @@ export class PoEDisenchantPage {
       };
     }
 
-    throw new Error(`Unrecognized price filter chip format: "${chipText}"`);
+    throw new Error(`Unrecognized range filter chip format: "${chipText}"`);
   }
 
   async getPriceFilterRange(): Promise<{ min?: number; max?: number }> {
@@ -947,13 +948,13 @@ export class PoEDisenchantPage {
   }
 
   async getDustFilterRange(): Promise<{ min?: number; max?: number }> {
-    const chipText = await this.dustFilterChip.innerText();
+    const chipText = (await this.dustFilterChip.innerText()).trim();
 
     return this.getRangeFilterRange(chipText);
   }
 
   async getGoldFilterRange(): Promise<{ min?: number; max?: number }> {
-    const chipText = await this.goldFilterChip.innerText();
+    const chipText = (await this.goldFilterChip.innerText()).trim();
 
     return this.getRangeFilterRange(chipText);
   }
@@ -970,7 +971,8 @@ export class PoEDisenchantPage {
     expect(range.max).toBe(max);
   }
 
-  // Private helper method to set filter value by percentage
+  // Private helper method to set filter value by percentage.
+  // Assumes the tabbed filter popover is already open.
   private async setFilterValuePercent(
     filterType: "price" | "dust" | "gold",
     bound: "lower" | "upper",
@@ -1070,7 +1072,7 @@ export class PoEDisenchantPage {
   async getLowerBoundResetButton(
     name: "price" | "dust" | "gold",
   ): Promise<Locator> {
-    const labelName = (await this.getFilterLabelName(name)).toLowerCase();
+    const labelName = this.getFilterLabelName(name).toLowerCase();
     return this.page.getByRole("button", {
       name: `Reset lower bound ${labelName} filter`,
     });
@@ -1079,7 +1081,7 @@ export class PoEDisenchantPage {
   async getUpperBoundResetButton(
     name: "price" | "dust" | "gold",
   ): Promise<Locator> {
-    const labelName = (await this.getFilterLabelName(name)).toLowerCase();
+    const labelName = this.getFilterLabelName(name).toLowerCase();
     return this.page.getByRole("button", {
       name: `Reset upper bound ${labelName} filter`,
     });
