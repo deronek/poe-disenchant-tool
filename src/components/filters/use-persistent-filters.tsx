@@ -31,7 +31,7 @@ type PersistedFilters = z.infer<typeof PersistedFiltersSchema>;
 
 /**
  * Hook to persist and restore column filters.
- * Persists both price and dust value filters, ignores name filter and other filters.
+ * Persists price, dust value, and gold fee filters; ignores name filter and any other filters.
  */
 export function usePersistentFilters(storageKey: string) {
   if (!storageKey) {

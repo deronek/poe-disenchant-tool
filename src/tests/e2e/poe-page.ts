@@ -117,7 +117,7 @@ export class PoEDisenchantPage {
         dustValue: await extract(indices["Dust Value"]),
         dustPerChaos: await extract(indices["Dust / Chaos"]),
         dustPerChaosPerSlot: await extract(indices["Dust / Chaos / Slot"]),
-        goldFee: await extract(indices["Gold Fee"]),
+        goldCost: await extract(indices["Gold Fee"]),
       });
     }
     return items;
@@ -147,7 +147,7 @@ export class PoEDisenchantPage {
       case "Dust / Chaos / Slot":
         return item.dustPerChaosPerSlot;
       case "Gold Fee":
-        return item.goldFee;
+        return item.goldCost;
       default:
         throw new Error(`Unknown header name: ${headerName}`);
     }

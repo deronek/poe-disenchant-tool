@@ -82,7 +82,7 @@ export function TabbedFilter<TData extends Item>({
     }
   };
 
-  const handleApply = () => {
+  const handleClose = () => {
     setIsOpen(false);
   };
 
@@ -119,7 +119,7 @@ export function TabbedFilter<TData extends Item>({
               <h4 className="font-semibold">Apply Filter</h4>
             </div>
             <p className="text-muted-foreground text-sm text-pretty">
-              Filter items by price or dust value. Saved locally.
+              Filter items by price, dust value, or gold fee. Saved locally.
             </p>
           </div>
 
@@ -236,7 +236,7 @@ export function TabbedFilter<TData extends Item>({
             >
               Reset All ({numberOfActiveFilters})
             </Button>
-            <Button size="sm" onClick={handleApply} className="flex-1">
+            <Button size="sm" onClick={handleClose} className="flex-1">
               Close
             </Button>
           </div>
