@@ -3,7 +3,7 @@ import type { Column } from "@tanstack/react-table";
 import { useCallback, useState } from "react";
 import { ChevronDown, Filter } from "lucide-react";
 
-import { RangeFilter } from "@/components/filters/range-filter";
+import { RangeFilter } from "@/components/filters";
 import { Button } from "@/components/ui/button";
 import {
   Popover,

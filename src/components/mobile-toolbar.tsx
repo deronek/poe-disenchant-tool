@@ -3,14 +3,17 @@ import type { Item } from "@/lib/itemData";
 import { Table } from "@tanstack/react-table";
 
 import { AdvancedSettingsPanel } from "@/components/advanced-settings-panel";
-import { NameFilterChip, PriceFilterChip } from "@/components/filters";
-import { DustFilterChip } from "@/components/filters/dust-filter-chip";
-import { TabbedFilter } from "@/components/filters/tabbed-filter";
+import {
+  DustFilterChip,
+  NameFilter,
+  NameFilterChip,
+  PriceFilterChip,
+  TabbedFilter,
+} from "@/components/filters";
 import { RangeFilterValue } from "@/lib/range-filter";
 import { ClearMarksButton } from "./clear-marks-button";
 import { COLUMN_IDS } from "./columns";
 import { MobileSortingControls } from "./mobile-sorting-controls";
-import { NameFilter } from "./name-filter";
 
 type MobileToolbarProps<TData extends Item> = {
   table: Table<TData>;
