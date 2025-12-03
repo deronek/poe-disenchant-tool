@@ -86,12 +86,17 @@ export function TabbedFilter<TData extends Item>({
     setIsOpen(false);
   };
 
-  const dotColor =
-    activeTab === "price"
-      ? "bg-radial-[var(--color-amber-900)_1px,transparent_1px] dark:bg-radial-[var(--color-amber-300)_1px,transparent_1px]"
-      : activeTab === "dust"
-        ? "bg-radial-[var(--color-purple-900)_1px,transparent_1px] dark:bg-radial-[var(--color-purple-300)_1px,transparent_1px]"
-        : "bg-radial-[var(--color-yellow-900)_1px,transparent_1px] dark:bg-radial-[var(--color-yellow-300)_1px,transparent_1px]";
+  function getDotColor(activeTab: string) {
+    if (activeTab === "price") {
+      return "bg-radial-[var(--color-amber-900)_1px,transparent_1px] dark:bg-radial-[var(--color-amber-300)_1px,transparent_1px]";
+    } else if (activeTab === "dust") {
+      return "bg-radial-[var(--color-purple-900)_1px,transparent_1px] dark:bg-radial-[var(--color-purple-300)_1px,transparent_1px]";
+    } else {
+      return "bg-radial-[var(--color-yellow-900)_1px,transparent_1px] dark:bg-radial-[var(--color-yellow-300)_1px,transparent_1px]";
+    }
+  }
+
+  const dotColor = getDotColor(activeTab);
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
