@@ -830,27 +830,31 @@ export class PoEDisenchantPage {
 
   // All below assume tabbed filter is open and correct tab is active
   get priceFilterLowerBoundSliderTrack() {
-    return this.page.getByLabel("Lower bound price filter");
+    return this.page.getByLabel("Lower bound price filter", { exact: true });
   }
 
   get priceFilterUpperBoundSliderTrack() {
-    return this.page.getByLabel("Upper bound price filter");
+    return this.page.getByLabel("Upper bound price filter", { exact: true });
   }
 
   get dustFilterLowerBoundSliderTrack() {
-    return this.page.getByLabel("Lower bound dust value filter");
+    return this.page.getByLabel("Lower bound dust value filter", {
+      exact: true,
+    });
   }
 
   get dustFilterUpperBoundSliderTrack() {
-    return this.page.getByLabel("Upper bound dust value filter");
+    return this.page.getByLabel("Upper bound dust value filter", {
+      exact: true,
+    });
   }
 
   get goldFilterLowerBoundSliderTrack() {
-    return this.page.getByLabel("Lower bound gold fee filter");
+    return this.page.getByLabel("Lower bound gold fee filter", { exact: true });
   }
 
   get goldFilterUpperBoundSliderTrack() {
-    return this.page.getByLabel("Upper bound gold fee filter");
+    return this.page.getByLabel("Upper bound gold fee filter", { exact: true });
   }
 
   get tabbedFilterResetAllButton() {
@@ -872,27 +876,33 @@ export class PoEDisenchantPage {
   }
 
   // Assumes popover is open
-  async switchToTab(tabName: "price" | "dustValue" | "goldFee"): Promise<void> {
-    const tab =
-      tabName === "price"
-        ? this.priceTabTrigger
-        : tabName === "dustValue"
-          ? this.dustValueTabTrigger
-          : this.goldFeeTabTrigger;
+  async switchToTab(tabName: "price" | "dust" | "gold"): Promise<void> {
+    const tab = (() => {
+      switch (tabName) {
+        case "price":
+          return this.priceTabTrigger;
+        case "dust":
+          return this.dustValueTabTrigger;
+        case "gold":
+          return this.goldFeeTabTrigger;
+      }
+    })();
     await tab.click();
     await expect(tab).toHaveAttribute("data-state", "active");
   }
 
   // Assumes popover is open
-  async verifyTabActive(
-    tabName: "price" | "dustValue" | "goldFee",
-  ): Promise<void> {
-    const tab =
-      tabName === "price"
-        ? this.priceTabTrigger
-        : tabName === "dustValue"
-          ? this.dustValueTabTrigger
-          : this.goldFeeTabTrigger;
+  async verifyTabActive(tabName: "price" | "dust" | "gold"): Promise<void> {
+    const tab = (() => {
+      switch (tabName) {
+        case "price":
+          return this.priceTabTrigger;
+        case "dust":
+          return this.dustValueTabTrigger;
+        case "gold":
+          return this.goldFeeTabTrigger;
+      }
+    })();
     await expect(tab).toHaveAttribute("data-state", "active");
   }
 
@@ -996,7 +1006,7 @@ export class PoEDisenchantPage {
     if (percent < 0 || percent > 100) {
       throw new Error("Percent must be between 0 and 100");
     }
-    await this.switchToTab("dustValue");
+    await this.switchToTab("dust");
 
     const track =
       bound === "lower"
@@ -1024,7 +1034,7 @@ export class PoEDisenchantPage {
     if (percent < 0 || percent > 100) {
       throw new Error("Percent must be between 0 and 100");
     }
-    await this.switchToTab("goldFee");
+    await this.switchToTab("gold");
 
     const track =
       bound === "lower"
@@ -1044,28 +1054,49 @@ export class PoEDisenchantPage {
     await this.page.mouse.up();
   }
 
-  async resetPriceFilter(): Promise<void> {
-    await this.switchToTab("price");
-    await this.tabbedFilterResetAllButton.click();
-    await this.closeTabbedFilter();
+  async setAllFilters(): Promise<void> {
+    // Set price filter
+    await this.setPriceFilterValuePercent("lower", 50);
+    await this.setPriceFilterValuePercent("upper", 50);
+    await this.verifyFilterChipVisible("price", true);
+
+    // Set dust filter
+    await this.setDustFilterValuePercent("lower", 30);
+    await this.setDustFilterValuePercent("upper", 30);
+    await this.verifyFilterChipVisible("dust", true);
+
+    // Set gold fee filter
+    await this.setGoldFilterValuePercent("lower", 25);
+    await this.setGoldFilterValuePercent("upper", 25);
+    await this.verifyFilterChipVisible("gold", true);
   }
 
-  async resetDustFilter(): Promise<void> {
-    await this.switchToTab("dustValue");
-    await this.tabbedFilterResetAllButton.click();
-    await this.closeTabbedFilter();
+  getFilterLabelName(name: "price" | "dust" | "gold") {
+    switch (name) {
+      case "price":
+        return "Price";
+      case "dust":
+        return "Dust Value";
+      case "gold":
+        return "Gold Fee";
+    }
+  }
+  async getLowerBoundResetButton(
+    name: "price" | "dust" | "gold",
+  ): Promise<Locator> {
+    const labelName = (await this.getFilterLabelName(name)).toLowerCase();
+    return this.page.getByRole("button", {
+      name: `Reset lower bound ${labelName} filter`,
+    });
   }
 
-  async resetGoldFilter(): Promise<void> {
-    await this.switchToTab("goldFee");
-    await this.tabbedFilterResetAllButton.click();
-    await this.closeTabbedFilter();
-  }
-
-  async resetTabbedFilter(): Promise<void> {
-    await this.openTabbedFilter();
-    await this.tabbedFilterResetAllButton.click();
-    await this.closeTabbedFilter();
+  async getUpperBoundResetButton(
+    name: "price" | "dust" | "gold",
+  ): Promise<Locator> {
+    const labelName = (await this.getFilterLabelName(name)).toLowerCase();
+    return this.page.getByRole("button", {
+      name: `Reset upper bound ${labelName} filter`,
+    });
   }
 
   // ---------------------------

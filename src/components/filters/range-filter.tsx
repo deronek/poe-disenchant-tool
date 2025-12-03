@@ -226,6 +226,7 @@ export function RangeFilter<TData extends Item>({
               disabled={!hasMin}
               onClick={handleResetLowerBound}
               className="bg-background dark:bg-background hover:bg-accent h-6 text-xs"
+              aria-label={`Reset lower bound ${title.toLowerCase()} filter`}
             >
               Reset
             </Button>
@@ -273,6 +274,7 @@ export function RangeFilter<TData extends Item>({
               disabled={!hasMax}
               onClick={handleResetUpperBound}
               className="bg-background dark:bg-background hover:bg-accent h-6 text-xs"
+              aria-label={`Reset upper bound  ${title.toLowerCase()} filter`}
             >
               Reset
             </Button>
