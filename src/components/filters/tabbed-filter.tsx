@@ -111,7 +111,7 @@ export function TabbedFilter<TData extends Item>({
           >
             {/* Halftone background pattern */}
             <div
-              className={`pointer-events-none absolute inset-0 z-0 -mx-1 -my-1.5 ${dotColor} mask-[radial-gradient(circle_at_center,white_0%,rgba(255,255,255,0.3)_60%,rgba(255,255,255,0.12)_80%,transparent_100%)] bg-size-[3px_3px] opacity-40`}
+              className={`pointer-events-none absolute inset-0 z-0 -mx-1 -my-1.5 ${dotColor} mask-[radial-gradient(circle_at_center,white_0%,rgba(255,255,255,0.3)_60%,rgba(255,255,255,0.12)_80%,transparent_100%)] bg-size-[3px_3px] opacity-30`}
             />
 
             <TabsList className="z-10 w-full">
