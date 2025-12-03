@@ -10,6 +10,7 @@ test("should display correct column headers", async ({ poePage }) => {
     "Dust Value",
     "Dust / Chaos",
     "Dust / Chaos / Slot",
+    "Gold Fee",
     "Trade Link",
     "Mark",
   ];
@@ -27,6 +28,7 @@ test.describe("Data Rendering and Formatting", () => {
     "Dust Value",
     "Dust / Chaos",
     "Dust / Chaos / Slot",
+    "Gold Fee",
   ];
 
   test("should display compact and full values correctly for all items and numerical columns", async ({
