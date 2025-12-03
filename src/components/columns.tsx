@@ -66,7 +66,7 @@ const ChaosCell: ColumnDef<Item>["cell"] = function ChaosCellComponent({
 
 const GoldFeeHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
   React.memo(
-    function GoldCostHeaderComponent() {
+    function GoldFeeHeaderComponent() {
       return (
         <div className="flex w-full flex-1 items-center">
           <p>Gold Fee</p>
@@ -355,6 +355,7 @@ export const createColumns = (
       header: GoldFeeHeader,
       size: 115,
       meta: { className: "text-right tabular-nums" },
+      filterFn: rangeFilterFn,
       cell: GoldCell,
     },
     {

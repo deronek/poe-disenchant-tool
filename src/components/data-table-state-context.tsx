@@ -32,6 +32,7 @@ const defaultState: DataTableState = {
 const DataTableStateContext = createContext<DataTableState>(defaultState);
 
 const chaosColumnId = COLUMN_IDS.CHAOS;
+const goldColumnId = COLUMN_IDS.GOLD_FEE;
 
 export function DataTableStateProvider({
   children,
@@ -60,7 +61,9 @@ export function DataTableStateProvider({
       setColumnFilters((prev) => {
         const filtersToRestore = prev.filter(
           (f) =>
-            f.id !== chaosColumnId && f.id !== COLUMN_IDS.CALCULATED_DUST_VALUE,
+            f.id !== chaosColumnId &&
+            f.id !== COLUMN_IDS.CALCULATED_DUST_VALUE &&
+            f.id !== goldColumnId,
         );
 
         // If chaos filter needs to be applied
@@ -79,6 +82,15 @@ export function DataTableStateProvider({
             value: persistedFilters.dust,
           };
           filtersToRestore.push(dustFilter);
+        }
+
+        // If gold filter needs to be applied
+        if (persistedFilters?.gold != null) {
+          const goldFilter = {
+            id: goldColumnId,
+            value: persistedFilters.gold,
+          };
+          filtersToRestore.push(goldFilter);
         }
 
         return filtersToRestore;

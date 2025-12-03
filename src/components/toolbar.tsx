@@ -5,6 +5,7 @@ import { Table } from "@tanstack/react-table";
 import { AdvancedSettingsPanel } from "@/components/advanced-settings-panel";
 import {
   DustFilterChip,
+  GoldFilterChip,
   NameFilter,
   NameFilterChip,
   PriceFilterChip,
@@ -42,10 +43,13 @@ export function DataTableToolbar<TData extends Item>({
             <TabbedFilter
               priceColumn={table.getColumn(COLUMN_IDS.CHAOS)}
               dustColumn={table.getColumn(COLUMN_IDS.CALCULATED_DUST_VALUE)}
+              goldColumn={table.getColumn(COLUMN_IDS.GOLD_FEE)}
               priceMin={0}
               priceMax={500}
               dustMin={2000}
               dustMax={5000000}
+              goldMin={1500}
+              goldMax={80000}
             />
           </div>
 
@@ -98,6 +102,27 @@ export function DataTableToolbar<TData extends Item>({
                     />
                   </div>
                 )}
+
+                {(() => {
+                  const goldRange = table
+                    .getColumn(COLUMN_IDS.GOLD_FEE)
+                    ?.getFilterValue() as RangeFilterValue | undefined;
+
+                  return (
+                    goldRange && (
+                      <div className="w-auto min-w-0 xl:shrink-0">
+                        <GoldFilterChip
+                          value={goldRange}
+                          onClear={() =>
+                            table
+                              .getColumn(COLUMN_IDS.GOLD_FEE)
+                              ?.setFilterValue(undefined)
+                          }
+                        />
+                      </div>
+                    )
+                  );
+                })()}
               </>
             );
           })()}

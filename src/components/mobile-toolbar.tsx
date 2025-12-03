@@ -5,6 +5,7 @@ import { Table } from "@tanstack/react-table";
 import { AdvancedSettingsPanel } from "@/components/advanced-settings-panel";
 import {
   DustFilterChip,
+  GoldFilterChip,
   NameFilter,
   NameFilterChip,
   PriceFilterChip,
@@ -39,10 +40,13 @@ export function MobileToolbar<TData extends Item>({
           <TabbedFilter
             priceColumn={table.getColumn(COLUMN_IDS.CHAOS)}
             dustColumn={table.getColumn(COLUMN_IDS.CALCULATED_DUST_VALUE)}
+            goldColumn={table.getColumn(COLUMN_IDS.GOLD_FEE)}
             priceMin={0}
             priceMax={500}
             dustMin={2000}
             dustMax={5000000}
+            goldMin={1500}
+            goldMax={80000}
             className="w-full"
           />
           <MobileSortingControls table={table} className="w-full" />
@@ -76,9 +80,12 @@ export function MobileToolbar<TData extends Item>({
           const dustRange = table
             .getColumn(COLUMN_IDS.CALCULATED_DUST_VALUE)
             ?.getFilterValue() as RangeFilterValue | undefined;
+          const goldRange = table
+            .getColumn(COLUMN_IDS.GOLD_FEE)
+            ?.getFilterValue() as RangeFilterValue | undefined;
 
           const hasActiveFilters =
-            nameFilter !== "" || !!chaosRange || !!dustRange;
+            nameFilter !== "" || !!chaosRange || !!dustRange || !!goldRange;
 
           return hasActiveFilters ? (
             <div className="flex flex-wrap gap-1">
@@ -102,6 +109,16 @@ export function MobileToolbar<TData extends Item>({
                   onClear={() =>
                     table
                       .getColumn(COLUMN_IDS.CALCULATED_DUST_VALUE)
+                      ?.setFilterValue(undefined)
+                  }
+                />
+              )}
+              {goldRange && (
+                <GoldFilterChip
+                  value={goldRange}
+                  onClear={() =>
+                    table
+                      .getColumn(COLUMN_IDS.GOLD_FEE)
                       ?.setFilterValue(undefined)
                   }
                 />
