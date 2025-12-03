@@ -370,7 +370,6 @@ test.describe("Tabbed Filter Functionality", () => {
     await poePage.verifyTabActive("dust");
     await poePage.closeTabbedFilter();
 
-    // Reopen and verify gold fee tab is still active
     await poePage.openTabbedFilter();
     await poePage.switchToTab("gold");
     await poePage.closeTabbedFilter();
@@ -913,7 +912,7 @@ test.describe("Dust Value Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("dust", true);
     await poePage.verifyFilterChipVisible("gold", true);
 
-    // Reset upper bound price filter
+    // Reset upper bound dust filter
     const upperBoundResetButton =
       await poePage.getUpperBoundResetButton("dust");
     await upperBoundResetButton.click();
