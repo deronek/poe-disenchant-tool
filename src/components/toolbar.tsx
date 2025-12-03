@@ -65,7 +65,7 @@ export function DataTableToolbar<TData extends Item>({
               ?.getFilterValue() as RangeFilterValue | undefined;
 
             return (
-              <>
+              <div className="flex flex-wrap gap-x-1">
                 {nameFilter !== "" && (
                   <div className="w-auto min-w-0 xl:shrink-0">
                     <NameFilterChip
@@ -123,7 +123,7 @@ export function DataTableToolbar<TData extends Item>({
                     )
                   );
                 })()}
-              </>
+              </div>
             );
           })()}
         </div>
