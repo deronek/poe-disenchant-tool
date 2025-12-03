@@ -196,9 +196,7 @@ export function TabbedFilter<TData extends Item>({
                 column={priceColumn}
                 min={priceMin}
                 max={priceMax}
-                step={10}
-                smallStep={1}
-                largeStep={10}
+                step={1}
                 icon={<ChaosOrbIcon />}
                 title="Price"
               />
@@ -210,8 +208,6 @@ export function TabbedFilter<TData extends Item>({
                 min={dustMin}
                 max={dustMax}
                 step={50000}
-                smallStep={10000}
-                largeStep={100000}
                 icon={<DustIcon />}
                 title="Dust Value"
               />
@@ -222,9 +218,7 @@ export function TabbedFilter<TData extends Item>({
                 column={goldColumn}
                 min={goldMin}
                 max={goldMax}
-                step={100}
-                smallStep={10}
-                largeStep={1000}
+                step={500}
                 icon={<GoldIcon />}
                 title="Gold Fee"
               />
