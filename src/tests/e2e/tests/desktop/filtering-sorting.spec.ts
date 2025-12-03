@@ -416,7 +416,7 @@ test.describe("Price Filter Functionality", () => {
     // Apply name filter
     const targetItem = initialItems[0];
     await poePage.setNameFilter(targetItem.name);
-    await poePage.page.waitForTimeout(500);
+    await poePage.waitForFilterDebounce();
 
     // Verify price filter is still active
     await poePage.verifyFilterChipVisible("price", true);
@@ -534,7 +534,7 @@ test.describe("Dust Value Filter Functionality", () => {
     // Apply name filter
     const targetItem = initialItems[0];
     await poePage.setNameFilter(targetItem.name);
-    await poePage.page.waitForTimeout(500);
+    await poePage.waitForFilterDebounce();
 
     // Verify dust value filter is still active
     await poePage.verifyFilterChipVisible("dust", true);
