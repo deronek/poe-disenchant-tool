@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Table } from "@tanstack/react-table";
 
 import { Input } from "@/components/ui/input";
-import { XButton } from "./ui/x-button";
+import { XButton } from "@/components/ui/x-button";
 
 export function NameFilter<TData extends Item>({
   table,

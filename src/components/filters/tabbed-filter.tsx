@@ -53,7 +53,7 @@ export function TabbedFilter<TData extends Item>({
   const isPriceFilterActive = priceHasMin || priceHasMax;
   const isDustFilterActive = dustHasMin || dustHasMax;
   const isFilterActive = isPriceFilterActive || isDustFilterActive;
-  const numberofActiveFilters =
+  const numberOfActiveFilters =
     (isPriceFilterActive ? 1 : 0) + (isDustFilterActive ? 1 : 0);
 
   const handleReset = () => {
@@ -65,9 +65,9 @@ export function TabbedFilter<TData extends Item>({
     }
   };
 
-  const handleApply = useCallback(() => {
+  const handleApply = () => {
     setIsOpen(false);
-  }, []);
+  };
 
   const dotColor =
     activeTab === "price"
@@ -109,19 +109,13 @@ export function TabbedFilter<TData extends Item>({
             onValueChange={setActiveTab}
             className="relative"
           >
-            {activeTab === "price" && (
-              <div
-                className={`pointer-events-none absolute inset-0 z-0 -mx-1 -my-1.5 ${dotColor} mask-repeat-no-repeat mask-[radial-gradient(circle_at_center,white_0%,rgba(255,255,255,0.3)_60%,rgba(255,255,255,0.12)_80%,transparent_100%)] bg-size-[3px_3px] opacity-40`}
-              />
-            )}
-            {activeTab === "dust" && (
-              <div
-                className={`pointer-events-none absolute inset-0 z-0 -mx-1 -my-1.5 ${dotColor} mask-[radial-gradient(circle_at_center,white_0%,rgba(255,255,255,0.3)_60%,rgba(255,255,255,0.12)_80%,transparent_100%)] bg-size-[3px_3px] opacity-40`}
-              />
-            )}
+            {/* Halftone background pattern */}
+            <div
+              className={`pointer-events-none absolute inset-0 z-0 -mx-1 -my-1.5 ${dotColor} mask-[radial-gradient(circle_at_center,white_0%,rgba(255,255,255,0.3)_60%,rgba(255,255,255,0.12)_80%,transparent_100%)] bg-size-[3px_3px] opacity-40`}
+            />
 
             <TabsList className="z-10 grid w-full grid-cols-2">
-              <TabsTrigger value="price">
+              <TabsTrigger value="price" aria-label="Open price filter tab">
                 <span
                   className={`text-foreground rounded-full p-1 transition-colors ${isPriceFilterActive ? "bg-primary/80" : ""}`}
                 >
@@ -132,7 +126,7 @@ export function TabbedFilter<TData extends Item>({
                 />
                 Price
               </TabsTrigger>
-              <TabsTrigger value="dust">
+              <TabsTrigger value="dust" aria-label="Open dust value filter tab">
                 <span
                   className={`text-foreground rounded-full p-1 transition-colors ${isDustFilterActive ? "bg-primary/80" : ""}`}
                 >
@@ -166,7 +160,6 @@ export function TabbedFilter<TData extends Item>({
                 step={50000}
                 smallStep={10000}
                 largeStep={100000}
-                formatValue={(value) => value.toLocaleString()}
                 icon={<DustIcon />}
                 title="Dust Value"
               />
@@ -181,7 +174,7 @@ export function TabbedFilter<TData extends Item>({
               className="flex-1 tabular-nums"
               disabled={!isFilterActive}
             >
-              Reset All ({numberofActiveFilters})
+              Reset All ({numberOfActiveFilters})
             </Button>
             <Button size="sm" onClick={handleApply} className="flex-1">
               Close

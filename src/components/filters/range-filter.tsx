@@ -27,7 +27,6 @@ interface RangeFilterProps<TData> {
   step?: number;
   smallStep?: number;
   largeStep?: number;
-  formatValue?: (value: number) => string;
   icon?: React.ReactNode;
   title: string;
 }
@@ -36,7 +35,7 @@ interface RangeFilterStatusProps {
   range: RangeFilterValue;
   hasMin: boolean;
   hasMax: boolean;
-  formatValue?: (value: number) => string;
+  format: (value: number) => string;
   icon?: React.ReactNode;
   title: string;
 }
@@ -45,12 +44,10 @@ export function RangeFilterStatus({
   range,
   hasMin,
   hasMax,
-  formatValue,
+  format,
   icon,
   title,
 }: RangeFilterStatusProps) {
-  const format = formatValue || ((value: number) => value.toString());
-
   if (hasMin && hasMax) {
     return (
       <>
@@ -156,6 +153,7 @@ export function RangeFilter<TData extends Item>({
   };
 
   const handleLowerBoundKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    // Home and End keys handled by Radix correctly
     if (e.key === "Home" || e.key === "End") return;
 
     let delta = 0;
@@ -244,7 +242,6 @@ export function RangeFilter<TData extends Item>({
             step={step}
             value={[hasMax ? (currentRange.max as number) : max]}
             onValueChange={handleUpperBoundChange}
-            disabled={false}
             className={cn("w-full py-1", !hasMax && "opacity-60")}
             aria-label={`Upper bound ${title.toLowerCase()} filter`}
           />
@@ -293,7 +290,7 @@ export function RangeFilter<TData extends Item>({
             range={currentRange}
             hasMin={hasMin}
             hasMax={hasMax}
-            formatValue={format}
+            format={format}
             icon={icon}
             title={title}
           />

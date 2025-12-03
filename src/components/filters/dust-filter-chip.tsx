@@ -23,8 +23,8 @@ export function DustFilterChip({ value, onClear }: DustFilterChipProps) {
 
     return (
       <>
-        {value?.min?.toLocaleString()}
-        <DustIcon />– {value?.max?.toLocaleString()}
+        {value.min?.toLocaleString()}
+        <DustIcon />– {value.max?.toLocaleString()}
       </>
     );
   };

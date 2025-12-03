@@ -30,6 +30,11 @@ export class PoEDisenchantPage {
     await this.waitForDataLoad();
   }
 
+  async refreshPage() {
+    await this.page.reload({ waitUntil: "domcontentloaded" });
+    await this.waitForDataLoad();
+  }
+
   // ---------------------------
   // Console Helpers
   // ---------------------------
@@ -788,15 +793,15 @@ export class PoEDisenchantPage {
   get tabbedFilterPopover() {
     return this.page
       .locator('[role="dialog"]')
-      .filter({ hasText: /price filter/i });
+      .filter({ hasText: /apply filter/i });
   }
 
-  get priceTab() {
-    return this.page.getByRole("tab", { name: "Price" });
+  get priceTabTrigger() {
+    return this.page.getByRole("tab", { name: "Open price filter tab" });
   }
 
-  get dustValueTab() {
-    return this.page.getByRole("tab", { name: "Dust Value" });
+  get dustValueTabTrigger() {
+    return this.page.getByRole("tab", { name: "Open dust value filter tab" });
   }
 
   get priceFilterChip() {
@@ -824,8 +829,8 @@ export class PoEDisenchantPage {
     return this.page.getByLabel("Upper bound dust value filter");
   }
 
-  get tabbedFilterResetButton() {
-    return this.tabbedFilterPopover.getByRole("button", { name: "Reset" });
+  get tabbedFilterResetAllButton() {
+    return this.tabbedFilterPopover.getByRole("button", { name: "Reset All" });
   }
 
   get tabbedFilterCloseButton() {
@@ -842,69 +847,65 @@ export class PoEDisenchantPage {
     await expect(this.tabbedFilterPopover).not.toBeVisible();
   }
 
+  // Assumes popover is open
   async switchToTab(tabName: "price" | "dustValue"): Promise<void> {
-    await this.openTabbedFilter();
-    const tab = tabName === "price" ? this.priceTab : this.dustValueTab;
+    const tab =
+      tabName === "price" ? this.priceTabTrigger : this.dustValueTabTrigger;
     await tab.click();
     await expect(tab).toHaveAttribute("data-state", "active");
   }
 
+  // Assumes popover is open
   async verifyTabActive(tabName: "price" | "dustValue"): Promise<void> {
-    const tab = tabName === "price" ? this.priceTab : this.dustValueTab;
+    const tab =
+      tabName === "price" ? this.priceTabTrigger : this.dustValueTabTrigger;
     await expect(tab).toHaveAttribute("data-state", "active");
   }
 
-  // Legacy methods for backward compatibility
-  get priceFilterButton() {
-    return this.tabbedFilterButton;
-  }
+  getRangeFilterRange(chipText: string): { min?: number; max?: number } {
+    const normalize = (v: string) => parseInt(v.replace(/,/g, ""), 10);
 
-  async openPriceFilter(): Promise<void> {
-    await this.switchToTab("price");
-  }
-
-  async closePriceFilter(): Promise<void> {
-    await this.closeTabbedFilter();
-  }
-
-  async getPriceFilterRange(): Promise<{ min: number; max?: number }> {
-    const chipText = await this.priceFilterChip.innerText();
-
-    // Pattern 1: "X–Y" (both bounds)
-    const betweenMatch = chipText.match(/(\d+)\s*[–-]\s*(\d+)/);
+    // Pattern 1: Between (min–max)
+    const betweenMatch = chipText.match(/([\d,.]+)\s*[–-]\s*([\d,.]+)/);
     if (betweenMatch) {
-      const [, min, max] = betweenMatch;
-      return { min: parseInt(min, 10), max: parseInt(max, 10) };
+      const [, rawMin, rawMax] = betweenMatch;
+      return {
+        min: normalize(rawMin),
+        max: normalize(rawMax),
+      };
     }
 
-    // Pattern 2: "≥ X" or ">= X" (only lower bound, no upper bound)
-    const lowerOnlyMatch = chipText.match(/≥\s*(\d+)|>=\s*(\d+)/);
+    // Pattern 2: Lower-only (≥ X or >= X)
+    const lowerOnlyMatch = chipText.match(/(?:≥|>=)\s*([\d,.]+)/);
     if (lowerOnlyMatch) {
-      const value = lowerOnlyMatch[1] ?? lowerOnlyMatch[2];
-      return { min: parseInt(value, 10), max: undefined };
+      return {
+        min: normalize(lowerOnlyMatch[1]),
+        max: undefined,
+      };
+    }
+
+    // Pattern 3: Upper-only (≤ X or <= X)
+    const upperOnlyMatch = chipText.match(/(?:≤|<=)\s*([\d,.]+)/);
+    if (upperOnlyMatch) {
+      return {
+        min: undefined,
+        max: normalize(upperOnlyMatch[1]),
+      };
     }
 
     throw new Error(`Unrecognized price filter chip format: "${chipText}"`);
   }
 
-  async getDustFilterRange(): Promise<{ min: number; max?: number }> {
+  async getPriceFilterRange(): Promise<{ min?: number; max?: number }> {
+    const chipText = (await this.priceFilterChip.innerText()).trim();
+
+    return this.getRangeFilterRange(chipText);
+  }
+
+  async getDustFilterRange(): Promise<{ min?: number; max?: number }> {
     const chipText = await this.dustFilterChip.innerText();
 
-    // Pattern 1: "X–Y" (both bounds)
-    const betweenMatch = chipText.match(/(\d+)\s*[–-]\s*(\d+)/);
-    if (betweenMatch) {
-      const [, min, max] = betweenMatch;
-      return { min: parseInt(min, 10), max: parseInt(max, 10) };
-    }
-
-    // Pattern 2: "≥ X" or ">= X" (only lower bound, no upper bound)
-    const lowerOnlyMatch = chipText.match(/≥\s*(\d+)|>=\s*(\d+)/);
-    if (lowerOnlyMatch) {
-      const value = lowerOnlyMatch[1] ?? lowerOnlyMatch[2];
-      return { min: parseInt(value, 10), max: undefined };
-    }
-
-    throw new Error(`Unrecognized dust filter chip format: "${chipText}"`);
+    return this.getRangeFilterRange(chipText);
   }
 
   async verifyPriceFilterRange(min: number, max: number): Promise<void> {
@@ -945,8 +946,6 @@ export class PoEDisenchantPage {
     await this.page.mouse.down();
     await track.hover({ force: true, position: { x: clickX, y: clickY } });
     await this.page.mouse.up();
-
-    await this.closeTabbedFilter();
   }
 
   // Percent should be between 0 and 100
@@ -975,25 +974,23 @@ export class PoEDisenchantPage {
     await this.page.mouse.down();
     await track.hover({ force: true, position: { x: clickX, y: clickY } });
     await this.page.mouse.up();
-
-    await this.closeTabbedFilter();
   }
 
   async resetPriceFilter(): Promise<void> {
     await this.switchToTab("price");
-    await this.tabbedFilterResetButton.click();
+    await this.tabbedFilterResetAllButton.click();
     await this.closeTabbedFilter();
   }
 
   async resetDustFilter(): Promise<void> {
     await this.switchToTab("dustValue");
-    await this.tabbedFilterResetButton.click();
+    await this.tabbedFilterResetAllButton.click();
     await this.closeTabbedFilter();
   }
 
   async resetTabbedFilter(): Promise<void> {
     await this.openTabbedFilter();
-    await this.tabbedFilterResetButton.click();
+    await this.tabbedFilterResetAllButton.click();
     await this.closeTabbedFilter();
   }
 
