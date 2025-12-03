@@ -787,7 +787,7 @@ export class PoEDisenchantPage {
   // ---------------------------
 
   get tabbedFilterButton() {
-    return this.page.getByRole("button", { name: "Filter", exact: true });
+    return this.page.getByRole("button", { name: "Filters", exact: true });
   }
 
   get tabbedFilterPopover() {
