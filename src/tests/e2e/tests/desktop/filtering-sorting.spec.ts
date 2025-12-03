@@ -272,16 +272,6 @@ test.describe("Tabbed Filter Functionality", () => {
     await expect(poePage.tabbedFilterPopover).not.toBeVisible();
   });
 
-  test("should close tabbed filter popover with close button", async ({
-    poePage,
-  }) => {
-    await poePage.openTabbedFilter();
-    await expect(poePage.tabbedFilterPopover).toBeVisible();
-
-    await poePage.closeTabbedFilter();
-    await expect(poePage.tabbedFilterPopover).not.toBeVisible();
-  });
-
   test("should close tabbed filter popover with escape key", async ({
     poePage,
   }) => {

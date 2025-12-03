@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
+import { cn } from "@/lib//utils";
 import {
   createNormalizedFilterValue,
   getCurrentFilterValue,
@@ -18,7 +19,6 @@ import {
   updateLowerBound,
   updateUpperBound,
 } from "@/lib/range-filter";
-import { cn } from "../../lib/utils";
 
 interface RangeFilterProps<TData> {
   column: Column<TData, unknown> | undefined;
@@ -109,27 +109,24 @@ export function RangeFilter<TData extends Item>({
   const hasMax = hasMaxFilter(currentRange);
   const isFilterActive = hasMin || hasMax;
 
+  const commitRange = (updatedRange: RangeFilterValue) => {
+    const normalized = createNormalizedFilterValue(updatedRange, defaults);
+    setFilterValue(column, normalized);
+  };
+
   const updateLowerBoundValue = (newValue: number) => {
     const effectiveMax = currentRange.max ?? max;
     const clamped = Math.round(Math.min(Math.max(newValue, min), effectiveMax));
 
     const updatedRange = updateLowerBound(clamped, currentRange, { max });
-    const normalizedFilter = createNormalizedFilterValue(
-      updatedRange,
-      defaults,
-    );
-    setFilterValue(column, normalizedFilter);
+    commitRange(updatedRange);
   };
 
   const updateUpperBoundValue = (newValue: number) => {
     const updatedRange = updateUpperBound(newValue, currentRange, {
       max,
     });
-    const normalizedFilter = createNormalizedFilterValue(
-      updatedRange,
-      defaults,
-    );
-    setFilterValue(column, normalizedFilter);
+    commitRange(updatedRange);
   };
 
   const handleLowerBoundChange = (sliderValue: number[]) => {
