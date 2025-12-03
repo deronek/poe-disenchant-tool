@@ -185,7 +185,20 @@ export function RangeFilter<TData extends Item>({
   const format = (value: number) => value.toLocaleString();
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
+      <div className="flex items-center justify-between border-b leading-8 font-semibold">
+        <div className="inline-flex items-center gap-2">
+          {icon}
+          {title}
+        </div>
+
+        <Badge
+          variant={isFilterActive ? "default" : "secondary"}
+          className="text-xs"
+        >
+          {isFilterActive ? "Active" : "Inactive"}
+        </Badge>
+      </div>
       <div className="space-y-2">
         <Label htmlFor="lower-bound">Lower Bound</Label>
         <div className="px-2">
@@ -276,15 +289,6 @@ export function RangeFilter<TData extends Item>({
       </div>
 
       <div className="space-y-3 border-t pt-2">
-        <div className="flex items-center justify-between text-sm">
-          <span className="text-muted-foreground">Filter Status:</span>
-          <Badge
-            variant={isFilterActive ? "default" : "secondary"}
-            className="text-xs"
-          >
-            {isFilterActive ? "Active" : "Inactive"}
-          </Badge>
-        </div>
         <div className="text-muted-foreground min-h-5 text-xs leading-[18px]">
           <RangeFilterStatus
             range={currentRange}

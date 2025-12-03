@@ -1,6 +1,6 @@
 import type { Item } from "@/lib/itemData";
 import type { Column } from "@tanstack/react-table";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { ChevronDown, Filter } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -114,28 +114,39 @@ export function TabbedFilter<TData extends Item>({
               className={`pointer-events-none absolute inset-0 z-0 -mx-1 -my-1.5 ${dotColor} mask-[radial-gradient(circle_at_center,white_0%,rgba(255,255,255,0.3)_60%,rgba(255,255,255,0.12)_80%,transparent_100%)] bg-size-[3px_3px] opacity-40`}
             />
 
-            <TabsList className="z-10 grid w-full grid-cols-2">
+            <TabsList className="z-10 w-full">
               <TabsTrigger value="price" aria-label="Open price filter tab">
-                <span
-                  className={`text-foreground rounded-full p-1 transition-colors ${isPriceFilterActive ? "bg-primary/80" : ""}`}
-                >
-                  <Filter className="h-4 w-4" />
-                </span>
                 <ChaosOrbIcon
-                  className={`${isPriceFilterActive ? "" : "grayscale-80"}`}
+                  className={isPriceFilterActive ? "" : "grayscale-80"}
                 />
-                Price
-              </TabsTrigger>
-              <TabsTrigger value="dust" aria-label="Open dust value filter tab">
-                <span
-                  className={`text-foreground rounded-full p-1 transition-colors ${isDustFilterActive ? "bg-primary/80" : ""}`}
-                >
-                  <Filter className="h-4 w-4" />
+
+                <span className="relative inline-flex items-center">
+                  <span className="text-xs leading-none">Price</span>
+
+                  {isPriceFilterActive && (
+                    <span
+                      aria-hidden="true"
+                      className="bg-primary absolute left-full size-1.5 translate-x-1 -translate-y-1 rounded-full"
+                    />
+                  )}
                 </span>
+              </TabsTrigger>
+
+              <TabsTrigger value="dust" aria-label="Open dust value filter tab">
                 <DustIcon
-                  className={`${isDustFilterActive ? "" : "grayscale-80"}`}
-                />{" "}
-                Dust Value
+                  className={isDustFilterActive ? "" : "grayscale-80"}
+                />
+
+                <span className="relative inline-flex items-center">
+                  <span className="text-xs leading-none">Dust</span>
+
+                  {isDustFilterActive && (
+                    <span
+                      aria-hidden="true"
+                      className="bg-primary absolute left-full size-1.5 translate-x-1 -translate-y-1 rounded-full"
+                    />
+                  )}
+                </span>
               </TabsTrigger>
             </TabsList>
 

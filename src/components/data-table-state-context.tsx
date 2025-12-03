@@ -58,19 +58,26 @@ export function DataTableStateProvider({
     // which triggers hydration warnings.
     const timeout = window.setTimeout(() => {
       setColumnFilters((prev) => {
-        const filtersToRestore = prev.filter((f) =>
-          f.id !== chaosColumnId && f.id !== COLUMN_IDS.CALCULATED_DUST_VALUE
+        const filtersToRestore = prev.filter(
+          (f) =>
+            f.id !== chaosColumnId && f.id !== COLUMN_IDS.CALCULATED_DUST_VALUE,
         );
 
         // If chaos filter needs to be applied
         if (persistedFilters?.price != null) {
-          const chaosFilter = { id: chaosColumnId, value: persistedFilters.price };
+          const chaosFilter = {
+            id: chaosColumnId,
+            value: persistedFilters.price,
+          };
           filtersToRestore.push(chaosFilter);
         }
 
         // If dust filter needs to be applied
         if (persistedFilters?.dust != null) {
-          const dustFilter = { id: COLUMN_IDS.CALCULATED_DUST_VALUE, value: persistedFilters.dust };
+          const dustFilter = {
+            id: COLUMN_IDS.CALCULATED_DUST_VALUE,
+            value: persistedFilters.dust,
+          };
           filtersToRestore.push(dustFilter);
         }
 
