@@ -380,7 +380,7 @@ test.describe("Tabbed Filter Functionality", () => {
     await poePage.closeTabbedFilter();
   });
 
-  test("should reset all filters with reset all button", async ({
+  test("should clear all filters with clear all button", async ({
     poePage,
   }) => {
     await poePage.openTabbedFilter();
@@ -503,7 +503,7 @@ test.describe("Price Filter Functionality", () => {
     expect(filterRangeAfter.max).toBe(filterRangeBefore.max);
   });
 
-  test("should reset price filter lower bound with reset button", async ({
+  test("should clear price filter lower bound with clear button", async ({
     poePage,
   }) => {
     await poePage.openTabbedFilter(); // Open tabbed filter
@@ -526,7 +526,7 @@ test.describe("Price Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("price", false);
   });
 
-  test("should reset price filter upper bound with reset button", async ({
+  test("should clear price filter upper bound with clear button", async ({
     poePage,
   }) => {
     await poePage.openTabbedFilter(); // Open tabbed filter
@@ -549,7 +549,7 @@ test.describe("Price Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("price", false);
   });
 
-  test("should reset price filter lower bound for both filters active", async ({
+  test("should clear price filter lower bound for both filters active", async ({
     poePage,
   }) => {
     await poePage.openTabbedFilter();
@@ -579,7 +579,7 @@ test.describe("Price Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("price", true);
   });
 
-  test("should reset price filter upper bound for both filters active", async ({
+  test("should clear price filter upper bound for both filters active", async ({
     poePage,
   }) => {
     await poePage.openTabbedFilter();
@@ -624,7 +624,7 @@ test.describe("Price Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("price", false);
   });
 
-  test("should persist other filters when resetting price filter bounds individually", async ({
+  test("should persist other filters when clearing price filter bounds individually", async ({
     poePage,
   }) => {
     await poePage.openTabbedFilter();
@@ -658,7 +658,7 @@ test.describe("Price Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("gold", true);
   });
 
-  test("should disable price filter lower bound reset button when not active", async ({
+  test("should disable price filter lower bound clear button when not active", async ({
     poePage,
   }) => {
     await poePage.openTabbedFilter();
@@ -675,7 +675,7 @@ test.describe("Price Filter Functionality", () => {
     await expect(lowerBoundResetButton).toBeDisabled();
   });
 
-  test("should disable price filter upper bound reset button when not active", async ({
+  test("should disable price filter upper bound clear button when not active", async ({
     poePage,
   }) => {
     await poePage.openTabbedFilter();
@@ -798,7 +798,7 @@ test.describe("Dust Value Filter Functionality", () => {
     expect(filterRangeAfter.max).toBe(filterRangeBefore.max);
   });
 
-  test("should reset dust filter lower bound with reset button", async ({
+  test("should clear dust filter lower bound with clear button", async ({
     poePage,
   }) => {
     await poePage.openTabbedFilter(); // Open tabbed filter
@@ -821,7 +821,7 @@ test.describe("Dust Value Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("dust", false);
   });
 
-  test("should reset dust filter upper bound with reset button", async ({
+  test("should clear dust filter upper bound with clear button", async ({
     poePage,
   }) => {
     await poePage.openTabbedFilter(); // Open tabbed filter
@@ -844,7 +844,7 @@ test.describe("Dust Value Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("dust", false);
   });
 
-  test("should reset dust filter lower bound for both filters active", async ({
+  test("should clear dust filter lower bound for both filters active", async ({
     poePage,
   }) => {
     await poePage.openTabbedFilter();
@@ -874,7 +874,7 @@ test.describe("Dust Value Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("dust", true);
   });
 
-  test("should reset dust filter upper bound for both filters active", async ({
+  test("should clear dust filter upper bound for both filters active", async ({
     poePage,
   }) => {
     await poePage.openTabbedFilter();
@@ -919,7 +919,7 @@ test.describe("Dust Value Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("dust", false);
   });
 
-  test("should persist other filters when resetting dust filter bounds individually", async ({
+  test("should persist other filters when clearing dust filter bounds individually", async ({
     poePage,
   }) => {
     await poePage.openTabbedFilter();
@@ -953,7 +953,7 @@ test.describe("Dust Value Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("gold", true);
   });
 
-  test("should disable dust filter lower bound reset button when not active", async ({
+  test("should disable dust filter lower bound clear button when not active", async ({
     poePage,
   }) => {
     await poePage.openTabbedFilter();
@@ -970,7 +970,7 @@ test.describe("Dust Value Filter Functionality", () => {
     await expect(lowerBoundResetButton).toBeDisabled();
   });
 
-  test("should disable dust filter upper bound reset button when not active", async ({
+  test("should disable dust filter upper bound clear button when not active", async ({
     poePage,
   }) => {
     await poePage.openTabbedFilter();
@@ -1104,7 +1104,7 @@ test.describe("Gold Fee Filter Functionality", () => {
     expect(filterRangeAfter.max).toBe(filterRangeBefore.max);
   });
 
-  test("should reset gold filter lower bound with reset button", async ({
+  test("should clear gold filter lower bound with clear button", async ({
     poePage,
   }) => {
     await poePage.openTabbedFilter(); // Open tabbed filter
@@ -1127,7 +1127,7 @@ test.describe("Gold Fee Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("gold", false);
   });
 
-  test("should reset gold filter upper bound with reset button", async ({
+  test("should clear gold filter upper bound with clear button", async ({
     poePage,
   }) => {
     await poePage.openTabbedFilter(); // Open tabbed filter
@@ -1150,7 +1150,7 @@ test.describe("Gold Fee Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("gold", false);
   });
 
-  test("should reset gold filter lower bound for both filters active", async ({
+  test("should clear gold filter lower bound for both filters active", async ({
     poePage,
   }) => {
     await poePage.openTabbedFilter();
@@ -1180,7 +1180,7 @@ test.describe("Gold Fee Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("gold", true);
   });
 
-  test("should reset gold filter upper bound for both filters active", async ({
+  test("should clear gold filter upper bound for both filters active", async ({
     poePage,
   }) => {
     await poePage.openTabbedFilter();
@@ -1225,7 +1225,7 @@ test.describe("Gold Fee Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("gold", false);
   });
 
-  test("should persist other filters when resetting gold filter bounds individually", async ({
+  test("should persist other filters when clearing gold filter bounds individually", async ({
     poePage,
   }) => {
     await poePage.openTabbedFilter();
@@ -1259,7 +1259,7 @@ test.describe("Gold Fee Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("dust", true);
   });
 
-  test("should disable gold filter lower bound reset button when not active", async ({
+  test("should disable gold filter lower bound clear button when not active", async ({
     poePage,
   }) => {
     await poePage.openTabbedFilter();
@@ -1276,7 +1276,7 @@ test.describe("Gold Fee Filter Functionality", () => {
     await expect(lowerBoundResetButton).toBeDisabled();
   });
 
-  test("should disable gold filter upper bound reset button when not active", async ({
+  test("should disable gold filter upper bound clear button when not active", async ({
     poePage,
   }) => {
     await poePage.openTabbedFilter();

@@ -245,7 +245,7 @@ export function TabbedFilter<TData extends Item>({
               className="flex-1 tabular-nums"
               disabled={!isFilterActive}
             >
-              Reset All ({numberOfActiveFilters})
+              Clear All ({numberOfActiveFilters})
             </Button>
             <Button size="sm" onClick={handleClose} className="flex-1">
               Close

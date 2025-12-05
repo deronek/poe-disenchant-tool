@@ -884,7 +884,7 @@ export class PoEDisenchantPage {
   }
 
   get tabbedFilterResetAllButton() {
-    return this.tabbedFilterPopover.getByRole("button", { name: "Reset All" });
+    return this.tabbedFilterPopover.getByRole("button", { name: "Clear All" });
   }
 
   get tabbedFilterCloseButton() {
@@ -1099,7 +1099,7 @@ export class PoEDisenchantPage {
   ): Promise<Locator> {
     const labelName = this.getFilterLabelName(name).toLowerCase();
     return this.page.getByRole("button", {
-      name: `Reset lower bound ${labelName} filter`,
+      name: `Clear lower bound ${labelName} filter`,
     });
   }
 
@@ -1108,7 +1108,7 @@ export class PoEDisenchantPage {
   ): Promise<Locator> {
     const labelName = this.getFilterLabelName(name).toLowerCase();
     return this.page.getByRole("button", {
-      name: `Reset upper bound ${labelName} filter`,
+      name: `Clear upper bound ${labelName} filter`,
     });
   }
 
