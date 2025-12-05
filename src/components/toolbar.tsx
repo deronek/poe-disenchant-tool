@@ -3,15 +3,7 @@ import type { Item } from "@/lib/itemData";
 import { Table } from "@tanstack/react-table";
 
 import { AdvancedSettingsPanel } from "@/components/advanced-settings-panel";
-import {
-  DustFilterChip,
-  GoldFilterChip,
-  NameFilter,
-  NameFilterChip,
-  PriceFilterChip,
-  TabbedFilter,
-} from "@/components/filters";
-import { RangeFilterValue } from "@/lib/range-filter";
+import { FilterChips, NameFilter, TabbedFilter } from "@/components/filters";
 import { ClearMarksButton } from "./clear-marks-button";
 import { COLUMN_IDS } from "./columns";
 import { MobileSortingControls } from "./mobile-sorting-controls";
@@ -53,79 +45,7 @@ export function DataTableToolbar<TData extends Item>({
             />
           </div>
 
-          {(() => {
-            const nameFilter =
-              (table.getColumn(COLUMN_IDS.NAME)?.getFilterValue() as string) ??
-              "";
-            const chaosRange = table
-              .getColumn(COLUMN_IDS.CHAOS)
-              ?.getFilterValue() as RangeFilterValue | undefined;
-            const dustRange = table
-              .getColumn(COLUMN_IDS.CALCULATED_DUST_VALUE)
-              ?.getFilterValue() as RangeFilterValue | undefined;
-
-            return (
-              <div className="flex flex-wrap gap-x-1">
-                {nameFilter !== "" && (
-                  <div className="w-auto min-w-0 xl:shrink-0">
-                    <NameFilterChip
-                      value={nameFilter}
-                      onClear={() =>
-                        table.getColumn(COLUMN_IDS.NAME)?.setFilterValue("")
-                      }
-                    />
-                  </div>
-                )}
-
-                {chaosRange && (
-                  <div className="w-auto min-w-0 xl:shrink-0">
-                    <PriceFilterChip
-                      value={chaosRange}
-                      onClear={() =>
-                        table
-                          .getColumn(COLUMN_IDS.CHAOS)
-                          ?.setFilterValue(undefined)
-                      }
-                    />
-                  </div>
-                )}
-
-                {dustRange && (
-                  <div className="w-auto min-w-0 xl:shrink-0">
-                    <DustFilterChip
-                      value={dustRange}
-                      onClear={() =>
-                        table
-                          .getColumn(COLUMN_IDS.CALCULATED_DUST_VALUE)
-                          ?.setFilterValue(undefined)
-                      }
-                    />
-                  </div>
-                )}
-
-                {(() => {
-                  const goldRange = table
-                    .getColumn(COLUMN_IDS.GOLD_FEE)
-                    ?.getFilterValue() as RangeFilterValue | undefined;
-
-                  return (
-                    goldRange && (
-                      <div className="w-auto min-w-0 xl:shrink-0">
-                        <GoldFilterChip
-                          value={goldRange}
-                          onClear={() =>
-                            table
-                              .getColumn(COLUMN_IDS.GOLD_FEE)
-                              ?.setFilterValue(undefined)
-                          }
-                        />
-                      </div>
-                    )
-                  );
-                })()}
-              </div>
-            );
-          })()}
+          <FilterChips table={table} />
         </div>
       </div>
 

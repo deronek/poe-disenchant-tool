@@ -787,6 +787,31 @@ export class PoEDisenchantPage {
     else await expect(chip).not.toBeVisible();
   }
 
+  async clearFilterChip(
+    type: "name" | "price" | "dust" | "gold",
+  ): Promise<void> {
+    let chip;
+    switch (type) {
+      case "name":
+        chip = this.nameFilterChip;
+        break;
+      case "price":
+        chip = this.priceFilterChip;
+        break;
+      case "dust":
+        chip = this.dustFilterChip;
+        break;
+      case "gold":
+        chip = this.goldFilterChip;
+        break;
+    }
+
+    // Find the X button within the chip and click it
+    const clearButton = chip.getByLabel("Clear");
+    await expect(clearButton).toBeVisible();
+    await clearButton.click();
+  }
+
   async verifyDustFilterChipVisible(visible: boolean = true): Promise<void> {
     await this.verifyFilterChipVisible("dust", visible);
   }

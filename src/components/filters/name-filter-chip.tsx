@@ -1,25 +1,36 @@
+import type { Column } from "@tanstack/react-table";
+
 import { Badge } from "@/components/ui/badge";
 import { XButton } from "@/components/ui/x-button";
 
-interface NameFilterChipProps {
-  value: string;
-  onClear: () => void;
+interface NameFilterChipProps<TData> {
+  column: Column<TData, unknown> | undefined;
 }
 
-export function NameFilterChip({ value, onClear }: NameFilterChipProps) {
+export function NameFilterChip<TData>({ column }: NameFilterChipProps<TData>) {
+  const value = column?.getFilterValue() as string | undefined;
+
   // Ignores whitespace-only or empty filter
-  if (value.trim() === "") {
+  if (!value || value.trim() === "") {
     return null;
   }
 
   return (
-    <Badge variant="outline" className="px-3" data-testid="name-filter-chip">
-      Name: {value}
-      <XButton
-        onClick={onClear}
-        aria-label="Clear name filter"
-        className="text-foreground/90"
-      />
-    </Badge>
+    <div className="w-auto min-w-0 xl:shrink-0">
+      <Badge
+        variant="outline"
+        className="inline-flex items-center gap-1 px-3"
+        data-testid="name-filter-chip"
+      >
+        <span className="inline-flex min-w-0 flex-shrink-0 items-center gap-1 truncate">
+          Name: {value}
+        </span>
+        <XButton
+          onClick={() => column?.setFilterValue("")}
+          aria-label="Clear name filter"
+          className="text-foreground/90"
+        />
+      </Badge>
+    </div>
   );
 }

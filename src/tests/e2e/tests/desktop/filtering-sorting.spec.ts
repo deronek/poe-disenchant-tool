@@ -610,6 +610,20 @@ test.describe("Price Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("price", true);
   });
 
+  test("should clear price filter using clear button on chip", async ({
+    poePage,
+  }) => {
+    await poePage.openTabbedFilter();
+    await poePage.setPriceFilterValuePercent("lower", 50);
+    await poePage.setPriceFilterValuePercent("upper", 50);
+    await poePage.closeTabbedFilter();
+    await poePage.verifyFilterChipVisible("price", true);
+
+    // Clear using the X button on the filter chip
+    await poePage.clearFilterChip("price");
+    await poePage.verifyFilterChipVisible("price", false);
+  });
+
   test("should persist other filters when resetting price filter bounds individually", async ({
     poePage,
   }) => {
@@ -889,6 +903,20 @@ test.describe("Dust Value Filter Functionality", () => {
 
     // Verify filter chip is still visible (lower bound is still active)
     await poePage.verifyFilterChipVisible("dust", true);
+  });
+
+  test("should clear dust filter using clear button on chip", async ({
+    poePage,
+  }) => {
+    await poePage.openTabbedFilter();
+    await poePage.setDustFilterValuePercent("lower", 30);
+    await poePage.setDustFilterValuePercent("upper", 70);
+    await poePage.closeTabbedFilter();
+    await poePage.verifyFilterChipVisible("dust", true);
+
+    // Clear using the X button on the filter chip
+    await poePage.clearFilterChip("dust");
+    await poePage.verifyFilterChipVisible("dust", false);
   });
 
   test("should persist other filters when resetting dust filter bounds individually", async ({
@@ -1181,6 +1209,20 @@ test.describe("Gold Fee Filter Functionality", () => {
 
     // Verify filter chip is still visible (lower bound is still active)
     await poePage.verifyFilterChipVisible("gold", true);
+  });
+
+  test("should clear gold filter using clear button on chip", async ({
+    poePage,
+  }) => {
+    await poePage.openTabbedFilter();
+    await poePage.setGoldFilterValuePercent("lower", 25);
+    await poePage.setGoldFilterValuePercent("upper", 75);
+    await poePage.closeTabbedFilter();
+    await poePage.verifyFilterChipVisible("gold", true);
+
+    // Clear using the X button on the filter chip
+    await poePage.clearFilterChip("gold");
+    await poePage.verifyFilterChipVisible("gold", false);
   });
 
   test("should persist other filters when resetting gold filter bounds individually", async ({

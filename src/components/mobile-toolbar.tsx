@@ -3,15 +3,7 @@ import type { Item } from "@/lib/itemData";
 import { Table } from "@tanstack/react-table";
 
 import { AdvancedSettingsPanel } from "@/components/advanced-settings-panel";
-import {
-  DustFilterChip,
-  GoldFilterChip,
-  NameFilter,
-  NameFilterChip,
-  PriceFilterChip,
-  TabbedFilter,
-} from "@/components/filters";
-import { RangeFilterValue } from "@/lib/range-filter";
+import { FilterChips, NameFilter, TabbedFilter } from "@/components/filters";
 import { ClearMarksButton } from "./clear-marks-button";
 import { COLUMN_IDS } from "./columns";
 import { MobileSortingControls } from "./mobile-sorting-controls";
@@ -70,62 +62,7 @@ export function MobileToolbar<TData extends Item>({
           <NameFilter table={table} />
         </div>
 
-        {(() => {
-          const nameFilter =
-            (table.getColumn(COLUMN_IDS.NAME)?.getFilterValue() as string) ??
-            "";
-          const chaosRange = table
-            .getColumn(COLUMN_IDS.CHAOS)
-            ?.getFilterValue() as RangeFilterValue | undefined;
-          const dustRange = table
-            .getColumn(COLUMN_IDS.CALCULATED_DUST_VALUE)
-            ?.getFilterValue() as RangeFilterValue | undefined;
-          const goldRange = table
-            .getColumn(COLUMN_IDS.GOLD_FEE)
-            ?.getFilterValue() as RangeFilterValue | undefined;
-
-          const hasActiveFilters =
-            nameFilter !== "" || !!chaosRange || !!dustRange || !!goldRange;
-
-          return hasActiveFilters ? (
-            <div className="flex flex-wrap gap-1">
-              <NameFilterChip
-                value={nameFilter}
-                onClear={() =>
-                  table.getColumn(COLUMN_IDS.NAME)?.setFilterValue("")
-                }
-              />
-              {chaosRange && (
-                <PriceFilterChip
-                  value={chaosRange}
-                  onClear={() =>
-                    table.getColumn(COLUMN_IDS.CHAOS)?.setFilterValue(undefined)
-                  }
-                />
-              )}
-              {dustRange && (
-                <DustFilterChip
-                  value={dustRange}
-                  onClear={() =>
-                    table
-                      .getColumn(COLUMN_IDS.CALCULATED_DUST_VALUE)
-                      ?.setFilterValue(undefined)
-                  }
-                />
-              )}
-              {goldRange && (
-                <GoldFilterChip
-                  value={goldRange}
-                  onClear={() =>
-                    table
-                      .getColumn(COLUMN_IDS.GOLD_FEE)
-                      ?.setFilterValue(undefined)
-                  }
-                />
-              )}
-            </div>
-          ) : null;
-        })()}
+        <FilterChips table={table} />
       </div>
     </div>
   );

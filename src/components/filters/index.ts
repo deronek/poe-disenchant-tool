@@ -1,9 +1,11 @@
 export { TabbedFilter } from "./tabbed-filter";
 export { NameFilter } from "./name-filter";
 export { RangeFilter, RangeFilterStatus } from "./range-filter";
-export { DustFilterChip } from "./dust-filter-chip";
-export { GoldFilterChip } from "./gold-filter-chip";
-export { PriceFilterChip } from "./price-filter-chip";
+export {
+  RangeFilterChip,
+  type RangeFilterChipProps,
+} from "./range-filter-chip";
+export { FilterChips } from "./filter-chips";
 export { NameFilterChip } from "./name-filter-chip";
 
 export { usePersistentFilters } from "./use-persistent-filters";
