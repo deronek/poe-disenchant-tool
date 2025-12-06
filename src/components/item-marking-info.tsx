@@ -28,8 +28,8 @@ export function ItemMarkingInfo({ itemName }: ItemMarkingInfoProps) {
           </Badge>
         </div>
         <p className="text-muted-foreground text-xs leading-relaxed">
-          Use &quot;Clear marks&quot; in the toolbar to remove marks from all
-          items.
+          Use <strong>Clear marks</strong> in the toolbar to remove marks from
+          all items.
         </p>
       </div>
     </div>
