@@ -41,22 +41,20 @@ export function RangeFilterChip<TData>({
   };
 
   return (
-    <div className="w-auto min-w-0 xl:shrink-0">
-      <Badge
-        variant="outline"
-        className="inline-flex items-center gap-1 px-3"
-        data-testid={testId}
-      >
-        <span className="inline-flex min-w-0 flex-shrink-0 items-center gap-1 truncate">
-          {title} {formatRange()}
-          <span className="flex-shrink-0">{icon}</span>
-        </span>
-        <XButton
-          onClick={() => column?.setFilterValue(undefined)}
-          aria-label={ariaLabel}
-          className="text-foreground/90"
-        />
-      </Badge>
-    </div>
+    <Badge
+      variant="outline"
+      className="inline-flex items-center gap-1 px-3"
+      data-testid={testId}
+    >
+      <span className="inline-flex min-w-0 flex-shrink-0 items-center gap-1 truncate">
+        {title} {formatRange()}
+        <span className="flex-shrink-0">{icon}</span>
+      </span>
+      <XButton
+        onClick={() => column?.setFilterValue(undefined)}
+        aria-label={ariaLabel}
+        className="text-foreground/90"
+      />
+    </Badge>
   );
 }
