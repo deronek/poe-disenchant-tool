@@ -6,7 +6,7 @@ import { XButton } from "@/components/ui/x-button";
 import { hasMaxFilter, hasMinFilter } from "@/lib/range-filter";
 
 export interface RangeFilterChipProps<TData> {
-  column: Column<TData, unknown> | undefined;
+  column: Column<TData, unknown>;
   title: string;
   icon: React.ReactNode;
   testId: string;
