@@ -787,6 +787,31 @@ export class PoEDisenchantPage {
     else await expect(chip).not.toBeVisible();
   }
 
+  async clearFilterChip(
+    type: "name" | "price" | "dust" | "gold",
+  ): Promise<void> {
+    let chip;
+    switch (type) {
+      case "name":
+        chip = this.nameFilterChip;
+        break;
+      case "price":
+        chip = this.priceFilterChip;
+        break;
+      case "dust":
+        chip = this.dustFilterChip;
+        break;
+      case "gold":
+        chip = this.goldFilterChip;
+        break;
+    }
+
+    // Find the X button within the chip and click it
+    const clearButton = chip.getByLabel("Clear");
+    await expect(clearButton).toBeVisible();
+    await clearButton.click();
+  }
+
   async verifyDustFilterChipVisible(visible: boolean = true): Promise<void> {
     await this.verifyFilterChipVisible("dust", visible);
   }
@@ -859,7 +884,7 @@ export class PoEDisenchantPage {
   }
 
   get tabbedFilterResetAllButton() {
-    return this.tabbedFilterPopover.getByRole("button", { name: "Reset All" });
+    return this.tabbedFilterPopover.getByRole("button", { name: "Clear All" });
   }
 
   get tabbedFilterCloseButton() {
@@ -1074,7 +1099,7 @@ export class PoEDisenchantPage {
   ): Promise<Locator> {
     const labelName = this.getFilterLabelName(name).toLowerCase();
     return this.page.getByRole("button", {
-      name: `Reset lower bound ${labelName} filter`,
+      name: `Clear lower bound ${labelName} filter`,
     });
   }
 
@@ -1083,7 +1108,7 @@ export class PoEDisenchantPage {
   ): Promise<Locator> {
     const labelName = this.getFilterLabelName(name).toLowerCase();
     return this.page.getByRole("button", {
-      name: `Reset upper bound ${labelName} filter`,
+      name: `Clear upper bound ${labelName} filter`,
     });
   }
 
