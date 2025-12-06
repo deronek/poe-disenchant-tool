@@ -90,13 +90,13 @@ const ListingTimeFilterSelector = React.memo<{
           <SelectValue placeholder="Select time filter" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="any">Any time</SelectItem>
           <SelectItem value="1hour">Up to an hour ago</SelectItem>
           <SelectItem value="3hours">Up to 3 hours ago</SelectItem>
           <SelectItem value="12hours">Up to 12 hours ago</SelectItem>
           <SelectItem value="1day">Up to a day ago</SelectItem>
           <SelectItem value="3days">Up to 3 days ago</SelectItem>
           <SelectItem value="1week">Up to a week ago</SelectItem>
+          <SelectItem value="any">Any time</SelectItem>
         </SelectContent>
       </Select>
       <p className="text-muted-foreground text-xs">
