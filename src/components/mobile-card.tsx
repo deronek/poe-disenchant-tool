@@ -93,7 +93,7 @@ const DustInfoPopover = React.memo(function DustInfoPopover() {
       </PopoverTrigger>
       <PopoverContent
         className="w-[min(var(--radix-popover-content-available-width,9999px),calc(var(--spacing)*84))] min-w-77 text-sm"
-        side="left"
+        side="bottom"
       >
         <DustInfo />
       </PopoverContent>
