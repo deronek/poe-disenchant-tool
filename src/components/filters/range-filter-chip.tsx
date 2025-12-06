@@ -29,13 +29,13 @@ export function RangeFilterChip<TData>({
   if (!hasMin && !hasMax) return null;
 
   const formatRange = () => {
-    if (!hasMin) return `≤ ${value.max!.toLocaleString()}`;
-    if (!hasMax) return `≥ ${value.min!.toLocaleString()}`;
+    if (!hasMin) return `≤ ${value.max.toLocaleString()}`;
+    if (!hasMax) return `≥ ${value.min.toLocaleString()}`;
 
     return (
       <>
-        {value.min!.toLocaleString()}
-        {icon}– {value.max!.toLocaleString()}
+        {value.min.toLocaleString()}
+        {icon}– {value.max.toLocaleString()}
       </>
     );
   };

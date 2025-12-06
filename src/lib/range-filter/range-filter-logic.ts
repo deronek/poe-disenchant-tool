@@ -142,14 +142,18 @@ export const resetFilter = <TData extends Item>(
 /**
  * Checks if the lower bound filter is active.
  */
-export const hasMinFilter = (range: RangeFilterValue): boolean => {
+export const hasMinFilter = (
+  range: RangeFilterValue,
+): range is RangeFilterValue & { min: number } => {
   return range.min !== undefined;
 };
 
 /**
  * Checks if the upper bound filter is active.
  */
-export const hasMaxFilter = (range: RangeFilterValue): boolean => {
+export const hasMaxFilter = (
+  range: RangeFilterValue,
+): range is RangeFilterValue & { max: number } => {
   return range.max !== undefined;
 };
 
