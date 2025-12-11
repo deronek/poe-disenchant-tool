@@ -1,20 +1,32 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { redirect } from "next/navigation";
 
 import LeagueContentServer from "@/app/[league]/league-content-server";
 import DataViewSkeleton from "@/components/data-view-skeleton";
 import { LeagueSelector } from "@/components/league-selector";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import { BASE_URL, DESCRIPTION, TITLE } from "@/lib/constants";
-import { getLeagueName, League, LEAGUE_SLUGS } from "@/lib/leagues";
+import {
+  ARCHIVED_LEAGUE_SLUGS,
+  ArchivedLeague,
+  DEFAULT_LEAGUE,
+  getLeagueName,
+  isArchivedLeague,
+  League,
+  LEAGUE_SLUGS,
+} from "@/lib/leagues";
 
-type Props = { params: Promise<{ league: League }> };
+type Props = { params: Promise<{ league: League | ArchivedLeague }> };
 
 export const dynamicParams = false;
 export const revalidate = 1800; // 30 minutes
 
 export default async function LeaguePage({ params }: Props) {
   const { league } = await params;
+  if (isArchivedLeague(league)) {
+    redirect(`/${DEFAULT_LEAGUE}`);
+  }
 
   return (
     <div className="container mx-auto flex min-h-0 flex-1 flex-col p-4 pb-0 sm:pt-6 sm:pr-6 sm:pb-0 sm:pl-6 md:px-8">
@@ -44,6 +56,9 @@ export default async function LeaguePage({ params }: Props) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { league } = await params;
+  if (isArchivedLeague(league)) {
+    return {};
+  }
   const leagueName = getLeagueName(league);
 
   return {
@@ -54,5 +69,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // Pre-generate static pages for known leagues
 export async function generateStaticParams() {
-  return LEAGUE_SLUGS.map((league: League) => ({ league }));
+  const leagues = LEAGUE_SLUGS.map((league: League) => ({ league }));
+  const archivedLeagues = ARCHIVED_LEAGUE_SLUGS.map(
+    (league: ArchivedLeague) => ({ league }),
+  );
+  return [...leagues, ...archivedLeagues];
 }
