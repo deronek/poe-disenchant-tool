@@ -2,7 +2,9 @@ import { readFileSync } from "fs";
 import { join } from "path";
 import type { NextConfig } from "next";
 
-//const injectWhyDidYouRender = require("./scripts/why-did-you-render");
+import { ARCHIVED_LEAGUE_SLUGS, DEFAULT_LEAGUE } from "./src/lib/leagues";
+
+// const injectWhyDidYouRender = require("./scripts/why-did-you-render");
 
 const packageJson = JSON.parse(
   readFileSync(join(__dirname, "package.json"), "utf-8"),
@@ -32,6 +34,14 @@ const nextConfig: NextConfig = {
   env: {
     PDT_APP_VERSION: packageJson.version,
     PDT_APP_NAME: packageJson.name,
+  },
+  // Static redirects for archival leagues - handled at CDN/edge level
+  async redirects() {
+    return ARCHIVED_LEAGUE_SLUGS.map((archivedLeague) => ({
+      source: `/${archivedLeague}`,
+      destination: `/${DEFAULT_LEAGUE}`,
+      permanent: true,
+    }));
   },
 };
 
