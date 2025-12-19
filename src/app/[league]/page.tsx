@@ -1,18 +1,12 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { redirect } from "next/navigation";
 
 import LeagueContentServer from "@/app/[league]/league-content-server";
 import DataViewSkeleton from "@/components/data-view-skeleton";
 import { LeagueSelector } from "@/components/league-selector";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import { BASE_URL, DESCRIPTION, TITLE } from "@/lib/constants";
-import {
-  DEFAULT_LEAGUE,
-  getLeagueName,
-  League,
-  LEAGUE_SLUGS,
-} from "@/lib/leagues";
+import { getLeagueName, League, LEAGUE_SLUGS } from "@/lib/leagues";
 
 type Props = { params: Promise<{ league: League }> };
 
