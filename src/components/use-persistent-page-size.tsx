@@ -8,9 +8,8 @@ type PersistedPageSize = z.infer<typeof PageSizeSchema>;
 
 /**
  * Persist TanStack Table page size to localStorage.
- * - Stores only pageSize (not pageIndex).
+ * - Stores only pageSize.
  * - League-independent (global setting).
- * - SSR safe: no localStorage access until mounted.
  */
 export function usePersistentPageSize(storageKey: string) {
   if (!storageKey) {

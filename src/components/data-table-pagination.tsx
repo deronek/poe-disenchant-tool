@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/select";
 import { usePersistentPageSize } from "./use-persistent-page-size";
 
-// Rows per page select as memo (lean display component)
+// Rows per page select as memo
 const RowsPerPageSelect = React.memo(function RowsPerPageSelect({
   pageSize,
   onPageSizeChange,
