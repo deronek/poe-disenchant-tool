@@ -255,6 +255,7 @@ test.describe("Pagination Functionality", () => {
 
     // Refresh the page
     await poePage.refreshPage();
+    await poePage.page.waitForTimeout(300);
 
     // Verify page size is persisted after refresh
     const newPageSize = await poePage.getCurrentPageSize();
