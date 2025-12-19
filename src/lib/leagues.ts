@@ -8,12 +8,32 @@ export const LEAGUES = {
   },
 } as const;
 
+export const ARCHIVED_LEAGUES = {
+  mercenaries: {
+    name: "Mercenaries",
+    apiName: "Mercenaries",
+  },
+  "hardcore-mercenaries": {
+    name: "Hardcore Mercenaries",
+    apiName: "Hardcore Mercenaries",
+  },
+} as const;
+
 export type League = keyof typeof LEAGUES;
 export const LEAGUE_SLUGS = Object.keys(LEAGUES) as League[];
 export const DEFAULT_LEAGUE: League = "keepers";
 
+export type ArchivedLeague = keyof typeof ARCHIVED_LEAGUES;
+export const ARCHIVED_LEAGUE_SLUGS = Object.keys(
+  ARCHIVED_LEAGUES,
+) as ArchivedLeague[];
+
 export function isValidLeague(slug: string): slug is League {
   return Object.hasOwn(LEAGUES, slug);
+}
+
+export function isArchivedLeague(slug: string): slug is ArchivedLeague {
+  return Object.hasOwn(ARCHIVED_LEAGUES, slug);
 }
 
 export function getLeagueName(slug: League) {

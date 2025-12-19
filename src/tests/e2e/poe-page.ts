@@ -14,8 +14,8 @@ export class PoEDisenchantPage {
   // Navigation & Loading
   // ---------------------------
 
-  async goto() {
-    await this.page.goto("/", { waitUntil: "domcontentloaded" });
+  async goto(path: string = "/") {
+    await this.page.goto(path, { waitUntil: "domcontentloaded" });
   }
 
   async waitForDataLoad(timeout = 15000) {

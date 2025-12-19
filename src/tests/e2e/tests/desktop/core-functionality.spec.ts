@@ -258,3 +258,12 @@ test.describe("Last Updated Functionality", () => {
     await poePage.verifyDateTimeAttribute(absoluteTime);
   });
 });
+
+test("should handle archived league redirects", async ({ poePage }) => {
+  // Go to archived league
+  await poePage.goto("/mercenaries");
+  await poePage.waitForDataLoad();
+
+  // Should be redirected to default league
+  await poePage.verifyLeagueSelected(DEFAULT_LEAGUE);
+});
