@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { usePersistentPageSize } from "./use-persistent-page-size";
 
 // Rows per page select as memo
 const RowsPerPageSelect = React.memo(function RowsPerPageSelect({
@@ -55,10 +56,31 @@ interface DataTablePaginationProps<TData> {
 export function DataTablePagination<TData>({
   table,
 }: DataTablePaginationProps<TData>) {
+  // Persistent page size storage
+  const { pageSize: persistedPageSize, setPageSize } = usePersistentPageSize(
+    "poe-udt:page-size:v1",
+  );
+
   // Compute start–end of total using the filtered row model
   const total = table.getFilteredRowModel().rows.length;
   const pageIndex = table.getState().pagination.pageIndex;
   const pageSize = table.getState().pagination.pageSize;
+
+  // Sync persisted page size with table state on mount
+  React.useEffect(() => {
+    if (pageSize !== persistedPageSize) {
+      table.setPageSize(persistedPageSize);
+    }
+  }, [pageSize, persistedPageSize, table]);
+
+  // Handle page size changes with persistence
+  const handlePageSizeChange = React.useCallback(
+    (value: number) => {
+      setPageSize(value);
+      table.setPageSize(value);
+    },
+    [setPageSize, table],
+  );
 
   const start = total === 0 ? 0 : pageIndex * pageSize + 1;
   const end = total === 0 ? 0 : Math.min(total, start + pageSize - 1);
@@ -86,7 +108,7 @@ export function DataTablePagination<TData>({
           <p className="flex-none text-sm font-semibold">Rows per page</p>
           <RowsPerPageSelect
             pageSize={pageSize}
-            onPageSizeChange={table.setPageSize}
+            onPageSizeChange={handlePageSizeChange}
           />
         </div>
 

@@ -234,4 +234,70 @@ test.describe("Pagination Functionality", () => {
     const updatedRowCount = await poePage.page.locator("tbody tr").count();
     expect(updatedRowCount).toBe(20);
   });
+
+  test("should persist page size across page refreshes", async ({
+    poePage,
+  }) => {
+    // Change page size to a different value (e.g., 20)
+    const pageSizeSelect = poePage.rowsPerPageSelectTrigger;
+    await pageSizeSelect.click();
+    await poePage.page.waitForTimeout(200);
+
+    // Select page size 20
+    const newPageSizeOption =
+      poePage.rowsPerPageSelectContent.locator('[data-value="20"]');
+    await newPageSizeOption.click();
+    await poePage.page.waitForTimeout(300);
+
+    // Verify the page size changed
+    const pageSize = await poePage.getCurrentPageSize();
+    expect(pageSize).toBe(20);
+
+    // Refresh the page
+    await poePage.refreshPage();
+
+    // Verify page size is persisted after refresh
+    const newPageSize = await poePage.getCurrentPageSize();
+    expect(newPageSize).toBe(20);
+
+    // Verify the correct number of rows are displayed
+    const rowCount = await poePage.page.locator("tbody tr").count();
+    expect(rowCount).toBe(20);
+  });
+
+  test("should persist page size across league changes", async ({
+    poePage,
+  }) => {
+    // Change page size to a different value (e.g., 30)
+    const pageSizeSelect = poePage.rowsPerPageSelectTrigger;
+    await pageSizeSelect.click();
+    await poePage.page.waitForTimeout(200);
+
+    // Select page size 30
+    const newPageSizeOption =
+      poePage.rowsPerPageSelectContent.locator('[data-value="30"]');
+    await newPageSizeOption.click();
+    await poePage.page.waitForTimeout(300);
+
+    // Verify the page size changed
+    const pageSize = await poePage.getCurrentPageSize();
+    expect(pageSize).toBe(30);
+
+    // Verify the correct number of rows are displayed
+    const rowCount = await poePage.page.locator("tbody tr").count();
+    expect(rowCount).toBe(30);
+
+    // Navigate to a different league
+    const newLeague = "standard";
+    await poePage.selectLeague(newLeague);
+    await poePage.verifyLeagueSelected(newLeague);
+
+    // Verify page size is persisted across leagues
+    const newPageSize = await poePage.getCurrentPageSize();
+    expect(newPageSize).toBe(30);
+
+    // Verify the correct number of rows are displayed
+    const newRowCount = await poePage.page.locator("tbody tr").count();
+    expect(newRowCount).toBe(30);
+  });
 });
