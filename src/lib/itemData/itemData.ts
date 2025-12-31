@@ -8,7 +8,7 @@ import {
   getPriceData,
   Item as PriceItem,
 } from "@/lib/prices";
-import { ITEMS_TO_IGNORE } from "./ignore-list";
+import { ITEMS_TO_IGNORE, ITEMS_TO_IGNORE_QUALITY } from "./ignore-list";
 
 export type Item = {
   name: string;
@@ -94,13 +94,21 @@ function isQuiver(item: PriceItem) {
   return item.itemType === "Quiver";
 }
 
+function isItemInQualityIgnoreList(item: PriceItem) {
+  return ITEMS_TO_IGNORE_QUALITY.includes(item.name);
+}
+
+function isNonQualityItem(item: PriceItem) {
+  return isQuiver(item) || isItemInQualityIgnoreList(item);
+}
+
 function calculateDustEfficiency(
   priceItem: PriceItem,
   dustItem: DustItem,
   catalystPrice: number,
 ) {
-  if (isQuiver(priceItem)) {
-    // Quivers cannot have quality
+  if (isNonQualityItem(priceItem)) {
+    // Items that cannot have quality (quivers and specific items)
     return {
       dustValue: dustItem.dustValIlvl84,
       dustPerChaos: dustItem.dustValIlvl84 / priceItem.chaos,

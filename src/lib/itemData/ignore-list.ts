@@ -26,3 +26,27 @@ export const ITEMS_TO_IGNORE = [
   // This item is legacy and extremely expensive
   "Deshret's Vise",
 ];
+
+// These items cannot have quality
+export const ITEMS_TO_IGNORE_QUALITY = [
+  // Mirrored
+  "Kalandra's Touch",
+
+  // Corrupted
+  "Skin of the Lords",
+  "String of Servitude",
+  "Blood of Corruption",
+  "Night's Hold",
+  "Ixchel's Temptation",
+  "Blightwell",
+  "Rigwald's Curse",
+  "Star of Wraeclast",
+  "Angler's Plait",
+  "The Utmost",
+  "Natural Hierarchy",
+  "Eyes of the Greatwolf",
+  "Glimpse of Chaos",
+  "Leadership's Price",
+  "Malachai's Vision",
+  "Shadowstitch",
+];
