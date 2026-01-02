@@ -58,7 +58,11 @@ const ChaosCell: ColumnDef<Item>["cell"] = function ChaosCellComponent({
   const value = row.getValue(COLUMN_IDS.CHAOS) as number;
   return (
     <span className="inline-flex w-full justify-end gap-1">
-      <CompactNumberTooltip value={value} />
+      <CompactNumberTooltip
+        value={value}
+        compactFormatter={compactFormatterPrice}
+        standardFormatter={standardFormatterPrice}
+      />
       <ChaosOrbIcon />
     </span>
   );
@@ -90,7 +94,11 @@ const GoldCell: ColumnDef<Item>["cell"] = function GoldCellComponent({ row }) {
   const value = row.getValue(COLUMN_IDS.GOLD_FEE) as number;
   return (
     <span className="inline-flex w-full justify-end gap-1">
-      <CompactNumberTooltip value={value} />
+      <CompactNumberTooltip
+        value={value}
+        compactFormatter={compactFormatterGlobal}
+        standardFormatter={standardFormatterGlobal}
+      />
       <GoldIcon />
     </span>
   );
@@ -111,7 +119,11 @@ const CalculatedDustValueCell: ColumnDef<Item>["cell"] =
             >
               <CatalystIcon size={24} />
               <span className="ml-auto inline-flex items-center gap-1">
-                <CompactNumberTooltip value={value} />
+                <CompactNumberTooltip
+                  value={value}
+                  compactFormatter={compactFormatterGlobal}
+                  standardFormatter={standardFormatterGlobal}
+                />
                 <DustIcon />
               </span>
             </div>
@@ -125,7 +137,11 @@ const CalculatedDustValueCell: ColumnDef<Item>["cell"] =
     return (
       <div className={"flex w-full justify-between"}>
         <span className="ml-auto inline-flex items-center gap-1">
-          <CompactNumberTooltip value={value} />
+          <CompactNumberTooltip
+            value={value}
+            compactFormatter={compactFormatterGlobal}
+            standardFormatter={standardFormatterGlobal}
+          />
           <DustIcon />
         </span>
       </div>
@@ -138,7 +154,11 @@ const DustPerChaosCell: ColumnDef<Item>["cell"] =
     return (
       <span className="block w-full">
         <span className="float-right inline-flex items-center gap-1 align-baseline">
-          <CompactNumberTooltip value={value} />
+          <CompactNumberTooltip
+            value={value}
+            compactFormatter={compactFormatterGlobal}
+            standardFormatter={standardFormatterGlobal}
+          />
           <DustIcon />
           <span className="text-muted-foreground">/</span>
           <ChaosOrbIcon />
@@ -155,7 +175,11 @@ const DustPerChaosPerSlotCell: ColumnDef<Item>["cell"] =
     return (
       <span className="block w-full">
         <span className="float-right inline-flex items-center gap-1 align-baseline">
-          <CompactNumberTooltip value={value} />
+          <CompactNumberTooltip
+            value={value}
+            compactFormatter={compactFormatterGlobal}
+            standardFormatter={standardFormatterGlobal}
+          />
           <DustIcon />
           <span className="text-muted-foreground">/</span>
           <ChaosOrbIcon />
@@ -189,24 +213,39 @@ const MarkHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> = React.memo(
   () => true,
 );
 
-const compactFormatter = new Intl.NumberFormat("en", {
+const compactFormatterGlobal = new Intl.NumberFormat("en", {
   notation: "compact",
   compactDisplay: "short",
   maximumFractionDigits: 1,
 });
 
-const standardFormatter = new Intl.NumberFormat("en", {
+const standardFormatterGlobal = new Intl.NumberFormat("en", {
   notation: "standard",
   maximumFractionDigits: 1,
+});
+
+const compactFormatterPrice = new Intl.NumberFormat("en", {
+  notation: "compact",
+  compactDisplay: "short",
+  maximumFractionDigits: 2,
+});
+
+const standardFormatterPrice = new Intl.NumberFormat("en", {
+  notation: "standard",
+  maximumFractionDigits: 2,
 });
 
 // Reusable tooltip wrapper for compact numbers
 const CompactNumberTooltip = React.memo(function CompactNumberTooltip({
   value,
+  compactFormatter,
+  standardFormatter,
 }: {
   value: number;
+  compactFormatter: Intl.NumberFormat;
+  standardFormatter: Intl.NumberFormat;
 }) {
-  const compact = renderCompactNumber(value);
+  const compact = renderCompactNumber(value, compactFormatter);
   const full = standardFormatter.format(value);
 
   return (
@@ -227,8 +266,11 @@ const ItemIcon = React.memo(function ItemIcon({ src }: { src: string }) {
   );
 });
 
-export function renderCompactNumber(value: number) {
-  const parts = compactFormatter.formatToParts(value);
+export function renderCompactNumber(
+  value: number,
+  formatter: Intl.NumberFormat,
+) {
+  const parts = formatter.formatToParts(value);
 
   return (
     <span data-full-value={value}>
