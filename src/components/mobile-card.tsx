@@ -27,9 +27,14 @@ import { ItemMarkingInfo } from "./item-marking-info";
 import { LowStockInfo } from "./low-stock-info";
 
 // Compact number formatter for mobile cards
-const compactFormatter = new Intl.NumberFormat("en", {
+const compactFormatterGlobal = new Intl.NumberFormat("en", {
   notation: "standard",
   maximumFractionDigits: 1,
+});
+
+const compactFormatterPrice = new Intl.NumberFormat("en", {
+  notation: "standard",
+  maximumFractionDigits: 2,
 });
 
 // Checkbox with memo
@@ -254,7 +259,7 @@ function PriceAndDustSection({
           <p className="text-muted-foreground">Price</p>
         </div>
         <div className="flex items-center gap-1 text-xs font-semibold">
-          <span>{compactFormatter.format(chaos)}</span>
+          <span>{compactFormatterPrice.format(chaos)}</span>
           <ChaosOrbIcon className="h-3 w-3" />
         </div>
       </div>
@@ -262,7 +267,7 @@ function PriceAndDustSection({
         <div className="space-y-2">
           <p className="text-muted-foreground text-xs">Dust Value</p>
           <div className="flex items-center gap-1 text-xs font-semibold">
-            <span>{compactFormatter.format(calculatedDustValue)}</span>
+            <span>{compactFormatterGlobal.format(calculatedDustValue)}</span>
             <DustIcon className="h-3 w-3" />
           </div>
         </div>
@@ -272,7 +277,7 @@ function PriceAndDustSection({
         <div className="space-y-2">
           <p className="text-muted-foreground text-xs">Gold Fee</p>
           <div className="flex items-center gap-1 text-xs font-semibold">
-            <span>{compactFormatter.format(goldCost)}</span>
+            <span>{compactFormatterGlobal.format(goldCost)}</span>
             <GoldIcon className="h-3 w-3" />
           </div>
         </div>
@@ -297,7 +302,7 @@ function DustPerChaosSection({
 
         <div className="text-primary flex items-center gap-1 text-lg font-bold">
           <span className="truncate">
-            {compactFormatter.format(dustPerChaos)}
+            {compactFormatterGlobal.format(dustPerChaos)}
           </span>
           <DustIcon className="h-5 w-5" />
           <span className="text-muted-foreground">/</span>
@@ -330,7 +335,7 @@ function DustPerChaosPerSlotSection({
         <p className="text-muted-foreground text-sm">Dust per Chaos per Slot</p>
         <div className="flex items-center gap-1 text-sm">
           <span className="font-semibold">
-            {compactFormatter.format(dustPerChaosPerSlot)}
+            {compactFormatterGlobal.format(dustPerChaosPerSlot)}
           </span>
           <DustIcon className="h-4 w-4" />
           <span className="text-muted-foreground">/</span>
