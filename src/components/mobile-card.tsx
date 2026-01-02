@@ -263,7 +263,7 @@ function PriceAndDustSection({
           <ChaosOrbIcon className="h-3 w-3" />
         </div>
       </div>
-      <div className="flex flex-40 items-center gap-2">
+      <div className="flex flex-40 items-center justify-center gap-2">
         <div className="space-y-2">
           <p className="text-muted-foreground text-xs">Dust Value</p>
           <div className="flex items-center gap-1 text-xs font-semibold">
@@ -273,7 +273,7 @@ function PriceAndDustSection({
         </div>
         <DustInfoPopover />
       </div>
-      <div className="flex flex-30 items-center gap-2">
+      <div className="flex flex-30 items-center justify-end gap-2">
         <div className="space-y-2">
           <p className="text-muted-foreground text-xs">Gold Fee</p>
           <div className="flex items-center gap-1 text-xs font-semibold">
