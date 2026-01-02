@@ -21,7 +21,7 @@ export function MobileCardLayout<TData extends Item>({
   return (
     <div className="px-2 py-4 sm:px-3">
       {table.getRowModel().rows?.length ? (
-        <div className="grid gap-3 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {table.getRowModel().rows.map((row, index) => (
             <div key={row.id} className="relative">
               <MobileCard
