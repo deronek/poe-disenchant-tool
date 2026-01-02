@@ -253,8 +253,8 @@ function PriceAndDustSection({
   goldCost: number;
 }) {
   return (
-    <div className="flex w-full justify-between gap-2">
-      <div className="space-y-2">
+    <div className="flex w-full gap-2">
+      <div className="flex-30 space-y-2">
         <div className="flex items-center gap-1 text-xs">
           <p className="text-muted-foreground">Price</p>
         </div>
@@ -263,7 +263,7 @@ function PriceAndDustSection({
           <ChaosOrbIcon className="h-3 w-3" />
         </div>
       </div>
-      <div className="flex items-center justify-between gap-1">
+      <div className="flex flex-40 items-center justify-center gap-2">
         <div className="space-y-2">
           <p className="text-muted-foreground text-xs">Dust Value</p>
           <div className="flex items-center gap-1 text-xs font-semibold">
@@ -273,7 +273,7 @@ function PriceAndDustSection({
         </div>
         <DustInfoPopover />
       </div>
-      <div className="flex items-center justify-between gap-1">
+      <div className="flex flex-30 items-center justify-end gap-2">
         <div className="space-y-2">
           <p className="text-muted-foreground text-xs">Gold Fee</p>
           <div className="flex items-center gap-1 text-xs font-semibold">
@@ -424,7 +424,7 @@ function MobileCardComponent<TData extends Item>({
 
   return (
     <div
-      className={`space-y-4 rounded-lg border p-5 ${
+      className={`min-w-78 space-y-4 rounded-lg border p-5 ${
         isSelected ? "bg-muted/60 border-primary/30 opacity-95" : "bg-card"
       } transition-all`}
     >
