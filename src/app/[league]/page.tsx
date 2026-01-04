@@ -5,7 +5,12 @@ import LeagueContentServer from "@/app/[league]/league-content-server";
 import DataViewSkeleton from "@/components/data-view-skeleton";
 import { LeagueSelector } from "@/components/league-selector";
 import { ModeToggle } from "@/components/ui/mode-toggle";
-import { BASE_URL, DESCRIPTION, TITLE } from "@/lib/constants";
+import {
+  BASE_URL,
+  DESCRIPTION,
+  getDescriptionWithLeague,
+  TITLE,
+} from "@/lib/constants";
 import { getLeagueName, League, LEAGUE_SLUGS } from "@/lib/leagues";
 
 type Props = { params: Promise<{ league: League }> };
@@ -48,7 +53,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: leagueName,
-    description: `Find the most efficient unique items to disenchant for Thaumaturgic Dust in ${leagueName} league`,
+    description: getDescriptionWithLeague(leagueName),
     alternates: { canonical: `${BASE_URL}/${league}` },
   };
 }
