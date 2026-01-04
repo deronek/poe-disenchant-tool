@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { Label } from "@/components/ui/label";
@@ -71,14 +72,14 @@ export function LeagueSelector({ currentLeague }: LeagueSelectorProps) {
           </Select>
         </div>
       </div>
-      {/* Static list of all leagues for SEO */}
-      <div className="sr-only" aria-hidden="true">
+      {/* Static list of all leagues for SEO and accessibility */}
+      <div className="sr-only">
         <ul className="flex flex-col gap-1">
           {LEAGUE_SLUGS.map((slug) => (
             <li key={slug}>
-              <a href={`/${slug}`} className="hover:underline">
+              <Link href={`/${slug}`} className="hover:underline">
                 {LEAGUES[slug].name}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
