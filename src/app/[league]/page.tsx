@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 
 import LeagueContentServer from "@/app/[league]/league-content-server";
-import DataViewSkeleton from "@/components/data-view-skeleton";
 import { LeagueSelector } from "@/components/league-selector";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import {
