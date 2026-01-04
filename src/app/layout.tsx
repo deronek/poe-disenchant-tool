@@ -18,7 +18,6 @@ export const metadata: Metadata = {
     template: `%s | ${TITLE}`,
     default: TITLE,
   },
-  description: DESCRIPTION,
   metadataBase: new URL(BASE_URL),
   applicationName: TITLE,
   keywords: [

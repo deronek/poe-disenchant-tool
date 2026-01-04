@@ -48,6 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: leagueName,
+    description: `Find the most efficient unique items to disenchant for Thaumaturgic Dust in ${leagueName} league`,
     alternates: { canonical: `${BASE_URL}/${league}` },
   };
 }
