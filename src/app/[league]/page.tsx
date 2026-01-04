@@ -40,9 +40,7 @@ export default async function LeaguePage({ params }: Props) {
           <ModeToggle />
         </nav>
       </header>
-      <Suspense fallback={<DataViewSkeleton />}>
-        <LeagueContentServer key={league} league={league} />
-      </Suspense>
+      <LeagueContentServer key={league} league={league} />
     </div>
   );
 }
