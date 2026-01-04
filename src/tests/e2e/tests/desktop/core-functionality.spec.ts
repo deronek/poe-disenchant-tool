@@ -1,4 +1,4 @@
-import { DESCRIPTION, TITLE } from "@/lib/constants";
+import { DESCRIPTION, getDescriptionWithLeague, TITLE } from "@/lib/constants";
 import {
   DEFAULT_LEAGUE,
   getLeagueFromName,
@@ -16,7 +16,9 @@ test.describe("Page Metadata", () => {
   });
 
   test("should have correct page description meta tag", async ({ poePage }) => {
-    await poePage.verifyPageDescription(DESCRIPTION);
+    await poePage.verifyPageDescription(
+      getDescriptionWithLeague(DEFAULT_LEAGUE),
+    );
   });
 
   test("should display page header and description", async ({ poePage }) => {
