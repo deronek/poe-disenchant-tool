@@ -71,6 +71,18 @@ export function LeagueSelector({ currentLeague }: LeagueSelectorProps) {
           </Select>
         </div>
       </div>
+      {/* Static list of all leagues for SEO */}
+      <div className="sr-only" aria-hidden="true">
+        <ul className="flex flex-col gap-1">
+          {LEAGUE_SLUGS.map((slug) => (
+            <li key={slug}>
+              <a href={`/${slug}`} className="hover:underline">
+                {LEAGUES[slug].name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
