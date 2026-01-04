@@ -106,6 +106,14 @@ export default function LastUpdated({ timestamp }: LastUpdatedProps) {
           <PopoverContent>{tooltipContent}</PopoverContent>
         </Popover>
       </div>
+      {/* Absolute time static element for SEO */}
+      <time
+        className="sr-only"
+        aria-hidden="true"
+        dateTime={timestamp.toISOString()}
+      >
+        Last updated: {absoluteTime}
+      </time>
     </>
   );
 }
