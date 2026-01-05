@@ -25,14 +25,22 @@ export class PoEDisenchantPage {
       .waitFor({ state: "visible", timeout });
   }
 
+  async waitForHydration(timeout = 15000) {
+    await this.page.waitForSelector("html[data-hydrated='true']", {
+      timeout,
+    });
+  }
+
   async setup() {
     await this.goto();
     await this.waitForDataLoad();
+    await this.waitForHydration();
   }
 
   async refreshPage() {
     await this.page.reload({ waitUntil: "domcontentloaded" });
     await this.waitForDataLoad();
+    await this.waitForHydration();
   }
 
   // ---------------------------

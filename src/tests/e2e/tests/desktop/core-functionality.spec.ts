@@ -16,9 +16,8 @@ test.describe("Page Metadata", () => {
   });
 
   test("should have correct page description meta tag", async ({ poePage }) => {
-    await poePage.verifyPageDescription(
-      getDescriptionWithLeague(DEFAULT_LEAGUE),
-    );
+    const leagueName = getLeagueName(DEFAULT_LEAGUE);
+    await poePage.verifyPageDescription(getDescriptionWithLeague(leagueName));
   });
 
   test("should display page header and description", async ({ poePage }) => {
