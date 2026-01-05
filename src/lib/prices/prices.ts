@@ -16,6 +16,13 @@ const allowedUniqueTypes = [
 
 export type AllowedUnique = (typeof allowedUniqueTypes)[number];
 
+/**
+ * Ensures chaos price is never 0
+ */
+const ensureValidChaosPrice = (price: number): number => {
+  return price <= 0 ? 0.01 : price;
+};
+
 const LineSchema = z.object({
   name: z.string(),
   chaosValue: z.number(),
@@ -104,7 +111,7 @@ const getProductionDataForType = async (
     const items: InternalItem[] = data.lines.map((line) => ({
       type,
       name: line.name,
-      chaos: line.chaosValue,
+      chaos: ensureValidChaosPrice(line.chaosValue),
       baseType: line.baseType,
       icon: line.icon,
       listingCount: line.listingCount,
@@ -148,7 +155,7 @@ const getDevDataForType = async (
   return data.lines.map((line) => ({
     type,
     name: line.name,
-    chaos: line.chaosValue,
+    chaos: ensureValidChaosPrice(line.chaosValue),
     baseType: line.baseType,
     icon: line.icon,
     listingCount: line.listingCount,
