@@ -28,6 +28,13 @@ export const ARCHIVED_LEAGUE_SLUGS = Object.keys(
   ARCHIVED_LEAGUES,
 ) as ArchivedLeague[];
 
+export const DATE_PUBLISHED_LEAGUES: Record<League, Date> = {
+  standard: new Date("2025-06-01"),
+  hardcore: new Date("2025-06-01"),
+  keepers: new Date("2025-10-31"),
+  "hardcore-keepers": new Date("2025-10-31"),
+};
+
 export function isValidLeague(slug: string): slug is League {
   return Object.hasOwn(LEAGUES, slug);
 }
@@ -46,4 +53,8 @@ export function getLeagueApiName(slug: League) {
 
 export function getLeagueFromName(name: string): League | undefined {
   return LEAGUE_SLUGS.find((slug) => LEAGUES[slug].name === name);
+}
+
+export function getLeagueDatePublished(slug: League) {
+  return DATE_PUBLISHED_LEAGUES[slug];
 }

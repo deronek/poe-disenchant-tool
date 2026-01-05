@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 
 import LeagueContentServer from "@/app/[league]/league-content-server";
-import DataViewSkeleton from "@/components/data-view-skeleton";
 import { LeagueSelector } from "@/components/league-selector";
 import { ModeToggle } from "@/components/ui/mode-toggle";
-import { BASE_URL, DESCRIPTION, TITLE } from "@/lib/constants";
+import {
+  BASE_URL,
+  DESCRIPTION,
+  getDescriptionWithLeague,
+  TITLE,
+} from "@/lib/constants";
 import { getLeagueName, League, LEAGUE_SLUGS } from "@/lib/leagues";
 
 type Props = { params: Promise<{ league: League }> };
@@ -35,9 +38,7 @@ export default async function LeaguePage({ params }: Props) {
           <ModeToggle />
         </nav>
       </header>
-      <Suspense fallback={<DataViewSkeleton />}>
-        <LeagueContentServer key={league} league={league} />
-      </Suspense>
+      <LeagueContentServer key={league} league={league} />
     </div>
   );
 }
@@ -48,6 +49,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: leagueName,
+    description: getDescriptionWithLeague(leagueName),
     alternates: { canonical: `${BASE_URL}/${league}` },
   };
 }

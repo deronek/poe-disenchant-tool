@@ -8,6 +8,7 @@ import { CleanupOldLeagueMarks } from "@/components/cleanup-old-league-marks";
 import { DataTableStateProvider } from "@/components/data-table-state-context";
 import { ErrorHandler } from "@/components/error-handler";
 import { Footer } from "@/components/footer";
+import { HydrationMarker } from "@/components/hydration-marker";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -18,7 +19,6 @@ export const metadata: Metadata = {
     template: `%s | ${TITLE}`,
     default: TITLE,
   },
-  description: DESCRIPTION,
   metadataBase: new URL(BASE_URL),
   applicationName: TITLE,
   keywords: [
@@ -62,25 +62,6 @@ export const metadata: Metadata = {
   category: "game utility",
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  name: TITLE,
-  url: BASE_URL,
-  description: DESCRIPTION,
-  applicationCategory: "GameUtility",
-  operatingSystem: "All",
-  offers: {
-    "@type": "Offer",
-    price: 0,
-  },
-  author: {
-    "@type": "Person",
-    name: "deronek",
-    url: "https://github.com/deronek",
-  },
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -88,15 +69,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
-          }}
-        />
-      </head>
       <body className="antialiased">
+        <HydrationMarker />
         <div className="flex min-h-screen flex-col">
           <TooltipProvider>
             <ThemeProvider

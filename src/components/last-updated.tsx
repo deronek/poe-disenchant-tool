@@ -26,7 +26,7 @@ interface LastUpdatedProps {
 
 export default function LastUpdated({ timestamp }: LastUpdatedProps) {
   const [relativeTime, setRelativeTime] = useState("...");
-  const [absoluteTime, setAbsoluteTime] = useState("");
+  const absoluteTime = formatAbsoluteTime(timestamp);
 
   useEffect(() => {
     const updateTime = () => {
@@ -38,10 +38,8 @@ export default function LastUpdated({ timestamp }: LastUpdatedProps) {
         diffInHours,
         diffInDays,
       );
-      const absolute = formatAbsoluteTime(timestamp);
 
       setRelativeTime(relative);
-      setAbsoluteTime(absolute);
     };
 
     updateTime();
@@ -106,6 +104,14 @@ export default function LastUpdated({ timestamp }: LastUpdatedProps) {
           <PopoverContent>{tooltipContent}</PopoverContent>
         </Popover>
       </div>
+      {/* Absolute time static element for SEO and accessibility */}
+      <time
+        className="sr-only"
+        dateTime={timestamp.toISOString()}
+        suppressHydrationWarning={true}
+      >
+        Last updated: {absoluteTime}
+      </time>
     </>
   );
 }

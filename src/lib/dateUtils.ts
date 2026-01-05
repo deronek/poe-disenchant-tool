@@ -30,7 +30,8 @@ export const formatRelativeTime = (
 };
 
 export const formatAbsoluteTime = (timestamp: Date) => {
-  const localeForFormatting = navigator.language;
+  const localeForFormatting =
+    typeof navigator !== "undefined" ? navigator.language : "en";
 
   return new Intl.DateTimeFormat(localeForFormatting, {
     year: "numeric",
