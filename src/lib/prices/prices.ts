@@ -17,7 +17,7 @@ const allowedUniqueTypes = [
 export type AllowedUnique = (typeof allowedUniqueTypes)[number];
 
 /**
- * Ensures chaos price is never 0
+ * Ensures chaos price is always positive
  */
 const ensureValidChaosPrice = (price: number): number => {
   return price <= 0 ? 0.01 : price;
