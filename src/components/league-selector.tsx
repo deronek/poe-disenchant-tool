@@ -34,17 +34,8 @@ export function LeagueSelector({ currentLeague }: LeagueSelectorProps) {
 
   return (
     <div className="flex flex-col gap-2 lg:flex-row lg:items-end lg:gap-3">
-      {isPending && (
-        <>
-          <Spinner
-            className="mb-2 place-self-end"
-            data-testid="league-selector-spinner"
-          />
-          <span className="sr-only" role="status" aria-live="polite">
-            Switching league…
-          </span>
-        </>
-      )}
+      <LeagueSelectorSpinner isPending={isPending} variant="desktop" />
+
       <div className="order-2 lg:order-1 lg:pb-2">
         <Badge variant="blue" className="text-xs">
           Phrecia 2.0 Leagues Available!
@@ -84,6 +75,7 @@ export function LeagueSelector({ currentLeague }: LeagueSelectorProps) {
               ))}
             </SelectContent>
           </Select>
+          <LeagueSelectorSpinner isPending={isPending} variant="mobile" />
         </div>
       </div>
       {/* Static list of all leagues for SEO and accessibility */}
@@ -99,5 +91,29 @@ export function LeagueSelector({ currentLeague }: LeagueSelectorProps) {
         </ul>
       </div>
     </div>
+  );
+}
+
+interface LeagueSelectorSpinnerProps {
+  isPending: boolean;
+  variant: "desktop" | "mobile";
+}
+
+function LeagueSelectorSpinner({
+  isPending,
+  variant,
+}: LeagueSelectorSpinnerProps) {
+  if (!isPending) return null;
+
+  return (
+    <>
+      <Spinner
+        className={variant === "desktop" ? "mb-2 hidden lg:block" : "lg:hidden"}
+        data-testid="league-selector-spinner"
+      />
+      <span className="sr-only" role="status" aria-live="polite">
+        Switching league…
+      </span>
+    </>
   );
 }
