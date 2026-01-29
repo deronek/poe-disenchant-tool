@@ -350,9 +350,9 @@ export class PoEDisenchantPage {
 
   // Assumes league selector is open
   async getLeagueOption(league: League) {
+    // Matches exactly the league name, optionally followed by whitespace and "New"
     const option = this.page.getByRole("option", {
-      name: getLeagueName(league),
-      exact: true,
+      name: new RegExp(`^${getLeagueName(league)}(?:\\s*New)?$`),
     });
     return option;
   }
