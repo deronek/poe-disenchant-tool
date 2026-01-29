@@ -345,14 +345,18 @@ export class PoEDisenchantPage {
   }
 
   get leagueSelectorSpinner() {
-    return this.page.getByTestId("league-selector-spinner");
+    return this.page.getByTestId("league-selector-spinner").first();
   }
 
   // Assumes league selector is open
   async getLeagueOption(league: League) {
+    // Matches exactly the league name, optionally followed by whitespace and "New"
+    const escapedName = getLeagueName(league).replace(
+      /[.*+?^${}()|[\]\\]/g,
+      "\\$&",
+    );
     const option = this.page.getByRole("option", {
-      name: getLeagueName(league),
-      exact: true,
+      name: new RegExp(`^${escapedName}(?:\\s*New)?$`),
     });
     return option;
   }
