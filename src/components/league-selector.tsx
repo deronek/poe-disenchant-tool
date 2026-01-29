@@ -109,11 +109,14 @@ function LeagueSelectorSpinner({
     <>
       <Spinner
         className={variant === "desktop" ? "mb-2 hidden lg:block" : "lg:hidden"}
-        data-testid="league-selector-spinner"
+        data-testid={`league-selector-spinner`}
       />
-      <span className="sr-only" role="status" aria-live="polite">
-        Switching league…
-      </span>
+      {/* Render only for mobile variant */}
+      {variant === "mobile" && (
+        <span className="sr-only" role="status" aria-live="polite">
+          Switching league…
+        </span>
+      )}
     </>
   );
 }

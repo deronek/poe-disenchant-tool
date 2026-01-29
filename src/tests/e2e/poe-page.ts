@@ -345,7 +345,7 @@ export class PoEDisenchantPage {
   }
 
   get leagueSelectorSpinner() {
-    return this.page.getByTestId("league-selector-spinner");
+    return this.page.getByTestId("league-selector-spinner").first();
   }
 
   // Assumes league selector is open
