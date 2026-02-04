@@ -107,6 +107,7 @@ const GoldCell: ColumnDef<Item>["cell"] = function GoldCellComponent({ row }) {
 const CalculatedDustValueCell: ColumnDef<Item>["cell"] =
   function CalculatedDustValueCellComponent({ row }) {
     const value = row.getValue(COLUMN_IDS.CALCULATED_DUST_VALUE) as number;
+    const qualityType = row.original.qualityType;
     const shouldCatalyst = row.original.shouldCatalyst;
     if (shouldCatalyst) {
       return (
@@ -125,6 +126,9 @@ const CalculatedDustValueCell: ColumnDef<Item>["cell"] =
                   standardFormatter={standardFormatterGlobal}
                 />
                 <DustIcon />
+                <span className="text-muted-foreground w-6 text-xs">
+                  ({qualityType})
+                </span>
               </span>
             </div>
           </TooltipTrigger>
@@ -143,6 +147,9 @@ const CalculatedDustValueCell: ColumnDef<Item>["cell"] =
             standardFormatter={standardFormatterGlobal}
           />
           <DustIcon />
+          <span className="text-muted-foreground w-6 text-xs">
+            ({qualityType})
+          </span>
         </span>
       </div>
     );

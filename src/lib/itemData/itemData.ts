@@ -25,6 +25,7 @@ export type Item = {
   type: AllowedUnique;
   icon: string;
   shouldCatalyst: boolean;
+  qualityType: "q0" | "q20";
 };
 
 const createUniqueId = (name: string, variant?: string) =>
@@ -61,6 +62,7 @@ const uncached__getItems = async (league: League) => {
       dustValue: calculatedDustValue,
       dustPerChaos,
       catalyst: shouldCatalyst,
+      qualityType,
     } = calculateDustEfficiency(priceItem, dustItem, catalystPrice);
 
     merged.push({
@@ -78,6 +80,7 @@ const uncached__getItems = async (league: League) => {
       type: priceItem.type,
       icon: priceItem.icon,
       shouldCatalyst: shouldCatalyst,
+      qualityType,
     });
   }
 
@@ -106,13 +109,19 @@ function calculateDustEfficiency(
   priceItem: PriceItem,
   dustItem: DustItem,
   catalystPrice: number,
-) {
+): {
+  dustValue: number;
+  dustPerChaos: number;
+  catalyst: boolean;
+  qualityType: "q0" | "q20";
+} {
   if (isNonQualityItem(priceItem)) {
     // Items that cannot have quality (quivers and specific items)
     return {
       dustValue: dustItem.dustValIlvl84,
       dustPerChaos: dustItem.dustValIlvl84 / priceItem.chaos,
       catalyst: false,
+      qualityType: "q0",
     };
   }
 
@@ -122,6 +131,7 @@ function calculateDustEfficiency(
       dustValue: dustItem.dustValIlvl84Q20,
       dustPerChaos: dustItem.dustValIlvl84Q20 / priceItem.chaos,
       catalyst: false,
+      qualityType: "q20",
     };
   }
 
@@ -136,6 +146,7 @@ function calculateDustEfficiency(
       dustValue: dustItem.dustValIlvl84Q20,
       dustPerChaos: catalystedDustPerChaos,
       catalyst: true,
+      qualityType: "q20",
     };
   } else {
     // Quality up is not worth it
@@ -143,6 +154,7 @@ function calculateDustEfficiency(
       dustValue: dustItem.dustValIlvl84,
       dustPerChaos: defaultDustPerChaos,
       catalyst: false,
+      qualityType: "q0",
     };
   }
 }
