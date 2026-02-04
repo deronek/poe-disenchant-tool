@@ -119,6 +119,12 @@ export class PoEDisenchantPage {
 
       const extract = (idx: number) => this.extractFullValue(cells.nth(idx));
 
+      // Extract qualityType from dust value cell
+      const dustValueCell = cells.nth(indices["Dust Value"]);
+      const dustValueText = await dustValueCell.innerText();
+      const qualityTypeMatch = dustValueText.match(/\(([^)]+)\)$/);
+      const qualityType = qualityTypeMatch ? qualityTypeMatch[1] : "";
+
       items.push({
         name,
         baseType,
@@ -127,6 +133,7 @@ export class PoEDisenchantPage {
         dustPerChaos: await extract(indices["Dust / Chaos"]),
         dustPerChaosPerSlot: await extract(indices["Dust / Chaos / Slot"]),
         goldCost: await extract(indices["Gold Fee"]),
+        qualityType,
       });
     }
     return items;

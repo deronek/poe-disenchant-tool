@@ -94,6 +94,16 @@ test.describe("Data Rendering and Formatting", () => {
       expect(tooltipValue).toBe(data.full);
     }
   });
+
+  test("should display qualityType for all items", async ({ poePage }) => {
+    const items = await poePage.getTestItems(10);
+    expect(items.length).toBeGreaterThan(0);
+
+    for (const item of items) {
+      // Verify that qualityType is present and is a valid value (q20/q0)
+      expect(item.qualityType).toMatch(/^(q20|q0)$/);
+    }
+  });
 });
 
 test.describe("Pagination Functionality", () => {

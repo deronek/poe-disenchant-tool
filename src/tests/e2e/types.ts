@@ -9,4 +9,5 @@ export type TestItem = {
   dustPerChaos: number;
   dustPerChaosPerSlot: number;
   goldCost: number;
+  qualityType: string;
 };
