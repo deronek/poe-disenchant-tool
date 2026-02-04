@@ -252,9 +252,10 @@ function PriceAndDustSection({
   calculatedDustValue: number;
   goldCost: number;
 }) {
+  const qualityType = "q20";
   return (
-    <div className="flex w-full gap-2">
-      <div className="flex-30 space-y-2">
+    <div className="flex w-full gap-3">
+      <div className="flex-30 space-y-3">
         <div className="flex items-center gap-1 text-xs">
           <p className="text-muted-foreground">Price</p>
         </div>
@@ -263,18 +264,23 @@ function PriceAndDustSection({
           <ChaosOrbIcon className="h-3 w-3" />
         </div>
       </div>
-      <div className="flex flex-40 items-center justify-center gap-2">
-        <div className="space-y-2">
+      <div className="flex flex-40 gap-2">
+        <div className="space-y-3">
           <p className="text-muted-foreground text-xs">Dust Value</p>
           <div className="flex items-center gap-1 text-xs font-semibold">
             <span>{compactFormatterGlobal.format(calculatedDustValue)}</span>
             <DustIcon className="h-3 w-3" />
           </div>
         </div>
-        <DustInfoPopover />
+        <div className="flex flex-col gap-2">
+          <DustInfoPopover />
+          <span className="text-muted-foreground w-6 text-xs">
+            ({qualityType})
+          </span>
+        </div>
       </div>
-      <div className="flex flex-30 items-center justify-end gap-2">
-        <div className="space-y-2">
+      <div className="flex flex-30 justify-end gap-2">
+        <div className="space-y-3">
           <p className="text-muted-foreground text-xs">Gold Fee</p>
           <div className="flex items-center gap-1 text-xs font-semibold">
             <span>{compactFormatterGlobal.format(goldCost)}</span>
@@ -296,7 +302,7 @@ function DustPerChaosSection({
   shouldCatalyst: boolean;
 }) {
   return (
-    <div className="flex justify-between">
+    <div className="mt-1 flex justify-between">
       <div className="min-w-0 flex-1 space-y-2">
         <p className="text-muted-foreground text-sm">Dust per Chaos</p>
 
@@ -424,7 +430,7 @@ function MobileCardComponent<TData extends Item>({
 
   return (
     <div
-      className={`min-w-78 space-y-4 rounded-lg border p-5 ${
+      className={`flex min-w-78 flex-col gap-4 rounded-lg border p-5 ${
         isSelected ? "bg-muted/60 border-primary/30 opacity-95" : "bg-card"
       } transition-all`}
     >
@@ -441,6 +447,8 @@ function MobileCardComponent<TData extends Item>({
         calculatedDustValue={calculatedDustValue}
         goldCost={goldCost}
       />
+      {/* 
+      <Separator /> */}
 
       <DustPerChaosSection
         dustPerChaos={dustPerChaos}
