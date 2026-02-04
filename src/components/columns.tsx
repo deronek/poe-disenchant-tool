@@ -126,7 +126,7 @@ const CalculatedDustValueCell: ColumnDef<Item>["cell"] =
                   standardFormatter={standardFormatterGlobal}
                 />
                 <DustIcon />
-                <span className="text-muted-foreground w-4 text-xs">
+                <span className="text-muted-foreground w-6 text-xs">
                   ({qualityType})
                 </span>
               </span>
@@ -147,7 +147,7 @@ const CalculatedDustValueCell: ColumnDef<Item>["cell"] =
             standardFormatter={standardFormatterGlobal}
           />
           <DustIcon />
-          <span className="text-muted-foreground w-4 text-xs">
+          <span className="text-muted-foreground w-6 text-xs">
             ({qualityType})
           </span>
         </span>
