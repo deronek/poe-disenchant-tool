@@ -247,12 +247,13 @@ function PriceAndDustSection({
   chaos,
   calculatedDustValue,
   goldCost,
+  qualityType,
 }: {
   chaos: number;
   calculatedDustValue: number;
   goldCost: number;
+  qualityType: string;
 }) {
-  const qualityType = "q20";
   return (
     <div className="flex w-full gap-3">
       <div className="flex-30 space-y-3">
@@ -446,9 +447,8 @@ function MobileCardComponent<TData extends Item>({
         chaos={chaos}
         calculatedDustValue={calculatedDustValue}
         goldCost={goldCost}
+        qualityType={row.original.qualityType}
       />
-      {/* 
-      <Separator /> */}
 
       <DustPerChaosSection
         dustPerChaos={dustPerChaos}
