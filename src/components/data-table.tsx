@@ -161,13 +161,6 @@ export function DataTable<TData extends Item, TValue>({
                     ? header.column.getToggleSortingHandler()
                     : undefined;
 
-                  const sortStateText =
-                    isSorted === "asc"
-                      ? ", currently sorted ascending"
-                      : isSorted === "desc"
-                        ? ", currently sorted descending"
-                        : "";
-
                   const headerName =
                     header.column.columnDef.meta?.headerName ??
                     (typeof header.column.columnDef.header === "string"
@@ -197,8 +190,8 @@ export function DataTable<TData extends Item, TValue>({
                           aria-label={
                             canSort
                               ? headerName
-                                ? `Sort by ${headerName}${sortStateText}`
-                                : `Sort column${sortStateText}`
+                                ? `Sort by ${headerName}`
+                                : "Sort column"
                               : undefined
                           }
                           aria-disabled={canSort ? undefined : true}
