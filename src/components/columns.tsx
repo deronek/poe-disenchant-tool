@@ -191,7 +191,7 @@ const DustPerChaosPerSlotCell: ColumnDef<Item>["cell"] =
           <span className="text-muted-foreground">/</span>
           <ChaosOrbIcon />
           <span className="text-muted-foreground">/</span>
-          <span className="min-w-9 text-left text-xs">
+          <span className="min-w-10 text-left text-xs">
             {slots} slot{slots !== 1 ? "s" : ""}
           </span>
         </span>
