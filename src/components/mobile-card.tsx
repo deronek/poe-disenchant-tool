@@ -69,10 +69,10 @@ const MarkInfoPopover = React.memo(function InfoPopover({
         <Button
           variant="ghost"
           size="sm"
-          className="size-5 p-0 text-blue-500 dark:text-blue-400"
+          className="size-6 p-0 text-blue-500 dark:text-blue-400"
           aria-label={`Learn more about marking ${name}`}
         >
-          <Info className="size-5" />
+          <Info className="size-5" aria-hidden="true" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="max-w-[280px] text-sm" side="left">
@@ -90,10 +90,10 @@ const DustInfoPopover = React.memo(function DustInfoPopover() {
         <Button
           variant="ghost"
           size="sm"
-          className="hover:text-foreground size-5 p-0 text-blue-500 dark:text-blue-400"
+          className="hover:text-foreground size-6 p-0 text-blue-500 dark:text-blue-400"
           aria-label="Learn more about dust value calculation"
         >
-          <Info className="size-5" />
+          <Info className="size-5" aria-hidden="true" />
         </Button>
       </PopoverTrigger>
       <PopoverContent
@@ -114,10 +114,10 @@ const GoldInfoPopover = React.memo(function GoldInfoPopover() {
         <Button
           variant="ghost"
           size="sm"
-          className="hover:text-foreground size-5 p-0 text-blue-500 dark:text-blue-400"
+          className="hover:text-foreground size-6 p-0 text-blue-500 dark:text-blue-400"
           aria-label="Learn more about gold fee calculation"
         >
-          <Info className="size-5" />
+          <Info className="size-5" aria-hidden="true" />
         </Button>
       </PopoverTrigger>
       <PopoverContent
@@ -256,9 +256,9 @@ function PriceAndDustSection({
 }) {
   return (
     <div className="flex w-full gap-3">
-      <div className="flex-30 space-y-3">
-        <div className="flex items-center gap-1 text-xs">
-          <p className="text-muted-foreground">Price</p>
+      <div className="flex flex-30 flex-col gap-2">
+        <div className="flex h-6 items-center">
+          <p className="text-muted-foreground text-xs">Price</p>
         </div>
         <div className="flex items-center gap-1 text-xs font-semibold">
           <span>{compactFormatterPrice.format(chaos)}</span>
@@ -266,29 +266,37 @@ function PriceAndDustSection({
         </div>
       </div>
       <div className="flex flex-40 gap-2">
-        <div className="space-y-3">
-          <p className="text-muted-foreground text-xs">Dust Value</p>
+        <div className="flex flex-col gap-2">
+          <div className="flex h-6 items-center">
+            <p className="text-muted-foreground text-xs">Dust Value</p>
+          </div>
           <div className="flex items-center gap-1 text-xs font-semibold">
             <span>{compactFormatterGlobal.format(calculatedDustValue)}</span>
             <DustIcon className="h-3 w-3" />
           </div>
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col items-center gap-2">
           <DustInfoPopover />
-          <span className="text-muted-foreground w-6 text-xs">
+          <span className="text-muted-foreground w-5 pl-0.5 text-xs">
             ({qualityType})
           </span>
         </div>
       </div>
-      <div className="flex flex-30 justify-end gap-2">
-        <div className="space-y-3">
-          <p className="text-muted-foreground text-xs">Gold Fee</p>
+      <div className="flex flex-30 gap-1">
+        <div className="flex flex-1 flex-col gap-2">
+          <div className="flex h-6 items-center">
+            <p className="text-muted-foreground text-xs whitespace-nowrap">
+              Gold Fee
+            </p>
+          </div>
           <div className="flex items-center gap-1 text-xs font-semibold">
             <span>{compactFormatterGlobal.format(goldCost)}</span>
             <GoldIcon className="h-3 w-3" />
           </div>
         </div>
-        <GoldInfoPopover />
+        <div className="flex h-6 items-center">
+          <GoldInfoPopover />
+        </div>
       </div>
     </div>
   );
