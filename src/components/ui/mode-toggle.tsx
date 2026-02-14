@@ -35,10 +35,7 @@ export function ModeToggle() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuRadioGroup
-            value={theme}
-            onValueChange={(value) => setTheme(value)}
-          >
+          <DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
             <DropdownMenuRadioItem value="light">Light</DropdownMenuRadioItem>
             <DropdownMenuRadioItem value="dark">Dark</DropdownMenuRadioItem>
             <DropdownMenuRadioItem value="system">System</DropdownMenuRadioItem>
