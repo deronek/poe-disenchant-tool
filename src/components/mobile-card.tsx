@@ -230,7 +230,8 @@ function HeaderSection({
           )}
         </div>
       </div>
-      <div className="flex items-center gap-3 pt-1.5">
+      {/* mr-px for vertical alignment with gold fee info popover trigger */}
+      <div className="mr-px flex items-center gap-3 pt-1.5">
         <SelectionCheckbox
           checked={isSelected}
           onChange={onSelect}
