@@ -175,7 +175,7 @@ const CalculatedDustValueCell: ColumnDef<Item>["cell"] =
           <TooltipTrigger asChild className="ml-auto">
             <div
               className={
-                "bg-radial flex w-full justify-between from-purple-400/30 to-transparent to-80%"
+                "flex w-full justify-between bg-radial from-purple-400/30 to-transparent to-80%"
               }
             >
               <CatalystIcon size={24} />
@@ -510,7 +510,7 @@ export const createColumns = (
             {isLowStock && (
               <Badge
                 variant="amber"
-                className="absolute -right-2 -top-1 size-4 border-none bg-transparent p-0"
+                className="absolute -top-1 -right-2 size-4 border-none bg-transparent p-0"
                 aria-hidden="true"
               >
                 <PackageMinus />
