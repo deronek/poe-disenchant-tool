@@ -45,7 +45,9 @@ export function DataTableToolbar<TData extends Item>({
             />
           </div>
 
-          <FilterChips table={table} />
+          <div className="xl:col-span-auto col-span-2">
+            <FilterChips table={table} />
+          </div>
         </div>
       </div>
 
