@@ -38,7 +38,10 @@ const DustValueHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
         <div className="flex w-full flex-1 items-center">
           <p>Dust Value</p>
           <Tooltip>
-            <TooltipTrigger className="ml-auto pl-1">
+            <TooltipTrigger
+              className="ml-auto pl-1"
+              aria-label="Learn more about dust value calculation"
+            >
               <Info className="size-5 text-blue-600 dark:text-blue-400" />
             </TooltipTrigger>
             <TooltipContent className="max-w-[460px] text-sm" variant="popover">
@@ -135,7 +138,10 @@ const GoldFeeHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
         <div className="flex w-full flex-1 items-center">
           <p>Gold Fee</p>
           <Tooltip>
-            <TooltipTrigger className="ml-auto pl-1">
+            <TooltipTrigger
+              className="ml-auto pl-1"
+              aria-label="Learn more about gold fee calculation"
+            >
               <Info className="size-5 text-blue-600 dark:text-blue-400" />
             </TooltipTrigger>
             <TooltipContent className="max-w-[460px] text-sm" variant="popover">
@@ -265,7 +271,10 @@ const MarkHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> = React.memo(
       <div className="flex w-full items-center">
         <p>Mark</p>
         <Tooltip>
-          <TooltipTrigger className="ml-auto">
+          <TooltipTrigger
+            className="ml-auto"
+            aria-label="Learn more about item marking"
+          >
             <Info className="size-5 text-blue-600 dark:text-blue-400" />
           </TooltipTrigger>
           <TooltipContent className="max-w-[280px] text-sm" variant="popover">
