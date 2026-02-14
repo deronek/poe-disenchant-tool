@@ -240,7 +240,9 @@ test.describe("Theme Selector Functionality", () => {
     await expect(dropdown).toBeVisible();
 
     // Should automatically focus the first option - light
-    const option = poePage.page.locator("[role='menuitem'][data-highlighted]");
+    const option = poePage.page.locator(
+      "[role='menuitemradio'][data-highlighted]",
+    );
     await expect(option).toHaveText("Light");
     await poePage.page.keyboard.press("Enter");
     await poePage.verifyThemeApplied("light");
@@ -258,7 +260,9 @@ test.describe("Theme Selector Functionality", () => {
 
     // Manually focus the second option - dark
     await poePage.page.keyboard.press("ArrowDown");
-    const option = poePage.page.locator("[role='menuitem'][data-highlighted]");
+    const option = poePage.page.locator(
+      "[role='menuitemradio'][data-highlighted]",
+    );
     await expect(option).toHaveText("Dark");
 
     await poePage.page.keyboard.press("Enter");
