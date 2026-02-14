@@ -34,6 +34,7 @@ declare module "@tanstack/react-table" {
   interface ColumnMeta<TData extends RowData, TValue> {
     className?: string;
     divinePriceThreshold?: number | null;
+    headerName?: string;
   }
 }
 
@@ -167,6 +168,12 @@ export function DataTable<TData extends Item, TValue>({
                         ? ", currently sorted descending"
                         : "";
 
+                  const headerName =
+                    header.column.columnDef.meta?.headerName ??
+                    (typeof header.column.columnDef.header === "string"
+                      ? header.column.columnDef.header
+                      : undefined);
+
                   return (
                     <TableHead
                       key={header.id}
@@ -189,9 +196,8 @@ export function DataTable<TData extends Item, TValue>({
                           }}
                           aria-label={
                             canSort
-                              ? typeof header.column.columnDef.header ===
-                                "string"
-                                ? `Sort by ${header.column.columnDef.header}${sortStateText}`
+                              ? headerName
+                                ? `Sort by ${headerName}${sortStateText}`
                                 : `Sort column${sortStateText}`
                               : undefined
                           }

@@ -443,6 +443,7 @@ export const createColumns = (
       meta: {
         className: "text-right tabular-nums",
         divinePriceThreshold: divinePriceThreshold,
+        headerName: "Price",
       },
       filterFn: rangeFilterFn,
       cell: ChaosCell,
@@ -451,7 +452,7 @@ export const createColumns = (
       accessorKey: COLUMN_IDS.CALCULATED_DUST_VALUE,
       header: DustValueHeader,
       size: 130,
-      meta: { className: "text-right tabular-nums" },
+      meta: { className: "text-right tabular-nums", headerName: "Dust Value" },
       filterFn: rangeFilterFn,
       cell: CalculatedDustValueCell,
     },
@@ -464,6 +465,7 @@ export const createColumns = (
           "text-right tabular-nums relative " +
           "bg-gradient-to-l from-primary/6 to-transparent dark:from-primary/7 dark:to-transparent " +
           "after:content-[''] after:absolute after:inset-y-0 after:right-0 after:w-px after:bg-border",
+        headerName: "Dust per Chaos",
       },
       cell: DustPerChaosCell,
     },
@@ -474,6 +476,7 @@ export const createColumns = (
       meta: {
         className:
           "text-right tabular-nums bg-gradient-to-r from-primary/6 to-transparent dark:from-primary/7 dark:to-transparent",
+        headerName: "Dust per Chaos per Slot",
       },
       cell: DustPerChaosPerSlotCell,
     },
@@ -481,7 +484,7 @@ export const createColumns = (
       accessorKey: COLUMN_IDS.GOLD_FEE,
       header: GoldFeeHeader,
       size: 115,
-      meta: { className: "text-right tabular-nums" },
+      meta: { className: "text-right tabular-nums", headerName: "Gold Fee" },
       filterFn: rangeFilterFn,
       cell: GoldCell,
     },
