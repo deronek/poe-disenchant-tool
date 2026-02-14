@@ -30,7 +30,7 @@ const XButton = React.forwardRef<HTMLButtonElement, XButtonProps>(
         ref={ref}
         {...props}
       >
-        <X aria-hidden="true" />
+        <X />
       </Button>
     );
   },

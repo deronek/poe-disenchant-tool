@@ -518,7 +518,7 @@ export const createColumns = (
             title={`Open trade search for ${name}`}
             className="inline-flex items-center gap-2"
           >
-            <ExternalLink className="size-5" aria-hidden="true" />
+            <ExternalLink className="size-5" />
             {isLowStock && (
               <Badge
                 variant="amber"

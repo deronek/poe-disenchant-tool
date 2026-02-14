@@ -68,7 +68,7 @@ const MarkInfoPopover = React.memo(function InfoPopover() {
           className="size-6 p-0 text-blue-600 dark:text-blue-400"
           aria-label="Learn more about item marking"
         >
-          <Info className="size-5" aria-hidden="true" />
+          <Info className="size-5" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="max-w-[280px] text-sm" side="left">
@@ -89,7 +89,7 @@ const DustInfoPopover = React.memo(function DustInfoPopover() {
           className="hover:text-foreground size-6 p-0 text-blue-600 dark:text-blue-400"
           aria-label="Learn more about dust value calculation"
         >
-          <Info className="size-5" aria-hidden="true" />
+          <Info className="size-5" />
         </Button>
       </PopoverTrigger>
       <PopoverContent
@@ -113,7 +113,7 @@ const GoldInfoPopover = React.memo(function GoldInfoPopover() {
           className="hover:text-foreground size-6 p-0 text-blue-600 dark:text-blue-400"
           aria-label="Learn more about gold fee"
         >
-          <Info className="size-5" aria-hidden="true" />
+          <Info className="size-5" />
         </Button>
       </PopoverTrigger>
       <PopoverContent
