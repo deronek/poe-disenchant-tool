@@ -210,7 +210,7 @@ export function RangeFilter<TData extends Item>({
             ]}
             onValueChange={handleLowerBoundChange}
             onKeyDown={handleLowerBoundKeyDown}
-            className="w-full py-1"
+            className="w-full py-1.5"
             aria-label={`Lower bound ${title.toLowerCase()} filter`}
           />
         </div>
@@ -252,7 +252,7 @@ export function RangeFilter<TData extends Item>({
             step={step}
             value={[hasMax ? (currentRange.max as number) : max]}
             onValueChange={handleUpperBoundChange}
-            className={cn("w-full py-1", !hasMax && "opacity-60")}
+            className={cn("w-full py-1.5", !hasMax && "opacity-60")}
             aria-label={`Upper bound ${title.toLowerCase()} filter`}
           />
         </div>
