@@ -21,6 +21,7 @@ export function NameFilterChip<TData>({ column }: NameFilterChipProps<TData>) {
         variant="outline"
         className="inline-flex items-center gap-1 px-3"
         data-testid="name-filter-chip"
+        role="status"
       >
         <span className="inline-flex min-w-0 flex-shrink-0 items-center gap-1 truncate">
           Name: {value}

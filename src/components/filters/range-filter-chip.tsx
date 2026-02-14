@@ -45,6 +45,7 @@ export function RangeFilterChip<TData>({
       variant="outline"
       className="inline-flex items-center gap-1 px-3"
       data-testid={testId}
+      role="status"
     >
       <span className="inline-flex min-w-0 flex-shrink-0 items-center gap-1 truncate">
         {title} {formatRange()}
