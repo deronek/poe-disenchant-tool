@@ -58,11 +58,7 @@ const SelectionCheckbox = React.memo(function SelectionCheckbox({
 });
 
 // Info button + popover as memo
-const MarkInfoPopover = React.memo(function InfoPopover({
-  name,
-}: {
-  name: string;
-}) {
+const MarkInfoPopover = React.memo(function InfoPopover() {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -70,13 +66,13 @@ const MarkInfoPopover = React.memo(function InfoPopover({
           variant="ghost"
           size="sm"
           className="size-6 p-0 text-blue-600 dark:text-blue-400"
-          aria-label={`Learn more about marking ${name}`}
+          aria-label="Learn more about item marking"
         >
           <Info className="size-5" aria-hidden="true" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="max-w-[280px] text-sm" side="left">
-        <ItemMarkingInfo itemName={name} />
+        <ItemMarkingInfo />
       </PopoverContent>
     </Popover>
   );
@@ -115,7 +111,7 @@ const GoldInfoPopover = React.memo(function GoldInfoPopover() {
           variant="ghost"
           size="sm"
           className="hover:text-foreground size-6 p-0 text-blue-600 dark:text-blue-400"
-          aria-label="Learn more about gold fee calculation"
+          aria-label="Learn more about gold fee"
         >
           <Info className="size-5" aria-hidden="true" />
         </Button>
@@ -237,7 +233,7 @@ function HeaderSection({
           onChange={onSelect}
           label={`Mark ${name} as completed`}
         />
-        <MarkInfoPopover name={name}></MarkInfoPopover>
+        <MarkInfoPopover />
       </div>
     </div>
   );

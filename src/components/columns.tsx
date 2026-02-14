@@ -140,7 +140,7 @@ const GoldFeeHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
           <Tooltip>
             <TooltipTrigger
               className="ml-auto pl-1"
-              aria-label="Learn more about gold fee calculation"
+              aria-label="Learn more about gold fee"
             >
               <Info className="size-5 text-blue-600 dark:text-blue-400" />
             </TooltipTrigger>
