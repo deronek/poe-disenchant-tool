@@ -39,7 +39,7 @@ const DustValueHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
           <p>Dust Value</p>
           <Tooltip>
             <TooltipTrigger className="ml-auto pl-1">
-              <Info className="size-5 text-blue-500 dark:text-blue-400" />
+              <Info className="size-5 text-blue-600 dark:text-blue-400" />
             </TooltipTrigger>
             <TooltipContent className="max-w-[460px] text-sm" variant="popover">
               <DustInfo />
@@ -136,7 +136,7 @@ const GoldFeeHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
           <p>Gold Fee</p>
           <Tooltip>
             <TooltipTrigger className="ml-auto pl-1">
-              <Info className="size-5 text-blue-500 dark:text-blue-400" />
+              <Info className="size-5 text-blue-600 dark:text-blue-400" />
             </TooltipTrigger>
             <TooltipContent className="max-w-[460px] text-sm" variant="popover">
               <GoldInfo />
@@ -175,7 +175,7 @@ const CalculatedDustValueCell: ColumnDef<Item>["cell"] =
           <TooltipTrigger asChild className="ml-auto">
             <div
               className={
-                "flex w-full justify-between bg-radial from-purple-400/30 to-transparent to-80%"
+                "bg-radial flex w-full justify-between from-purple-400/30 to-transparent to-80%"
               }
             >
               <CatalystIcon size={24} />
@@ -266,7 +266,7 @@ const MarkHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> = React.memo(
         <p>Mark</p>
         <Tooltip>
           <TooltipTrigger className="ml-auto">
-            <Info className="size-5 text-blue-500 dark:text-blue-400" />
+            <Info className="size-5 text-blue-600 dark:text-blue-400" />
           </TooltipTrigger>
           <TooltipContent className="max-w-[280px] text-sm" variant="popover">
             <ItemMarkingInfo />
@@ -510,7 +510,7 @@ export const createColumns = (
             {isLowStock && (
               <Badge
                 variant="amber"
-                className="absolute -top-1 -right-2 size-4 border-none bg-transparent p-0"
+                className="absolute -right-2 -top-1 size-4 border-none bg-transparent p-0"
                 aria-hidden="true"
               >
                 <PackageMinus />

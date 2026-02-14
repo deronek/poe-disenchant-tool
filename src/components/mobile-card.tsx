@@ -69,7 +69,7 @@ const MarkInfoPopover = React.memo(function InfoPopover({
         <Button
           variant="ghost"
           size="sm"
-          className="size-6 p-0 text-blue-500 dark:text-blue-400"
+          className="size-6 p-0 text-blue-600 dark:text-blue-400"
           aria-label={`Learn more about marking ${name}`}
         >
           <Info className="size-5" aria-hidden="true" />
@@ -90,14 +90,14 @@ const DustInfoPopover = React.memo(function DustInfoPopover() {
         <Button
           variant="ghost"
           size="sm"
-          className="hover:text-foreground size-6 p-0 text-blue-500 dark:text-blue-400"
+          className="hover:text-foreground size-6 p-0 text-blue-600 dark:text-blue-400"
           aria-label="Learn more about dust value calculation"
         >
           <Info className="size-5" aria-hidden="true" />
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="w-[min(var(--radix-popover-content-available-width,9999px),calc(var(--spacing)*84))] min-w-77 text-sm"
+        className="min-w-77 w-[min(var(--radix-popover-content-available-width,9999px),calc(var(--spacing)*84))] text-sm"
         side="bottom"
       >
         <DustInfo />
@@ -114,14 +114,14 @@ const GoldInfoPopover = React.memo(function GoldInfoPopover() {
         <Button
           variant="ghost"
           size="sm"
-          className="hover:text-foreground size-6 p-0 text-blue-500 dark:text-blue-400"
+          className="hover:text-foreground size-6 p-0 text-blue-600 dark:text-blue-400"
           aria-label="Learn more about gold fee calculation"
         >
           <Info className="size-5" aria-hidden="true" />
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="w-[min(var(--radix-popover-content-available-width,9999px),calc(var(--spacing)*84))] min-w-77 text-sm"
+        className="min-w-77 w-[min(var(--radix-popover-content-available-width,9999px),calc(var(--spacing)*84))] text-sm"
         side="left"
       >
         <GoldInfo />
@@ -256,7 +256,7 @@ function PriceAndDustSection({
 }) {
   return (
     <div className="flex w-full gap-3">
-      <div className="flex flex-30 flex-col gap-2">
+      <div className="flex-30 flex flex-col gap-2">
         <div className="flex h-6 items-center">
           <p className="text-muted-foreground text-xs">Price</p>
         </div>
@@ -265,7 +265,7 @@ function PriceAndDustSection({
           <ChaosOrbIcon className="h-3 w-3" />
         </div>
       </div>
-      <div className="flex flex-40 gap-2">
+      <div className="flex-40 flex gap-2">
         <div className="flex flex-col gap-2">
           <div className="flex h-6 items-center">
             <p className="text-muted-foreground text-xs">Dust Value</p>
@@ -282,10 +282,10 @@ function PriceAndDustSection({
           </span>
         </div>
       </div>
-      <div className="flex flex-30 gap-1">
+      <div className="flex-30 flex gap-1">
         <div className="flex flex-1 flex-col gap-2">
           <div className="flex h-6 items-center">
-            <p className="text-muted-foreground text-xs whitespace-nowrap">
+            <p className="text-muted-foreground whitespace-nowrap text-xs">
               Gold Fee
             </p>
           </div>
@@ -439,7 +439,7 @@ function MobileCardComponent<TData extends Item>({
 
   return (
     <div
-      className={`flex min-w-78 flex-col gap-4 rounded-lg border p-5 ${
+      className={`min-w-78 flex flex-col gap-4 rounded-lg border p-5 ${
         isSelected ? "bg-muted/60 border-primary/30 opacity-95" : "bg-card"
       } transition-all`}
     >
