@@ -6,11 +6,6 @@ export const LEAGUES = {
     name: "Hardcore Keepers",
     apiName: "Hardcore Keepers",
   },
-  "phrecia2.0": { name: "Phrecia 2.0", apiName: "Phrecia 2.0" },
-  "phrecia2.0hc": {
-    name: "Hardcore Phrecia 2.0",
-    apiName: "Hardcore Phrecia 2.0",
-  },
 } as const;
 
 export const ARCHIVED_LEAGUES = {
@@ -21,6 +16,11 @@ export const ARCHIVED_LEAGUES = {
   "hardcore-mercenaries": {
     name: "Hardcore Mercenaries",
     apiName: "Hardcore Mercenaries",
+  },
+  "phrecia2.0": { name: "Phrecia 2.0", apiName: "Phrecia 2.0" },
+  "phrecia2.0hc": {
+    name: "Hardcore Phrecia 2.0",
+    apiName: "Hardcore Phrecia 2.0",
   },
 } as const;
 
@@ -38,8 +38,6 @@ export const DATE_PUBLISHED_LEAGUES: Record<League, Date> = {
   hardcore: new Date("2025-06-01"),
   keepers: new Date("2025-10-31"),
   "hardcore-keepers": new Date("2025-10-31"),
-  "phrecia2.0": new Date("2026-01-29"),
-  "phrecia2.0hc": new Date("2026-01-29"),
 };
 
 export function isValidLeague(slug: string): slug is League {

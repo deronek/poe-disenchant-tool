@@ -4,7 +4,6 @@ import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -66,14 +65,7 @@ export function LeagueSelector({ currentLeague }: LeagueSelectorProps) {
             <SelectContent>
               {LEAGUE_SLUGS.map((slug) => (
                 <SelectItem key={slug} value={slug}>
-                  <div className="flex items-center gap-2">
-                    {LEAGUES[slug].name}
-                    {(slug === "phrecia2.0" || slug === "phrecia2.0hc") && (
-                      <Badge variant="blue" className="text-xs">
-                        New
-                      </Badge>
-                    )}
-                  </div>
+                  {LEAGUES[slug].name}
                 </SelectItem>
               ))}
             </SelectContent>
