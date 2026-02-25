@@ -260,9 +260,14 @@ export const dedupeCheapestVariants = (
       const regulars = items.filter((i) => !isFoulbornItem(i.name));
       const foulborns = items.filter((i) => isFoulbornItem(i.name));
 
-      // Case 1: Only one type exists → push as is
+      // Case 1: Only one type exists → use base name (without Foulborn prefix)
       if (regulars.length === 0 || foulborns.length === 0) {
-        finalResult.push(...items);
+        const cheapestItem = getCheapest(items);
+        finalResult.push({
+          ...cheapestItem,
+          name: extractBaseName(cheapestItem.name),
+          listingCount: sumListings(items),
+        });
         continue;
       }
 
