@@ -23,8 +23,10 @@ export const ITEMS_TO_IGNORE = [
   "Third Piece of the Arcane",
   "First Piece of Time",
   "Second Piece of Time",
-  // This item is legacy and extremely expensive
-  "Deshret's Vise",
+
+  // These items are legacy and extremely expensive
+  "Deshret's Vise", // Now Meginord's Vise
+  "Titucus Span", // Now Titucius' Span
 ];
 
 // These items cannot have quality
