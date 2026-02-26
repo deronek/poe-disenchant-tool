@@ -719,7 +719,7 @@ describe("dedupeCheapestVariants", () => {
       const output = dedupeCheapestVariants(input);
 
       expect(output).toHaveLength(1);
-      expect(output[0].name).toBe("Foulborn "); // Keep regular name
+      expect(output[0].name).toBe(""); // Empty base name
       expect(output[0].chaos).toBe(10); // Use Foulborn price
       expect(output[0].listingCount).toBe(5); // Sum both counts
     });
@@ -742,8 +742,8 @@ describe("dedupeCheapestVariants", () => {
       // Should produce exactly one result
       expect(output).toHaveLength(1);
 
-      // Should retain the Foulborn name
-      expect(output[0].name).toBe("Foulborn The Surrender");
+      // Should use base name without Foulborn prefix
+      expect(output[0].name).toBe("The Surrender");
 
       // Should keep its own price and listing count
       expect(output[0].chaos).toBe(10);
