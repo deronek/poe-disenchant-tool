@@ -61,3 +61,12 @@ export function getLeagueFromName(name: string): League | undefined {
 export function getLeagueDatePublished(slug: League) {
   return DATE_PUBLISHED_LEAGUES[slug];
 }
+
+export function hasNewLeagues(): boolean {
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+  return Object.values(DATE_PUBLISHED_LEAGUES).some(
+    (publishedDate) => publishedDate > oneWeekAgo,
+  );
+}
