@@ -95,6 +95,7 @@ export function LeagueSelector({ currentLeague }: LeagueSelectorProps) {
                 className={`absolute -top-3 right-0 border-none px-1.5 py-0.5 text-xs transition-opacity ${
                   isSelectOpen ? "opacity-80" : "opacity-100"
                 }`}
+                data-testid="new-leagues-info-badge"
               >
                 <CalendarPlus className="mr-1" />
                 Updated!

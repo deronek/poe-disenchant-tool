@@ -474,6 +474,22 @@ export class PoEDisenchantPage {
     });
   }
 
+  async setAlwaysShowNewLeaguesFlag(): Promise<void> {
+    await this.page.evaluate(() => {
+      localStorage.setItem("poe-udt:always-show-new-leagues:v1", "true");
+    });
+  }
+
+  async clearAlwaysShowNewLeaguesFlag(): Promise<void> {
+    await this.page.evaluate(() => {
+      localStorage.removeItem("poe-udt:always-show-new-leagues:v1");
+    });
+  }
+
+  get newLeaguesBadge() {
+    return this.page.getByTestId("new-leagues-info-badge");
+  }
+
   async clickRefreshButton(): Promise<void> {
     await this.lastUpdatedRefreshButton.click();
   }
