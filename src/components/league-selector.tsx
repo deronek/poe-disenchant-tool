@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { CalendarPlus } from "lucide-react";
@@ -26,6 +26,20 @@ export function LeagueSelector({ currentLeague }: LeagueSelectorProps) {
   const [selected, setSelected] = useState<League>(currentLeague);
   const [isPending, startTransition] = useTransition();
   const [isSelectOpen, setIsSelectOpen] = useState(false);
+  const [showNewLeaguesBadge, setShowNewLeaguesBadge] = useState(() =>
+    hasNewLeagues(),
+  );
+
+  // On hydration, check whether to display the new badge based on localStorage override
+  useEffect(() => {
+    if (
+      typeof localStorage !== "undefined" &&
+      localStorage.getItem("poe-udt:always-show-new-leagues:v1") !== null
+    ) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setShowNewLeaguesBadge(true);
+    }
+  }, []);
 
   const handleLeagueChange = (newLeague: League) => {
     setSelected(newLeague);
@@ -75,15 +89,15 @@ export function LeagueSelector({ currentLeague }: LeagueSelectorProps) {
                 ))}
               </SelectContent>
             </Select>
-            {hasNewLeagues() && (
+            {showNewLeaguesBadge && (
               <Badge
                 variant="blue"
                 className={`absolute -top-3 right-0 border-none px-1.5 py-0.5 text-xs transition-opacity ${
-                  isSelectOpen ? "opacity-0" : "opacity-100"
+                  isSelectOpen ? "opacity-80" : "opacity-100"
                 }`}
               >
                 <CalendarPlus className="mr-1" />
-                New!
+                Updated!
               </Badge>
             )}
           </div>
