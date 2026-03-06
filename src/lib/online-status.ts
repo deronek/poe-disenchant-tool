@@ -1,9 +1,10 @@
 import { z } from "zod";
 
 export const OnlineStatusSchema = z.enum([
-  "available", // Instant Buyout and In-Person Trade
-  "securable", // Instant Buyout Only
-  "online", // In-Person Trade Only
+  "available", // Instant Buyout and In Person Trade
+  "securable", // Instant Buyout
+  "onlineleague", // In Person (Online In League)
+  "online", // In Person (Online)
   "any", // Any
 ]);
 
