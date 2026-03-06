@@ -267,13 +267,13 @@ export function AdvancedSettingsPanel({
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="available">
-                    Instant Buyout & In-Person
+                    Instant Buyout & In Person
                   </SelectItem>
                   <SelectItem value="securable">Instant Buyout</SelectItem>
                   <SelectItem value="onlineleague">
-                    In-Person (Online In League)
+                    In Person (Online In League)
                   </SelectItem>
-                  <SelectItem value="online">In-Person (Online)</SelectItem>
+                  <SelectItem value="online">In Person (Online)</SelectItem>
                   <SelectItem value="any">Any (Possibly Offline)</SelectItem>
                 </SelectContent>
               </Select>
