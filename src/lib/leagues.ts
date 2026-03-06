@@ -66,11 +66,13 @@ export function getLeagueDatePublished(slug: League) {
   return DATE_PUBLISHED_LEAGUES[slug];
 }
 
-export function hasNewLeagues(): boolean {
+export function isNewLeague(slug: League): boolean {
   const oneWeekAgo = new Date();
   oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
-  return Object.values(DATE_PUBLISHED_LEAGUES).some(
-    (publishedDate) => publishedDate > oneWeekAgo,
-  );
+  return DATE_PUBLISHED_LEAGUES[slug] > oneWeekAgo;
+}
+
+export function hasNewLeagues(): boolean {
+  return LEAGUE_SLUGS.some(isNewLeague);
 }

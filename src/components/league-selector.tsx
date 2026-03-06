@@ -14,7 +14,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { hasNewLeagues, League, LEAGUE_SLUGS, LEAGUES } from "@/lib/leagues";
+import {
+  hasNewLeagues,
+  isNewLeague,
+  League,
+  LEAGUE_SLUGS,
+  LEAGUES,
+} from "@/lib/leagues";
 import Spinner from "./ui/spinner";
 
 interface LeagueSelectorProps {
@@ -84,7 +90,14 @@ export function LeagueSelector({ currentLeague }: LeagueSelectorProps) {
               <SelectContent>
                 {LEAGUE_SLUGS.map((slug) => (
                   <SelectItem key={slug} value={slug}>
-                    {LEAGUES[slug].name}
+                    <div className="flex items-center gap-3">
+                      {LEAGUES[slug].name}
+                      {isNewLeague(slug) && (
+                        <Badge variant="blue" className="text-xs">
+                          New
+                        </Badge>
+                      )}
+                    </div>
                   </SelectItem>
                 ))}
               </SelectContent>
