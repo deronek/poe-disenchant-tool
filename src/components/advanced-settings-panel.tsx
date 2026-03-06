@@ -269,8 +269,11 @@ export function AdvancedSettingsPanel({
                   <SelectItem value="available">
                     Instant Buyout & In-Person
                   </SelectItem>
-                  <SelectItem value="securable">Instant Buyout Only</SelectItem>
-                  <SelectItem value="online">In-Person Only</SelectItem>
+                  <SelectItem value="securable">Instant Buyout</SelectItem>
+                  <SelectItem value="onlineleague">
+                    In-Person (Online In League)
+                  </SelectItem>
+                  <SelectItem value="online">In-Person (Online)</SelectItem>
                   <SelectItem value="any">Any (Possibly Offline)</SelectItem>
                 </SelectContent>
               </Select>
