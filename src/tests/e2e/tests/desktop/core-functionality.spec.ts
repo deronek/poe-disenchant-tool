@@ -3,6 +3,7 @@ import {
   DEFAULT_LEAGUE,
   getLeagueFromName,
   getLeagueName,
+  hasNewLeagues,
   League,
   LEAGUE_SLUGS,
 } from "@/lib/leagues";
@@ -136,6 +137,38 @@ test.describe("League Selector Functionality", () => {
     // Select that league
     await poePage.page.keyboard.press("Enter");
     await poePage.verifyLeagueSelected(highlightedLeague as League);
+  });
+
+  test("should display new leagues badge when there are new leagues", async ({
+    poePage,
+  }) => {
+    test.skip(!hasNewLeagues(), "No new leagues to display badge for");
+
+    // Verify the badge is visible
+    await expect(poePage.newLeaguesBadge).toBeVisible();
+  });
+
+  test("should not display new leagues badge when there are no new leagues", async ({
+    poePage,
+  }) => {
+    test.skip(
+      hasNewLeagues(),
+      "New leagues are available, badge should be visible",
+    );
+
+    // Verify the badge is not visible
+    await expect(poePage.newLeaguesBadge).not.toBeVisible();
+  });
+
+  test("should always display new leagues badge when localStorage flag is set", async ({
+    poePage,
+  }) => {
+    // Set the localStorage flag
+    await poePage.setAlwaysShowNewLeaguesFlag();
+    // Refresh the page to apply the change
+    await poePage.refreshPage();
+    // Verify the badge is visible regardless of hasNewLeagues() result
+    await expect(poePage.newLeaguesBadge).toBeVisible();
   });
 });
 
