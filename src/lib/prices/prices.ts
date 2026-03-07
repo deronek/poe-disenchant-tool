@@ -26,6 +26,7 @@ const ensureValidChaosPrice = (price: number): number => {
 const LineSchema = z.object({
   name: z.string(),
   chaosValue: z.number(),
+  divineValue: z.number(),
   baseType: z.string(),
   icon: z.url(),
   listingCount: z.int(),
@@ -43,6 +44,7 @@ export type InternalItem = {
   type: AllowedUnique;
   name: string;
   chaos: number;
+  divine: number;
   baseType: string;
   icon: string;
   listingCount: number;
@@ -112,6 +114,7 @@ const getProductionDataForType = async (
       type,
       name: line.name,
       chaos: ensureValidChaosPrice(line.chaosValue),
+      divine: line.divineValue,
       baseType: line.baseType,
       icon: line.icon,
       listingCount: line.listingCount,
@@ -156,6 +159,7 @@ const getDevDataForType = async (
     type,
     name: line.name,
     chaos: ensureValidChaosPrice(line.chaosValue),
+    divine: line.divineValue,
     baseType: line.baseType,
     icon: line.icon,
     listingCount: line.listingCount,
@@ -329,6 +333,7 @@ const uncached__getPriceData = async (league: League): Promise<Item[]> => {
       type: item.type,
       name: item.name,
       chaos: item.chaos,
+      divine: item.divine,
       baseType: item.baseType,
       icon: item.icon,
       listingCount: item.listingCount,

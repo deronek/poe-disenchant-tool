@@ -22,6 +22,7 @@ import { createTradeLink } from "@/lib/tradeLink";
 import { CatalystIcon } from "./catalyst-icon";
 import { CatalystInfo } from "./catalyst-info";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
+import { DivineOrbIcon } from "./divine-orb-icon";
 import { DustIcon } from "./dust-icon";
 import { DustInfo } from "./dust-info";
 import { GoldIcon } from "./gold-icon";
@@ -55,13 +56,32 @@ const DustValueHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
 const ChaosCell: ColumnDef<Item>["cell"] = function ChaosCellComponent({
   row,
 }) {
-  const value = row.getValue(COLUMN_IDS.CHAOS) as number;
+  const chaosValue = row.getValue(COLUMN_IDS.CHAOS) as number;
+  const divineValue = row.original.divine;
+  const THRESHOLD = 1000; // Items above this chaos value will be displayed in divines
+
+  if (chaosValue >= THRESHOLD && divineValue > 0) {
+    return (
+      <span className="inline-flex w-full justify-end gap-1">
+        <CompactNumberTooltip
+          value={divineValue}
+          compactFormatter={compactFormatterPrice}
+          standardFormatter={standardFormatterPrice}
+          secondaryValue={chaosValue}
+          isDivine={true}
+        />
+        <DivineOrbIcon />
+      </span>
+    );
+  }
+
   return (
     <span className="inline-flex w-full justify-end gap-1">
       <CompactNumberTooltip
-        value={value}
+        value={chaosValue}
         compactFormatter={compactFormatterPrice}
         standardFormatter={standardFormatterPrice}
+        isDivine={false}
       />
       <ChaosOrbIcon />
     </span>
@@ -247,10 +267,14 @@ const CompactNumberTooltip = React.memo(function CompactNumberTooltip({
   value,
   compactFormatter,
   standardFormatter,
+  secondaryValue,
+  isDivine,
 }: {
   value: number;
   compactFormatter: Intl.NumberFormat;
   standardFormatter: Intl.NumberFormat;
+  secondaryValue?: number;
+  isDivine?: boolean;
 }) {
   const compact = renderCompactNumber(value, compactFormatter);
   const full = standardFormatter.format(value);
@@ -259,7 +283,16 @@ const CompactNumberTooltip = React.memo(function CompactNumberTooltip({
     <Tooltip>
       <TooltipTrigger>{compact}</TooltipTrigger>
       <TooltipContent variant="popover" className="px-3 py-1.5 text-xs">
-        {full}
+        <div className="flex items-center gap-1">
+          {full}
+          {isDivine ? <DivineOrbIcon size={16} /> : <ChaosOrbIcon size={16} />}
+        </div>
+        {secondaryValue !== undefined && (
+          <div className="flex items-center gap-1 text-muted-foreground mt-1">
+            {standardFormatter.format(secondaryValue)}
+            <ChaosOrbIcon size={16} />
+          </div>
+        )}
       </TooltipContent>
     </Tooltip>
   );
