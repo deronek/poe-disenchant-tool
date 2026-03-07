@@ -66,20 +66,42 @@ const ChaosCell: ColumnDef<Item>["cell"] = function ChaosCellComponent({
   // - Item has a divine price
   // - Chaos value is above the threshold
   if (threshold && divineValue > 0 && chaosValue >= threshold) {
-    const compactDivine = renderCompactNumber(
+    const { element: compactDivine, hasCompactSuffix } = renderCompactNumber(
       divineValue,
       compactFormatterPrice,
     );
+
+    // If divine value is in compact representation, show both full divine and chaos in tooltip
+    if (hasCompactSuffix) {
+      return (
+        <span className="inline-flex w-full justify-end gap-1">
+          <Tooltip>
+            <TooltipTrigger>{compactDivine}</TooltipTrigger>
+            <TooltipContent variant="popover" className="px-3 py-1.5 text-xs">
+              <div className="flex items-center gap-1">
+                {standardFormatterPrice.format(divineValue)}
+                <DivineOrbIcon size={16} />
+              </div>
+              <div className="text-muted-foreground mt-1 flex items-center gap-1">
+                {standardFormatterPrice.format(chaosValue)}
+                <ChaosOrbIcon size={16} />
+              </div>
+            </TooltipContent>
+          </Tooltip>
+          <DivineOrbIcon />
+        </span>
+      );
+    }
+
+    // If divine value has no compact representation, show only chaos in tooltip
     return (
       <span className="inline-flex w-full justify-end gap-1">
         <Tooltip>
-          <TooltipTrigger>{compactDivine}</TooltipTrigger>
+          <TooltipTrigger>
+            {standardFormatterPrice.format(divineValue)}
+          </TooltipTrigger>
           <TooltipContent variant="popover" className="px-3 py-1.5 text-xs">
-            <div className="flex items-center gap-1">
-              {standardFormatterPrice.format(divineValue)}
-              <DivineOrbIcon size={16} />
-            </div>
-            <div className="text-muted-foreground mt-1 flex items-center gap-1">
+            <div className="mt-1 flex items-center gap-1">
               {standardFormatterPrice.format(chaosValue)}
               <ChaosOrbIcon size={16} />
             </div>
@@ -281,16 +303,20 @@ const CompactNumberTooltip = React.memo(function CompactNumberTooltip({
   value,
   compactFormatter,
   standardFormatter,
-  secondaryValue,
-  isDivine,
 }: {
   value: number;
   compactFormatter: Intl.NumberFormat;
   standardFormatter: Intl.NumberFormat;
-  secondaryValue?: number;
-  isDivine?: boolean;
 }) {
-  const compact = renderCompactNumber(value, compactFormatter);
+  const { element: compact, hasCompactSuffix } = renderCompactNumber(
+    value,
+    compactFormatter,
+  );
+
+  if (!hasCompactSuffix) {
+    return <span>{standardFormatter.format(value)}</span>;
+  }
+
   const full = standardFormatter.format(value);
 
   return (
@@ -298,12 +324,6 @@ const CompactNumberTooltip = React.memo(function CompactNumberTooltip({
       <TooltipTrigger>{compact}</TooltipTrigger>
       <TooltipContent variant="popover" className="px-3 py-1.5 text-xs">
         <div className="flex items-center gap-1">{full}</div>
-        {secondaryValue !== undefined && (
-          <div className="text-muted-foreground mt-1 flex items-center gap-1">
-            {standardFormatter.format(secondaryValue)}
-            <ChaosOrbIcon size={16} />
-          </div>
-        )}
       </TooltipContent>
     </Tooltip>
   );
@@ -322,8 +342,9 @@ export function renderCompactNumber(
   formatter: Intl.NumberFormat,
 ) {
   const parts = formatter.formatToParts(value);
+  const hasCompactSuffix = parts.some((part) => part.type === "compact");
 
-  return (
+  const element = (
     <span data-full-value={value}>
       {parts.map(({ type, value: partValue }, index) => {
         if (type === "compact") {
@@ -337,6 +358,8 @@ export function renderCompactNumber(
       })}
     </span>
   );
+
+  return { element, hasCompactSuffix };
 }
 
 export const COLUMN_IDS = {
