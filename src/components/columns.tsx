@@ -55,12 +55,17 @@ const DustValueHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
 
 const ChaosCell: ColumnDef<Item>["cell"] = function ChaosCellComponent({
   row,
+  column,
 }) {
   const chaosValue = row.getValue(COLUMN_IDS.CHAOS) as number;
   const divineValue = row.original.divine;
-  const THRESHOLD = 1000; // Items above this chaos value will be displayed in divines
+  const threshold = column.columnDef.meta?.divinePriceThreshold;
 
-  if (chaosValue >= THRESHOLD && divineValue > 0) {
+  // Show the price in divines when:
+  // - We have a threshold available (calculated from divine/chaos rate)
+  // - Item has a divine price
+  // - Chaos value is above the threshold
+  if (threshold && divineValue > 0 && chaosValue >= threshold) {
     return (
       <span className="inline-flex w-full justify-end gap-1">
         <CompactNumberTooltip
@@ -288,7 +293,7 @@ const CompactNumberTooltip = React.memo(function CompactNumberTooltip({
           {isDivine ? <DivineOrbIcon size={16} /> : <ChaosOrbIcon size={16} />}
         </div>
         {secondaryValue !== undefined && (
-          <div className="flex items-center gap-1 text-muted-foreground mt-1">
+          <div className="text-muted-foreground mt-1 flex items-center gap-1">
             {standardFormatter.format(secondaryValue)}
             <ChaosOrbIcon size={16} />
           </div>
@@ -346,6 +351,7 @@ export const createColumns = (
   advancedSettings: AdvancedSettings,
   lowStockThreshold: number,
   league: League,
+  divinePriceThreshold: number | null,
 ): ColumnDef<Item>[] => {
   return [
     {
@@ -398,7 +404,10 @@ export const createColumns = (
       accessorKey: COLUMN_IDS.CHAOS,
       header: () => <span>Price</span>,
       size: 85,
-      meta: { className: "text-right tabular-nums" },
+      meta: {
+        className: "text-right tabular-nums",
+        divinePriceThreshold: divinePriceThreshold,
+      },
       filterFn: rangeFilterFn,
       cell: ChaosCell,
     },

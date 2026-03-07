@@ -4,7 +4,7 @@ import { Item as DustItem, getDustData } from "@/lib/dust";
 import { League } from "@/lib/leagues";
 import {
   AllowedUnique,
-  getCheapestCatalyst,
+  getCurrencyData,
   getPriceData,
   Item as PriceItem,
 } from "@/lib/prices";
@@ -36,15 +36,20 @@ const uncached__getItems = async (league: League) => {
   const dustData = getDustData();
   const dustMap = new Map(dustData.map((d) => [d.name, d]));
 
-  const [priceData, maybeCatalystPrice] = await Promise.all([
+  const [priceData, currencyData] = await Promise.all([
     getPriceData(league),
-    getCheapestCatalyst(league),
+    getCurrencyData(league),
   ]);
 
   // Fallback to 1c if no data
-  const catalystPrice = maybeCatalystPrice
-    ? maybeCatalystPrice.primaryValue
+  const catalystPrice = currencyData.catalyst
+    ? currencyData.catalyst.primaryValue
     : 1;
+
+  // Threshold is 1 divine worth of chaos (divineRate is divines per 1 chaos)
+  const divinePriceThreshold = currencyData.divineRate
+    ? Math.round(1 / currencyData.divineRate)
+    : null;
 
   const merged: Item[] = [];
   let id = 0;
@@ -92,6 +97,7 @@ const uncached__getItems = async (league: League) => {
     items: merged,
     lastUpdated: Date.now(),
     lowStockThreshold,
+    divinePriceThreshold,
   };
 };
 
