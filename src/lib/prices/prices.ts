@@ -283,12 +283,21 @@ export const dedupeCheapestVariants = (
         cheapestFoulborn.chaos,
       );
 
+      // Get the divine price corresponding to the cheapest chaos price
+      let cheapestDivine: number;
+      if (cheapestRegular.chaos <= cheapestFoulborn.chaos) {
+        cheapestDivine = cheapestRegular.divine;
+      } else {
+        cheapestDivine = cheapestFoulborn.divine;
+      }
+
       finalResult.push({
         ...(cheapestRegular.chaos <= cheapestFoulborn.chaos
           ? cheapestRegular
           : cheapestFoulborn),
         name: cheapestRegular.name, // always keep non-Foulborn name
         chaos: cheapestChaos,
+        divine: cheapestDivine, // ensure we set the correct divine price
         listingCount: sumListings(items), // aggregate listings across both
       });
     }

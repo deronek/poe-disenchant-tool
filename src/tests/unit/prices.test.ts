@@ -28,6 +28,7 @@ describe("dedupeCheapestVariants", () => {
         type: "UniqueWeapon",
         name: "Single Item",
         chaos: 10,
+        divine: 0.05,
         baseType: "Cool Type",
         icon: "http://example.com/icon.png",
         listingCount: 5,
@@ -47,6 +48,7 @@ describe("dedupeCheapestVariants", () => {
           type: "UniqueWeapon",
           name: "Unique Item One",
           chaos: 10,
+          divine: 0.05,
           baseType: "Cool Type One",
           icon: "http://example.com/icon1.png",
           listingCount: 5,
@@ -57,6 +59,7 @@ describe("dedupeCheapestVariants", () => {
           type: "UniqueArmour",
           name: "Unique Item Two",
           chaos: 20,
+          divine: 0.1,
           baseType: "Cool Type Two",
           icon: "http://example.com/icon2.png",
           listingCount: 3,
@@ -73,16 +76,27 @@ describe("dedupeCheapestVariants", () => {
 
   describe("Duplication Handling", () => {
     it("dedupes non-special duplicates to cheapest with summed listingCount", () => {
-      const baseItem: Omit<InternalItem, "chaos" | "listingCount"> = {
-        type: "UniqueWeapon",
-        name: "Duplicate Item",
-        baseType: "Cool Base",
-        icon: "http://example.com/icon.png",
-        detailsId: "duplicate-item-cool-base",
-        itemType: "Weapon",
+      const baseItem: Omit<InternalItem, "chaos" | "divine" | "listingCount"> =
+        {
+          type: "UniqueWeapon",
+          name: "Duplicate Item",
+          baseType: "Cool Base",
+          icon: "http://example.com/icon.png",
+          detailsId: "duplicate-item-cool-base",
+          itemType: "Weapon",
+        };
+      const item1: InternalItem = {
+        ...baseItem,
+        chaos: 15,
+        divine: 0.075,
+        listingCount: 2,
       };
-      const item1: InternalItem = { ...baseItem, chaos: 15, listingCount: 2 };
-      const item2: InternalItem = { ...baseItem, chaos: 10, listingCount: 3 }; // Cheaper
+      const item2: InternalItem = {
+        ...baseItem,
+        chaos: 10,
+        divine: 0.05,
+        listingCount: 3,
+      }; // Cheaper
       const input: InternalItem[] = [item1, item2];
       const expected: InternalItem = { ...item2, listingCount: 5 }; // Sum counts, cheapest fields
       const output = dedupeCheapestVariants(input);
@@ -94,18 +108,25 @@ describe("dedupeCheapestVariants", () => {
     });
 
     it("handles tied cheapest prices by keeping first occurrence", () => {
-      const baseItem: Omit<InternalItem, "chaos" | "listingCount"> = {
-        type: "UniqueWeapon",
-        name: "Tie Item",
-        baseType: "Cool Base",
-        icon: "http://example.com/icon.png",
-        detailsId: "tie-item-cool-base",
-        itemType: "Weapon",
+      const baseItem: Omit<InternalItem, "chaos" | "divine" | "listingCount"> =
+        {
+          type: "UniqueWeapon",
+          name: "Tie Item",
+          baseType: "Cool Base",
+          icon: "http://example.com/icon.png",
+          detailsId: "tie-item-cool-base",
+          itemType: "Weapon",
+        };
+      const item1: InternalItem = {
+        ...baseItem,
+        chaos: 10,
+        divine: 0.05,
+        listingCount: 2,
       };
-      const item1: InternalItem = { ...baseItem, chaos: 10, listingCount: 2 };
       const item2: InternalItem = {
         ...baseItem,
         chaos: 10,
+        divine: 0.05,
         listingCount: 3,
         detailsId: "tie-item-cool-base-variant",
       }; // Same price, different id
@@ -118,18 +139,25 @@ describe("dedupeCheapestVariants", () => {
     });
 
     it("dedupes only special duplicates to cheapest special", () => {
-      const baseItem: Omit<InternalItem, "chaos" | "listingCount"> = {
-        type: "UniqueWeapon",
-        name: "Special Item",
-        baseType: "Cool Relic",
-        icon: "http://example.com/icon.png",
-        detailsId: "special-item-cool-relic",
-        itemType: "Weapon",
+      const baseItem: Omit<InternalItem, "chaos" | "divine" | "listingCount"> =
+        {
+          type: "UniqueWeapon",
+          name: "Special Item",
+          baseType: "Cool Relic",
+          icon: "http://example.com/icon.png",
+          detailsId: "special-item-cool-relic",
+          itemType: "Weapon",
+        };
+      const item1: InternalItem = {
+        ...baseItem,
+        chaos: 15,
+        divine: 0.075,
+        listingCount: 2,
       };
-      const item1: InternalItem = { ...baseItem, chaos: 15, listingCount: 2 };
       const item2: InternalItem = {
         ...baseItem,
         chaos: 10,
+        divine: 0.05,
         listingCount: 3,
         detailsId: "special-item-cool-relic-5l",
       }; // Another special
@@ -142,7 +170,7 @@ describe("dedupeCheapestVariants", () => {
     it("prefers non-special over special when mixed in group", () => {
       const baseItem: Omit<
         InternalItem,
-        "chaos" | "listingCount" | "detailsId"
+        "chaos" | "divine" | "listingCount" | "detailsId"
       > = {
         type: "UniqueWeapon",
         name: "Mixed Item",
@@ -153,12 +181,14 @@ describe("dedupeCheapestVariants", () => {
       const nonSpecial: InternalItem = {
         ...baseItem,
         chaos: 12,
+        divine: 0.06,
         listingCount: 4,
         detailsId: "mixed-item-cool-base",
       };
       const special: InternalItem = {
         ...baseItem,
         chaos: 8,
+        divine: 0.04,
         listingCount: 2,
         detailsId: "mixed-item-cool-base-relic",
       }; // Cheaper but special
@@ -171,17 +201,33 @@ describe("dedupeCheapestVariants", () => {
     });
 
     it("sums listingCount for all non-special even if multiple with different prices", () => {
-      const baseItem: Omit<InternalItem, "chaos" | "listingCount"> = {
-        type: "UniqueWeapon",
-        name: "Multi Item",
-        baseType: "Cool Base",
-        icon: "http://example.com/icon.png",
-        detailsId: "multi-item-cool-base",
-        itemType: "Weapon",
+      const baseItem: Omit<InternalItem, "chaos" | "divine" | "listingCount"> =
+        {
+          type: "UniqueWeapon",
+          name: "Multi Item",
+          baseType: "Cool Base",
+          icon: "http://example.com/icon.png",
+          detailsId: "multi-item-cool-base",
+          itemType: "Weapon",
+        };
+      const item1: InternalItem = {
+        ...baseItem,
+        chaos: 15,
+        divine: 0.075,
+        listingCount: 2,
       };
-      const item1: InternalItem = { ...baseItem, chaos: 15, listingCount: 2 };
-      const item2: InternalItem = { ...baseItem, chaos: 10, listingCount: 3 }; // Cheapest
-      const item3: InternalItem = { ...baseItem, chaos: 12, listingCount: 1 };
+      const item2: InternalItem = {
+        ...baseItem,
+        chaos: 10,
+        divine: 0.05,
+        listingCount: 3,
+      }; // Cheapest
+      const item3: InternalItem = {
+        ...baseItem,
+        chaos: 12,
+        divine: 0.06,
+        listingCount: 1,
+      };
       const input: InternalItem[] = [item1, item2, item3];
       const expected: InternalItem = { ...item2, listingCount: 6 }; // Sum all non-special: 2+3+1
       const output = dedupeCheapestVariants(input);
@@ -206,6 +252,7 @@ describe("dedupeCheapestVariants", () => {
         type: "UniqueWeapon",
         name: "Valid Item",
         chaos: 10,
+        divine: 0.05,
         baseType: "Cool Base",
         icon: "http://example.com/icon.png",
         listingCount: 5,
@@ -222,6 +269,7 @@ describe("dedupeCheapestVariants", () => {
       const malformed = {
         type: "UniqueWeapon" as const,
         chaos: 10,
+        divine: 0.05,
         baseType: "Cool Base",
         icon: "http://example.com/icon.png",
         listingCount: 5,
@@ -244,7 +292,7 @@ describe("dedupeCheapestVariants", () => {
     });
 
     it("handles malformed items with NaN chaos by treating as higher in reduce", () => {
-      const baseItem: Omit<InternalItem, "chaos"> = {
+      const baseItem: Omit<InternalItem, "chaos" | "divine"> = {
         type: "UniqueWeapon",
         name: "NaN Chaos Item",
         baseType: "Cool Base",
@@ -253,7 +301,7 @@ describe("dedupeCheapestVariants", () => {
         detailsId: "nan-chaos-item-cool-base",
         itemType: "Weapon",
       };
-      const valid: InternalItem = { ...baseItem, chaos: 10 };
+      const valid: InternalItem = { ...baseItem, chaos: 10, divine: 0.05 };
       const nanChaos = { ...baseItem, chaos: NaN };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const input: any[] = [valid, nanChaos];
@@ -266,6 +314,7 @@ describe("dedupeCheapestVariants", () => {
       const partialItem = {
         name: "Partial Item",
         chaos: 10,
+        divine: 0.05,
         type: "UniqueWeapon" as const,
         baseType: "Cool Base",
         icon: "http://example.com/icon.png",
@@ -286,7 +335,10 @@ describe("dedupeCheapestVariants", () => {
   describe("Performance and Large Inputs", () => {
     it("handles large input arrays efficiently", () => {
       // Generate 100 groups, each with 100 duplicate items
-      const baseItem: Omit<InternalItem, "name" | "chaos" | "listingCount"> = {
+      const baseItem: Omit<
+        InternalItem,
+        "name" | "chaos" | "divine" | "listingCount"
+      > = {
         type: "UniqueWeapon",
         baseType: "Cool Base",
         icon: "http://example.com/icon.png",
@@ -300,7 +352,8 @@ describe("dedupeCheapestVariants", () => {
           input.push({
             ...baseItem,
             name: groupName,
-            chaos: 10 + (dup % 10), // Vary slightly
+            chaos: 10,
+            divine: 0.05 + (dup % 10), // Vary slightly
             listingCount: 1,
           });
         }
@@ -315,16 +368,27 @@ describe("dedupeCheapestVariants", () => {
 
   describe("Additional Edge Cases", () => {
     it("does not treat as special if suffix not at end of detailsId", () => {
-      const baseItem: Omit<InternalItem, "chaos" | "listingCount"> = {
-        type: "UniqueWeapon",
-        name: "Suffix Item",
-        baseType: "Cool Base",
-        icon: "http://example.com/icon.png",
-        detailsId: "suffix-item-cool-base-relic-extra", // suffix not at end
-        itemType: "Weapon",
+      const baseItem: Omit<InternalItem, "chaos" | "divine" | "listingCount"> =
+        {
+          type: "UniqueWeapon",
+          name: "Suffix Item",
+          baseType: "Cool Base",
+          icon: "http://example.com/icon.png",
+          detailsId: "suffix-item-cool-base-relic-extra", // suffix not at end
+          itemType: "Weapon",
+        };
+      const item1: InternalItem = {
+        ...baseItem,
+        chaos: 15,
+        divine: 0.075,
+        listingCount: 2,
       };
-      const item1: InternalItem = { ...baseItem, chaos: 15, listingCount: 2 };
-      const item2: InternalItem = { ...baseItem, chaos: 10, listingCount: 3 }; // Cheaper
+      const item2: InternalItem = {
+        ...baseItem,
+        chaos: 10,
+        divine: 0.05,
+        listingCount: 3,
+      }; // Cheaper
       const input: InternalItem[] = [item1, item2];
       const expected: InternalItem = { ...item2, listingCount: 5 }; // Treated as non-special, sum counts
       const output = dedupeCheapestVariants(input);
@@ -336,7 +400,7 @@ describe("dedupeCheapestVariants", () => {
     it("handles only-special group with all three suffixes: picks cheapest regardless of suffix type", () => {
       const baseItem: Omit<
         InternalItem,
-        "chaos" | "listingCount" | "detailsId"
+        "chaos" | "divine" | "listingCount" | "detailsId"
       > = {
         type: "UniqueWeapon",
         name: "All Specials Item",
@@ -347,18 +411,21 @@ describe("dedupeCheapestVariants", () => {
       const relic: InternalItem = {
         ...baseItem,
         chaos: 15,
+        divine: 0.075,
         listingCount: 2,
         detailsId: "all-specials-item-cool-base-relic",
       };
       const fiveL: InternalItem = {
         ...baseItem,
-        chaos: 10, // Cheapest
+        chaos: 10,
+        divine: 0.05, // Cheapest
         listingCount: 3,
         detailsId: "all-specials-item-cool-base-5l",
       };
       const sixL: InternalItem = {
         ...baseItem,
         chaos: 12,
+        divine: 0.06,
         listingCount: 1,
         detailsId: "all-specials-item-cool-base-6l",
       };
@@ -373,7 +440,7 @@ describe("dedupeCheapestVariants", () => {
     it("handles mixed non-special + all three specials: prefers non-special, sums only non-specials", () => {
       const baseItem: Omit<
         InternalItem,
-        "chaos" | "listingCount" | "detailsId"
+        "chaos" | "divine" | "listingCount" | "detailsId"
       > = {
         type: "UniqueWeapon",
         name: "Mixed All Specials Item",
@@ -383,31 +450,36 @@ describe("dedupeCheapestVariants", () => {
       };
       const nonSpecial1: InternalItem = {
         ...baseItem,
-        chaos: 20, // More expensive
+        chaos: 20,
+        divine: 0.1, // More expensive
         listingCount: 4,
         detailsId: "mixed-all-specials-item-cool-base",
       };
       const nonSpecial2: InternalItem = {
         ...baseItem,
-        chaos: 18, // Cheapest non-special
+        chaos: 18,
+        divine: 0.09, // Cheapest non-special
         listingCount: 2,
         detailsId: "mixed-all-specials-item-cool-base-variant",
       };
       const relic: InternalItem = {
         ...baseItem,
-        chaos: 15, // Cheaper but special
+        chaos: 15,
+        divine: 0.075, // Cheaper but special
         listingCount: 1,
         detailsId: "mixed-all-specials-item-cool-base-relic",
       };
       const fiveL: InternalItem = {
         ...baseItem,
         chaos: 12,
+        divine: 0.06,
         listingCount: 3,
         detailsId: "mixed-all-specials-item-cool-base-5l",
       };
       const sixL: InternalItem = {
         ...baseItem,
         chaos: 10,
+        divine: 0.05,
         listingCount: 5,
         detailsId: "mixed-all-specials-item-cool-base-6l",
       };
@@ -429,22 +501,25 @@ describe("dedupeCheapestVariants", () => {
     });
 
     it("handles zero chaos: zero is valid low and is selected; sums counts", () => {
-      const baseItem: Omit<InternalItem, "chaos" | "listingCount"> = {
-        type: "UniqueWeapon",
-        name: "Zero Chaos Item",
-        baseType: "Cool Base",
-        icon: "http://example.com/icon.png",
-        detailsId: "zero-chaos-item-cool-base",
-        itemType: "Weapon",
-      };
+      const baseItem: Omit<InternalItem, "chaos" | "divine" | "listingCount"> =
+        {
+          type: "UniqueWeapon",
+          name: "Zero Chaos Item",
+          baseType: "Cool Base",
+          icon: "http://example.com/icon.png",
+          detailsId: "zero-chaos-item-cool-base",
+          itemType: "Weapon",
+        };
       const zeroChaos: InternalItem = {
         ...baseItem,
         chaos: 0,
+        divine: 0,
         listingCount: 2,
       };
       const positiveChaos: InternalItem = {
         ...baseItem,
         chaos: 5,
+        divine: 0.025,
         listingCount: 3,
       };
       const input: InternalItem[] = [zeroChaos, positiveChaos];
@@ -455,16 +530,27 @@ describe("dedupeCheapestVariants", () => {
     });
 
     it("handles zero listingCount: includes in sum if non-special", () => {
-      const baseItem: Omit<InternalItem, "chaos" | "listingCount"> = {
-        type: "UniqueWeapon",
-        name: "Zero Count Item",
-        baseType: "Cool Base",
-        icon: "http://example.com/icon.png",
-        detailsId: "zero-count-item-cool-base",
-        itemType: "Weapon",
+      const baseItem: Omit<InternalItem, "chaos" | "divine" | "listingCount"> =
+        {
+          type: "UniqueWeapon",
+          name: "Zero Count Item",
+          baseType: "Cool Base",
+          icon: "http://example.com/icon.png",
+          detailsId: "zero-count-item-cool-base",
+          itemType: "Weapon",
+        };
+      const item1: InternalItem = {
+        ...baseItem,
+        chaos: 10,
+        divine: 0.05,
+        listingCount: 0,
       };
-      const item1: InternalItem = { ...baseItem, chaos: 10, listingCount: 0 };
-      const item2: InternalItem = { ...baseItem, chaos: 15, listingCount: 3 };
+      const item2: InternalItem = {
+        ...baseItem,
+        chaos: 15,
+        divine: 0.075,
+        listingCount: 3,
+      };
       const input: InternalItem[] = [item1, item2];
 
       const output = dedupeCheapestVariants(input);
@@ -479,6 +565,7 @@ describe("dedupeCheapestVariants", () => {
         type: "UniqueWeapon",
         name: "Foulborn The Surrender",
         chaos: 10,
+        divine: 0.05,
         baseType: "Claw",
         icon: "http://example.com/foulborn.png",
         listingCount: 5,
@@ -489,6 +576,7 @@ describe("dedupeCheapestVariants", () => {
         type: "UniqueWeapon",
         name: "The Surrender",
         chaos: 15,
+        divine: 0.075,
         baseType: "Claw",
         icon: "http://example.com/regular.png",
         listingCount: 3,
@@ -512,6 +600,7 @@ describe("dedupeCheapestVariants", () => {
         type: "UniqueWeapon",
         name: "The Surrender",
         chaos: 8,
+        divine: 0.04,
         baseType: "Claw",
         icon: "http://example.com/regular.png",
         listingCount: 4,
@@ -522,6 +611,7 @@ describe("dedupeCheapestVariants", () => {
         type: "UniqueWeapon",
         name: "Foulborn The Surrender",
         chaos: 10,
+        divine: 0.05,
         baseType: "Claw",
         icon: "http://example.com/foulborn.png",
         listingCount: 2,
@@ -543,6 +633,7 @@ describe("dedupeCheapestVariants", () => {
         type: "UniqueWeapon",
         name: "The Surrender",
         chaos: 20,
+        divine: 0.1,
         baseType: "Claw",
         icon: "http://example.com/regular.png",
         listingCount: 2,
@@ -553,6 +644,7 @@ describe("dedupeCheapestVariants", () => {
         type: "UniqueWeapon",
         name: "Foulborn The Surrender",
         chaos: 12,
+        divine: 0.06,
         baseType: "Claw",
         icon: "http://example.com/foulborn-relic.png",
         listingCount: 3,
@@ -563,6 +655,7 @@ describe("dedupeCheapestVariants", () => {
         type: "UniqueWeapon",
         name: "The Surrender",
         chaos: 15,
+        divine: 0.075,
         baseType: "Claw",
         icon: "http://example.com/regular-relic.png",
         listingCount: 1,
@@ -588,6 +681,7 @@ describe("dedupeCheapestVariants", () => {
         type: "UniqueWeapon",
         name: "The Surrender",
         chaos: 25,
+        divine: 0.125,
         baseType: "Claw",
         icon: "http://example.com/regular.png",
         listingCount: 1,
@@ -598,6 +692,7 @@ describe("dedupeCheapestVariants", () => {
         type: "UniqueWeapon",
         name: "Foulborn The Surrender",
         chaos: 10,
+        divine: 0.05,
         baseType: "Claw",
         icon: "http://example.com/foulborn1.png",
         listingCount: 2,
@@ -608,6 +703,7 @@ describe("dedupeCheapestVariants", () => {
         type: "UniqueWeapon",
         name: "Foulborn The Surrender",
         chaos: 8,
+        divine: 0.04,
         baseType: "Claw",
         icon: "http://example.com/foulborn2.png",
         listingCount: 3,
@@ -629,6 +725,7 @@ describe("dedupeCheapestVariants", () => {
         type: "UniqueWeapon",
         name: "The Surrender",
         chaos: 20,
+        divine: 0.1,
         baseType: "Claw",
         icon: "http://example.com/regular1.png",
         listingCount: 2,
@@ -639,6 +736,7 @@ describe("dedupeCheapestVariants", () => {
         type: "UniqueWeapon",
         name: "Foulborn The Surrender",
         chaos: 15,
+        divine: 0.075,
         baseType: "Claw",
         icon: "http://example.com/foulborn1.png",
         listingCount: 3,
@@ -649,6 +747,7 @@ describe("dedupeCheapestVariants", () => {
         type: "UniqueWeapon",
         name: "Perseverance",
         chaos: 30,
+        divine: 0.15,
         baseType: "Shield",
         icon: "http://example.com/regular2.png",
         listingCount: 1,
@@ -659,6 +758,7 @@ describe("dedupeCheapestVariants", () => {
         type: "UniqueWeapon",
         name: "Foulborn Perseverance",
         chaos: 25,
+        divine: 0.125,
         baseType: "Shield",
         icon: "http://example.com/foulborn2.png",
         listingCount: 4,
@@ -698,6 +798,7 @@ describe("dedupeCheapestVariants", () => {
         type: "UniqueWeapon",
         name: "Foulborn ",
         chaos: 10,
+        divine: 0.05,
         baseType: "Claw",
         icon: "http://example.com/foulborn.png",
         listingCount: 2,
@@ -708,6 +809,7 @@ describe("dedupeCheapestVariants", () => {
         type: "UniqueWeapon",
         name: "Foulborn ",
         chaos: 15,
+        divine: 0.075,
         baseType: "Claw",
         icon: "http://example.com/regular.png",
         listingCount: 3,
@@ -729,6 +831,7 @@ describe("dedupeCheapestVariants", () => {
         type: "UniqueWeapon",
         name: "Foulborn The Surrender",
         chaos: 10,
+        divine: 0.05,
         baseType: "Claw",
         icon: "http://example.com/foulborn.png",
         listingCount: 3,
