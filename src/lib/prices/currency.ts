@@ -14,7 +14,7 @@ const CurrencyLineSchema = z.object({
 });
 
 const CurrencyCoreRatesSchema = z.object({
-  divine: z.number().nonnegative(),
+  divine: z.number().nonnegative().optional(),
 });
 
 const CurrencyCoreSchema = z.object({
@@ -63,7 +63,7 @@ const fetchCurrencyData = async (
     return CurrencyOverviewResponseSchema.parse(json);
   } catch (error) {
     console.error(`Failed to fetch currency data for ${league}:`, error);
-    return { lines: [] };
+    return {};
   }
 };
 
@@ -99,7 +99,7 @@ const processCurrencyData = (
     console.warn("No valid catalysts items found for league", league);
   }
 
-  // Get divine rate (may be null if not available)
+  // Get divine rate (null if not available)
   const divineRate = currencyData.core?.rates.divine || null;
   if (divineRate === null) {
     console.warn("No divine rate found for league", league);
