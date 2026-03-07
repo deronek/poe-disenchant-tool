@@ -112,6 +112,7 @@ const ChaosCell: ColumnDef<Item>["cell"] = function ChaosCellComponent({
     );
   }
 
+  // Showing only chaos price - component handles tooltip based on compact representation present
   return (
     <span className="inline-flex w-full justify-end gap-1">
       <CompactNumberTooltip
