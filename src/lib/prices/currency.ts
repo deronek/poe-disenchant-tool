@@ -99,7 +99,7 @@ const processCurrencyData = (
     console.warn("No valid catalysts items found for league", league);
   }
 
-  // Get divine rate (null if not available)
+  // Get divine rate (null if not available or zero)
   const divineRate = currencyData.core?.rates.divine || null;
   if (divineRate === null) {
     console.warn("No divine rate found for league", league);
