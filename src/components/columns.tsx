@@ -66,15 +66,25 @@ const ChaosCell: ColumnDef<Item>["cell"] = function ChaosCellComponent({
   // - Item has a divine price
   // - Chaos value is above the threshold
   if (threshold && divineValue > 0 && chaosValue >= threshold) {
+    const compactDivine = renderCompactNumber(
+      divineValue,
+      compactFormatterPrice,
+    );
     return (
       <span className="inline-flex w-full justify-end gap-1">
-        <CompactNumberTooltip
-          value={divineValue}
-          compactFormatter={compactFormatterPrice}
-          standardFormatter={standardFormatterPrice}
-          secondaryValue={chaosValue}
-          isDivine={true}
-        />
+        <Tooltip>
+          <TooltipTrigger>{compactDivine}</TooltipTrigger>
+          <TooltipContent variant="popover" className="px-3 py-1.5 text-xs">
+            <div className="flex items-center gap-1">
+              {standardFormatterPrice.format(divineValue)}
+              <DivineOrbIcon size={16} />
+            </div>
+            <div className="text-muted-foreground mt-1 flex items-center gap-1">
+              {standardFormatterPrice.format(chaosValue)}
+              <ChaosOrbIcon size={16} />
+            </div>
+          </TooltipContent>
+        </Tooltip>
         <DivineOrbIcon />
       </span>
     );
@@ -86,7 +96,6 @@ const ChaosCell: ColumnDef<Item>["cell"] = function ChaosCellComponent({
         value={chaosValue}
         compactFormatter={compactFormatterPrice}
         standardFormatter={standardFormatterPrice}
-        isDivine={false}
       />
       <ChaosOrbIcon />
     </span>
@@ -288,10 +297,7 @@ const CompactNumberTooltip = React.memo(function CompactNumberTooltip({
     <Tooltip>
       <TooltipTrigger>{compact}</TooltipTrigger>
       <TooltipContent variant="popover" className="px-3 py-1.5 text-xs">
-        <div className="flex items-center gap-1">
-          {full}
-          {isDivine ? <DivineOrbIcon size={16} /> : <ChaosOrbIcon size={16} />}
-        </div>
+        <div className="flex items-center gap-1">{full}</div>
         {secondaryValue !== undefined && (
           <div className="text-muted-foreground mt-1 flex items-center gap-1">
             {standardFormatter.format(secondaryValue)}
