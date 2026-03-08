@@ -98,7 +98,9 @@ const ChaosCell: ColumnDef<Item>["cell"] = function ChaosCellComponent({
       <span className="inline-flex w-full justify-end gap-1">
         <Tooltip>
           <TooltipTrigger>
-            {standardFormatterPrice.format(divineValue)}
+            <span data-full-value={chaosValue}>
+              {standardFormatterPrice.format(divineValue)}
+            </span>
           </TooltipTrigger>
           <TooltipContent variant="popover" className="px-3 py-1.5 text-xs">
             <div className="mt-1 flex items-center gap-1">
@@ -315,7 +317,9 @@ const CompactNumberTooltip = React.memo(function CompactNumberTooltip({
   );
 
   if (!hasCompactSuffix) {
-    return <span>{standardFormatter.format(value)}</span>;
+    return (
+      <span data-full-value={value}>{standardFormatter.format(value)}</span>
+    );
   }
 
   const full = standardFormatter.format(value);
