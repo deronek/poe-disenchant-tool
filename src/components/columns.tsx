@@ -69,6 +69,7 @@ const ChaosCell: ColumnDef<Item>["cell"] = function ChaosCellComponent({
     const { element: compactDivine, hasCompactSuffix } = renderCompactNumber(
       divineValue,
       compactFormatterPrice,
+      chaosValue,
     );
 
     // If divine value is in compact representation, show both full divine and chaos in tooltip
@@ -345,12 +346,13 @@ const ItemIcon = React.memo(function ItemIcon({ src }: { src: string }) {
 export function renderCompactNumber(
   value: number,
   formatter: Intl.NumberFormat,
+  fullValue?: number,
 ) {
   const parts = formatter.formatToParts(value);
   const hasCompactSuffix = parts.some((part) => part.type === "compact");
 
   const element = (
-    <span data-full-value={value}>
+    <span data-full-value={fullValue ?? value}>
       {parts.map(({ type, value: partValue }, index) => {
         if (type === "compact") {
           return (
