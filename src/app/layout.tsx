@@ -13,6 +13,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { BASE_URL, DESCRIPTION, TITLE } from "@/lib/constants";
+import { DEFAULT_LEAGUE } from "@/lib/leagues";
 
 export const metadata: Metadata = {
   title: {
@@ -30,7 +31,8 @@ export const metadata: Metadata = {
     "trading",
     "disenchant calculator",
     "PoE 3.27",
-    "PoE 3.26",
+    "PoE 3.28",
+    DEFAULT_LEAGUE[0].toUpperCase() + DEFAULT_LEAGUE.slice(1), // Capitalized league name
   ],
   authors: [{ name: "deronek", url: "https://github.com/deronek" }],
   creator: "deronek",
