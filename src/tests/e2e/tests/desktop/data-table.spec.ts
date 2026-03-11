@@ -188,6 +188,10 @@ test.describe("Data Rendering and Formatting", () => {
       const hasCompactDivinePrice = (await compactNumber.count()) > 0;
 
       if (hasCompactDivinePrice) {
+        const priceData = await poePage.getFullValueAndDisplayedTextForCell(
+          item.name,
+          "Price",
+        );
         // Check if tooltip contains both divine and chaos info
         const tooltipText = await tooltip.innerText();
         expect(tooltipText).toMatch(/[0-9,]+(\.[0-9]+)?/);
@@ -212,14 +216,34 @@ test.describe("Data Rendering and Formatting", () => {
             const numericMatches = tooltipText.match(/[0-9,]+(\.[0-9]+)?/g);
             expect(numericMatches).toBeDefined();
             expect(numericMatches!.length).toBeGreaterThanOrEqual(2);
-            // TODO: compare the actual values
+            // Compare actual values
+            const matches = numericMatches!;
+            const divineStr = matches[0].replace(/,/g, "");
+            const chaosStr = matches[1].replace(/,/g, "");
+            const divineValue = Number.parseFloat(divineStr);
+            // Compare chaos value from tooltip with full chaos from cell
+            expect(
+              poePage.compareCompactAndFullValues(chaosStr, priceData.full),
+            ).toBeTruthy();
+            // Compare divine value from tooltip with compact divine from cell
+            expect(
+              poePage.compareCompactAndFullValues(
+                priceData.displayed,
+                divineValue,
+              ),
+            ).toBeTruthy();
           } else {
             // Divine pricing active but divine value not compact - tooltip shows only chaos value
             expect(hasChaosIconInTooltip).toBeTruthy();
             const numericMatches = tooltipText.match(/[0-9,]+(\.[0-9]+)?/g);
             expect(numericMatches).toBeDefined();
             expect(numericMatches!.length).toBeGreaterThanOrEqual(1);
-            // TODO: compare the actual values
+            // Compare actual values
+            const matches = numericMatches!;
+            const chaosStr = matches[0].replace(/,/g, "");
+            expect(
+              poePage.compareCompactAndFullValues(chaosStr, priceData.full),
+            ).toBeTruthy();
           }
         } else {
           // No divine pricing - tooltip should show chaos value
