@@ -544,10 +544,10 @@ export class PoEDisenchantPage {
     // Extract only the compact number value by targeting the specific span
     // This avoids capturing "/" separators and icon text
     const compactNumberSpan = cell.locator("[data-full-value]").first();
-    const compactText = (await compactNumberSpan.innerText()).trim();
+    const displayedText = (await compactNumberSpan.innerText()).trim();
 
     return {
-      displayed: compactText,
+      displayed: displayedText,
       full: fullValue,
     };
   }
