@@ -30,57 +30,92 @@ test.describe("Data Rendering and Formatting", () => {
     "Dust / Chaos / Slot",
     "Gold Fee",
   ];
-
-  test.describe("Compact Number Display", () => {
+  test.describe("Table Value Display", () => {
     numericalColumns.forEach((column) => {
-      test(`should check compact and non-compact values for ${column} column in both sort directions`, async ({
+      test(`should display table value correctly for ${column} column`, async ({
         poePage,
       }) => {
-        let hasCompact = false;
-        let hasNonCompact = false;
+        const items = await poePage.getTestItems(10);
+        expect(items.length).toBe(10);
 
-        // Test descending sort (high values)
-        await poePage.sortByColumn(column, "desc");
-        const [highValueItem] = await poePage.getTestItems(1);
-        const highColIndex = await poePage.getColumnIndex(column);
-        const highCell = poePage.page
-          .locator("tr")
-          .filter({ hasText: highValueItem.name })
-          .locator("td")
-          .nth(highColIndex);
-        const highCompactNumber = highCell.locator("[data-full-value]");
-        const highCellText = await highCompactNumber.innerText();
+        for (const item of items) {
+          const data = await poePage.getFullValueAndDisplayedTextForCell(
+            item.name,
+            column,
+          );
 
-        if (highCellText.match(/[KMBkmb]/)) {
-          hasCompact = true;
-          await highCompactNumber.hover();
-          await poePage.page.waitForTimeout(500);
-          const tooltip = poePage.page.locator("[role='tooltip']").first();
-          await expect(tooltip).toBeVisible();
+          // Verify displayed table value exists and is properly formatted
+          expect(data.displayed).toBeTruthy();
+          expect(data.displayed).toMatch(/[0-9]+(\.[0-9]+)?[KMBkmb]?/); // possibly with compact suffix
+
+          // Verify full value is a valid number greater than 0
+          expect(data.full).toBeGreaterThan(0);
+          expect(data.full).not.toBeNaN();
+
+          // Parse compact value and compare to full value with tolerance
+          expect(
+            poePage.compareCompactAndFullValues(data.displayed, data.full),
+          ).toBeTruthy();
         }
-
-        // Test ascending sort (low values)
-        await poePage.sortByColumn(column, "asc");
-        const [lowValueItem] = await poePage.getTestItems(1);
-        const lowColIndex = await poePage.getColumnIndex(column);
-        const lowCell = poePage.page
-          .locator("tr")
-          .filter({ hasText: lowValueItem.name })
-          .locator("td")
-          .nth(lowColIndex);
-        const lowCompactNumber = lowCell.locator("[data-full-value]");
-        const lowCellText = await lowCompactNumber.innerText();
-
-        if (!lowCellText.match(/[KMBkmb]/)) {
-          hasNonCompact = true;
-          // Check if the cell text does not contain compact suffix (K, M, B)
-          expect(lowCellText).not.toMatch(/[KMBkmb]/);
-        }
-
-        // Ensure we tested at least one condition
-        expect(hasCompact || hasNonCompact).toBeTruthy();
       });
     });
+  });
+  test.describe("Compact Number Display", () => {
+    numericalColumns
+      .filter((col) => col !== "Price") // Price handled in separate test due to custom divine/chaos logic
+      .forEach((column) => {
+        test(`should show tooltips on compact numbers for ${column} column`, async ({
+          poePage,
+        }) => {
+          // Sort by descending to find highest values (most likely to be compact)
+          await poePage.sortByColumn(column, "desc");
+          let compactTested = false;
+          const items = await poePage.getTestItems(10);
+
+          for (const item of items) {
+            const data = await poePage.getFullValueAndDisplayedTextForCell(
+              item.name,
+              column,
+            );
+
+            // Skip non-compact numbers
+            if (!data.displayed.match(/[KMBkmb]/)) {
+              continue;
+            }
+
+            compactTested = true;
+            const colIndex = await poePage.getColumnIndex(column);
+            const cell = poePage.page
+              .locator("tr")
+              .filter({ hasText: item.name })
+              .locator("td")
+              .nth(colIndex);
+
+            const compactNumber = cell.locator("[data-full-value]");
+            await compactNumber.hover();
+
+            const tooltip = poePage.page.locator("[role='tooltip']").first();
+            await expect(tooltip).toBeVisible();
+
+            const tooltipText = await tooltip.innerText();
+            expect(tooltipText).toMatch(/[0-9,]+(\.[0-9]+)?/);
+
+            const tooltipValue = Number.parseFloat(
+              tooltipText.replace(/,/g, ""),
+            );
+            expect(tooltipValue).toBe(data.full);
+
+            // Remove hover and wait for tooltip to disappear
+            await poePage.pageTitle.click();
+            await expect(tooltip).not.toBeVisible({ timeout: 5000 });
+          }
+
+          // We needed to test at least one tooltip in that column
+          expect(compactTested).toBeTruthy();
+        });
+      });
+
+    // Should not display tooltip on non-compact numbers
   });
 
   test("should display correct divine/chaos price tooltips", async ({
@@ -100,18 +135,48 @@ test.describe("Data Rendering and Formatting", () => {
         .nth(colIndex);
 
       const compactNumber = cell.locator("[data-full-value]");
+      const hasCompactDivinePrice = (await compactNumber.count()) > 0;
+
       await compactNumber.hover();
-      await poePage.page.waitForTimeout(500);
-
       const tooltip = poePage.page.locator("[role='tooltip']").first();
+      await expect(tooltip).toBeVisible();
 
-      // Check if tooltip contains both divine and chaos values or just chaos value
-      if (await tooltip.isVisible()) {
+      // Check if divine pricing is active (cell contains DivineOrbIcon)
+      const hasDivineIcon =
+        (await cell.locator("img[alt='Divine Orb']").count()) > 0;
+
+      if (hasCompactDivinePrice) {
+        // Check if tooltip contains both divine and chaos info
         const tooltipText = await tooltip.innerText();
         expect(tooltipText).toMatch(/[0-9,]+(\.[0-9]+)?/);
 
-        // Price column tooltip should contain at least one currency value
-        expect(tooltipText.trim().length).toBeGreaterThan(0);
+        // Check for both currency icons in tooltip
+        const hasDivineIconInTooltip =
+          (await tooltip.locator("img[alt='Divine Orb']").count()) > 0;
+        const hasChaosIconInTooltip =
+          (await tooltip.locator("img[alt='Chaos Orb']").count()) > 0;
+
+        if (hasDivineIcon) {
+          // If divine pricing is active, tooltip may show both prices (if divine is compact)
+          // or just chaos price (if divine is not compact)
+          if (hasDivineIconInTooltip) {
+            expect(hasChaosIconInTooltip).toBeTruthy();
+            const numericMatches = tooltipText.match(/[0-9,]+(\.[0-9]+)?/g);
+            expect(numericMatches).toBeDefined();
+            expect(numericMatches!.length).toBeGreaterThanOrEqual(2);
+          } else {
+            // Divine pricing active but divine value not compact - tooltip only shows chaos
+            expect(hasChaosIconInTooltip).toBeTruthy();
+            const numericMatches = tooltipText.match(/[0-9,]+(\.[0-9]+)?/g);
+            expect(numericMatches).toBeDefined();
+            expect(numericMatches!.length).toBeGreaterThanOrEqual(1);
+          }
+        } else {
+          // No divine pricing - tooltip should show at least one numeric value
+          const numericMatches = tooltipText.match(/[0-9,]+(\.[0-9]+)?/g);
+          expect(numericMatches).toBeDefined();
+          expect(numericMatches!.length).toBeGreaterThanOrEqual(1);
+        }
       }
     }
   });

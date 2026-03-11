@@ -43,6 +43,10 @@ export class PoEDisenchantPage {
     await this.waitForHydration();
   }
 
+  get pageTitle() {
+    return this.page.locator("h1");
+  }
+
   // ---------------------------
   // Console Helpers
   // ---------------------------
@@ -519,10 +523,10 @@ export class PoEDisenchantPage {
     };
   }
 
-  async getCompactAndFullValueForCell(
+  async getFullValueAndDisplayedTextForCell(
     itemName: string,
     columnName: string,
-  ): Promise<{ compact: string; full: number }> {
+  ): Promise<{ displayed: string; full: number }> {
     const colIndex = await this.getColumnIndex(columnName);
     const cell = this.page
       .locator("tr")
@@ -543,7 +547,7 @@ export class PoEDisenchantPage {
     const compactText = (await compactNumberSpan.innerText()).trim();
 
     return {
-      compact: compactText,
+      displayed: compactText,
       full: fullValue,
     };
   }
