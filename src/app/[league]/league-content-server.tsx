@@ -15,6 +15,7 @@ export default async function LeagueContentServer({
     items,
     lastUpdated: lastUpdatedTimestamp,
     lowStockThreshold,
+    divinePriceThreshold,
   } = await getItems(league);
   const lastUpdated = new Date(lastUpdatedTimestamp);
   const leagueName = getLeagueName(league);
@@ -56,6 +57,7 @@ export default async function LeagueContentServer({
           items={items}
           league={league}
           lowStockThreshold={lowStockThreshold}
+          divinePriceThreshold={divinePriceThreshold}
         />
       </section>
     </div>

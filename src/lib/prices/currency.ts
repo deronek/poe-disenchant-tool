@@ -13,11 +13,22 @@ const CurrencyLineSchema = z.object({
   primaryValue: z.number().nonnegative().nullable().optional(),
 });
 
-const CurrencyOverviewResponseSchema = z.object({
-  lines: z.optional(z.array(CurrencyLineSchema)),
+const CurrencyCoreRatesSchema = z.object({
+  divine: z.number().nonnegative().optional(),
 });
 
-type CurrencyOverviewResponse = z.infer<typeof CurrencyOverviewResponseSchema>;
+const CurrencyCoreSchema = z.object({
+  rates: CurrencyCoreRatesSchema,
+});
+
+const CurrencyOverviewResponseSchema = z.object({
+  lines: z.optional(z.array(CurrencyLineSchema)),
+  core: z.optional(CurrencyCoreSchema),
+});
+
+export type CurrencyOverviewResponse = z.infer<
+  typeof CurrencyOverviewResponseSchema
+>;
 
 // Export types for external use
 export type CatalystItem = {
@@ -25,8 +36,13 @@ export type CatalystItem = {
   primaryValue: number;
 };
 
-// Function to fetch currency data from poe.ninja API
-const getCurrencyData = async (
+export type CurrencyData = {
+  catalyst: CatalystItem | null;
+  divineRate: number | null;
+};
+
+// Fetch currency data from poe.ninja API
+const fetchCurrencyData = async (
   league: League,
 ): Promise<CurrencyOverviewResponse> => {
   const leagueApiName = getLeagueApiName(league);
@@ -47,70 +63,84 @@ const getCurrencyData = async (
     return CurrencyOverviewResponseSchema.parse(json);
   } catch (error) {
     console.error(`Failed to fetch currency data for ${league}:`, error);
-    return { lines: [] };
+    return {};
   }
 };
 
-// Function to filter catalyst items
-const getCatalystItems = async (league: League): Promise<CatalystItem[]> => {
-  const currencyData = await getCurrencyData(league);
-
-  if (!currencyData.lines) {
-    return [];
-  }
-
-  return (
-    currencyData.lines
+// Process raw currency data into useful format
+const processCurrencyData = (
+  currencyData: CurrencyOverviewResponse,
+  league: League,
+): CurrencyData => {
+  // Get cheapest catalyst
+  let catalyst: CatalystItem | null = null;
+  if (currencyData.lines) {
+    const catalystItems = currencyData.lines
       .filter(
         (line) =>
           line.id.toLowerCase().endsWith("-catalyst") &&
           line.id.toLowerCase() !== "tainted-catalyst",
       )
-      // Handles both null and undefined cases here
       .filter((line) => line.primaryValue != null)
       .map((line) => ({
         id: line.id,
         primaryValue: line.primaryValue!,
-      }))
-  );
-};
+      }));
 
-// Function to find cheapest catalyst
-const uncached__getCheapestCatalyst = async (
-  league: League,
-): Promise<CatalystItem | null> => {
-  if (isDevelopment) {
-    return {
-      id: "dev-catalyst",
-      primaryValue: 1,
-    };
+    const validItems = catalystItems.filter((i) => i.primaryValue !== 0);
+    if (validItems.length > 0) {
+      catalyst = validItems.reduce((min, item) =>
+        item.primaryValue < min.primaryValue ? item : min,
+      );
+    }
   }
-  const catalystItems = await getCatalystItems(league);
 
-  const validItems = catalystItems.filter((i) => i.primaryValue !== 0);
-  if (validItems.length === 0) {
+  if (catalyst === null) {
     console.warn("No valid catalysts items found for league", league);
-    return null;
   }
 
-  const cheapest = validItems.reduce((min, item) =>
-    item.primaryValue < min.primaryValue ? item : min,
-  );
+  // Get divine rate (null if not available or zero)
+  const divineRate = currencyData.core?.rates.divine || null;
+  if (divineRate === null) {
+    console.warn("No divine rate found for league", league);
+  }
 
   console.log(
-    `Cheapest catalyst: ${cheapest.id} at ${cheapest.primaryValue} in league ${league}`,
+    `Currency data for ${league}: cheapest catalyst: ${catalyst?.id} at ${catalyst?.primaryValue}, divine rate: ${divineRate}`,
   );
-  return cheapest;
+
+  return {
+    catalyst,
+    divineRate,
+  };
 };
 
-export const getCheapestCatalyst = async (
+// Uncached version that does the actual work
+const uncached__getCurrencyData = async (
   league: League,
-): Promise<CatalystItem | null> => {
+): Promise<CurrencyData> => {
+  if (isDevelopment) {
+    return {
+      catalyst: {
+        id: "dev-catalyst",
+        primaryValue: 1,
+      },
+      divineRate: 0.005, // 200 chaos per divine
+    };
+  }
+
+  const rawData = await fetchCurrencyData(league);
+  return processCurrencyData(rawData, league);
+};
+
+export const getCurrencyData = async (
+  league: League,
+): Promise<CurrencyData> => {
   return unstable_cache(
-    async () => uncached__getCheapestCatalyst(league),
+    async () => uncached__getCurrencyData(league),
     [league],
     {
-      tags: [`cheapest-catalyst-${league}`],
+      tags: [`currency-data-${league}`],
       revalidate: 86_400, // 1 day
     },
   )();

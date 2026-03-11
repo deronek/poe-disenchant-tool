@@ -43,6 +43,10 @@ export class PoEDisenchantPage {
     await this.waitForHydration();
   }
 
+  get pageTitle() {
+    return this.page.locator("h1");
+  }
+
   // ---------------------------
   // Console Helpers
   // ---------------------------
@@ -90,7 +94,7 @@ export class PoEDisenchantPage {
   async getTestItems(limit = 10): Promise<TestItem[]> {
     const rows = this.dataTableRows;
     const count = Math.min(await rows.count(), limit);
-    expect(count).toBeGreaterThanOrEqual(2);
+    expect(count).toBeGreaterThanOrEqual(limit > 1 ? 2 : 1);
 
     // Resolve indices by header
 
@@ -519,10 +523,10 @@ export class PoEDisenchantPage {
     };
   }
 
-  async getCompactAndFullValueForCell(
+  async getFullValueAndDisplayedTextForCell(
     itemName: string,
     columnName: string,
-  ): Promise<{ compact: string; full: number }> {
+  ): Promise<{ displayed: string; full: number }> {
     const colIndex = await this.getColumnIndex(columnName);
     const cell = this.page
       .locator("tr")
@@ -540,10 +544,10 @@ export class PoEDisenchantPage {
     // Extract only the compact number value by targeting the specific span
     // This avoids capturing "/" separators and icon text
     const compactNumberSpan = cell.locator("[data-full-value]").first();
-    const compactText = (await compactNumberSpan.innerText()).trim();
+    const displayedText = (await compactNumberSpan.innerText()).trim();
 
     return {
-      compact: compactText,
+      displayed: displayedText,
       full: fullValue,
     };
   }

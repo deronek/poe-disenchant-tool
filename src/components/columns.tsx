@@ -22,6 +22,7 @@ import { createTradeLink } from "@/lib/tradeLink";
 import { CatalystIcon } from "./catalyst-icon";
 import { CatalystInfo } from "./catalyst-info";
 import { ChaosOrbIcon } from "./chaos-orb-icon";
+import { DivineOrbIcon } from "./divine-orb-icon";
 import { DustIcon } from "./dust-icon";
 import { DustInfo } from "./dust-info";
 import { GoldIcon } from "./gold-icon";
@@ -54,12 +55,71 @@ const DustValueHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
 
 const ChaosCell: ColumnDef<Item>["cell"] = function ChaosCellComponent({
   row,
+  column,
 }) {
-  const value = row.getValue(COLUMN_IDS.CHAOS) as number;
+  const chaosValue = row.getValue(COLUMN_IDS.CHAOS) as number;
+  const divineValue = row.original.divine;
+  const threshold = column.columnDef.meta?.divinePriceThreshold;
+
+  // Show the price in divines when:
+  // - We have a threshold available (calculated from divine/chaos rate)
+  // - Item has a divine price
+  // - Chaos value is above the threshold
+  if (threshold && divineValue > 0 && chaosValue >= threshold) {
+    const { element: compactDivine, hasCompactSuffix } = renderCompactNumber(
+      divineValue,
+      compactFormatterPrice,
+      chaosValue,
+    );
+
+    // If divine value is in compact representation, show both full divine and chaos in tooltip
+    if (hasCompactSuffix) {
+      return (
+        <span className="inline-flex w-full justify-end gap-1">
+          <Tooltip>
+            <TooltipTrigger>{compactDivine}</TooltipTrigger>
+            <TooltipContent variant="popover" className="px-3 py-1.5 text-xs">
+              <div className="flex items-center gap-1">
+                {standardFormatterPrice.format(divineValue)}
+                <DivineOrbIcon size={16} />
+              </div>
+              <div className="text-muted-foreground mt-1 flex items-center gap-1">
+                {standardFormatterPrice.format(chaosValue)}
+                <ChaosOrbIcon size={16} />
+              </div>
+            </TooltipContent>
+          </Tooltip>
+          <DivineOrbIcon />
+        </span>
+      );
+    }
+
+    // If divine value has no compact representation, show only chaos in tooltip
+    return (
+      <span className="inline-flex w-full justify-end gap-1">
+        <Tooltip>
+          <TooltipTrigger>
+            <span data-full-value={chaosValue}>
+              {standardFormatterPrice.format(divineValue)}
+            </span>
+          </TooltipTrigger>
+          <TooltipContent variant="popover" className="px-3 py-1.5 text-xs">
+            <div className="flex items-center gap-1">
+              {standardFormatterPrice.format(chaosValue)}
+              <ChaosOrbIcon size={16} />
+            </div>
+          </TooltipContent>
+        </Tooltip>
+        <DivineOrbIcon />
+      </span>
+    );
+  }
+
+  // Showing only chaos price - component handles tooltip based on compact representation present
   return (
     <span className="inline-flex w-full justify-end gap-1">
       <CompactNumberTooltip
-        value={value}
+        value={chaosValue}
         compactFormatter={compactFormatterPrice}
         standardFormatter={standardFormatterPrice}
       />
@@ -252,14 +312,24 @@ const CompactNumberTooltip = React.memo(function CompactNumberTooltip({
   compactFormatter: Intl.NumberFormat;
   standardFormatter: Intl.NumberFormat;
 }) {
-  const compact = renderCompactNumber(value, compactFormatter);
+  const { element: compact, hasCompactSuffix } = renderCompactNumber(
+    value,
+    compactFormatter,
+  );
+
+  if (!hasCompactSuffix) {
+    return (
+      <span data-full-value={value}>{standardFormatter.format(value)}</span>
+    );
+  }
+
   const full = standardFormatter.format(value);
 
   return (
     <Tooltip>
       <TooltipTrigger>{compact}</TooltipTrigger>
       <TooltipContent variant="popover" className="px-3 py-1.5 text-xs">
-        {full}
+        <div className="flex items-center gap-1">{full}</div>
       </TooltipContent>
     </Tooltip>
   );
@@ -276,11 +346,13 @@ const ItemIcon = React.memo(function ItemIcon({ src }: { src: string }) {
 export function renderCompactNumber(
   value: number,
   formatter: Intl.NumberFormat,
+  fullValue?: number,
 ) {
   const parts = formatter.formatToParts(value);
+  const hasCompactSuffix = parts.some((part) => part.type === "compact");
 
-  return (
-    <span data-full-value={value}>
+  const element = (
+    <span data-full-value={fullValue ?? value}>
       {parts.map(({ type, value: partValue }, index) => {
         if (type === "compact") {
           return (
@@ -293,6 +365,8 @@ export function renderCompactNumber(
       })}
     </span>
   );
+
+  return { element, hasCompactSuffix };
 }
 
 export const COLUMN_IDS = {
@@ -313,6 +387,7 @@ export const createColumns = (
   advancedSettings: AdvancedSettings,
   lowStockThreshold: number,
   league: League,
+  divinePriceThreshold: number | null,
 ): ColumnDef<Item>[] => {
   return [
     {
@@ -365,7 +440,10 @@ export const createColumns = (
       accessorKey: COLUMN_IDS.CHAOS,
       header: () => <span>Price</span>,
       size: 85,
-      meta: { className: "text-right tabular-nums" },
+      meta: {
+        className: "text-right tabular-nums",
+        divinePriceThreshold: divinePriceThreshold,
+      },
       filterFn: rangeFilterFn,
       cell: ChaosCell,
     },

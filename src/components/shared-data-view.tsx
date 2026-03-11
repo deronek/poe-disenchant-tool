@@ -17,12 +17,14 @@ interface SharedDataViewProps {
   items: Item[];
   league: League;
   lowStockThreshold: number;
+  divinePriceThreshold: number | null;
 }
 
 export function SharedDataView({
   items,
   league,
   lowStockThreshold,
+  divinePriceThreshold,
 }: SharedDataViewProps) {
   const [advancedSettings, setAdvancedSettings] =
     useLocalStorage<AdvancedSettings>(
@@ -36,8 +38,14 @@ export function SharedDataView({
 
   // Generate columns with current settings and league
   const columns = React.useMemo(
-    () => createColumns(advancedSettings, lowStockThreshold, league),
-    [advancedSettings, lowStockThreshold, league],
+    () =>
+      createColumns(
+        advancedSettings,
+        lowStockThreshold,
+        league,
+        divinePriceThreshold,
+      ),
+    [advancedSettings, lowStockThreshold, league, divinePriceThreshold],
   );
 
   return (
