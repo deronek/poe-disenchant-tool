@@ -104,11 +104,11 @@ const ChaosCell: ColumnDef<Item>["cell"] = function ChaosCellComponent({
             </span>
           </TooltipTrigger>
           <TooltipContent variant="popover" className="px-3 py-1.5 text-xs">
-             <div className="flex items-center gap-1">
-               {standardFormatterPrice.format(chaosValue)}
-               <ChaosOrbIcon size={16} />
-             </div>
-           </TooltipContent>
+            <div className="flex items-center gap-1">
+              {standardFormatterPrice.format(chaosValue)}
+              <ChaosOrbIcon size={16} />
+            </div>
+          </TooltipContent>
         </Tooltip>
         <DivineOrbIcon />
       </span>
