@@ -168,6 +168,7 @@ test.describe("Data Rendering and Formatting", () => {
     await poePage.sortByColumn("Price", "desc");
 
     const items = await poePage.getTestItems(10);
+    let compactTested = false;
 
     for (const item of items) {
       const colIndex = await poePage.getColumnIndex("Price");
@@ -185,13 +186,15 @@ test.describe("Data Rendering and Formatting", () => {
         .first();
       await expect(tooltip).toBeVisible();
 
-      const hasCompactDivinePrice = (await compactNumber.count()) > 0;
+      // Check if the price is compact (has K/M/B suffix)
+      const priceData = await poePage.getFullValueAndDisplayedTextForCell(
+        item.name,
+        "Price",
+      );
+      const isCompactPrice = /[KMBkmb]/.test(priceData.displayed);
 
-      if (hasCompactDivinePrice) {
-        const priceData = await poePage.getFullValueAndDisplayedTextForCell(
-          item.name,
-          "Price",
-        );
+      if (isCompactPrice) {
+        compactTested = true;
         // Check if tooltip contains both divine and chaos info
         const tooltipText = await tooltip.innerText();
         expect(tooltipText).toMatch(/[0-9,]+(\.[0-9]+)?/);
@@ -256,6 +259,8 @@ test.describe("Data Rendering and Formatting", () => {
       await poePage.pageTitle.click();
       await expect(tooltip).not.toBeVisible({ timeout: 500 });
     }
+    // We needed to test at least one compact price
+    expect(compactTested).toBeTruthy();
   });
 
   test("should display qualityType for all items", async ({ poePage }) => {
