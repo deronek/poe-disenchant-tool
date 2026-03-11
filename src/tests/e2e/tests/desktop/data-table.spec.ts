@@ -107,15 +107,58 @@ test.describe("Data Rendering and Formatting", () => {
 
             // Remove hover and wait for tooltip to disappear
             await poePage.pageTitle.click();
-            await expect(tooltip).not.toBeVisible({ timeout: 5000 });
+            await expect(tooltip).not.toBeVisible({ timeout: 500 });
           }
 
           // We needed to test at least one tooltip in that column
           expect(compactTested).toBeTruthy();
         });
-      });
+        test(`should not show tooltips on non-compact numbers for ${column} column`, async ({
+          poePage,
+        }) => {
+          // Sort by ascending to find lowest values (most likely to be non-compact)
+          await poePage.sortByColumn(column, "asc");
+          let nonCompactTested = false;
+          const items = await poePage.getTestItems(10);
 
-    // Should not display tooltip on non-compact numbers
+          for (const item of items) {
+            const data = await poePage.getFullValueAndDisplayedTextForCell(
+              item.name,
+              column,
+            );
+
+            // Skip compact numbers
+            if (data.displayed.match(/[KMBkmb]/)) {
+              continue;
+            }
+
+            nonCompactTested = true;
+            const colIndex = await poePage.getColumnIndex(column);
+            const cell = poePage.page
+              .locator("tr")
+              .filter({ hasText: item.name })
+              .locator("td")
+              .nth(colIndex);
+
+            const compactNumber = cell.locator("[data-full-value]");
+            await compactNumber.hover();
+
+            const tooltip = poePage.page.locator("[role='tooltip']").first();
+            await expect(tooltip).not.toBeVisible({ timeout: 1000 });
+
+            // Remove hover and wait for the potential tooltip to disappear
+            await poePage.pageTitle.click();
+            await expect(tooltip).not.toBeVisible({ timeout: 500 });
+          }
+
+          // If we didn't test any compact numbers, mark test as skipped
+          // e.g. Dust Value column doesn't have such small values
+          test.skip(
+            !nonCompactTested,
+            `No non-compact numbers found for ${column} column`,
+          );
+        });
+      });
   });
 
   test("should display correct divine/chaos price tooltips", async ({
@@ -124,7 +167,7 @@ test.describe("Data Rendering and Formatting", () => {
     // Sort price column descending to get high values (more likely to be in divine format)
     await poePage.sortByColumn("Price", "desc");
 
-    const items = await poePage.getTestItems(5);
+    const items = await poePage.getTestItems(10);
 
     for (const item of items) {
       const colIndex = await poePage.getColumnIndex("Price");
@@ -135,49 +178,59 @@ test.describe("Data Rendering and Formatting", () => {
         .nth(colIndex);
 
       const compactNumber = cell.locator("[data-full-value]");
-      const hasCompactDivinePrice = (await compactNumber.count()) > 0;
-
       await compactNumber.hover();
-      const tooltip = poePage.page.locator("[role='tooltip']").first();
+
+      const tooltip = poePage.page
+        .locator("[data-slot='tooltip-content']")
+        .first();
       await expect(tooltip).toBeVisible();
 
-      // Check if divine pricing is active (cell contains DivineOrbIcon)
-      const hasDivineIcon =
-        (await cell.locator("img[alt='Divine Orb']").count()) > 0;
+      const hasCompactDivinePrice = (await compactNumber.count()) > 0;
 
       if (hasCompactDivinePrice) {
         // Check if tooltip contains both divine and chaos info
         const tooltipText = await tooltip.innerText();
         expect(tooltipText).toMatch(/[0-9,]+(\.[0-9]+)?/);
 
-        // Check for both currency icons in tooltip
-        const hasDivineIconInTooltip =
-          (await tooltip.locator("img[alt='Divine Orb']").count()) > 0;
-        const hasChaosIconInTooltip =
-          (await tooltip.locator("img[alt='Chaos Orb']").count()) > 0;
+        // Check if divine pricing is active (cell contains DivineOrbIcon)
+        const hasDivineIcon =
+          (await cell.locator("img[alt='Divine Orb']").count()) > 0;
 
         if (hasDivineIcon) {
           // If divine pricing is active, tooltip may show both prices (if divine is compact)
           // or just chaos price (if divine is not compact)
+
+          // Check for both currency icons in tooltip
+          const hasDivineIconInTooltip =
+            (await tooltip.locator("img[alt='Divine Orb']").count()) > 0;
+          const hasChaosIconInTooltip =
+            (await tooltip.locator("img[alt='Chaos Orb']").count()) > 0;
+
           if (hasDivineIconInTooltip) {
+            // Divine pricing active and divine value is compact - tooltip shows both divine and chaos values
             expect(hasChaosIconInTooltip).toBeTruthy();
             const numericMatches = tooltipText.match(/[0-9,]+(\.[0-9]+)?/g);
             expect(numericMatches).toBeDefined();
             expect(numericMatches!.length).toBeGreaterThanOrEqual(2);
+            // TODO: compare the actual values
           } else {
-            // Divine pricing active but divine value not compact - tooltip only shows chaos
+            // Divine pricing active but divine value not compact - tooltip shows only chaos value
             expect(hasChaosIconInTooltip).toBeTruthy();
             const numericMatches = tooltipText.match(/[0-9,]+(\.[0-9]+)?/g);
             expect(numericMatches).toBeDefined();
             expect(numericMatches!.length).toBeGreaterThanOrEqual(1);
+            // TODO: compare the actual values
           }
         } else {
-          // No divine pricing - tooltip should show at least one numeric value
+          // No divine pricing - tooltip should show chaos value
           const numericMatches = tooltipText.match(/[0-9,]+(\.[0-9]+)?/g);
           expect(numericMatches).toBeDefined();
           expect(numericMatches!.length).toBeGreaterThanOrEqual(1);
         }
       }
+      // Remove hover and wait for the tooltip to disappear
+      await poePage.pageTitle.click();
+      await expect(tooltip).not.toBeVisible({ timeout: 500 });
     }
   });
 
