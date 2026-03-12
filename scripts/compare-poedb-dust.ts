@@ -60,19 +60,40 @@ for (const item of scrapedData) {
 console.log("🔍 Comparison Complete");
 console.log("====================================");
 
-console.log(`⏭️ Ignored (${ignoredCount}): Items from ignore list`);
+console.log(`⏭️  Ignored: ${ignoredCount} items from ignore list`);
 console.log("====================================");
 
-console.log(`❌ Not Found (${notFound.length}):`);
-console.log(notFound.length ? notFound.join(", ") : "✅ All found");
-
-console.log("====================================");
-
-console.log(`⚠️ Mismatched Dust Values (${mismatched.length}):`);
-if (mismatched.length) {
-  mismatched.forEach((m) => {
-    console.log(`- ${m.name}: poe-dust=${m.poeVal} | poedb=${m.poedbVal}`);
+console.log(`❌ Not Found: ${notFound.length} items`);
+if (notFound.length) {
+  console.log("┌─────┬────────────────────────────────────────┐");
+  console.log("│  #  │ Item Name                              │");
+  console.log("├─────┼────────────────────────────────────────┤");
+  notFound.forEach((name, index) => {
+    const num = String(index + 1).padStart(3);
+    const paddedName = name.padEnd(36);
+    console.log(`│ ${num} │ ${paddedName} │`);
   });
+  console.log("└─────┴────────────────────────────────────────┘");
+} else {
+  console.log("✅ All found");
+}
+
+console.log("====================================");
+
+console.log(`⚠️  Mismatched Dust Values: ${mismatched.length} items`);
+if (mismatched.length) {
+  console.log("┌─────┬────────────────────────────────────────┬───────────┬────────────┬────────────┐");
+  console.log("│  #  │ Item Name                              │ PoE Dust  │ PoEDB Dust │ Difference │");
+  console.log("├─────┼────────────────────────────────────────┼───────────┼────────────┼────────────┤");
+  mismatched.forEach((m, index) => {
+    const num = String(index + 1).padStart(3);
+    const paddedName = m.name.padEnd(36);
+    const poeVal = String(m.poeVal).padStart(9);
+    const poedbVal = String(m.poedbVal).padStart(10);
+    const diff = Math.abs(m.poeVal - m.poedbVal).toFixed(4).padStart(10);
+    console.log(`│ ${num} │ ${paddedName} │ ${poeVal} │ ${poedbVal} │ ${diff} │`);
+  });
+  console.log("└─────┴────────────────────────────────────────┴───────────┴────────────┴────────────┘");
 } else {
   console.log("✅ All dust values match!");
 }
