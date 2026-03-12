@@ -4,6 +4,7 @@ import type { Column } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { XButton } from "@/components/ui/x-button";
 import { hasMaxFilter, hasMinFilter } from "@/lib/range-filter";
+import { useFilterStatus } from "./use-filter-status";
 
 export interface RangeFilterChipProps<TData> {
   column: Column<TData, unknown>;
@@ -48,12 +49,21 @@ export function RangeFilterChip<TData>({
     return `${title} filter applied: ${value.min.toLocaleString()} – ${value.max.toLocaleString()}`;
   };
 
+  const statusRef = useFilterStatus(
+    !!hasValue,
+    formatLiveRegionText(),
+    `${title} filter cleared`,
+  );
+
   return (
     <>
       {/* Live region (always mounted) */}
-      <span role="status" aria-live="polite" className="sr-only">
-        {formatLiveRegionText()}
-      </span>
+      <span
+        ref={statusRef}
+        role="status"
+        aria-live="polite"
+        className="sr-only"
+      />
 
       {!hasValue ? null : (
         <Badge

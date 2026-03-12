@@ -2,6 +2,7 @@ import type { Column } from "@tanstack/react-table";
 
 import { Badge } from "@/components/ui/badge";
 import { XButton } from "@/components/ui/x-button";
+import { useFilterStatus } from "./use-filter-status";
 
 interface NameFilterChipProps<TData> {
   column: Column<TData, unknown> | undefined;
@@ -11,12 +12,21 @@ export function NameFilterChip<TData>({ column }: NameFilterChipProps<TData>) {
   const value = column?.getFilterValue() as string | undefined;
   const hasValue = value && value.trim() !== "";
 
+  const statusRef = useFilterStatus(
+    !!hasValue,
+    `Name filter applied: ${value}`,
+    "Name filter cleared",
+  );
+
   return (
     <>
       {/* Live region (always mounted) */}
-      <span role="status" aria-live="polite" className="sr-only">
-        {hasValue ? `Name filter applied: ${value}` : ""}
-      </span>
+      <span
+        ref={statusRef}
+        role="status"
+        aria-live="polite"
+        className="sr-only"
+      />
 
       {!hasValue ? null : (
         <div className="w-auto min-w-0 xl:shrink-0">
