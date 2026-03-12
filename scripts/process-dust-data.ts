@@ -36,7 +36,43 @@ async function main() {
     const validationResult = InputItemDataSchema.safeParse(data);
     if (!validationResult.success) {
       console.error("❌ Input validation failed:");
-      console.error(JSON.stringify(validationResult.error, null, 2));
+
+      // Enhanced error reporting with invalid items
+      validationResult.error.issues.forEach((issue, index) => {
+        console.error(`\n${index + 1}. ${issue.message}`);
+        console.error(`   Path: ${issue.path.join(".")}`);
+
+        // Try to find and print the invalid object
+        if (issue.path.length > 0) {
+          // Find the array index first to get the complete item
+          const arrayIndex = issue.path.findIndex((p) => typeof p === "number");
+
+          if (arrayIndex !== -1) {
+            const index = issue.path[arrayIndex] as number;
+            const invalidItem = data[index];
+            console.error(
+              `   Invalid Item (index ${index}): ${JSON.stringify(invalidItem, null, 2)}`,
+            );
+          } else {
+            // If no array index, traverse the full path
+            let invalidItem: unknown = data;
+            let pathIndex = 0;
+
+            while (pathIndex < issue.path.length && invalidItem) {
+              const key = issue.path[pathIndex];
+              invalidItem = (invalidItem as Record<string, unknown>)[key as string];
+              pathIndex++;
+            }
+
+            if (invalidItem && typeof invalidItem === "object") {
+              console.error(
+                `   Invalid Item: ${JSON.stringify(invalidItem, null, 2)}`,
+              );
+            }
+          }
+        }
+      });
+
       throw new Error("Input data validation failed");
     }
 
