@@ -27,7 +27,7 @@ export const calculateGoldCost = (
     const factor = 10 ** decimals;
     return Math.floor(value * factor) / factor;
   };
-  const inner = floorTo(Math.pow(baseDust, 0.45), 0.01);
+  const inner = floorTo(baseDust ** 0.45, 0.01);
 
   // === 2. Calculate multiplier ===
   const multiplier =
