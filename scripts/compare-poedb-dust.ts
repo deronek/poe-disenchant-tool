@@ -82,18 +82,30 @@ console.log("====================================");
 
 console.log(`⚠️  Mismatched Dust Values: ${mismatched.length} items`);
 if (mismatched.length) {
-  console.log("┌─────┬────────────────────────────────────────┬───────────┬────────────┬────────────┐");
-  console.log("│  #  │ Item Name                              │ PoE Dust  │ PoEDB Dust │ Difference │");
-  console.log("├─────┼────────────────────────────────────────┼───────────┼────────────┼────────────┤");
+  console.log(
+    "┌─────┬────────────────────────────────────────┬───────────┬────────────┬────────────┐",
+  );
+  console.log(
+    "│  #  │ Item Name                              │ PoE Dust  │ PoEDB Dust │ Difference │",
+  );
+  console.log(
+    "├─────┼────────────────────────────────────────┼───────────┼────────────┼────────────┤",
+  );
   mismatched.forEach((m, index) => {
     const num = String(index + 1).padStart(3);
     const paddedName = m.name.padEnd(36);
     const poeVal = String(m.poeVal).padStart(9);
     const poedbVal = String(m.poedbVal).padStart(10);
-    const diff = Math.abs(m.poeVal - m.poedbVal).toFixed(4).padStart(10);
-    console.log(`│ ${num} │ ${paddedName} │ ${poeVal} │ ${poedbVal} │ ${diff} │`);
+    const diff = Math.abs(m.poeVal - m.poedbVal)
+      .toFixed(4)
+      .padStart(10);
+    console.log(
+      `│ ${num} │ ${paddedName} │ ${poeVal} │ ${poedbVal} │ ${diff} │`,
+    );
   });
-  console.log("└─────┴────────────────────────────────────────┴───────────┴────────────┴────────────┘");
+  console.log(
+    "└─────┴────────────────────────────────────────┴───────────┴────────────┴────────────┘",
+  );
 } else {
   console.log("✅ All dust values match!");
 }
