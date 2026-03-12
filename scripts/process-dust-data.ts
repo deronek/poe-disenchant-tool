@@ -60,7 +60,9 @@ async function main() {
 
             while (pathIndex < issue.path.length && invalidItem) {
               const key = issue.path[pathIndex];
-              invalidItem = (invalidItem as Record<string, unknown>)[key as string];
+              invalidItem = (invalidItem as Record<string, unknown>)[
+                key as string
+              ];
               pathIndex++;
             }
 
