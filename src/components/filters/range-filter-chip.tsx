@@ -68,10 +68,10 @@ export function RangeFilterChip<TData>({
       {!hasValue ? null : (
         <Badge
           variant="outline"
-          className="inline-flex items-center gap-1 px-3"
+          className="inline-flex min-w-0 items-center gap-1 px-3"
           data-testid={testId}
         >
-          <span className="inline-flex min-w-0 flex-shrink-0 items-center gap-1 truncate tabular-nums">
+          <span className="inline-flex min-w-0 items-center gap-1 truncate tabular-nums">
             {title} {formatRange()}
             <span className="flex-shrink-0">{icon}</span>
           </span>
