@@ -47,7 +47,7 @@ export function RangeFilterChip<TData>({
       data-testid={testId}
       role="status"
     >
-      <span className="inline-flex min-w-0 flex-shrink-0 items-center gap-1 truncate">
+      <span className="inline-flex min-w-0 flex-shrink-0 items-center gap-1 truncate tabular-nums">
         {title} {formatRange()}
         <span className="flex-shrink-0">{icon}</span>
       </span>
