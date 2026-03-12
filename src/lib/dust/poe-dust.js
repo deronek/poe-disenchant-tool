@@ -8426,17 +8426,17 @@ const data = [
   {
     name: "Jiquani's Potential",
     baseType: "Imperial Staff",
-    dustValIlvl84: 34150,
-    dustValIlvl84Q20: 47810,
-    goldCost: 6480,
+    dustValIlvl84: 1707500,
+    dustValIlvl84Q20: 2390500,
+    goldCost: 37700,
     slots: 8,
   },
   {
     name: "The Grey Wind",
     baseType: "Spectral Axe",
-    dustValIlvl84: 12875,
-    dustValIlvl84Q20: 18025,
-    goldCost: 4180,
+    dustValIlvl84: 38625,
+    dustValIlvl84Q20: 54075,
+    goldCost: 6840,
     slots: 6,
   },
   {

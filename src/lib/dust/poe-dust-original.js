@@ -9668,7 +9668,7 @@ const data = [
   {
     name: "Jiquani's Potential",
     baseType: "Imperial Staff",
-    dustVal: 13.66,
+    dustVal: 683,
     w: 2,
     h: 4,
     slots: 8,
@@ -9677,7 +9677,7 @@ const data = [
   {
     name: "The Grey Wind",
     baseType: "Spectral Axe",
-    dustVal: 5.15,
+    dustVal: 15.45,
     w: 2,
     h: 3,
     slots: 6,
