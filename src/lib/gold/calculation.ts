@@ -23,9 +23,11 @@ export const calculateGoldCost = (
     throw new Error("corruptionImplicitCount is invalid");
 
   // === 1. Compute inner value ===
-  const floorTo = (value: number, step: number) =>
-    Math.floor(value / step) * step;
-  const inner = floorTo(Math.pow(baseDust, 0.45), 0.01);
+  const roundTo = (value: number, decimals: number = 0): number => {
+    const factor = 10 ** decimals;
+    return Math.round((value + Number.EPSILON) * factor) / factor;
+  };
+  const inner = roundTo(baseDust ** 0.45, 2);
 
   // === 2. Calculate multiplier ===
   const multiplier =
