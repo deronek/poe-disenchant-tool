@@ -17,6 +17,7 @@ const XButton = React.forwardRef<HTMLButtonElement, XButtonProps>(
       size = "sm",
       variant = "ghost",
       "aria-label": ariaLabel = "Close",
+      type = "button",
       ...props
     },
     ref,
@@ -27,6 +28,7 @@ const XButton = React.forwardRef<HTMLButtonElement, XButtonProps>(
         size={size}
         className={cn("h-6 px-1", className)}
         aria-label={ariaLabel}
+        type={type}
         ref={ref}
         {...props}
       >
