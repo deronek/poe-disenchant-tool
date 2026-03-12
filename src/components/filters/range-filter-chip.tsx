@@ -22,15 +22,14 @@ export function RangeFilterChip<TData>({
 }: RangeFilterChipProps<TData>) {
   const value = column?.getFilterValue() as RangeFilterValue | undefined;
 
-  if (!value) return null;
-
-  const hasMin = hasMinFilter(value);
-  const hasMax = hasMaxFilter(value);
-  if (!hasMin && !hasMax) return null;
+  const hasMin = value && hasMinFilter(value);
+  const hasMax = value && hasMaxFilter(value);
+  const hasValue = hasMin || hasMax;
 
   const formatRange = () => {
-    if (!hasMin) return `≤ ${value.max.toLocaleString()}`;
-    if (!hasMax) return `≥ ${value.min.toLocaleString()}`;
+    if (!value) return "";
+    if (!hasMin) return `≤ ${value.max!.toLocaleString() ?? ""}`;
+    if (!hasMax) return `≥ ${value.min!.toLocaleString() ?? ""}`;
 
     return (
       <>
@@ -40,22 +39,39 @@ export function RangeFilterChip<TData>({
     );
   };
 
+  const formatLiveRegionText = () => {
+    if (!value || !hasValue) return "";
+    if (!hasMin)
+      return `${title} filter applied: ≤ ${value.max.toLocaleString()}`;
+    if (!hasMax)
+      return `${title} filter applied: ≥ ${value.min.toLocaleString()}`;
+    return `${title} filter applied: ${value.min.toLocaleString()} – ${value.max.toLocaleString()}`;
+  };
+
   return (
-    <Badge
-      variant="outline"
-      className="inline-flex items-center gap-1 px-3"
-      data-testid={testId}
-      role="status"
-    >
-      <span className="inline-flex min-w-0 flex-shrink-0 items-center gap-1 truncate tabular-nums">
-        {title} {formatRange()}
-        <span className="flex-shrink-0">{icon}</span>
+    <>
+      {/* Live region (always mounted) */}
+      <span role="status" aria-live="polite" className="sr-only">
+        {formatLiveRegionText()}
       </span>
-      <XButton
-        onClick={() => column?.setFilterValue(undefined)}
-        aria-label={ariaLabel}
-        className="text-foreground/90"
-      />
-    </Badge>
+
+      {!hasValue ? null : (
+        <Badge
+          variant="outline"
+          className="inline-flex items-center gap-1 px-3"
+          data-testid={testId}
+        >
+          <span className="inline-flex min-w-0 flex-shrink-0 items-center gap-1 truncate tabular-nums">
+            {title} {formatRange()}
+            <span className="flex-shrink-0">{icon}</span>
+          </span>
+          <XButton
+            onClick={() => column?.setFilterValue(undefined)}
+            aria-label={ariaLabel}
+            className="text-foreground/90"
+          />
+        </Badge>
+      )}
+    </>
   );
 }
