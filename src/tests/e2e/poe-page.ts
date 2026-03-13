@@ -60,6 +60,16 @@ export class PoEDisenchantPage {
   // Test Data Helpers
   // ---------------------------
 
+  // With toolbar and pagination Controls
+  get leagueTable() {
+    return this.page.locator("[data-testid='league-table']");
+  }
+
+  // Headers + Rows only
+  get dataTable() {
+    return this.page.locator("table");
+  }
+
   get dataTableRows() {
     return this.page.locator("tbody tr");
   }
@@ -1108,18 +1118,18 @@ export class PoEDisenchantPage {
 
   async setAllFilters(): Promise<void> {
     // Set price filter
-    await this.setPriceFilterValuePercent("lower", 50);
-    await this.setPriceFilterValuePercent("upper", 50);
+    await this.setPriceFilterValuePercent("lower", 10);
+    await this.setPriceFilterValuePercent("upper", 90);
     await this.verifyFilterChipVisible("price", true);
 
     // Set dust filter
-    await this.setDustFilterValuePercent("lower", 30);
-    await this.setDustFilterValuePercent("upper", 30);
+    await this.setDustFilterValuePercent("lower", 10);
+    await this.setDustFilterValuePercent("upper", 90);
     await this.verifyFilterChipVisible("dust", true);
 
     // Set gold fee filter
-    await this.setGoldFilterValuePercent("lower", 25);
-    await this.setGoldFilterValuePercent("upper", 25);
+    await this.setGoldFilterValuePercent("lower", 10);
+    await this.setGoldFilterValuePercent("upper", 90);
     await this.verifyFilterChipVisible("gold", true);
   }
 

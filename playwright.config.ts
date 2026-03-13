@@ -26,6 +26,27 @@ export default defineConfig({
         ...devices["Desktop Chrome"],
       },
     },
+    // Visual Regression Test - light and dark themes
+    {
+      name: "vrt-light",
+      testDir: "./src/tests/vrt",
+      use: {
+        baseURL: process.env.VRT_BASE_URL ?? "http://localhost:3000",
+        ...devices["Desktop Chrome"],
+        colorScheme: "light",
+      },
+      retries: 0,
+    },
+    {
+      name: "vrt-dark",
+      testDir: "./src/tests/vrt",
+      use: {
+        baseURL: process.env.VRT_BASE_URL ?? "http://localhost:3000",
+        ...devices["Desktop Chrome"],
+        colorScheme: "dark",
+      },
+      retries: 0,
+    },
     // { name: "firefox", use: { ...devices["Desktop Firefox"] } },
     // { name: "webkit", use: { ...devices["Desktop Safari"] } },
     // { name: "Mobile Chrome", use: { ...devices["Pixel 5"] } },

@@ -35,6 +35,7 @@ const nextConfig: NextConfig = {
     PDT_APP_VERSION: packageJson.version,
     PDT_APP_NAME: packageJson.name,
   },
+  devIndicators: process.env.PLAYWRIGHT ? false : undefined, // Disable dev tools in Playwright for VRT
   // Static redirects for archival leagues - handled at CDN/edge level
   async redirects() {
     return ARCHIVED_LEAGUE_SLUGS.map((archivedLeague) => ({

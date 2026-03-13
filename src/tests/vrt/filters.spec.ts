@@ -1,0 +1,68 @@
+import { expect, testVrt as test } from "../e2e/fixtures";
+
+test.describe("Filters - Desktop", () => {
+  test("price filter open", async ({ poePage }) => {
+    await poePage.openTabbedFilter();
+    await poePage.switchToTab("price");
+    await expect(poePage.tabbedFilterPopover).toHaveScreenshot(
+      "price-filter-open.png",
+    );
+
+    await poePage.setPriceFilterValuePercent("lower", 50);
+    await poePage.setPriceFilterValuePercent("upper", 50);
+    await expect(poePage.tabbedFilterPopover).toHaveScreenshot(
+      "price-filter-active.png",
+    );
+  });
+
+  test("dust filter open", async ({ poePage }) => {
+    await poePage.openTabbedFilter();
+    await poePage.switchToTab("dust");
+    await expect(poePage.tabbedFilterPopover).toHaveScreenshot(
+      "dust-filter-open.png",
+    );
+
+    await poePage.setDustFilterValuePercent("lower", 50);
+    await poePage.setDustFilterValuePercent("upper", 50);
+    await expect(poePage.tabbedFilterPopover).toHaveScreenshot(
+      "dust-filter-active.png",
+    );
+  });
+
+  test("gold filter open", async ({ poePage }) => {
+    await poePage.openTabbedFilter();
+    await poePage.switchToTab("gold");
+    await expect(poePage.tabbedFilterPopover).toHaveScreenshot(
+      "gold-filter-open.png",
+    );
+
+    await poePage.setGoldFilterValuePercent("lower", 50);
+    await poePage.setGoldFilterValuePercent("upper", 50);
+    await expect(poePage.tabbedFilterPopover).toHaveScreenshot(
+      "gold-filter-active.png",
+    );
+  });
+
+  test("name filter active", async ({ poePage }) => {
+    await poePage.setNameFilter("Mageblood");
+    await poePage.waitForFilterDebounce();
+    await expect(poePage.leagueTable).toHaveScreenshot(
+      "name-filter-active.png",
+    );
+  });
+
+  test("all filters active", async ({ poePage }) => {
+    // Set name filter
+    await poePage.setNameFilter("Yoke of Suffering");
+    await poePage.waitForFilterDebounce();
+
+    // Set other filters
+    await poePage.openTabbedFilter();
+    await poePage.setAllFilters();
+    await poePage.closeTabbedFilter();
+
+    await expect(poePage.leagueTable).toHaveScreenshot(
+      "all-filters-active.png",
+    );
+  });
+});

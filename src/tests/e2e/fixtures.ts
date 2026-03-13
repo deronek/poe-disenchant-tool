@@ -11,4 +11,15 @@ export const test = base.extend<{ poePage: PoEDisenchantPage }>({
   },
 });
 
+export const testVrt = base.extend<{ poePage: PoEDisenchantPage }>({
+  poePage: async ({ page }, use) => {
+    const poePage = new PoEDisenchantPage(page);
+    await poePage.setup();
+    // Wait for icons load
+    await poePage.page.waitForLoadState("networkidle");
+    // eslint-disable-next-line react-hooks/rules-of-hooks -- 💀
+    await use(poePage);
+  },
+});
+
 export { expect } from "@playwright/test";

@@ -18,6 +18,9 @@
     "test:report": "playwright show-report",
     "test:update": "playwright test --update-snapshots",
     "test:install": "playwright install --with-deps",
+    "test:vrt": "playwright test --project=vrt-light --project=vrt-dark",
+    "test:vrt:ui": "playwright test --ui --project=vrt-light --project=vrt-dark",
+    "test:vrt:update": "playwright test --project=vrt-light --project=vrt-dark --update-snapshots",
     "dust:process": "tsx scripts/process-dust-data.ts && tsx scripts/validate-dust-data.ts"
   },
   "dependencies": {

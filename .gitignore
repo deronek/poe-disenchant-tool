@@ -61,3 +61,7 @@ next-env.d.ts
 *.zip
 *.tar.gz
 *.log
+
+# Visual Regression Test fail artifacts
+src/tests/vrt/__snapshots__/**/*.diff.png
+src/tests/vrt/__snapshots__/**/*.actual.png
