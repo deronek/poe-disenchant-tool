@@ -63,18 +63,14 @@ const sortOptions: SortOption[] = [
         /
         <ChaosOrbIcon className="h-4 w-4" aria-hidden="true" alt="" />
         /
-        <StretchHorizontal
-          className="h-4 w-4"
-          aria-hidden="true"
-          focusable="false"
-        />
+        <StretchHorizontal className="h-4 w-4" />
       </>
     ),
   },
   {
     id: COLUMN_IDS.NAME,
     label: "Name",
-    icons: <Type className="h-4 w-4" aria-hidden="true" focusable="false" />,
+    icons: <Type className="h-4 w-4" />,
   },
   {
     id: COLUMN_IDS.CHAOS,

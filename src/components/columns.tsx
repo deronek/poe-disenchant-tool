@@ -38,8 +38,11 @@ const DustValueHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
         <div className="flex w-full flex-1 items-center">
           <p>Dust Value</p>
           <Tooltip>
-            <TooltipTrigger className="ml-auto pl-1">
-              <Info className="size-5 text-blue-500 dark:text-blue-400" />
+            <TooltipTrigger
+              className="ml-auto pl-1"
+              aria-label="Learn more about dust value calculation"
+            >
+              <Info className="size-5 text-blue-600 dark:text-blue-400" />
             </TooltipTrigger>
             <TooltipContent className="max-w-[460px] text-sm" variant="popover">
               <DustInfo />
@@ -135,8 +138,11 @@ const GoldFeeHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
         <div className="flex w-full flex-1 items-center">
           <p>Gold Fee</p>
           <Tooltip>
-            <TooltipTrigger className="ml-auto pl-1">
-              <Info className="size-5 text-blue-500 dark:text-blue-400" />
+            <TooltipTrigger
+              className="ml-auto pl-1"
+              aria-label="Learn more about gold fee"
+            >
+              <Info className="size-5 text-blue-600 dark:text-blue-400" />
             </TooltipTrigger>
             <TooltipContent className="max-w-[460px] text-sm" variant="popover">
               <GoldInfo />
@@ -265,8 +271,11 @@ const MarkHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> = React.memo(
       <div className="flex w-full items-center">
         <p>Mark</p>
         <Tooltip>
-          <TooltipTrigger className="ml-auto">
-            <Info className="size-5 text-blue-500 dark:text-blue-400" />
+          <TooltipTrigger
+            className="ml-auto"
+            aria-label="Learn more about item marking"
+          >
+            <Info className="size-5 text-blue-600 dark:text-blue-400" />
           </TooltipTrigger>
           <TooltipContent className="max-w-[280px] text-sm" variant="popover">
             <ItemMarkingInfo />
@@ -443,6 +452,7 @@ export const createColumns = (
       meta: {
         className: "text-right tabular-nums",
         divinePriceThreshold: divinePriceThreshold,
+        headerName: "Price",
       },
       filterFn: rangeFilterFn,
       cell: ChaosCell,
@@ -451,7 +461,7 @@ export const createColumns = (
       accessorKey: COLUMN_IDS.CALCULATED_DUST_VALUE,
       header: DustValueHeader,
       size: 130,
-      meta: { className: "text-right tabular-nums" },
+      meta: { className: "text-right tabular-nums", headerName: "Dust Value" },
       filterFn: rangeFilterFn,
       cell: CalculatedDustValueCell,
     },
@@ -464,6 +474,7 @@ export const createColumns = (
           "text-right tabular-nums relative " +
           "bg-gradient-to-l from-primary/6 to-transparent dark:from-primary/7 dark:to-transparent " +
           "after:content-[''] after:absolute after:inset-y-0 after:right-0 after:w-px after:bg-border",
+        headerName: "Dust per Chaos",
       },
       cell: DustPerChaosCell,
     },
@@ -474,6 +485,7 @@ export const createColumns = (
       meta: {
         className:
           "text-right tabular-nums bg-gradient-to-r from-primary/6 to-transparent dark:from-primary/7 dark:to-transparent",
+        headerName: "Dust per Chaos per Slot",
       },
       cell: DustPerChaosPerSlotCell,
     },
@@ -481,7 +493,7 @@ export const createColumns = (
       accessorKey: COLUMN_IDS.GOLD_FEE,
       header: GoldFeeHeader,
       size: 115,
-      meta: { className: "text-right tabular-nums" },
+      meta: { className: "text-right tabular-nums", headerName: "Gold Fee" },
       filterFn: rangeFilterFn,
       cell: GoldCell,
     },
@@ -506,7 +518,7 @@ export const createColumns = (
             title={`Open trade search for ${name}`}
             className="inline-flex items-center gap-2"
           >
-            <ExternalLink className="size-5" aria-hidden="true" />
+            <ExternalLink className="size-5" />
             {isLowStock && (
               <Badge
                 variant="amber"

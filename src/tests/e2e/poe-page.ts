@@ -422,7 +422,7 @@ export class PoEDisenchantPage {
 
   async selectTheme(theme: ThemeOption) {
     await this.themeSelectorTrigger.click();
-    const themeOption = this.page.getByRole("menuitem", {
+    const themeOption = this.page.getByRole("menuitemradio", {
       name: new RegExp(theme, "i"),
     });
     await themeOption.click();

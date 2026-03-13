@@ -2,11 +2,7 @@ import { CheckCircle } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 
-interface ItemMarkingInfoProps {
-  itemName?: string;
-}
-
-export function ItemMarkingInfo({ itemName }: ItemMarkingInfoProps) {
+export function ItemMarkingInfo() {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-2">
@@ -14,11 +10,7 @@ export function ItemMarkingInfo({ itemName }: ItemMarkingInfoProps) {
         <h4 className="text-sm font-semibold">Item Marking</h4>
       </div>
       <div className="flex flex-col gap-2">
-        <p className="leading-relaxed">
-          {itemName
-            ? `Mark ${itemName} as traded recently.`
-            : "Mark items you've traded recently."}
-        </p>
+        <p className="leading-relaxed">Mark items you have traded recently.</p>
         <div className="flex items-center gap-2">
           <Badge variant="secondary" className="text-xs">
             Local Storage

@@ -11,12 +11,24 @@ export interface XButtonProps
 }
 
 const XButton = React.forwardRef<HTMLButtonElement, XButtonProps>(
-  ({ className, size = "sm", variant = "ghost", ...props }, ref) => {
+  (
+    {
+      className,
+      size = "sm",
+      variant = "ghost",
+      "aria-label": ariaLabel = "Close",
+      type = "button",
+      ...props
+    },
+    ref,
+  ) => {
     return (
       <Button
         variant={variant}
         size={size}
-        className={cn("h-5 px-1", className)}
+        className={cn("h-6 px-1", className)}
+        aria-label={ariaLabel}
+        type={type}
         ref={ref}
         {...props}
       >
