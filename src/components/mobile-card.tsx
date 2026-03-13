@@ -273,7 +273,7 @@ function PriceAndDustSection({
         </div>
         <div className="flex flex-col items-center gap-2">
           <DustInfoPopover />
-          <span className="text-muted-foreground w-5 pl-0.5 text-xs">
+          <span className="text-muted-foreground w-5 text-xs">
             ({qualityType})
           </span>
         </div>
