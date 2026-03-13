@@ -28,7 +28,7 @@ export function ClearMarksButton<TData>({
         disabled={numberOfSelectedRows === 0}
         className={cn("gap-1", className)}
       >
-        Clear marks{" "}
+        Clear Marks{" "}
         <span className="tabular-nums">({numberOfSelectedRows})</span>
       </Button>
     )
