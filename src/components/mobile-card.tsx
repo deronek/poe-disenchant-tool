@@ -279,8 +279,8 @@ function PriceAndDustSection({
           </span>
         </div>
       </div>
-      <div className="flex flex-30 gap-1">
-        <div className="flex flex-1 flex-col gap-2">
+      <div className="flex flex-30 justify-end gap-1">
+        <div className="flex flex-col gap-2">
           <div className="flex h-6 items-center">
             <p className="text-muted-foreground text-xs whitespace-nowrap">
               Gold Fee
