@@ -20,7 +20,7 @@ export function ItemMarkingInfo() {
           </Badge>
         </div>
         <p className="text-muted-foreground text-xs leading-relaxed">
-          Use <strong>Clear marks</strong> in the toolbar to remove marks from
+          Use <strong>Clear Marks</strong> in the toolbar to remove marks from
           all items.
         </p>
       </div>
