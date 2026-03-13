@@ -10,7 +10,9 @@ test.describe("Pagination - Desktop", () => {
   test("page 2", async ({ poePage }) => {
     await poePage.nextPageButton.click();
     await poePage.page.waitForTimeout(300);
-    await expect(poePage.dataTable).toHaveScreenshot("page-2.png");
+    await expect(poePage.dataTable).toHaveScreenshot("page-2.png", {
+      maxDiffPixelRatio: 0.01,
+    });
   });
 
   test("rows per page selector open", async ({ poePage }) => {

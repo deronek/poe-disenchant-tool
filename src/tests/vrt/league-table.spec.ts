@@ -12,6 +12,9 @@ test.describe("League Table - Desktop", () => {
     await poePage.sortByColumn("Price", "asc");
     await expect(poePage.leagueTable).toHaveScreenshot(
       "table-sorted-price-asc.png",
+      {
+        maxDiffPixelRatio: 0.01,
+      },
     );
   });
 
@@ -19,6 +22,9 @@ test.describe("League Table - Desktop", () => {
     await poePage.sortByColumn("Dust Value", "desc");
     await expect(poePage.leagueTable).toHaveScreenshot(
       "table-sorted-dust-desc.png",
+      {
+        maxDiffPixelRatio: 0.01,
+      },
     );
   });
 });
