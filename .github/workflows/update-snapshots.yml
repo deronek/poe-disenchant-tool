@@ -1,0 +1,51 @@
+name: Update VRT Snapshots
+
+on:
+  issue_comment:
+    types: [created]
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to update snapshots on"
+        required: false
+        default: ""
+
+jobs:
+  update:
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.issue.pull_request && contains(github.event.comment.body, '/update-snapshots'))
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          ref: ${{ github.event.inputs.branch || github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install Playwright Browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Update snapshots
+        run: pnpm test:vrt:update
+
+      - name: Commit updated snapshots
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update snapshots for VRT"
+          file_pattern: "src/tests/vrt/__snapshots__/**/*.png"
