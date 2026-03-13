@@ -39,12 +39,10 @@ jobs:
       - name: Run VRT (Desktop)
         run: pnpm test:vrt
 
-      - name: Upload diff artifacts
-        if: failure()
+      - name: Upload VRT Report Artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: vrt-diffs-${{ github.run_id }}
-          path: |
-            src/tests/vrt/__snapshots__/**/*.diff.png
-            src/tests/vrt/__snapshots__/**/*.actual.png
+          name: report-vrt-${{ github.run_id }}
+          path: playwright-report/
           retention-days: 7
