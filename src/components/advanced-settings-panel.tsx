@@ -2,7 +2,6 @@ import type { CheckedState } from "@/components/ui/checkbox";
 import type { ListingTimeFilter } from "@/lib/listing-time-filter";
 import * as React from "react";
 import { zx } from "@traversable/zod";
-import equal from "fast-deep-equal";
 import {
   ChevronDown,
   Clock,
@@ -33,13 +32,25 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
-import { ListingTimeFilterSchema } from "@/lib/listing-time-filter";
-import { OnlineStatus, OnlineStatusSchema } from "@/lib/online-status";
+import {
+  LISTING_TIME_FILTER_OPTIONS,
+  ListingTimeFilterSchema,
+} from "@/lib/listing-time-filter";
+import { MIN_ITEM_LEVEL_RANGE } from "@/lib/min-item-level";
+import {
+  ONLINE_STATUS_FILTER_OPTIONS,
+  OnlineStatus,
+  OnlineStatusSchema,
+} from "@/lib/online-status";
 import { cn } from "@/lib/utils";
 import { Separator } from "./ui/separator";
 
 export const AdvancedSettingsSchema = z.object({
-  minItemLevel: z.int().min(65).max(84).prefault(78),
+  minItemLevel: z
+    .int()
+    .min(MIN_ITEM_LEVEL_RANGE.min)
+    .max(MIN_ITEM_LEVEL_RANGE.max)
+    .prefault(78),
   includeCorrupted: z.boolean().prefault(true),
   listingTimeFilter: ListingTimeFilterSchema.prefault("3days"),
   onlineStatus: OnlineStatusSchema.prefault("available"),
@@ -75,7 +86,7 @@ const getMinimumItemLevelIcon: (iLvl: number) => React.ReactNode = (iLvl) => {
 
 const ListingTimeFilterSelector = React.memo<{
   value: ListingTimeFilter;
-  onChange: (value: string) => void;
+  onChange: (value: ListingTimeFilter) => void;
 }>(function ListingTimeFilterSelector({ value, onChange }) {
   return (
     <div className="space-y-2">
@@ -89,14 +100,12 @@ const ListingTimeFilterSelector = React.memo<{
         <SelectTrigger id="listing-time-filter">
           <SelectValue placeholder="Select time filter" />
         </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="1hour">Up to an hour ago</SelectItem>
-          <SelectItem value="3hours">Up to 3 hours ago</SelectItem>
-          <SelectItem value="12hours">Up to 12 hours ago</SelectItem>
-          <SelectItem value="1day">Up to a day ago</SelectItem>
-          <SelectItem value="3days">Up to 3 days ago</SelectItem>
-          <SelectItem value="1week">Up to a week ago</SelectItem>
-          <SelectItem value="any">Any time</SelectItem>
+        <SelectContent data-testid="listing-time-filter-content">
+          {LISTING_TIME_FILTER_OPTIONS.map((option) => (
+            <SelectItem key={option.value} value={option.value}>
+              {option.label}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
       <p className="text-muted-foreground text-xs">
@@ -135,24 +144,35 @@ export function AdvancedSettingsPanel({
   );
 
   const handleListingTimeFilterChange = React.useCallback(
-    (value: string) => {
+    (value: ListingTimeFilter) => {
       onSettingsChange((prev) => ({
         ...prev,
-        listingTimeFilter: value as ListingTimeFilter,
+        listingTimeFilter: value,
       }));
     },
     [onSettingsChange],
   );
 
-  const handleOnlineStatusChange = (value: string) => {
-    onSettingsChange({
-      ...settings,
-      onlineStatus: value as OnlineStatus,
-    });
-  };
+  const handleOnlineStatusChange = React.useCallback(
+    (value: OnlineStatus) => {
+      onSettingsChange((prev) => ({
+        ...prev,
+        onlineStatus: value,
+      }));
+    },
+    [onSettingsChange],
+  );
 
-  const dustValueLoss =
-    (84 - Math.min(Math.max(settings.minItemLevel, 65), 84)) * 5;
+  const dustValueLoss = React.useMemo(() => {
+    return (
+      (MIN_ITEM_LEVEL_RANGE.max -
+        Math.min(
+          Math.max(settings.minItemLevel, MIN_ITEM_LEVEL_RANGE.min),
+          MIN_ITEM_LEVEL_RANGE.max,
+        )) *
+      5
+    );
+  }, [settings.minItemLevel]);
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
@@ -189,8 +209,8 @@ export function AdvancedSettingsPanel({
               <div className="px-2">
                 <Slider
                   aria-labelledby="min-item-level"
-                  min={65}
-                  max={84}
+                  min={MIN_ITEM_LEVEL_RANGE.min}
+                  max={MIN_ITEM_LEVEL_RANGE.max}
                   step={1}
                   value={[settings.minItemLevel]}
                   onValueChange={handleMinItemLevelChange}
@@ -198,11 +218,24 @@ export function AdvancedSettingsPanel({
                 />
               </div>
               <div className="text-muted-foreground flex justify-between text-xs">
-                <span className="leading-none">65</span>
-                <span className="text-foreground leading-none font-semibold">
+                <span
+                  className="leading-none"
+                  data-testid="min-item-level-range-min"
+                >
+                  {MIN_ITEM_LEVEL_RANGE.min}
+                </span>
+                <span
+                  className="text-foreground leading-none font-semibold"
+                  data-testid="min-item-level-value"
+                >
                   {settings.minItemLevel}
                 </span>
-                <span className="leading-none">84</span>
+                <span
+                  className="leading-none"
+                  data-testid="min-item-level-range-max"
+                >
+                  {MIN_ITEM_LEVEL_RANGE.max}
+                </span>
               </div>
               <div className="text-muted-foreground text-xs">
                 Search will only include items with{" "}
@@ -265,16 +298,12 @@ export function AdvancedSettingsPanel({
                 <SelectTrigger id="online-status-filter">
                   <SelectValue placeholder="Select online status" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="available">
-                    Instant Buyout & In Person
-                  </SelectItem>
-                  <SelectItem value="securable">Instant Buyout</SelectItem>
-                  <SelectItem value="onlineleague">
-                    In Person (Online In League)
-                  </SelectItem>
-                  <SelectItem value="online">In Person (Online)</SelectItem>
-                  <SelectItem value="any">Any (Possibly Offline)</SelectItem>
+                <SelectContent data-testid="online-status-filter-content">
+                  {ONLINE_STATUS_FILTER_OPTIONS.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               <p className="text-muted-foreground text-xs">
@@ -298,7 +327,10 @@ export function AdvancedSettingsPanel({
                 onSettingsChange(DEFAULT_ADVANCED_SETTINGS);
               }}
               className="flex-1"
-              disabled={equal(settings, DEFAULT_ADVANCED_SETTINGS)}
+              disabled={advancedSettingsDeepEqual(
+                settings,
+                DEFAULT_ADVANCED_SETTINGS,
+              )}
             >
               Reset
             </Button>

@@ -9,6 +9,44 @@ export interface TradeLinkSettings {
   onlineStatus?: OnlineStatus;
 }
 
+/**
+ * Type representing the parsed trade link payload structure
+ */
+export type TradeLinkPayload = {
+  query: {
+    status: {
+      option: string;
+    };
+    name: string;
+    stats: Array<{
+      type: string;
+      filters: Array<unknown>;
+    }>;
+    filters: {
+      trade_filters: {
+        filters: {
+          indexed?: {
+            option: string;
+          };
+        };
+      };
+      misc_filters: {
+        filters: {
+          ilvl?: {
+            min: number;
+          };
+          corrupted?: {
+            option: boolean;
+          };
+        };
+      };
+    };
+  };
+  sort: {
+    price: string;
+  };
+};
+
 export const createTradeLink = (
   name: string,
   league: League,
