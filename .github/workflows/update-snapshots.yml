@@ -1,8 +1,10 @@
 name: Update VRT Snapshots
 
 on:
+  # Trigger when a new comment is created on any issue or PR
   issue_comment:
     types: [created]
+  # Allow manual trigger from GitHub Actions UI
   workflow_dispatch:
     inputs:
       branch:
@@ -12,11 +14,28 @@ on:
 
 jobs:
   update:
+    # Complex conditional to determine when the job should run:
+    # 1. Allow manual trigger (workflow_dispatch)
+    # 2. For issue_comment events:
+    #    - Only trigger on PRs (not regular issues)
+    #    - Only if comment contains "/update-snapshots" command
+    #    - Only if author has trusted association (OWNER, MEMBER, COLLABORATOR)
     if: |
       github.event_name == 'workflow_dispatch' ||
-      (github.event.issue.pull_request && contains(github.event.comment.body, '/update-snapshots'))
+      (
+        github.event.issue.pull_request &&
+        contains(github.event.comment.body, '/update-snapshots') &&
+        (
+          github.event.comment.author_association == 'OWNER' ||
+          github.event.comment.author_association == 'MEMBER' ||
+          github.event.comment.author_association == 'COLLABORATOR'
+        )
+      )
     runs-on: ubuntu-latest
     steps:
+      # Resolve PR head branch details when trigger is an issue_comment
+      # This is necessary because github.head_ref and github.base_ref are not available
+      # in the context of issue_comment events
       - name: Resolve PR head branch
         if: github.event_name == 'issue_comment'
         id: pr_head
@@ -32,6 +51,9 @@ jobs:
             core.setOutput('repo', pr.head.repo.full_name);
             core.setOutput('ref', pr.head.ref);
 
+      # Checkout the appropriate repository and branch:
+      # - For manual trigger: Use specified branch or default branch
+      # - For PR comment trigger: Use the PR's head branch from the resolved details
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
