@@ -48,6 +48,8 @@ export default defineConfig({
         colorScheme: "dark",
       },
       retries: 0,
+      snapshotPathTemplate:
+        "src/tests/vrt/__snapshots__/{projectName}/{testFilePath}/{arg}{ext}",
     },
     // { name: "firefox", use: { ...devices["Desktop Firefox"] } },
     // { name: "webkit", use: { ...devices["Desktop Safari"] } },

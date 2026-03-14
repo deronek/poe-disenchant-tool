@@ -1,0 +1,48 @@
+name: Visual Regression Test
+
+on:
+  pull_request:
+    branches: [main, master]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  vrt:
+    name: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install Playwright Browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Run VRT (Desktop)
+        run: pnpm test:vrt
+
+      - name: Upload VRT Report Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-vrt-${{ github.run_id }}
+          path: playwright-report/
+          retention-days: 7
