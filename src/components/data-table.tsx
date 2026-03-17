@@ -228,7 +228,7 @@ export function DataTable<TData extends Item, TValue>({
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                   className={
-                    "data-[state=selected]:bg-muted/40 even:bg-background bg-background-200 h-11 data-[state=selected]:opacity-95"
+                    "data-[state=selected]:bg-muted/40 even:bg-background bg-background-200 h-11 transition-none data-[state=selected]:opacity-95"
                   }
                 >
                   {row.getVisibleCells().map((cell) => {
