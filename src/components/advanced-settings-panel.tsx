@@ -33,12 +33,12 @@ import {
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import {
-  LISTING_TIME_FILTER_OPTIONS,
+  LISTING_TIME_LABELS,
   ListingTimeFilterSchema,
 } from "@/lib/listing-time-filter";
 import { MIN_ITEM_LEVEL_RANGE } from "@/lib/min-item-level";
 import {
-  ONLINE_STATUS_FILTER_OPTIONS,
+  ONLINE_STATUS_LABELS,
   OnlineStatus,
   OnlineStatusSchema,
 } from "@/lib/online-status";
@@ -101,9 +101,9 @@ const ListingTimeFilterSelector = React.memo<{
           <SelectValue placeholder="Select time filter" />
         </SelectTrigger>
         <SelectContent data-testid="listing-time-filter-content">
-          {LISTING_TIME_FILTER_OPTIONS.map((option) => (
-            <SelectItem key={option.value} value={option.value}>
-              {option.label}
+          {ListingTimeFilterSchema.options.map((value) => (
+            <SelectItem key={value} value={value}>
+              {LISTING_TIME_LABELS[value]}
             </SelectItem>
           ))}
         </SelectContent>
@@ -299,9 +299,9 @@ export function AdvancedSettingsPanel({
                   <SelectValue placeholder="Select online status" />
                 </SelectTrigger>
                 <SelectContent data-testid="online-status-filter-content">
-                  {ONLINE_STATUS_FILTER_OPTIONS.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
+                  {OnlineStatusSchema.options.map((value) => (
+                    <SelectItem key={value} value={value}>
+                      {ONLINE_STATUS_LABELS[value]}
                     </SelectItem>
                   ))}
                 </SelectContent>

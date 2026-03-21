@@ -1,13 +1,10 @@
 import { DEFAULT_ADVANCED_SETTINGS } from "@/components/advanced-settings-panel";
 import {
-  LISTING_TIME_FILTER_OPTIONS,
   LISTING_TIME_LABELS,
+  ListingTimeFilterSchema,
 } from "@/lib/listing-time-filter";
 import { MIN_ITEM_LEVEL_RANGE } from "@/lib/min-item-level";
-import {
-  ONLINE_STATUS_FILTER_OPTIONS,
-  ONLINE_STATUS_LABELS,
-} from "@/lib/online-status";
+import { ONLINE_STATUS_LABELS, OnlineStatusSchema } from "@/lib/online-status";
 import { expect, test } from "../../fixtures";
 import { PoEDisenchantPage } from "../../poe-page";
 
@@ -167,15 +164,15 @@ test.describe("Listing Time Filter", () => {
     }
   });
 
-  LISTING_TIME_FILTER_OPTIONS.forEach((option) => {
-    test(`should select listing time filter option: ${option.label}`, async ({
+  ListingTimeFilterSchema.options.forEach((value) => {
+    test(`should select listing time filter option: ${LISTING_TIME_LABELS[value]}`, async ({
       poePage,
     }) => {
       await poePage.openAdvancedSettings();
-      await poePage.selectListingTimeFilter(option.value);
-      await poePage.verifyListingTimeFilter(option.value);
+      await poePage.selectListingTimeFilter(value);
+      await poePage.verifyListingTimeFilter(value);
       await poePage.verifyTradeLinkSettings({
-        listingTimeFilter: option.value,
+        listingTimeFilter: value,
       });
     });
   });
@@ -208,15 +205,15 @@ test.describe("Online Status Filter", () => {
     }
   });
 
-  ONLINE_STATUS_FILTER_OPTIONS.forEach((option) => {
-    test(`should select online status filter option: ${option.label}`, async ({
+  OnlineStatusSchema.options.forEach((value) => {
+    test(`should select online status filter option: ${ONLINE_STATUS_LABELS[value]}`, async ({
       poePage,
     }) => {
       await poePage.openAdvancedSettings();
-      await poePage.selectOnlineStatusFilter(option.value);
-      await poePage.verifyOnlineStatusFilter(option.value);
+      await poePage.selectOnlineStatusFilter(value);
+      await poePage.verifyOnlineStatusFilter(value);
       await poePage.verifyTradeLinkSettings({
-        onlineStatus: option.value,
+        onlineStatus: value,
       });
     });
   });
