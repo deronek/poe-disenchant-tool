@@ -62,7 +62,7 @@ test.describe("Minimum Item Level Slider", () => {
     await poePage.verifyMinItemLevel(DEFAULT_ADVANCED_SETTINGS.minItemLevel);
   });
 
-  test("should display slider range labels with min anx max values", async ({
+  test("should display slider range labels with min and max values", async ({
     poePage,
   }) => {
     await poePage.openAdvancedSettings();
