@@ -1456,7 +1456,7 @@ export class PoEDisenchantPage {
   async verifyListingTimeFilter(value: ListingTimeFilter): Promise<void> {
     const label = LISTING_TIME_LABELS[value];
     const currentValue = await this.getListingTimeFilterValue();
-    expect(currentValue).toMatch(new RegExp(label, "i"));
+    expect(currentValue).toContain(label);
   }
 
   // Online Status Filter
