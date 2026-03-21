@@ -1448,7 +1448,7 @@ export class PoEDisenchantPage {
     await this.listingTimeFilterTrigger.click();
     await this.page.waitForTimeout(300);
 
-    const option = this.page.getByRole("option", { name: label });
+    const option = this.page.getByRole("option", { name: label, exact: true });
     await option.scrollIntoViewIfNeeded();
     await option.click();
   }
