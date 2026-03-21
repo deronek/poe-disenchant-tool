@@ -101,9 +101,9 @@ const ListingTimeFilterSelector = React.memo<{
           <SelectValue placeholder="Select time filter" />
         </SelectTrigger>
         <SelectContent data-testid="listing-time-filter-content">
-          {ListingTimeFilterSchema.options.map((value) => (
-            <SelectItem key={value} value={value}>
-              {LISTING_TIME_LABELS[value]}
+          {ListingTimeFilterSchema.options.map((option) => (
+            <SelectItem key={option} value={option}>
+              {LISTING_TIME_LABELS[option]}
             </SelectItem>
           ))}
         </SelectContent>
@@ -299,9 +299,9 @@ export function AdvancedSettingsPanel({
                   <SelectValue placeholder="Select online status" />
                 </SelectTrigger>
                 <SelectContent data-testid="online-status-filter-content">
-                  {OnlineStatusSchema.options.map((value) => (
-                    <SelectItem key={value} value={value}>
-                      {ONLINE_STATUS_LABELS[value]}
+                  {OnlineStatusSchema.options.map((option) => (
+                    <SelectItem key={option} value={option}>
+                      {ONLINE_STATUS_LABELS[option]}
                     </SelectItem>
                   ))}
                 </SelectContent>
