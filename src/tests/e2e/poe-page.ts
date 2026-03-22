@@ -126,7 +126,8 @@ export class PoEDisenchantPage {
     ) as Record<string, number>;
 
     const items: TestItem[] = [];
-    for (const row of await rows.all()) {
+    for (let i = 0; i < count; i++) {
+      const row = rows.nth(i);
       const cells = row.locator("td");
 
       const { name, baseType } = await cells

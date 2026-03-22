@@ -77,7 +77,7 @@ test.describe("Row Selection & Marking", () => {
 
 test.describe("Trade Link Functionality", () => {
   test("should generate valid PoE trade links", async ({ poePage }) => {
-    const [item] = await poePage.getTestItems();
+    const [item] = await poePage.getTestItems(1);
     const link = await poePage.getTradeLink(item.name);
 
     expect(link).toContain("https://www.pathofexile.com/trade/search/");
@@ -85,7 +85,7 @@ test.describe("Trade Link Functionality", () => {
   });
 
   test("should open trade link in new tab", async ({ poePage, context }) => {
-    const [item] = await poePage.getTestItems();
+    const [item] = await poePage.getTestItems(1);
     expect(item).toBeTruthy();
 
     const href = await poePage.getTradeLink(item.name);
