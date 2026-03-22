@@ -1,7 +1,15 @@
-import { expect, Locator, Page } from "@playwright/test";
+import type { ListingTimeFilter } from "@/lib/listing-time-filter";
+import type { OnlineStatus } from "@/lib/online-status";
+import type { TradeLinkPayload } from "@/lib/tradeLink";
+import type { BrowserContext, Locator, Page } from "@playwright/test";
+import { expect } from "@playwright/test";
 
 import type { TestItem, Theme, ThemeOption } from "./types";
+import { DEFAULT_ADVANCED_SETTINGS } from "@/components/advanced-settings-panel";
 import { getLeagueName, League } from "@/lib/leagues";
+import { LISTING_TIME_LABELS } from "@/lib/listing-time-filter";
+import { MIN_ITEM_LEVEL_RANGE } from "@/lib/min-item-level";
+import { ONLINE_STATUS_LABELS } from "@/lib/online-status";
 
 export class PoEDisenchantPage {
   readonly page: Page;
@@ -118,7 +126,8 @@ export class PoEDisenchantPage {
     ) as Record<string, number>;
 
     const items: TestItem[] = [];
-    for (const row of await rows.all()) {
+    for (let i = 0; i < count; i++) {
+      const row = rows.nth(i);
       const cells = row.locator("td");
 
       const { name, baseType } = await cells
@@ -233,6 +242,78 @@ export class PoEDisenchantPage {
   // Trade Links
   // ---------------------------
 
+  /**
+   * Parses a trade link to extract its query payload
+   */
+  async parseTradeLinkPayload(tradeLink: string): Promise<TradeLinkPayload> {
+    const queryIndex = tradeLink.indexOf("?q=");
+    if (queryIndex === -1)
+      throw new Error("Invalid trade link format - missing query parameter");
+    const payload = decodeURIComponent(tradeLink.slice(queryIndex + 3));
+    try {
+      return JSON.parse(payload);
+    } catch (error) {
+      throw new Error(
+        `Failed to parse trade link payload: ${error instanceof Error ? error.message : String(error)}`,
+      );
+    }
+  }
+
+  /**
+   * Gets the first item's trade link and parses its payload
+   */
+  async getFirstTradeLinkPayload(): Promise<TradeLinkPayload> {
+    const items = await this.getTestItems(1);
+    const tradeLink = await this.getTradeLink(items[0].name);
+    return this.parseTradeLinkPayload(tradeLink);
+  }
+
+  /**
+   * Verifies that trade link settings match the expected values
+   */
+  async verifyTradeLinkSettings(expectedSettings: {
+    minItemLevel?: number;
+    includeCorrupted?: boolean;
+    listingTimeFilter?: ListingTimeFilter;
+    onlineStatus?: OnlineStatus;
+  }): Promise<void> {
+    const payload = await this.getFirstTradeLinkPayload();
+
+    if (expectedSettings.minItemLevel !== undefined) {
+      const ilvl = payload.query.filters.misc_filters.filters.ilvl;
+      expect(ilvl).toBeDefined();
+      expect(ilvl?.min).toBe(expectedSettings.minItemLevel);
+    }
+
+    if (expectedSettings.includeCorrupted !== undefined) {
+      if (expectedSettings.includeCorrupted) {
+        expect(
+          payload.query.filters.misc_filters.filters.corrupted,
+        ).toBeUndefined();
+      } else {
+        expect(
+          payload.query.filters.misc_filters.filters.corrupted!.option,
+        ).toBe(false);
+      }
+    }
+
+    if (expectedSettings.listingTimeFilter !== undefined) {
+      if (expectedSettings.listingTimeFilter === "any") {
+        expect(
+          payload.query.filters.trade_filters.filters.indexed,
+        ).toBeUndefined();
+      } else {
+        const indexed = payload.query.filters.trade_filters.filters.indexed;
+        expect(indexed).toBeDefined();
+        expect(indexed?.option).toBe(expectedSettings.listingTimeFilter);
+      }
+    }
+
+    if (expectedSettings.onlineStatus !== undefined) {
+      expect(payload.query.status.option).toBe(expectedSettings.onlineStatus);
+    }
+  }
+
   async getTradeLink(itemName: string): Promise<string> {
     const row = this.page.locator("tr").filter({ hasText: itemName });
     const link = row
@@ -257,10 +338,7 @@ export class PoEDisenchantPage {
    * Opens the trade link in a new tab and returns the opened Page.
    * Uses scrolling + visible wait, then clicks.
    */
-  async openTradeLinkInNewTab(
-    itemName: string,
-    context: import("@playwright/test").BrowserContext,
-  ) {
+  async openTradeLinkInNewTab(itemName: string, context: BrowserContext) {
     const a = this.getTradeLinkLocator(itemName);
 
     await a.scrollIntoViewIfNeeded();
@@ -1242,5 +1320,205 @@ export class PoEDisenchantPage {
     });
 
     expect(values).toEqual(sortedValues);
+  }
+
+  // ---------------------------
+  // Advanced Settings Panel
+  // ---------------------------
+
+  get advancedSettingsTrigger() {
+    return this.page.getByRole("button", { name: /trade/i }).first();
+  }
+
+  get advancedSettingsPopover() {
+    return this.page
+      .locator('[role="dialog"]')
+      .filter({ hasText: /trade settings/i });
+  }
+
+  get advancedSettingsCloseButton() {
+    return this.advancedSettingsPopover.getByRole("button", { name: "Close" });
+  }
+
+  get advancedSettingsResetButton() {
+    return this.advancedSettingsPopover.getByRole("button", { name: "Reset" });
+  }
+
+  async openAdvancedSettings(): Promise<void> {
+    // Position the trigger button at the top of viewport to show full popover content
+    await this.advancedSettingsTrigger.evaluate((el) =>
+      el.scrollIntoView({ block: "start", behavior: "instant" }),
+    );
+    await this.advancedSettingsTrigger.click();
+    await expect(this.advancedSettingsPopover).toBeVisible();
+  }
+
+  async closeAdvancedSettings(): Promise<void> {
+    await this.advancedSettingsCloseButton.click();
+    await expect(this.advancedSettingsPopover).not.toBeVisible();
+  }
+
+  // Minimum Item Level Slider
+  get minItemLevelSlider() {
+    return this.page.getByLabel("Minimum Item Level", { exact: true });
+  }
+
+  get minItemLevelValue() {
+    return this.advancedSettingsPopover.getByTestId("min-item-level-value");
+  }
+
+  get minItemLevelRangeMin() {
+    return this.advancedSettingsPopover.getByTestId("min-item-level-range-min");
+  }
+
+  get minItemLevelRangeMax() {
+    return this.advancedSettingsPopover.getByTestId("min-item-level-range-max");
+  }
+
+  async getMinItemLevel(): Promise<number> {
+    const valueText = await this.minItemLevelValue.innerText();
+    return parseInt(valueText.trim(), 10);
+  }
+
+  async setMinItemLevel(value: number): Promise<void> {
+    const min = MIN_ITEM_LEVEL_RANGE.min;
+    const max = MIN_ITEM_LEVEL_RANGE.max;
+    if (value < min || value > max) {
+      throw new Error(`Min item level must be between ${min} and ${max}`);
+    }
+
+    const slider = this.minItemLevelSlider;
+    const boundingBox = (await slider.boundingBox())!;
+    const percent = ((value - min) / (max - min)) * 100;
+    const clickX = Math.round((percent * boundingBox.width) / 100);
+    const clickY = boundingBox.height / 2;
+
+    await slider.focus();
+    await slider.hover({ force: true, position: { x: 0, y: clickY } });
+    await this.page.mouse.down();
+    await slider.hover({ force: true, position: { x: clickX, y: clickY } });
+    await this.page.mouse.up();
+  }
+
+  async verifyMinItemLevel(value: number): Promise<void> {
+    const currentValue = await this.getMinItemLevel();
+    expect(currentValue).toBe(value);
+  }
+
+  // Include Corrupted Items Checkbox
+  get includeCorruptedCheckbox() {
+    return this.page.getByRole("checkbox", {
+      name: /include corrupted items/i,
+    });
+  }
+
+  async isIncludeCorruptedChecked(): Promise<boolean> {
+    return await this.includeCorruptedCheckbox.isChecked();
+  }
+
+  async setIncludeCorrupted(checked: boolean): Promise<void> {
+    const isChecked = await this.isIncludeCorruptedChecked();
+    if (isChecked !== checked) {
+      await this.includeCorruptedCheckbox.click();
+    }
+  }
+
+  async verifyIncludeCorrupted(checked: boolean): Promise<void> {
+    const isChecked = await this.isIncludeCorruptedChecked();
+    expect(isChecked).toBe(checked);
+  }
+
+  // Listing Time Filter
+  get listingTimeFilterTrigger() {
+    return this.page.locator("#listing-time-filter");
+  }
+
+  get listingTimeFilterContent() {
+    return this.page.getByTestId("listing-time-filter-content");
+  }
+
+  async getListingTimeFilterValue(): Promise<string> {
+    const valueText = await this.listingTimeFilterTrigger
+      .locator('[data-slot="select-value"]')
+      .innerText();
+    return valueText.trim();
+  }
+
+  async selectListingTimeFilter(value: ListingTimeFilter): Promise<void> {
+    const label = LISTING_TIME_LABELS[value];
+    await this.listingTimeFilterTrigger.click();
+    await this.page.waitForTimeout(300);
+
+    const option = this.page.getByRole("option", { name: label, exact: true });
+    await option.scrollIntoViewIfNeeded();
+    await option.click();
+  }
+
+  async verifyListingTimeFilter(value: ListingTimeFilter): Promise<void> {
+    const label = LISTING_TIME_LABELS[value];
+    const currentValue = await this.getListingTimeFilterValue();
+    expect(currentValue).toContain(label);
+  }
+
+  // Online Status Filter
+  get onlineStatusFilterTrigger() {
+    return this.page.locator("#online-status-filter");
+  }
+
+  get onlineStatusFilterContent() {
+    return this.page.getByTestId("online-status-filter-content");
+  }
+
+  async getOnlineStatusFilterValue(): Promise<string> {
+    const valueText = await this.onlineStatusFilterTrigger
+      .locator('[data-slot="select-value"]')
+      .innerText();
+    return valueText.trim();
+  }
+
+  async selectOnlineStatusFilter(value: OnlineStatus): Promise<void> {
+    const label = ONLINE_STATUS_LABELS[value];
+    await this.onlineStatusFilterTrigger.click();
+    await this.page.waitForTimeout(300);
+
+    const option = this.page.getByRole("option", {
+      name: label,
+      exact: true,
+    });
+    await option.scrollIntoViewIfNeeded();
+    await option.click();
+  }
+
+  async verifyOnlineStatusFilter(value: OnlineStatus): Promise<void> {
+    const label = ONLINE_STATUS_LABELS[value];
+    const currentValue = await this.getOnlineStatusFilterValue();
+    expect(currentValue).toContain(label);
+  }
+
+  // Reset Button State
+  async isResetButtonDisabled(): Promise<boolean> {
+    return await this.advancedSettingsResetButton.isDisabled();
+  }
+
+  async verifyResetButtonDisabled(disabled: boolean): Promise<void> {
+    const isDisabled = await this.isResetButtonDisabled();
+    expect(isDisabled).toBe(disabled);
+  }
+
+  async resetAdvancedSettings(): Promise<void> {
+    await this.advancedSettingsResetButton.scrollIntoViewIfNeeded();
+    await this.advancedSettingsResetButton.click();
+  }
+
+  async verifyAllDefaultSettings(): Promise<void> {
+    await this.verifyMinItemLevel(DEFAULT_ADVANCED_SETTINGS.minItemLevel);
+    await this.verifyIncludeCorrupted(
+      DEFAULT_ADVANCED_SETTINGS.includeCorrupted,
+    );
+    await this.verifyListingTimeFilter(
+      DEFAULT_ADVANCED_SETTINGS.listingTimeFilter,
+    );
+    await this.verifyOnlineStatusFilter(DEFAULT_ADVANCED_SETTINGS.onlineStatus);
+    await this.verifyResetButtonDisabled(true);
   }
 }

@@ -30,8 +30,8 @@ export function LowStockInfo({
           </span>
         </div>
         <p className="mt-1 leading-relaxed">
-          <strong>{name}</strong> is scarce on the market. No online sellers
-          might be available.
+          <strong>{name}</strong> is scarce on the market. Items might not be
+          available or price might not be accurate.
         </p>
         <p className="text-muted-foreground text-xs leading-relaxed">
           This item is among the lowest 10% in the listing count (10th
