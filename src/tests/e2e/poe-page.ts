@@ -280,9 +280,9 @@ export class PoEDisenchantPage {
     const payload = await this.getFirstTradeLinkPayload();
 
     if (expectedSettings.minItemLevel !== undefined) {
-      expect(payload.query.filters.misc_filters.filters.ilvl!.min).toBe(
-        expectedSettings.minItemLevel,
-      );
+      const ilvl = payload.query.filters.misc_filters.filters.ilvl;
+      expect(ilvl).toBeDefined();
+      expect(ilvl?.min).toBe(expectedSettings.minItemLevel);
     }
 
     if (expectedSettings.includeCorrupted !== undefined) {
@@ -303,9 +303,9 @@ export class PoEDisenchantPage {
           payload.query.filters.trade_filters.filters.indexed,
         ).toBeUndefined();
       } else {
-        expect(
-          payload.query.filters.trade_filters.filters.indexed!.option,
-        ).toBe(expectedSettings.listingTimeFilter);
+        const indexed = payload.query.filters.trade_filters.filters.indexed;
+        expect(indexed).toBeDefined();
+        expect(indexed?.option).toBe(expectedSettings.listingTimeFilter);
       }
     }
 
