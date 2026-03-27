@@ -3,10 +3,10 @@ import type { OnlineStatus } from "./online-status";
 import { League, LEAGUES } from "./leagues";
 
 export interface TradeLinkSettings {
-  minItemLevel?: number;
-  includeCorrupted?: boolean;
-  listingTimeFilter?: ListingTimeFilter;
-  onlineStatus?: OnlineStatus;
+  minItemLevel: number;
+  includeCorrupted: boolean;
+  listingTimeFilter: ListingTimeFilter;
+  onlineStatus: OnlineStatus;
 }
 
 /**
@@ -50,12 +50,12 @@ export type TradeLinkPayload = {
 export const createTradeLink = (
   name: string,
   league: League,
-  settings?: TradeLinkSettings,
+  settings: TradeLinkSettings,
 ) => {
   const payload = {
     query: {
       status: {
-        option: settings?.onlineStatus || "available",
+        option: settings.onlineStatus,
       },
       name: name,
       stats: [
@@ -67,22 +67,21 @@ export const createTradeLink = (
       filters: {
         trade_filters: {
           filters: {
-            ...(settings?.listingTimeFilter &&
-              settings.listingTimeFilter !== "any" && {
-                indexed: {
-                  option: settings.listingTimeFilter,
-                },
-              }),
+            ...(settings.listingTimeFilter !== "any" && {
+              indexed: {
+                option: settings.listingTimeFilter,
+              },
+            }),
           },
         },
         misc_filters: {
           filters: {
-            ...(settings?.minItemLevel !== undefined && {
+            ...(settings.minItemLevel !== undefined && {
               ilvl: {
                 min: settings.minItemLevel,
               },
             }),
-            ...(settings?.includeCorrupted === false && {
+            ...(settings.includeCorrupted === false && {
               corrupted: {
                 option: false,
               },
