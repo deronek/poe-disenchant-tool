@@ -32,7 +32,7 @@ export type TradeLinkPayload = {
       };
       misc_filters: {
         filters: {
-          ilvl?: {
+          ilvl: {
             min: number;
           };
           corrupted?: {
@@ -52,10 +52,13 @@ export const createTradeLink = (
   league: League,
   settings: TradeLinkSettings,
 ) => {
+  const { onlineStatus, listingTimeFilter, minItemLevel, includeCorrupted } =
+    settings;
+
   const payload = {
     query: {
       status: {
-        option: settings.onlineStatus,
+        option: onlineStatus,
       },
       name: name,
       stats: [
@@ -67,21 +70,19 @@ export const createTradeLink = (
       filters: {
         trade_filters: {
           filters: {
-            ...(settings.listingTimeFilter !== "any" && {
+            ...(listingTimeFilter !== "any" && {
               indexed: {
-                option: settings.listingTimeFilter,
+                option: listingTimeFilter,
               },
             }),
           },
         },
         misc_filters: {
           filters: {
-            ...(settings.minItemLevel !== undefined && {
-              ilvl: {
-                min: settings.minItemLevel,
-              },
-            }),
-            ...(settings.includeCorrupted === false && {
+            ilvl: {
+              min: minItemLevel,
+            },
+            ...(includeCorrupted === false && {
               corrupted: {
                 option: false,
               },

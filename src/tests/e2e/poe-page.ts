@@ -281,8 +281,7 @@ export class PoEDisenchantPage {
 
     if (expectedSettings.minItemLevel !== undefined) {
       const ilvl = payload.query.filters.misc_filters.filters.ilvl;
-      expect(ilvl).toBeDefined();
-      expect(ilvl?.min).toBe(expectedSettings.minItemLevel);
+      expect(ilvl.min).toBe(expectedSettings.minItemLevel);
     }
 
     if (expectedSettings.includeCorrupted !== undefined) {
