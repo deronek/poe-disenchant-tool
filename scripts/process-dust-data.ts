@@ -9,12 +9,12 @@ import { z } from "zod";
 
 import { calculateDustValueFull, Item } from "@/lib/dust";
 import { calculateGoldCost } from "@/lib/gold";
-import { ITEMS_TO_IGNORE } from "@/lib/itemData/ignore-list";
-import data from "../src/lib/dust/poe-dust-original.js";
+import { ITEMS_TO_IGNORE } from "@/lib/item-data/ignore-list";
+import data from "../data/dust/poe-dust-original.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const outputJsPath = path.join(__dirname, "../src/lib/dust/poe-dust.js");
+const outputJsPath = path.join(__dirname, "../data/dust/poe-dust.js");
 
 const InputItemSchema = z.strictObject({
   name: z.string().trim().min(1),

@@ -1,8 +1,8 @@
 import fs from "fs";
 import path from "path";
 
-import poeDust from "../src/lib/dust/poe-dust-original";
-import { ITEMS_TO_IGNORE } from "../src/lib/itemData/ignore-list";
+import poeDust from "../data/dust/poe-dust-original";
+import { ITEMS_TO_IGNORE } from "../src/lib/item-data/ignore-list";
 
 interface ItemDust {
   name: string;
@@ -11,8 +11,7 @@ interface ItemDust {
 
 const scrapedPath = path.join(
   process.cwd(),
-  "src",
-  "lib",
+  "data",
   "dust",
   "poedb_dust_values.json",
 );

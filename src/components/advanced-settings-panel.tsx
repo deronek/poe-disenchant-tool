@@ -1,5 +1,5 @@
 import type { CheckedState } from "@/components/ui/checkbox";
-import type { ListingTimeFilter } from "@/lib/listing-time-filter";
+import type { ListingTimeFilter } from "@/lib/filters";
 import * as React from "react";
 import { zx } from "@traversable/zod";
 import {
@@ -35,13 +35,11 @@ import { Slider } from "@/components/ui/slider";
 import {
   LISTING_TIME_LABELS,
   ListingTimeFilterSchema,
-} from "@/lib/listing-time-filter";
-import { MIN_ITEM_LEVEL_RANGE } from "@/lib/min-item-level";
-import {
+  MIN_ITEM_LEVEL_RANGE,
   ONLINE_STATUS_LABELS,
   OnlineStatus,
   OnlineStatusSchema,
-} from "@/lib/online-status";
+} from "@/lib/filters";
 import { cn } from "@/lib/utils";
 import { Separator } from "./ui/separator";
 

@@ -61,7 +61,7 @@ if (isDevelopment) {
   const loadData = (type: string): ItemOverviewResponse => {
     const filePath = path.join(
       process.cwd(),
-      "src/lib/prices/dev-data",
+      "data/prices/dev-data",
       `${type}.json`,
     );
 

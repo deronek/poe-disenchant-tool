@@ -3,7 +3,7 @@
 const fs = require("fs");
 const parse = require("csv-parse/sync").parse;
 
-const dustDir = "src/lib/dust";
+const dustDir = "data/dust";
 
 const inputCsvPath = `${dustDir}/poe-dust.csv`;
 const outputJsonPath = `${dustDir}/poe-dust.json`;

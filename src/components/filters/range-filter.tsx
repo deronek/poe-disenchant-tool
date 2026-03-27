@@ -1,5 +1,5 @@
-import type { Item } from "@/lib/itemData";
-import type { RangeFilterValue } from "@/lib/range-filter";
+import type { RangeFilterValue } from "@/lib/filters";
+import type { Item } from "@/lib/item-data";
 import type { Column } from "@tanstack/react-table";
 import { useMemo } from "react";
 
@@ -17,7 +17,7 @@ import {
   setFilterValue,
   updateLowerBound,
   updateUpperBound,
-} from "@/lib/range-filter";
+} from "@/lib/filters";
 import { cn } from "@/lib/utils";
 
 interface RangeFilterProps<TData> {

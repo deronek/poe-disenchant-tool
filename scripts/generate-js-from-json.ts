@@ -5,7 +5,7 @@
 
 import { writeFileSync } from "fs";
 
-import data from "../src/lib/dust/poe-dust-original.json";
+import data from "../data/dust/poe-dust-original.json";
 
 // Process data to omit fields which are to be generated during processing
 const processedData = data.map((item: any) => {
@@ -17,6 +17,6 @@ const processedData = data.map((item: any) => {
 const output = `const data = ${JSON.stringify(processedData, null, 2)};\nexport default data;\n`;
 
 // Write it to a JS file
-writeFileSync("./src/lib/dust/poe-dust-original.js", output, "utf8");
+writeFileSync("./data/dust/poe-dust-original.js", output, "utf8");
 
 console.log("✅ poe-dust-original.js generated successfully!");

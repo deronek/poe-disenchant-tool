@@ -1,3 +1,4 @@
+import type { ColumnId } from "@/components/data-table";
 import React from "react";
 import { Table } from "@tanstack/react-table";
 import {
@@ -8,10 +9,10 @@ import {
   Type,
 } from "lucide-react";
 
-import type { ColumnId } from "./columns";
-import { ChaosOrbIcon } from "@/components/chaos-orb-icon";
-import { DustIcon } from "@/components/dust-icon";
-import { GoldIcon } from "@/components/gold-icon";
+import { COLUMN_IDS } from "@/components/data-table";
+import { ChaosOrbIcon } from "@/components/icons/chaos-orb-icon";
+import { DustIcon } from "@/components/icons/dust-icon";
+import { GoldIcon } from "@/components/icons/gold-icon";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -20,7 +21,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { COLUMN_IDS } from "./columns";
 
 const AscendingSortIcon = () => (
   <ArrowUp className="h-4 w-4" aria-label="ascending" />

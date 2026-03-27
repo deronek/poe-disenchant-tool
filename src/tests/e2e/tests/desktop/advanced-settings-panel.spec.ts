@@ -2,9 +2,10 @@ import { DEFAULT_ADVANCED_SETTINGS } from "@/components/advanced-settings-panel"
 import {
   LISTING_TIME_LABELS,
   ListingTimeFilterSchema,
-} from "@/lib/listing-time-filter";
-import { MIN_ITEM_LEVEL_RANGE } from "@/lib/min-item-level";
-import { ONLINE_STATUS_LABELS, OnlineStatusSchema } from "@/lib/online-status";
+  MIN_ITEM_LEVEL_RANGE,
+  ONLINE_STATUS_LABELS,
+  OnlineStatusSchema,
+} from "@/lib/filters";
 import { expect, test } from "../../fixtures";
 import { PoEDisenchantPage } from "../../poe-page";
 

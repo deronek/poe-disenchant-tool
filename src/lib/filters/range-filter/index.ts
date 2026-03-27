@@ -13,6 +13,7 @@ export {
   resetFilter,
   hasMinFilter,
   hasMaxFilter,
+  rangeFilterFn,
 } from "./range-filter-logic";
 
 // Export transformation utilities

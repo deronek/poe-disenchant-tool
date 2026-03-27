@@ -1,4 +1,4 @@
-import type { Item } from "@/lib/itemData";
+import type { Item } from "@/lib/item-data";
 import { useEffect, useRef, useState } from "react";
 import { Table } from "@tanstack/react-table";
 
