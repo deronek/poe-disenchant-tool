@@ -13,8 +13,7 @@ import {
 import { ChevronDown } from "lucide-react";
 
 import { type AdvancedSettings } from "@/components/advanced-settings-panel";
-import { MobileCardLayout } from "@/components/mobile/mobile-card-layout";
-import { MobileToolbar } from "@/components/mobile/mobile-toolbar";
+import { MobileCardLayout, MobileToolbar } from "@/components/mobile";
 import { DataTableToolbar } from "@/components/toolbar";
 import {
   Table,
