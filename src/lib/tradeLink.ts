@@ -3,10 +3,10 @@ import type { OnlineStatus } from "./online-status";
 import { League, LEAGUES } from "./leagues";
 
 export interface TradeLinkSettings {
-  minItemLevel?: number;
-  includeCorrupted?: boolean;
-  listingTimeFilter?: ListingTimeFilter;
-  onlineStatus?: OnlineStatus;
+  minItemLevel: number;
+  includeCorrupted: boolean;
+  listingTimeFilter: ListingTimeFilter;
+  onlineStatus: OnlineStatus;
 }
 
 /**
@@ -32,7 +32,7 @@ export type TradeLinkPayload = {
       };
       misc_filters: {
         filters: {
-          ilvl?: {
+          ilvl: {
             min: number;
           };
           corrupted?: {
@@ -50,12 +50,15 @@ export type TradeLinkPayload = {
 export const createTradeLink = (
   name: string,
   league: League,
-  settings?: TradeLinkSettings,
+  settings: TradeLinkSettings,
 ) => {
+  const { onlineStatus, listingTimeFilter, minItemLevel, includeCorrupted } =
+    settings;
+
   const payload = {
     query: {
       status: {
-        option: settings?.onlineStatus || "available",
+        option: onlineStatus,
       },
       name: name,
       stats: [
@@ -67,22 +70,19 @@ export const createTradeLink = (
       filters: {
         trade_filters: {
           filters: {
-            ...(settings?.listingTimeFilter &&
-              settings.listingTimeFilter !== "any" && {
-                indexed: {
-                  option: settings.listingTimeFilter,
-                },
-              }),
+            ...(listingTimeFilter !== "any" && {
+              indexed: {
+                option: listingTimeFilter,
+              },
+            }),
           },
         },
         misc_filters: {
           filters: {
-            ...(settings?.minItemLevel !== undefined && {
-              ilvl: {
-                min: settings.minItemLevel,
-              },
-            }),
-            ...(settings?.includeCorrupted === false && {
+            ilvl: {
+              min: minItemLevel,
+            },
+            ...(includeCorrupted === false && {
               corrupted: {
                 option: false,
               },
