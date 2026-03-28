@@ -6,7 +6,7 @@ import { AdvancedSettingsPanel } from "@/components/advanced-settings-panel";
 import { ClearMarksButton } from "@/components/clear-marks-button";
 import { COLUMN_IDS } from "@/components/data-table";
 import { FilterChips, NameFilter, TabbedFilter } from "@/components/filters";
-import { MobileSortingControls } from "@/components/mobile/mobile-sorting-controls";
+import { MobileSortingControls } from "@/components/mobile";
 
 type MobileToolbarProps<TData extends Item> = {
   table: Table<TData>;

@@ -10,9 +10,7 @@ import {
 } from "lucide-react";
 
 import { COLUMN_IDS } from "@/components/data-table";
-import { ChaosOrbIcon } from "@/components/icons/chaos-orb-icon";
-import { DustIcon } from "@/components/icons/dust-icon";
-import { GoldIcon } from "@/components/icons/gold-icon";
+import { ChaosOrbIcon, DustIcon, GoldIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
