@@ -58,9 +58,12 @@ export function TabbedFilter<TData extends Item>({
   const goldHasMin = hasMinFilter(goldRange);
   const goldHasMax = hasMaxFilter(goldRange);
 
-  const isPriceFilterActive = priceHasMin || priceHasMax;
-  const isDustFilterActive = dustHasMin || dustHasMax;
-  const isGoldFilterActive = goldHasMin || goldHasMax;
+  const priceActiveCount = (priceHasMin ? 1 : 0) + (priceHasMax ? 1 : 0);
+  const dustActiveCount = (dustHasMin ? 1 : 0) + (dustHasMax ? 1 : 0);
+  const goldActiveCount = (goldHasMin ? 1 : 0) + (goldHasMax ? 1 : 0);
+  const isPriceFilterActive = priceActiveCount > 0;
+  const isDustFilterActive = dustActiveCount > 0;
+  const isGoldFilterActive = goldActiveCount > 0;
   const isFilterActive =
     isPriceFilterActive || isDustFilterActive || isGoldFilterActive;
   const numberOfActiveFilters =
@@ -152,8 +155,10 @@ export function TabbedFilter<TData extends Item>({
                   {isPriceFilterActive && (
                     <span
                       aria-hidden="true"
-                      className="bg-primary absolute left-full size-1.5 translate-x-1.5 -translate-y-1 rounded-full"
-                    />
+                      className="text-primary/80 dark:text-primary/90 absolute -top-1 left-full ml-1.5 text-[10px] leading-none font-bold"
+                    >
+                      {priceActiveCount}
+                    </span>
                   )}
                 </span>
               </TabsTrigger>
@@ -173,8 +178,10 @@ export function TabbedFilter<TData extends Item>({
                   {isDustFilterActive && (
                     <span
                       aria-hidden="true"
-                      className="bg-primary absolute left-full size-1.5 translate-x-1.5 -translate-y-1 rounded-full"
-                    />
+                      className="text-primary/80 dark:text-primary/90 absolute -top-1 left-full ml-1.5 text-[10px] leading-none font-bold"
+                    >
+                      {dustActiveCount}
+                    </span>
                   )}
                 </span>
               </TabsTrigger>
@@ -194,8 +201,10 @@ export function TabbedFilter<TData extends Item>({
                   {isGoldFilterActive && (
                     <span
                       aria-hidden="true"
-                      className="bg-primary absolute left-full size-1.5 translate-x-1.5 -translate-y-1 rounded-full"
-                    />
+                      className="text-primary/80 dark:text-primary/90 absolute -top-1 left-full ml-1.5 text-[10px] leading-none font-bold"
+                    >
+                      {goldActiveCount}
+                    </span>
                   )}
                 </span>
               </TabsTrigger>
