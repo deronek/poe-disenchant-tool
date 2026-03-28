@@ -1,8 +1,9 @@
-import type { Item } from "@/lib/itemData";
+import type { Item } from "@/lib/item-data";
 import type { Column } from "@tanstack/react-table";
 import { useState } from "react";
 import { ChevronDown, Filter } from "lucide-react";
 
+import { ChaosOrbIcon, DustIcon, GoldIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -14,11 +15,8 @@ import {
   getCurrentFilterValue,
   hasMaxFilter,
   hasMinFilter,
-} from "@/lib/range-filter";
+} from "@/lib/filters";
 import { cn } from "@/lib/utils";
-import { ChaosOrbIcon } from "../chaos-orb-icon";
-import { DustIcon } from "../dust-icon";
-import { GoldIcon } from "../gold-icon";
 import { RangeFilter } from "./range-filter";
 
 interface TabbedFilterProps<TData> {

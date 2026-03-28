@@ -1,9 +1,9 @@
-import type { RangeFilterValue } from "@/lib/range-filter";
+import type { RangeFilterValue } from "@/lib/filters";
 import type { Column } from "@tanstack/react-table";
 
 import { Badge } from "@/components/ui/badge";
 import { XButton } from "@/components/ui/x-button";
-import { hasMaxFilter, hasMinFilter } from "@/lib/range-filter";
+import { hasMaxFilter, hasMinFilter } from "@/lib/filters";
 import { useFilterStatus } from "./use-filter-status";
 
 export interface RangeFilterChipProps<TData> {

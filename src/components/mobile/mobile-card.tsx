@@ -1,11 +1,20 @@
 import type { AdvancedSettings } from "@/components/advanced-settings-panel";
-import type { Item } from "@/lib/itemData";
+import type { Item } from "@/lib/item-data";
 import type { League } from "@/lib/leagues";
 import * as React from "react";
 import { Row } from "@tanstack/react-table";
 import { ExternalLink, Info, Orbit, PackageMinus } from "lucide-react";
 
 import { advancedSettingsDeepEqual } from "@/components/advanced-settings-panel";
+import { COLUMN_IDS } from "@/components/data-table";
+import { ChaosOrbIcon, DustIcon, GoldIcon, Icon } from "@/components/icons";
+import {
+  CatalystInfo,
+  DustInfo,
+  GoldInfo,
+  ItemMarkingInfo,
+  LowStockInfo,
+} from "@/components/info-popovers";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -14,17 +23,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { createTradeLink } from "@/lib/tradeLink";
-import { CatalystInfo } from "./catalyst-info";
-import { ChaosOrbIcon } from "./chaos-orb-icon";
-import { COLUMN_IDS } from "./columns";
-import { DustIcon } from "./dust-icon";
-import { DustInfo } from "./dust-info";
-import { GoldIcon } from "./gold-icon";
-import { GoldInfo } from "./gold-info";
-import { Icon } from "./icon";
-import { ItemMarkingInfo } from "./item-marking-info";
-import { LowStockInfo } from "./low-stock-info";
+import { createTradeLink } from "@/lib/trade-link";
 
 // Compact number formatter for mobile cards
 const compactFormatterGlobal = new Intl.NumberFormat("en", {

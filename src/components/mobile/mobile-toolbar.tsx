@@ -1,12 +1,12 @@
 import type { AdvancedSettings } from "@/components/advanced-settings-panel";
-import type { Item } from "@/lib/itemData";
+import type { Item } from "@/lib/item-data";
 import { Table } from "@tanstack/react-table";
 
 import { AdvancedSettingsPanel } from "@/components/advanced-settings-panel";
+import { ClearMarksButton } from "@/components/clear-marks-button";
+import { COLUMN_IDS } from "@/components/data-table";
 import { FilterChips, NameFilter, TabbedFilter } from "@/components/filters";
-import { ClearMarksButton } from "./clear-marks-button";
-import { COLUMN_IDS } from "./columns";
-import { MobileSortingControls } from "./mobile-sorting-controls";
+import { MobileSortingControls } from "@/components/mobile";
 
 type MobileToolbarProps<TData extends Item> = {
   table: Table<TData>;

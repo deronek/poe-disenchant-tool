@@ -1,4 +1,4 @@
-import type { Item } from "@/lib/itemData";
+import type { Item } from "@/lib/item-data";
 import type { Column, Row } from "@tanstack/react-table";
 
 import {

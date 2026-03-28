@@ -1,8 +1,8 @@
-import type { Item } from "@/lib/itemData";
+import type { Item } from "@/lib/item-data";
 import { Table } from "@tanstack/react-table";
 
+import { AdvancedSettings } from "@/components/advanced-settings-panel";
 import { League } from "@/lib/leagues";
-import { AdvancedSettings } from "./advanced-settings-panel";
 import { MobileCard } from "./mobile-card";
 
 interface MobileCardLayoutProps<TData extends Item> {

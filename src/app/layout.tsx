@@ -5,7 +5,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import { CleanupOldLeagueMarks } from "@/components/cleanup-old-league-marks";
-import { DataTableStateProvider } from "@/components/data-table-state-context";
+import { DataTableStateProvider } from "@/components/data-table/data-table-state-context";
 import { ErrorHandler } from "@/components/error-handler";
 import { Footer } from "@/components/footer";
 import { HydrationMarker } from "@/components/hydration-marker";

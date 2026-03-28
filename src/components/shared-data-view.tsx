@@ -1,15 +1,14 @@
 "use client";
 
 import type { AdvancedSettings } from "@/components/advanced-settings-panel";
-import type { Item } from "@/lib/itemData";
+import type { Item } from "@/lib/item-data";
 import * as React from "react";
 
 import {
   AdvancedSettingsSchema,
   DEFAULT_ADVANCED_SETTINGS,
 } from "@/components/advanced-settings-panel";
-import { createColumns } from "@/components/columns";
-import { DataTable } from "@/components/data-table";
+import { createColumns, DataTable } from "@/components/data-table";
 import { League } from "@/lib/leagues";
 import { useLocalStorage } from "@/lib/use-local-storage";
 

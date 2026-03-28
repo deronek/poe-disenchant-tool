@@ -18,7 +18,7 @@ import {
   calculateTimeDifferences,
   formatAbsoluteTime,
   formatRelativeTime,
-} from "@/lib/dateUtils";
+} from "@/lib/date-utils";
 
 interface LastUpdatedProps {
   timestamp: Date;

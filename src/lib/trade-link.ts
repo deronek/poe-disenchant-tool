@@ -1,5 +1,5 @@
-import type { ListingTimeFilter } from "./listing-time-filter";
-import type { OnlineStatus } from "./online-status";
+import type { ListingTimeFilter } from "./filters/listing-time-filter";
+import type { OnlineStatus } from "./filters/online-status";
 import { League, LEAGUES } from "./leagues";
 
 export interface TradeLinkSettings {

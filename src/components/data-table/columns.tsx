@@ -1,4 +1,5 @@
-import type { Item } from "@/lib/itemData";
+import type { AdvancedSettings } from "@/components/advanced-settings-panel";
+import type { Item } from "@/lib/item-data";
 import * as React from "react";
 import {
   ColumnDef,
@@ -7,7 +8,21 @@ import {
 } from "@tanstack/react-table";
 import { ExternalLink, Info, PackageMinus } from "lucide-react";
 
-import type { AdvancedSettings } from "./advanced-settings-panel";
+import {
+  CatalystIcon,
+  ChaosOrbIcon,
+  DivineOrbIcon,
+  DustIcon,
+  GoldIcon,
+  Icon,
+} from "@/components/icons";
+import {
+  CatalystInfo,
+  DustInfo,
+  GoldInfo,
+  ItemMarkingInfo,
+  LowStockInfo,
+} from "@/components/info-popovers";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -16,20 +31,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { rangeFilterFn } from "@/lib/filters";
 import { League } from "@/lib/leagues";
-import { rangeFilterFn } from "@/lib/range-filter/range-filter-logic";
-import { createTradeLink } from "@/lib/tradeLink";
-import { CatalystIcon } from "./catalyst-icon";
-import { CatalystInfo } from "./catalyst-info";
-import { ChaosOrbIcon } from "./chaos-orb-icon";
-import { DivineOrbIcon } from "./divine-orb-icon";
-import { DustIcon } from "./dust-icon";
-import { DustInfo } from "./dust-info";
-import { GoldIcon } from "./gold-icon";
-import { GoldInfo } from "./gold-info";
-import { Icon } from "./icon";
-import { ItemMarkingInfo } from "./item-marking-info";
-import { LowStockInfo } from "./low-stock-info";
+import { createTradeLink } from "@/lib/trade-link";
 
 const DustValueHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
   React.memo(

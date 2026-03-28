@@ -1,4 +1,4 @@
-import type { Item } from "@/lib/itemData";
+import type { Item } from "@/lib/item-data";
 import * as React from "react";
 import {
   ColumnDef,
@@ -13,7 +13,7 @@ import {
 import { ChevronDown } from "lucide-react";
 
 import { type AdvancedSettings } from "@/components/advanced-settings-panel";
-import { MobileToolbar } from "@/components/mobile-toolbar";
+import { MobileCardLayout, MobileToolbar } from "@/components/mobile";
 import { DataTableToolbar } from "@/components/toolbar";
 import {
   Table,
@@ -26,8 +26,7 @@ import {
 import { League } from "@/lib/leagues";
 import { DataTablePagination } from "./data-table-pagination";
 import { useDataTableState } from "./data-table-state-context";
-import { MobileCardLayout } from "./mobile-card-layout";
-import { usePersistentRowSelection } from "./usePersistentRowSelection";
+import { usePersistentRowSelection } from "./use-persistent-row-selection";
 
 declare module "@tanstack/react-table" {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

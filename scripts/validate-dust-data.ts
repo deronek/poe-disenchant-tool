@@ -3,8 +3,8 @@
 
 import { z } from "zod";
 
+import data from "../data/dust/poe-dust.js";
 import { ItemDataSchema } from "../src/lib/dust";
-import data from "../src/lib/dust/poe-dust.js";
 
 try {
   const validatedData = ItemDataSchema.parse(data);

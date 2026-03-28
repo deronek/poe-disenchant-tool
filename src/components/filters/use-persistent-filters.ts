@@ -1,9 +1,9 @@
-import type { RangeFilterValue } from "@/lib/range-filter";
+import type { RangeFilterValue } from "@/lib/filters";
 import type { ColumnFiltersState } from "@tanstack/react-table";
 import * as React from "react";
 import { z } from "zod";
 
-import { COLUMN_IDS } from "@/components/columns";
+import { COLUMN_IDS } from "@/components/data-table/columns";
 import { useLocalStorage } from "@/lib/use-local-storage";
 
 const PersistedFiltersSchema = z.object({

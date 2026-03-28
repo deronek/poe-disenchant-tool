@@ -1,7 +1,7 @@
 import LastUpdatedClient from "@/components/last-updated";
 import { SharedDataView } from "@/components/shared-data-view";
 import { BASE_URL, getDescriptionWithLeague, TITLE } from "@/lib/constants";
-import { getItems } from "@/lib/itemData";
+import { getItems } from "@/lib/item-data";
 import { getLeagueDatePublished, getLeagueName, League } from "@/lib/leagues";
 
 interface LeagueContentServerProps {

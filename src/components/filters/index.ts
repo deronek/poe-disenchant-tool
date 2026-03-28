@@ -1,13 +1,10 @@
-export { TabbedFilter } from "./tabbed-filter";
+export { FilterChips } from "./filter-chips";
 export { NameFilter } from "./name-filter";
+export { NameFilterChip } from "./name-filter-chip";
 export { RangeFilter, RangeFilterStatus } from "./range-filter";
 export {
   RangeFilterChip,
   type RangeFilterChipProps,
 } from "./range-filter-chip";
-export { FilterChips } from "./filter-chips";
-export { NameFilterChip } from "./name-filter-chip";
-
+export { TabbedFilter } from "./tabbed-filter";
 export { usePersistentFilters } from "./use-persistent-filters";
-
-export { COLUMN_IDS } from "../columns";

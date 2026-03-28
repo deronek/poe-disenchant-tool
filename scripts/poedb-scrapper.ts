@@ -38,7 +38,7 @@ async function scrapeDustValues() {
   });
 
   // Define and ensure output directory
-  const outputDir = join(process.cwd(), "src", "lib", "dust");
+  const outputDir = join(process.cwd(), "data", "dust");
   mkdirSync(outputDir, { recursive: true });
 
   // Save JSON file

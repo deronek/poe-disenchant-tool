@@ -1,15 +1,16 @@
-import type { ListingTimeFilter } from "@/lib/listing-time-filter";
-import type { OnlineStatus } from "@/lib/online-status";
-import type { TradeLinkPayload } from "@/lib/tradeLink";
+import type { ListingTimeFilter, OnlineStatus } from "@/lib/filters";
+import type { TradeLinkPayload } from "@/lib/trade-link";
 import type { BrowserContext, Locator, Page } from "@playwright/test";
 import { expect } from "@playwright/test";
 
 import type { TestItem, Theme, ThemeOption } from "./types";
 import { DEFAULT_ADVANCED_SETTINGS } from "@/components/advanced-settings-panel";
+import {
+  LISTING_TIME_LABELS,
+  MIN_ITEM_LEVEL_RANGE,
+  ONLINE_STATUS_LABELS,
+} from "@/lib/filters";
 import { getLeagueName, League } from "@/lib/leagues";
-import { LISTING_TIME_LABELS } from "@/lib/listing-time-filter";
-import { MIN_ITEM_LEVEL_RANGE } from "@/lib/min-item-level";
-import { ONLINE_STATUS_LABELS } from "@/lib/online-status";
 
 export class PoEDisenchantPage {
   readonly page: Page;
