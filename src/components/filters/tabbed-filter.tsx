@@ -155,7 +155,7 @@ export function TabbedFilter<TData extends Item>({
                   {isPriceFilterActive && (
                     <span
                       aria-hidden="true"
-                      className="text-primary/80 dark:text-primary/90 absolute -top-1 left-full ml-1.5 text-[10px] leading-none font-bold"
+                      className="text-primary/80 dark:text-primary/90 bg-muted absolute -top-1 left-full ml-1.5 inline-flex items-center justify-center rounded-full p-0.5 text-[10px] leading-none font-bold"
                     >
                       {priceActiveCount}
                     </span>
@@ -178,7 +178,7 @@ export function TabbedFilter<TData extends Item>({
                   {isDustFilterActive && (
                     <span
                       aria-hidden="true"
-                      className="text-primary/80 dark:text-primary/90 absolute -top-1 left-full ml-1.5 text-[10px] leading-none font-bold"
+                      className="text-primary/80 dark:text-primary/90 bg-muted absolute -top-1 left-full ml-1.5 inline-flex items-center justify-center rounded-full p-0.5 text-[10px] leading-none font-bold"
                     >
                       {dustActiveCount}
                     </span>
@@ -201,7 +201,7 @@ export function TabbedFilter<TData extends Item>({
                   {isGoldFilterActive && (
                     <span
                       aria-hidden="true"
-                      className="text-primary/80 dark:text-primary/90 absolute -top-1 left-full ml-1.5 text-[10px] leading-none font-bold"
+                      className="text-primary/80 dark:text-primary/90 bg-muted absolute -top-1 left-full ml-1.5 inline-flex items-center justify-center rounded-full p-0.5 text-[10px] leading-none font-bold"
                     >
                       {goldActiveCount}
                     </span>
