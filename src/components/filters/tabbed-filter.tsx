@@ -67,9 +67,7 @@ export function TabbedFilter<TData extends Item>({
   const isFilterActive =
     isPriceFilterActive || isDustFilterActive || isGoldFilterActive;
   const numberOfActiveFilters =
-    (isPriceFilterActive ? 1 : 0) +
-    (isDustFilterActive ? 1 : 0) +
-    (isGoldFilterActive ? 1 : 0);
+    priceActiveCount + dustActiveCount + goldActiveCount;
 
   const handleReset = () => {
     if (priceColumn) {
