@@ -60,7 +60,7 @@ jobs:
           lfs: true
           repository: ${{ steps.pr_head.outputs.repo || github.repository }}
           ref: ${{ github.event.inputs.branch || steps.pr_head.outputs.ref || github.ref_name }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_PAT }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
