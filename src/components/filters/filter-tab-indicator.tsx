@@ -9,7 +9,7 @@ export function FilterTabIndicator({
     <>
       <span
         aria-hidden="true"
-        className="text-primary/80 dark:text-primary/90 bg-muted absolute -top-1 left-full ml-1.5 inline-flex items-center justify-center rounded-full p-0.5 text-[10px] leading-none font-bold"
+        className="text-primary bg-muted absolute -top-1 left-full ml-0.5 inline-flex size-3.5 items-center justify-center rounded-full text-[10px] leading-none font-bold"
       >
         {count}
       </span>
