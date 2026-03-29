@@ -17,6 +17,7 @@ import {
   hasMinFilter,
 } from "@/lib/filters";
 import { cn } from "@/lib/utils";
+import { FilterTabIndicator } from "./filter-tab-indicator";
 import { RangeFilter } from "./range-filter";
 
 interface TabbedFilterProps<TData> {
@@ -151,17 +152,10 @@ export function TabbedFilter<TData extends Item>({
                   <span className="text-xs leading-none">Price</span>
 
                   {isPriceFilterActive && (
-                    <>
-                      <span
-                        aria-hidden="true"
-                        className="text-primary/80 dark:text-primary/90 bg-muted absolute -top-1 left-full ml-1.5 inline-flex items-center justify-center rounded-full p-0.5 text-[10px] leading-none font-bold"
-                      >
-                        {priceActiveCount}
-                      </span>
-                      <span className="sr-only">
-                        ({priceActiveCount} active price filter bounds)
-                      </span>
-                    </>
+                    <FilterTabIndicator
+                      count={priceActiveCount}
+                      label="price"
+                    />
                   )}
                 </span>
               </TabsTrigger>
@@ -179,17 +173,7 @@ export function TabbedFilter<TData extends Item>({
                   <span className="text-xs leading-none">Dust</span>
 
                   {isDustFilterActive && (
-                    <>
-                      <span
-                        aria-hidden="true"
-                        className="text-primary/80 dark:text-primary/90 bg-muted absolute -top-1 left-full ml-1.5 inline-flex items-center justify-center rounded-full p-0.5 text-[10px] leading-none font-bold"
-                      >
-                        {dustActiveCount}
-                      </span>
-                      <span className="sr-only">
-                        ({dustActiveCount} active dust filter bounds)
-                      </span>
-                    </>
+                    <FilterTabIndicator count={dustActiveCount} label="dust" />
                   )}
                 </span>
               </TabsTrigger>
@@ -207,17 +191,7 @@ export function TabbedFilter<TData extends Item>({
                   <span className="text-xs leading-none">Gold</span>
 
                   {isGoldFilterActive && (
-                    <>
-                      <span
-                        aria-hidden="true"
-                        className="text-primary/80 dark:text-primary/90 bg-muted absolute -top-1 left-full ml-1.5 inline-flex items-center justify-center rounded-full p-0.5 text-[10px] leading-none font-bold"
-                      >
-                        {goldActiveCount}
-                      </span>
-                      <span className="sr-only">
-                        ({goldActiveCount} active gold filter bounds)
-                      </span>
-                    </>
+                    <FilterTabIndicator count={goldActiveCount} label="gold" />
                   )}
                 </span>
               </TabsTrigger>
