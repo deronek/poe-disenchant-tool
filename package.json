@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --webpack",
     "scan": "pnpx react-scan@latest localhost:3000",
     "prebuild": "tsx scripts/validate-dust-data.ts",
-    "build": "next build --turbopack",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "prettier --check . && eslint . && tsc --noEmit",
     "format": "prettier --write .",

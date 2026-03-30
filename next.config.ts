@@ -19,11 +19,20 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // webpack: (config, context) => {
-  //   injectWhyDidYouRender(config, context);
+  webpack: (config) => {
+    // Hotfix for Webpack - @traversable/zod-types is not bundled correctly for ESM
+    // Make it use the CJS instead
+    config.resolve.conditionNames = ["require", "node", "default"];
 
-  //   return config;
-  // },
+    // Force conservative chunking to optimize for edge requests
+    config.optimization.splitChunks = {
+      chunks: "all",
+      minSize: 1000000, // force large chunks
+      maxInitialRequests: 3,
+    };
+
+    return config;
+  },
   // Checks done in CI
   typescript: {
     ignoreBuildErrors: true,
