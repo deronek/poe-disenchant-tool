@@ -19,11 +19,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // webpack: (config, context) => {
-  //   injectWhyDidYouRender(config, context);
+  webpack: (config) => {
+    // Hotfix for Webpack - @traversable/zod-types is not bundled correctly for ESM
+    // Make it use the CJS instead
+    config.resolve.conditionNames = ["require", "node", "default"];
 
-  //   return config;
-  // },
+    return config;
+  },
   // Checks done in CI
   typescript: {
     ignoreBuildErrors: true,
