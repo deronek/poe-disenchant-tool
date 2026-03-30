@@ -24,6 +24,13 @@ const nextConfig: NextConfig = {
     // Make it use the CJS instead
     config.resolve.conditionNames = ["require", "node", "default"];
 
+    // Force conservative chunking to optimize for edge requests
+    config.optimization.splitChunks = {
+      chunks: "all",
+      minSize: 1000000, // force large chunks
+      maxInitialRequests: 3,
+    };
+
     return config;
   },
   // Checks done in CI
