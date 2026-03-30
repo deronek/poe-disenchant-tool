@@ -37,7 +37,6 @@
     "@tanstack/react-table": "^8.21.3",
     "@traversable/zod": "^0.0.57",
     "@vercel/analytics": "^1.5.0",
-    "@vercel/speed-insights": "^1.2.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.525.0",
