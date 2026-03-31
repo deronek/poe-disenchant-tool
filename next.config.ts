@@ -26,6 +26,8 @@ const nextConfig: NextConfig = {
       minSize: 2000000, // force large chunks
     };
 
+    // Force inline webpack chunk
+    config.optimization.runtimeChunk = false;
     return config;
   },
   // Checks done in CI
