@@ -1,4 +1,4 @@
-import type { ColumnId } from "@/components/data-table";
+import type { ColumnId } from "@/lib/column-ids";
 import React from "react";
 import { Table } from "@tanstack/react-table";
 import {
