@@ -31,6 +31,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { COLUMN_IDS } from "@/lib/column-ids";
 import { rangeFilterFn } from "@/lib/filters";
 import { League } from "@/lib/leagues";
 import { createTradeLink } from "@/lib/trade-link";
@@ -381,20 +382,6 @@ export function renderCompactNumber(
 
   return { element, hasCompactSuffix };
 }
-
-export const COLUMN_IDS = {
-  ICON: "icon",
-  NAME: "name",
-  CHAOS: "chaos",
-  CALCULATED_DUST_VALUE: "calculatedDustValue",
-  DUST_PER_CHAOS: "dustPerChaos",
-  DUST_PER_CHAOS_PER_SLOT: "dustPerChaosPerSlot",
-  GOLD_FEE: "goldCost",
-  TRADE_LINK: "tradeLink",
-  SELECT: "select",
-} as const;
-
-export type ColumnId = (typeof COLUMN_IDS)[keyof typeof COLUMN_IDS];
 
 export const createColumns = (
   advancedSettings: AdvancedSettings,

@@ -1,4 +1,4 @@
-import type { ColumnId } from "@/components/data-table";
+import type { ColumnId } from "@/lib/column-ids";
 import React from "react";
 import { Table } from "@tanstack/react-table";
 import {
@@ -9,7 +9,6 @@ import {
   Type,
 } from "lucide-react";
 
-import { COLUMN_IDS } from "@/components/data-table";
 import { ChaosOrbIcon, DustIcon, GoldIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +17,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { COLUMN_IDS } from "@/lib/column-ids";
 import { cn } from "@/lib/utils";
 
 const AscendingSortIcon = () => (

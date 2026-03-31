@@ -4,9 +4,9 @@ import { Table } from "@tanstack/react-table";
 
 import { AdvancedSettingsPanel } from "@/components/advanced-settings-panel";
 import { ClearMarksButton } from "@/components/clear-marks-button";
-import { COLUMN_IDS } from "@/components/data-table";
 import { FilterChips, NameFilter, TabbedFilter } from "@/components/filters";
 import { MobileSortingControls } from "@/components/mobile";
+import { COLUMN_IDS } from "@/lib/column-ids";
 
 type ToolbarProps<TData extends Item> = {
   table: Table<TData>;

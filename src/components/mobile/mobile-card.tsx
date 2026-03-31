@@ -6,7 +6,6 @@ import { Row } from "@tanstack/react-table";
 import { ExternalLink, Info, Orbit, PackageMinus } from "lucide-react";
 
 import { advancedSettingsDeepEqual } from "@/components/advanced-settings-panel";
-import { COLUMN_IDS } from "@/components/data-table";
 import { ChaosOrbIcon, DustIcon, GoldIcon, Icon } from "@/components/icons";
 import {
   CatalystInfo,
@@ -23,6 +22,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { COLUMN_IDS } from "@/lib/column-ids";
 import { createTradeLink } from "@/lib/trade-link";
 
 // Compact number formatter for mobile cards

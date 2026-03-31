@@ -81,7 +81,7 @@ export default function RootLayout({
               disableTransitionOnChange
             >
               <ErrorHandler />
-              <Toaster richColors />
+              <Toaster richColors closeButton={true} />
               <CleanupOldLeagueMarks />
               <DataTableStateProvider>
                 <main className="flex min-h-0 flex-1 flex-col">{children}</main>

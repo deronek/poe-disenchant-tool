@@ -20,17 +20,14 @@ const nextConfig: NextConfig = {
     ],
   },
   webpack: (config) => {
-    // Hotfix for Webpack - @traversable/zod-types is not bundled correctly for ESM
-    // Make it use the CJS instead
-    config.resolve.conditionNames = ["require", "node", "default"];
-
     // Force conservative chunking to optimize for edge requests
     config.optimization.splitChunks = {
       chunks: "all",
-      minSize: 1000000, // force large chunks
-      maxInitialRequests: 3,
+      minSize: 2000000, // force large chunks
     };
 
+    // Force inline webpack chunk
+    config.optimization.runtimeChunk = false;
     return config;
   },
   // Checks done in CI

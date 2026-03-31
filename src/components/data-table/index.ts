@@ -1,9 +1,4 @@
-export {
-  COLUMN_IDS,
-  createColumns,
-  renderCompactNumber,
-  type ColumnId,
-} from "./columns";
+export { createColumns, renderCompactNumber } from "./columns";
 export { DataTable } from "./data-table";
 export { DataTablePagination } from "./data-table-pagination";
 // DataTableStateProvider must be imported directly from ./data-table-state-context

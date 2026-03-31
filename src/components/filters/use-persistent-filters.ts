@@ -3,7 +3,7 @@ import type { ColumnFiltersState } from "@tanstack/react-table";
 import * as React from "react";
 import { z } from "zod";
 
-import { COLUMN_IDS } from "@/components/data-table/columns";
+import { COLUMN_IDS } from "@/lib/column-ids";
 import { useLocalStorage } from "@/lib/use-local-storage";
 
 const PersistedFiltersSchema = z.object({
