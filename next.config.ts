@@ -42,13 +42,22 @@ const nextConfig: NextConfig = {
     PDT_APP_NAME: packageJson.name,
   },
   devIndicators: process.env.PLAYWRIGHT ? false : undefined, // Disable dev tools in Playwright for VRT
-  // Static redirects for archival leagues - handled at CDN/edge level
+  // Static redirects - handled at CDN/edge level
   async redirects() {
-    return ARCHIVED_LEAGUE_SLUGS.map((archivedLeague) => ({
-      source: `/${archivedLeague}`,
-      destination: `/${DEFAULT_LEAGUE}`,
-      permanent: true,
-    }));
+    return [
+      // Root redirect - temporary because DEFAULT_LEAGUE changes
+      {
+        source: "/",
+        destination: `/${DEFAULT_LEAGUE}`,
+        permanent: false,
+      },
+      // Archival leagues - permanent because these URLs will not come back
+      ...ARCHIVED_LEAGUE_SLUGS.map((archivedLeague) => ({
+        source: `/${archivedLeague}`,
+        destination: `/${DEFAULT_LEAGUE}`,
+        permanent: true,
+      })),
+    ];
   },
 };
 
