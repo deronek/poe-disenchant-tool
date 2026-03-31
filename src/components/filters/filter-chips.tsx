@@ -2,8 +2,8 @@ import type { Item } from "@/lib/item-data";
 import { Table } from "@tanstack/react-table";
 
 import type { RangeFilterChipProps } from "./range-filter-chip";
-import { COLUMN_IDS } from "@/components/data-table";
 import { ChaosOrbIcon, DustIcon, GoldIcon } from "@/components/icons";
+import { COLUMN_IDS } from "@/lib/column-ids";
 import { NameFilterChip } from "./name-filter-chip";
 import { RangeFilterChip } from "./range-filter-chip";
 

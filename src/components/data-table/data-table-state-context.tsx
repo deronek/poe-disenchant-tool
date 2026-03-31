@@ -9,7 +9,7 @@ import type {
 import React, { createContext, useCallback, useContext, useState } from "react";
 
 import { usePersistentFilters } from "@/components/filters";
-import { COLUMN_IDS } from "./columns";
+import { COLUMN_IDS } from "@/lib/column-ids";
 
 interface DataTableState {
   sorting: SortingState;
