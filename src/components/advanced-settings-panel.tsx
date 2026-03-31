@@ -55,16 +55,15 @@ export const AdvancedSettingsSchema = z.object({
 
 export type AdvancedSettings = z.infer<typeof AdvancedSettingsSchema>;
 
+const ADVANCED_SETTINGS_KEYS = Object.keys(
+  AdvancedSettingsSchema.shape,
+) as (keyof AdvancedSettings)[];
+
 export function advancedSettingsDeepEqual(
   a: AdvancedSettings,
   b: AdvancedSettings,
 ): boolean {
-  return (
-    a.minItemLevel === b.minItemLevel &&
-    a.includeCorrupted === b.includeCorrupted &&
-    a.listingTimeFilter === b.listingTimeFilter &&
-    a.onlineStatus === b.onlineStatus
-  );
+  return ADVANCED_SETTINGS_KEYS.every((k) => a[k] === b[k]);
 }
 
 // Default values derived from schema
