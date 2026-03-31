@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync, statSync } from "fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "fs";
 import { join } from "path";
 
 import { DEFAULT_LEAGUE } from "../src/lib/leagues";
@@ -12,11 +12,20 @@ interface ChunkFile {
 const chunksDir = join(".next", "static", "chunks");
 const htmlPath = join(".next", "server", "app", `${DEFAULT_LEAGUE}.html`);
 
+if (!existsSync(htmlPath)) {
+  console.error(
+    `Build output not found at "${htmlPath}". ` +
+      `Run "next build" for the "${DEFAULT_LEAGUE}" league first.`,
+  );
+  process.exit(1);
+}
 const html = readFileSync(htmlPath, "utf-8");
 
 // Scripts with src= (loaded in modern browsers, unless noModule)
 const scriptTags = [
-  ...html.matchAll(/<script\s+src="(\/_next\/static\/chunks\/[^"]+)"([^>]*)>/g),
+  ...html.matchAll(
+    /<script\b[^>]*\bsrc="(\/_next\/static\/chunks\/[^"]+)"([^>]*)>/g,
+  ),
 ];
 
 const loadedFiles = new Set<string>();
@@ -120,5 +129,5 @@ console.log(
   `Not loaded:       ${notLoaded.length} files, ${fmt(notLoadedTotal)}`,
 );
 console.log(
-  `Total build:      ${allFiles.length} files, ${fmt(loadedTotal + notLoadedTotal)}`,
+  `Total build:      ${loaded.length + notLoaded.length} files, ${fmt(loadedTotal + notLoadedTotal)}`,
 );
