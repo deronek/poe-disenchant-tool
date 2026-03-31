@@ -1,7 +1,6 @@
 import type { CheckedState } from "@/components/ui/checkbox";
 import type { ListingTimeFilter } from "@/lib/filters";
 import * as React from "react";
-import { zx } from "@traversable/zod";
 import {
   ChevronDown,
   Clock,
@@ -54,9 +53,19 @@ export const AdvancedSettingsSchema = z.object({
   onlineStatus: OnlineStatusSchema.prefault("available"),
 });
 
-export const advancedSettingsDeepEqual = zx.deepEqual(AdvancedSettingsSchema);
-
 export type AdvancedSettings = z.infer<typeof AdvancedSettingsSchema>;
+
+export function advancedSettingsDeepEqual(
+  a: AdvancedSettings,
+  b: AdvancedSettings,
+): boolean {
+  return (
+    a.minItemLevel === b.minItemLevel &&
+    a.includeCorrupted === b.includeCorrupted &&
+    a.listingTimeFilter === b.listingTimeFilter &&
+    a.onlineStatus === b.onlineStatus
+  );
+}
 
 // Default values derived from schema
 export const DEFAULT_ADVANCED_SETTINGS: AdvancedSettings =
