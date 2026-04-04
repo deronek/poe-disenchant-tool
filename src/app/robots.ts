@@ -6,7 +6,8 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
-      allow: "/",
+      // Crawlers hit below URL often, which is not needed
+      disallow: "/_vercel/insights/",
     },
     sitemap: `${BASE_URL}/sitemap.xml`,
   };
