@@ -95,7 +95,7 @@ const getProductionDataForType = async (
   type: AllowedUnique,
   leagueApiName: string,
 ): Promise<InternalItem[]> => {
-  const url = `https://poe.ninja/api/data/itemoverview?type=${encodeURIComponent(type)}&league=${encodeURIComponent(leagueApiName)}`;
+  const url = `https://poe.ninja/poe1/api/economy/stash/current/item/overview?type=${encodeURIComponent(type)}&league=${encodeURIComponent(leagueApiName)}`;
   try {
     const response = await fetch(url, {
       headers: {
@@ -139,9 +139,9 @@ const getPriceDataForType = async (
   type: AllowedUnique,
   leagueApiName: string,
 ): Promise<InternalItem[]> => {
-  if (isDevelopment) {
-    return getDevDataForType(type);
-  }
+  // if (isDevelopment) {
+  //   return getDevDataForType(type);
+  // }
 
   return getProductionDataForType(type, leagueApiName);
 };
