@@ -6,7 +6,7 @@ import { z } from "zod";
 
 import type { AllowedUnique } from "./allowed-types";
 import { getLeagueApiName, League } from "../leagues";
-import { isDevelopment } from "../utils-server";
+import { isBuildTime, isDevelopment } from "../utils-server";
 import { allowedUniqueTypes } from "./allowed-types";
 import { USER_AGENT } from "./utils";
 
@@ -96,12 +96,16 @@ const getProductionDataForType = async (
         "User-Agent": USER_AGENT,
       },
     });
+    if (!response.ok) {
+      throw new Error(
+        `Error fetching ${type} in ${leagueApiName}: ${response.status} ${response.statusText}`,
+      );
+    }
     const json = await response.json();
     const data = ItemOverviewResponseSchema.parse(json);
 
     if (!data.lines) {
-      console.warn(`No data returned for ${type} in ${leagueApiName}`);
-      return [];
+      throw new Error(`No data returned for ${type} in ${leagueApiName}`);
     }
 
     const items: InternalItem[] = data.lines.map((line) => ({
@@ -121,11 +125,13 @@ const getProductionDataForType = async (
     );
     return items;
   } catch (error) {
-    console.error(
-      `Error fetching price data for ${type} in ${leagueApiName}:`,
-      error,
-    );
-    return [];
+    if (isBuildTime) {
+      // Allow errors and return empty data
+      console.error(error);
+      return [];
+    }
+    // Otherwise, re-throw to server stale page as fallback
+    throw error;
   }
 };
 
