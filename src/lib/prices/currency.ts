@@ -6,7 +6,7 @@ import { z } from "zod";
 import type { ApiResult } from "./external-api";
 import { getLeagueApiName, League } from "../leagues";
 import { isDevelopment } from "../utils-server";
-import { ExternalApiError, logExternalApiError } from "./external-api";
+import { ExternalApiError, toExternalApiErrorContext } from "./external-api";
 import { USER_AGENT } from "./utils";
 
 // TypeScript interfaces for poe.ninja API response
@@ -44,10 +44,24 @@ export type CurrencyData = {
   error: ExternalApiError | null;
 };
 
+export type CurrencyFetchContext = {
+  source: "poe.ninja";
+  status_code?: number;
+  has_catalyst: boolean;
+  has_divine_rate: boolean;
+  fallback_activated: boolean;
+  error?: ReturnType<typeof toExternalApiErrorContext>;
+};
+
+export type CurrencyDataResult = {
+  data: CurrencyData;
+  context: CurrencyFetchContext;
+};
+
 // Fetch currency data from poe.ninja API
 const fetchCurrencyData = async (
   league: League,
-): Promise<ApiResult<CurrencyOverviewResponse>> => {
+): Promise<ApiResult<CurrencyOverviewResponse> & { statusCode?: number }> => {
   const leagueApiName = getLeagueApiName(league);
   const url = `https://poe.ninja/poe1/api/economy/exchange/current/overview?league=${encodeURIComponent(leagueApiName)}&type=Currency`;
 
@@ -61,6 +75,7 @@ const fetchCurrencyData = async (
     if (!response.ok) {
       return {
         ok: false,
+        statusCode: response.status,
         error: new ExternalApiError({
           source: "currency",
           league,
@@ -89,7 +104,7 @@ const fetchCurrencyData = async (
       };
     }
 
-    return { ok: true, data: parsed.data };
+    return { ok: true, data: parsed.data, statusCode: response.status };
   } catch (error) {
     return {
       ok: false,
@@ -152,30 +167,58 @@ const createFallbackCurrencyData = (
 // Uncached version that does the actual work
 const uncached__getCurrencyData = async (
   league: League,
-): Promise<CurrencyData> => {
+): Promise<CurrencyDataResult> => {
   if (isDevelopment) {
     return {
-      catalyst: {
-        id: "dev-catalyst",
-        primaryValue: 1,
+      data: {
+        catalyst: {
+          id: "dev-catalyst",
+          primaryValue: 1,
+        },
+        divineRate: 0.005, // 200 chaos per divine
+        error: null,
       },
-      divineRate: 0.005, // 200 chaos per divine
-      error: null,
+      context: {
+        source: "poe.ninja",
+        has_catalyst: true,
+        has_divine_rate: true,
+        fallback_activated: false,
+      },
     };
   }
 
   const rawData = await fetchCurrencyData(league);
   if (!rawData.ok) {
-    logExternalApiError(rawData.error, "Currency fallback activated");
-    return createFallbackCurrencyData(rawData.error);
+    const data = createFallbackCurrencyData(rawData.error);
+    return {
+      data,
+      context: {
+        source: "poe.ninja",
+        status_code: rawData.statusCode,
+        has_catalyst: false,
+        has_divine_rate: false,
+        fallback_activated: true,
+        error: toExternalApiErrorContext(rawData.error),
+      },
+    };
   }
 
-  return processCurrencyData(rawData.data);
+  const data = processCurrencyData(rawData.data);
+  return {
+    data,
+    context: {
+      source: "poe.ninja",
+      status_code: rawData.statusCode,
+      has_catalyst: data.catalyst !== null,
+      has_divine_rate: data.divineRate !== null,
+      fallback_activated: false,
+    },
+  };
 };
 
 export const getCurrencyData = async (
   league: League,
-): Promise<CurrencyData> => {
+): Promise<CurrencyDataResult> => {
   return unstable_cache(
     async () => uncached__getCurrencyData(league),
     [league],

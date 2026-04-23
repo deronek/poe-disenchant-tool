@@ -8,7 +8,7 @@ import type { AllowedUnique } from "./allowed-types";
 import { getLeagueApiName, League } from "../leagues";
 import { isBuildTime, isDevelopment } from "../utils-server";
 import { allowedUniqueTypes } from "./allowed-types";
-import { ExternalApiError, logExternalApiError } from "./external-api";
+import { ExternalApiError, toExternalApiErrorContext } from "./external-api";
 import { USER_AGENT } from "./utils";
 
 /**
@@ -48,6 +48,23 @@ export type InternalItem = {
 };
 
 export type Item = Omit<InternalItem, "detailsId">;
+
+export type PriceFetchContext = {
+  source: "poe.ninja";
+  types_requested: AllowedUnique[];
+  types_completed: AllowedUnique[];
+  resources_failed: string[];
+  line_counts_by_resource: Partial<Record<AllowedUnique, number>>;
+  status_codes_by_resource: Partial<Record<AllowedUnique, number>>;
+  item_count: number;
+  used_build_fallback: boolean;
+  error?: ReturnType<typeof toExternalApiErrorContext>;
+};
+
+export type PriceDataResult = {
+  items: Item[];
+  context: PriceFetchContext;
+};
 
 // Parse dev data globally in development only
 const devDataCache = {} as Record<AllowedUnique, ItemOverviewResponse>;
@@ -90,7 +107,7 @@ const getProductionDataForType = async (
   type: AllowedUnique,
   league: League,
   leagueApiName: string,
-): Promise<InternalItem[]> => {
+): Promise<{ items: InternalItem[]; statusCode?: number }> => {
   const url = `https://poe.ninja/poe1/api/economy/stash/current/item/overview?type=${encodeURIComponent(type)}&league=${encodeURIComponent(leagueApiName)}`;
   try {
     const response = await fetch(url, {
@@ -144,7 +161,7 @@ const getProductionDataForType = async (
       itemType: line.itemType,
     }));
 
-    return items;
+    return { items, statusCode: response.status };
   } catch (error) {
     const wrappedError =
       error instanceof ExternalApiError
@@ -159,24 +176,11 @@ const getProductionDataForType = async (
           });
 
     if (isBuildTime) {
-      logExternalApiError(wrappedError, "Build-time price fallback");
-      return [];
+      return { items: [] };
     }
 
     throw wrappedError;
   }
-};
-
-const getPriceDataForType = async (
-  type: AllowedUnique,
-  league: League,
-  leagueApiName: string,
-): Promise<InternalItem[]> => {
-  if (isDevelopment) {
-    return getDevDataForType(type);
-  }
-
-  return getProductionDataForType(type, league, leagueApiName);
 };
 
 const getDevDataForType = async (
@@ -199,6 +203,55 @@ const getDevDataForType = async (
     detailsId: line.detailsId,
     itemType: line.itemType,
   }));
+};
+
+const createEmptyPriceContext = (): PriceFetchContext => ({
+  source: "poe.ninja",
+  types_requested: [...allowedUniqueTypes],
+  types_completed: [],
+  resources_failed: [],
+  line_counts_by_resource: {},
+  status_codes_by_resource: {},
+  item_count: 0,
+  used_build_fallback: false,
+});
+
+const toPublicItems = (items: InternalItem[]): Item[] => {
+  const cheapestVariants = dedupeCheapestVariants(items);
+
+  return cheapestVariants.map(
+    (item): Item => ({
+      type: item.type,
+      name: item.name,
+      chaos: item.chaos,
+      divine: item.divine,
+      baseType: item.baseType,
+      icon: item.icon,
+      listingCount: item.listingCount,
+      itemType: item.itemType,
+    }),
+  );
+};
+
+const getDevelopmentPriceData = async (): Promise<PriceDataResult> => {
+  const allTypes = allowedUniqueTypes as readonly AllowedUnique[];
+  const context = createEmptyPriceContext();
+  const allItems = await Promise.all(
+    allTypes.map((type) => getDevDataForType(type)),
+  );
+
+  allTypes.forEach((type, index) => {
+    context.types_completed.push(type);
+    context.line_counts_by_resource[type] = allItems[index].length;
+  });
+
+  const combinedItems = allItems.flat();
+  context.item_count = combinedItems.length;
+
+  return {
+    items: toPublicItems(combinedItems),
+    context,
+  };
 };
 
 /**
@@ -355,43 +408,66 @@ export const dedupeCheapestVariants = (
   return result;
 };
 
-const uncached__getPriceData = async (league: League): Promise<Item[]> => {
-  const leagueApiName = getLeagueApiName(league);
-  const allTypes = allowedUniqueTypes as readonly AllowedUnique[];
-
-  // Fetch data for each type in parallel
-  const typePromises = allTypes.map((type) =>
-    getPriceDataForType(type, league, leagueApiName),
-  );
-
-  const allItems = await Promise.all(typePromises);
-  const combinedItems = allItems.flat();
-
-  if (!isDevelopment && !isBuildTime && combinedItems.length === 0) {
-    throw new ExternalApiError({
-      source: "prices",
-      league,
-      resource: "all-types",
-      kind: "empty-data",
-      message: `Price fetch completed with zero items for ${leagueApiName}`,
-    });
+const uncached__getPriceData = async (
+  league: League,
+): Promise<PriceDataResult> => {
+  if (isDevelopment) {
+    return getDevelopmentPriceData();
   }
 
-  const cheapestVariants = dedupeCheapestVariants(combinedItems);
+  const leagueApiName = getLeagueApiName(league);
+  const allTypes = allowedUniqueTypes as readonly AllowedUnique[];
+  const context = createEmptyPriceContext();
 
-  // Map to public Item type, excluding detailsId
-  return cheapestVariants.map(
-    (item): Item => ({
-      type: item.type,
-      name: item.name,
-      chaos: item.chaos,
-      divine: item.divine,
-      baseType: item.baseType,
-      icon: item.icon,
-      listingCount: item.listingCount,
-      itemType: item.itemType,
-    }),
-  );
+  try {
+    const allItems = await Promise.all(
+      allTypes.map((type) =>
+        getProductionDataForType(type, league, leagueApiName),
+      ),
+    );
+
+    allItems.forEach(({ items, statusCode }, index) => {
+      const type = allTypes[index];
+      context.types_completed.push(type);
+      context.line_counts_by_resource[type] = items.length;
+      if (statusCode != null) {
+        context.status_codes_by_resource[type] = statusCode;
+      }
+    });
+
+    const combinedItems = allItems.flatMap((entry) => entry.items);
+    context.item_count = combinedItems.length;
+
+    if (!isBuildTime && combinedItems.length === 0) {
+      throw new ExternalApiError({
+        source: "prices",
+        league,
+        resource: "all-types",
+        kind: "empty-data",
+        message: `Price fetch completed with zero items for ${leagueApiName}`,
+      });
+    }
+
+    context.used_build_fallback = isBuildTime && combinedItems.length === 0;
+
+    return {
+      items: toPublicItems(combinedItems),
+      context,
+    };
+  } catch (error) {
+    if (error instanceof ExternalApiError) {
+      context.error = toExternalApiErrorContext(error);
+      context.resources_failed.push(error.resource);
+      if (
+        error.status != null &&
+        allowedUniqueTypes.includes(error.resource as AllowedUnique)
+      ) {
+        context.status_codes_by_resource[error.resource as AllowedUnique] =
+          error.status;
+      }
+    }
+    throw error;
+  }
 };
 
 export const getPriceData = uncached__getPriceData;

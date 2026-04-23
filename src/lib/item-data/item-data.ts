@@ -1,5 +1,7 @@
+import type { LogRecord } from "@/lib/axiom/server";
 import { unstable_cache } from "next/cache";
 
+import { emitWideEvent, normalizeError } from "@/lib/axiom/server";
 import { Item as DustItem, getDustData } from "@/lib/dust";
 import { League } from "@/lib/leagues";
 import {
@@ -40,78 +42,119 @@ const createUniqueId = (name: string, variant?: string) =>
   `${name}${variant ? `-${variant}` : ""}`;
 
 const uncached__getItems = async (league: League) => {
+  const startedAt = Date.now();
+  const event: LogRecord = {
+    event_name: "item_data_fetch",
+    message: "Item data fetch completed",
+    operation: "getItems",
+    league,
+    outcome: "success",
+    prices: {},
+    currency: {},
+  };
+
   const dustData = getDustData();
   const dustMap = new Map(dustData.map((d) => [d.name, d]));
+  const missingDustExamples: string[] = [];
+  let ignoredItemCount = 0;
 
-  const [priceData, currencyData] = await Promise.all([
-    getPriceData(league),
-    getCurrencyData(league),
-  ]);
+  try {
+    const [priceResult, currencyResult] = await Promise.all([
+      getPriceData(league),
+      getCurrencyData(league),
+    ]);
 
-  // Fallback to 1c if no data
-  const catalystPrice = currencyData.catalyst
-    ? currencyData.catalyst.primaryValue
-    : 1;
+    event.prices = priceResult.context;
+    event.currency = currencyResult.context;
 
-  // Threshold is 1 divine worth of chaos (divineRate is divines per 1 chaos)
-  const divinePriceThreshold = currencyData.divineRate
-    ? Math.round(1 / currencyData.divineRate)
-    : null;
+    const priceData = priceResult.items;
+    const currencyData = currencyResult.data;
 
-  const merged: Item[] = [];
-  let id = 0;
+    // Fallback to 1c if no data
+    const catalystPrice = currencyData.catalyst
+      ? currencyData.catalyst.primaryValue
+      : 1;
 
-  for (const priceItem of priceData) {
-    if (ITEMS_TO_IGNORE.includes(priceItem.name)) continue;
-    const dustItem = dustMap.get(priceItem.name);
+    // Threshold is 1 divine worth of chaos (divineRate is divines per 1 chaos)
+    const divinePriceThreshold = currencyData.divineRate
+      ? Math.round(1 / currencyData.divineRate)
+      : null;
 
-    if (dustItem === undefined) {
-      // TODO: need to display this in the UI, as an information that something will be missing
-      console.warn(`Warning: No dust data found for ${priceItem.name}`);
-      continue;
+    const merged: Item[] = [];
+    let id = 0;
+
+    for (const priceItem of priceData) {
+      if (ITEMS_TO_IGNORE.includes(priceItem.name)) {
+        ignoredItemCount += 1;
+        continue;
+      }
+      const dustItem = dustMap.get(priceItem.name);
+
+      if (dustItem === undefined) {
+        if (missingDustExamples.length < 10) {
+          missingDustExamples.push(priceItem.name);
+        }
+        continue;
+      }
+
+      const {
+        dustValue: calculatedDustValue,
+        dustPerChaos,
+        catalyst: shouldCatalyst,
+        qualityType,
+      } = calculateDustEfficiency(priceItem, dustItem, catalystPrice);
+
+      merged.push({
+        id: id++,
+        uniqueId: createUniqueId(priceItem.name, priceItem.baseType),
+        name: priceItem.name,
+        chaos: priceItem.chaos,
+        divine: priceItem.divine,
+        listingCount: priceItem.listingCount,
+        variant: priceItem.baseType,
+        calculatedDustValue,
+        dustPerChaos: Math.round(dustPerChaos),
+        slots: dustItem.slots,
+        dustPerChaosPerSlot: Math.round(dustPerChaos / dustItem.slots),
+        goldCost: dustItem.goldCost,
+        type: priceItem.type,
+        icon: priceItem.icon,
+        shouldCatalyst: shouldCatalyst,
+        qualityType,
+      });
     }
 
-    const {
-      dustValue: calculatedDustValue,
-      dustPerChaos,
-      catalyst: shouldCatalyst,
-      qualityType,
-    } = calculateDustEfficiency(priceItem, dustItem, catalystPrice);
+    // Calculate p10 of listingCounts
+    const lowStockThreshold = calculateLowStockThreshold(merged);
+    event.item_count = merged.length;
+    event.missing_dust_count = missingDustExamples.length;
+    event.missing_dust_examples = missingDustExamples;
+    event.ignored_item_count = ignoredItemCount;
+    event.low_stock_threshold = lowStockThreshold;
+    event.divine_price_threshold = divinePriceThreshold;
+    event.currency_fallback_used = currencyData.catalyst === null;
 
-    merged.push({
-      id: id++,
-      uniqueId: createUniqueId(priceItem.name, priceItem.baseType),
-      name: priceItem.name,
-      chaos: priceItem.chaos,
-      divine: priceItem.divine,
-      listingCount: priceItem.listingCount,
-      variant: priceItem.baseType,
-      calculatedDustValue,
-      dustPerChaos: Math.round(dustPerChaos),
-      slots: dustItem.slots,
-      dustPerChaosPerSlot: Math.round(dustPerChaos / dustItem.slots),
-      goldCost: dustItem.goldCost,
-      type: priceItem.type,
-      icon: priceItem.icon,
-      shouldCatalyst: shouldCatalyst,
-      qualityType,
-    });
+    return {
+      items: merged,
+      lastUpdated: Date.now(),
+      lowStockThreshold,
+      divinePriceThreshold,
+      dataStatus: {
+        currency: {
+          usedDefaultCatalystPrice: currencyData.catalyst === null,
+          error: currencyData.error?.message ?? null,
+        },
+      } satisfies ItemDataStatus,
+    };
+  } catch (error) {
+    event.outcome = "error";
+    event.message = "Item data fetch failed";
+    event.error = normalizeError(error);
+    throw error;
+  } finally {
+    event.duration_ms = Date.now() - startedAt;
+    await emitWideEvent(event);
   }
-
-  // Calculate p10 of listingCounts
-  const lowStockThreshold = calculateLowStockThreshold(merged);
-  return {
-    items: merged,
-    lastUpdated: Date.now(),
-    lowStockThreshold,
-    divinePriceThreshold,
-    dataStatus: {
-      currency: {
-        usedDefaultCatalystPrice: currencyData.catalyst === null,
-        error: currencyData.error?.message ?? null,
-      },
-    } satisfies ItemDataStatus,
-  };
 };
 
 function isQuiver(item: PriceItem) {
@@ -199,11 +242,7 @@ function calculateLowStockThreshold(items: Item[]) {
   const PERCENTILE = 0.1;
   const index = Math.floor(PERCENTILE * (listingCounts.length - 1));
   const candidate = listingCounts[index];
-  const lowStockThreshold = Math.max(1, candidate ?? 1);
-
-  console.log("Low stock threshold:", lowStockThreshold);
-
-  return lowStockThreshold;
+  return Math.max(1, candidate ?? 1);
 }
 
 export const getItems = async (league: League) => {

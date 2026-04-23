@@ -52,7 +52,12 @@ describe("external API error handling", () => {
 
     const { getPriceData } = await import("@/lib/prices/prices");
 
-    await expect(getPriceData("standard")).resolves.toEqual([]);
+    await expect(getPriceData("standard")).resolves.toMatchObject({
+      items: [],
+      context: {
+        used_build_fallback: true,
+      },
+    });
   });
 
   it("returns degraded currency status with fallback defaults", async () => {
@@ -66,7 +71,7 @@ describe("external API error handling", () => {
 
     const { getCurrencyData } = await import("@/lib/prices/currency");
 
-    const data = await getCurrencyData("standard");
+    const { data, context } = await getCurrencyData("standard");
 
     expect(data.catalyst).toBeNull();
     expect(data.divineRate).toBeNull();
@@ -75,6 +80,7 @@ describe("external API error handling", () => {
       source: "currency",
       kind: "network",
     });
+    expect(context.fallback_activated).toBe(true);
   });
 
   it("keeps currency success but marks missing divine rate", async () => {
@@ -94,10 +100,11 @@ describe("external API error handling", () => {
 
     const { getCurrencyData } = await import("@/lib/prices/currency");
 
-    const data = await getCurrencyData("standard");
+    const { data, context } = await getCurrencyData("standard");
 
     expect(data.catalyst).toEqual({ id: "abrasive-catalyst", primaryValue: 2 });
     expect(data.divineRate).toBeNull();
     expect(data.error).toBeNull();
+    expect(context.fallback_activated).toBe(false);
   });
 });

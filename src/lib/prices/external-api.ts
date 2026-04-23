@@ -54,23 +54,26 @@ export type ApiFailure = {
 
 export type ApiResult<T> = ApiSuccess<T> | ApiFailure;
 
-export const logExternalApiError = (
+export type ExternalApiErrorContext = {
+  source: ExternalApiSource;
+  league: League | string;
+  resource: string;
+  kind: ExternalApiErrorKind;
+  status_code?: number;
+  message: string;
+  cause?: string;
+};
+
+export const toExternalApiErrorContext = (
   error: ExternalApiError,
-  prefix = "External API error",
-) => {
-  const details = [
-    `source=${error.source}`,
-    `league=${error.league}`,
-    `resource=${error.resource}`,
-    `kind=${error.kind}`,
-    error.status != null ? `status=${error.status}` : null,
-  ]
-    .filter(Boolean)
-    .join(" ");
-
-  console.error(`${prefix}: ${details} - ${error.message}`);
-
-  if (error.cause != null) {
-    console.error(error.cause);
-  }
+): ExternalApiErrorContext => {
+  return {
+    source: error.source,
+    league: error.league,
+    resource: error.resource,
+    kind: error.kind,
+    status_code: error.status,
+    message: error.message,
+    cause: error.cause == null ? undefined : String(error.cause),
+  };
 };
