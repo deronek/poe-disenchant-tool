@@ -29,6 +29,13 @@ export type Item = {
   qualityType: "q0" | "q20";
 };
 
+export type ItemDataStatus = {
+  currency: {
+    usedDefaultCatalystPrice: boolean;
+    error: string | null;
+  };
+};
+
 const createUniqueId = (name: string, variant?: string) =>
   `${name}${variant ? `-${variant}` : ""}`;
 
@@ -98,6 +105,12 @@ const uncached__getItems = async (league: League) => {
     lastUpdated: Date.now(),
     lowStockThreshold,
     divinePriceThreshold,
+    dataStatus: {
+      currency: {
+        usedDefaultCatalystPrice: currencyData.catalyst === null,
+        error: currencyData.error?.message ?? null,
+      },
+    } satisfies ItemDataStatus,
   };
 };
 

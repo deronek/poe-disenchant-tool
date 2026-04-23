@@ -1,5 +1,5 @@
-import type { Item } from "./item-data";
+import type { Item, ItemDataStatus } from "./item-data";
 import { ITEMS_TO_IGNORE } from "./ignore-list";
 import { getItems } from "./item-data";
 
-export { Item, ITEMS_TO_IGNORE, getItems };
+export { Item, type ItemDataStatus, ITEMS_TO_IGNORE, getItems };

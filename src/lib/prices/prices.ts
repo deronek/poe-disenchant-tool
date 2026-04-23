@@ -8,6 +8,7 @@ import type { AllowedUnique } from "./allowed-types";
 import { getLeagueApiName, League } from "../leagues";
 import { isBuildTime, isDevelopment } from "../utils-server";
 import { allowedUniqueTypes } from "./allowed-types";
+import { ExternalApiError, logExternalApiError } from "./external-api";
 import { USER_AGENT } from "./utils";
 
 /**
@@ -87,6 +88,7 @@ const getDevData = async (
 
 const getProductionDataForType = async (
   type: AllowedUnique,
+  league: League,
   leagueApiName: string,
 ): Promise<InternalItem[]> => {
   const url = `https://poe.ninja/poe1/api/economy/stash/current/item/overview?type=${encodeURIComponent(type)}&league=${encodeURIComponent(leagueApiName)}`;
@@ -97,18 +99,40 @@ const getProductionDataForType = async (
       },
     });
     if (!response.ok) {
-      throw new Error(
-        `Error fetching ${type} in ${leagueApiName}: ${response.status} ${response.statusText}`,
-      );
+      throw new ExternalApiError({
+        source: "prices",
+        league,
+        resource: type,
+        kind: "http",
+        status: response.status,
+        message: `Failed to fetch ${type} prices for ${leagueApiName}: ${response.status} ${response.statusText}`,
+      });
     }
     const json = await response.json();
-    const data = ItemOverviewResponseSchema.parse(json);
+    const data = ItemOverviewResponseSchema.safeParse(json);
 
-    if (!data.lines) {
-      throw new Error(`No data returned for ${type} in ${leagueApiName}`);
+    if (!data.success) {
+      throw new ExternalApiError({
+        source: "prices",
+        league,
+        resource: type,
+        kind: "schema",
+        message: `Invalid ${type} prices payload for ${leagueApiName}`,
+        cause: data.error,
+      });
     }
 
-    const items: InternalItem[] = data.lines.map((line) => ({
+    if (!data.data.lines) {
+      throw new ExternalApiError({
+        source: "prices",
+        league,
+        resource: type,
+        kind: "empty-data",
+        message: `No ${type} price lines returned for ${leagueApiName}`,
+      });
+    }
+
+    const items: InternalItem[] = data.data.lines.map((line) => ({
       type,
       name: line.name,
       chaos: ensureValidChaosPrice(line.chaosValue),
@@ -120,30 +144,39 @@ const getProductionDataForType = async (
       itemType: line.itemType,
     }));
 
-    console.log(
-      `Successfully fetched price data for ${type} in ${leagueApiName}`,
-    );
     return items;
   } catch (error) {
+    const wrappedError =
+      error instanceof ExternalApiError
+        ? error
+        : new ExternalApiError({
+            source: "prices",
+            league,
+            resource: type,
+            kind: "network",
+            message: `Failed to fetch ${type} prices for ${leagueApiName}`,
+            cause: error,
+          });
+
     if (isBuildTime) {
-      // Allow errors and return empty data
-      console.error(error);
+      logExternalApiError(wrappedError, "Build-time price fallback");
       return [];
     }
-    // Otherwise, re-throw to server stale page as fallback
-    throw error;
+
+    throw wrappedError;
   }
 };
 
 const getPriceDataForType = async (
   type: AllowedUnique,
+  league: League,
   leagueApiName: string,
 ): Promise<InternalItem[]> => {
   if (isDevelopment) {
     return getDevDataForType(type);
   }
 
-  return getProductionDataForType(type, leagueApiName);
+  return getProductionDataForType(type, league, leagueApiName);
 };
 
 const getDevDataForType = async (
@@ -328,11 +361,21 @@ const uncached__getPriceData = async (league: League): Promise<Item[]> => {
 
   // Fetch data for each type in parallel
   const typePromises = allTypes.map((type) =>
-    getPriceDataForType(type, leagueApiName),
+    getPriceDataForType(type, league, leagueApiName),
   );
 
   const allItems = await Promise.all(typePromises);
   const combinedItems = allItems.flat();
+
+  if (!isDevelopment && !isBuildTime && combinedItems.length === 0) {
+    throw new ExternalApiError({
+      source: "prices",
+      league,
+      resource: "all-types",
+      kind: "empty-data",
+      message: `Price fetch completed with zero items for ${leagueApiName}`,
+    });
+  }
 
   const cheapestVariants = dedupeCheapestVariants(combinedItems);
 

@@ -3,8 +3,10 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 import { z } from "zod";
 
+import type { ApiResult } from "./external-api";
 import { getLeagueApiName, League } from "../leagues";
 import { isDevelopment } from "../utils-server";
+import { ExternalApiError, logExternalApiError } from "./external-api";
 import { USER_AGENT } from "./utils";
 
 // TypeScript interfaces for poe.ninja API response
@@ -39,12 +41,13 @@ export type CatalystItem = {
 export type CurrencyData = {
   catalyst: CatalystItem | null;
   divineRate: number | null;
+  error: ExternalApiError | null;
 };
 
 // Fetch currency data from poe.ninja API
 const fetchCurrencyData = async (
   league: League,
-): Promise<CurrencyOverviewResponse> => {
+): Promise<ApiResult<CurrencyOverviewResponse>> => {
   const leagueApiName = getLeagueApiName(league);
   const url = `https://poe.ninja/poe1/api/economy/exchange/current/overview?league=${encodeURIComponent(leagueApiName)}&type=Currency`;
 
@@ -56,21 +59,55 @@ const fetchCurrencyData = async (
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      return {
+        ok: false,
+        error: new ExternalApiError({
+          source: "currency",
+          league,
+          resource: "Currency",
+          kind: "http",
+          status: response.status,
+          message: `Failed to fetch currency data for ${leagueApiName}: ${response.status} ${response.statusText}`,
+        }),
+      };
     }
 
     const json = await response.json();
-    return CurrencyOverviewResponseSchema.parse(json);
+    const parsed = CurrencyOverviewResponseSchema.safeParse(json);
+
+    if (!parsed.success) {
+      return {
+        ok: false,
+        error: new ExternalApiError({
+          source: "currency",
+          league,
+          resource: "Currency",
+          kind: "schema",
+          message: `Invalid currency payload for ${leagueApiName}`,
+          cause: parsed.error,
+        }),
+      };
+    }
+
+    return { ok: true, data: parsed.data };
   } catch (error) {
-    console.error(`Failed to fetch currency data for ${league}:`, error);
-    return {};
+    return {
+      ok: false,
+      error: new ExternalApiError({
+        source: "currency",
+        league,
+        resource: "Currency",
+        kind: "network",
+        message: `Failed to fetch currency data for ${leagueApiName}`,
+        cause: error,
+      }),
+    };
   }
 };
 
 // Process raw currency data into useful format
 const processCurrencyData = (
   currencyData: CurrencyOverviewResponse,
-  league: League,
 ): CurrencyData => {
   // Get cheapest catalyst
   let catalyst: CatalystItem | null = null;
@@ -95,25 +132,22 @@ const processCurrencyData = (
     }
   }
 
-  if (catalyst === null) {
-    console.warn("No valid catalysts items found for league", league);
-  }
-
-  // Get divine rate (null if not available or zero)
   const divineRate = currencyData.core?.rates.divine || null;
-  if (divineRate === null) {
-    console.warn("No divine rate found for league", league);
-  }
-
-  console.log(
-    `Currency data for ${league}: cheapest catalyst: ${catalyst?.id} at ${catalyst?.primaryValue}, divine rate: ${divineRate}`,
-  );
 
   return {
     catalyst,
     divineRate,
+    error: null,
   };
 };
+
+const createFallbackCurrencyData = (
+  error: ExternalApiError | null,
+): CurrencyData => ({
+  catalyst: null,
+  divineRate: null,
+  error,
+});
 
 // Uncached version that does the actual work
 const uncached__getCurrencyData = async (
@@ -126,11 +160,17 @@ const uncached__getCurrencyData = async (
         primaryValue: 1,
       },
       divineRate: 0.005, // 200 chaos per divine
+      error: null,
     };
   }
 
   const rawData = await fetchCurrencyData(league);
-  return processCurrencyData(rawData, league);
+  if (!rawData.ok) {
+    logExternalApiError(rawData.error, "Currency fallback activated");
+    return createFallbackCurrencyData(rawData.error);
+  }
+
+  return processCurrencyData(rawData.data);
 };
 
 export const getCurrencyData = async (

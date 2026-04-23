@@ -5,7 +5,7 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   plugins: [tsconfigPaths(), react()],
   test: {
-    environment: "node",
-    include: ["./src/tests/unit/**/*.{test,spec}.?(c|m)[jt]s"],
+    environment: "jsdom",
+    include: ["./src/tests/unit-ui/**/*.{test,spec}.?(c|m)[jt]sx"],
   },
 });
