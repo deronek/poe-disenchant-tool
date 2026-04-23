@@ -139,9 +139,9 @@ const getPriceDataForType = async (
   type: AllowedUnique,
   leagueApiName: string,
 ): Promise<InternalItem[]> => {
-  // if (isDevelopment) {
-  //   return getDevDataForType(type);
-  // }
+  if (isDevelopment) {
+    return getDevDataForType(type);
+  }
 
   return getProductionDataForType(type, leagueApiName);
 };
