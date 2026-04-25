@@ -56,22 +56,78 @@ const baseMetadata = (): LogRecord => ({
   region: process.env.VERCEL_REGION,
 });
 
+const MAX_CAUSE_DEPTH = 3;
+
+const normalizeErrorCause = (
+  cause: unknown,
+  depth: number,
+): LogValue | undefined => {
+  if (cause == null) {
+    return undefined;
+  }
+
+  if (cause instanceof Error) {
+    if (depth >= MAX_CAUSE_DEPTH) {
+      return {
+        name: cause.name,
+        message: cause.message,
+        stack: cause.stack,
+      };
+    }
+
+    return normalizeErrorInternal(cause, depth + 1);
+  }
+
+  return String(cause);
+};
+
 export const normalizeError = (error: unknown): LogRecord | undefined => {
+  return normalizeErrorInternal(error, 0);
+};
+
+const normalizeErrorInternal = (
+  error: unknown,
+  depth: number,
+): LogRecord | undefined => {
   if (error == null) return undefined;
   if (error instanceof Error) {
-    return {
+    const record: LogRecord = {
       name: error.name,
       message: error.message,
-      cause:
-        error.cause instanceof Error
-          ? {
-              name: error.cause.name,
-              message: error.cause.message,
-            }
-          : error.cause == null
-            ? undefined
-            : String(error.cause),
+      stack: error.stack,
     };
+
+    if ("code" in error) {
+      const code = error.code;
+      if (
+        typeof code === "string" ||
+        typeof code === "number" ||
+        typeof code === "boolean"
+      ) {
+        record.code = code;
+      }
+    }
+
+    const normalizedCause = normalizeErrorCause(error.cause, depth);
+    if (normalizedCause !== undefined) {
+      record.cause = normalizedCause;
+    }
+
+    if (error instanceof AggregateError) {
+      record.errors = Array.from(error.errors, (entry) =>
+        entry instanceof Error
+          ? depth >= MAX_CAUSE_DEPTH
+            ? {
+                name: entry.name,
+                message: entry.message,
+                stack: entry.stack,
+              }
+            : normalizeErrorInternal(entry, depth + 1)
+          : String(entry),
+      );
+    }
+
+    return record;
   }
 
   return {
