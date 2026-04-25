@@ -110,7 +110,7 @@ export function CurrencyDataStatus({
   }
 
   const currencyPill = currencyDegraded ? (
-    <span className="inline-flex items-center gap-1 whitespace-nowrap">
+    <span className="inline-flex items-center gap-2 whitespace-nowrap">
       <span className="text-muted-foreground/50 select-none">·</span>
       <StatusPill content={currencyContent}>
         <AlertTriangle className="size-3.5 shrink-0 text-amber-600 dark:text-amber-500" />
@@ -122,7 +122,7 @@ export function CurrencyDataStatus({
   ) : null;
 
   const catalystPill = catalystDegraded ? (
-    <span className="inline-flex items-center gap-1 whitespace-nowrap">
+    <span className="inline-flex items-center gap-2 whitespace-nowrap">
       <span
         className={`text-muted-foreground/50 select-none ${currencyDegraded ? "inline" : "hidden lg:inline"}`}
       >
