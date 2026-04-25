@@ -3,87 +3,80 @@ import { afterEach, describe, expect, it } from "vitest";
 
 import { CurrencyDataStatus } from "@/components/currency-data-status";
 
-const okStatus = { usedDefaultCatalystPrice: false, error: null };
-const catalystDegradedStatus = { usedDefaultCatalystPrice: true, error: null };
+const CURRENCY_MESSAGE = "Currency rates unavailable";
+const CATALYST_MESSAGE = "Catalyst price unavailable";
+
+function renderStatus({
+  usedDefaultCatalystPrice = false,
+  divinePriceThreshold = 160,
+}: {
+  usedDefaultCatalystPrice?: boolean;
+  divinePriceThreshold?: number | null;
+}) {
+  return render(
+    <CurrencyDataStatus
+      status={{ usedDefaultCatalystPrice }}
+      divinePriceThreshold={divinePriceThreshold}
+    />,
+  );
+}
+
+function expectStatusVisibility({
+  currencyVisible,
+  catalystVisible,
+}: {
+  currencyVisible: boolean;
+  catalystVisible: boolean;
+}) {
+  const currencyMessage = screen.queryAllByText(CURRENCY_MESSAGE);
+  const catalystMessage = screen.queryAllByText(CATALYST_MESSAGE);
+
+  if (currencyVisible) {
+    expect(currencyMessage.length).toBeGreaterThan(0);
+  } else {
+    expect(currencyMessage).toHaveLength(0);
+  }
+
+  if (catalystVisible) {
+    expect(catalystMessage.length).toBeGreaterThan(0);
+  } else {
+    expect(catalystMessage).toHaveLength(0);
+  }
+}
 
 describe("CurrencyDataStatus", () => {
   afterEach(cleanup);
 
   it("renders nothing when both currency and catalyst are healthy", () => {
-    const { container } = render(
-      <CurrencyDataStatus status={okStatus} divinePriceThreshold={160} />,
-    );
+    const { container } = renderStatus({});
 
     expect(container.firstChild).toBeNull();
   });
 
-  it("renders the currency pill when divinePriceThreshold is null", () => {
-    render(
-      <CurrencyDataStatus status={okStatus} divinePriceThreshold={null} />,
-    );
+  it.each([
+    {
+      name: "renders only the currency pill when currency data is degraded",
+      props: { divinePriceThreshold: null },
+      expected: { currencyVisible: true, catalystVisible: false },
+    },
+    {
+      name: "renders only the catalyst pill when catalyst data is degraded",
+      props: { usedDefaultCatalystPrice: true },
+      expected: { currencyVisible: false, catalystVisible: true },
+    },
+    {
+      name: "renders both pills when both data sources are degraded",
+      props: { usedDefaultCatalystPrice: true, divinePriceThreshold: null },
+      expected: { currencyVisible: true, catalystVisible: true },
+    },
+    {
+      name: "renders no pills when neither data source is degraded",
+      props: {},
+      expected: { currencyVisible: false, catalystVisible: false },
+    },
+  ])("$name", ({ props, expected }) => {
+    renderStatus(props);
 
-    expect(
-      screen.getAllByText("Currency rates unavailable").length,
-    ).toBeGreaterThan(0);
-  });
-
-  it("does not render the currency pill when divinePriceThreshold is set", () => {
-    render(<CurrencyDataStatus status={okStatus} divinePriceThreshold={160} />);
-
-    expect(screen.queryAllByText("Currency rates unavailable")).toHaveLength(0);
-  });
-
-  it("renders the catalyst pill when usedDefaultCatalystPrice is true", () => {
-    render(
-      <CurrencyDataStatus
-        status={catalystDegradedStatus}
-        divinePriceThreshold={160}
-      />,
-    );
-
-    expect(
-      screen.getAllByText("Catalyst price unavailable").length,
-    ).toBeGreaterThan(0);
-  });
-
-  it("does not render the catalyst pill when usedDefaultCatalystPrice is false", () => {
-    render(<CurrencyDataStatus status={okStatus} divinePriceThreshold={160} />);
-
-    expect(screen.queryAllByText("Catalyst price unavailable")).toHaveLength(0);
-  });
-
-  it("renders both pills when both are degraded", () => {
-    render(
-      <CurrencyDataStatus
-        status={catalystDegradedStatus}
-        divinePriceThreshold={null}
-      />,
-    );
-
-    expect(
-      screen.getAllByText("Currency rates unavailable").length,
-    ).toBeGreaterThan(0);
-    expect(
-      screen.getAllByText("Catalyst price unavailable").length,
-    ).toBeGreaterThan(0);
-  });
-
-  it("does not render the catalyst pill when only currency is degraded", () => {
-    render(
-      <CurrencyDataStatus status={okStatus} divinePriceThreshold={null} />,
-    );
-
-    expect(screen.queryAllByText("Catalyst price unavailable")).toHaveLength(0);
-  });
-
-  it("does not render the currency pill when only catalyst is degraded", () => {
-    render(
-      <CurrencyDataStatus
-        status={catalystDegradedStatus}
-        divinePriceThreshold={160}
-      />,
-    );
-
-    expect(screen.queryAllByText("Currency rates unavailable")).toHaveLength(0);
+    expectStatusVisibility(expected);
   });
 });
