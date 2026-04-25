@@ -1,14 +1,13 @@
 "use client";
 
 import type { AdvancedSettings } from "@/components/advanced-settings-panel";
-import type { Item, ItemDataStatus } from "@/lib/item-data";
+import type { Item } from "@/lib/item-data";
 import * as React from "react";
 
 import {
   AdvancedSettingsSchema,
   DEFAULT_ADVANCED_SETTINGS,
 } from "@/components/advanced-settings-panel";
-import { CurrencyDataStatus } from "@/components/currency-data-status";
 import { createColumns, DataTable } from "@/components/data-table";
 import { League } from "@/lib/leagues";
 import { useLocalStorage } from "@/lib/use-local-storage";
@@ -18,7 +17,6 @@ interface SharedDataViewProps {
   league: League;
   lowStockThreshold: number;
   divinePriceThreshold: number | null;
-  dataStatus: ItemDataStatus;
 }
 
 export function SharedDataView({
@@ -26,7 +24,6 @@ export function SharedDataView({
   league,
   lowStockThreshold,
   divinePriceThreshold,
-  dataStatus,
 }: SharedDataViewProps) {
   const [advancedSettings, setAdvancedSettings] =
     useLocalStorage<AdvancedSettings>(
@@ -52,10 +49,6 @@ export function SharedDataView({
 
   return (
     <div className="space-y-3">
-      <CurrencyDataStatus
-        status={dataStatus.currency}
-        divinePriceThreshold={divinePriceThreshold}
-      />
       <DataTable
         columns={columns}
         data={items}

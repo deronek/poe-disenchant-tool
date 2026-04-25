@@ -1,3 +1,4 @@
+import { CurrencyDataStatus } from "@/components/currency-data-status";
 import LastUpdatedClient from "@/components/last-updated";
 import { SharedDataView } from "@/components/shared-data-view";
 import { BASE_URL, getDescriptionWithLeague, TITLE } from "@/lib/constants";
@@ -50,8 +51,12 @@ export default async function LeagueContentServer({
           __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
         }}
       />
-      <div className="font-italic text-muted-foreground text-sm">
+      <div className="font-italic text-muted-foreground inline-flex flex-wrap items-center gap-x-2 text-sm">
         <LastUpdatedClient timestamp={lastUpdated} />
+        <CurrencyDataStatus
+          status={dataStatus.currency}
+          divinePriceThreshold={divinePriceThreshold}
+        />
       </div>
       <section className="py-1">
         <SharedDataView
@@ -59,7 +64,6 @@ export default async function LeagueContentServer({
           league={league}
           lowStockThreshold={lowStockThreshold}
           divinePriceThreshold={divinePriceThreshold}
-          dataStatus={dataStatus}
         />
       </section>
     </div>
