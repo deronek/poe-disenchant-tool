@@ -2,6 +2,7 @@ import "server-only";
 
 import { AxiomJSTransport, Logger, LogLevel } from "@axiomhq/logging";
 import { nextJsFormatters } from "@axiomhq/nextjs";
+import { serializeError } from "serialize-error";
 
 import { axiom } from "@/lib/axiom/axiom";
 import { isDevelopment } from "@/lib/utils-server";
@@ -57,122 +58,8 @@ const baseMetadata = (): LogRecord => ({
   region: process.env.VERCEL_REGION,
 });
 
-const MAX_CAUSE_DEPTH = 3;
-
-const toSerializableLogValue = (value: unknown): LogValue => {
-  if (value == null) {
-    return value;
-  }
-
-  if (
-    typeof value === "string" ||
-    typeof value === "number" ||
-    typeof value === "boolean"
-  ) {
-    return value;
-  }
-
-  if (Array.isArray(value)) {
-    return value.map((entry) => toSerializableLogValue(entry));
-  }
-
-  if (typeof value === "object") {
-    try {
-      const parsed = JSON.parse(JSON.stringify(value)) as unknown;
-      if (parsed == null) {
-        return null;
-      }
-
-      if (Array.isArray(parsed)) {
-        return parsed.map((entry) => toSerializableLogValue(entry));
-      }
-
-      if (typeof parsed === "object") {
-        return parsed as LogRecord;
-      }
-    } catch {
-      return { message: String(value) };
-    }
-  }
-
-  return String(value);
-};
-
-const normalizeErrorCause = (
-  cause: unknown,
-  depth: number,
-): LogValue | undefined => {
-  if (cause == null) {
-    return undefined;
-  }
-
-  if (cause instanceof Error) {
-    if (depth >= MAX_CAUSE_DEPTH) {
-      return {
-        name: cause.name,
-        message: cause.message,
-        stack: cause.stack,
-      };
-    }
-
-    return normalizeErrorInternal(cause, depth + 1);
-  }
-
-  return toSerializableLogValue(cause);
-};
-
 export const normalizeError = (error: unknown): LogRecord | undefined => {
-  return normalizeErrorInternal(error, 0);
-};
-
-const normalizeErrorInternal = (
-  error: unknown,
-  depth: number,
-): LogRecord | undefined => {
-  if (error == null) return undefined;
-  if (error instanceof Error) {
-    const record: LogRecord = {
-      name: error.name,
-      message: error.message,
-      stack: error.stack,
-    };
-
-    if ("code" in error) {
-      const code = error.code;
-      if (
-        typeof code === "string" ||
-        typeof code === "number" ||
-        typeof code === "boolean"
-      ) {
-        record.code = code;
-      }
-    }
-
-    const normalizedCause = normalizeErrorCause(error.cause, depth);
-    if (normalizedCause !== undefined) {
-      record.cause = normalizedCause;
-    }
-
-    if (error instanceof AggregateError) {
-      record.errors = Array.from(error.errors, (entry) =>
-        entry instanceof Error
-          ? depth >= MAX_CAUSE_DEPTH
-            ? {
-                name: entry.name,
-                message: entry.message,
-                stack: entry.stack,
-              }
-            : normalizeErrorInternal(entry, depth + 1)
-          : String(entry),
-      );
-    }
-
-    return record;
-  }
-
-  return {
-    message: String(error),
-  };
+  return serializeError(error) as LogRecord;
 };
 
 export const emitWideEvent = async (event: WideEvent) => {

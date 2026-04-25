@@ -1,4 +1,5 @@
-import { ZodError } from "zod";
+import type { ErrorObject } from "serialize-error";
+import { serializeError } from "serialize-error";
 
 import type { League } from "../leagues";
 
@@ -67,84 +68,7 @@ export type ExternalApiErrorContext = {
   kind: ExternalApiErrorKind;
   status_code?: number;
   message: string;
-  cause?: string | Record<string, unknown>;
-};
-
-const MAX_CAUSE_DEPTH = 3;
-
-const isPlainObject = (value: unknown): value is Record<string, unknown> => {
-  return Object.prototype.toString.call(value) === "[object Object]";
-};
-
-const serializeCause = (
-  cause: unknown,
-  depth = 0,
-  seen = new WeakSet<object>(),
-): string | Record<string, unknown> | undefined => {
-  if (cause == null) {
-    return undefined;
-  }
-
-  if (depth >= MAX_CAUSE_DEPTH) {
-    return { message: "max cause depth reached" };
-  }
-
-  if (typeof cause === "object") {
-    if (seen.has(cause)) {
-      return { message: "circular cause reference" };
-    }
-    seen.add(cause);
-  }
-
-  if (cause instanceof ZodError) {
-    return {
-      name: cause.name,
-      message: cause.message,
-      stack: cause.stack,
-      issues: cause.issues,
-      cause: serializeCause(cause.cause, depth + 1, seen),
-    };
-  }
-
-  if (cause instanceof Error) {
-    const serialized: Record<string, unknown> = {
-      name: cause.name,
-      message: cause.message,
-      stack: cause.stack,
-    };
-
-    if ("code" in cause) {
-      serialized.code = cause.code;
-    }
-
-    const nestedCause = serializeCause(cause.cause, depth + 1, seen);
-    if (nestedCause !== undefined) {
-      serialized.cause = nestedCause;
-    }
-
-    if (cause instanceof AggregateError) {
-      serialized.errors = Array.from(
-        cause.errors,
-        (entry) => serializeCause(entry, depth + 1, seen) ?? String(entry),
-      );
-    }
-
-    return serialized;
-  }
-
-  if (typeof cause === "object") {
-    try {
-      const parsed = JSON.parse(JSON.stringify(cause)) as unknown;
-      if (!isPlainObject(parsed)) {
-        return { value: parsed };
-      }
-      return parsed;
-    } catch {
-      return { message: String(cause) };
-    }
-  }
-
-  return String(cause);
+  cause?: ErrorObject;
 };
 
 export const toExternalApiErrorContext = (
@@ -157,6 +81,6 @@ export const toExternalApiErrorContext = (
     kind: error.kind,
     status_code: error.status,
     message: error.message,
-    cause: serializeCause(error.cause),
+    cause: serializeError(error.cause),
   };
 };
