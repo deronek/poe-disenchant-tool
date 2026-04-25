@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     title: TITLE,
     description: DESCRIPTION,
     images: "/og-image.jpg",
-    creator: GITHUB_AUTHOR_TWITTER,
+    creator: `@${GITHUB_AUTHOR_TWITTER}`,
   },
   alternates: {
     canonical: BASE_URL,
