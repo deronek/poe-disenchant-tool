@@ -108,6 +108,51 @@ const getDevData = async (
   return devDataCache[type];
 };
 
+const createSingleTypePriceContext = (
+  type: AllowedUnique,
+  overrides: Partial<PriceFetchContext> = {},
+): PriceFetchContext => ({
+  source: "poe.ninja",
+  types_requested: [type],
+  types_completed: [],
+  resources_failed: [type],
+  line_counts_by_resource: { [type]: 0 },
+  status_codes_by_resource: {},
+  item_count: 0,
+  used_build_fallback: false,
+  ...overrides,
+});
+
+const createPriceFetchError = ({
+  league,
+  resource,
+  kind,
+  message,
+  status,
+  cause,
+  priceContext,
+}: {
+  league: League;
+  resource: string;
+  kind: "http" | "network" | "schema" | "empty-data";
+  message: string;
+  status?: number;
+  cause?: unknown;
+  priceContext: PriceFetchContext;
+}) =>
+  new ExternalApiError({
+    source: "prices",
+    league,
+    resource,
+    kind,
+    message,
+    status,
+    cause,
+    context: {
+      price_fetch: priceContext,
+    },
+  });
+
 const getProductionDataForType = async (
   type: AllowedUnique,
   league: League,
@@ -129,72 +174,39 @@ const getProductionDataForType = async (
       },
     });
     if (!response.ok) {
-      throw new ExternalApiError({
-        source: "prices",
+      throw createPriceFetchError({
         league,
         resource: type,
         kind: "http",
         status: response.status,
         message: `Failed to fetch ${type} prices for ${leagueApiName}: ${response.status} ${response.statusText}`,
-        context: {
-          price_fetch: {
-            source: "poe.ninja",
-            types_requested: [type],
-            types_completed: [],
-            resources_failed: [type],
-            line_counts_by_resource: { [type]: 0 },
-            status_codes_by_resource: { [type]: response.status },
-            item_count: 0,
-            used_build_fallback: false,
-          },
-        },
+        priceContext: createSingleTypePriceContext(type, {
+          status_codes_by_resource: { [type]: response.status },
+        }),
       });
     }
+
     const json = await response.json();
     const data = ItemOverviewResponseSchema.safeParse(json);
 
     if (!data.success) {
-      throw new ExternalApiError({
-        source: "prices",
+      throw createPriceFetchError({
         league,
         resource: type,
         kind: "schema",
         message: `Invalid ${type} prices payload for ${leagueApiName}`,
         cause: data.error,
-        context: {
-          price_fetch: {
-            source: "poe.ninja",
-            types_requested: [type],
-            types_completed: [],
-            resources_failed: [type],
-            line_counts_by_resource: { [type]: 0 },
-            status_codes_by_resource: {},
-            item_count: 0,
-            used_build_fallback: false,
-          },
-        },
+        priceContext: createSingleTypePriceContext(type),
       });
     }
 
     if (!data.data.lines) {
-      throw new ExternalApiError({
-        source: "prices",
+      throw createPriceFetchError({
         league,
         resource: type,
         kind: "empty-data",
         message: `No ${type} price lines returned for ${leagueApiName}`,
-        context: {
-          price_fetch: {
-            source: "poe.ninja",
-            types_requested: [type],
-            types_completed: [],
-            resources_failed: [type],
-            line_counts_by_resource: { [type]: 0 },
-            status_codes_by_resource: {},
-            item_count: 0,
-            used_build_fallback: false,
-          },
-        },
+        priceContext: createSingleTypePriceContext(type),
       });
     }
 
@@ -215,29 +227,22 @@ const getProductionDataForType = async (
     const wrappedError =
       error instanceof ExternalApiError
         ? error
-        : new ExternalApiError({
-            source: "prices",
+        : createPriceFetchError({
             league,
             resource: type,
             kind: "network",
             message: `Failed to fetch ${type} prices for ${leagueApiName}`,
             cause: error,
-            context: {
-              price_fetch: {
-                source: "poe.ninja",
-                types_requested: [type],
-                types_completed: [],
-                resources_failed: [type],
-                line_counts_by_resource: { [type]: 0 },
-                status_codes_by_resource: {},
-                item_count: 0,
-                used_build_fallback: false,
-              },
-            },
+            priceContext: createSingleTypePriceContext(type),
           });
 
     if (isBuildTime) {
-      return { ok: false, items: [], error: wrappedError };
+      return {
+        ok: false,
+        items: [],
+        error: wrappedError,
+        statusCode: wrappedError.status,
+      };
     }
 
     throw wrappedError;
@@ -276,6 +281,51 @@ const createEmptyPriceContext = (): PriceFetchContext => ({
   item_count: 0,
   used_build_fallback: false,
 });
+
+const recordSuccessfulTypeFetch = (
+  context: PriceFetchContext,
+  type: AllowedUnique,
+  items: InternalItem[],
+  statusCode?: number,
+) => {
+  context.types_completed.push(type);
+  context.line_counts_by_resource[type] = items.length;
+  if (statusCode != null) {
+    context.status_codes_by_resource[type] = statusCode;
+  }
+};
+
+const recordFailedTypeFetch = (
+  context: PriceFetchContext,
+  type: AllowedUnique,
+  error: ExternalApiError,
+  statusCode?: number,
+) => {
+  context.resources_failed.push(type);
+  context.line_counts_by_resource[type] = 0;
+  context.error ??= toExternalApiErrorContext(error);
+  if (statusCode != null) {
+    context.status_codes_by_resource[type] = statusCode;
+  }
+};
+
+const withAggregatePriceContext = (
+  error: ExternalApiError,
+  context: PriceFetchContext,
+) =>
+  new ExternalApiError({
+    source: error.source,
+    league: error.league,
+    resource: error.resource,
+    kind: error.kind,
+    status: error.status,
+    message: error.message,
+    cause: error.cause,
+    context: {
+      ...(error.context ?? {}),
+      price_fetch: context,
+    },
+  });
 
 const toPublicItems = (items: InternalItem[]): Item[] => {
   const cheapestVariants = dedupeCheapestVariants(items);
@@ -490,32 +540,34 @@ const uncached__getPriceData = async (
     allItems.forEach((result, index) => {
       const type = allTypes[index];
       if (result.status === "rejected") {
-        context.resources_failed.push(type);
-        context.line_counts_by_resource[type] = 0;
         if (result.reason instanceof ExternalApiError) {
-          context.error ??= toExternalApiErrorContext(result.reason);
-          if (result.reason.status != null) {
-            context.status_codes_by_resource[type] = result.reason.status;
-          }
+          recordFailedTypeFetch(
+            context,
+            type,
+            result.reason,
+            result.reason.status,
+          );
         }
         return;
       }
 
+      // Build-time fallback path only - production errors are handled by throwing, instead
       if (!result.value.ok) {
-        context.resources_failed.push(type);
-        context.line_counts_by_resource[type] = 0;
-        context.error ??= toExternalApiErrorContext(result.value.error);
-        if (result.value.statusCode != null) {
-          context.status_codes_by_resource[type] = result.value.statusCode;
-        }
+        recordFailedTypeFetch(
+          context,
+          type,
+          result.value.error,
+          result.value.statusCode,
+        );
         return;
       }
 
-      context.types_completed.push(type);
-      context.line_counts_by_resource[type] = result.value.items.length;
-      if (result.value.statusCode != null) {
-        context.status_codes_by_resource[type] = result.value.statusCode;
-      }
+      recordSuccessfulTypeFetch(
+        context,
+        type,
+        result.value.items,
+        result.value.statusCode,
+      );
     });
 
     const firstRuntimeFailure = allItems.find(
@@ -523,22 +575,8 @@ const uncached__getPriceData = async (
     );
     if (firstRuntimeFailure?.reason instanceof ExternalApiError) {
       context.used_build_fallback = false;
-      throw new ExternalApiError({
-        source: firstRuntimeFailure.reason.source,
-        league: firstRuntimeFailure.reason.league,
-        resource: firstRuntimeFailure.reason.resource,
-        kind: firstRuntimeFailure.reason.kind,
-        status: firstRuntimeFailure.reason.status,
-        message: firstRuntimeFailure.reason.message,
-        cause: firstRuntimeFailure.reason.cause,
-        context: { price_fetch: context },
-      });
+      throw withAggregatePriceContext(firstRuntimeFailure.reason, context);
     }
-
-    const firstBuildTimeFailure = allItems.find(
-      (entry): entry is PromiseFulfilledResult<PriceTypeFetchFailure> =>
-        entry.status === "fulfilled" && !entry.value.ok,
-    );
 
     const combinedItems = allItems.flatMap((entry) =>
       entry.status === "fulfilled" && entry.value.ok ? entry.value.items : [],
@@ -549,29 +587,16 @@ const uncached__getPriceData = async (
     // not ready yet, but runtime refreshes must never replace cached data with
     // an empty or otherwise invalid dataset.
     if (!isBuildTime && combinedItems.length === 0) {
-      throw new ExternalApiError({
-        source: "prices",
+      throw createPriceFetchError({
         league,
         resource: "all-types",
         kind: "empty-data",
         message: `Price fetch completed with zero items for ${leagueApiName}`,
+        priceContext: context,
       });
     }
 
     context.used_build_fallback = isBuildTime && combinedItems.length === 0;
-
-    if (firstBuildTimeFailure != null) {
-      throw new ExternalApiError({
-        source: firstBuildTimeFailure.value.error.source,
-        league: firstBuildTimeFailure.value.error.league,
-        resource: firstBuildTimeFailure.value.error.resource,
-        kind: firstBuildTimeFailure.value.error.kind,
-        status: firstBuildTimeFailure.value.error.status,
-        message: firstBuildTimeFailure.value.error.message,
-        cause: firstBuildTimeFailure.value.error.cause,
-        context: { price_fetch: context },
-      });
-    }
 
     return {
       items: toPublicItems(combinedItems),
@@ -590,19 +615,7 @@ const uncached__getPriceData = async (
         context.status_codes_by_resource[error.resource as AllowedUnique] =
           error.status;
       }
-      throw new ExternalApiError({
-        source: error.source,
-        league: error.league,
-        resource: error.resource,
-        kind: error.kind,
-        status: error.status,
-        message: error.message,
-        cause: error.cause,
-        context: {
-          ...(error.context ?? {}),
-          price_fetch: context,
-        },
-      });
+      throw withAggregatePriceContext(error, context);
     }
     throw error;
   }
