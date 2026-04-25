@@ -13,6 +13,7 @@ type LogValue =
   | null
   | undefined
   | LogRecord
+  | { [key: string]: unknown }
   | LogValue[];
 
 export type LogRecord = {

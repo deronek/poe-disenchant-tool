@@ -35,6 +35,11 @@ const ItemOverviewResponseSchema = z.object({
 
 type ItemOverviewResponse = z.infer<typeof ItemOverviewResponseSchema>;
 
+type PriceTypeFetchResult = Awaited<
+  ReturnType<typeof getProductionDataForType>
+>;
+type PriceTypeFetchFailure = Extract<PriceTypeFetchResult, { ok: false }>;
+
 export type InternalItem = {
   type: AllowedUnique;
   name: string;
@@ -131,6 +136,18 @@ const getProductionDataForType = async (
         kind: "http",
         status: response.status,
         message: `Failed to fetch ${type} prices for ${leagueApiName}: ${response.status} ${response.statusText}`,
+        context: {
+          price_fetch: {
+            source: "poe.ninja",
+            types_requested: [type],
+            types_completed: [],
+            resources_failed: [type],
+            line_counts_by_resource: { [type]: 0 },
+            status_codes_by_resource: { [type]: response.status },
+            item_count: 0,
+            used_build_fallback: false,
+          },
+        },
       });
     }
     const json = await response.json();
@@ -144,6 +161,18 @@ const getProductionDataForType = async (
         kind: "schema",
         message: `Invalid ${type} prices payload for ${leagueApiName}`,
         cause: data.error,
+        context: {
+          price_fetch: {
+            source: "poe.ninja",
+            types_requested: [type],
+            types_completed: [],
+            resources_failed: [type],
+            line_counts_by_resource: { [type]: 0 },
+            status_codes_by_resource: {},
+            item_count: 0,
+            used_build_fallback: false,
+          },
+        },
       });
     }
 
@@ -154,6 +183,18 @@ const getProductionDataForType = async (
         resource: type,
         kind: "empty-data",
         message: `No ${type} price lines returned for ${leagueApiName}`,
+        context: {
+          price_fetch: {
+            source: "poe.ninja",
+            types_requested: [type],
+            types_completed: [],
+            resources_failed: [type],
+            line_counts_by_resource: { [type]: 0 },
+            status_codes_by_resource: {},
+            item_count: 0,
+            used_build_fallback: false,
+          },
+        },
       });
     }
 
@@ -181,6 +222,18 @@ const getProductionDataForType = async (
             kind: "network",
             message: `Failed to fetch ${type} prices for ${leagueApiName}`,
             cause: error,
+            context: {
+              price_fetch: {
+                source: "poe.ninja",
+                types_requested: [type],
+                types_completed: [],
+                resources_failed: [type],
+                line_counts_by_resource: { [type]: 0 },
+                status_codes_by_resource: {},
+                item_count: 0,
+                used_build_fallback: false,
+              },
+            },
           });
 
     if (isBuildTime) {
@@ -428,7 +481,7 @@ const uncached__getPriceData = async (
   const context = createEmptyPriceContext();
 
   try {
-    const allItems = await Promise.all(
+    const allItems = await Promise.allSettled(
       allTypes.map((type) =>
         getProductionDataForType(type, league, leagueApiName),
       ),
@@ -436,21 +489,59 @@ const uncached__getPriceData = async (
 
     allItems.forEach((result, index) => {
       const type = allTypes[index];
-      if (!result.ok) {
+      if (result.status === "rejected") {
         context.resources_failed.push(type);
-        context.error ??= toExternalApiErrorContext(result.error);
+        context.line_counts_by_resource[type] = 0;
+        if (result.reason instanceof ExternalApiError) {
+          context.error ??= toExternalApiErrorContext(result.reason);
+          if (result.reason.status != null) {
+            context.status_codes_by_resource[type] = result.reason.status;
+          }
+        }
+        return;
+      }
+
+      if (!result.value.ok) {
+        context.resources_failed.push(type);
+        context.line_counts_by_resource[type] = 0;
+        context.error ??= toExternalApiErrorContext(result.value.error);
+        if (result.value.statusCode != null) {
+          context.status_codes_by_resource[type] = result.value.statusCode;
+        }
         return;
       }
 
       context.types_completed.push(type);
-      context.line_counts_by_resource[type] = result.items.length;
-      if (result.statusCode != null) {
-        context.status_codes_by_resource[type] = result.statusCode;
+      context.line_counts_by_resource[type] = result.value.items.length;
+      if (result.value.statusCode != null) {
+        context.status_codes_by_resource[type] = result.value.statusCode;
       }
     });
 
+    const firstRuntimeFailure = allItems.find(
+      (entry): entry is PromiseRejectedResult => entry.status === "rejected",
+    );
+    if (firstRuntimeFailure?.reason instanceof ExternalApiError) {
+      context.used_build_fallback = false;
+      throw new ExternalApiError({
+        source: firstRuntimeFailure.reason.source,
+        league: firstRuntimeFailure.reason.league,
+        resource: firstRuntimeFailure.reason.resource,
+        kind: firstRuntimeFailure.reason.kind,
+        status: firstRuntimeFailure.reason.status,
+        message: firstRuntimeFailure.reason.message,
+        cause: firstRuntimeFailure.reason.cause,
+        context: { price_fetch: context },
+      });
+    }
+
+    const firstBuildTimeFailure = allItems.find(
+      (entry): entry is PromiseFulfilledResult<PriceTypeFetchFailure> =>
+        entry.status === "fulfilled" && !entry.value.ok,
+    );
+
     const combinedItems = allItems.flatMap((entry) =>
-      entry.ok ? entry.items : [],
+      entry.status === "fulfilled" && entry.value.ok ? entry.value.items : [],
     );
     context.item_count = combinedItems.length;
 
@@ -469,6 +560,19 @@ const uncached__getPriceData = async (
 
     context.used_build_fallback = isBuildTime && combinedItems.length === 0;
 
+    if (firstBuildTimeFailure != null) {
+      throw new ExternalApiError({
+        source: firstBuildTimeFailure.value.error.source,
+        league: firstBuildTimeFailure.value.error.league,
+        resource: firstBuildTimeFailure.value.error.resource,
+        kind: firstBuildTimeFailure.value.error.kind,
+        status: firstBuildTimeFailure.value.error.status,
+        message: firstBuildTimeFailure.value.error.message,
+        cause: firstBuildTimeFailure.value.error.cause,
+        context: { price_fetch: context },
+      });
+    }
+
     return {
       items: toPublicItems(combinedItems),
       context,
@@ -476,7 +580,9 @@ const uncached__getPriceData = async (
   } catch (error) {
     if (error instanceof ExternalApiError) {
       context.error = toExternalApiErrorContext(error);
-      context.resources_failed.push(error.resource);
+      if (!context.resources_failed.includes(error.resource)) {
+        context.resources_failed.push(error.resource);
+      }
       if (
         error.status != null &&
         allowedUniqueTypes.includes(error.resource as AllowedUnique)
@@ -484,6 +590,19 @@ const uncached__getPriceData = async (
         context.status_codes_by_resource[error.resource as AllowedUnique] =
           error.status;
       }
+      throw new ExternalApiError({
+        source: error.source,
+        league: error.league,
+        resource: error.resource,
+        kind: error.kind,
+        status: error.status,
+        message: error.message,
+        cause: error.cause,
+        context: {
+          ...(error.context ?? {}),
+          price_fetch: context,
+        },
+      });
     }
     throw error;
   }

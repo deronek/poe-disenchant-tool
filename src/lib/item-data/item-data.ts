@@ -10,6 +10,7 @@ import {
   getPriceData,
   Item as PriceItem,
 } from "@/lib/prices";
+import { ExternalApiError } from "@/lib/prices/external-api";
 import { ITEMS_TO_IGNORE, ITEMS_TO_IGNORE_QUALITY } from "./ignore-list";
 
 export type Item = {
@@ -59,16 +60,34 @@ const uncached__getItems = async (league: League) => {
   let ignoredItemCount = 0;
 
   try {
-    const [priceResult, currencyResult] = await Promise.all([
+    const [priceResult, currencyResult] = await Promise.allSettled([
       getPriceData(league),
       getCurrencyData(league),
     ]);
 
-    event.prices = priceResult.context;
-    event.currency = currencyResult.context;
+    if (priceResult.status === "fulfilled") {
+      event.prices = priceResult.value.context;
+    } else if (priceResult.reason instanceof ExternalApiError) {
+      const priceContext = priceResult.reason.context?.price_fetch;
+      if (priceContext != null && typeof priceContext === "object") {
+        event.prices = priceContext as LogRecord;
+      }
+    }
 
-    const priceData = priceResult.items;
-    const currencyData = currencyResult.data;
+    if (currencyResult.status === "fulfilled") {
+      event.currency = currencyResult.value.context;
+    }
+
+    if (priceResult.status === "rejected") {
+      throw priceResult.reason;
+    }
+
+    if (currencyResult.status === "rejected") {
+      throw currencyResult.reason;
+    }
+
+    const priceData = priceResult.value.items;
+    const currencyData = currencyResult.value.data;
 
     // Fallback to 1c if no data
     const catalystPrice = currencyData.catalyst
@@ -149,6 +168,12 @@ const uncached__getItems = async (league: League) => {
   } catch (error) {
     event.outcome = "error";
     event.message = "Item data fetch failed";
+    if (error instanceof ExternalApiError) {
+      const priceContext = error.context?.price_fetch;
+      if (priceContext != null && typeof priceContext === "object") {
+        event.prices = priceContext as LogRecord;
+      }
+    }
     event.error = normalizeError(error);
     throw error;
   } finally {
