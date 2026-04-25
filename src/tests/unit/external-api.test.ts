@@ -75,11 +75,6 @@ describe("external API error handling", () => {
 
     expect(data.catalyst).toBeNull();
     expect(data.divineRate).toBeNull();
-    expect(data.error).toMatchObject({
-      name: "ExternalApiError",
-      source: "currency",
-      kind: "network",
-    });
     expect(context.fallback_activated).toBe(true);
   });
 
@@ -104,7 +99,6 @@ describe("external API error handling", () => {
 
     expect(data.catalyst).toEqual({ id: "abrasive-catalyst", primaryValue: 2 });
     expect(data.divineRate).toBeNull();
-    expect(data.error).toBeNull();
     expect(context.fallback_activated).toBe(false);
   });
 });

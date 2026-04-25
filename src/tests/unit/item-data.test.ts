@@ -78,7 +78,6 @@ describe("item data wide event logging", () => {
         data: {
           catalyst: { id: "abrasive-catalyst", primaryValue: 2 },
           divineRate: 0.005,
-          error: null,
         },
         context: {
           source: "poe_ninja",
@@ -122,7 +121,6 @@ describe("item data wide event logging", () => {
         data: {
           catalyst: null,
           divineRate: null,
-          error: null,
         },
         context: {
           source: "poe_ninja",

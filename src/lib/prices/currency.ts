@@ -41,7 +41,6 @@ export type CatalystItem = {
 export type CurrencyData = {
   catalyst: CatalystItem | null;
   divineRate: number | null;
-  error: ExternalApiError | null;
 };
 
 export type CurrencyFetchContext = {
@@ -152,17 +151,8 @@ const processCurrencyData = (
   return {
     catalyst,
     divineRate,
-    error: null,
   };
 };
-
-const createFallbackCurrencyData = (
-  error: ExternalApiError | null,
-): CurrencyData => ({
-  catalyst: null,
-  divineRate: null,
-  error,
-});
 
 // Uncached version that does the actual work
 const uncached__getCurrencyData = async (
@@ -176,7 +166,6 @@ const uncached__getCurrencyData = async (
           primaryValue: 1,
         },
         divineRate: 0.005, // 200 chaos per divine
-        error: null,
       },
       context: {
         source: "poe.ninja",
@@ -189,9 +178,8 @@ const uncached__getCurrencyData = async (
 
   const rawData = await fetchCurrencyData(league);
   if (!rawData.ok) {
-    const data = createFallbackCurrencyData(rawData.error);
     return {
-      data,
+      data: { catalyst: null, divineRate: null },
       context: {
         source: "poe.ninja",
         status_code: rawData.statusCode,

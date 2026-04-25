@@ -34,7 +34,6 @@ export type Item = {
 export type ItemDataStatus = {
   currency: {
     usedDefaultCatalystPrice: boolean;
-    error: string | null;
   };
 };
 
@@ -142,7 +141,6 @@ const uncached__getItems = async (league: League) => {
       dataStatus: {
         currency: {
           usedDefaultCatalystPrice: currencyData.catalyst === null,
-          error: currencyData.error?.message ?? null,
         },
       } satisfies ItemDataStatus,
     };
