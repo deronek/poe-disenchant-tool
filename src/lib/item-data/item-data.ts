@@ -55,6 +55,7 @@ const uncached__getItems = async (league: League) => {
   const dustData = getDustData();
   const dustMap = new Map(dustData.map((d) => [d.name, d]));
   const missingDustExamples: string[] = [];
+  let missingDustCount = 0;
   let ignoredItemCount = 0;
 
   try {
@@ -90,6 +91,7 @@ const uncached__getItems = async (league: League) => {
       const dustItem = dustMap.get(priceItem.name);
 
       if (dustItem === undefined) {
+        missingDustCount += 1;
         if (missingDustExamples.length < 10) {
           missingDustExamples.push(priceItem.name);
         }
@@ -126,7 +128,7 @@ const uncached__getItems = async (league: League) => {
     // Calculate p10 of listingCounts
     const lowStockThreshold = calculateLowStockThreshold(merged);
     event.item_count = merged.length;
-    event.missing_dust_count = missingDustExamples.length;
+    event.missing_dust_count = missingDustCount;
     event.missing_dust_examples = missingDustExamples;
     event.ignored_item_count = ignoredItemCount;
     event.low_stock_threshold = lowStockThreshold;
