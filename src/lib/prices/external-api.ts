@@ -70,11 +70,30 @@ export type ExternalApiErrorContext = {
   cause?: string | Record<string, unknown>;
 };
 
+const MAX_CAUSE_DEPTH = 3;
+
+const isPlainObject = (value: unknown): value is Record<string, unknown> => {
+  return Object.prototype.toString.call(value) === "[object Object]";
+};
+
 const serializeCause = (
   cause: unknown,
+  depth = 0,
+  seen = new WeakSet<object>(),
 ): string | Record<string, unknown> | undefined => {
   if (cause == null) {
     return undefined;
+  }
+
+  if (depth >= MAX_CAUSE_DEPTH) {
+    return { message: "max cause depth reached" };
+  }
+
+  if (typeof cause === "object") {
+    if (seen.has(cause)) {
+      return { message: "circular cause reference" };
+    }
+    seen.add(cause);
   }
 
   if (cause instanceof ZodError) {
@@ -83,7 +102,7 @@ const serializeCause = (
       message: cause.message,
       stack: cause.stack,
       issues: cause.issues,
-      cause: serializeCause(cause.cause),
+      cause: serializeCause(cause.cause, depth + 1, seen),
     };
   }
 
@@ -98,7 +117,7 @@ const serializeCause = (
       serialized.code = cause.code;
     }
 
-    const nestedCause = serializeCause(cause.cause);
+    const nestedCause = serializeCause(cause.cause, depth + 1, seen);
     if (nestedCause !== undefined) {
       serialized.cause = nestedCause;
     }
@@ -106,7 +125,7 @@ const serializeCause = (
     if (cause instanceof AggregateError) {
       serialized.errors = Array.from(
         cause.errors,
-        (entry) => serializeCause(entry) ?? String(entry),
+        (entry) => serializeCause(entry, depth + 1, seen) ?? String(entry),
       );
     }
 
@@ -115,7 +134,11 @@ const serializeCause = (
 
   if (typeof cause === "object") {
     try {
-      return JSON.parse(JSON.stringify(cause)) as Record<string, unknown>;
+      const parsed = JSON.parse(JSON.stringify(cause)) as unknown;
+      if (!isPlainObject(parsed)) {
+        return { value: parsed };
+      }
+      return parsed;
     } catch {
       return { message: String(cause) };
     }

@@ -59,6 +59,45 @@ const baseMetadata = (): LogRecord => ({
 
 const MAX_CAUSE_DEPTH = 3;
 
+const toSerializableLogValue = (value: unknown): LogValue => {
+  if (value == null) {
+    return value;
+  }
+
+  if (
+    typeof value === "string" ||
+    typeof value === "number" ||
+    typeof value === "boolean"
+  ) {
+    return value;
+  }
+
+  if (Array.isArray(value)) {
+    return value.map((entry) => toSerializableLogValue(entry));
+  }
+
+  if (typeof value === "object") {
+    try {
+      const parsed = JSON.parse(JSON.stringify(value)) as unknown;
+      if (parsed == null) {
+        return null;
+      }
+
+      if (Array.isArray(parsed)) {
+        return parsed.map((entry) => toSerializableLogValue(entry));
+      }
+
+      if (typeof parsed === "object") {
+        return parsed as LogRecord;
+      }
+    } catch {
+      return { message: String(value) };
+    }
+  }
+
+  return String(value);
+};
+
 const normalizeErrorCause = (
   cause: unknown,
   depth: number,
@@ -79,7 +118,7 @@ const normalizeErrorCause = (
     return normalizeErrorInternal(cause, depth + 1);
   }
 
-  return String(cause);
+  return toSerializableLogValue(cause);
 };
 
 export const normalizeError = (error: unknown): LogRecord | undefined => {

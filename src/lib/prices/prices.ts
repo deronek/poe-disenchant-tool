@@ -35,11 +35,6 @@ const ItemOverviewResponseSchema = z.object({
 
 type ItemOverviewResponse = z.infer<typeof ItemOverviewResponseSchema>;
 
-type PriceTypeFetchResult = Awaited<
-  ReturnType<typeof getProductionDataForType>
->;
-type PriceTypeFetchFailure = Extract<PriceTypeFetchResult, { ok: false }>;
-
 export type InternalItem = {
   type: AllowedUnique;
   name: string;
@@ -61,6 +56,9 @@ export type PriceFetchContext = {
   resources_failed: string[];
   line_counts_by_resource: Partial<Record<AllowedUnique, number>>;
   status_codes_by_resource: Partial<Record<AllowedUnique, number>>;
+  errors_by_resource: Partial<
+    Record<AllowedUnique, ReturnType<typeof toExternalApiErrorContext>>
+  >;
   item_count: number;
   used_build_fallback: boolean;
   error?: ReturnType<typeof toExternalApiErrorContext>;
@@ -118,6 +116,7 @@ const createSingleTypePriceContext = (
   resources_failed: [type],
   line_counts_by_resource: { [type]: 0 },
   status_codes_by_resource: {},
+  errors_by_resource: {},
   item_count: 0,
   used_build_fallback: false,
   ...overrides,
@@ -278,6 +277,7 @@ const createEmptyPriceContext = (): PriceFetchContext => ({
   resources_failed: [],
   line_counts_by_resource: {},
   status_codes_by_resource: {},
+  errors_by_resource: {},
   item_count: 0,
   used_build_fallback: false,
 });
@@ -303,7 +303,9 @@ const recordFailedTypeFetch = (
 ) => {
   context.resources_failed.push(type);
   context.line_counts_by_resource[type] = 0;
-  context.error ??= toExternalApiErrorContext(error);
+  const errorContext = toExternalApiErrorContext(error);
+  context.errors_by_resource[type] = errorContext;
+  context.error ??= errorContext;
   if (statusCode != null) {
     context.status_codes_by_resource[type] = statusCode;
   }

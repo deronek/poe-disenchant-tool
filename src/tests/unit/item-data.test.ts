@@ -1,5 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
+import { ExternalApiError } from "@/lib/prices/external-api";
+
 vi.mock("server-only", () => ({}));
 vi.mock("next/cache", () => ({
   unstable_cache: (fn: () => unknown) => fn,
@@ -141,6 +143,69 @@ describe("item data wide event logging", () => {
         outcome: "error",
         error: expect.objectContaining({
           message: "prices down",
+        }),
+      }),
+    );
+  });
+
+  it("emits one canonical aggregate error when both upstream fetches fail", async () => {
+    vi.doMock("@/lib/prices", () => ({
+      getPriceData: vi.fn().mockRejectedValue(
+        new ExternalApiError({
+          source: "prices",
+          league: "standard",
+          resource: "UniqueWeapon",
+          kind: "http",
+          message: "prices down",
+          status: 503,
+          context: {
+            price_fetch: {
+              source: "poe.ninja",
+              types_requested: ["UniqueWeapon"],
+              types_completed: [],
+              resources_failed: ["UniqueWeapon"],
+              line_counts_by_resource: { UniqueWeapon: 0 },
+              status_codes_by_resource: { UniqueWeapon: 503 },
+              errors_by_resource: {
+                UniqueWeapon: {
+                  source: "prices",
+                  league: "standard",
+                  resource: "UniqueWeapon",
+                  kind: "http",
+                  status_code: 503,
+                  message: "prices down",
+                },
+              },
+              item_count: 0,
+              used_build_fallback: false,
+            },
+          },
+        }),
+      ),
+      getCurrencyData: vi.fn().mockRejectedValue(
+        new ExternalApiError({
+          source: "currency",
+          league: "standard",
+          resource: "Currency",
+          kind: "network",
+          message: "currency down",
+        }),
+      ),
+    }));
+
+    const { getItems } = await import("@/lib/item-data/item-data");
+
+    await expect(getItems("standard")).rejects.toThrow(
+      "Item data fetch failed",
+    );
+    expect(emitWideEvent).toHaveBeenCalledTimes(1);
+    expect(emitWideEvent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        event_name: "item_data_fetch",
+        outcome: "error",
+        error: expect.objectContaining({
+          name: "AggregateError",
+          message: "Item data fetch failed",
         }),
       }),
     );

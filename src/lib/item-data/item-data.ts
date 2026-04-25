@@ -41,6 +41,37 @@ export type ItemDataStatus = {
 const createUniqueId = (name: string, variant?: string) =>
   `${name}${variant ? `-${variant}` : ""}`;
 
+const attachExternalApiContext = (
+  event: LogRecord,
+  error: ExternalApiError,
+  target: "prices" | "currency",
+) => {
+  const contextKey = target === "prices" ? "price_fetch" : "currency_fetch";
+  const apiContext = error.context?.[contextKey];
+  if (apiContext != null && typeof apiContext === "object") {
+    event[target] = apiContext as LogRecord;
+  }
+};
+
+const attachAggregateExternalApiContexts = (
+  event: LogRecord,
+  error: AggregateError,
+) => {
+  for (const entry of error.errors) {
+    if (!(entry instanceof ExternalApiError)) {
+      continue;
+    }
+
+    if (entry.source === "prices") {
+      attachExternalApiContext(event, entry, "prices");
+    }
+
+    if (entry.source === "currency") {
+      attachExternalApiContext(event, entry, "currency");
+    }
+  }
+};
+
 const uncached__getItems = async (league: League) => {
   const startedAt = Date.now();
   const event: LogRecord = {
@@ -68,17 +99,22 @@ const uncached__getItems = async (league: League) => {
     if (priceResult.status === "fulfilled") {
       event.prices = priceResult.value.context;
     } else if (priceResult.reason instanceof ExternalApiError) {
-      const priceContext = priceResult.reason.context?.price_fetch;
-      if (priceContext != null && typeof priceContext === "object") {
-        event.prices = priceContext as LogRecord;
-      }
+      attachExternalApiContext(event, priceResult.reason, "prices");
     }
 
     if (currencyResult.status === "fulfilled") {
       event.currency = currencyResult.value.context;
+    } else if (currencyResult.reason instanceof ExternalApiError) {
+      attachExternalApiContext(event, currencyResult.reason, "currency");
     }
 
     if (priceResult.status === "rejected") {
+      if (currencyResult.status === "rejected") {
+        throw new AggregateError(
+          [priceResult.reason, currencyResult.reason],
+          "Item data fetch failed",
+        );
+      }
       throw priceResult.reason;
     }
 
@@ -169,10 +205,10 @@ const uncached__getItems = async (league: League) => {
     event.outcome = "error";
     event.message = "Item data fetch failed";
     if (error instanceof ExternalApiError) {
-      const priceContext = error.context?.price_fetch;
-      if (priceContext != null && typeof priceContext === "object") {
-        event.prices = priceContext as LogRecord;
-      }
+      attachExternalApiContext(event, error, "prices");
+      attachExternalApiContext(event, error, "currency");
+    } else if (error instanceof AggregateError) {
+      attachAggregateExternalApiContexts(event, error);
     }
     event.error = normalizeError(error);
     throw error;
