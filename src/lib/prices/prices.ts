@@ -454,6 +454,9 @@ const uncached__getPriceData = async (
     );
     context.item_count = combinedItems.length;
 
+    // Build-time fallback keeps deployment unblocked when the external API is
+    // not ready yet, but runtime refreshes must never replace cached data with
+    // an empty or otherwise invalid dataset.
     if (!isBuildTime && combinedItems.length === 0) {
       throw new ExternalApiError({
         source: "prices",
