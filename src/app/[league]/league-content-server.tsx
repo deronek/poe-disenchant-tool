@@ -2,6 +2,7 @@ import { CurrencyDataStatus } from "@/components/currency-data-status";
 import LastUpdatedClient from "@/components/last-updated";
 import { SharedDataView } from "@/components/shared-data-view";
 import { BASE_URL, getDescriptionWithLeague, TITLE } from "@/lib/constants";
+import { GITHUB_AUTHOR_NAME, GITHUB_AUTHOR_URL } from "@/lib/github";
 import { getItems } from "@/lib/item-data";
 import { getLeagueDatePublished, getLeagueName, League } from "@/lib/leagues";
 
@@ -38,8 +39,8 @@ export default async function LeagueContentServer({
     },
     author: {
       "@type": "Person",
-      name: "deronek",
-      url: "https://github.com/deronek",
+      name: GITHUB_AUTHOR_NAME,
+      url: GITHUB_AUTHOR_URL,
     },
   };
 

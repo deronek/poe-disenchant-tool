@@ -11,6 +11,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { GITHUB_ISSUES_URL } from "@/lib/github";
 
 type CurrencyDataStatusProps = {
   status: ItemDataStatus["currency"];
@@ -72,8 +73,16 @@ const currencyContent = (
         disabled until rates recover.
       </p>
       <p className="text-muted-foreground text-xs leading-relaxed">
-        If this persists, please open an issue on the app&apos;s GitHub
-        repository.
+        If this persists, please{" "}
+        <a
+          href={GITHUB_ISSUES_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary hover:underline"
+        >
+          open an issue on GitHub
+        </a>
+        .
       </p>
     </div>
   </div>

@@ -12,6 +12,11 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { BASE_URL, DESCRIPTION, TITLE } from "@/lib/constants";
+import {
+  GITHUB_AUTHOR_NAME,
+  GITHUB_AUTHOR_TWITTER,
+  GITHUB_AUTHOR_URL,
+} from "@/lib/github";
 import { DEFAULT_LEAGUE } from "@/lib/leagues";
 
 export const metadata: Metadata = {
@@ -33,9 +38,9 @@ export const metadata: Metadata = {
     "PoE 3.28",
     DEFAULT_LEAGUE[0].toUpperCase() + DEFAULT_LEAGUE.slice(1), // Capitalized league name
   ],
-  authors: [{ name: "deronek", url: "https://github.com/deronek" }],
-  creator: "deronek",
-  publisher: "deronek",
+  authors: [{ name: GITHUB_AUTHOR_NAME, url: GITHUB_AUTHOR_URL }],
+  creator: GITHUB_AUTHOR_NAME,
+  publisher: GITHUB_AUTHOR_NAME,
   robots: {
     index: true,
     follow: true,
@@ -55,7 +60,7 @@ export const metadata: Metadata = {
     title: TITLE,
     description: DESCRIPTION,
     images: "/og-image.jpg",
-    creator: "@deronek",
+    creator: GITHUB_AUTHOR_TWITTER,
   },
   alternates: {
     canonical: BASE_URL,

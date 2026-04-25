@@ -1,4 +1,9 @@
 import { TITLE } from "@/lib/constants";
+import {
+  GITHUB_AUTHOR_NAME,
+  GITHUB_AUTHOR_URL,
+  GITHUB_REPO_URL,
+} from "@/lib/github";
 
 export function Footer() {
   return (
@@ -9,18 +14,18 @@ export function Footer() {
             <span className="text-muted-foreground text-sm">
               Created by{" "}
               <a
-                href="https://github.com/deronek"
+                href={GITHUB_AUTHOR_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary transition-colors hover:underline"
-                aria-label="Visit deronek's GitHub profile"
+                aria-label={`Visit ${GITHUB_AUTHOR_NAME}'s GitHub profile`}
               >
-                deronek
+                {GITHUB_AUTHOR_NAME}
               </a>
             </span>
             <span className="text-muted-foreground text-sm">•</span>
             <a
-              href="https://github.com/deronek/poe-disenchant-tool"
+              href={GITHUB_REPO_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors"
