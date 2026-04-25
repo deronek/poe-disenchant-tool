@@ -107,7 +107,15 @@ const getProductionDataForType = async (
   type: AllowedUnique,
   league: League,
   leagueApiName: string,
-): Promise<{ items: InternalItem[]; statusCode?: number }> => {
+): Promise<
+  | { ok: true; items: InternalItem[]; statusCode?: number }
+  | {
+      ok: false;
+      items: [];
+      error: ExternalApiError;
+      statusCode?: number;
+    }
+> => {
   const url = `https://poe.ninja/poe1/api/economy/stash/current/item/overview?type=${encodeURIComponent(type)}&league=${encodeURIComponent(leagueApiName)}`;
   try {
     const response = await fetch(url, {
@@ -161,7 +169,7 @@ const getProductionDataForType = async (
       itemType: line.itemType,
     }));
 
-    return { items, statusCode: response.status };
+    return { ok: true, items, statusCode: response.status };
   } catch (error) {
     const wrappedError =
       error instanceof ExternalApiError
@@ -176,7 +184,7 @@ const getProductionDataForType = async (
           });
 
     if (isBuildTime) {
-      return { items: [] };
+      return { ok: false, items: [], error: wrappedError };
     }
 
     throw wrappedError;
@@ -426,16 +434,24 @@ const uncached__getPriceData = async (
       ),
     );
 
-    allItems.forEach(({ items, statusCode }, index) => {
+    allItems.forEach((result, index) => {
       const type = allTypes[index];
+      if (!result.ok) {
+        context.resources_failed.push(type);
+        context.error ??= toExternalApiErrorContext(result.error);
+        return;
+      }
+
       context.types_completed.push(type);
-      context.line_counts_by_resource[type] = items.length;
-      if (statusCode != null) {
-        context.status_codes_by_resource[type] = statusCode;
+      context.line_counts_by_resource[type] = result.items.length;
+      if (result.statusCode != null) {
+        context.status_codes_by_resource[type] = result.statusCode;
       }
     });
 
-    const combinedItems = allItems.flatMap((entry) => entry.items);
+    const combinedItems = allItems.flatMap((entry) =>
+      entry.ok ? entry.items : [],
+    );
     context.item_count = combinedItems.length;
 
     if (!isBuildTime && combinedItems.length === 0) {
