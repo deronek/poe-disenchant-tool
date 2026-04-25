@@ -138,8 +138,8 @@ export function CurrencyDataStatus({
         ·
       </span>
       <StatusPill content={catalystContent}>
-        <Info className="text-muted-foreground size-3.5 shrink-0" />
-        <span className="text-muted-foreground text-sm">
+        <Info className="size-3.5 shrink-0 text-zinc-600 dark:text-zinc-300" />
+        <span className="text-sm text-zinc-600 dark:text-zinc-300">
           Catalyst price unavailable
         </span>
       </StatusPill>
