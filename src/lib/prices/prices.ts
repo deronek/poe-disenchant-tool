@@ -26,7 +26,7 @@ const ensureValidChaosPrice = (price: number): number => {
 const LineSchema = z.object({
   name: z.string(),
   chaosValue: z.number(),
-  divineValue: z.number(),
+  divineValue: z.number().optional(),
   baseType: z.string(),
   icon: z.url(),
   listingCount: z.int(),
