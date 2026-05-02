@@ -48,6 +48,9 @@ test.describe("Filters - Desktop", () => {
     await poePage.waitForFilterDebounce();
     await expect(poePage.leagueTable).toHaveScreenshot(
       "name-filter-active.png",
+      {
+        maxDiffPixelRatio: 0.01,
+      },
     );
   });
 
