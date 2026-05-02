@@ -73,7 +73,7 @@ const ChaosCell: ColumnDef<Item>["cell"] = function ChaosCellComponent({
   // - We have a threshold available (calculated from divine/chaos rate)
   // - Item has a divine price
   // - Chaos value is above the threshold
-  if (threshold && divineValue > 0 && chaosValue >= threshold) {
+  if (threshold && divineValue && divineValue > 0 && chaosValue >= threshold) {
     const { element: compactDivine, hasCompactSuffix } = renderCompactNumber(
       divineValue,
       compactFormatterPrice,

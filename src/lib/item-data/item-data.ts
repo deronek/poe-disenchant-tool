@@ -15,7 +15,7 @@ export type Item = {
   id: number;
   uniqueId: string;
   chaos: number;
-  divine: number;
+  divine?: number;
   listingCount: number;
   variant?: string;
   calculatedDustValue: number;

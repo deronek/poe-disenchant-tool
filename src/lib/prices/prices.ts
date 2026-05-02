@@ -44,7 +44,7 @@ export type InternalItem = {
   type: AllowedUnique;
   name: string;
   chaos: number;
-  divine: number;
+  divine?: number;
   baseType: string;
   icon: string;
   listingCount: number;
@@ -284,7 +284,7 @@ export const dedupeCheapestVariants = (
       );
 
       // Get the divine price corresponding to the cheapest chaos price
-      let cheapestDivine: number;
+      let cheapestDivine: number | undefined;
       if (cheapestRegular.chaos <= cheapestFoulborn.chaos) {
         cheapestDivine = cheapestRegular.divine;
       } else {
