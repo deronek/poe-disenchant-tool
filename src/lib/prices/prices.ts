@@ -4,17 +4,11 @@ import fs from "fs";
 import path from "path";
 import { z } from "zod";
 
+import type { AllowedUnique } from "./allowed-types";
 import { getLeagueApiName, League } from "../leagues";
 import { isDevelopment } from "../utils-server";
+import { allowedUniqueTypes } from "./allowed-types";
 import { USER_AGENT } from "./utils";
-
-const allowedUniqueTypes = [
-  "UniqueWeapon",
-  "UniqueArmour",
-  "UniqueAccessory",
-] as const;
-
-export type AllowedUnique = (typeof allowedUniqueTypes)[number];
 
 /**
  * Ensures chaos price is always positive
@@ -44,7 +38,7 @@ export type InternalItem = {
   type: AllowedUnique;
   name: string;
   chaos: number;
-  divine: number;
+  divine?: number;
   baseType: string;
   icon: string;
   listingCount: number;
@@ -284,7 +278,7 @@ export const dedupeCheapestVariants = (
       );
 
       // Get the divine price corresponding to the cheapest chaos price
-      let cheapestDivine: number;
+      let cheapestDivine: number | undefined;
       if (cheapestRegular.chaos <= cheapestFoulborn.chaos) {
         cheapestDivine = cheapestRegular.divine;
       } else {
