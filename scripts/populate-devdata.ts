@@ -3,14 +3,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 import { DEFAULT_LEAGUE, LEAGUES } from "@/lib/leagues";
-
-const allowedUniqueTypes = [
-  "UniqueWeapon",
-  "UniqueArmour",
-  "UniqueAccessory",
-] as const;
-
-type AllowedUnique = (typeof allowedUniqueTypes)[number];
+import { allowedUniqueTypes } from "@/lib/prices";
+import type { AllowedUnique } from "@/lib/prices";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

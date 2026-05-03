@@ -7,14 +7,10 @@ import { z } from "zod";
 import { getLeagueApiName, League } from "../leagues";
 import { isDevelopment } from "../utils-server";
 import { USER_AGENT } from "./utils";
-
-const allowedUniqueTypes = [
-  "UniqueWeapon",
-  "UniqueArmour",
-  "UniqueAccessory",
-] as const;
-
-export type AllowedUnique = (typeof allowedUniqueTypes)[number];
+import {
+  allowedUniqueTypes,
+  type AllowedUnique,
+} from "./allowed-types";
 
 /**
  * Ensures chaos price is always positive
