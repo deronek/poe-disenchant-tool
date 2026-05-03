@@ -70,19 +70,7 @@ const currencyContent = (
     <div className="flex flex-col gap-2">
       <p className="leading-relaxed">
         Exchange rate data could not be fetched. Divine price display is
-        disabled until rates recover.
-      </p>
-      <p className="text-muted-foreground text-xs leading-relaxed">
-        If this persists, please{" "}
-        <a
-          href={GITHUB_ISSUES_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-primary hover:underline"
-        >
-          open an issue on GitHub
-        </a>
-        .
+        disabled until rates are available.
       </p>
     </div>
   </div>
