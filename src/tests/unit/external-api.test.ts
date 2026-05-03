@@ -254,7 +254,7 @@ describe("external API error handling", () => {
 
     expect(data.catalyst).toBeNull();
     expect(data.divineRate).toBeNull();
-    expect(context.fallback_activated).toBe(true);
+    expect(context.fetch_failed).toBe(true);
   });
 
   it("keeps currency success but marks missing divine rate", async () => {
@@ -278,6 +278,6 @@ describe("external API error handling", () => {
 
     expect(data.catalyst).toEqual({ id: "abrasive-catalyst", primaryValue: 2 });
     expect(data.divineRate).toBeNull();
-    expect(context.fallback_activated).toBe(false);
+    expect(context.fetch_failed).toBe(false);
   });
 });

@@ -84,9 +84,9 @@ describe("item data wide event logging", () => {
         context: {
           source: "poe_ninja",
           status_code: 200,
+          fetch_failed: false,
           has_catalyst: true,
           has_divine_rate: true,
-          fallback_activated: false,
         },
       }),
     }));
@@ -126,7 +126,7 @@ describe("item data wide event logging", () => {
         },
         context: {
           source: "poe_ninja",
-          fallback_activated: true,
+          fetch_failed: true,
           has_catalyst: false,
           has_divine_rate: false,
         },

@@ -46,9 +46,9 @@ export type CurrencyData = {
 export type CurrencyFetchContext = {
   source: "poe.ninja";
   status_code?: number;
+  fetch_failed: boolean;
   has_catalyst: boolean;
   has_divine_rate: boolean;
-  fallback_activated: boolean;
   error?: ReturnType<typeof toExternalApiErrorContext>;
 };
 
@@ -169,9 +169,9 @@ const uncached__getCurrencyData = async (
       },
       context: {
         source: "poe.ninja",
+        fetch_failed: false,
         has_catalyst: true,
         has_divine_rate: true,
-        fallback_activated: false,
       },
     };
   }
@@ -183,9 +183,9 @@ const uncached__getCurrencyData = async (
       context: {
         source: "poe.ninja",
         status_code: rawData.statusCode,
+        fetch_failed: true,
         has_catalyst: false,
         has_divine_rate: false,
-        fallback_activated: true,
         error: toExternalApiErrorContext(rawData.error),
       },
     };
@@ -197,9 +197,9 @@ const uncached__getCurrencyData = async (
     context: {
       source: "poe.ninja",
       status_code: rawData.statusCode,
+      fetch_failed: false,
       has_catalyst: data.catalyst !== null,
       has_divine_rate: data.divineRate !== null,
-      fallback_activated: false,
     },
   };
 };
