@@ -170,6 +170,7 @@ const getProductionDataForType = async (
         league,
         resource: type,
         kind: "schema",
+        status: response.status,
         message: `Invalid ${type} prices payload for ${leagueApiName}`,
         cause: data.error,
       });
@@ -180,6 +181,7 @@ const getProductionDataForType = async (
         league,
         resource: type,
         kind: "empty-data",
+        status: response.status,
         message: `No ${type} price lines returned for ${leagueApiName}`,
       });
     }
@@ -515,6 +517,8 @@ const uncached__getPriceData = async (
 
     allItems.forEach((result, index) => {
       const type = allTypes[index];
+      // If promise is rejected, there was an issue retrieving that data.
+      // Build-time fallback (pass with no data) is handled below
       if (result.status === "rejected") {
         if (result.reason instanceof ExternalApiError) {
           recordFailedTypeFetch(
@@ -557,7 +561,6 @@ const uncached__getPriceData = async (
     const combinedItems = allItems.flatMap((entry) =>
       entry.status === "fulfilled" && entry.value.ok ? entry.value.items : [],
     );
-    context.item_count = combinedItems.length;
 
     // Build-time fallback keeps deployment unblocked when the external API is
     // not ready yet, but runtime refreshes must never replace cached data with
@@ -573,8 +576,10 @@ const uncached__getPriceData = async (
 
     context.used_build_fallback = isBuildTime && combinedItems.length === 0;
 
+    const publicItems = toPublicItems(combinedItems);
+    context.item_count = publicItems.length;
     return {
-      items: toPublicItems(combinedItems),
+      items: publicItems,
       context,
     };
   } catch (error) {

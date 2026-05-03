@@ -97,6 +97,7 @@ const fetchCurrencyData = async (
           league,
           resource: "Currency",
           kind: "schema",
+          status: response.status,
           message: `Invalid currency payload for ${leagueApiName}`,
           cause: parsed.error,
         }),
@@ -146,6 +147,7 @@ const processCurrencyData = (
     }
   }
 
+  // Get divine rate (null if not available or zero)
   const divineRate = currencyData.core?.rates.divine || null;
 
   return {
