@@ -44,10 +44,9 @@ const createUniqueId = (name: string, variant?: string) =>
 const attachExternalApiContext = (
   event: LogRecord,
   error: ExternalApiError,
-  target: "prices" | "currency",
+  target: "price_fetch" | "currency_fetch",
 ) => {
-  const contextKey = target === "prices" ? "price_fetch" : "currency_fetch";
-  const apiContext = error.context?.[contextKey];
+  const apiContext = error.context?.[target];
   if (apiContext != null && typeof apiContext === "object") {
     event[target] = apiContext as LogRecord;
   }
@@ -63,11 +62,11 @@ const attachAggregateExternalApiContexts = (
     }
 
     if (entry.source === "prices") {
-      attachExternalApiContext(event, entry, "prices");
+      attachExternalApiContext(event, entry, "price_fetch");
     }
 
     if (entry.source === "currency") {
-      attachExternalApiContext(event, entry, "currency");
+      attachExternalApiContext(event, entry, "currency_fetch");
     }
   }
 };
@@ -99,13 +98,13 @@ const uncached__getItems = async (league: League) => {
     if (priceResult.status === "fulfilled") {
       event.prices = priceResult.value.context;
     } else if (priceResult.reason instanceof ExternalApiError) {
-      attachExternalApiContext(event, priceResult.reason, "prices");
+      attachExternalApiContext(event, priceResult.reason, "price_fetch");
     }
 
     if (currencyResult.status === "fulfilled") {
       event.currency = currencyResult.value.context;
     } else if (currencyResult.reason instanceof ExternalApiError) {
-      attachExternalApiContext(event, currencyResult.reason, "currency");
+      attachExternalApiContext(event, currencyResult.reason, "currency_fetch");
     }
 
     if (priceResult.status === "rejected") {
@@ -205,8 +204,8 @@ const uncached__getItems = async (league: League) => {
     event.outcome = "error";
     event.message = "Item data fetch failed";
     if (error instanceof ExternalApiError) {
-      attachExternalApiContext(event, error, "prices");
-      attachExternalApiContext(event, error, "currency");
+      attachExternalApiContext(event, error, "price_fetch");
+      attachExternalApiContext(event, error, "currency_fetch");
     } else if (error instanceof AggregateError) {
       attachAggregateExternalApiContexts(event, error);
     }
