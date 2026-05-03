@@ -531,7 +531,11 @@ const uncached__getPriceData = async (
         return;
       }
 
-      // Build-time fallback path only - production errors are handled by throwing, instead
+      // Build-time fallback path only - production errors are handled by throwing, instead.
+      // We intentionally swallow the per-type failure here and carry it forward in
+      // the aggregate context via resources_failed, errors_by_resource,
+      // status_codes_by_resource, and context.error so logging can get the
+      // degraded result while builds continue.
       if (!result.value.ok) {
         recordFailedTypeFetch(
           context,
@@ -550,12 +554,18 @@ const uncached__getPriceData = async (
       );
     });
 
-    const firstRuntimeFailure = allItems.find(
+    const runtimeFailures = allItems.filter(
+      // Build-time failures are normalized in getProductionDataForType to
+      // fulfilled { ok: false } results so builds can continue with partial or
+      // empty data. Any rejected promise here therefore indicates a runtime
+      // failure.
       (entry): entry is PromiseRejectedResult => entry.status === "rejected",
     );
-    if (firstRuntimeFailure?.reason instanceof ExternalApiError) {
+    if (runtimeFailures.length > 0) {
       context.used_build_fallback = false;
-      throw withAggregatePriceContext(firstRuntimeFailure.reason, context);
+      // Use the first runtime failure as the thrown error identity while the
+      // attached aggregate context carries the full set of per-type failures.
+      throw withAggregatePriceContext(runtimeFailures[0].reason, context);
     }
 
     const combinedItems = allItems.flatMap((entry) =>
