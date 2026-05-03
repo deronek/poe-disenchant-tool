@@ -4,13 +4,11 @@ import fs from "fs";
 import path from "path";
 import { z } from "zod";
 
+import type { AllowedUnique } from "./allowed-types";
 import { getLeagueApiName, League } from "../leagues";
 import { isDevelopment } from "../utils-server";
+import { allowedUniqueTypes } from "./allowed-types";
 import { USER_AGENT } from "./utils";
-import {
-  allowedUniqueTypes,
-  type AllowedUnique,
-} from "./allowed-types";
 
 /**
  * Ensures chaos price is always positive

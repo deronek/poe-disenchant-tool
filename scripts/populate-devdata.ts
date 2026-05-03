@@ -1,10 +1,10 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import type { AllowedUnique } from "@/lib/prices";
 
 import { DEFAULT_LEAGUE, LEAGUES } from "@/lib/leagues";
 import { allowedUniqueTypes } from "@/lib/prices";
-import type { AllowedUnique } from "@/lib/prices";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
