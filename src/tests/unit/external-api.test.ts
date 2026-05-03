@@ -111,7 +111,11 @@ describe("external API error handling", () => {
             UniqueArmour: 0,
             UniqueAccessory: 0,
           },
-          status_codes_by_resource: {},
+          status_codes_by_resource: {
+            UniqueWeapon: 200,
+            UniqueArmour: 200,
+            UniqueAccessory: 200,
+          },
           errors_by_resource: {
             UniqueWeapon: {
               source: "prices",
@@ -303,6 +307,7 @@ describe("external API error handling", () => {
     expect(data.catalyst).toBeNull();
     expect(data.divineRate).toBeNull();
     expect(context.fetch_failed).toBe(true);
+    expect(context.status_code).toBeUndefined();
   });
 
   it("keeps currency success but marks missing divine rate", async () => {
@@ -313,6 +318,7 @@ describe("external API error handling", () => {
       "fetch",
       vi.fn().mockResolvedValue({
         ok: true,
+        status: 200,
         json: vi.fn().mockResolvedValue({
           lines: [{ id: "abrasive-catalyst", primaryValue: 2 }],
           core: { rates: {} },
@@ -327,5 +333,6 @@ describe("external API error handling", () => {
     expect(data.catalyst).toEqual({ id: "abrasive-catalyst", primaryValue: 2 });
     expect(data.divineRate).toBeNull();
     expect(context.fetch_failed).toBe(false);
+    expect(context.status_code).toBe(200);
   });
 });

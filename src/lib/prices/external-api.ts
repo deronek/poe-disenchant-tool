@@ -7,7 +7,7 @@ export type ExternalApiSource = "prices" | "currency";
 
 export type ExternalApiErrorKind = "http" | "network" | "schema" | "empty-data";
 
-type ExternalApiErrorParams = {
+export type ExternalApiErrorParams = {
   source: ExternalApiSource;
   league: League | string;
   resource: string;
@@ -49,9 +49,14 @@ export class ExternalApiError extends Error {
   }
 }
 
+export const createExternalApiError = (
+  params: ExternalApiErrorParams,
+): ExternalApiError => new ExternalApiError(params);
+
 export type ApiSuccess<T> = {
   ok: true;
   data: T;
+  statusCode: number;
 };
 
 export type ApiFailure = {
@@ -60,6 +65,12 @@ export type ApiFailure = {
 };
 
 export type ApiResult<T> = ApiSuccess<T> | ApiFailure;
+
+export const getApiResultStatusCode = <T>(
+  result: ApiResult<T>,
+): number | undefined => {
+  return result.ok ? result.statusCode : result.error.status;
+};
 
 export type ExternalApiErrorContext = {
   source: ExternalApiSource;

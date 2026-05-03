@@ -5,10 +5,16 @@ import path from "path";
 import { z } from "zod";
 
 import type { AllowedUnique } from "./allowed-types";
+import type { ApiResult } from "./external-api";
 import { getLeagueApiName, League } from "../leagues";
 import { isBuildTime, isDevelopment } from "../utils-server";
 import { allowedUniqueTypes } from "./allowed-types";
-import { ExternalApiError, toExternalApiErrorContext } from "./external-api";
+import {
+  createExternalApiError,
+  ExternalApiError,
+  getApiResultStatusCode,
+  toExternalApiErrorContext,
+} from "./external-api";
 import { USER_AGENT } from "./utils";
 
 /**
@@ -120,7 +126,7 @@ const createPriceFetchError = ({
   status?: number;
   cause?: unknown;
 }) => {
-  return new ExternalApiError({
+  return createExternalApiError({
     source: "prices",
     league,
     resource,
@@ -131,25 +137,11 @@ const createPriceFetchError = ({
   });
 };
 
-type PriceFetchSuccess = {
-  ok: true;
-  items: InternalItem[];
-  statusCode?: number;
-};
-
-type PriceFetchFailure = {
-  ok: false;
-  error: ExternalApiError;
-  statusCode?: number;
-};
-
-type PriceFetchResult = PriceFetchSuccess | PriceFetchFailure;
-
 const getProductionDataForType = async (
   type: AllowedUnique,
   league: League,
   leagueApiName: string,
-): Promise<PriceFetchResult> => {
+): Promise<ApiResult<InternalItem[]>> => {
   const url = `https://poe.ninja/poe1/api/economy/stash/current/item/overview?type=${encodeURIComponent(type)}&league=${encodeURIComponent(leagueApiName)}`;
   try {
     const response = await fetch(url, {
@@ -167,7 +159,6 @@ const getProductionDataForType = async (
           status: response.status,
           message: `Failed to fetch ${type} prices for ${leagueApiName}: ${response.status} ${response.statusText}`,
         }),
-        statusCode: response.status,
       };
     }
 
@@ -185,7 +176,6 @@ const getProductionDataForType = async (
           message: `Invalid ${type} prices payload for ${leagueApiName}`,
           cause: data.error,
         }),
-        statusCode: response.status,
       };
     }
 
@@ -199,7 +189,6 @@ const getProductionDataForType = async (
           status: response.status,
           message: `No ${type} price lines returned for ${leagueApiName}`,
         }),
-        statusCode: response.status,
       };
     }
 
@@ -215,20 +204,21 @@ const getProductionDataForType = async (
       itemType: line.itemType,
     }));
 
-    return { ok: true, items, statusCode: response.status };
+    return {
+      ok: true,
+      data: items,
+      statusCode: response.status,
+    };
   } catch (error) {
-    const wrappedError = createPriceFetchError({
-      league,
-      resource: type,
-      kind: "network",
-      message: `Failed to fetch ${type} prices for ${leagueApiName}`,
-      cause: error,
-    });
-
     return {
       ok: false,
-      error: wrappedError,
-      statusCode: wrappedError.status,
+      error: createPriceFetchError({
+        league,
+        resource: type,
+        kind: "network",
+        message: `Failed to fetch ${type} prices for ${leagueApiName}`,
+        cause: error,
+      }),
     };
   }
 };
@@ -288,11 +278,11 @@ const recordFailedTypeFetch = (
 ) => {
   context.resources_failed.push(type);
   context.line_counts_by_resource[type] = 0;
-  const errorContext = toExternalApiErrorContext(error);
-  context.errors_by_resource[type] = errorContext;
   if (statusCode != null) {
     context.status_codes_by_resource[type] = statusCode;
   }
+  const errorContext = toExternalApiErrorContext(error);
+  context.errors_by_resource[type] = errorContext;
 };
 
 const withAggregatePriceContext = (
@@ -530,15 +520,26 @@ const uncached__getPriceData = async (
       // caller is the only place that decides whether to continue (build) or
       // throw (runtime). We still record all failures here so the final context
       // reflects the full degraded state.
-      recordFailedTypeFetch(context, type, result.error, result.statusCode);
+      recordFailedTypeFetch(
+        context,
+        type,
+        result.error,
+        getApiResultStatusCode(result),
+      );
       return;
     }
 
-    recordSuccessfulTypeFetch(context, type, result.items, result.statusCode);
+    recordSuccessfulTypeFetch(
+      context,
+      type,
+      result.data,
+      getApiResultStatusCode(result),
+    );
   });
 
   const failures = allItems.filter(
-    (result): result is PriceFetchFailure => !result.ok,
+    (result): result is Extract<ApiResult<InternalItem[]>, { ok: false }> =>
+      !result.ok,
   );
 
   if (!isBuildTime && failures.length > 0) {
@@ -548,7 +549,7 @@ const uncached__getPriceData = async (
   }
 
   const combinedItems = allItems.flatMap((result) =>
-    result.ok ? result.items : [],
+    result.ok ? result.data : [],
   );
 
   // Build-time fallback keeps deployment unblocked when the external API is

@@ -3,9 +3,14 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 import { z } from "zod";
 
+import type { ApiResult } from "./external-api";
 import { getLeagueApiName, League } from "../leagues";
 import { isDevelopment } from "../utils-server";
-import { ExternalApiError, toExternalApiErrorContext } from "./external-api";
+import {
+  createExternalApiError,
+  getApiResultStatusCode,
+  toExternalApiErrorContext,
+} from "./external-api";
 import { USER_AGENT } from "./utils";
 
 // TypeScript interfaces for poe.ninja API response
@@ -56,20 +61,7 @@ export type CurrencyDataResult = {
   context: CurrencyFetchContext;
 };
 
-type CurrencyFetchSuccess = {
-  ok: true;
-  data: CurrencyOverviewResponse;
-  statusCode?: number;
-};
-
-type CurrencyFetchFailure = {
-  ok: false;
-  context: CurrencyFetchContext;
-};
-
-type CurrencyFetchResult = CurrencyFetchSuccess | CurrencyFetchFailure;
-
-const createCurrencyFetchFailure = ({
+const createCurrencyFetchError = ({
   league,
   status,
   kind,
@@ -81,8 +73,8 @@ const createCurrencyFetchFailure = ({
   kind: "http" | "network" | "schema";
   message: string;
   cause?: unknown;
-}): CurrencyFetchFailure => {
-  const error = new ExternalApiError({
+}) => {
+  return createExternalApiError({
     source: "currency",
     league,
     resource: "Currency",
@@ -91,24 +83,12 @@ const createCurrencyFetchFailure = ({
     message,
     cause,
   });
-
-  return {
-    ok: false,
-    context: {
-      source: "poe.ninja",
-      status_code: status,
-      fetch_failed: true,
-      has_catalyst: false,
-      has_divine_rate: false,
-      error: toExternalApiErrorContext(error),
-    },
-  };
 };
 
 // Fetch currency data from poe.ninja API
 const fetchCurrencyData = async (
   league: League,
-): Promise<CurrencyFetchResult> => {
+): Promise<ApiResult<CurrencyOverviewResponse>> => {
   const leagueApiName = getLeagueApiName(league);
   const url = `https://poe.ninja/poe1/api/economy/exchange/current/overview?league=${encodeURIComponent(leagueApiName)}&type=Currency`;
 
@@ -120,25 +100,31 @@ const fetchCurrencyData = async (
     });
 
     if (!response.ok) {
-      return createCurrencyFetchFailure({
-        league,
-        status: response.status,
-        kind: "http",
-        message: `Failed to fetch currency data for ${leagueApiName}: ${response.status} ${response.statusText}`,
-      });
+      return {
+        ok: false,
+        error: createCurrencyFetchError({
+          league,
+          status: response.status,
+          kind: "http",
+          message: `Failed to fetch currency data for ${leagueApiName}: ${response.status} ${response.statusText}`,
+        }),
+      };
     }
 
     const json = await response.json();
     const parsed = CurrencyOverviewResponseSchema.safeParse(json);
 
     if (!parsed.success) {
-      return createCurrencyFetchFailure({
-        league,
-        status: response.status,
-        kind: "schema",
-        message: `Invalid currency payload for ${leagueApiName}`,
-        cause: parsed.error,
-      });
+      return {
+        ok: false,
+        error: createCurrencyFetchError({
+          league,
+          status: response.status,
+          kind: "schema",
+          message: `Invalid currency payload for ${leagueApiName}`,
+          cause: parsed.error,
+        }),
+      };
     }
 
     return {
@@ -147,12 +133,15 @@ const fetchCurrencyData = async (
       statusCode: response.status,
     };
   } catch (error) {
-    return createCurrencyFetchFailure({
-      league,
-      kind: "network",
-      message: `Failed to fetch currency data for ${leagueApiName}`,
-      cause: error,
-    });
+    return {
+      ok: false,
+      error: createCurrencyFetchError({
+        league,
+        kind: "network",
+        message: `Failed to fetch currency data for ${leagueApiName}`,
+        cause: error,
+      }),
+    };
   }
 };
 
@@ -207,10 +196,10 @@ const uncached__getCurrencyData = async (
       },
       context: {
         source: "poe.ninja",
+        status_code: 200,
         fetch_failed: false,
         has_catalyst: true,
         has_divine_rate: true,
-        status_code: 200,
       },
     };
   }
@@ -219,7 +208,14 @@ const uncached__getCurrencyData = async (
   if (!rawData.ok) {
     return {
       data: { catalyst: null, divineRate: null },
-      context: rawData.context,
+      context: {
+        source: "poe.ninja",
+        status_code: getApiResultStatusCode(rawData),
+        fetch_failed: true,
+        has_catalyst: false,
+        has_divine_rate: false,
+        error: toExternalApiErrorContext(rawData.error),
+      },
     };
   }
 
@@ -228,7 +224,7 @@ const uncached__getCurrencyData = async (
     data,
     context: {
       source: "poe.ninja",
-      status_code: rawData.statusCode,
+      status_code: getApiResultStatusCode(rawData),
       fetch_failed: false,
       has_catalyst: data.catalyst !== null,
       has_divine_rate: data.divineRate !== null,
