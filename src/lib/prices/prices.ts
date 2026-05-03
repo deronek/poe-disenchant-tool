@@ -607,7 +607,9 @@ const uncached__getPriceData = async (
   } catch (error) {
     if (error instanceof ExternalApiError) {
       context.error = toExternalApiErrorContext(error);
-      const resource = allowedUniqueTypes.includes(error.resource as AllowedUnique)
+      const resource = allowedUniqueTypes.includes(
+        error.resource as AllowedUnique,
+      )
         ? (error.resource as AllowedUnique)
         : undefined;
 

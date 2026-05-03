@@ -6,6 +6,7 @@ import { Item as DustItem, getDustData } from "@/lib/dust";
 import { League } from "@/lib/leagues";
 import {
   AllowedUnique,
+  CurrencyData,
   getCurrencyData,
   getPriceData,
   Item as PriceItem,
@@ -107,38 +108,36 @@ const uncached__getItems = async (league: League) => {
       getCurrencyData(league),
     ]);
 
+    let priceData: PriceItem[] | null = null;
+    let currencyData: CurrencyData | null = null;
+    const fetchErrors: unknown[] = [];
+
     if (priceResult.status === "fulfilled") {
       event.prices = priceResult.value.context;
-    } else if (priceResult.reason instanceof ExternalApiError) {
-      attachExternalApiContext(event, priceResult.reason, "price_fetch");
+      priceData = priceResult.value.items;
+    } else {
+      fetchErrors.push(priceResult.reason);
     }
 
     if (currencyResult.status === "fulfilled") {
       event.currency = currencyResult.value.context;
-    } else if (currencyResult.reason instanceof ExternalApiError) {
-      attachExternalApiContext(event, currencyResult.reason, "currency_fetch");
+      currencyData = currencyResult.value.data;
+    } else {
+      fetchErrors.push(currencyResult.reason);
     }
 
-    if (priceResult.status === "rejected") {
-      if (currencyResult.status === "rejected") {
-        const error = new AggregateError(
-          [priceResult.reason, currencyResult.reason],
-          "Item data fetch failed",
-        );
-        attachFetchFailureContext(event, error);
-        throw error;
-      }
-      attachFetchFailureContext(event, priceResult.reason);
-      throw priceResult.reason;
+    if (fetchErrors.length > 0) {
+      const fetchError =
+        fetchErrors.length === 1
+          ? fetchErrors[0]
+          : new AggregateError(fetchErrors, "Item data fetch failed");
+      attachFetchFailureContext(event, fetchError);
+      throw fetchError;
     }
 
-    if (currencyResult.status === "rejected") {
-      attachFetchFailureContext(event, currencyResult.reason);
-      throw currencyResult.reason;
+    if (priceData === null || currencyData === null) {
+      throw new Error("Missing data from at least one source");
     }
-
-    const priceData = priceResult.value.items;
-    const currencyData = currencyResult.value.data;
 
     // Fallback to 1c if no data
     const catalystPrice = currencyData.catalyst
