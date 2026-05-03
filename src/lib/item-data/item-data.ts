@@ -71,6 +71,18 @@ const attachAggregateExternalApiContexts = (
   }
 };
 
+const attachFetchFailureContext = (event: LogRecord, error: unknown) => {
+  if (error instanceof ExternalApiError) {
+    attachExternalApiContext(event, error, "price_fetch");
+    attachExternalApiContext(event, error, "currency_fetch");
+    return;
+  }
+
+  if (error instanceof AggregateError) {
+    attachAggregateExternalApiContexts(event, error);
+  }
+};
+
 const uncached__getItems = async (league: League) => {
   const startedAt = Date.now();
   const event: LogRecord = {
@@ -109,15 +121,19 @@ const uncached__getItems = async (league: League) => {
 
     if (priceResult.status === "rejected") {
       if (currencyResult.status === "rejected") {
-        throw new AggregateError(
+        const error = new AggregateError(
           [priceResult.reason, currencyResult.reason],
           "Item data fetch failed",
         );
+        attachFetchFailureContext(event, error);
+        throw error;
       }
+      attachFetchFailureContext(event, priceResult.reason);
       throw priceResult.reason;
     }
 
     if (currencyResult.status === "rejected") {
+      attachFetchFailureContext(event, currencyResult.reason);
       throw currencyResult.reason;
     }
 
@@ -203,12 +219,6 @@ const uncached__getItems = async (league: League) => {
   } catch (error) {
     event.outcome = "error";
     event.message = "Item data fetch failed";
-    if (error instanceof ExternalApiError) {
-      attachExternalApiContext(event, error, "price_fetch");
-      attachExternalApiContext(event, error, "currency_fetch");
-    } else if (error instanceof AggregateError) {
-      attachAggregateExternalApiContexts(event, error);
-    }
     event.error = normalizeError(error);
     throw error;
   } finally {
