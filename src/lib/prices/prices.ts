@@ -61,7 +61,6 @@ export type PriceFetchContext = {
   >;
   item_count: number;
   used_build_fallback: boolean;
-  error?: ReturnType<typeof toExternalApiErrorContext>;
 };
 
 export type PriceDataResult = {
@@ -296,7 +295,6 @@ const recordFailedTypeFetch = (
   context.line_counts_by_resource[type] = 0;
   const errorContext = toExternalApiErrorContext(error);
   context.errors_by_resource[type] = errorContext;
-  context.error ??= errorContext;
   if (statusCode != null) {
     context.status_codes_by_resource[type] = statusCode;
   }

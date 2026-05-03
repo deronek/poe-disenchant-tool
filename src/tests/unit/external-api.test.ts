@@ -51,15 +51,31 @@ describe("external API error handling", () => {
             UniqueArmour: 503,
             UniqueAccessory: 503,
           },
+          errors_by_resource: {
+            UniqueWeapon: {
+              source: "prices",
+              league: "standard",
+              resource: "UniqueWeapon",
+              kind: "http",
+              status_code: 503,
+            },
+            UniqueArmour: {
+              source: "prices",
+              league: "standard",
+              resource: "UniqueArmour",
+              kind: "http",
+              status_code: 503,
+            },
+            UniqueAccessory: {
+              source: "prices",
+              league: "standard",
+              resource: "UniqueAccessory",
+              kind: "http",
+              status_code: 503,
+            },
+          },
           item_count: 0,
           used_build_fallback: false,
-          error: {
-            source: "prices",
-            league: "standard",
-            resource: "UniqueWeapon",
-            kind: "http",
-            status_code: 503,
-          },
         },
       },
     });
@@ -96,14 +112,28 @@ describe("external API error handling", () => {
             UniqueAccessory: 0,
           },
           status_codes_by_resource: {},
+          errors_by_resource: {
+            UniqueWeapon: {
+              source: "prices",
+              league: "standard",
+              resource: "UniqueWeapon",
+              kind: "schema",
+            },
+            UniqueArmour: {
+              source: "prices",
+              league: "standard",
+              resource: "UniqueArmour",
+              kind: "schema",
+            },
+            UniqueAccessory: {
+              source: "prices",
+              league: "standard",
+              resource: "UniqueAccessory",
+              kind: "schema",
+            },
+          },
           item_count: 0,
           used_build_fallback: false,
-          error: {
-            source: "prices",
-            league: "standard",
-            resource: "UniqueWeapon",
-            kind: "schema",
-          },
         },
       },
     });
@@ -141,15 +171,31 @@ describe("external API error handling", () => {
           UniqueArmour: 503,
           UniqueAccessory: 503,
         },
+        errors_by_resource: {
+          UniqueWeapon: {
+            source: "prices",
+            league: "standard",
+            resource: "UniqueWeapon",
+            kind: "http",
+            status_code: 503,
+          },
+          UniqueArmour: {
+            source: "prices",
+            league: "standard",
+            resource: "UniqueArmour",
+            kind: "http",
+            status_code: 503,
+          },
+          UniqueAccessory: {
+            source: "prices",
+            league: "standard",
+            resource: "UniqueAccessory",
+            kind: "http",
+            status_code: 503,
+          },
+        },
         item_count: 0,
         used_build_fallback: true,
-        error: {
-          source: "prices",
-          league: "standard",
-          resource: "UniqueWeapon",
-          kind: "http",
-          status_code: 503,
-        },
       },
     });
   });
@@ -226,15 +272,17 @@ describe("external API error handling", () => {
           UniqueArmour: 503,
           UniqueAccessory: 200,
         },
+        errors_by_resource: {
+          UniqueArmour: {
+            source: "prices",
+            league: "standard",
+            resource: "UniqueArmour",
+            kind: "http",
+            status_code: 503,
+          },
+        },
         item_count: 2,
         used_build_fallback: false,
-        error: {
-          source: "prices",
-          league: "standard",
-          resource: "UniqueArmour",
-          kind: "http",
-          status_code: 503,
-        },
       },
     });
   });
