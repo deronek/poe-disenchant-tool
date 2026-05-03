@@ -36,7 +36,7 @@ describe("external API error handling", () => {
       kind: "http",
       status: 503,
       context: {
-        price_fetch: {
+        prices: {
           source: "poe.ninja",
           types_requested: ["UniqueWeapon", "UniqueArmour", "UniqueAccessory"],
           types_completed: [],
@@ -85,7 +85,7 @@ describe("external API error handling", () => {
       source: "prices",
       kind: "schema",
       context: {
-        price_fetch: {
+        prices: {
           source: "poe.ninja",
           types_requested: ["UniqueWeapon", "UniqueArmour", "UniqueAccessory"],
           types_completed: [],

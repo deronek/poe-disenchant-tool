@@ -45,7 +45,7 @@ const createUniqueId = (name: string, variant?: string) =>
 const attachExternalApiContext = (
   event: LogRecord,
   error: ExternalApiError,
-  target: "price_fetch" | "currency_fetch",
+  target: "prices" | "currency",
 ) => {
   const apiContext = error.context?.[target];
   if (apiContext != null && typeof apiContext === "object") {
@@ -63,19 +63,19 @@ const attachAggregateExternalApiContexts = (
     }
 
     if (entry.source === "prices") {
-      attachExternalApiContext(event, entry, "price_fetch");
+      attachExternalApiContext(event, entry, "prices");
     }
 
     if (entry.source === "currency") {
-      attachExternalApiContext(event, entry, "currency_fetch");
+      attachExternalApiContext(event, entry, "currency");
     }
   }
 };
 
 const attachFetchFailureContext = (event: LogRecord, error: unknown) => {
   if (error instanceof ExternalApiError) {
-    attachExternalApiContext(event, error, "price_fetch");
-    attachExternalApiContext(event, error, "currency_fetch");
+    attachExternalApiContext(event, error, "prices");
+    attachExternalApiContext(event, error, "currency");
     return;
   }
 

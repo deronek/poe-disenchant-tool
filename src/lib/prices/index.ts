@@ -1,5 +1,5 @@
 import type { AllowedUnique } from "./allowed-types";
-import type { CatalystItem, CurrencyData, CurrencyResultData } from "./currency";
+import type { CatalystItem, CurrencyData } from "./currency";
 import type { Item } from "./prices";
 import { allowedUniqueTypes } from "./allowed-types";
 import { getCurrencyData } from "./currency";
@@ -13,5 +13,4 @@ export {
   getCurrencyData,
   type CatalystItem,
   type CurrencyData,
-  type CurrencyResultData,
 };

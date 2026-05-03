@@ -148,7 +148,7 @@ const createPriceFetchError = ({
     status,
     cause,
     context: {
-      price_fetch: priceContext,
+      prices: priceContext,
     },
   });
 
@@ -325,7 +325,7 @@ const withAggregatePriceContext = (
     cause: error.cause,
     context: {
       ...(error.context ?? {}),
-      price_fetch: context,
+      prices: context,
     },
   });
 

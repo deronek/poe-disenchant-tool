@@ -159,7 +159,7 @@ describe("item data wide event logging", () => {
           message: "prices down",
           status: 503,
           context: {
-            price_fetch: {
+            prices: {
               source: "poe.ninja",
               types_requested: ["UniqueWeapon"],
               types_completed: [],
