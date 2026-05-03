@@ -11,7 +11,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { GITHUB_ISSUES_URL } from "@/lib/github";
 
 type CurrencyDataStatusProps = {
   status: ItemDataStatus["currency"];
