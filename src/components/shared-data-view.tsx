@@ -48,15 +48,13 @@ export function SharedDataView({
   );
 
   return (
-    <div className="space-y-3">
-      <DataTable
-        columns={columns}
-        data={items}
-        advancedSettings={advancedSettings}
-        onAdvancedSettingsChange={setAdvancedSettings}
-        league={league}
-        lowStockThreshold={lowStockThreshold}
-      />
-    </div>
+    <DataTable
+      columns={columns}
+      data={items}
+      advancedSettings={advancedSettings}
+      onAdvancedSettingsChange={setAdvancedSettings}
+      league={league}
+      lowStockThreshold={lowStockThreshold}
+    />
   );
 }
