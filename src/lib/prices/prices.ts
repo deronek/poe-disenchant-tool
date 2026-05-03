@@ -139,7 +139,6 @@ type PriceFetchSuccess = {
 
 type PriceFetchFailure = {
   ok: false;
-  items: [];
   error: ExternalApiError;
   statusCode?: number;
 };
@@ -161,7 +160,6 @@ const getProductionDataForType = async (
     if (!response.ok) {
       return {
         ok: false,
-        items: [],
         error: createPriceFetchError({
           league,
           resource: type,
@@ -179,7 +177,6 @@ const getProductionDataForType = async (
     if (!data.success) {
       return {
         ok: false,
-        items: [],
         error: createPriceFetchError({
           league,
           resource: type,
@@ -195,7 +192,6 @@ const getProductionDataForType = async (
     if (!data.data.lines) {
       return {
         ok: false,
-        items: [],
         error: createPriceFetchError({
           league,
           resource: type,
@@ -231,7 +227,6 @@ const getProductionDataForType = async (
 
     return {
       ok: false,
-      items: [],
       error: wrappedError,
       statusCode: wrappedError.status,
     };

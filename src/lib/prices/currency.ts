@@ -3,7 +3,6 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 import { z } from "zod";
 
-import type { ApiResult } from "./external-api";
 import { getLeagueApiName, League } from "../leagues";
 import { isDevelopment } from "../utils-server";
 import { ExternalApiError, toExternalApiErrorContext } from "./external-api";
@@ -57,10 +56,59 @@ export type CurrencyDataResult = {
   context: CurrencyFetchContext;
 };
 
+type CurrencyFetchSuccess = {
+  ok: true;
+  data: CurrencyOverviewResponse;
+  statusCode?: number;
+};
+
+type CurrencyFetchFailure = {
+  ok: false;
+  context: CurrencyFetchContext;
+};
+
+type CurrencyFetchResult = CurrencyFetchSuccess | CurrencyFetchFailure;
+
+const createCurrencyFetchFailure = ({
+  league,
+  status,
+  kind,
+  message,
+  cause,
+}: {
+  league: League;
+  status?: number;
+  kind: "http" | "network" | "schema";
+  message: string;
+  cause?: unknown;
+}): CurrencyFetchFailure => {
+  const error = new ExternalApiError({
+    source: "currency",
+    league,
+    resource: "Currency",
+    kind,
+    status,
+    message,
+    cause,
+  });
+
+  return {
+    ok: false,
+    context: {
+      source: "poe.ninja",
+      status_code: status,
+      fetch_failed: true,
+      has_catalyst: false,
+      has_divine_rate: false,
+      error: toExternalApiErrorContext(error),
+    },
+  };
+};
+
 // Fetch currency data from poe.ninja API
 const fetchCurrencyData = async (
   league: League,
-): Promise<ApiResult<CurrencyOverviewResponse> & { statusCode?: number }> => {
+): Promise<CurrencyFetchResult> => {
   const leagueApiName = getLeagueApiName(league);
   const url = `https://poe.ninja/poe1/api/economy/exchange/current/overview?league=${encodeURIComponent(leagueApiName)}&type=Currency`;
 
@@ -72,51 +120,39 @@ const fetchCurrencyData = async (
     });
 
     if (!response.ok) {
-      return {
-        ok: false,
-        statusCode: response.status,
-        error: new ExternalApiError({
-          source: "currency",
-          league,
-          resource: "Currency",
-          kind: "http",
-          status: response.status,
-          message: `Failed to fetch currency data for ${leagueApiName}: ${response.status} ${response.statusText}`,
-        }),
-      };
+      return createCurrencyFetchFailure({
+        league,
+        status: response.status,
+        kind: "http",
+        message: `Failed to fetch currency data for ${leagueApiName}: ${response.status} ${response.statusText}`,
+      });
     }
 
     const json = await response.json();
     const parsed = CurrencyOverviewResponseSchema.safeParse(json);
 
     if (!parsed.success) {
-      return {
-        ok: false,
-        error: new ExternalApiError({
-          source: "currency",
-          league,
-          resource: "Currency",
-          kind: "schema",
-          status: response.status,
-          message: `Invalid currency payload for ${leagueApiName}`,
-          cause: parsed.error,
-        }),
-      };
+      return createCurrencyFetchFailure({
+        league,
+        status: response.status,
+        kind: "schema",
+        message: `Invalid currency payload for ${leagueApiName}`,
+        cause: parsed.error,
+      });
     }
 
-    return { ok: true, data: parsed.data, statusCode: response.status };
-  } catch (error) {
     return {
-      ok: false,
-      error: new ExternalApiError({
-        source: "currency",
-        league,
-        resource: "Currency",
-        kind: "network",
-        message: `Failed to fetch currency data for ${leagueApiName}`,
-        cause: error,
-      }),
+      ok: true,
+      data: parsed.data,
+      statusCode: response.status,
     };
+  } catch (error) {
+    return createCurrencyFetchFailure({
+      league,
+      kind: "network",
+      message: `Failed to fetch currency data for ${leagueApiName}`,
+      cause: error,
+    });
   }
 };
 
@@ -183,14 +219,7 @@ const uncached__getCurrencyData = async (
   if (!rawData.ok) {
     return {
       data: { catalyst: null, divineRate: null },
-      context: {
-        source: "poe.ninja",
-        status_code: rawData.statusCode,
-        fetch_failed: true,
-        has_catalyst: false,
-        has_divine_rate: false,
-        error: toExternalApiErrorContext(rawData.error),
-      },
+      context: rawData.context,
     };
   }
 
