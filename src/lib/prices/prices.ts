@@ -106,22 +106,6 @@ const getDevData = async (
   return devDataCache[type];
 };
 
-const createSingleTypePriceContext = (
-  type: AllowedUnique,
-  overrides: Partial<PriceFetchContext> = {},
-): PriceFetchContext => ({
-  source: "poe.ninja",
-  types_requested: [type],
-  types_completed: [],
-  resources_failed: [type],
-  line_counts_by_resource: { [type]: 0 },
-  status_codes_by_resource: {},
-  errors_by_resource: {},
-  item_count: 0,
-  used_build_fallback: false,
-  ...overrides,
-});
-
 const createPriceFetchError = ({
   league,
   resource,
@@ -129,7 +113,6 @@ const createPriceFetchError = ({
   message,
   status,
   cause,
-  priceContext,
 }: {
   league: League;
   resource: string;
@@ -137,9 +120,8 @@ const createPriceFetchError = ({
   message: string;
   status?: number;
   cause?: unknown;
-  priceContext: PriceFetchContext;
-}) =>
-  new ExternalApiError({
+}) => {
+  return new ExternalApiError({
     source: "prices",
     league,
     resource,
@@ -147,10 +129,8 @@ const createPriceFetchError = ({
     message,
     status,
     cause,
-    context: {
-      prices: priceContext,
-    },
   });
+};
 
 const getProductionDataForType = async (
   type: AllowedUnique,
@@ -179,9 +159,6 @@ const getProductionDataForType = async (
         kind: "http",
         status: response.status,
         message: `Failed to fetch ${type} prices for ${leagueApiName}: ${response.status} ${response.statusText}`,
-        priceContext: createSingleTypePriceContext(type, {
-          status_codes_by_resource: { [type]: response.status },
-        }),
       });
     }
 
@@ -195,7 +172,6 @@ const getProductionDataForType = async (
         kind: "schema",
         message: `Invalid ${type} prices payload for ${leagueApiName}`,
         cause: data.error,
-        priceContext: createSingleTypePriceContext(type),
       });
     }
 
@@ -205,7 +181,6 @@ const getProductionDataForType = async (
         resource: type,
         kind: "empty-data",
         message: `No ${type} price lines returned for ${leagueApiName}`,
-        priceContext: createSingleTypePriceContext(type),
       });
     }
 
@@ -232,7 +207,6 @@ const getProductionDataForType = async (
             kind: "network",
             message: `Failed to fetch ${type} prices for ${leagueApiName}`,
             cause: error,
-            priceContext: createSingleTypePriceContext(type),
           });
 
     if (isBuildTime) {
@@ -594,7 +568,6 @@ const uncached__getPriceData = async (
         resource: "all-types",
         kind: "empty-data",
         message: `Price fetch completed with zero items for ${leagueApiName}`,
-        priceContext: context,
       });
     }
 

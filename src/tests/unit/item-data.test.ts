@@ -110,7 +110,7 @@ describe("item data wide event logging", () => {
         }),
         currency: expect.objectContaining({
           source: "poe_ninja",
-          fallback_activated: false,
+          fetch_failed: false,
         }),
       }),
     );
