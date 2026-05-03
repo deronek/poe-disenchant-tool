@@ -162,12 +162,15 @@ async function fetchPoeNinjaData(
   }
 }
 
-function saveDevDataFile(fileName: string, data: DevDataResponse | null): void {
+function saveDevDataFile(
+  fileName: string,
+  data: DevDataResponse | null,
+): boolean {
   const filePath = path.join(OUTPUT_DIR, fileName);
 
   if (data == null) {
     console.warn(`    No data to save for ${fileName}, skipping.`);
-    return;
+    return false;
   }
 
   try {
@@ -180,6 +183,7 @@ function saveDevDataFile(fileName: string, data: DevDataResponse | null): void {
     fs.renameSync(tempFile, filePath);
 
     console.log(`    Saved ${fileName} (${lineCount} items)`);
+    return true;
   } catch (err) {
     console.error(
       `    Error: Failed to save ${fileName}: ${(err as Error).message}`,
@@ -188,6 +192,7 @@ function saveDevDataFile(fileName: string, data: DevDataResponse | null): void {
     if (fs.existsSync(tempFile)) {
       fs.unlinkSync(tempFile);
     }
+    return false;
   }
 }
 
@@ -211,12 +216,16 @@ async function main(): Promise<void> {
     const data = await fetchPoeNinjaData(type, league.apiName);
 
     if (data != null) {
-      saveDevDataFile(fileName, data);
+      const saved = saveDevDataFile(fileName, data);
 
-      if (Array.isArray(data.lines)) {
-        totalItems += data.lines.length;
+      if (saved) {
+        if (Array.isArray(data.lines)) {
+          totalItems += data.lines.length;
+        }
+        totalFiles++;
+      } else {
+        failedRequests++;
       }
-      totalFiles++;
     } else {
       failedRequests++;
     }
