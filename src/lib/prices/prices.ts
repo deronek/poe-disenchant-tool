@@ -53,7 +53,7 @@ export type PriceFetchContext = {
   source: "poe.ninja";
   types_requested: AllowedUnique[];
   types_completed: AllowedUnique[];
-  resources_failed: string[];
+  resources_failed: AllowedUnique[];
   line_counts_by_resource: Partial<Record<AllowedUnique, number>>;
   status_codes_by_resource: Partial<Record<AllowedUnique, number>>;
   errors_by_resource: Partial<
@@ -607,15 +607,17 @@ const uncached__getPriceData = async (
   } catch (error) {
     if (error instanceof ExternalApiError) {
       context.error = toExternalApiErrorContext(error);
-      if (!context.resources_failed.includes(error.resource)) {
-        context.resources_failed.push(error.resource);
-      }
-      if (
-        error.status != null &&
-        allowedUniqueTypes.includes(error.resource as AllowedUnique)
-      ) {
-        context.status_codes_by_resource[error.resource as AllowedUnique] =
-          error.status;
+      const resource = allowedUniqueTypes.includes(error.resource as AllowedUnique)
+        ? (error.resource as AllowedUnique)
+        : undefined;
+
+      if (resource) {
+        if (!context.resources_failed.includes(resource)) {
+          context.resources_failed.push(resource);
+        }
+        if (error.status != null) {
+          context.status_codes_by_resource[resource] = error.status;
+        }
       }
       throw withAggregatePriceContext(error, context);
     }
