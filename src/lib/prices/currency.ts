@@ -174,6 +174,7 @@ const uncached__getCurrencyData = async (
         fetch_failed: false,
         has_catalyst: true,
         has_divine_rate: true,
+        status_code: 200,
       },
     };
   }
