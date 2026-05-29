@@ -543,15 +543,20 @@ const uncached__getPriceData = async (
       !result.ok,
   );
 
+  const combinedItems = allItems.flatMap((result) =>
+    result.ok ? result.data : [],
+  );
+
+  const publicItems = toPublicItems(combinedItems);
+  context.item_count = publicItems.length;
+
+  context.used_build_fallback = isBuildTime && combinedItems.length === 0;
+
   if (!isBuildTime && failures.length > 0) {
     // Runtime refreshes must fail closed (using the first error as an error identity), but the aggregate context already
     // contains every per-type failure for logging and inspection.
     throw withAggregatePriceContext(failures[0].error, context);
   }
-
-  const combinedItems = allItems.flatMap((result) =>
-    result.ok ? result.data : [],
-  );
 
   // Build-time fallback keeps deployment unblocked when the external API is
   // not ready yet, but runtime refreshes must never replace cached data with
@@ -568,10 +573,6 @@ const uncached__getPriceData = async (
     );
   }
 
-  context.used_build_fallback = isBuildTime && combinedItems.length === 0;
-
-  const publicItems = toPublicItems(combinedItems);
-  context.item_count = publicItems.length;
   return {
     items: publicItems,
     context,
