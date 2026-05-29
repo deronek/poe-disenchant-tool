@@ -162,7 +162,23 @@ const getProductionDataForType = async (
       };
     }
 
-    const json = await response.json();
+    let json: unknown;
+
+    try {
+      json = await response.json();
+    } catch (error) {
+      return {
+        ok: false,
+        error: createPriceFetchError({
+          league,
+          resource: type,
+          kind: "schema",
+          status: response.status,
+          message: `Malformed JSON for ${type} prices payload for ${leagueApiName}`,
+          cause: error,
+        }),
+      };
+    }
     const data = ItemOverviewResponseSchema.safeParse(json);
 
     if (!data.success) {
