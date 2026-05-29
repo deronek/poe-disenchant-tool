@@ -333,10 +333,11 @@ const getDevelopmentPriceData = async (): Promise<PriceDataResult> => {
   });
 
   const combinedItems = allItems.flat();
-  context.item_count = combinedItems.length;
+  const publicItems = toPublicItems(combinedItems);
+  context.item_count = publicItems.length;
 
   return {
-    items: toPublicItems(combinedItems),
+    items: publicItems,
     context,
   };
 };
