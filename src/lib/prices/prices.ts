@@ -41,6 +41,8 @@ const ItemOverviewResponseSchema = z.object({
 
 type ItemOverviewResponse = z.infer<typeof ItemOverviewResponseSchema>;
 
+type PriceLine = z.infer<typeof LineSchema>;
+
 export type InternalItem = {
   type: AllowedUnique;
   name: string;
@@ -54,6 +56,21 @@ export type InternalItem = {
 };
 
 export type Item = Omit<InternalItem, "detailsId">;
+
+const toInternalItem = (
+  type: AllowedUnique,
+  line: PriceLine,
+): InternalItem => ({
+  type,
+  name: line.name,
+  chaos: ensureValidChaosPrice(line.chaosValue),
+  divine: line.divineValue,
+  baseType: line.baseType,
+  icon: line.icon,
+  listingCount: line.listingCount,
+  detailsId: line.detailsId,
+  itemType: line.itemType,
+});
 
 export type PriceFetchContext = {
   source: "poe.ninja";
@@ -222,17 +239,9 @@ const getProductionDataForType = async (
       };
     }
 
-    const items: InternalItem[] = data.data.lines.map((line) => ({
-      type,
-      name: line.name,
-      chaos: ensureValidChaosPrice(line.chaosValue),
-      divine: line.divineValue,
-      baseType: line.baseType,
-      icon: line.icon,
-      listingCount: line.listingCount,
-      detailsId: line.detailsId,
-      itemType: line.itemType,
-    }));
+    const items: InternalItem[] = data.data.lines.map((line) =>
+      toInternalItem(type, line),
+    );
 
     return {
       ok: true,
@@ -262,17 +271,7 @@ const getDevDataForType = async (
     return [];
   }
 
-  return data.lines.map((line) => ({
-    type,
-    name: line.name,
-    chaos: ensureValidChaosPrice(line.chaosValue),
-    divine: line.divineValue,
-    baseType: line.baseType,
-    icon: line.icon,
-    listingCount: line.listingCount,
-    detailsId: line.detailsId,
-    itemType: line.itemType,
-  }));
+  return data.lines.map((line) => toInternalItem(type, line));
 };
 
 const toPriceFetchOutcome = (
