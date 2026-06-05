@@ -1,7 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { ExternalApiError } from "@/lib/prices/external-api";
-
 vi.mock("server-only", () => ({}));
 vi.mock("next/cache", () => ({
   unstable_cache: (fn: () => unknown) => fn,
@@ -179,14 +177,46 @@ describe("item data wide event logging", () => {
     );
   });
 
-  it("emits one canonical event before rethrowing upstream price errors", async () => {
+  it("emits one canonical event with price error context and degraded currency context", async () => {
     emitWideEvent.mockRejectedValueOnce(new Error("telemetry down"));
     const consoleError = vi
       .spyOn(console, "error")
       .mockImplementation(() => undefined);
+    const { ExternalApiError } = await import("@/lib/prices/external-api");
 
     vi.doMock("@/lib/prices", () => ({
-      getPriceData: vi.fn().mockRejectedValue(new Error("prices down")),
+      getPriceData: vi.fn().mockRejectedValue(
+        new ExternalApiError({
+          source: "prices",
+          league: "standard",
+          resource: "UniqueWeapon",
+          kind: "http",
+          message: "prices down",
+          status: 503,
+          context: {
+            prices: {
+              source: "poe.ninja",
+              types_requested: ["UniqueWeapon"],
+              types_completed: [],
+              resources_failed: ["UniqueWeapon"],
+              line_counts_by_resource: { UniqueWeapon: 0 },
+              status_codes_by_resource: { UniqueWeapon: 503 },
+              errors_by_resource: {
+                UniqueWeapon: {
+                  source: "prices",
+                  league: "standard",
+                  resource: "UniqueWeapon",
+                  kind: "http",
+                  status_code: 503,
+                  message: "prices down",
+                },
+              },
+              item_count: 0,
+              used_build_fallback: false,
+            },
+          },
+        }),
+      ),
       getCurrencyData: vi.fn().mockResolvedValue({
         data: {
           catalyst: null,
@@ -218,6 +248,12 @@ describe("item data wide event logging", () => {
       expect.objectContaining({
         event_name: "item_data_fetch",
         outcome: "error",
+        prices: expect.objectContaining({
+          source: "poe.ninja",
+          resources_failed: ["UniqueWeapon"],
+          status_codes_by_resource: { UniqueWeapon: 503 },
+          item_count: 0,
+        }),
         currency: expect.objectContaining({
           source: "poe_ninja",
           fetch_failed: true,
@@ -278,6 +314,8 @@ describe("item data wide event logging", () => {
   });
 
   it("emits one canonical aggregate error when both upstream fetches fail", async () => {
+    const { ExternalApiError } = await import("@/lib/prices/external-api");
+
     vi.doMock("@/lib/prices", () => ({
       getPriceData: vi.fn().mockRejectedValue(
         new ExternalApiError({
