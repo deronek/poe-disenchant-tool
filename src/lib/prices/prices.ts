@@ -78,7 +78,7 @@ type PriceFetchOutcome =
   | {
       type: AllowedUnique;
       ok: true;
-      itemCount: number;
+      lineCount: number;
       statusCode?: number;
     }
   | {
@@ -288,7 +288,7 @@ const toPriceFetchOutcome = (
     return { type, ok: false, error: result.error, statusCode };
   }
 
-  return { type, ok: true, itemCount: result.data.length, statusCode };
+  return { type, ok: true, lineCount: result.data.length, statusCode };
 };
 
 const buildPriceFetchContext = ({
@@ -310,7 +310,7 @@ const buildPriceFetchContext = ({
   for (const outcome of outcomes) {
     if (outcome.ok) {
       typesCompleted.push(outcome.type);
-      lineCountsByResource[outcome.type] = outcome.itemCount;
+      lineCountsByResource[outcome.type] = outcome.lineCount;
     } else {
       resourcesFailed.push(outcome.type);
       lineCountsByResource[outcome.type] = 0;
@@ -384,7 +384,7 @@ const getDevelopmentPriceData = async (): Promise<PriceDataResult> => {
     outcomes: allTypes.map((type, index) => ({
       type,
       ok: true,
-      itemCount: allItems[index].length,
+      lineCount: allItems[index].length,
     })),
     itemCount: publicItems.length,
   });
