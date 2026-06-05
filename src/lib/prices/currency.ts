@@ -111,7 +111,23 @@ const fetchCurrencyData = async (
       };
     }
 
-    const json = await response.json();
+    let json: unknown;
+
+    try {
+      json = await response.json();
+    } catch (error) {
+      return {
+        ok: false,
+        error: createCurrencyFetchError({
+          league,
+          status: response.status,
+          kind: "schema",
+          message: `Malformed JSON for currency payload for ${leagueApiName}`,
+          cause: error,
+        }),
+      };
+    }
+
     const parsed = CurrencyOverviewResponseSchema.safeParse(json);
 
     if (!parsed.success) {

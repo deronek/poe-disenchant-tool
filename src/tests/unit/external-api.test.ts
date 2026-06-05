@@ -310,6 +310,39 @@ describe("external API error handling", () => {
     expect(context.status_code).toBeUndefined();
   });
 
+  it("classifies malformed currency JSON as schema failure with preserved status", async () => {
+    vi.resetModules();
+    vi.stubEnv("NODE_ENV", "production");
+
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: true,
+        status: 200,
+        json: vi.fn().mockRejectedValue(new SyntaxError("Unexpected token <")),
+      }),
+    );
+
+    const { getCurrencyData } = await import("@/lib/prices/currency");
+
+    const { data, context } = await getCurrencyData("standard");
+
+    expect(data.catalyst).toBeNull();
+    expect(data.divineRate).toBeNull();
+    expect(context).toMatchObject({
+      fetch_failed: true,
+      status_code: 200,
+      has_catalyst: false,
+      has_divine_rate: false,
+      error: expect.objectContaining({
+        source: "currency",
+        kind: "schema",
+        status_code: 200,
+        message: "Malformed JSON for currency payload for Standard",
+      }),
+    });
+  });
+
   it("keeps currency success but marks missing divine rate", async () => {
     vi.resetModules();
     vi.stubEnv("NODE_ENV", "production");
