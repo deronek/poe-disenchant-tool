@@ -74,6 +74,20 @@ export type PriceDataResult = {
   context: PriceFetchContext;
 };
 
+type PriceFetchOutcome =
+  | {
+      type: AllowedUnique;
+      ok: true;
+      itemCount: number;
+      statusCode?: number;
+    }
+  | {
+      type: AllowedUnique;
+      ok: false;
+      error: ExternalApiError;
+      statusCode?: number;
+    };
+
 // Parse dev data globally in development only
 const devDataCache = {} as Record<AllowedUnique, ItemOverviewResponse>;
 
@@ -261,44 +275,50 @@ const getDevDataForType = async (
   }));
 };
 
-const createEmptyPriceContext = (): PriceFetchContext => ({
-  source: "poe.ninja",
-  types_requested: [...allowedUniqueTypes],
-  types_completed: [],
-  resources_failed: [],
-  line_counts_by_resource: {},
-  status_codes_by_resource: {},
-  errors_by_resource: {},
-  item_count: 0,
-  used_build_fallback: false,
-});
+const buildPriceFetchContext = ({
+  outcomes,
+  itemCount,
+  usedBuildFallback = false,
+}: {
+  outcomes: readonly PriceFetchOutcome[];
+  itemCount: number;
+  usedBuildFallback?: boolean;
+}): PriceFetchContext => {
+  const typesCompleted: AllowedUnique[] = [];
+  const resourcesFailed: AllowedUnique[] = [];
+  const lineCountsByResource: PriceFetchContext["line_counts_by_resource"] = {};
+  const statusCodesByResource: PriceFetchContext["status_codes_by_resource"] =
+    {};
+  const errorsByResource: PriceFetchContext["errors_by_resource"] = {};
 
-const recordSuccessfulTypeFetch = (
-  context: PriceFetchContext,
-  type: AllowedUnique,
-  items: InternalItem[],
-  statusCode?: number,
-) => {
-  context.types_completed.push(type);
-  context.line_counts_by_resource[type] = items.length;
-  if (statusCode != null) {
-    context.status_codes_by_resource[type] = statusCode;
-  }
-};
+  for (const outcome of outcomes) {
+    if (outcome.ok) {
+      typesCompleted.push(outcome.type);
+      lineCountsByResource[outcome.type] = outcome.itemCount;
+    } else {
+      resourcesFailed.push(outcome.type);
+      lineCountsByResource[outcome.type] = 0;
+      errorsByResource[outcome.type] = toExternalApiErrorContext(
+        outcome.error,
+      );
+    }
 
-const recordFailedTypeFetch = (
-  context: PriceFetchContext,
-  type: AllowedUnique,
-  error: ExternalApiError,
-  statusCode?: number,
-) => {
-  context.resources_failed.push(type);
-  context.line_counts_by_resource[type] = 0;
-  if (statusCode != null) {
-    context.status_codes_by_resource[type] = statusCode;
+    if (outcome.statusCode != null) {
+      statusCodesByResource[outcome.type] = outcome.statusCode;
+    }
   }
-  const errorContext = toExternalApiErrorContext(error);
-  context.errors_by_resource[type] = errorContext;
+
+  return {
+    source: "poe.ninja",
+    types_requested: [...allowedUniqueTypes],
+    types_completed: typesCompleted,
+    resources_failed: resourcesFailed,
+    line_counts_by_resource: lineCountsByResource,
+    status_codes_by_resource: statusCodesByResource,
+    errors_by_resource: errorsByResource,
+    item_count: itemCount,
+    used_build_fallback: usedBuildFallback,
+  };
 };
 
 const withAggregatePriceContext = (
@@ -338,19 +358,20 @@ const toPublicItems = (items: InternalItem[]): Item[] => {
 
 const getDevelopmentPriceData = async (): Promise<PriceDataResult> => {
   const allTypes = allowedUniqueTypes as readonly AllowedUnique[];
-  const context = createEmptyPriceContext();
   const allItems = await Promise.all(
     allTypes.map((type) => getDevDataForType(type)),
   );
 
-  allTypes.forEach((type, index) => {
-    context.types_completed.push(type);
-    context.line_counts_by_resource[type] = allItems[index].length;
-  });
-
   const combinedItems = allItems.flat();
   const publicItems = toPublicItems(combinedItems);
-  context.item_count = publicItems.length;
+  const context = buildPriceFetchContext({
+    outcomes: allTypes.map((type, index) => ({
+      type,
+      ok: true,
+      itemCount: allItems[index].length,
+    })),
+    itemCount: publicItems.length,
+  });
 
   return {
     items: publicItems,
@@ -521,38 +542,11 @@ const uncached__getPriceData = async (
 
   const leagueApiName = getLeagueApiName(league);
   const allTypes = allowedUniqueTypes as readonly AllowedUnique[];
-  const context = createEmptyPriceContext();
-
   const allItems = await Promise.all(
     allTypes.map((type) =>
       getProductionDataForType(type, league, leagueApiName),
     ),
   );
-
-  allItems.forEach((result, index) => {
-    const type = allTypes[index];
-
-    if (!result.ok) {
-      // Per-type failures always resolve as { ok: false } so the aggregate
-      // caller is the only place that decides whether to continue (build) or
-      // throw (runtime). We still record all failures here so the final context
-      // reflects the full degraded state.
-      recordFailedTypeFetch(
-        context,
-        type,
-        result.error,
-        getApiResultStatusCode(result),
-      );
-      return;
-    }
-
-    recordSuccessfulTypeFetch(
-      context,
-      type,
-      result.data,
-      getApiResultStatusCode(result),
-    );
-  });
 
   const failures = allItems.filter(
     (result): result is Extract<ApiResult<InternalItem[]>, { ok: false }> =>
@@ -564,9 +558,33 @@ const uncached__getPriceData = async (
   );
 
   const publicItems = toPublicItems(combinedItems);
-  context.item_count = publicItems.length;
+  const context = buildPriceFetchContext({
+    outcomes: allItems.map((result, index) => {
+      const type = allTypes[index];
+      const statusCode = getApiResultStatusCode(result);
 
-  context.used_build_fallback = isBuildTime && combinedItems.length === 0;
+      if (!result.ok) {
+        // Per-type failures always resolve as { ok: false } so the aggregate
+        // caller is the only place that decides whether to continue (build) or
+        // throw (runtime). We still preserve every failure in the final context.
+        return {
+          type,
+          ok: false,
+          error: result.error,
+          statusCode,
+        };
+      }
+
+      return {
+        type,
+        ok: true,
+        itemCount: result.data.length,
+        statusCode,
+      };
+    }),
+    itemCount: publicItems.length,
+    usedBuildFallback: isBuildTime && combinedItems.length === 0,
+  });
 
   if (!isBuildTime && failures.length > 0) {
     // Runtime refreshes must fail closed (using the first error as an error identity), but the aggregate context already
