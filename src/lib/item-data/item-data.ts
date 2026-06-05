@@ -278,7 +278,10 @@ const loadItemDataAttempt = async (
     return {
       ok: true,
       fetchContext,
-      ...buildItemDataResult(priceResult.value.items, currencyResult.value.data),
+      ...buildItemDataResult(
+        priceResult.value.items,
+        currencyResult.value.data,
+      ),
     };
   } catch (error) {
     return {

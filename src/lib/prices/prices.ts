@@ -313,9 +313,7 @@ const buildPriceFetchContext = ({
     } else {
       resourcesFailed.push(outcome.type);
       lineCountsByResource[outcome.type] = 0;
-      errorsByResource[outcome.type] = toExternalApiErrorContext(
-        outcome.error,
-      );
+      errorsByResource[outcome.type] = toExternalApiErrorContext(outcome.error);
     }
 
     if (outcome.statusCode != null) {
