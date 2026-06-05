@@ -275,6 +275,22 @@ const getDevDataForType = async (
   }));
 };
 
+const toPriceFetchOutcome = (
+  result: ApiResult<InternalItem[]>,
+  type: AllowedUnique,
+): PriceFetchOutcome => {
+  const statusCode = getApiResultStatusCode(result);
+
+  if (!result.ok) {
+    // Per-type failures always resolve as { ok: false } so the aggregate
+    // caller is the only place that decides whether to continue (build) or
+    // throw (runtime). We still preserve every failure in the final context.
+    return { type, ok: false, error: result.error, statusCode };
+  }
+
+  return { type, ok: true, itemCount: result.data.length, statusCode };
+};
+
 const buildPriceFetchContext = ({
   outcomes,
   itemCount,
@@ -559,29 +575,9 @@ const uncached__getPriceData = async (
 
   const publicItems = toPublicItems(combinedItems);
   const context = buildPriceFetchContext({
-    outcomes: allItems.map((result, index) => {
-      const type = allTypes[index];
-      const statusCode = getApiResultStatusCode(result);
-
-      if (!result.ok) {
-        // Per-type failures always resolve as { ok: false } so the aggregate
-        // caller is the only place that decides whether to continue (build) or
-        // throw (runtime). We still preserve every failure in the final context.
-        return {
-          type,
-          ok: false,
-          error: result.error,
-          statusCode,
-        };
-      }
-
-      return {
-        type,
-        ok: true,
-        itemCount: result.data.length,
-        statusCode,
-      };
-    }),
+    outcomes: allItems.map((result, index) =>
+      toPriceFetchOutcome(result, allTypes[index]),
+    ),
     itemCount: publicItems.length,
     usedBuildFallback: isBuildTime && combinedItems.length === 0,
   });
