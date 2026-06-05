@@ -291,6 +291,37 @@ describe("external API error handling", () => {
     });
   });
 
+  it("returns development price context with an explicit empty status-code map", async () => {
+    vi.resetModules();
+    vi.stubEnv("NODE_ENV", "development");
+
+    const fetch = vi.fn();
+    vi.stubGlobal("fetch", fetch);
+
+    const { getPriceData } = await import("@/lib/prices/prices");
+
+    await expect(getPriceData("standard")).resolves.toMatchObject({
+      items: expect.any(Array),
+      context: {
+        source: "poe.ninja",
+        types_requested: ["UniqueWeapon", "UniqueArmour", "UniqueAccessory"],
+        types_completed: ["UniqueWeapon", "UniqueArmour", "UniqueAccessory"],
+        resources_failed: [],
+        line_counts_by_resource: {
+          UniqueWeapon: expect.any(Number),
+          UniqueArmour: expect.any(Number),
+          UniqueAccessory: expect.any(Number),
+        },
+        status_codes_by_resource: {},
+        errors_by_resource: {},
+        item_count: expect.any(Number),
+        used_build_fallback: false,
+      },
+    });
+
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
   it("returns degraded currency status with fallback defaults", async () => {
     vi.resetModules();
     vi.stubEnv("NODE_ENV", "production");
