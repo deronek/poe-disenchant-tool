@@ -40,6 +40,69 @@ beforeEach(() => {
 });
 
 describe("item data wide event logging", () => {
+  it("keeps successful item data responses when telemetry emission fails", async () => {
+    emitWideEvent.mockRejectedValueOnce(new Error("telemetry down"));
+    const consoleError = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => undefined);
+
+    vi.doMock("@/lib/prices", () => ({
+      getPriceData: vi.fn().mockResolvedValue({
+        items: [
+          {
+            type: "UniqueWeapon",
+            name: "Known Item",
+            chaos: 10,
+            divine: 0.05,
+            baseType: "Base",
+            icon: "https://example.com/item.png",
+            listingCount: 5,
+            itemType: "Weapon",
+          },
+        ],
+        context: {
+          source: "poe_ninja",
+          types_requested: ["UniqueWeapon", "UniqueArmour", "UniqueAccessory"],
+          types_completed: ["UniqueWeapon", "UniqueArmour", "UniqueAccessory"],
+          resources_failed: [],
+          line_counts_by_resource: { UniqueWeapon: 1 },
+          status_codes_by_resource: { UniqueWeapon: 200 },
+          item_count: 1,
+          used_build_fallback: false,
+        },
+      }),
+      getCurrencyData: vi.fn().mockResolvedValue({
+        data: {
+          catalyst: { id: "abrasive-catalyst", primaryValue: 2 },
+          divineRate: 0.005,
+        },
+        context: {
+          source: "poe_ninja",
+          status_code: 200,
+          fetch_failed: false,
+          has_catalyst: true,
+          has_divine_rate: true,
+        },
+      }),
+    }));
+
+    const { getItems } = await import("@/lib/item-data/item-data");
+
+    await expect(getItems("standard")).resolves.toMatchObject({
+      items: [expect.objectContaining({ name: "Known Item" })],
+    });
+    expect(emitWideEvent).toHaveBeenCalledTimes(1);
+    expect(consoleError).toHaveBeenCalledWith(
+      "Failed to emit item_data_fetch telemetry",
+      expect.objectContaining({ message: "telemetry down" }),
+      expect.objectContaining({
+        event_name: "item_data_fetch",
+        league: "standard",
+        outcome: "success",
+      }),
+    );
+  });
+
   it("emits one canonical event on success with embedded prices and currency context", async () => {
     vi.doMock("@/lib/prices", () => ({
       getPriceData: vi.fn().mockResolvedValue({
@@ -117,6 +180,11 @@ describe("item data wide event logging", () => {
   });
 
   it("emits one canonical event before rethrowing upstream price errors", async () => {
+    emitWideEvent.mockRejectedValueOnce(new Error("telemetry down"));
+    const consoleError = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => undefined);
+
     vi.doMock("@/lib/prices", () => ({
       getPriceData: vi.fn().mockRejectedValue(new Error("prices down")),
       getCurrencyData: vi.fn().mockResolvedValue({
@@ -137,6 +205,15 @@ describe("item data wide event logging", () => {
 
     await expect(getItems("standard")).rejects.toThrow("prices down");
     expect(emitWideEvent).toHaveBeenCalledTimes(1);
+    expect(consoleError).toHaveBeenCalledWith(
+      "Failed to emit item_data_fetch telemetry",
+      expect.objectContaining({ message: "telemetry down" }),
+      expect.objectContaining({
+        event_name: "item_data_fetch",
+        league: "standard",
+        outcome: "error",
+      }),
+    );
     expect(emitWideEvent).toHaveBeenCalledWith(
       expect.objectContaining({
         event_name: "item_data_fetch",

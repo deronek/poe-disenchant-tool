@@ -222,7 +222,19 @@ const uncached__getItems = async (league: League) => {
     throw error;
   } finally {
     event.duration_ms = Date.now() - startedAt;
-    await emitWideEvent(event);
+    try {
+      await emitWideEvent(event);
+    } catch (telemetryError) {
+      console.error(
+        "Failed to emit item_data_fetch telemetry",
+        telemetryError,
+        {
+          event_name: event.event_name,
+          league,
+          outcome: event.outcome,
+        },
+      );
+    }
   }
 };
 
