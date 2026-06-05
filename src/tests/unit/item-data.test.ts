@@ -218,8 +218,60 @@ describe("item data wide event logging", () => {
       expect.objectContaining({
         event_name: "item_data_fetch",
         outcome: "error",
+        currency: expect.objectContaining({
+          source: "poe_ninja",
+          fetch_failed: true,
+        }),
         error: expect.objectContaining({
           message: "prices down",
+        }),
+      }),
+    );
+  });
+
+  it("emits one canonical event before rethrowing upstream currency errors", async () => {
+    vi.doMock("@/lib/prices", () => ({
+      getPriceData: vi.fn().mockResolvedValue({
+        items: [
+          {
+            type: "UniqueWeapon",
+            name: "Known Item",
+            chaos: 10,
+            divine: 0.05,
+            baseType: "Base",
+            icon: "https://example.com/item.png",
+            listingCount: 5,
+            itemType: "Weapon",
+          },
+        ],
+        context: {
+          source: "poe_ninja",
+          types_requested: ["UniqueWeapon", "UniqueArmour", "UniqueAccessory"],
+          types_completed: ["UniqueWeapon", "UniqueArmour", "UniqueAccessory"],
+          resources_failed: [],
+          line_counts_by_resource: { UniqueWeapon: 1 },
+          status_codes_by_resource: { UniqueWeapon: 200 },
+          item_count: 1,
+          used_build_fallback: false,
+        },
+      }),
+      getCurrencyData: vi.fn().mockRejectedValue(new Error("currency down")),
+    }));
+
+    const { getItems } = await import("@/lib/item-data/item-data");
+
+    await expect(getItems("standard")).rejects.toThrow("currency down");
+    expect(emitWideEvent).toHaveBeenCalledTimes(1);
+    expect(emitWideEvent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        event_name: "item_data_fetch",
+        outcome: "error",
+        prices: expect.objectContaining({
+          source: "poe_ninja",
+          item_count: 1,
+        }),
+        error: expect.objectContaining({
+          message: "currency down",
         }),
       }),
     );

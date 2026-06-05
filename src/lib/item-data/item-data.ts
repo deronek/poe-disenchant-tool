@@ -6,7 +6,6 @@ import { Item as DustItem, getDustData } from "@/lib/dust";
 import { League } from "@/lib/leagues";
 import {
   AllowedUnique,
-  CurrencyData,
   getCurrencyData,
   getPriceData,
   Item as PriceItem,
@@ -39,203 +38,319 @@ export type ItemDataStatus = {
   };
 };
 
+type PriceDataResult = Awaited<ReturnType<typeof getPriceData>>;
+
+type CurrencyDataResult = Awaited<ReturnType<typeof getCurrencyData>>;
+
+type PriceDataFetchResult = PromiseSettledResult<PriceDataResult>;
+
+type CurrencyDataFetchResult = PromiseSettledResult<CurrencyDataResult>;
+
+type ItemDataResult = {
+  items: Item[];
+  lastUpdated: number;
+  lowStockThreshold: number;
+  divinePriceThreshold: number | null;
+  dataStatus: ItemDataStatus;
+};
+
+type ItemDataFetchContext = {
+  prices: PriceDataResult["context"] | Record<string, never>;
+  currency: CurrencyDataResult["context"] | Record<string, never>;
+};
+
+type ItemDataFetchResults = {
+  priceResult: PriceDataFetchResult;
+  currencyResult: CurrencyDataFetchResult;
+};
+
+type ItemDataBuildStats = {
+  itemCount: number;
+  missingDustCount: number;
+  missingDustExamples: string[];
+  ignoredItemCount: number;
+  lowStockThreshold: number;
+  divinePriceThreshold: number | null;
+  usedDefaultCatalystPrice: boolean;
+};
+
+type ItemDataBuildResult = {
+  data: ItemDataResult;
+  stats: ItemDataBuildStats;
+};
+
+type ItemDataLoadAttempt =
+  | ({
+      ok: true;
+      fetchContext: ItemDataFetchContext;
+    } & ItemDataBuildResult)
+  | {
+      ok: false;
+      error: unknown;
+      fetchContext: ItemDataFetchContext;
+    };
+
+const emptyFetchContext: Record<string, never> = {};
+
 const createUniqueId = (name: string, variant?: string) =>
   `${name}${variant ? `-${variant}` : ""}`;
 
-const attachExternalApiContext = (
-  event: LogRecord,
-  error: ExternalApiError,
+const getRejectedFetchContext = <TContext extends object>(
+  error: unknown,
   target: "prices" | "currency",
-) => {
-  const apiContext = error.context?.[target];
-  if (apiContext != null && typeof apiContext === "object") {
-    event[target] = apiContext as LogRecord;
+): TContext | Record<string, never> => {
+  if (!(error instanceof ExternalApiError)) {
+    return emptyFetchContext;
   }
+
+  const context = error.context?.[target];
+  if (context != null && typeof context === "object") {
+    return context as TContext;
+  }
+
+  return emptyFetchContext;
 };
 
-const attachAggregateExternalApiContexts = (
-  event: LogRecord,
-  error: AggregateError,
-) => {
-  for (const entry of error.errors) {
-    if (!(entry instanceof ExternalApiError)) {
-      continue;
-    }
+const fetchItemDataResults = async (
+  league: League,
+): Promise<ItemDataFetchResults> => {
+  const [priceResult, currencyResult] = await Promise.allSettled([
+    getPriceData(league),
+    getCurrencyData(league),
+  ]);
 
-    if (entry.source === "prices") {
-      attachExternalApiContext(event, entry, "prices");
-    }
-
-    if (entry.source === "currency") {
-      attachExternalApiContext(event, entry, "currency");
-    }
-  }
-};
-
-const attachFetchFailureContext = (event: LogRecord, error: unknown) => {
-  if (error instanceof ExternalApiError) {
-    attachExternalApiContext(event, error, "prices");
-    attachExternalApiContext(event, error, "currency");
-    return;
-  }
-
-  if (error instanceof AggregateError) {
-    attachAggregateExternalApiContexts(event, error);
-  }
-};
-
-const uncached__getItems = async (league: League) => {
-  const startedAt = Date.now();
-  const event: LogRecord = {
-    event_name: "item_data_fetch",
-    message: "Item data fetch completed",
-    operation: "getItems",
-    league,
-    outcome: "success",
-    prices: {},
-    currency: {},
+  return {
+    priceResult,
+    currencyResult,
   };
+};
 
+const getItemDataFetchContext = ({
+  priceResult,
+  currencyResult,
+}: ItemDataFetchResults): ItemDataFetchContext => ({
+  prices:
+    priceResult.status === "fulfilled"
+      ? priceResult.value.context
+      : getRejectedFetchContext<PriceDataResult["context"]>(
+          priceResult.reason,
+          "prices",
+        ),
+  currency:
+    currencyResult.status === "fulfilled"
+      ? currencyResult.value.context
+      : getRejectedFetchContext<CurrencyDataResult["context"]>(
+          currencyResult.reason,
+          "currency",
+        ),
+});
+
+const createItemDataFetchError = ({
+  priceResult,
+  currencyResult,
+}: ItemDataFetchResults): unknown => {
+  const errors = [
+    ...(priceResult.status === "rejected" ? [priceResult.reason] : []),
+    ...(currencyResult.status === "rejected" ? [currencyResult.reason] : []),
+  ];
+
+  if (errors.length === 0) {
+    throw new Error("Item data fetch error requires at least one rejection");
+  }
+
+  return errors.length === 1
+    ? errors[0]
+    : new AggregateError(errors, "Item data fetch failed");
+};
+
+const buildItemDataResult = (
+  priceData: PriceDataResult["items"],
+  currencyData: CurrencyDataResult["data"],
+): ItemDataBuildResult => {
   const dustData = getDustData();
   const dustMap = new Map(dustData.map((d) => [d.name, d]));
   const missingDustExamples: string[] = [];
   let missingDustCount = 0;
   let ignoredItemCount = 0;
 
-  try {
-    const [priceResult, currencyResult] = await Promise.allSettled([
-      getPriceData(league),
-      getCurrencyData(league),
-    ]);
+  // Fallback to 1c when catalyst data is unavailable.
+  const catalystPrice = currencyData.catalyst
+    ? currencyData.catalyst.primaryValue
+    : 1;
 
-    let priceData: PriceItem[] | null = null;
-    let currencyData: CurrencyData | null = null;
-    const fetchErrors: unknown[] = [];
+  // Threshold is 1 divine worth of chaos (divineRate is divines per 1 chaos).
+  const divinePriceThreshold = currencyData.divineRate
+    ? Math.round(1 / currencyData.divineRate)
+    : null;
 
-    if (priceResult.status === "fulfilled") {
-      event.prices = priceResult.value.context;
-      priceData = priceResult.value.items;
-    } else {
-      fetchErrors.push(priceResult.reason);
+  const merged: Item[] = [];
+  let id = 0;
+
+  for (const priceItem of priceData) {
+    if (ITEMS_TO_IGNORE.includes(priceItem.name)) {
+      ignoredItemCount += 1;
+      continue;
     }
 
-    if (currencyResult.status === "fulfilled") {
-      event.currency = currencyResult.value.context;
-      currencyData = currencyResult.value.data;
-    } else {
-      fetchErrors.push(currencyResult.reason);
-    }
-
-    if (fetchErrors.length > 0) {
-      const fetchError =
-        fetchErrors.length === 1
-          ? fetchErrors[0]
-          : new AggregateError(fetchErrors, "Item data fetch failed");
-      attachFetchFailureContext(event, fetchError);
-      throw fetchError;
-    }
-
-    if (priceData === null || currencyData === null) {
-      throw new Error("Missing data from at least one source");
-    }
-
-    // Fallback to 1c if no data
-    const catalystPrice = currencyData.catalyst
-      ? currencyData.catalyst.primaryValue
-      : 1;
-
-    // Threshold is 1 divine worth of chaos (divineRate is divines per 1 chaos)
-    const divinePriceThreshold = currencyData.divineRate
-      ? Math.round(1 / currencyData.divineRate)
-      : null;
-
-    const merged: Item[] = [];
-    let id = 0;
-
-    for (const priceItem of priceData) {
-      if (ITEMS_TO_IGNORE.includes(priceItem.name)) {
-        ignoredItemCount += 1;
-        continue;
+    const dustItem = dustMap.get(priceItem.name);
+    if (dustItem === undefined) {
+      missingDustCount += 1;
+      if (missingDustExamples.length < 10) {
+        missingDustExamples.push(priceItem.name);
       }
-      const dustItem = dustMap.get(priceItem.name);
-
-      if (dustItem === undefined) {
-        missingDustCount += 1;
-        if (missingDustExamples.length < 10) {
-          missingDustExamples.push(priceItem.name);
-        }
-        continue;
-      }
-
-      const {
-        dustValue: calculatedDustValue,
-        dustPerChaos,
-        catalyst: shouldCatalyst,
-        qualityType,
-      } = calculateDustEfficiency(priceItem, dustItem, catalystPrice);
-
-      merged.push({
-        id: id++,
-        uniqueId: createUniqueId(priceItem.name, priceItem.baseType),
-        name: priceItem.name,
-        chaos: priceItem.chaos,
-        divine: priceItem.divine,
-        listingCount: priceItem.listingCount,
-        variant: priceItem.baseType,
-        calculatedDustValue,
-        dustPerChaos: Math.round(dustPerChaos),
-        slots: dustItem.slots,
-        dustPerChaosPerSlot: Math.round(dustPerChaos / dustItem.slots),
-        goldCost: dustItem.goldCost,
-        type: priceItem.type,
-        icon: priceItem.icon,
-        shouldCatalyst: shouldCatalyst,
-        qualityType,
-      });
+      continue;
     }
 
-    // Calculate p10 of listingCounts
-    const lowStockThreshold = calculateLowStockThreshold(merged);
-    event.item_count = merged.length;
-    event.missing_dust_count = missingDustCount;
-    event.missing_dust_examples = missingDustExamples;
-    event.ignored_item_count = ignoredItemCount;
-    event.low_stock_threshold = lowStockThreshold;
-    event.divine_price_threshold = divinePriceThreshold;
-    event.currency_fallback_used = currencyData.catalyst === null;
+    const {
+      dustValue: calculatedDustValue,
+      dustPerChaos,
+      catalyst: shouldCatalyst,
+      qualityType,
+    } = calculateDustEfficiency(priceItem, dustItem, catalystPrice);
 
-    return {
+    merged.push({
+      id: id++,
+      uniqueId: createUniqueId(priceItem.name, priceItem.baseType),
+      name: priceItem.name,
+      chaos: priceItem.chaos,
+      divine: priceItem.divine,
+      listingCount: priceItem.listingCount,
+      variant: priceItem.baseType,
+      calculatedDustValue,
+      dustPerChaos: Math.round(dustPerChaos),
+      slots: dustItem.slots,
+      dustPerChaosPerSlot: Math.round(dustPerChaos / dustItem.slots),
+      goldCost: dustItem.goldCost,
+      type: priceItem.type,
+      icon: priceItem.icon,
+      shouldCatalyst,
+      qualityType,
+    });
+  }
+
+  const lowStockThreshold = calculateLowStockThreshold(merged);
+  const usedDefaultCatalystPrice = currencyData.catalyst === null;
+  const lastUpdated = Date.now();
+
+  return {
+    data: {
       items: merged,
-      lastUpdated: Date.now(),
+      lastUpdated,
       lowStockThreshold,
       divinePriceThreshold,
       dataStatus: {
         currency: {
-          usedDefaultCatalystPrice: currencyData.catalyst === null,
+          usedDefaultCatalystPrice,
         },
       } satisfies ItemDataStatus,
+    },
+    stats: {
+      itemCount: merged.length,
+      missingDustCount,
+      missingDustExamples,
+      ignoredItemCount,
+      lowStockThreshold,
+      divinePriceThreshold,
+      usedDefaultCatalystPrice,
+    },
+  };
+};
+
+const loadItemDataAttempt = async (
+  league: League,
+): Promise<ItemDataLoadAttempt> => {
+  const fetchResults = await fetchItemDataResults(league);
+  const { priceResult, currencyResult } = fetchResults;
+  const fetchContext = getItemDataFetchContext(fetchResults);
+
+  if (
+    priceResult.status !== "fulfilled" ||
+    currencyResult.status !== "fulfilled"
+  ) {
+    return {
+      ok: false,
+      error: createItemDataFetchError(fetchResults),
+      fetchContext,
+    };
+  }
+
+  try {
+    return {
+      ok: true,
+      fetchContext,
+      ...buildItemDataResult(priceResult.value.items, currencyResult.value.data),
     };
   } catch (error) {
-    event.outcome = "error";
-    event.message = "Item data fetch failed";
-    event.error = normalizeError(error);
-    throw error;
-  } finally {
-    event.duration_ms = Date.now() - startedAt;
-    try {
-      await emitWideEvent(event);
-    } catch (telemetryError) {
-      console.error(
-        "Failed to emit item_data_fetch telemetry",
-        telemetryError,
-        {
-          event_name: event.event_name,
-          league,
-          outcome: event.outcome,
-        },
-      );
-    }
+    return {
+      ok: false,
+      error,
+      fetchContext,
+    };
   }
+};
+
+const emitItemDataFetchEventSafely = async ({
+  league,
+  durationMs,
+  attempt,
+}: {
+  league: League;
+  durationMs: number;
+  attempt: ItemDataLoadAttempt;
+}): Promise<void> => {
+  const outcome = attempt.ok ? "success" : "error";
+  const event: LogRecord = {
+    event_name: "item_data_fetch",
+    message:
+      outcome === "success"
+        ? "Item data fetch completed"
+        : "Item data fetch failed",
+    operation: "getItems",
+    league,
+    outcome,
+    duration_ms: durationMs,
+    prices: attempt.fetchContext.prices,
+    currency: attempt.fetchContext.currency,
+  };
+
+  if (attempt.ok) {
+    event.item_count = attempt.stats.itemCount;
+    event.missing_dust_count = attempt.stats.missingDustCount;
+    event.missing_dust_examples = attempt.stats.missingDustExamples;
+    event.ignored_item_count = attempt.stats.ignoredItemCount;
+    event.low_stock_threshold = attempt.stats.lowStockThreshold;
+    event.divine_price_threshold = attempt.stats.divinePriceThreshold;
+    event.currency_fallback_used = attempt.stats.usedDefaultCatalystPrice;
+  } else {
+    event.error = normalizeError(attempt.error);
+  }
+
+  try {
+    await emitWideEvent(event);
+  } catch (telemetryError) {
+    console.error("Failed to emit item_data_fetch telemetry", telemetryError, {
+      event_name: "item_data_fetch",
+      league,
+      outcome,
+    });
+  }
+};
+
+const uncached__getItems = async (league: League): Promise<ItemDataResult> => {
+  const startedAt = Date.now();
+  const attempt = await loadItemDataAttempt(league);
+
+  await emitItemDataFetchEventSafely({
+    league,
+    durationMs: Date.now() - startedAt,
+    attempt,
+  });
+
+  if (!attempt.ok) {
+    throw attempt.error;
+  }
+
+  return attempt.data;
 };
 
 function isQuiver(item: PriceItem) {
@@ -293,15 +408,15 @@ function calculateDustEfficiency(
       catalyst: true,
       qualityType: "q20",
     };
-  } else {
-    // Quality up is not worth it
-    return {
-      dustValue: dustItem.dustValIlvl84,
-      dustPerChaos: defaultDustPerChaos,
-      catalyst: false,
-      qualityType: "q0",
-    };
   }
+
+  // Quality up is not worth it
+  return {
+    dustValue: dustItem.dustValIlvl84,
+    dustPerChaos: defaultDustPerChaos,
+    catalyst: false,
+    qualityType: "q0",
+  };
 }
 
 /**
