@@ -68,8 +68,8 @@ const currencyContent = (
     </div>
     <div className="flex flex-col gap-2">
       <p className="leading-relaxed">
-        Exchange rate data could not be fetched. Divine price display is
-        disabled until rates are available.
+        Exchange rate data is not available. Divine price display is disabled
+        until rates are available.
       </p>
     </div>
   </div>
