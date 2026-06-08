@@ -28,6 +28,7 @@ vi.mock("@/lib/dust", () => ({
 }));
 
 afterEach(() => {
+  vi.restoreAllMocks();
   vi.clearAllMocks();
   vi.unstubAllGlobals();
   vi.unstubAllEnvs();
