@@ -1,5 +1,6 @@
 import type { LogRecord } from "@/lib/axiom/server";
 import { unstable_cache } from "next/cache";
+import { after } from "next/server";
 
 import { emitWideEvent, normalizeError } from "@/lib/axiom/server";
 import { Item as DustItem, getDustData } from "@/lib/dust";
@@ -273,6 +274,20 @@ const emitItemDataFetchEventSafely = async ({
   }
 };
 
+const scheduleItemDataFetchEvent = (payload: {
+  league: League;
+  durationMs: number;
+  fetchContext: ItemDataFetchContext;
+  stats?: ItemDataBuildStats;
+  error?: unknown;
+}) => {
+  // `getItems()` only runs from the main league-route RSC path. Using
+  // `after()` keeps telemetry off the render/prerender path while still using
+  // Next/Vercel waitUntil semantics, so the background flush can finish before
+  // the invocation fully closes.
+  after(() => emitItemDataFetchEventSafely(payload));
+};
+
 const uncached__getItems = async (league: League): Promise<ItemDataResult> => {
   const startedAt = Date.now();
   const [priceResult, currencyResult] = await Promise.allSettled([
@@ -294,7 +309,7 @@ const uncached__getItems = async (league: League): Promise<ItemDataResult> => {
       currencyResult.value.data,
     );
 
-    await emitItemDataFetchEventSafely({
+    scheduleItemDataFetchEvent({
       league,
       durationMs: Date.now() - startedAt,
       fetchContext,
@@ -303,7 +318,7 @@ const uncached__getItems = async (league: League): Promise<ItemDataResult> => {
 
     return result.data;
   } catch (error) {
-    await emitItemDataFetchEventSafely({
+    scheduleItemDataFetchEvent({
       league,
       durationMs: Date.now() - startedAt,
       fetchContext,

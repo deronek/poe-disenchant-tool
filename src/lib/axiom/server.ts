@@ -79,5 +79,8 @@ export const emitWideEvent = async (event: WideEvent) => {
     String(payload.message ?? payload.event_name ?? "event"),
     payload,
   );
+  // Callers that care about render latency should schedule this with
+  // Next's `after()` hook. We still await the transport flush here so the
+  // scheduled background task is durable before the serverless invocation ends.
   await logger.flush();
 };
