@@ -29,10 +29,26 @@ type WideEvent = LogRecord & {
 
 const dataset = process.env.AXIOM_DATASET;
 
+const createAxiomTransport = () => {
+  const configuredDataset = dataset;
+  const configuredAxiom = axiom;
+
+  if (!configuredDataset || configuredAxiom == null) {
+    return null;
+  }
+
+  return new AxiomJSTransport({
+    axiom: configuredAxiom,
+    dataset: configuredDataset,
+  });
+};
+
+const axiomTransport = createAxiomTransport();
+
 export const logger = new Logger(
-  dataset
+  axiomTransport
     ? {
-        transports: [new AxiomJSTransport({ axiom, dataset })],
+        transports: [axiomTransport],
         formatters: nextJsFormatters,
       }
     : {
