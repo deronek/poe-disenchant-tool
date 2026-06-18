@@ -172,9 +172,11 @@ describe("item data wide event logging", () => {
       expect.objectContaining({
         event_name: "item_data_fetch",
         outcome: "success",
-        item_count: 1,
-        missing_dust_count: 1,
-        missing_dust_examples: ["Missing Dust Item"],
+        item_data: expect.objectContaining({
+          item_count: 1,
+          missing_dust_count: 1,
+          missing_dust_examples: ["Missing Dust Item"],
+        }),
         prices: expect.objectContaining({
           source: "poe_ninja",
           item_count: 2,
