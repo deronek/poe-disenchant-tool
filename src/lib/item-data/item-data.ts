@@ -36,6 +36,7 @@ export type Item = {
 export type ItemDataStatus = {
   currency: {
     usedDefaultCatalystPrice: boolean;
+    usedDefaultDivineRate: boolean;
   };
 };
 
@@ -64,6 +65,7 @@ type ItemDataBuildStats = {
   lowStockThreshold: number;
   divinePriceThreshold: number | null;
   usedDefaultCatalystPrice: boolean;
+  usedDefaultDivineRate: boolean;
 };
 
 type ItemDataBuildResult = {
@@ -197,6 +199,7 @@ const buildItemDataResult = (
 
   const lowStockThreshold = calculateLowStockThreshold(merged);
   const usedDefaultCatalystPrice = currencyData.catalyst === null;
+  const usedDefaultDivineRate = currencyData.divineRate === null;
   const lastUpdated = Date.now();
 
   return {
@@ -208,6 +211,7 @@ const buildItemDataResult = (
       dataStatus: {
         currency: {
           usedDefaultCatalystPrice,
+          usedDefaultDivineRate,
         },
       } satisfies ItemDataStatus,
     },
@@ -219,6 +223,7 @@ const buildItemDataResult = (
       lowStockThreshold,
       divinePriceThreshold,
       usedDefaultCatalystPrice,
+      usedDefaultDivineRate,
     },
   };
 };
@@ -258,7 +263,8 @@ const emitItemDataFetchEventSafely = async ({
     event.ignored_item_count = stats.ignoredItemCount;
     event.low_stock_threshold = stats.lowStockThreshold;
     event.divine_price_threshold = stats.divinePriceThreshold;
-    event.currency_fallback_used = stats.usedDefaultCatalystPrice;
+    event.catalyst_fallback_used = stats.usedDefaultCatalystPrice;
+    event.divine_rate_fallback_used = stats.usedDefaultDivineRate;
   } else {
     event.error = normalizeError(error);
   }

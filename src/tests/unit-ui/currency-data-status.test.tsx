@@ -8,15 +8,14 @@ const CATALYST_MESSAGE = "Catalyst price unavailable";
 
 function renderStatus({
   usedDefaultCatalystPrice = false,
-  divinePriceThreshold = 160,
+  usedDefaultDivineRate = false,
 }: {
   usedDefaultCatalystPrice?: boolean;
-  divinePriceThreshold?: number | null;
+  usedDefaultDivineRate?: boolean;
 }) {
   return render(
     <CurrencyDataStatus
-      status={{ usedDefaultCatalystPrice }}
-      divinePriceThreshold={divinePriceThreshold}
+      status={{ usedDefaultCatalystPrice, usedDefaultDivineRate }}
     />,
   );
 }
@@ -56,7 +55,7 @@ describe("CurrencyDataStatus", () => {
   it.each([
     {
       name: "renders only the currency pill when currency data is degraded",
-      props: { divinePriceThreshold: null },
+      props: { usedDefaultDivineRate: true },
       expected: { currencyVisible: true, catalystVisible: false },
     },
     {
@@ -66,7 +65,7 @@ describe("CurrencyDataStatus", () => {
     },
     {
       name: "renders both pills when both data sources are degraded",
-      props: { usedDefaultCatalystPrice: true, divinePriceThreshold: null },
+      props: { usedDefaultCatalystPrice: true, usedDefaultDivineRate: true },
       expected: { currencyVisible: true, catalystVisible: true },
     },
     {

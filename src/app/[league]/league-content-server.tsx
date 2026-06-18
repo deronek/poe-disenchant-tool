@@ -54,10 +54,7 @@ export default async function LeagueContentServer({
       />
       <div className="font-italic text-muted-foreground inline-flex flex-wrap items-center gap-x-2 text-sm">
         <LastUpdatedClient timestamp={lastUpdated} />
-        <CurrencyDataStatus
-          status={dataStatus.currency}
-          divinePriceThreshold={divinePriceThreshold}
-        />
+        <CurrencyDataStatus status={dataStatus.currency} />
       </div>
       <section className="py-1">
         <SharedDataView

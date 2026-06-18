@@ -14,7 +14,6 @@ import {
 
 type CurrencyDataStatusProps = {
   status: ItemDataStatus["currency"];
-  divinePriceThreshold: number | null;
 };
 
 type PillProps = {
@@ -94,12 +93,9 @@ const catalystContent = (
   </div>
 );
 
-export function CurrencyDataStatus({
-  status,
-  divinePriceThreshold,
-}: CurrencyDataStatusProps) {
+export function CurrencyDataStatus({ status }: CurrencyDataStatusProps) {
   const catalystDegraded = status.usedDefaultCatalystPrice;
-  const currencyDegraded = divinePriceThreshold === null;
+  const currencyDegraded = status.usedDefaultDivineRate;
 
   if (!catalystDegraded && !currencyDegraded) {
     return null;
