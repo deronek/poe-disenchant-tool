@@ -29,10 +29,26 @@ type WideEvent = LogRecord & {
 
 const dataset = process.env.AXIOM_DATASET;
 
+const createAxiomTransport = () => {
+  const configuredDataset = dataset;
+  const configuredAxiom = axiom;
+
+  if (!configuredDataset || configuredAxiom == null) {
+    return null;
+  }
+
+  return new AxiomJSTransport({
+    axiom: configuredAxiom,
+    dataset: configuredDataset,
+  });
+};
+
+const axiomTransport = createAxiomTransport();
+
 export const logger = new Logger(
-  dataset
+  axiomTransport
     ? {
-        transports: [new AxiomJSTransport({ axiom, dataset })],
+        transports: [axiomTransport],
         formatters: nextJsFormatters,
       }
     : {
@@ -79,5 +95,8 @@ export const emitWideEvent = async (event: WideEvent) => {
     String(payload.message ?? payload.event_name ?? "event"),
     payload,
   );
+  // Callers that care about render latency should schedule this with
+  // Next's `after()` hook. We still await the transport flush here so the
+  // scheduled background task is durable before the serverless invocation ends.
   await logger.flush();
 };

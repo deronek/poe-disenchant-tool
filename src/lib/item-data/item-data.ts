@@ -1,5 +1,6 @@
 import type { LogRecord } from "@/lib/axiom/server";
 import { unstable_cache } from "next/cache";
+import { after } from "next/server";
 
 import { emitWideEvent, normalizeError } from "@/lib/axiom/server";
 import { Item as DustItem, getDustData } from "@/lib/dust";
@@ -42,10 +43,6 @@ type PriceDataResult = Awaited<ReturnType<typeof getPriceData>>;
 
 type CurrencyDataResult = Awaited<ReturnType<typeof getCurrencyData>>;
 
-type PriceDataFetchResult = PromiseSettledResult<PriceDataResult>;
-
-type CurrencyDataFetchResult = PromiseSettledResult<CurrencyDataResult>;
-
 type ItemDataResult = {
   items: Item[];
   lastUpdated: number;
@@ -57,11 +54,6 @@ type ItemDataResult = {
 type ItemDataFetchContext = {
   prices: PriceDataResult["context"] | Record<string, never>;
   currency: CurrencyDataResult["context"] | Record<string, never>;
-};
-
-type ItemDataFetchResults = {
-  priceResult: PriceDataFetchResult;
-  currencyResult: CurrencyDataFetchResult;
 };
 
 type ItemDataBuildStats = {
@@ -78,17 +70,6 @@ type ItemDataBuildResult = {
   data: ItemDataResult;
   stats: ItemDataBuildStats;
 };
-
-type ItemDataLoadAttempt =
-  | ({
-      ok: true;
-      fetchContext: ItemDataFetchContext;
-    } & ItemDataBuildResult)
-  | {
-      ok: false;
-      error: unknown;
-      fetchContext: ItemDataFetchContext;
-    };
 
 const emptyFetchContext: Record<string, never> = {};
 
@@ -111,24 +92,10 @@ const getRejectedFetchContext = <TContext extends object>(
   return emptyFetchContext;
 };
 
-const fetchItemDataResults = async (
-  league: League,
-): Promise<ItemDataFetchResults> => {
-  const [priceResult, currencyResult] = await Promise.allSettled([
-    getPriceData(league),
-    getCurrencyData(league),
-  ]);
-
-  return {
-    priceResult,
-    currencyResult,
-  };
-};
-
-const getItemDataFetchContext = ({
-  priceResult,
-  currencyResult,
-}: ItemDataFetchResults): ItemDataFetchContext => ({
+const createItemDataFetchContext = (
+  priceResult: PromiseSettledResult<PriceDataResult>,
+  currencyResult: PromiseSettledResult<CurrencyDataResult>,
+): ItemDataFetchContext => ({
   prices:
     priceResult.status === "fulfilled"
       ? priceResult.value.context
@@ -145,10 +112,10 @@ const getItemDataFetchContext = ({
         ),
 });
 
-const createItemDataFetchError = ({
-  priceResult,
-  currencyResult,
-}: ItemDataFetchResults): unknown => {
+const createItemDataFetchError = (
+  priceResult: PromiseSettledResult<PriceDataResult>,
+  currencyResult: PromiseSettledResult<CurrencyDataResult>,
+): unknown => {
   const errors = [
     ...(priceResult.status === "rejected" ? [priceResult.reason] : []),
     ...(currencyResult.status === "rejected" ? [currencyResult.reason] : []),
@@ -256,52 +223,20 @@ const buildItemDataResult = (
   };
 };
 
-const loadItemDataAttempt = async (
-  league: League,
-): Promise<ItemDataLoadAttempt> => {
-  const fetchResults = await fetchItemDataResults(league);
-  const { priceResult, currencyResult } = fetchResults;
-  const fetchContext = getItemDataFetchContext(fetchResults);
-
-  if (
-    priceResult.status !== "fulfilled" ||
-    currencyResult.status !== "fulfilled"
-  ) {
-    return {
-      ok: false,
-      error: createItemDataFetchError(fetchResults),
-      fetchContext,
-    };
-  }
-
-  try {
-    return {
-      ok: true,
-      fetchContext,
-      ...buildItemDataResult(
-        priceResult.value.items,
-        currencyResult.value.data,
-      ),
-    };
-  } catch (error) {
-    return {
-      ok: false,
-      error,
-      fetchContext,
-    };
-  }
-};
-
 const emitItemDataFetchEventSafely = async ({
   league,
   durationMs,
-  attempt,
+  fetchContext,
+  stats,
+  error,
 }: {
   league: League;
   durationMs: number;
-  attempt: ItemDataLoadAttempt;
+  fetchContext: ItemDataFetchContext;
+  stats?: ItemDataBuildStats;
+  error?: unknown;
 }): Promise<void> => {
-  const outcome = attempt.ok ? "success" : "error";
+  const outcome = error === undefined ? "success" : "error";
   const event: LogRecord = {
     event_name: "item_data_fetch",
     message:
@@ -312,20 +247,20 @@ const emitItemDataFetchEventSafely = async ({
     league,
     outcome,
     duration_ms: durationMs,
-    prices: attempt.fetchContext.prices,
-    currency: attempt.fetchContext.currency,
+    prices: fetchContext.prices,
+    currency: fetchContext.currency,
   };
 
-  if (attempt.ok) {
-    event.item_count = attempt.stats.itemCount;
-    event.missing_dust_count = attempt.stats.missingDustCount;
-    event.missing_dust_examples = attempt.stats.missingDustExamples;
-    event.ignored_item_count = attempt.stats.ignoredItemCount;
-    event.low_stock_threshold = attempt.stats.lowStockThreshold;
-    event.divine_price_threshold = attempt.stats.divinePriceThreshold;
-    event.currency_fallback_used = attempt.stats.usedDefaultCatalystPrice;
+  if (stats !== undefined) {
+    event.item_count = stats.itemCount;
+    event.missing_dust_count = stats.missingDustCount;
+    event.missing_dust_examples = stats.missingDustExamples;
+    event.ignored_item_count = stats.ignoredItemCount;
+    event.low_stock_threshold = stats.lowStockThreshold;
+    event.divine_price_threshold = stats.divinePriceThreshold;
+    event.currency_fallback_used = stats.usedDefaultCatalystPrice;
   } else {
-    event.error = normalizeError(attempt.error);
+    event.error = normalizeError(error);
   }
 
   try {
@@ -339,21 +274,59 @@ const emitItemDataFetchEventSafely = async ({
   }
 };
 
+const scheduleItemDataFetchEvent = (payload: {
+  league: League;
+  durationMs: number;
+  fetchContext: ItemDataFetchContext;
+  stats?: ItemDataBuildStats;
+  error?: unknown;
+}) => {
+  // `getItems()` only runs from the main league-route RSC path. Using
+  // `after()` keeps telemetry off the render/prerender path while still using
+  // Next/Vercel waitUntil semantics, so the background flush can finish before
+  // the invocation fully closes.
+  after(() => emitItemDataFetchEventSafely(payload));
+};
+
 const uncached__getItems = async (league: League): Promise<ItemDataResult> => {
   const startedAt = Date.now();
-  const attempt = await loadItemDataAttempt(league);
+  const [priceResult, currencyResult] = await Promise.allSettled([
+    getPriceData(league),
+    getCurrencyData(league),
+  ]);
+  const fetchContext = createItemDataFetchContext(priceResult, currencyResult);
 
-  await emitItemDataFetchEventSafely({
-    league,
-    durationMs: Date.now() - startedAt,
-    attempt,
-  });
+  try {
+    if (
+      priceResult.status !== "fulfilled" ||
+      currencyResult.status !== "fulfilled"
+    ) {
+      throw createItemDataFetchError(priceResult, currencyResult);
+    }
 
-  if (!attempt.ok) {
-    throw attempt.error;
+    const result = buildItemDataResult(
+      priceResult.value.items,
+      currencyResult.value.data,
+    );
+
+    scheduleItemDataFetchEvent({
+      league,
+      durationMs: Date.now() - startedAt,
+      fetchContext,
+      stats: result.stats,
+    });
+
+    return result.data;
+  } catch (error) {
+    scheduleItemDataFetchEvent({
+      league,
+      durationMs: Date.now() - startedAt,
+      fetchContext,
+      error,
+    });
+
+    throw error;
   }
-
-  return attempt.data;
 };
 
 function isQuiver(item: PriceItem) {

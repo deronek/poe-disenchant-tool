@@ -576,18 +576,28 @@ const uncached__getPriceData = async (
       toPriceFetchOutcome(result, allTypes[index]),
     ),
     itemCount: publicItems.length,
+    // `used_build_fallback` marks the fully empty build-time fallback case.
+    // Partial build-time degradation is still intentional and is represented by
+    // `resources_failed` plus the per-resource status/error maps in `context`.
     usedBuildFallback: isBuildTime && combinedItems.length === 0,
   });
 
   if (!isBuildTime && failures.length > 0) {
-    // Runtime refreshes must fail closed (using the first error as an error identity), but the aggregate context already
-    // contains every per-type failure for logging and inspection.
+    // Build-time prerendering intentionally keeps any successful upstream
+    // resources so page generation is never blocked on partial poe.ninja
+    // availability.
+    //
+    // Runtime refreshes are stricter: any missing price resource fails the
+    // refresh so Next keeps serving the last good cached/prerendered page
+    // instead of overwriting it with partial data. We still attach the full
+    // aggregate failure context for logging and inspection.
     throw withAggregatePriceContext(failures[0].error, context);
   }
 
-  // Build-time fallback keeps deployment unblocked when the external API is
-  // not ready yet, but runtime refreshes must never replace cached data with
-  // an empty or otherwise invalid dataset.
+  // The fully empty build-time fallback is also intentional so deployment and
+  // prerender can complete even when the third-party API is completely down.
+  // Runtime refreshes must fail closed here for the same reason as partial
+  // failures above: never replace an existing cached page with no data.
   if (!isBuildTime && combinedItems.length === 0) {
     throw withAggregatePriceContext(
       createPriceFetchError({

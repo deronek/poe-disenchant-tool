@@ -4,6 +4,15 @@ vi.mock("server-only", () => ({}));
 vi.mock("next/cache", () => ({
   unstable_cache: (fn: () => unknown) => fn,
 }));
+vi.mock("next/server", () => ({
+  after: (task: Promise<unknown> | (() => unknown)) => {
+    if (typeof task === "function") {
+      return task();
+    }
+
+    return task;
+  },
+}));
 
 const emitWideEvent = vi.fn().mockResolvedValue(undefined);
 
