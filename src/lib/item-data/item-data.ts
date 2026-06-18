@@ -257,14 +257,16 @@ const emitItemDataFetchEventSafely = async ({
   };
 
   if (stats !== undefined) {
-    event.item_count = stats.itemCount;
-    event.missing_dust_count = stats.missingDustCount;
-    event.missing_dust_examples = stats.missingDustExamples;
-    event.ignored_item_count = stats.ignoredItemCount;
-    event.low_stock_threshold = stats.lowStockThreshold;
-    event.divine_price_threshold = stats.divinePriceThreshold;
-    event.catalyst_fallback_used = stats.usedDefaultCatalystPrice;
-    event.divine_rate_fallback_used = stats.usedDefaultDivineRate;
+    event.item_data = {
+      item_count: stats.itemCount,
+      missing_dust_count: stats.missingDustCount,
+      missing_dust_examples: stats.missingDustExamples,
+      ignored_item_count: stats.ignoredItemCount,
+      low_stock_threshold: stats.lowStockThreshold,
+      divine_price_threshold: stats.divinePriceThreshold,
+      catalyst_fallback_used: stats.usedDefaultCatalystPrice,
+      divine_rate_fallback_used: stats.usedDefaultDivineRate,
+    };
   } else {
     event.error = normalizeError(error);
   }
