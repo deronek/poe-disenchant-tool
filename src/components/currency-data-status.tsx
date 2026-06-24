@@ -1,0 +1,167 @@
+import type { ItemDataStatus } from "@/lib/item-data";
+import { AlertTriangle, Info, Orbit, TrendingDown } from "lucide-react";
+
+import { ChaosOrbIcon } from "@/components/icons";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+type CurrencyDataStatusProps = {
+  status: ItemDataStatus["currency"];
+};
+
+type PillDefinition = {
+  key: "currency" | "catalyst";
+  content: React.ReactNode;
+};
+
+type PillProps = {
+  children: React.ReactNode;
+  content: React.ReactNode;
+};
+
+function Separator() {
+  return <span className="text-muted-foreground/50 select-none">·</span>;
+}
+
+function StatusPill({ children, content }: PillProps) {
+  return (
+    <>
+      {/* Desktop lg+: tooltip */}
+      <span className="hidden items-center lg:inline-flex">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <span className="inline-flex cursor-help items-center gap-1">
+              {children}
+            </span>
+          </TooltipTrigger>
+          <TooltipContent
+            side="bottom"
+            variant="popover"
+            className="max-w-xs text-sm text-wrap"
+          >
+            {content}
+          </TooltipContent>
+        </Tooltip>
+      </span>
+
+      {/* Mobile: popover */}
+      <span className="inline-flex items-center lg:hidden">
+        <Popover>
+          <PopoverTrigger asChild>
+            <span className="inline-flex cursor-pointer items-center gap-1">
+              {children}
+            </span>
+          </PopoverTrigger>
+          <PopoverContent className="max-w-xs text-sm">
+            {content}
+          </PopoverContent>
+        </Popover>
+      </span>
+    </>
+  );
+}
+
+const currencyContent = (
+  <div className="flex flex-col gap-3">
+    <div className="flex items-center gap-2">
+      <TrendingDown className="size-4 text-amber-600 dark:text-amber-400" />
+      <h4 className="text-sm font-semibold">Currency Rates Unavailable</h4>
+    </div>
+    <div className="flex flex-col gap-2">
+      <p className="leading-relaxed">
+        Exchange rate data is not available. Divine price display is disabled
+        until rates are available.
+      </p>
+    </div>
+  </div>
+);
+
+const catalystContent = (
+  <div className="flex flex-col gap-3">
+    <div className="flex items-center gap-2">
+      <Orbit className="size-4 text-blue-500 dark:text-blue-400" />
+      <h4 className="text-sm font-semibold">Catalyst Price Unavailable</h4>
+    </div>
+    <div className="flex flex-col gap-2">
+      <p className="leading-relaxed">
+        Current catalyst market prices are unavailable. Dust per chaos
+        calculations are assuming a catalyst costs 1 <ChaosOrbIcon size={14} />.
+      </p>
+      <p className="text-muted-foreground text-xs leading-relaxed">
+        Values may be slightly off for items where catalyst investment is
+        considered.
+      </p>
+    </div>
+  </div>
+);
+
+export function CurrencyDataStatus({ status }: CurrencyDataStatusProps) {
+  const catalystDegraded = status.usedDefaultCatalystPrice;
+  const currencyDegraded = status.usedDefaultDivineRate;
+
+  if (!catalystDegraded && !currencyDegraded) {
+    return null;
+  }
+
+  const visiblePills: PillDefinition[] = [];
+
+  if (currencyDegraded) {
+    visiblePills.push({
+      key: "currency",
+      content: (
+        <StatusPill content={currencyContent}>
+          <AlertTriangle className="size-3.5 shrink-0 text-amber-600 dark:text-amber-500" />
+          <span className="text-sm text-amber-600 dark:text-amber-500">
+            Currency rates unavailable
+          </span>
+        </StatusPill>
+      ),
+    });
+  }
+
+  if (catalystDegraded) {
+    visiblePills.push({
+      key: "catalyst",
+      content: (
+        <StatusPill content={catalystContent}>
+          <Info className="size-3.5 shrink-0 text-zinc-600 dark:text-zinc-300" />
+          <span className="text-sm text-zinc-600 dark:text-zinc-300">
+            Catalyst price unavailable
+          </span>
+        </StatusPill>
+      ),
+    });
+  }
+
+  const renderedPills = visiblePills.map((pill) => (
+    <span
+      key={pill.key}
+      className="inline-flex items-center gap-2 whitespace-nowrap"
+    >
+      <Separator />
+      {pill.content}
+    </span>
+  ));
+
+  if (renderedPills.length > 1) {
+    // Both pills: wrap them in a single flex item so they travel together
+    // relative to "Last updated", but can still wrap onto separate lines
+    // internally at the very smallest screens.
+    return (
+      <span className="inline-flex flex-wrap items-center gap-2">
+        {renderedPills}
+      </span>
+    );
+  }
+
+  // Single pill: use contents so it's a direct flex item in the parent row
+  return <span className="contents">{renderedPills[0]}</span>;
+}
