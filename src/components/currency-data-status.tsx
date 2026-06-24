@@ -1,6 +1,7 @@
 import type { ItemDataStatus } from "@/lib/item-data";
 import { AlertTriangle, Info, Orbit, TrendingDown } from "lucide-react";
 
+import { ChaosOrbIcon } from "@/components/icons";
 import {
   Popover,
   PopoverContent,
@@ -83,7 +84,7 @@ const catalystContent = (
     <div className="flex flex-col gap-2">
       <p className="leading-relaxed">
         Current catalyst market prices are unavailable. Price calculations are
-        assuming a catalyst costs 1c.
+        assuming a catalyst costs 1 <ChaosOrbIcon size={14} />.
       </p>
       <p className="text-muted-foreground text-xs leading-relaxed">
         Total price may be slightly off for items where catalyst investment is
