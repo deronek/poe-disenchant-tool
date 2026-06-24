@@ -17,10 +17,19 @@ type CurrencyDataStatusProps = {
   status: ItemDataStatus["currency"];
 };
 
+type PillDefinition = {
+  key: "currency" | "catalyst";
+  content: React.ReactNode;
+};
+
 type PillProps = {
   children: React.ReactNode;
   content: React.ReactNode;
 };
+
+function Separator() {
+  return <span className="text-muted-foreground/50 select-none">·</span>;
+}
 
 function StatusPill({ children, content }: PillProps) {
   return (
@@ -102,46 +111,57 @@ export function CurrencyDataStatus({ status }: CurrencyDataStatusProps) {
     return null;
   }
 
-  const currencyPill = currencyDegraded ? (
-    <span className="inline-flex items-center gap-2 whitespace-nowrap">
-      <span className="text-muted-foreground/50 select-none">·</span>
-      <StatusPill content={currencyContent}>
-        <AlertTriangle className="size-3.5 shrink-0 text-amber-600 dark:text-amber-500" />
-        <span className="text-sm text-amber-600 dark:text-amber-500">
-          Currency rates unavailable
-        </span>
-      </StatusPill>
-    </span>
-  ) : null;
+  const visiblePills: PillDefinition[] = [];
 
-  const catalystPill = catalystDegraded ? (
-    <span className="inline-flex items-center gap-2 whitespace-nowrap">
-      <span
-        className={`text-muted-foreground/50 select-none ${currencyDegraded ? "inline" : "hidden lg:inline"}`}
-      >
-        ·
-      </span>
-      <StatusPill content={catalystContent}>
-        <Info className="size-3.5 shrink-0 text-zinc-600 dark:text-zinc-300" />
-        <span className="text-sm text-zinc-600 dark:text-zinc-300">
-          Catalyst price unavailable
-        </span>
-      </StatusPill>
-    </span>
-  ) : null;
+  if (currencyDegraded) {
+    visiblePills.push({
+      key: "currency",
+      content: (
+        <StatusPill content={currencyContent}>
+          <AlertTriangle className="size-3.5 shrink-0 text-amber-600 dark:text-amber-500" />
+          <span className="text-sm text-amber-600 dark:text-amber-500">
+            Currency rates unavailable
+          </span>
+        </StatusPill>
+      ),
+    });
+  }
 
-  if (currencyDegraded && catalystDegraded) {
+  if (catalystDegraded) {
+    visiblePills.push({
+      key: "catalyst",
+      content: (
+        <StatusPill content={catalystContent}>
+          <Info className="size-3.5 shrink-0 text-zinc-600 dark:text-zinc-300" />
+          <span className="text-sm text-zinc-600 dark:text-zinc-300">
+            Catalyst price unavailable
+          </span>
+        </StatusPill>
+      ),
+    });
+  }
+
+  const renderedPills = visiblePills.map((pill) => (
+    <span
+      key={pill.key}
+      className="inline-flex items-center gap-2 whitespace-nowrap"
+    >
+      <Separator />
+      {pill.content}
+    </span>
+  ));
+
+  if (renderedPills.length > 1) {
     // Both pills: wrap them in a single flex item so they travel together
     // relative to "Last updated", but can still wrap onto separate lines
     // internally at the very smallest screens.
     return (
       <span className="inline-flex flex-wrap items-center gap-2">
-        {currencyPill}
-        {catalystPill}
+        {renderedPills}
       </span>
     );
   }
 
   // Single pill: use contents so it's a direct flex item in the parent row
-  return <span className="contents">{currencyPill ?? catalystPill}</span>;
+  return <span className="contents">{renderedPills[0]}</span>;
 }
