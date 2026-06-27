@@ -30,7 +30,7 @@ const LineSchema = z.object({
   divineValue: z.number().optional(),
   baseType: z.string(),
   icon: z.url(),
-  listingCount: z.int(),
+  listingCount: z.int().optional().default(0),
   detailsId: z.string(),
   itemType: z.string(),
 });
