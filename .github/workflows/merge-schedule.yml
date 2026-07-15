@@ -13,6 +13,12 @@ on:
 jobs:
   merge_schedule:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      checks: read
+      statuses: read
     steps:
       - uses: gr2m/merge-schedule-action@a9b6ddcf1282dfd66907bda8e7941dff59f03bad # 2.7.0
         with:
