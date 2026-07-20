@@ -87,12 +87,14 @@ test.describe("League Selector Functionality", () => {
     poePage,
     page,
   }) => {
-    const selectedLeague = "standard";
-    await poePage.selectLeague(selectedLeague);
-    await poePage.verifyLeagueSelected(selectedLeague);
+    // Get first which key isn't DEFAULT_LEAGUE
+    const leagueToSelect = LEAGUE_SLUGS.find((key) => key !== DEFAULT_LEAGUE)!;
+    expect(leagueToSelect).toBeDefined();
+    await poePage.selectLeague(leagueToSelect);
+    await poePage.verifyLeagueSelected(leagueToSelect);
     await page.reload();
     await poePage.waitForDataLoad();
-    await poePage.verifyLeagueSelected(selectedLeague);
+    await poePage.verifyLeagueSelected(leagueToSelect);
   });
 
   test("should support keyboard open/close in league selector", async ({
