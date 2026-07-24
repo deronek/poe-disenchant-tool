@@ -51,8 +51,8 @@ export const ARCHIVED_LEAGUE_SLUGS = Object.keys(
 export const DATE_PUBLISHED_LEAGUES: Record<League, Date> = {
   standard: new Date("2025-06-01"),
   hardcore: new Date("2025-06-01"),
-  allflame: new Date("2025-07-24"),
-  "hardcore-allflame": new Date("2025-07-24"),
+  allflame: new Date("2026-07-24"),
+  "hardcore-allflame": new Date("2026-07-24"),
 };
 
 export function isValidLeague(slug: string): slug is League {
