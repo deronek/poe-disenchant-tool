@@ -32,16 +32,21 @@ const LineSchema = z.object({
   icon: z.url(),
   listingCount: z.int().optional().default(0),
   detailsId: z.string(),
-  itemType: z.string(),
+  itemType: z.string().optional(), // Some items have no itemType
 });
 
+type PriceLine = z.infer<typeof LineSchema> & { itemType: string };
+
 const ItemOverviewResponseSchema = z.object({
-  lines: z.optional(z.array(LineSchema)),
+  lines: z.optional(
+    z.array(LineSchema).transform((items): PriceLine[] =>
+      // Filter out items with no itemType
+      items.filter((item): item is PriceLine => item.itemType !== undefined),
+    ),
+  ),
 });
 
 type ItemOverviewResponse = z.infer<typeof ItemOverviewResponseSchema>;
-
-type PriceLine = z.infer<typeof LineSchema>;
 
 export type InternalItem = {
   type: AllowedUnique;
