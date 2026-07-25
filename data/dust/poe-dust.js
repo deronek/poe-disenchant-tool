@@ -522,9 +522,9 @@ const data = [
   {
     name: "Eyes of the Greatwolf",
     baseType: "Greatwolf Talisman",
-    dustValIlvl84: 164400,
-    dustValIlvl84Q20: 230160,
-    goldCost: 13160,
+    dustValIlvl84: 685000,
+    dustValIlvl84Q20: 959000,
+    goldCost: 25000,
     slots: 1,
   },
   {
@@ -5210,9 +5210,9 @@ const data = [
   {
     name: "Natural Hierarchy",
     baseType: "Rotfeather Talisman",
-    dustValIlvl84: 11150,
-    dustValIlvl84Q20: 15610,
-    goldCost: 3920,
+    dustValIlvl84: 53475,
+    dustValIlvl84Q20: 74865,
+    goldCost: 7940,
     slots: 1,
   },
   {
@@ -6042,9 +6042,9 @@ const data = [
   {
     name: "Blightwell",
     baseType: "Clutching Talisman",
-    dustValIlvl84: 6950,
-    dustValIlvl84Q20: 9730,
-    goldCost: 3160,
+    dustValIlvl84: 11100,
+    dustValIlvl84Q20: 15540,
+    goldCost: 3920,
     slots: 1,
   },
   {
@@ -8154,9 +8154,9 @@ const data = [
   {
     name: "The Hateful Accuser",
     baseType: "Nameless Ring",
-    dustValIlvl84: 18125,
-    dustValIlvl84Q20: 25375,
-    goldCost: 4880,
+    dustValIlvl84: 108700,
+    dustValIlvl84Q20: 152180,
+    goldCost: 10920,
     slots: 1,
   },
   {
@@ -8330,9 +8330,9 @@ const data = [
   {
     name: "Azadi Crest",
     baseType: "Lacquered Buckler",
-    dustValIlvl84: 22650,
-    dustValIlvl84Q20: 31710,
-    goldCost: 5400,
+    dustValIlvl84: 108700,
+    dustValIlvl84Q20: 152180,
+    goldCost: 10920,
     slots: 4,
   },
   {
@@ -8710,6 +8710,38 @@ const data = [
     dustValIlvl84Q20: 6895,
     goldCost: 2720,
     slots: 2,
+  },
+  {
+    name: "Seablister",
+    baseType: "Spiny Round Shield",
+    dustValIlvl84: 24675,
+    dustValIlvl84Q20: 34545,
+    goldCost: 5600,
+    slots: 6,
+  },
+  {
+    name: "Spinesnatch",
+    baseType: "Fleshripper",
+    dustValIlvl84: 115300,
+    dustValIlvl84Q20: 161420,
+    goldCost: 11220,
+    slots: 8,
+  },
+  {
+    name: "Subsume the Source",
+    baseType: "Faithful Helmet",
+    dustValIlvl84: 126000,
+    dustValIlvl84Q20: 176400,
+    goldCost: 11680,
+    slots: 4,
+  },
+  {
+    name: "The Crustacean's Call",
+    baseType: "Primordial Staff",
+    dustValIlvl84: 24675,
+    dustValIlvl84Q20: 34545,
+    goldCost: 5600,
+    slots: 8,
   },
 ];
 export default data;

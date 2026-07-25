@@ -592,7 +592,7 @@ const data = [
   {
     name: "Eyes of the Greatwolf",
     baseType: "Greatwolf Talisman",
-    dustVal: 65.76,
+    dustVal: 274,
     w: 1,
     h: 1,
     slots: 1,
@@ -6001,7 +6001,7 @@ const data = [
   {
     name: "Natural Hierarchy",
     baseType: "Rotfeather Talisman",
-    dustVal: 4.46,
+    dustVal: 21.39,
     w: 1,
     h: 1,
     slots: 1,
@@ -6937,7 +6937,7 @@ const data = [
   {
     name: "Blightwell",
     baseType: "Clutching Talisman",
-    dustVal: 2.78,
+    dustVal: 4.44,
     w: 1,
     h: 1,
     slots: 1,
@@ -9361,7 +9361,7 @@ const data = [
   {
     name: "The Hateful Accuser",
     baseType: "Nameless Ring",
-    dustVal: 7.25,
+    dustVal: 43.48,
     w: 1,
     h: 1,
     slots: 1,
@@ -9560,7 +9560,7 @@ const data = [
   {
     name: "Azadi Crest",
     baseType: "Lacquered Buckler",
-    dustVal: 9.06,
+    dustVal: 43.48,
     w: 2,
     h: 2,
     slots: 4,
@@ -9988,6 +9988,42 @@ const data = [
     h: 1,
     slots: 2,
     link: "https://poedb.tw/us/Sareshs_Darkness",
+  },
+  {
+    name: "Seablister",
+    baseType: "Spiny Round Shield",
+    dustVal: 9.87,
+    w: 2,
+    h: 3,
+    slots: 6,
+    link: "https://poedb.tw/us/Seablister",
+  },
+  {
+    name: "Spinesnatch",
+    baseType: "Fleshripper",
+    dustVal: 46.12,
+    w: 2,
+    h: 4,
+    slots: 8,
+    link: "https://poedb.tw/us/Spinesnatch",
+  },
+  {
+    name: "Subsume the Source",
+    baseType: "Faithful Helmet",
+    dustVal: 50.4,
+    w: 2,
+    h: 2,
+    slots: 4,
+    link: "https://poedb.tw/us/Subsume_the_Source",
+  },
+  {
+    name: "The Crustacean's Call",
+    baseType: "Primordial Staff",
+    dustVal: 9.87,
+    w: 2,
+    h: 4,
+    slots: 8,
+    link: "https://poedb.tw/us/The_Crustaceans_Call",
   },
 ];
 export default data;

@@ -23,7 +23,7 @@ async function scrapeDustValues() {
   const document = dom.window.document;
 
   const items = document.querySelectorAll(
-    "a.uniqueitem",
+    "a.UniqueItem",
   ) as NodeListOf<HTMLAnchorElement>;
   const results: ItemDust[] = [];
 
