@@ -93,7 +93,8 @@ const catalystContent = (
     <div className="flex flex-col gap-2">
       <p className="leading-relaxed">
         Current catalyst market prices are unavailable. Dust per chaos
-        calculations are assuming a catalyst costs 1 <ChaosOrbIcon size={14} />.
+        calculations for jewellery are assuming a catalyst costs 1{" "}
+        <ChaosOrbIcon size={14} />.
       </p>
       <p className="text-muted-foreground text-xs leading-relaxed">
         Values may be slightly off for items where catalyst investment is
