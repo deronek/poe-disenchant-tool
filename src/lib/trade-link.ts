@@ -1,6 +1,6 @@
 import type { ListingTimeFilter } from "./filters/listing-time-filter";
 import type { OnlineStatus } from "./filters/online-status";
-import { League, LEAGUES } from "./leagues";
+import { getLeagueApiName, League } from "./leagues";
 
 export interface TradeLinkSettings {
   minItemLevel: number;
@@ -55,7 +55,7 @@ export const createTradeLink = (
   const { onlineStatus, listingTimeFilter, minItemLevel, includeCorrupted } =
     settings;
 
-  const payload = {
+  const payload: TradeLinkPayload = {
     query: {
       status: {
         option: onlineStatus,
@@ -96,7 +96,7 @@ export const createTradeLink = (
     },
   };
 
-  const leagueName = LEAGUES[league].apiName;
+  const leagueName = getLeagueApiName(league);
   const baseLink = `https://www.pathofexile.com/trade/search/${leagueName}?q=`;
   return baseLink + encodeURIComponent(JSON.stringify(payload));
 };
