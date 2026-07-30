@@ -479,4 +479,49 @@ test.describe("Pagination Functionality", () => {
     const newRowCount = await poePage.page.locator("tbody tr").count();
     expect(newRowCount).toBe(30);
   });
+
+  test("should keep the current page when trade settings change", async ({
+    poePage,
+  }) => {
+    // Navigate to a non-first page
+    await poePage.nextPageButton.click();
+    await expect
+      .poll(async () => (await poePage.getPaginationInfo()).currentPage)
+      .toBeGreaterThan(1);
+    const stateBefore = await poePage.getPaginationInfo();
+
+    // Change a trade setting
+    await poePage.openAdvancedSettings();
+    await poePage.setMinItemLevel(72);
+    // Deterministic: confirm the new value propagated before closing the panel
+    await expect(poePage.minItemLevelValue).toHaveText("72");
+    await poePage.closeAdvancedSettings();
+
+    // The same page should still be selected
+    await expect
+      .poll(async () => (await poePage.getPaginationInfo()).currentPage)
+      .toBe(stateBefore.currentPage);
+
+    const stateAfter = await poePage.getPaginationInfo();
+    expect(stateAfter.rowsPerPage).toBe(stateBefore.rowsPerPage);
+  });
+
+  test("should reset to first page when a filter is applied", async ({
+    poePage,
+  }) => {
+    // Navigate to a non-first page
+    await poePage.nextPageButton.click();
+    await expect
+      .poll(async () => (await poePage.getPaginationInfo()).currentPage)
+      .toBeGreaterThan(1);
+
+    // Apply a name filter that reduces the row count
+    const items = await poePage.getTestItems(1);
+    await poePage.setNameFilter(items[0].name);
+
+    // Deterministic: wait for the reset
+    await expect
+      .poll(async () => (await poePage.getPaginationInfo()).currentPage)
+      .toBe(1);
+  });
 });

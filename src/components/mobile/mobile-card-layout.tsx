@@ -1,22 +1,14 @@
 import type { Item } from "@/lib/item-data";
 import { Table } from "@tanstack/react-table";
 
-import { AdvancedSettings } from "@/components/advanced-settings-panel";
-import { League } from "@/lib/leagues";
 import { MobileCard } from "./mobile-card";
 
 interface MobileCardLayoutProps<TData extends Item> {
   table: Table<TData>;
-  advancedSettings: AdvancedSettings;
-  league: League;
-  lowStockThreshold: number;
 }
 
 export function MobileCardLayout<TData extends Item>({
   table,
-  advancedSettings,
-  league,
-  lowStockThreshold,
 }: MobileCardLayoutProps<TData>) {
   return (
     <div className="px-2 py-4 sm:px-3">
@@ -24,13 +16,7 @@ export function MobileCardLayout<TData extends Item>({
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {table.getRowModel().rows.map((row, index) => (
             <div key={row.id} className="relative">
-              <MobileCard
-                row={row}
-                isSelected={row.getIsSelected()}
-                advancedSettings={advancedSettings}
-                league={league}
-                lowStockThreshold={lowStockThreshold}
-              />
+              <MobileCard row={row} isSelected={row.getIsSelected()} />
               {/* Subtle order indicator for tablet two-column layout */}
               <div className="text-muted-foreground/60 absolute -top-1 -right-1 hidden text-[10px] font-semibold md:block">
                 {index + 1}

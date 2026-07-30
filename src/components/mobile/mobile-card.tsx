@@ -1,11 +1,9 @@
-import type { AdvancedSettings } from "@/components/advanced-settings-panel";
 import type { Item } from "@/lib/item-data";
-import type { League } from "@/lib/leagues";
 import * as React from "react";
 import { Row } from "@tanstack/react-table";
 import { ExternalLink, Info, Orbit, PackageMinus } from "lucide-react";
 
-import { advancedSettingsDeepEqual } from "@/components/advanced-settings-panel";
+import { useAdvancedSettings } from "@/components/advanced-settings-context";
 import { ChaosOrbIcon, DustIcon, GoldIcon, Icon } from "@/components/icons";
 import {
   CatalystInfo,
@@ -14,6 +12,7 @@ import {
   ItemMarkingInfo,
   LowStockInfo,
 } from "@/components/info-popovers";
+import { useLeagueSession } from "@/components/league-session-context";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -368,14 +367,10 @@ function DustPerChaosPerSlotSection({
   );
 }
 
-// Trade button section
-function TradeButtonSection({
-  name,
-  tradeLink,
-}: {
-  name: string;
-  tradeLink: string;
-}) {
+function TradeButtonSection({ name }: { name: string }) {
+  const { settings } = useAdvancedSettings();
+  const { league } = useLeagueSession();
+  const tradeLink = createTradeLink(name, league, settings);
   return (
     <div className="pt-3">
       <Button
@@ -401,17 +396,11 @@ function TradeButtonSection({
 interface MobileCardProps<TData extends Item> {
   row: Row<TData>;
   isSelected: boolean;
-  advancedSettings: AdvancedSettings;
-  league: League;
-  lowStockThreshold: number;
 }
 
 function MobileCardComponent<TData extends Item>({
   row,
   isSelected,
-  advancedSettings,
-  league,
-  lowStockThreshold,
 }: MobileCardProps<TData>) {
   "use memo";
   const name = row.getValue<string>(COLUMN_IDS.NAME);
@@ -423,7 +412,7 @@ function MobileCardComponent<TData extends Item>({
     COLUMN_IDS.DUST_PER_CHAOS_PER_SLOT,
   );
   const slots = row.original.slots;
-  const tradeLink = createTradeLink(name, league, advancedSettings);
+  const { lowStockThreshold } = useLeagueSession();
   const calculatedDustValue = row.original.calculatedDustValue;
   const goldCost = row.original.goldCost;
 
@@ -466,23 +455,11 @@ function MobileCardComponent<TData extends Item>({
         lowStockThreshold={lowStockThreshold}
       />
 
-      <TradeButtonSection name={name} tradeLink={tradeLink} />
+      <TradeButtonSection name={name} />
     </div>
   );
 }
 
 export const MobileCard = React.memo(
   MobileCardComponent,
-  (prevProps, nextProps) => {
-    return (
-      prevProps.row.id === nextProps.row.id &&
-      prevProps.isSelected === nextProps.isSelected &&
-      prevProps.league === nextProps.league &&
-      prevProps.lowStockThreshold === nextProps.lowStockThreshold &&
-      advancedSettingsDeepEqual(
-        prevProps.advancedSettings,
-        nextProps.advancedSettings,
-      )
-    );
-  },
 ) as typeof MobileCardComponent;
