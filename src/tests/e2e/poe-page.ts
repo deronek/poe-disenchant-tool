@@ -800,6 +800,21 @@ export class PoEDisenchantPage {
     return { start, end, total, currentPage, totalPages, rowsPerPage };
   }
 
+  async expectCurrentPage(currentPage: number) {
+    let paginationInfo!: Awaited<ReturnType<typeof this.getPaginationInfo>>;
+    await expect(async () => {
+      paginationInfo = await this.getPaginationInfo();
+      expect(paginationInfo.currentPage).toBe(currentPage);
+    }).toPass({ timeout: 5000 });
+    return paginationInfo;
+  }
+
+  async goToNextPage() {
+    const { currentPage } = await this.getPaginationInfo();
+    await this.nextPageButton.click();
+    return this.expectCurrentPage(currentPage + 1);
+  }
+
   async getPageSizeOptions(): Promise<number[]> {
     const selectTrigger = this.rowsPerPageSelectTrigger;
 
@@ -1387,21 +1402,19 @@ export class PoEDisenchantPage {
     }
 
     const slider = this.minItemLevelSlider;
-    const boundingBox = (await slider.boundingBox())!;
-    const percent = ((value - min) / (max - min)) * 100;
-    const clickX = Math.round((percent * boundingBox.width) / 100);
-    const clickY = boundingBox.height / 2;
+    const fromMin = value - min;
+    const fromMax = max - value;
+    const startAtMin = fromMin <= fromMax;
 
     await slider.focus();
-    await slider.hover({ force: true, position: { x: 0, y: clickY } });
-    await this.page.mouse.down();
-    await slider.hover({ force: true, position: { x: clickX, y: clickY } });
-    await this.page.mouse.up();
+    await slider.press(startAtMin ? "Home" : "End");
+    for (let steps = startAtMin ? fromMin : fromMax; steps > 0; steps--) {
+      await slider.press(startAtMin ? "ArrowRight" : "ArrowLeft");
+    }
   }
 
   async verifyMinItemLevel(value: number): Promise<void> {
-    const currentValue = await this.getMinItemLevel();
-    expect(currentValue).toBe(value);
+    await expect(this.minItemLevelValue).toHaveText(String(value));
   }
 
   // Include Corrupted Items Checkbox

@@ -484,11 +484,7 @@ test.describe("Pagination Functionality", () => {
     poePage,
   }) => {
     // Navigate to a non-first page
-    await poePage.nextPageButton.click();
-    await expect
-      .poll(async () => (await poePage.getPaginationInfo()).currentPage)
-      .toBeGreaterThan(1);
-    const stateBefore = await poePage.getPaginationInfo();
+    const stateBefore = await poePage.goToNextPage();
 
     // Change a trade setting
     await poePage.openAdvancedSettings();
@@ -502,11 +498,7 @@ test.describe("Pagination Functionality", () => {
     await poePage.closeAdvancedSettings();
 
     // The same page should still be selected
-    await expect
-      .poll(async () => (await poePage.getPaginationInfo()).currentPage)
-      .toBe(stateBefore.currentPage);
-
-    const stateAfter = await poePage.getPaginationInfo();
+    const stateAfter = await poePage.expectCurrentPage(stateBefore.currentPage);
     expect(stateAfter.rowsPerPage).toBe(stateBefore.rowsPerPage);
   });
 
@@ -514,18 +506,14 @@ test.describe("Pagination Functionality", () => {
     poePage,
   }) => {
     // Navigate to a non-first page
-    await poePage.nextPageButton.click();
-    await expect
-      .poll(async () => (await poePage.getPaginationInfo()).currentPage)
-      .toBeGreaterThan(1);
+    await poePage.goToNextPage();
 
     // Apply a name filter that reduces the row count
     const items = await poePage.getTestItems(1);
     await poePage.setNameFilter(items[0].name);
+    await poePage.waitForFilterDebounce();
+    await poePage.verifyItemDisplayed(items[0].name);
 
-    // Deterministic: wait for the reset
-    await expect
-      .poll(async () => (await poePage.getPaginationInfo()).currentPage)
-      .toBe(1);
+    await poePage.expectCurrentPage(1);
   });
 });
