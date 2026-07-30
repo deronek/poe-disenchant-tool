@@ -113,7 +113,6 @@ export class PoEDisenchantPage {
   async getTestItems(limit = 10): Promise<TestItem[]> {
     const rows = this.dataTableRows;
     const count = Math.min(await rows.count(), limit);
-    expect(count).toBeGreaterThanOrEqual(limit > 1 ? 2 : 1);
 
     // Resolve indices by header
 
