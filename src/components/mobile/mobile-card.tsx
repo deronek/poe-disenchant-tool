@@ -3,7 +3,6 @@ import * as React from "react";
 import { Row } from "@tanstack/react-table";
 import { ExternalLink, Info, Orbit, PackageMinus } from "lucide-react";
 
-import { useAdvancedSettings } from "@/components/advanced-settings-context";
 import { ChaosOrbIcon, DustIcon, GoldIcon, Icon } from "@/components/icons";
 import {
   CatalystInfo,
@@ -21,8 +20,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useTradeLink } from "@/components/use-trade-link";
 import { COLUMN_IDS } from "@/lib/column-ids";
-import { createTradeLink } from "@/lib/trade-link";
 
 // Compact number formatter for mobile cards
 const compactFormatterGlobal = new Intl.NumberFormat("en", {
@@ -330,14 +329,13 @@ function DustPerChaosPerSlotSection({
   slots,
   name,
   listingCount,
-  lowStockThreshold,
 }: {
   dustPerChaosPerSlot: number;
   slots: number;
   name: string;
   listingCount: number;
-  lowStockThreshold: number;
 }) {
+  const { lowStockThreshold } = useLeagueSession();
   return (
     <div className="flex justify-between">
       <div className="min-w-0 flex-1 space-y-2">
@@ -368,9 +366,7 @@ function DustPerChaosPerSlotSection({
 }
 
 function TradeButtonSection({ name }: { name: string }) {
-  const { settings } = useAdvancedSettings();
-  const { league } = useLeagueSession();
-  const tradeLink = createTradeLink(name, league, settings);
+  const tradeLink = useTradeLink(name);
   return (
     <div className="pt-3">
       <Button
@@ -412,7 +408,6 @@ function MobileCardComponent<TData extends Item>({
     COLUMN_IDS.DUST_PER_CHAOS_PER_SLOT,
   );
   const slots = row.original.slots;
-  const { lowStockThreshold } = useLeagueSession();
   const calculatedDustValue = row.original.calculatedDustValue;
   const goldCost = row.original.goldCost;
 
@@ -452,7 +447,6 @@ function MobileCardComponent<TData extends Item>({
         slots={slots}
         name={name}
         listingCount={row.original.listingCount}
-        lowStockThreshold={lowStockThreshold}
       />
 
       <TradeButtonSection name={name} />

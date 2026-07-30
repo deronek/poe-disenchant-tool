@@ -7,7 +7,6 @@ import type {
 import * as React from "react";
 import { ExternalLink, Info, PackageMinus } from "lucide-react";
 
-import { useAdvancedSettings } from "@/components/advanced-settings-context";
 import {
   CatalystIcon,
   ChaosOrbIcon,
@@ -32,9 +31,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useTradeLink } from "@/components/use-trade-link";
 import { COLUMN_IDS } from "@/lib/column-ids";
 import { rangeFilterFn } from "@/lib/filters";
-import { createTradeLink } from "@/lib/trade-link";
 
 const DustValueHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
   React.memo(
@@ -387,9 +386,8 @@ const TradeLinkCell: ColumnDef<Item>["cell"] = function TradeLinkCellComponent({
   row,
 }) {
   const name = row.getValue(COLUMN_IDS.NAME) as string;
-  const { settings } = useAdvancedSettings();
-  const { league, lowStockThreshold } = useLeagueSession();
-  const link = createTradeLink(name, league, settings);
+  const { lowStockThreshold } = useLeagueSession();
+  const link = useTradeLink(name);
   const listingCount = row.original.listingCount;
   const isLowStock = listingCount < lowStockThreshold;
 
