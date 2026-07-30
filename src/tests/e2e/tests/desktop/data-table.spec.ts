@@ -492,9 +492,13 @@ test.describe("Pagination Functionality", () => {
 
     // Change a trade setting
     await poePage.openAdvancedSettings();
-    await poePage.setMinItemLevel(72);
+    const currentMinItemLevel = await poePage.getMinItemLevel();
+    const targetMinItemLevel = currentMinItemLevel === 72 ? 73 : 72;
+    await poePage.setMinItemLevel(targetMinItemLevel);
     // Deterministic: confirm the new value propagated before closing the panel
-    await expect(poePage.minItemLevelValue).toHaveText("72");
+    await expect(poePage.minItemLevelValue).toHaveText(
+      String(targetMinItemLevel),
+    );
     await poePage.closeAdvancedSettings();
 
     // The same page should still be selected
