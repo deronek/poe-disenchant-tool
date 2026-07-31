@@ -71,7 +71,9 @@ test.describe("Row Selection & Marking", () => {
   test("should display the number of selected rows on the Clear Marks button", async ({
     poePage,
   }) => {
-    const [first, second, third] = await poePage.getTestItems(3);
+    const items = await poePage.getTestItems(3);
+    expect(items.length).toBeGreaterThanOrEqual(3);
+    const [first, second, third] = items;
 
     await poePage.verifyClearMarksCount(0);
     await expect(poePage.clearMarksButton).toBeDisabled();
