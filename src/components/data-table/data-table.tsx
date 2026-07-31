@@ -12,7 +12,6 @@ import {
 } from "@tanstack/react-table";
 import { ChevronDown } from "lucide-react";
 
-import { type AdvancedSettings } from "@/components/advanced-settings-panel";
 import { MobileCardLayout, MobileToolbar } from "@/components/mobile";
 import { DataTableToolbar } from "@/components/toolbar";
 import {
@@ -23,7 +22,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { League } from "@/lib/leagues";
+import { useLeagueSession } from "../league-session-context";
 import { DataTablePagination } from "./data-table-pagination";
 import { useDataTableState } from "./data-table-state-context";
 import { usePersistentRowSelection } from "./use-persistent-row-selection";
@@ -40,23 +39,13 @@ declare module "@tanstack/react-table" {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  advancedSettings: AdvancedSettings;
-  onAdvancedSettingsChange: (
-    update: AdvancedSettings | ((prev: AdvancedSettings) => AdvancedSettings),
-  ) => void;
-  league: League;
-  lowStockThreshold: number;
 }
 
 export function DataTable<TData extends Item, TValue>({
   columns,
   data,
-  advancedSettings,
-  onAdvancedSettingsChange,
-  league,
-  lowStockThreshold,
 }: DataTableProps<TData, TValue>) {
-  "use no memo"; // TanStack Table not yet comptatible with React Compiler
+  "use no memo"; // TanStack Table not yet compatible with React Compiler
   const {
     sorting,
     columnFilters,
@@ -66,11 +55,10 @@ export function DataTable<TData extends Item, TValue>({
     updateColumnSizing,
   } = useDataTableState();
 
+  const { league } = useLeagueSession();
+  const selectionStorageKey = `poe-udt:selected:${league}:v2`;
+
   // Persistent row selection
-  const selectionStorageKey = React.useMemo(
-    () => `poe-udt:selected:${league}:v2`,
-    [league],
-  );
   const { rowSelection, setRowSelection, clearSelection } =
     usePersistentRowSelection(selectionStorageKey);
 
@@ -114,32 +102,17 @@ export function DataTable<TData extends Item, TValue>({
     >
       {/* Desktop Toolbar */}
       <div className="bg-background-200 hidden lg:block">
-        <DataTableToolbar
-          table={table}
-          onClearMarks={clearSelection}
-          advancedSettings={advancedSettings}
-          onAdvancedSettingsChange={onAdvancedSettingsChange}
-        />
+        <DataTableToolbar table={table} onClearMarks={clearSelection} />
       </div>
 
       {/* Mobile Toolbar */}
       <div className="bg-background-200 lg:hidden">
-        <MobileToolbar
-          table={table}
-          onClearMarks={clearSelection}
-          advancedSettings={advancedSettings}
-          onAdvancedSettingsChange={onAdvancedSettingsChange}
-        />
+        <MobileToolbar table={table} onClearMarks={clearSelection} />
       </div>
 
       {/* Mobile Card Layout */}
       <div className="lg:hidden">
-        <MobileCardLayout
-          table={table}
-          advancedSettings={advancedSettings}
-          league={league}
-          lowStockThreshold={lowStockThreshold}
-        />
+        <MobileCardLayout table={table} />
       </div>
 
       {/* Desktop Table Layout */}

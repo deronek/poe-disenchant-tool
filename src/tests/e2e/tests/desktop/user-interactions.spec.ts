@@ -5,7 +5,9 @@ test.describe("Row Selection & Marking", () => {
   test("should allow selecting, deselecting, and visual feedback", async ({
     poePage,
   }) => {
-    const [first, second] = await poePage.getTestItems();
+    const items = await poePage.getTestItems();
+    expect(items.length).toBeGreaterThanOrEqual(2);
+    const [first, second] = items;
 
     await poePage.selectItems([first.name, second.name]);
     await poePage.verifyItemSelected(first.name, true);
@@ -27,7 +29,9 @@ test.describe("Row Selection & Marking", () => {
   });
 
   test("should clear all marks and disable button", async ({ poePage }) => {
-    const [first, second] = await poePage.getTestItems();
+    const items = await poePage.getTestItems();
+    expect(items.length).toBeGreaterThanOrEqual(2);
+    const [first, second] = items;
 
     await poePage.selectItems([first.name, second.name]);
     await expect(poePage.clearMarksButton).toBeEnabled();

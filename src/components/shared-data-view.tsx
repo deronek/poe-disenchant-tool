@@ -1,16 +1,12 @@
 "use client";
 
-import type { AdvancedSettings } from "@/components/advanced-settings-panel";
 import type { Item } from "@/lib/item-data";
 import * as React from "react";
 
-import {
-  AdvancedSettingsSchema,
-  DEFAULT_ADVANCED_SETTINGS,
-} from "@/components/advanced-settings-panel";
+import { AdvancedSettingsProvider } from "@/components/advanced-settings-context";
 import { createColumns, DataTable } from "@/components/data-table";
+import { LeagueSessionProvider } from "@/components/league-session-context";
 import { League } from "@/lib/leagues";
-import { useLocalStorage } from "@/lib/use-local-storage";
 
 interface SharedDataViewProps {
   items: Item[];
@@ -25,36 +21,19 @@ export function SharedDataView({
   lowStockThreshold,
   divinePriceThreshold,
 }: SharedDataViewProps) {
-  const [advancedSettings, setAdvancedSettings] =
-    useLocalStorage<AdvancedSettings>(
-      DEFAULT_ADVANCED_SETTINGS,
-      "poe-udt:trade-settings:v1",
-      {
-        debounceDelay: 300,
-        schema: AdvancedSettingsSchema,
-      },
-    );
-
-  // Generate columns with current settings and league
   const columns = React.useMemo(
-    () =>
-      createColumns(
-        advancedSettings,
-        lowStockThreshold,
-        league,
-        divinePriceThreshold,
-      ),
-    [advancedSettings, lowStockThreshold, league, divinePriceThreshold],
+    () => createColumns(divinePriceThreshold),
+    [divinePriceThreshold],
   );
 
   return (
-    <DataTable
-      columns={columns}
-      data={items}
-      advancedSettings={advancedSettings}
-      onAdvancedSettingsChange={setAdvancedSettings}
+    <LeagueSessionProvider
       league={league}
       lowStockThreshold={lowStockThreshold}
-    />
+    >
+      <AdvancedSettingsProvider>
+        <DataTable columns={columns} data={items} />
+      </AdvancedSettingsProvider>
+    </LeagueSessionProvider>
   );
 }

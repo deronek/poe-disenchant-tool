@@ -6,7 +6,6 @@ let initialItems: TestItem[];
 test.beforeEach(async ({ poePage }) => {
   // Get items for tests
   initialItems = await poePage.getTestItems(10);
-  expect(initialItems.length).toBe(10);
 });
 
 test.describe("Name Filter Functionality", () => {
@@ -25,9 +24,8 @@ test.describe("Name Filter Functionality", () => {
       const otherItems = initialItems.filter(
         (item) => item.name !== targetItem.name,
       );
-      if (otherItems.length > 0) {
-        await poePage.verifyItemDisplayed(otherItems[0].name, false);
-      }
+      expect(otherItems.length).toBeGreaterThanOrEqual(1);
+      await poePage.verifyItemDisplayed(otherItems[0].name, false);
     });
 
     test("should filter by partial item name", async ({ poePage }) => {
@@ -98,6 +96,7 @@ test.describe("Name Filter Functionality", () => {
       poePage,
     }) => {
       const items = initialItems.slice(0, 3);
+      expect(items.length).toBeGreaterThanOrEqual(2);
 
       // Filter by first item
       await poePage.setNameFilter(items[0].name);

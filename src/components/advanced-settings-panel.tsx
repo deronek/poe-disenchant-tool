@@ -1,4 +1,5 @@
 import type { CheckedState } from "@/components/ui/checkbox";
+import type { AdvancedSettings } from "@/lib/advanced-settings";
 import type { ListingTimeFilter } from "@/lib/filters";
 import * as React from "react";
 import {
@@ -12,7 +13,6 @@ import {
   Users,
   Zap,
 } from "lucide-react";
-import { z } from "zod";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -32,6 +32,10 @@ import {
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import {
+  advancedSettingsDeepEqual,
+  DEFAULT_ADVANCED_SETTINGS,
+} from "@/lib/advanced-settings";
+import {
   LISTING_TIME_LABELS,
   ListingTimeFilterSchema,
   MIN_ITEM_LEVEL_RANGE,
@@ -41,34 +45,6 @@ import {
 } from "@/lib/filters";
 import { cn } from "@/lib/utils";
 import { Separator } from "./ui/separator";
-
-export const AdvancedSettingsSchema = z.object({
-  minItemLevel: z
-    .int()
-    .min(MIN_ITEM_LEVEL_RANGE.min)
-    .max(MIN_ITEM_LEVEL_RANGE.max)
-    .prefault(78),
-  includeCorrupted: z.boolean().prefault(true),
-  listingTimeFilter: ListingTimeFilterSchema.prefault("3days"),
-  onlineStatus: OnlineStatusSchema.prefault("available"),
-});
-
-export type AdvancedSettings = z.infer<typeof AdvancedSettingsSchema>;
-
-const ADVANCED_SETTINGS_KEYS = Object.keys(
-  AdvancedSettingsSchema.shape,
-) as (keyof AdvancedSettings)[];
-
-export function advancedSettingsDeepEqual(
-  a: AdvancedSettings,
-  b: AdvancedSettings,
-): boolean {
-  return ADVANCED_SETTINGS_KEYS.every((k) => a[k] === b[k]);
-}
-
-// Default values derived from schema
-export const DEFAULT_ADVANCED_SETTINGS: AdvancedSettings =
-  AdvancedSettingsSchema.parse({});
 
 interface AdvancedSettingsPanelProps {
   settings: AdvancedSettings;

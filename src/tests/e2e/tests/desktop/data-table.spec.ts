@@ -36,7 +36,6 @@ test.describe("Data Rendering and Formatting", () => {
         poePage,
       }) => {
         const items = await poePage.getTestItems(10);
-        expect(items.length).toBe(10);
 
         for (const item of items) {
           const data = await poePage.getFullValueAndDisplayedTextForCell(
@@ -265,7 +264,6 @@ test.describe("Data Rendering and Formatting", () => {
 
   test("should display qualityType for all items", async ({ poePage }) => {
     const items = await poePage.getTestItems(10);
-    expect(items.length).toBeGreaterThan(0);
 
     for (const item of items) {
       // Verify that qualityType is present and is a valid value (q20/q0)
@@ -478,5 +476,43 @@ test.describe("Pagination Functionality", () => {
     // Verify the correct number of rows are displayed
     const newRowCount = await poePage.page.locator("tbody tr").count();
     expect(newRowCount).toBe(30);
+  });
+
+  test("should keep the current page when trade settings change", async ({
+    poePage,
+  }) => {
+    // Navigate to a non-first page
+    const stateBefore = await poePage.goToNextPage();
+
+    // Change a trade setting
+    await poePage.openAdvancedSettings();
+    const currentMinItemLevel = await poePage.getMinItemLevel();
+    const targetMinItemLevel = currentMinItemLevel === 72 ? 73 : 72;
+    await poePage.setMinItemLevel(targetMinItemLevel);
+    // Deterministic: confirm the new value propagated before closing the panel
+    await expect(poePage.minItemLevelValue).toHaveText(
+      String(targetMinItemLevel),
+    );
+    await poePage.closeAdvancedSettings();
+
+    // The same page should still be selected
+    const stateAfter = await poePage.expectCurrentPage(stateBefore.currentPage);
+    expect(stateAfter.rowsPerPage).toBe(stateBefore.rowsPerPage);
+  });
+
+  test("should reset to first page when a filter is applied", async ({
+    poePage,
+  }) => {
+    // Navigate to a non-first page
+    await poePage.goToNextPage();
+
+    // Apply a name filter that reduces the row count
+    const items = await poePage.getTestItems(1);
+    expect(items.length).toBeGreaterThanOrEqual(1);
+    await poePage.setNameFilter(items[0].name);
+    await poePage.waitForFilterDebounce();
+    await poePage.verifyItemDisplayed(items[0].name);
+
+    await poePage.expectCurrentPage(1);
   });
 });

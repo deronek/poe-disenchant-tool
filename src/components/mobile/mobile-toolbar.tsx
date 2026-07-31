@@ -1,7 +1,7 @@
-import type { AdvancedSettings } from "@/components/advanced-settings-panel";
 import type { Item } from "@/lib/item-data";
 import { Table } from "@tanstack/react-table";
 
+import { useAdvancedSettings } from "@/components/advanced-settings-context";
 import { AdvancedSettingsPanel } from "@/components/advanced-settings-panel";
 import { ClearMarksButton } from "@/components/clear-marks-button";
 import { FilterChips, NameFilter, TabbedFilter } from "@/components/filters";
@@ -11,18 +11,13 @@ import { COLUMN_IDS } from "@/lib/column-ids";
 type MobileToolbarProps<TData extends Item> = {
   table: Table<TData>;
   onClearMarks?: () => void;
-  advancedSettings: AdvancedSettings;
-  onAdvancedSettingsChange: (
-    update: AdvancedSettings | ((prev: AdvancedSettings) => AdvancedSettings),
-  ) => void;
 };
 
 export function MobileToolbar<TData extends Item>({
   table,
   onClearMarks,
-  advancedSettings,
-  onAdvancedSettingsChange,
 }: MobileToolbarProps<TData>) {
+  const { settings, setSettings } = useAdvancedSettings();
   return (
     <div className="bg-background-200 flex flex-col gap-3 border-b px-2 py-4 sm:px-3">
       <div className="flex justify-between gap-2">
@@ -50,8 +45,8 @@ export function MobileToolbar<TData extends Item>({
             className="w-auto"
           />
           <AdvancedSettingsPanel
-            settings={advancedSettings}
-            onSettingsChange={onAdvancedSettingsChange}
+            settings={settings}
+            onSettingsChange={setSettings}
             className="w-auto"
           />
         </div>

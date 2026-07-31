@@ -1,11 +1,10 @@
-import type { AdvancedSettings } from "@/components/advanced-settings-panel";
 import type { Item } from "@/lib/item-data";
-import * as React from "react";
-import {
+import type {
   ColumnDef,
   ColumnDefTemplate,
   HeaderContext,
 } from "@tanstack/react-table";
+import * as React from "react";
 import { ExternalLink, Info, PackageMinus } from "lucide-react";
 
 import {
@@ -23,6 +22,7 @@ import {
   ItemMarkingInfo,
   LowStockInfo,
 } from "@/components/info-popovers";
+import { useLeagueSession } from "@/components/league-session-context";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -31,10 +31,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useTradeLink } from "@/components/use-trade-link";
 import { COLUMN_IDS } from "@/lib/column-ids";
 import { rangeFilterFn } from "@/lib/filters";
-import { League } from "@/lib/leagues";
-import { createTradeLink } from "@/lib/trade-link";
 
 const DustValueHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
   React.memo(
@@ -383,10 +382,69 @@ export function renderCompactNumber(
   return { element, hasCompactSuffix };
 }
 
+const TradeLinkCell: ColumnDef<Item>["cell"] = function TradeLinkCellComponent({
+  row,
+}) {
+  const name = row.getValue(COLUMN_IDS.NAME) as string;
+  const { lowStockThreshold } = useLeagueSession();
+  const link = useTradeLink(name);
+  const listingCount = row.original.listingCount;
+  const isLowStock = listingCount < lowStockThreshold;
+
+  const linkElement = (
+    <a
+      href={link}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={`Open trade search for ${name} in new tab${isLowStock ? " (low stock warning)" : ""}`}
+      title={`Open trade search for ${name}`}
+      className="inline-flex items-center gap-2"
+    >
+      <ExternalLink className="size-5" />
+      {isLowStock && (
+        <Badge
+          variant="amber"
+          className="absolute -top-1 -right-2 size-4 border-none bg-transparent p-0"
+          aria-hidden="true"
+        >
+          <PackageMinus />
+        </Badge>
+      )}
+    </a>
+  );
+
+  const button = (
+    <Button
+      asChild
+      variant="default"
+      size="lg"
+      className="text-primary bg-primary/10 hover:bg-primary/20 border-input hover:border-primary relative mx-auto gap-2 border border-solid"
+    >
+      {linkElement}
+    </Button>
+  );
+
+  const content = isLowStock ? (
+    <Tooltip>
+      <TooltipTrigger asChild className="cursor-pointer">
+        {button}
+      </TooltipTrigger>
+      <TooltipContent className="max-w-[280px] text-sm" variant="popover">
+        <LowStockInfo
+          name={name}
+          listingCount={listingCount}
+          lowStockThreshold={lowStockThreshold}
+        />
+      </TooltipContent>
+    </Tooltip>
+  ) : (
+    button
+  );
+
+  return <div className="flex w-full flex-1 items-center">{content}</div>;
+};
+
 export const createColumns = (
-  advancedSettings: AdvancedSettings,
-  lowStockThreshold: number,
-  league: League,
   divinePriceThreshold: number | null,
 ): ColumnDef<Item>[] => {
   return [
@@ -493,65 +551,7 @@ export const createColumns = (
       header: "Trade Link",
       size: 80,
       enableSorting: false,
-      cell: ({ row }) => {
-        const name = row.getValue(COLUMN_IDS.NAME) as string;
-        const link = createTradeLink(name, league, advancedSettings);
-        const listingCount = row.original.listingCount;
-        const isLowStock = listingCount < lowStockThreshold;
-
-        // Reusable link element
-        const linkElement = (
-          <a
-            href={link}
-            target="_blank"
-            rel="noreferrer"
-            aria-label={`Open trade search for ${name} in new tab${isLowStock ? " (low stock warning)" : ""}`}
-            title={`Open trade search for ${name}`}
-            className="inline-flex items-center gap-2"
-          >
-            <ExternalLink className="size-5" />
-            {isLowStock && (
-              <Badge
-                variant="amber"
-                className="absolute -top-1 -right-2 size-4 border-none bg-transparent p-0"
-                aria-hidden="true"
-              >
-                <PackageMinus />
-              </Badge>
-            )}
-          </a>
-        );
-
-        const button = (
-          <Button
-            asChild
-            variant="default"
-            size="lg"
-            className="text-primary bg-primary/10 hover:bg-primary/20 border-input hover:border-primary relative mx-auto gap-2 border border-solid"
-          >
-            {linkElement}
-          </Button>
-        );
-
-        const content = isLowStock ? (
-          <Tooltip>
-            <TooltipTrigger asChild className="cursor-pointer">
-              {button}
-            </TooltipTrigger>
-            <TooltipContent className="max-w-[280px] text-sm" variant="popover">
-              <LowStockInfo
-                name={name}
-                listingCount={listingCount}
-                lowStockThreshold={lowStockThreshold}
-              />
-            </TooltipContent>
-          </Tooltip>
-        ) : (
-          button
-        );
-
-        return <div className="flex w-full flex-1 items-center">{content}</div>;
-      },
+      cell: TradeLinkCell,
     },
     {
       id: COLUMN_IDS.SELECT,

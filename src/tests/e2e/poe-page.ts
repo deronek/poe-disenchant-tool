@@ -4,7 +4,7 @@ import type { BrowserContext, Locator, Page } from "@playwright/test";
 import { expect } from "@playwright/test";
 
 import type { TestItem, Theme, ThemeOption } from "./types";
-import { DEFAULT_ADVANCED_SETTINGS } from "@/components/advanced-settings-panel";
+import { DEFAULT_ADVANCED_SETTINGS } from "@/lib/advanced-settings";
 import {
   LISTING_TIME_LABELS,
   MIN_ITEM_LEVEL_RANGE,
@@ -113,7 +113,7 @@ export class PoEDisenchantPage {
   async getTestItems(limit = 10): Promise<TestItem[]> {
     const rows = this.dataTableRows;
     const count = Math.min(await rows.count(), limit);
-    expect(count).toBeGreaterThanOrEqual(limit > 1 ? 2 : 1);
+    expect(count).toBeGreaterThan(0); // at least one item
 
     // Resolve indices by header
 
@@ -801,6 +801,21 @@ export class PoEDisenchantPage {
     return { start, end, total, currentPage, totalPages, rowsPerPage };
   }
 
+  async expectCurrentPage(currentPage: number) {
+    let paginationInfo!: Awaited<ReturnType<typeof this.getPaginationInfo>>;
+    await expect(async () => {
+      paginationInfo = await this.getPaginationInfo();
+      expect(paginationInfo.currentPage).toBe(currentPage);
+    }).toPass({ timeout: 5000 });
+    return paginationInfo;
+  }
+
+  async goToNextPage() {
+    const { currentPage } = await this.getPaginationInfo();
+    await this.nextPageButton.click();
+    return this.expectCurrentPage(currentPage + 1);
+  }
+
   async getPageSizeOptions(): Promise<number[]> {
     const selectTrigger = this.rowsPerPageSelectTrigger;
 
@@ -1301,6 +1316,7 @@ export class PoEDisenchantPage {
     type: "number" | "string" = "number",
   ): Promise<void> {
     const tableData = await this.getTestItems();
+    expect(tableData.length).toBeGreaterThanOrEqual(2);
 
     // Extract numeric values for the target column
     const rawValues = tableData.map((item) =>
@@ -1388,21 +1404,19 @@ export class PoEDisenchantPage {
     }
 
     const slider = this.minItemLevelSlider;
-    const boundingBox = (await slider.boundingBox())!;
-    const percent = ((value - min) / (max - min)) * 100;
-    const clickX = Math.round((percent * boundingBox.width) / 100);
-    const clickY = boundingBox.height / 2;
+    const fromMin = value - min;
+    const fromMax = max - value;
+    const startAtMin = fromMin <= fromMax;
 
     await slider.focus();
-    await slider.hover({ force: true, position: { x: 0, y: clickY } });
-    await this.page.mouse.down();
-    await slider.hover({ force: true, position: { x: clickX, y: clickY } });
-    await this.page.mouse.up();
+    await slider.press(startAtMin ? "Home" : "End");
+    for (let steps = startAtMin ? fromMin : fromMax; steps > 0; steps--) {
+      await slider.press(startAtMin ? "ArrowRight" : "ArrowLeft");
+    }
   }
 
   async verifyMinItemLevel(value: number): Promise<void> {
-    const currentValue = await this.getMinItemLevel();
-    expect(currentValue).toBe(value);
+    await expect(this.minItemLevelValue).toHaveText(String(value));
   }
 
   // Include Corrupted Items Checkbox

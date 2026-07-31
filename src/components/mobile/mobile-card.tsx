@@ -1,11 +1,8 @@
-import type { AdvancedSettings } from "@/components/advanced-settings-panel";
 import type { Item } from "@/lib/item-data";
-import type { League } from "@/lib/leagues";
 import * as React from "react";
 import { Row } from "@tanstack/react-table";
 import { ExternalLink, Info, Orbit, PackageMinus } from "lucide-react";
 
-import { advancedSettingsDeepEqual } from "@/components/advanced-settings-panel";
 import { ChaosOrbIcon, DustIcon, GoldIcon, Icon } from "@/components/icons";
 import {
   CatalystInfo,
@@ -14,6 +11,7 @@ import {
   ItemMarkingInfo,
   LowStockInfo,
 } from "@/components/info-popovers";
+import { useLeagueSession } from "@/components/league-session-context";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -22,8 +20,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useTradeLink } from "@/components/use-trade-link";
 import { COLUMN_IDS } from "@/lib/column-ids";
-import { createTradeLink } from "@/lib/trade-link";
 
 // Compact number formatter for mobile cards
 const compactFormatterGlobal = new Intl.NumberFormat("en", {
@@ -331,14 +329,13 @@ function DustPerChaosPerSlotSection({
   slots,
   name,
   listingCount,
-  lowStockThreshold,
 }: {
   dustPerChaosPerSlot: number;
   slots: number;
   name: string;
   listingCount: number;
-  lowStockThreshold: number;
 }) {
+  const { lowStockThreshold } = useLeagueSession();
   return (
     <div className="flex justify-between">
       <div className="min-w-0 flex-1 space-y-2">
@@ -368,14 +365,8 @@ function DustPerChaosPerSlotSection({
   );
 }
 
-// Trade button section
-function TradeButtonSection({
-  name,
-  tradeLink,
-}: {
-  name: string;
-  tradeLink: string;
-}) {
+function TradeButtonSection({ name }: { name: string }) {
+  const tradeLink = useTradeLink(name);
   return (
     <div className="pt-3">
       <Button
@@ -401,17 +392,11 @@ function TradeButtonSection({
 interface MobileCardProps<TData extends Item> {
   row: Row<TData>;
   isSelected: boolean;
-  advancedSettings: AdvancedSettings;
-  league: League;
-  lowStockThreshold: number;
 }
 
 function MobileCardComponent<TData extends Item>({
   row,
   isSelected,
-  advancedSettings,
-  league,
-  lowStockThreshold,
 }: MobileCardProps<TData>) {
   "use memo";
   const name = row.getValue<string>(COLUMN_IDS.NAME);
@@ -423,7 +408,6 @@ function MobileCardComponent<TData extends Item>({
     COLUMN_IDS.DUST_PER_CHAOS_PER_SLOT,
   );
   const slots = row.original.slots;
-  const tradeLink = createTradeLink(name, league, advancedSettings);
   const calculatedDustValue = row.original.calculatedDustValue;
   const goldCost = row.original.goldCost;
 
@@ -463,26 +447,13 @@ function MobileCardComponent<TData extends Item>({
         slots={slots}
         name={name}
         listingCount={row.original.listingCount}
-        lowStockThreshold={lowStockThreshold}
       />
 
-      <TradeButtonSection name={name} tradeLink={tradeLink} />
+      <TradeButtonSection name={name} />
     </div>
   );
 }
 
 export const MobileCard = React.memo(
   MobileCardComponent,
-  (prevProps, nextProps) => {
-    return (
-      prevProps.row.id === nextProps.row.id &&
-      prevProps.isSelected === nextProps.isSelected &&
-      prevProps.league === nextProps.league &&
-      prevProps.lowStockThreshold === nextProps.lowStockThreshold &&
-      advancedSettingsDeepEqual(
-        prevProps.advancedSettings,
-        nextProps.advancedSettings,
-      )
-    );
-  },
 ) as typeof MobileCardComponent;
