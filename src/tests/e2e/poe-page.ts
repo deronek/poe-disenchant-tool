@@ -1316,6 +1316,7 @@ export class PoEDisenchantPage {
     type: "number" | "string" = "number",
   ): Promise<void> {
     const tableData = await this.getTestItems();
+    expect(tableData.length).toBeGreaterThanOrEqual(2);
 
     // Extract numeric values for the target column
     const rawValues = tableData.map((item) =>
