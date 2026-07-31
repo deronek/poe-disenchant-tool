@@ -68,6 +68,30 @@ test.describe("Row Selection & Marking", () => {
     await poePage.verifyItemSelected(item.name, false);
   });
 
+  test("should display the number of selected rows on the Clear Marks button", async ({
+    poePage,
+  }) => {
+    const items = await poePage.getTestItems(3);
+    expect(items.length).toBeGreaterThanOrEqual(3);
+    const [first, second, third] = items;
+
+    await poePage.verifyClearMarksCount(0);
+    await expect(poePage.clearMarksButton).toBeDisabled();
+
+    await poePage.selectItems([first.name]);
+    await poePage.verifyClearMarksCount(1);
+
+    await poePage.selectItems([second.name, third.name]);
+    await poePage.verifyClearMarksCount(3);
+
+    await poePage.selectItem(second.name); // toggle off
+    await poePage.verifyClearMarksCount(2);
+
+    await poePage.clearAllSelections();
+    await poePage.verifyClearMarksCount(0);
+    await expect(poePage.clearMarksButton).toBeDisabled();
+  });
+
   test("should clear marks via keyboard", async ({ poePage }) => {
     const [item] = await poePage.getTestItems();
     await poePage.selectItem(item.name);
