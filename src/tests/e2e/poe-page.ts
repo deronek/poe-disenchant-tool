@@ -239,6 +239,11 @@ export class PoEDisenchantPage {
     }
   }
 
+  async verifyClearMarksCount(count: number): Promise<void> {
+    const button = this.clearMarksButton;
+    await expect(button).toContainText(`(${count})`);
+  }
+
   // ---------------------------
   // Trade Links
   // ---------------------------
