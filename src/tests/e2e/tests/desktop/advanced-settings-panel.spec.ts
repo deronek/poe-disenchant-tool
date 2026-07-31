@@ -1,4 +1,4 @@
-import { DEFAULT_ADVANCED_SETTINGS } from "@/components/advanced-settings-panel";
+import { DEFAULT_ADVANCED_SETTINGS } from "@/lib/advanced-settings";
 import {
   LISTING_TIME_LABELS,
   ListingTimeFilterSchema,

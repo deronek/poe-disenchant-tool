@@ -1,12 +1,12 @@
 "use client";
 
-import type { AdvancedSettings } from "@/components/advanced-settings-panel";
+import type { AdvancedSettings } from "@/lib/advanced-settings";
 import * as React from "react";
 
 import {
   AdvancedSettingsSchema,
   DEFAULT_ADVANCED_SETTINGS,
-} from "@/components/advanced-settings-panel";
+} from "@/lib/advanced-settings";
 import { useLocalStorage } from "@/lib/use-local-storage";
 
 interface AdvancedSettingsContextValue {

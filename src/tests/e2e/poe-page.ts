@@ -4,7 +4,7 @@ import type { BrowserContext, Locator, Page } from "@playwright/test";
 import { expect } from "@playwright/test";
 
 import type { TestItem, Theme, ThemeOption } from "./types";
-import { DEFAULT_ADVANCED_SETTINGS } from "@/components/advanced-settings-panel";
+import { DEFAULT_ADVANCED_SETTINGS } from "@/lib/advanced-settings";
 import {
   LISTING_TIME_LABELS,
   MIN_ITEM_LEVEL_RANGE,
