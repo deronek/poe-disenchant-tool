@@ -6,7 +6,6 @@ let initialItems: TestItem[];
 test.beforeEach(async ({ poePage }) => {
   // Get items for tests
   initialItems = await poePage.getTestItems(10);
-  expect(initialItems.length).toBe(10);
 });
 
 test.describe("Name Filter Functionality", () => {

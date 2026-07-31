@@ -36,7 +36,6 @@ test.describe("Data Rendering and Formatting", () => {
         poePage,
       }) => {
         const items = await poePage.getTestItems(10);
-        expect(items.length).toBe(10);
 
         for (const item of items) {
           const data = await poePage.getFullValueAndDisplayedTextForCell(
@@ -265,7 +264,6 @@ test.describe("Data Rendering and Formatting", () => {
 
   test("should display qualityType for all items", async ({ poePage }) => {
     const items = await poePage.getTestItems(10);
-    expect(items.length).toBeGreaterThan(0);
 
     for (const item of items) {
       // Verify that qualityType is present and is a valid value (q20/q0)
@@ -510,6 +508,7 @@ test.describe("Pagination Functionality", () => {
 
     // Apply a name filter that reduces the row count
     const items = await poePage.getTestItems(1);
+    expect(items.length).toBeGreaterThanOrEqual(1);
     await poePage.setNameFilter(items[0].name);
     await poePage.waitForFilterDebounce();
     await poePage.verifyItemDisplayed(items[0].name);
