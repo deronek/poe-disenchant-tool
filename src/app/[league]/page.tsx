@@ -14,7 +14,7 @@ import { getLeagueName, League, LEAGUE_SLUGS } from "@/lib/leagues";
 type Props = { params: Promise<{ league: League }> };
 
 export const dynamicParams = false;
-export const revalidate = 1800; // 30 minutes
+export const revalidate = 3600; // 1 hour
 
 export default async function LeaguePage({ params }: Props) {
   const { league } = await params;
