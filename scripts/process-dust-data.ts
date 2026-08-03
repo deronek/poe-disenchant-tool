@@ -100,6 +100,30 @@ async function main() {
     }
     console.log("✅ All items pass w * h == slots verification");
 
+    console.log("🔍 Verifying name uniqueness...");
+    const duplicateNames = validatedData
+      .map((item: InputItem) => item.name)
+      .filter((name, index, names) => names.indexOf(name) !== index);
+    const duplicateNamesSet = [...new Set(duplicateNames)];
+    if (duplicateNamesSet.length > 0) {
+      console.error("❌ Found duplicate item names:");
+      duplicateNamesSet.forEach((name, index) => {
+        const occurrences = validatedData.filter(
+          (item: InputItem) => item.name === name,
+        );
+        console.error(
+          `${index + 1}. "${name}" appears ${occurrences.length} times:`,
+        );
+        occurrences.forEach((item) => {
+          console.error(`   - baseType: "${item.baseType}"`);
+        });
+      });
+      throw new Error(
+        `Found ${duplicateNamesSet.length} duplicate name(s); each dust item must have a unique name`,
+      );
+    }
+    console.log(`✅ All ${validatedData.length} item names are unique`);
+
     // Filter out ignored items
     console.log("🚫 Filtering ignored items...");
     const filteredData = validatedData.filter(
