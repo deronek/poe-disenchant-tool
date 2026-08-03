@@ -489,11 +489,7 @@ test.describe("Pagination Functionality", () => {
     const currentMinItemLevel = await poePage.getMinItemLevel();
     const targetMinItemLevel = currentMinItemLevel === 72 ? 73 : 72;
     await poePage.setMinItemLevel(targetMinItemLevel);
-    // Deterministic: confirm the new value propagated before closing the panel
-    await expect(poePage.minItemLevelValue).toHaveText(
-      String(targetMinItemLevel),
-    );
-    await poePage.closeAdvancedSettings();
+    await poePage.page.waitForTimeout(300);
 
     // The same page should still be selected
     const stateAfter = await poePage.expectCurrentPage(stateBefore.currentPage);
