@@ -51,7 +51,7 @@ function TooltipTrigger({
   return (
     <TooltipPrimitive.Trigger
       data-slot="tooltip-trigger"
-      className={cn("cursor-help", className)}
+      className={cn("cursor-help select-text", className)}
       {...props}
     />
   );

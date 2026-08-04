@@ -147,7 +147,7 @@ export function DataTable<TData extends Item, TValue>({
                       key={header.id}
                       style={{ width }}
                       aria-sort={ariaSort as React.AriaAttributes["aria-sort"]}
-                      className={`font-normal transition-colors select-none ${isSorted ? "text-primary" : "text-foreground"} ${canSort ? "hover:bg-accent/60" : ""}`}
+                      className={`font-normal transition-colors ${isSorted ? "text-primary" : "text-foreground"} ${canSort ? "hover:bg-accent/60" : ""}`}
                     >
                       {header.isPlaceholder ? null : (
                         <div
