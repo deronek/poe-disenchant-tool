@@ -6,7 +6,6 @@ export const test = base.extend<{ poePage: PoEDisenchantPage }>({
   poePage: async ({ page }, use) => {
     const poePage = new PoEDisenchantPage(page);
     await poePage.setup();
-    await poePage.page.waitForTimeout(100);
     // eslint-disable-next-line react-hooks/rules-of-hooks -- 💀
     await use(poePage);
   },
