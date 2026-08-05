@@ -23,11 +23,17 @@ export function NameFilter<TData extends Item>({
   useEffect(() => {
     const handler = setTimeout(() => {
       if (!column) return;
+      // Skip when the value already matches the table state (e.g., the initial
+      // mount with an empty filter). Pushing a no-op value creates a new
+      // columnFilters reference, which triggers TanStack Table's
+      // _autoResetPageIndex and resets the current page.
+      if (getExternal() === value) return;
       column.setFilterValue(value);
       lastPushedValueRef.current = value;
     }, 250);
 
     return () => clearTimeout(handler);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, column]);
 
   // Keep local state in sync if external table state changes (e.g., clear from chip),
