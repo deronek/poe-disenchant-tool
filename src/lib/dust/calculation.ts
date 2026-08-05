@@ -91,7 +91,6 @@ export const calculateDustValueFull = (
   return finalDust;
 };
 
-
 /**
  * Reverse-calculates the range of base dust values that could produce a given
  * final Thaumaturgic Dust value after rounding.
@@ -122,16 +121,11 @@ export const calculateBaseDustRange = (
   const clampedIlvl = Math.min(Math.max(ilvl, 65), 84);
 
   const increaseByFactors =
-    quality * 2 +
-    influenceCount * 50 +
-    corruptionImplicitCount * 50;
+    quality * 2 + influenceCount * 50 + corruptionImplicitCount * 50;
 
   const factorsMultiplier = (increaseByFactors + 100) / 100;
 
-  const globalMultiplier =
-    125 *
-    (20 - (84 - clampedIlvl)) *
-    factorsMultiplier;
+  const globalMultiplier = 125 * (20 - (84 - clampedIlvl)) * factorsMultiplier;
 
   return {
     minBaseDust: (finalDust - 0.5) / globalMultiplier,
