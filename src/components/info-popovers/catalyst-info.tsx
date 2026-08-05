@@ -31,13 +31,12 @@ export function CatalystInfo() {
             <Badge variant="green">+40% Dust</Badge>
           </div>
         </div>
-
-        <div className="flex items-center gap-2">
-          <DollarSign className="h-4 w-4 flex-none text-green-600 dark:text-green-400" />
-          <p className="text-muted-foreground text-xs leading-relaxed text-pretty">
-            Use cheapest catalyst available on the market.
-          </p>
-        </div>
+      </div>
+      <div className="flex items-start gap-2">
+        <DollarSign className="mt-0.5 h-4 w-4 flex-none text-green-600 dark:text-green-400" />
+        <p className="text-muted-foreground text-xs leading-relaxed text-pretty">
+          Use cheapest catalyst available on the market.
+        </p>
       </div>
     </div>
   );
