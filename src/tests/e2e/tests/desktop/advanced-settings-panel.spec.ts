@@ -1,4 +1,9 @@
-import { DEFAULT_ADVANCED_SETTINGS } from "@/lib/advanced-settings";
+import {
+  ADVANCED_SETTINGS_STORAGE_KEY,
+  DEFAULT_ADVANCED_SETTINGS,
+  LEGACY_ADVANCED_SETTINGS_STORAGE_KEY_V1,
+  LEGACY_MIN_ITEM_LEVEL_DEFAULT_V1,
+} from "@/lib/advanced-settings";
 import {
   LISTING_TIME_LABELS,
   ListingTimeFilterSchema,
@@ -454,9 +459,9 @@ test.describe("Settings Persistence", () => {
     const newPoePage = new PoEDisenchantPage(newPage);
 
     // Set invalid localStorage data
-    await newPage.addInitScript(() => {
-      localStorage.setItem("poe-udt:trade-settings:v1", "invalid-json");
-    });
+    await newPage.addInitScript((key) => {
+      localStorage.setItem(key, "invalid-json");
+    }, ADVANCED_SETTINGS_STORAGE_KEY);
     await newPoePage.setup();
 
     // Should load with default settings
@@ -475,12 +480,9 @@ test.describe("Settings Persistence", () => {
     const newPoePage = new PoEDisenchantPage(newPage);
 
     // Set partial localStorage data (missing some fields)
-    await newPage.addInitScript(() => {
-      localStorage.setItem(
-        "poe-udt:trade-settings:v1",
-        JSON.stringify({ minItemLevel: 70 }),
-      );
-    });
+    await newPage.addInitScript((key) => {
+      localStorage.setItem(key, JSON.stringify({ minItemLevel: 70 }));
+    }, ADVANCED_SETTINGS_STORAGE_KEY);
     await newPoePage.setup();
 
     // Should load with defaults for missing fields
@@ -490,6 +492,85 @@ test.describe("Settings Persistence", () => {
     await newPoePage.verifyIncludeCorrupted(
       DEFAULT_ADVANCED_SETTINGS.includeCorrupted,
     );
+  });
+
+  test("should migrate legacy v1 settings on load", async ({ context }) => {
+    // Open page manually
+    const newPage = await context.newPage();
+    const newPoePage = new PoEDisenchantPage(newPage);
+
+    // Set legacy settings (minItemLevel at the old default) alongside custom values
+    await newPage.addInitScript(
+      ({ key, data }) => {
+        localStorage.setItem(key, JSON.stringify(data));
+      },
+      {
+        key: LEGACY_ADVANCED_SETTINGS_STORAGE_KEY_V1,
+        data: {
+          minItemLevel: LEGACY_MIN_ITEM_LEVEL_DEFAULT_V1,
+          includeCorrupted: false,
+          listingTimeFilter: "1day",
+          onlineStatus: "available",
+        },
+      },
+    );
+    await newPoePage.setup();
+
+    // The legacy default should be migrated to the new default (highest item level),
+    // other settings should be transferred 1:1, and the legacy key should be removed
+    await newPoePage.openAdvancedSettings();
+    await newPoePage.verifyMinItemLevel(DEFAULT_ADVANCED_SETTINGS.minItemLevel);
+    await newPoePage.verifyIncludeCorrupted(false);
+    await newPoePage.verifyListingTimeFilter("1day");
+    await newPoePage.expectStorageKey(
+      LEGACY_ADVANCED_SETTINGS_STORAGE_KEY_V1,
+      null,
+    );
+    await newPoePage.expectStorageKeyContains(ADVANCED_SETTINGS_STORAGE_KEY, {
+      minItemLevel: DEFAULT_ADVANCED_SETTINGS.minItemLevel,
+      includeCorrupted: false,
+      listingTimeFilter: "1day",
+      onlineStatus: "available",
+    });
+  });
+
+  test("should migrate legacy v1 settings 1:1 when minItemLevel is custom", async ({
+    context,
+  }) => {
+    // Open page manually
+    const newPage = await context.newPage();
+    const newPoePage = new PoEDisenchantPage(newPage);
+
+    // Set legacy settings with a custom minItemLevel
+    await newPage.addInitScript(
+      ({ key, data }) => {
+        localStorage.setItem(key, JSON.stringify(data));
+      },
+      {
+        key: LEGACY_ADVANCED_SETTINGS_STORAGE_KEY_V1,
+        data: {
+          minItemLevel: 70,
+          includeCorrupted: false,
+          listingTimeFilter: "1day",
+        },
+      },
+    );
+    await newPoePage.setup();
+
+    // The custom value should be transferred 1:1, and the legacy key should be removed
+    await newPoePage.openAdvancedSettings();
+    await newPoePage.verifyMinItemLevel(70);
+    await newPoePage.verifyIncludeCorrupted(false);
+    await newPoePage.verifyListingTimeFilter("1day");
+    await newPoePage.expectStorageKey(
+      LEGACY_ADVANCED_SETTINGS_STORAGE_KEY_V1,
+      null,
+    );
+    await newPoePage.expectStorageKeyContains(ADVANCED_SETTINGS_STORAGE_KEY, {
+      minItemLevel: 70,
+      includeCorrupted: false,
+      listingTimeFilter: "1day",
+    });
   });
 
   test("should persist settings after force closing and reopening page", async ({
@@ -541,18 +622,16 @@ test.describe("Keyboard Navigation", () => {
   }) => {
     await poePage.openAdvancedSettings();
 
+    // Set a value below the max so the slider can be increased
+    await poePage.setMinItemLevel(80);
+
     // Focus slider
     const slider = poePage.minItemLevelSlider;
     await slider.focus();
 
-    // Get initial value
-    const initialValue = await poePage.getMinItemLevel();
-
     // Press right arrow to increase
     await poePage.page.keyboard.press("ArrowRight");
-    await expect(poePage.minItemLevelValue).toHaveText(
-      (initialValue + 1).toString(),
-    );
+    await expect(poePage.minItemLevelValue).toHaveText("81");
   });
 
   test("should toggle include corrupted checkbox with space key", async ({

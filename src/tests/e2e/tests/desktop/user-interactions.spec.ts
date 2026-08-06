@@ -1,3 +1,4 @@
+import { DEFAULT_ADVANCED_SETTINGS } from "@/lib/advanced-settings";
 import { DEFAULT_LEAGUE, getLeagueApiName } from "@/lib/leagues";
 import { expect, test } from "../../fixtures";
 
@@ -134,7 +135,9 @@ test.describe("Trade Link Functionality", () => {
     expect(payload.query.filters.trade_filters.filters.indexed.option).toBe(
       "3days",
     );
-    expect(payload.query.filters.misc_filters.filters.ilvl.min).toBe(78);
+    expect(payload.query.filters.misc_filters.filters.ilvl.min).toBe(
+      DEFAULT_ADVANCED_SETTINGS.minItemLevel,
+    );
     expect(payload.sort.price).toBe("asc");
   });
 });
