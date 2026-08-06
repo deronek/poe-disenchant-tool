@@ -4,11 +4,11 @@ import {
   ADVANCED_SETTINGS_STORAGE_KEY,
   AdvancedSettingsSchema,
   DEFAULT_ADVANCED_SETTINGS,
+  LEGACY_ADVANCED_SETTINGS_STORAGE_KEY_V1,
+  LEGACY_MIN_ITEM_LEVEL_DEFAULT_V1,
   migrateLegacyAdvancedSettings,
 } from "@/lib/advanced-settings";
 import { MIN_ITEM_LEVEL_RANGE } from "@/lib/filters";
-
-const LEGACY_STORAGE_KEY = "poe-udt:trade-settings:v1";
 
 class MemoryStorage implements Storage {
   private store = new Map<string, string>();
@@ -69,8 +69,8 @@ describe("migrateLegacyAdvancedSettings", () => {
 
   it("migrates the legacy default minItemLevel to the highest item level", () => {
     window.localStorage.setItem(
-      LEGACY_STORAGE_KEY,
-      JSON.stringify({ minItemLevel: 78 }),
+      LEGACY_ADVANCED_SETTINGS_STORAGE_KEY_V1,
+      JSON.stringify({ minItemLevel: LEGACY_MIN_ITEM_LEVEL_DEFAULT_V1 }),
     );
 
     const migrated = migrateLegacyAdvancedSettings();
@@ -81,7 +81,9 @@ describe("migrateLegacyAdvancedSettings", () => {
       JSON.parse(window.localStorage.getItem(ADVANCED_SETTINGS_STORAGE_KEY)!)
         .minItemLevel,
     ).toBe(MIN_ITEM_LEVEL_RANGE.max);
-    expect(window.localStorage.getItem(LEGACY_STORAGE_KEY)).toBeNull();
+    expect(
+      window.localStorage.getItem(LEGACY_ADVANCED_SETTINGS_STORAGE_KEY_V1),
+    ).toBeNull();
   });
 
   it("transfers custom minItemLevel values 1:1", () => {
@@ -94,7 +96,7 @@ describe("migrateLegacyAdvancedSettings", () => {
     ]) {
       window.localStorage.clear();
       window.localStorage.setItem(
-        LEGACY_STORAGE_KEY,
+        LEGACY_ADVANCED_SETTINGS_STORAGE_KEY_V1,
         JSON.stringify({ minItemLevel }),
       );
 
@@ -110,9 +112,9 @@ describe("migrateLegacyAdvancedSettings", () => {
 
   it("transfers all other settings 1:1", () => {
     window.localStorage.setItem(
-      LEGACY_STORAGE_KEY,
+      LEGACY_ADVANCED_SETTINGS_STORAGE_KEY_V1,
       JSON.stringify({
-        minItemLevel: 78,
+        minItemLevel: LEGACY_MIN_ITEM_LEVEL_DEFAULT_V1,
         includeCorrupted: false,
         listingTimeFilter: "1day",
         onlineStatus: "securable",
@@ -130,30 +132,39 @@ describe("migrateLegacyAdvancedSettings", () => {
   });
 
   it("removes the legacy key and returns null when its data is invalid", () => {
-    window.localStorage.setItem(LEGACY_STORAGE_KEY, "invalid-json");
+    window.localStorage.setItem(
+      LEGACY_ADVANCED_SETTINGS_STORAGE_KEY_V1,
+      "invalid-json",
+    );
 
     expect(migrateLegacyAdvancedSettings()).toBeNull();
-    expect(window.localStorage.getItem(LEGACY_STORAGE_KEY)).toBeNull();
+    expect(
+      window.localStorage.getItem(LEGACY_ADVANCED_SETTINGS_STORAGE_KEY_V1),
+    ).toBeNull();
     expect(window.localStorage.getItem(ADVANCED_SETTINGS_STORAGE_KEY)).toBe(
       null,
     );
   });
 
-  it("does not overwrite existing v2 data", () => {
+  it("migrates legacy v1 data over existing v2 data", () => {
     window.localStorage.setItem(
       ADVANCED_SETTINGS_STORAGE_KEY,
       JSON.stringify({ minItemLevel: 65 }),
     );
     window.localStorage.setItem(
-      LEGACY_STORAGE_KEY,
-      JSON.stringify({ minItemLevel: 78 }),
+      LEGACY_ADVANCED_SETTINGS_STORAGE_KEY_V1,
+      JSON.stringify({ minItemLevel: LEGACY_MIN_ITEM_LEVEL_DEFAULT_V1 }),
     );
 
-    expect(migrateLegacyAdvancedSettings()).toBeNull();
+    const migrated = migrateLegacyAdvancedSettings();
+
+    expect(migrated!.minItemLevel).toBe(MIN_ITEM_LEVEL_RANGE.max);
     expect(
       JSON.parse(window.localStorage.getItem(ADVANCED_SETTINGS_STORAGE_KEY)!)
         .minItemLevel,
-    ).toBe(65);
-    expect(window.localStorage.getItem(LEGACY_STORAGE_KEY)).toBeNull();
+    ).toBe(MIN_ITEM_LEVEL_RANGE.max);
+    expect(
+      window.localStorage.getItem(LEGACY_ADVANCED_SETTINGS_STORAGE_KEY_V1),
+    ).toBeNull();
   });
 });

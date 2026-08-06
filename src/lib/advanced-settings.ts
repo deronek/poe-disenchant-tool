@@ -29,9 +29,11 @@ export const LEGACY_MIN_ITEM_LEVEL_DEFAULT_V1 = 78;
  *
  * Copies every setting over 1:1, except minItemLevel: the legacy default (78)
  * becomes the new default (highest item level), while custom values are kept
- * as-is. The legacy key is removed after migrating. Returns the migrated
- * settings so the caller can adopt them as the current state, or null when
- * there was nothing to migrate.
+ * as-is. Legacy data always wins: even when v2 data already exists (e.g.,
+ * after a rollback to an older version), the legacy values are migrated over
+ * it. The legacy key is removed no matter whether the data was valid. Returns
+ * the migrated settings so the caller can adopt them as the current state, or
+ * null when there was nothing to migrate.
  */
 export function migrateLegacyAdvancedSettings(): AdvancedSettings | null {
   const legacyRaw = window.localStorage.getItem(
@@ -39,33 +41,27 @@ export function migrateLegacyAdvancedSettings(): AdvancedSettings | null {
   );
   if (legacyRaw === null) return null;
 
-  if (window.localStorage.getItem(ADVANCED_SETTINGS_STORAGE_KEY) !== null) {
-    window.localStorage.removeItem(LEGACY_ADVANCED_SETTINGS_STORAGE_KEY_V1);
-    return null;
-  }
+  window.localStorage.removeItem(LEGACY_ADVANCED_SETTINGS_STORAGE_KEY_V1);
 
-  let migrated: AdvancedSettings | null = null;
   try {
     const legacy = AdvancedSettingsSchema.safeParse(JSON.parse(legacyRaw));
-    if (legacy.success) {
-      migrated = {
-        ...legacy.data,
-        minItemLevel:
-          legacy.data.minItemLevel === LEGACY_MIN_ITEM_LEVEL_DEFAULT_V1
-            ? MIN_ITEM_LEVEL_RANGE.max
-            : legacy.data.minItemLevel,
-      };
-      window.localStorage.setItem(
-        ADVANCED_SETTINGS_STORAGE_KEY,
-        JSON.stringify(migrated),
-      );
-    }
+    if (!legacy.success) return null;
+
+    const migrated: AdvancedSettings = {
+      ...legacy.data,
+      minItemLevel:
+        legacy.data.minItemLevel === LEGACY_MIN_ITEM_LEVEL_DEFAULT_V1
+          ? MIN_ITEM_LEVEL_RANGE.max
+          : legacy.data.minItemLevel,
+    };
+    window.localStorage.setItem(
+      ADVANCED_SETTINGS_STORAGE_KEY,
+      JSON.stringify(migrated),
+    );
+    return migrated;
   } catch {
-    // Invalid legacy data; fall through to cleanup
-  } finally {
-    window.localStorage.removeItem(LEGACY_ADVANCED_SETTINGS_STORAGE_KEY_V1);
+    return null;
   }
-  return migrated;
 }
 
 const ADVANCED_SETTINGS_KEYS = Object.keys(
