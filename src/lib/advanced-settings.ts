@@ -31,7 +31,8 @@ export const LEGACY_MIN_ITEM_LEVEL_DEFAULT_V1 = 78;
  * becomes the new default (highest item level), while custom values are kept
  * as-is. Legacy data always wins: even when v2 data already exists (e.g.,
  * after a rollback to an older version), the legacy values are migrated over
- * it. The legacy key is removed no matter whether the data was valid. Returns
+ * it. The legacy key is removed up front: if the v2 write then fails (e.g.,
+ * storage quota exceeded), the v1 data is lost — this is accepted. Returns
  * the migrated settings so the caller can adopt them as the current state, or
  * null when there was nothing to migrate.
  */
