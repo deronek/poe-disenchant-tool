@@ -1540,4 +1540,25 @@ export class PoEDisenchantPage {
     await this.verifyOnlineStatusFilter(DEFAULT_ADVANCED_SETTINGS.onlineStatus);
     await this.verifyResetButtonDisabled(true);
   }
+
+  // localStorage
+  async expectStorageKey(key: string, expected: string | null): Promise<void> {
+    const stored = await this.page.evaluate(
+      (k) => localStorage.getItem(k),
+      key,
+    );
+    expect(stored).toBe(expected);
+  }
+
+  async expectStorageKeyContains(
+    key: string,
+    expected: Record<string, unknown>,
+  ): Promise<void> {
+    const stored = await this.page.evaluate(
+      (k) => localStorage.getItem(k),
+      key,
+    );
+    expect(stored).not.toBeNull();
+    expect(JSON.parse(stored!)).toMatchObject(expected);
+  }
 }
