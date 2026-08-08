@@ -26,7 +26,8 @@ export function NameFilter<TData extends Item>({
       // Skip when the value already matches the table state (e.g., the initial
       // mount with an empty filter). Pushing a no-op value creates a new
       // columnFilters reference, which triggers TanStack Table's
-      // _autoResetPageIndex and resets the current page.
+      // _autoResetPageIndex and briefly snaps the page back mid-pagination,
+      // which made some tests flaky.
       if (lastPushedValueRef.current === value) return;
       column.setFilterValue(value);
       lastPushedValueRef.current = value;
