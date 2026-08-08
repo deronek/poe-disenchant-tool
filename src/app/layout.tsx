@@ -7,7 +7,6 @@ import { CleanupOldLeagueMarks } from "@/components/cleanup-old-league-marks";
 import { DataTableStateProvider } from "@/components/data-table/data-table-state-context";
 import { ErrorHandler } from "@/components/error-handler";
 import { Footer } from "@/components/footer";
-import { HydrationMarker } from "@/components/hydration-marker";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -76,7 +75,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased">
-        <HydrationMarker />
         <div className="flex min-h-screen flex-col">
           <TooltipProvider>
             <ThemeProvider

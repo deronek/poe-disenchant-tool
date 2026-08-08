@@ -489,6 +489,7 @@ test.describe("Pagination Functionality", () => {
     const currentMinItemLevel = await poePage.getMinItemLevel();
     const targetMinItemLevel = currentMinItemLevel === 72 ? 73 : 72;
     await poePage.setMinItemLevel(targetMinItemLevel);
+    await poePage.closeAdvancedSettings();
     await poePage.page.waitForTimeout(300);
 
     // The same page should still be selected

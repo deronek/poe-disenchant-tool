@@ -5,6 +5,7 @@ import * as React from "react";
 
 import { AdvancedSettingsProvider } from "@/components/advanced-settings-context";
 import { createColumns, DataTable } from "@/components/data-table";
+import { HydrationMarker } from "@/components/hydration-marker";
 import { LeagueSessionProvider } from "@/components/league-session-context";
 import { League } from "@/lib/leagues";
 
@@ -34,6 +35,7 @@ export function SharedDataView({
       <AdvancedSettingsProvider>
         <DataTable columns={columns} data={items} />
       </AdvancedSettingsProvider>
+      <HydrationMarker />
     </LeagueSessionProvider>
   );
 }

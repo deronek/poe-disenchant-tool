@@ -84,7 +84,9 @@ const ChaosCell: ColumnDef<Item>["cell"] = function ChaosCellComponent({
       return (
         <span className="inline-flex w-full justify-end gap-1">
           <Tooltip>
-            <TooltipTrigger>{compactDivine}</TooltipTrigger>
+            <TooltipTrigger className="select-text">
+              {compactDivine}
+            </TooltipTrigger>
             <TooltipContent variant="popover" className="px-3 py-1.5 text-xs">
               <div className="flex items-center gap-1">
                 {standardFormatterPrice.format(divineValue)}
@@ -105,7 +107,7 @@ const ChaosCell: ColumnDef<Item>["cell"] = function ChaosCellComponent({
     return (
       <span className="inline-flex w-full justify-end gap-1">
         <Tooltip>
-          <TooltipTrigger>
+          <TooltipTrigger className="select-text">
             <span data-full-value={chaosValue}>
               {standardFormatterPrice.format(divineValue)}
             </span>
@@ -340,7 +342,7 @@ const CompactNumberTooltip = React.memo(function CompactNumberTooltip({
 
   return (
     <Tooltip>
-      <TooltipTrigger>{compact}</TooltipTrigger>
+      <TooltipTrigger className="select-text">{compact}</TooltipTrigger>
       <TooltipContent variant="popover" className="px-3 py-1.5 text-xs">
         <div className="flex items-center gap-1">{full}</div>
       </TooltipContent>
