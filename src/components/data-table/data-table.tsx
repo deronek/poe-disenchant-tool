@@ -147,19 +147,14 @@ export function DataTable<TData extends Item, TValue>({
                       key={header.id}
                       style={{ width }}
                       aria-sort={ariaSort as React.AriaAttributes["aria-sort"]}
-                      className={`font-normal transition-colors ${isSorted ? "text-primary" : "text-foreground"} ${canSort ? "hover:bg-accent/60" : ""}`}
+                      className={`font-normal transition-colors select-none ${isSorted ? "text-primary" : "text-foreground"} ${canSort ? "hover:bg-accent/60" : ""}`}
                     >
                       {header.isPlaceholder ? null : (
                         <div
                           role={canSort ? "button" : undefined}
                           tabIndex={canSort ? 0 : -1}
                           className={`flex w-full items-center justify-between rounded-sm py-1 outline-none ${canSort ? "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-offset-background focus-visible:ring-[3px] focus-visible:ring-offset-2" : ""}`}
-                          onClick={(e) => {
-                            if (!toggleSort) return;
-                            // Ignore the click that ends a text-selection drag
-                            if (window.getSelection()?.toString()) return;
-                            toggleSort(e);
-                          }}
+                          onClick={toggleSort}
                           onKeyDown={(e) => {
                             if (!canSort) return;
                             if (e.key === "Enter" || e.key === " ") {
