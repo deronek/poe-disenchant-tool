@@ -3,22 +3,23 @@ import { expect, test } from "../../fixtures";
 test("should display correct column headers", async ({ poePage }) => {
   const headers = await poePage.getColumnHeaderNames();
 
-  // Expected headers based on columns.tsx
-  const expectedHeaders = [
+  const staticHeaders = [
     "Name",
     "Price",
     "Dust Value",
     "Dust / Chaos",
-    "Dust / Chaos / Slot",
     "Gold Fee",
     "Trade Link",
     "Mark",
   ];
 
-  expect(headers).toHaveLength(expectedHeaders.length);
-  expectedHeaders.forEach((header) => {
+  // +1 for the dynamic Efficiency column
+  expect(headers).toHaveLength(staticHeaders.length + 1);
+  staticHeaders.forEach((header) => {
     expect(headers).toContain(header);
   });
+  // Efficiency header is mode-dependent (default: "Efficiency · Slot")
+  expect(headers.filter((h) => h.startsWith("Efficiency"))).toHaveLength(1);
 });
 
 test.describe("Data Rendering and Formatting", () => {
@@ -27,7 +28,7 @@ test.describe("Data Rendering and Formatting", () => {
     "Price",
     "Dust Value",
     "Dust / Chaos",
-    "Dust / Chaos / Slot",
+    "Efficiency",
     "Gold Fee",
   ];
   test.describe("Table Value Display", () => {

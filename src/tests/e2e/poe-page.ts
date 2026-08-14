@@ -92,7 +92,7 @@ export class PoEDisenchantPage {
     "Price",
     "Dust Value",
     "Dust / Chaos",
-    "Dust / Chaos / Slot",
+    "Efficiency",
     "Gold Fee",
   ] as const;
 
@@ -100,7 +100,7 @@ export class PoEDisenchantPage {
     "Price",
     "Dust Value",
     "Dust / Chaos",
-    "Dust / Chaos / Slot",
+    "Efficiency",
     "Gold Fee",
   ] as const;
 
@@ -155,7 +155,7 @@ export class PoEDisenchantPage {
         price: await extract(indices["Price"]),
         dustValue: await extract(indices["Dust Value"]),
         dustPerChaos: await extract(indices["Dust / Chaos"]),
-        dustPerChaosPerSlot: await extract(indices["Dust / Chaos / Slot"]),
+        efficiency: await extract(indices["Efficiency"]),
         goldCost: await extract(indices["Gold Fee"]),
         qualityType,
       });
@@ -184,8 +184,8 @@ export class PoEDisenchantPage {
         return item.dustValue;
       case "Dust / Chaos":
         return item.dustPerChaos;
-      case "Dust / Chaos / Slot":
-        return item.dustPerChaosPerSlot;
+      case "Efficiency":
+        return item.efficiency;
       case "Gold Fee":
         return item.goldCost;
       default:
@@ -415,7 +415,13 @@ export class PoEDisenchantPage {
 
   async getColumnIndex(columnName: string): Promise<number> {
     const headers = await this.dataTableHeaders.allInnerTexts();
-    const index = headers.findIndex((h) => h.trim() === columnName);
+    const normalized = headers.map((h) => h.trim());
+    // The Efficiency column header is dynamic (depends on the selected mode),
+    // e.g. "Efficiency · Slot", so match it by prefix. All others match exactly.
+    const index =
+      columnName === "Efficiency"
+        ? normalized.findIndex((h) => h.startsWith("Efficiency"))
+        : normalized.findIndex((h) => h === columnName);
     if (index === -1) throw new Error(`Column "${columnName}" not found`);
     return index;
   }

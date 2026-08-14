@@ -7,7 +7,7 @@ export type TestItem = {
   price: number;
   dustValue: number;
   dustPerChaos: number;
-  dustPerChaosPerSlot: number;
+  efficiency: number;
   goldCost: number;
   qualityType: string;
 };
