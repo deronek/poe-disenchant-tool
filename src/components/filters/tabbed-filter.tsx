@@ -1,4 +1,3 @@
-import type { Item } from "@/lib/item-data";
 import type { Column } from "@tanstack/react-table";
 import { useState } from "react";
 import { ChevronDown, Filter } from "lucide-react";
@@ -17,6 +16,7 @@ import {
   hasMinFilter,
 } from "@/lib/filters";
 import { cn } from "@/lib/utils";
+import { ViewItem } from "@/lib/view-item";
 import { FilterTabIndicator } from "./filter-tab-indicator";
 import { RangeFilter } from "./range-filter";
 
@@ -33,7 +33,7 @@ interface TabbedFilterProps<TData> {
   className?: string;
 }
 
-export function TabbedFilter<TData extends Item>({
+export function TabbedFilter<TData extends ViewItem>({
   priceColumn,
   dustColumn,
   goldColumn,

@@ -1,5 +1,4 @@
 import type { RangeFilterValue } from "@/lib/filters";
-import type { Item } from "@/lib/item-data";
 import type { Column } from "@tanstack/react-table";
 import { useMemo } from "react";
 
@@ -19,6 +18,7 @@ import {
   updateUpperBound,
 } from "@/lib/filters";
 import { cn } from "@/lib/utils";
+import { ViewItem } from "@/lib/view-item";
 
 interface RangeFilterProps<TData> {
   column: Column<TData, unknown> | undefined;
@@ -91,7 +91,7 @@ export function RangeFilterStatus({
   return <span>No {title.toLowerCase()} filter applied.</span>;
 }
 
-export function RangeFilter<TData extends Item>({
+export function RangeFilter<TData extends ViewItem>({
   column,
   min,
   max,

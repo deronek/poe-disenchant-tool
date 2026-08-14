@@ -1,4 +1,3 @@
-import type { Item } from "@/lib/item-data";
 import * as React from "react";
 import {
   ColumnDef,
@@ -22,6 +21,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { ViewItem } from "@/lib/view-item";
 import { useLeagueSession } from "../league-session-context";
 import { DataTablePagination } from "./data-table-pagination";
 import { useDataTableState } from "./data-table-state-context";
@@ -41,7 +41,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
-export function DataTable<TData extends Item, TValue>({
+export function DataTable<TData extends ViewItem, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {

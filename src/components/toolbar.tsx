@@ -1,26 +1,26 @@
-import type { Item } from "@/lib/item-data";
+import type { ViewItem } from "@/lib/view-item";
 import { Table } from "@tanstack/react-table";
 
 import { useAdvancedSettings } from "@/components/advanced-settings-context";
 import { AdvancedSettingsPanel } from "@/components/advanced-settings-panel";
 import { ClearMarksButton } from "@/components/clear-marks-button";
+import { EfficiencySettingsControl } from "@/components/efficiency";
 import { FilterChips, NameFilter, TabbedFilter } from "@/components/filters";
-import { MobileSortingControls } from "@/components/mobile";
 import { COLUMN_IDS } from "@/lib/column-ids";
 
-type ToolbarProps<TData extends Item> = {
+type ToolbarProps<TData extends ViewItem> = {
   table: Table<TData>;
   onClearMarks?: () => void;
 };
 
-export function DataTableToolbar<TData extends Item>({
+export function DataTableToolbar<TData extends ViewItem>({
   table,
   onClearMarks,
 }: ToolbarProps<TData>) {
   const { settings, setSettings } = useAdvancedSettings();
   return (
-    <div className="bg-background-200 flex gap-3 border-b p-3">
-      <div className="w-full">
+    <div className="bg-background-200 grid grid-cols-1 items-start gap-3 border-b p-3 xl:grid-cols-[minmax(0,1fr)_auto]">
+      <div className="min-w-0">
         <div className="grid grid-cols-[minmax(0,theme(maxWidth.3xs))_1fr] items-start gap-3 xl:flex xl:flex-nowrap xl:items-center">
           <div className="w-full min-w-0 xl:w-3xs xl:flex-none">
             <NameFilter table={table} />
@@ -40,26 +40,25 @@ export function DataTableToolbar<TData extends Item>({
             />
           </div>
 
-          <div className="xl:col-span-auto col-span-2">
+          <div className="col-span-2 xl:col-span-1">
             <FilterChips table={table} />
           </div>
         </div>
       </div>
 
-      {/* Sorting Controls - Mobile Only */}
-      <MobileSortingControls table={table} />
+      <div className="flex min-w-0 items-center justify-end gap-2">
+        <EfficiencySettingsControl />
 
-      <div className="flex flex-col items-center gap-2 md:ml-auto xl:flex-row">
         <AdvancedSettingsPanel
           settings={settings}
           onSettingsChange={setSettings}
-          className="w-full xl:w-auto"
+          className="w-auto shrink-0"
         />
 
         <ClearMarksButton
           table={table}
           onClearMarks={onClearMarks}
-          className="w-full xl:w-auto"
+          className="w-auto shrink-0"
         />
       </div>
     </div>

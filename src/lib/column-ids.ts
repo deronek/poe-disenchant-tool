@@ -4,7 +4,7 @@ export const COLUMN_IDS = {
   CHAOS: "chaos",
   CALCULATED_DUST_VALUE: "calculatedDustValue",
   DUST_PER_CHAOS: "dustPerChaos",
-  DUST_PER_CHAOS_PER_SLOT: "dustPerChaosPerSlot",
+  EFFICIENCY: "efficiency",
   GOLD_FEE: "goldCost",
   TRADE_LINK: "tradeLink",
   SELECT: "select",
