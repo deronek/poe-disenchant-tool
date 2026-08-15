@@ -23,7 +23,7 @@ const TotalCostIconComponent = ({
       className={cn("text-amber-600 dark:text-amber-500", className)}
       aria-label={alt || undefined}
     >
-      (titleText && <title>{title ?? alt}</title>)
+      {titleText && <title>{titleText}</title>}
     </HandCoins>
   );
 };
