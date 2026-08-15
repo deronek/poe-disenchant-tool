@@ -19,7 +19,7 @@ export function EfficiencySettingsControl({
       <PopoverTrigger asChild>
         <Button
           variant="outline"
-          className={cn("group min-w-0 gap-2 whitespace-nowrap", className)}
+          className={cn("gap-3 whitespace-nowrap", className)}
           aria-label="Configure the Efficiency metric"
         >
           <Gauge className="size-4 shrink-0" aria-hidden="true" />

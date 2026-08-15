@@ -109,12 +109,12 @@ export function TabbedFilter<TData extends ViewItem>({
           )}
         >
           <span
-            className={`mr-1 rounded-full p-1 transition-colors ${isFilterActive ? "bg-primary/80" : ""}`}
+            className={`rounded-full p-1 transition-colors ${isFilterActive ? "bg-primary/80" : ""}`}
           >
             <Filter className="h-4 w-4" />
           </span>
           <span className="">Filters</span>
-          <ChevronDown className="ml-1 h-3 w-3 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+          <ChevronDown className="ml-2 h-3 w-3 transition-transform duration-200 group-data-[state=open]:rotate-180" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80" align="start">

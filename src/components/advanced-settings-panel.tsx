@@ -159,8 +159,8 @@ export function AdvancedSettingsPanel({
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" className={cn("group", className)}>
-          <Settings className="mr-2 h-4 w-4" />
+        <Button variant="outline" className={cn("group gap-3", className)}>
+          <Settings className="h-4 w-4" />
           <span>Trade</span>
           <ChevronDown className="ml-1 h-3 w-3 transition-transform duration-200 group-data-[state=open]:rotate-180" />
         </Button>

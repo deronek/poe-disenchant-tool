@@ -178,7 +178,7 @@ export function EfficiencySortingControls<TData>({
         <DropdownMenuTrigger asChild>
           <Button
             variant="outline"
-            className={cn("gap-3", className)}
+            className={cn("group gap-3", className)}
             aria-label={triggerLabel}
           >
             <span aria-hidden="true" className="contents">
