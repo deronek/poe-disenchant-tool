@@ -29,7 +29,7 @@ Path of Exile tool for calculating unique item disenchanting efficiency across m
   - Gold fee
 - Sorting options:
   - Dust per Chaos
-  - Configurable secondary efficiency: Dust per Chaos per slot, Dust per Gold, or Dust per Total Cost
+  - Configurable efficiency metric: Dust per Chaos per slot, Dust per Gold, or Dust per Total Cost
   - Price
   - Dust value
   - Gold fee
@@ -54,7 +54,7 @@ Path of Exile tool for calculating unique item disenchanting efficiency across m
 - **Dust per Chaos per Slot**: `dustPerChaos / itemSlots`: For comparing items with different slot counts
 - **Gold Cost**: calculated fee for async trades
 - **Dust per Gold**: `dustValue / goldFee`; higher is more Gold-efficient
-- **Dust per Total Cost**: dust divided by price plus the user-defined Chaos value of Gold
+- **Dust per Total Cost**: dust divided by price including user-defined Chaos value of Gold
 
 ### Advanced Trade Settings
 
