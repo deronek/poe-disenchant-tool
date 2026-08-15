@@ -468,8 +468,9 @@ function MobileCardComponent<TData extends ViewItem>({
 
   return (
     <div
-      className={`flex min-w-78 flex-col gap-4 rounded-lg border p-5 ${isSelected ? "bg-muted/60 border-primary/30 opacity-95" : "bg-card"
-        } transition-all`}
+      className={`flex min-w-78 flex-col gap-4 rounded-lg border p-5 ${
+        isSelected ? "bg-muted/60 border-primary/30 opacity-95" : "bg-card"
+      } transition-all`}
     >
       <HeaderSection
         name={name}
