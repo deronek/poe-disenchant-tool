@@ -1,4 +1,5 @@
 {
   "typescript.tsdk": "node_modules\\typescript\\lib",
-  "tailwindCSS.classFunctions": ["tw", "clsx", "tw\\.[a-z-]+", "cn", "cva"]
+  "tailwindCSS.classFunctions": ["tw", "clsx", "tw\\.[a-z-]+", "cn", "cva"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
