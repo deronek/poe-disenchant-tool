@@ -115,9 +115,9 @@ export function calculateDustPerGold(
   dustValue: number,
   goldCost: number,
 ): number {
-  return goldCost > 0 ? dustValue / goldCost : 0;
+  return goldCost > 0 ? Math.round(dustValue / goldCost) : 0;
 }
 
 export function calculateDustPerCost(dustValue: number, cost: number): number {
-  return cost > 0 ? dustValue / cost : 0;
+  return cost > 0 ? Math.round(dustValue / cost) : 0;
 }
