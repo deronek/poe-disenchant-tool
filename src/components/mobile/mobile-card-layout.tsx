@@ -7,6 +7,12 @@ interface MobileCardLayoutProps<TData extends ViewItem> {
   table: Table<TData>;
 }
 
+/**
+ * Renders the table's current rows as responsive cards.
+ *
+ * @param table - The table whose current row model supplies the cards
+ * @returns A responsive card layout, or a no-results message when the table has no rows
+ */
 export function MobileCardLayout<TData extends ViewItem>({
   table,
 }: MobileCardLayoutProps<TData>) {

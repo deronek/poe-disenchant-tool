@@ -8,6 +8,9 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 
+/**
+ * Groups related form fields in a styled fieldset container.
+ */
 function FieldSet({ className, ...props }: React.ComponentProps<"fieldset">) {
   return (
     <fieldset
@@ -22,6 +25,11 @@ function FieldSet({ className, ...props }: React.ComponentProps<"fieldset">) {
   );
 }
 
+/**
+ * Renders a field legend with legend or label styling.
+ *
+ * @param variant - The styling variant applied to the legend.
+ */
 function FieldLegend({
   className,
   variant = "legend",
@@ -42,6 +50,12 @@ function FieldLegend({
   );
 }
 
+/**
+ * Groups related fields in a vertically spaced container.
+ *
+ * @param className - Additional CSS classes to apply to the container
+ * @returns The rendered field group container
+ */
 function FieldGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -79,6 +93,11 @@ const fieldVariants = cva(
   },
 );
 
+/**
+ * Renders a grouped field container with the specified layout orientation.
+ *
+ * @param orientation - The field layout orientation.
+ */
 function Field({
   className,
   orientation = "vertical",
@@ -95,6 +114,9 @@ function Field({
   );
 }
 
+/**
+ * Renders a flexible column container for field content.
+ */
 function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -108,6 +130,11 @@ function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
+/**
+ * Renders a label with field-specific layout and state styling.
+ *
+ * @returns The styled field label element.
+ */
 function FieldLabel({
   className,
   ...props
@@ -126,6 +153,9 @@ function FieldLabel({
   );
 }
 
+/**
+ * Renders a styled title for a form field.
+ */
 function FieldTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -139,6 +169,9 @@ function FieldTitle({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
+/**
+ * Renders descriptive text associated with a form field.
+ */
 function FieldDescription({ className, ...props }: React.ComponentProps<"p">) {
   return (
     <p
@@ -154,6 +187,11 @@ function FieldDescription({ className, ...props }: React.ComponentProps<"p">) {
   );
 }
 
+/**
+ * Renders a horizontal separator between fields, optionally displaying centered content over the separator.
+ *
+ * @param children - Optional content displayed at the center of the separator
+ */
 function FieldSeparator({
   children,
   className,
@@ -184,6 +222,12 @@ function FieldSeparator({
   );
 }
 
+/**
+ * Displays field validation errors or explicitly provided content.
+ *
+ * @param errors - Error entries whose messages are deduplicated before display.
+ * @returns The error content, or `null` when no content is available.
+ */
 function FieldError({
   className,
   children,

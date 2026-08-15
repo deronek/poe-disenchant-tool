@@ -22,6 +22,11 @@ interface EfficiencySettingsProviderProps {
   children: React.ReactNode;
 }
 
+/**
+ * Provides efficiency settings and their updater to descendant components.
+ *
+ * @param children - Components rendered within the provider
+ */
 export function EfficiencySettingsProvider({
   children,
 }: EfficiencySettingsProviderProps) {
@@ -46,6 +51,12 @@ export function EfficiencySettingsProvider({
   );
 }
 
+/**
+ * Provides access to efficiency settings and their state updater.
+ *
+ * @returns The efficiency settings context value.
+ * @throws An error if used outside `EfficiencySettingsProvider`.
+ */
 export function useEfficiencySettings(): EfficiencySettingsContextValue {
   const context = React.useContext(EfficiencySettingsContext);
 

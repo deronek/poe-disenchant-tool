@@ -14,6 +14,12 @@ type MobileToolbarProps<TData extends ViewItem> = {
   onClearMarks?: () => void;
 };
 
+/**
+ * Renders mobile table controls for filtering, sorting, efficiency settings, advanced settings, and mark management.
+ *
+ * @param table - The table instance controlled by the toolbar.
+ * @param onClearMarks - Optional callback invoked when marks are cleared.
+ */
 export function MobileToolbar<TData extends ViewItem>({
   table,
   onClearMarks,

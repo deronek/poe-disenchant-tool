@@ -80,6 +80,13 @@ export const EFFICIENCY_MODES: Record<
   },
 };
 
+/**
+ * Calculates an item's efficiency using the configured mode.
+ *
+ * @param item - The item and cost values used for the calculation
+ * @param settings - The efficiency mode and calculation settings
+ * @returns The calculated efficiency result
+ */
 export function getEfficiencyResult(
   item: EfficiencyComputeInput,
   settings: EfficiencySettings,
@@ -87,6 +94,13 @@ export function getEfficiencyResult(
   return EFFICIENCY_MODES[settings.mode].compute(item, settings);
 }
 
+/**
+ * Converts a gold cost to its equivalent chaos cost.
+ *
+ * @param goldCost - The gold cost to convert
+ * @param goldValueChaosPer10k - The chaos value of 10,000 gold
+ * @returns The equivalent chaos cost, or `0` when either input is invalid or negative
+ */
 export function calculateGoldChaosCost(
   goldCost: number,
   goldValueChaosPer10k: number,
@@ -100,6 +114,14 @@ export function calculateGoldChaosCost(
   return goldCost * (goldValueChaosPer10k / 10_000);
 }
 
+/**
+ * Calculates the effective chaos cost by combining acquisition cost with the chaos equivalent of the gold cost.
+ *
+ * @param acquisitionChaosCost - The acquisition cost in chaos.
+ * @param goldCost - The cost in gold.
+ * @param goldValueChaosPer10k - The chaos value of 10,000 gold.
+ * @returns The combined effective cost in chaos.
+ */
 export function calculateEffectiveChaosCost(
   acquisitionChaosCost: number,
   goldCost: number,
@@ -111,6 +133,13 @@ export function calculateEffectiveChaosCost(
   );
 }
 
+/**
+ * Calculates the rounded dust value per gold.
+ *
+ * @param dustValue - The item's dust value
+ * @param goldCost - The item's gold cost
+ * @returns The rounded dust value per gold, or `0` when the gold cost is zero or less
+ */
 export function calculateDustPerGold(
   dustValue: number,
   goldCost: number,
@@ -118,6 +147,13 @@ export function calculateDustPerGold(
   return goldCost > 0 ? Math.round(dustValue / goldCost) : 0;
 }
 
+/**
+ * Calculates the rounded dust value per unit of cost.
+ *
+ * @param dustValue - The dust value to divide
+ * @param cost - The cost used as the divisor
+ * @returns The rounded dust value per cost, or `0` when the cost is zero or negative
+ */
 export function calculateDustPerCost(dustValue: number, cost: number): number {
   return cost > 0 ? Math.round(dustValue / cost) : 0;
 }

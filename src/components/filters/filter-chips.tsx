@@ -11,6 +11,11 @@ interface FilterChipsProps<TData extends ViewItem> {
   table: Table<TData>;
 }
 
+/**
+ * Renders chips for the table's active name, price, dust, and gold filters.
+ *
+ * @param table - The table containing the filter columns
+ */
 export function FilterChips<TData extends ViewItem>({
   table,
 }: FilterChipsProps<TData>) {

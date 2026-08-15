@@ -6,6 +6,12 @@ import { CircleIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
+/**
+ * Renders a styled group of radio button items.
+ *
+ * @param className - Additional CSS classes to apply to the radio group.
+ * @param props - Props forwarded to the underlying Radix radio group.
+ */
 function RadioGroup({
   className,
   ...props
@@ -19,6 +25,9 @@ function RadioGroup({
   );
 }
 
+/**
+ * Renders a styled radio button within a radio group.
+ */
 function RadioGroupItem({
   className,
   ...props

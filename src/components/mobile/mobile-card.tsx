@@ -126,6 +126,16 @@ const GoldInfoPopover = React.memo(function GoldInfoPopover() {
   );
 });
 
+/**
+ * Displays a popover containing an item's total cost breakdown.
+ *
+ * @param itemName - The item name used in the popover's accessible label
+ * @param acquisitionChaosCost - The item's acquisition cost in chaos
+ * @param goldCost - The item's gold cost
+ * @param goldValueChaosPer10k - The chaos value of 10,000 gold
+ * @param effectiveChaosCost - The item's effective total cost in chaos
+ * @param shouldCatalyst - Whether catalyst usage is recommended
+ */
 function TotalCostInfoPopover({
   itemName,
   acquisitionChaosCost,
@@ -171,7 +181,13 @@ function TotalCostInfoPopover({
   );
 }
 
-// Low stock badge with popover
+/**
+ * Displays a low-stock badge with listing count and threshold details.
+ *
+ * @param name - The item name shown in the badge's accessible label and details
+ * @param listingCount - The current number of listings
+ * @param lowStockThreshold - The listing count threshold for low-stock status
+ */
 function LowStockBadge({
   name,
   listingCount,
@@ -343,7 +359,12 @@ function PriceAndDustSection({
   );
 }
 
-// Primary metric section (dust per chaos) with optional catalyst badge
+/**
+ * Displays the dust-per-chaos metric and an optional catalyst recommendation.
+ *
+ * @param dustPerChaos - The calculated amount of dust per chaos orb
+ * @param shouldCatalyst - Whether to display the catalyst recommendation
+ */
 function DustPerChaosSection({
   dustPerChaos,
   shouldCatalyst,
@@ -371,7 +392,12 @@ function DustPerChaosSection({
   );
 }
 
-// Secondary efficiency metric
+/**
+ * Displays an item's configured efficiency metric and low-stock status.
+ *
+ * @param item - The item whose efficiency, cost details, and listing availability are displayed
+ * @returns The rendered efficiency section
+ */
 function EfficiencySection({ item }: { item: ViewItem }) {
   const { settings } = useEfficiencySettings();
   const { lowStockThreshold } = useLeagueSession();
@@ -419,6 +445,11 @@ function EfficiencySection({ item }: { item: ViewItem }) {
   );
 }
 
+/**
+ * Renders a link that opens a trade search for the specified item in a new tab.
+ *
+ * @param name - The item name used to generate the trade search link
+ */
 function TradeButtonSection({ name }: { name: string }) {
   const tradeLink = useTradeLink(name);
   return (
@@ -448,6 +479,12 @@ interface MobileCardProps<TData extends ViewItem> {
   isSelected: boolean;
 }
 
+/**
+ * Renders a mobile item card with selection controls, pricing details, efficiency information, and a trade link.
+ *
+ * @param row - The table row containing the item data and selection state
+ * @param isSelected - Whether the card is currently selected
+ */
 function MobileCardComponent<TData extends ViewItem>({
   row,
   isSelected,

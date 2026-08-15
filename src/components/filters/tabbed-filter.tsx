@@ -33,6 +33,12 @@ interface TabbedFilterProps<TData> {
   className?: string;
 }
 
+/**
+ * Provides a tabbed filter control for price, dust value, and gold fee ranges.
+ *
+ * Users can apply or clear range filters for the supplied table columns and close
+ * the filter popover.
+ */
 export function TabbedFilter<TData extends ViewItem>({
   priceColumn,
   dustColumn,

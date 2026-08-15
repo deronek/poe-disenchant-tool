@@ -20,6 +20,9 @@ import {
 } from "@/lib/efficiency";
 import { useEfficiencySettings } from "./efficiency-settings-context";
 
+/**
+ * Renders controls for selecting the efficiency metric and valuing 10,000 Gold in Chaos.
+ */
 export function EfficiencySettingsPanel() {
   const { settings, setSettings } = useEfficiencySettings();
 

@@ -41,6 +41,12 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
+/**
+ * Renders a responsive data table with sorting, filtering, pagination, column resizing, and persistent row selection.
+ *
+ * @param columns - The column definitions used to render the table.
+ * @param data - The rows displayed in the table.
+ */
 export function DataTable<TData extends ViewItem, TValue>({
   columns,
   data,

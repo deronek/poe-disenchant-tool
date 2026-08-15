@@ -97,6 +97,12 @@ const ListingTimeFilterSelector = React.memo<{
   );
 });
 
+/**
+ * Renders a popover for configuring trade-search settings.
+ *
+ * @param settings - The current trade-search settings.
+ * @param onSettingsChange - Updates the trade-search settings.
+ */
 export function AdvancedSettingsPanel({
   settings,
   onSettingsChange,

@@ -35,10 +35,23 @@ type EfficiencySortingControlsProps<TData> = {
   className?: string;
 };
 
+/**
+ * Describes the sorting direction.
+ *
+ * @param descending - Whether the direction is descending
+ * @returns `"descending"` if `descending` is true, `"ascending"` otherwise
+ */
 function getDirectionLabel(descending: boolean) {
   return descending ? "descending" : "ascending";
 }
 
+/**
+ * Builds an accessible label describing a sort option and its selectable direction.
+ *
+ * @param option - The sort option to describe
+ * @param currentSort - The table's active sort rule, if one is set
+ * @returns A label describing the option's current or selectable sort direction
+ */
 function getSortOptionLabel(
   option: SortOption,
   currentSort?: { id: string; desc: boolean },
@@ -53,6 +66,11 @@ function getSortOptionLabel(
   return `${option.label}, currently ${currentDirection}. Select to sort ${nextDirection}`;
 }
 
+/**
+ * Renders an icon indicating the sort direction.
+ *
+ * @param descending - Whether the sort direction is descending
+ */
 function SortDirectionIcon({ descending }: { descending: boolean }) {
   const Icon = descending ? ArrowDown : ArrowUp;
 
@@ -69,6 +87,12 @@ function DustPerChaosIcons() {
   );
 }
 
+/**
+ * Displays the resource icons associated with an efficiency mode.
+ *
+ * @param mode - The efficiency calculation mode
+ * @returns The icon sequence representing the efficiency mode
+ */
 function EfficiencyIcons({ mode }: { mode: EfficiencyMode }) {
   switch (mode) {
     case "per-slot":
@@ -105,6 +129,13 @@ function EfficiencyIcons({ mode }: { mode: EfficiencyMode }) {
   }
 }
 
+/**
+ * Renders a mobile sorting control for the efficiency table.
+ *
+ * @param table - The table instance whose sorting state is displayed and updated
+ * @param className - Optional classes applied to the control button
+ * @returns The responsive sorting control
+ */
 export function EfficiencySortingControls<TData>({
   table,
   className,

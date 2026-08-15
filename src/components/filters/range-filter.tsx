@@ -38,6 +38,17 @@ interface RangeFilterStatusProps {
   title: string;
 }
 
+/**
+ * Displays a textual summary of the active range filter.
+ *
+ * @param range - The minimum and maximum values used to describe the filter.
+ * @param hasMin - Whether a minimum bound is active.
+ * @param hasMax - Whether a maximum bound is active.
+ * @param format - Formats bound values for display.
+ * @param icon - Visual separator displayed with bound values.
+ * @param title - Filter name used when no bound is active.
+ * @returns The rendered filter status content.
+ */
 export function RangeFilterStatus({
   range,
   hasMin,
@@ -91,6 +102,16 @@ export function RangeFilterStatus({
   return <span>No {title.toLowerCase()} filter applied.</span>;
 }
 
+/**
+ * Renders a numeric range filter for a table column, including lower- and upper-bound controls and filter status.
+ *
+ * @param column - The table column whose filter value is managed
+ * @param min - The minimum available filter value
+ * @param max - The maximum available filter value
+ * @param step - The increment used by the upper-bound control
+ * @param icon - The icon displayed beside range values
+ * @param title - The filter title displayed to users
+ */
 export function RangeFilter<TData extends ViewItem>({
   column,
   min,

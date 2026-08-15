@@ -1,3 +1,6 @@
+/**
+ * Renders an accessible separator between units.
+ */
 export function UnitSeparator() {
   const sep = (
     <>

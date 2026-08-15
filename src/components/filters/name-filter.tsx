@@ -5,6 +5,11 @@ import { Input } from "@/components/ui/input";
 import { XButton } from "@/components/ui/x-button";
 import { ViewItem } from "@/lib/view-item";
 
+/**
+ * Renders a debounced filter input for the table's name or variant column.
+ *
+ * @returns The name filter input with an optional clear button.
+ */
 export function NameFilter<TData extends ViewItem>({
   table,
 }: {

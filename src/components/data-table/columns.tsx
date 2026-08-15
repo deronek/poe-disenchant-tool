@@ -399,6 +399,14 @@ const ItemIcon = React.memo(function ItemIcon({ src }: { src: string }) {
   );
 });
 
+/**
+ * Formats a number with compact notation and separates its suffix for styling.
+ *
+ * @param value - The number to format.
+ * @param formatter - The number formatter used to produce the displayed parts.
+ * @param fullValue - The value stored for access to the unabridged number.
+ * @returns An object containing the formatted element and whether compact notation was applied.
+ */
 export function renderCompactNumber(
   value: number,
   formatter: Intl.NumberFormat,

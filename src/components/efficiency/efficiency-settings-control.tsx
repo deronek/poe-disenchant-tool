@@ -9,6 +9,11 @@ import {
 import { cn } from "@/lib/utils";
 import { EfficiencySettingsPanel } from "./efficiency-settings-panel";
 
+/**
+ * Renders a control for configuring the Efficiency metric.
+ *
+ * @param className - Optional additional classes applied to the control button
+ */
 export function EfficiencySettingsControl({
   className,
 }: {

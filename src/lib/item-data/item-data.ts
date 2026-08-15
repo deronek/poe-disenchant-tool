@@ -355,6 +355,14 @@ function isNonQualityItem(item: PriceItem) {
   return isQuiver(item) || isItemInQualityIgnoreList(item);
 }
 
+/**
+ * Calculates the most efficient dust acquisition strategy for an item.
+ *
+ * @param priceItem - Item pricing and classification data used to calculate acquisition cost
+ * @param dustItem - Dust values for the item's available quality states
+ * @param catalystPrice - Price of one catalyst used to increase accessory quality
+ * @returns Dust value, efficiency, quality state, catalyst usage, and total chaos acquisition cost
+ */
 function calculateDustEfficiency(
   priceItem: PriceItem,
   dustItem: DustItem,

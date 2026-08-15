@@ -13,6 +13,12 @@ type ToolbarProps<TData extends ViewItem> = {
   onClearMarks?: () => void;
 };
 
+/**
+ * Provides filtering, efficiency, advanced settings, and mark-clearing controls for a data table.
+ *
+ * @param onClearMarks - Optional callback invoked when table marks are cleared.
+ * @returns The rendered data table toolbar.
+ */
 export function DataTableToolbar<TData extends ViewItem>({
   table,
   onClearMarks,

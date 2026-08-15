@@ -22,6 +22,12 @@ interface SharedDataViewProps {
   divinePriceThreshold: number | null;
 }
 
+/**
+ * Renders the shared data table with efficiency results calculated for each item.
+ *
+ * @param items - The items to display in the table
+ * @param divinePriceThreshold - The price threshold used to configure divine price display
+ */
 function EfficiencyDataView({
   items,
   divinePriceThreshold,
@@ -50,6 +56,13 @@ function EfficiencyDataView({
   return <DataTable columns={columns} data={viewItems} />;
 }
 
+/**
+ * Renders the shared data view with league, advanced settings, and efficiency contexts.
+ *
+ * @param league - The league whose session data configures the view
+ * @param lowStockThreshold - The stock level at which items are considered low in stock
+ * @param divinePriceThreshold - The optional divine price threshold used for efficiency calculations
+ */
 export function SharedDataView({
   items,
   league,

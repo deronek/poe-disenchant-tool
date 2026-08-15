@@ -14,7 +14,13 @@ const SIZE = {
   md: 16,
 } as const;
 
-/** The per-mode unit shown next to the efficiency value (e.g. "Dust / Chaos / 6 slots"). */
+/**
+ * Displays the unit associated with an efficiency mode.
+ *
+ * @param slots - The number of slots displayed for per-slot efficiency.
+ * @param size - The icon size, defaulting to medium.
+ * @returns The rendered efficiency unit.
+ */
 export function EfficiencyUnit({
   mode,
   slots,
@@ -35,6 +41,14 @@ export function EfficiencyUnit({
   );
 }
 
+/**
+ * Renders the icons and labels associated with an efficiency mode.
+ *
+ * @param mode - The efficiency mode that determines the displayed unit.
+ * @param slots - The number of slots shown for per-slot efficiency.
+ * @param px - The pixel size applied to each icon.
+ * @returns The mode-specific efficiency unit content.
+ */
 function EfficiencyUnitIcons({
   mode,
   slots,

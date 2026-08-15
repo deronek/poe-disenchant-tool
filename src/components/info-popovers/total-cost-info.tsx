@@ -16,6 +16,16 @@ const numberFormatter = new Intl.NumberFormat("en", {
   maximumFractionDigits: 0,
 });
 
+/**
+ * Displays an item's total cost breakdown, including acquisition cost, Gold fee, and optional Catalyst costs.
+ *
+ * @param acquisitionChaosCost - The item's acquisition cost in Chaos.
+ * @param goldCost - The Gold fee.
+ * @param goldValueChaosPer10k - The Chaos value assigned to 10,000 Gold.
+ * @param effectiveChaosCost - The total cost in Chaos after including the Gold-equivalent cost.
+ * @param shouldCatalyst - Whether to include the recommended cost of 20 Catalysts.
+ * @returns The rendered total cost breakdown.
+ */
 export function TotalCostInfo({
   acquisitionChaosCost,
   goldCost,
