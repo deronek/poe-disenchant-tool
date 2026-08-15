@@ -19,7 +19,7 @@ export function DataTableToolbar<TData extends ViewItem>({
 }: ToolbarProps<TData>) {
   const { settings, setSettings } = useAdvancedSettings();
   return (
-    <div className="bg-background-200 grid grid-cols-1 items-start gap-3 border-b p-3 xl:grid-cols-[minmax(0,1fr)_auto]">
+    <div className="bg-background-200 grid grid-cols-1 gap-3 border-b p-3 xl:grid-cols-[minmax(0,1fr)_auto]">
       <div className="min-w-0">
         <div className="grid grid-cols-[minmax(0,theme(maxWidth.3xs))_1fr] items-start gap-3 xl:flex xl:flex-nowrap xl:items-center">
           <div className="w-full min-w-0 xl:w-3xs xl:flex-none">
