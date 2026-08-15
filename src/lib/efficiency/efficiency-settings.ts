@@ -6,7 +6,7 @@ export const GOLD_VALUATION_MIN = 0;
 export const GOLD_VALUATION_MAX = 50;
 
 export const EfficiencySettingsSchema = z.object({
-  mode: EfficiencyModeSchema.prefault("per-slot"),
+  mode: EfficiencyModeSchema.prefault("total-cost"),
   goldValueChaosPer10k: z
     .int()
     .min(GOLD_VALUATION_MIN)
