@@ -21,8 +21,8 @@ export function MobileToolbar<TData extends ViewItem>({
   const { settings, setSettings } = useAdvancedSettings();
 
   return (
-    <div className="bg-background-200 flex flex-col gap-3 border-b px-2 py-4 sm:px-3">
-      <div className="grid grid-cols-2 gap-2">
+    <div className="bg-background-200 grid grid-cols-6 gap-2 border-b px-2 py-4 sm:px-3">
+      <div className="col-span-3 min-w-0">
         <TabbedFilter
           priceColumn={table.getColumn(COLUMN_IDS.CHAOS)}
           dustColumn={table.getColumn(COLUMN_IDS.CALCULATED_DUST_VALUE)}
@@ -35,19 +35,31 @@ export function MobileToolbar<TData extends ViewItem>({
           goldMax={80000}
           className="w-full"
         />
+      </div>
 
+      <div className="col-span-3 min-w-0">
         <EfficiencySortingControls table={table} className="w-full" />
       </div>
 
-      <div className="grid grid-cols-3 gap-2">
+      <div className="col-span-3 min-w-0 md:col-span-2">
         <EfficiencySettingsControl className="w-full" />
+      </div>
 
+      <div className="col-span-3 min-w-0 md:col-span-2">
         <AdvancedSettingsPanel
           settings={settings}
           onSettingsChange={setSettings}
           className="w-full"
         />
+      </div>
 
+      <div className="col-span-4 min-w-0 md:order-7 md:col-span-6">
+        <div className="min-w-0 md:w-3xs">
+          <NameFilter table={table} />
+        </div>
+      </div>
+
+      <div className="col-span-2 min-w-0 md:order-6">
         <ClearMarksButton
           table={table}
           onClearMarks={onClearMarks}
@@ -55,11 +67,7 @@ export function MobileToolbar<TData extends ViewItem>({
         />
       </div>
 
-      <div className="flex flex-col gap-2">
-        <div className="md:w-3xs">
-          <NameFilter table={table} />
-        </div>
-
+      <div className="col-span-6 min-w-0 md:order-8">
         <FilterChips table={table} />
       </div>
     </div>
