@@ -1,4 +1,5 @@
 import type { EfficiencyMode } from "@/lib/efficiency";
+import type { ReactNode } from "react";
 
 import {
   ChaosOrbIcon,
@@ -28,25 +29,11 @@ export function EfficiencyUnit({
 }) {
   const px = SIZE[size];
 
-  return (
-    <span className={cn("inline-flex items-center gap-1", className)}>
-      <EfficiencyUnitIcons mode={mode} slots={slots} px={px} />
-    </span>
-  );
-}
+  let icons: ReactNode;
 
-function EfficiencyUnitIcons({
-  mode,
-  slots,
-  px,
-}: {
-  mode: EfficiencyMode;
-  slots: number;
-  px: number;
-}) {
   switch (mode) {
     case "per-slot":
-      return (
+      icons = (
         <>
           <DustIcon size={px} />
           <UnitSeparator />
@@ -57,24 +44,32 @@ function EfficiencyUnitIcons({
           </span>
         </>
       );
+      break;
     case "per-gold":
-      return (
+      icons = (
         <>
           <DustIcon size={px} />
           <UnitSeparator />
           <GoldIcon size={px} />
         </>
       );
+      break;
     case "total-cost":
-      return (
+      icons = (
         <>
           <DustIcon size={px} />
           <UnitSeparator />
           <TotalCostIcon size={px} />
         </>
       );
-    default: {
+      break;
+    default:
       return assertNever(mode);
-    }
   }
+
+  return (
+    <span className={cn("inline-flex items-center gap-1", className)}>
+      {icons}
+    </span>
+  );
 }
