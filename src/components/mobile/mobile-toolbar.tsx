@@ -5,7 +5,7 @@ import { AdvancedSettingsPanel } from "@/components/advanced-settings-panel";
 import { ClearMarksButton } from "@/components/clear-marks-button";
 import { EfficiencySettingsControl } from "@/components/efficiency";
 import { FilterChips, NameFilter, TabbedFilter } from "@/components/filters";
-import { EfficiencySortingControls } from "@/components/mobile";
+import { MobileSortingControls } from "@/components/mobile";
 import { COLUMN_IDS } from "@/lib/column-ids";
 import { ViewItem } from "@/lib/view-item";
 
@@ -38,7 +38,7 @@ export function MobileToolbar<TData extends ViewItem>({
       </div>
 
       <div className="col-span-3 min-w-0">
-        <EfficiencySortingControls table={table} className="w-full" />
+        <MobileSortingControls table={table} className="w-full" />
       </div>
 
       <div className="col-span-3 min-w-0 md:col-span-2">

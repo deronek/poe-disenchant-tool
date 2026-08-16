@@ -30,7 +30,7 @@ type SortOption = {
   icons: React.ReactNode;
 };
 
-type EfficiencySortingControlsProps<TData> = {
+type MobileSortingControlsProps<TData> = {
   table: Table<TData>;
   className?: string;
 };
@@ -105,10 +105,10 @@ function EfficiencyIcons({ mode }: { mode: EfficiencyMode }) {
   }
 }
 
-export function EfficiencySortingControls<TData>({
+export function MobileSortingControls<TData>({
   table,
   className,
-}: EfficiencySortingControlsProps<TData>) {
+}: MobileSortingControlsProps<TData>) {
   "use memo";
 
   const { settings } = useEfficiencySettings();
