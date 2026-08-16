@@ -4,7 +4,7 @@ import { after } from "next/server";
 
 import { emitWideEvent, normalizeError } from "@/lib/axiom/server";
 import { Item as DustItem, getDustData } from "@/lib/dust";
-import { calculateDustPerGold } from "@/lib/efficiency";
+import { calculateDustPerCost } from "@/lib/efficiency";
 import { League } from "@/lib/leagues";
 import {
   AllowedUnique,
@@ -194,7 +194,7 @@ const buildItemDataResult = (
       slots: dustItem.slots,
       dustPerChaosPerSlot: Math.round(dustPerChaos / dustItem.slots),
       acquisitionChaosCost: chaosCost,
-      dustPerGold: calculateDustPerGold(calculatedDustValue, dustItem.goldCost),
+      dustPerGold: calculateDustPerCost(calculatedDustValue, dustItem.goldCost),
       goldCost: dustItem.goldCost,
       type: priceItem.type,
       icon: priceItem.icon,

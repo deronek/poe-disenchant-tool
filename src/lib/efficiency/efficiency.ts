@@ -106,13 +106,6 @@ export function calculateGoldChaosCost(
   return goldCost * (goldValueChaosPer10k / 10_000);
 }
 
-export function calculateDustPerGold(
-  dustValue: number,
-  goldCost: number,
-): number {
-  return goldCost > 0 ? Math.round(dustValue / goldCost) : 0;
-}
-
 export function calculateDustPerCost(dustValue: number, cost: number): number {
   return cost > 0 ? Math.round(dustValue / cost) : 0;
 }

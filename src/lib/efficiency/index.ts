@@ -1,7 +1,7 @@
 import type { EfficiencyMode, TotalCostDetails } from "./efficiency";
 import type { EfficiencySettings } from "./efficiency-settings";
 import {
-  calculateDustPerGold,
+  calculateDustPerCost,
   EFFICIENCY_MODES,
   EfficiencyModeSchema,
   getEfficiencyResult,
@@ -16,7 +16,7 @@ import {
 } from "./efficiency-settings";
 
 export {
-  calculateDustPerGold,
+  calculateDustPerCost,
   EFFICIENCY_MODES,
   EfficiencyModeSchema,
   getEfficiencyResult,

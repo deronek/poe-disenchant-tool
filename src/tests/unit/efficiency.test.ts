@@ -4,7 +4,6 @@ import { describe, expect, it } from "vitest";
 
 import {
   calculateDustPerCost,
-  calculateDustPerGold,
   calculateGoldChaosCost,
   getEfficiencyResult,
 } from "@/lib/efficiency/efficiency";
@@ -28,13 +27,10 @@ describe("efficiency calculations", () => {
     expect(calculateGoldChaosCost(5_000, 2.5)).toBe(1.25);
   });
 
-  it("calculates Dust per Gold", () => {
-    expect(calculateDustPerGold(150_000, 10_000)).toBe(15);
-    expect(calculateDustPerGold(150_000, 0)).toBe(0);
-  });
-
-  it("calculates Dust per total cost", () => {
-    // effective cost of (acq 10 + 10k gold @ 5c/10k) = 15
+  it("calculates Dust per cost, guarding against zero cost", () => {
+    // Dust per Gold: 150k dust / 10k gold fee
+    expect(calculateDustPerCost(150_000, 10_000)).toBe(15);
+    // Dust per Total Cost: effective cost of (acq 10 + 10k gold @ 5c/10k) = 15
     expect(calculateDustPerCost(150_000, 15)).toBe(10_000);
     expect(calculateDustPerCost(150_000, 0)).toBe(0);
   });
