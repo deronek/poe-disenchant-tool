@@ -106,7 +106,9 @@ export function EfficiencySettingsPanel({ onClose }: { onClose: () => void }) {
 
               <ChaosOrbIcon />
 
-              <span className="text-muted-foreground font-normal">per 10k</span>
+              <span className="text-muted-foreground font-normal">
+                per 10 K
+              </span>
 
               <GoldIcon />
             </span>
