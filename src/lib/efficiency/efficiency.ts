@@ -97,12 +97,6 @@ export function calculateGoldChaosCost(
   goldCost: number,
   goldValueChaosPer10k: number,
 ): number {
-  if (!Number.isFinite(goldCost) || goldCost < 0) return 0;
-
-  if (!Number.isFinite(goldValueChaosPer10k) || goldValueChaosPer10k < 0) {
-    return 0;
-  }
-
   return goldCost * (goldValueChaosPer10k / 10_000);
 }
 

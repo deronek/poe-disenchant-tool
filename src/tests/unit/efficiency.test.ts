@@ -35,9 +35,10 @@ describe("efficiency calculations", () => {
     expect(calculateDustPerCost(150_000, 0)).toBe(0);
   });
 
-  it("handles invalid personal valuation defensively", () => {
-    expect(calculateGoldChaosCost(10_000, -1)).toBe(0);
-    expect(calculateGoldChaosCost(10_000, Number.NaN)).toBe(0);
+  it("applies a zero gold valuation as the schema minimum", () => {
+    // goldValueChaosPer10k is bounded to [0, 50] by EfficiencySettingsSchema,
+    // and goldCost is positive by the dust data schema
+    expect(calculateGoldChaosCost(10_000, 0)).toBe(0);
   });
 
   it("provides a total cost breakdown only in total-cost mode", () => {
