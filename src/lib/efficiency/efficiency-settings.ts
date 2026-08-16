@@ -4,6 +4,7 @@ import { EfficiencyModeSchema } from "./efficiency";
 
 export const GOLD_VALUATION_MIN = 0;
 export const GOLD_VALUATION_MAX = 50;
+export const GOLD_VALUATION_DEFAULT = 10;
 
 export const EfficiencySettingsSchema = z.object({
   mode: EfficiencyModeSchema.prefault("total-cost"),
@@ -11,7 +12,7 @@ export const EfficiencySettingsSchema = z.object({
     .int()
     .min(GOLD_VALUATION_MIN)
     .max(GOLD_VALUATION_MAX)
-    .prefault(10),
+    .prefault(GOLD_VALUATION_DEFAULT),
 });
 
 export type EfficiencySettings = z.infer<typeof EfficiencySettingsSchema>;

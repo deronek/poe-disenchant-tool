@@ -16,6 +16,7 @@ import {
   EFFICIENCY_MODES,
   EfficiencyMode,
   EfficiencyModeSchema,
+  GOLD_VALUATION_DEFAULT,
   GOLD_VALUATION_MAX,
   GOLD_VALUATION_MIN,
 } from "@/lib/efficiency";
@@ -52,6 +53,11 @@ export function EfficiencySettingsPanel({ onClose }: { onClose: () => void }) {
   const handleModeChange = (value: EfficiencyMode) => {
     // Set value with no validation - values are created directly from schema
     setMode(value);
+  };
+
+  const handleResetGoldValue = () => {
+    setDraftGoldValue(GOLD_VALUATION_DEFAULT);
+    setGoldValueChaosPer10k(GOLD_VALUATION_DEFAULT);
   };
 
   return (
@@ -125,15 +131,28 @@ export function EfficiencySettingsPanel({ onClose }: { onClose: () => void }) {
             aria-label="Chaos value per ten thousand Gold"
             aria-describedby="gold-valuation-description"
           />
-          <div className="text-muted-foreground flex justify-between text-xs tabular-nums">
-            <span>
-              0 <ChaosOrbIcon />
+          <div className="text-muted-foreground grid grid-cols-3 text-xs">
+            <span className="inline-flex items-center gap-1">
+              <span className="leading-none">{GOLD_VALUATION_MIN}</span>
+              <ChaosOrbIcon />
             </span>
-            <span>
-              25 <ChaosOrbIcon />
-            </span>
-            <span>
-              50 <ChaosOrbIcon />
+            <div className="flex justify-center">
+              <Button
+                size="sm"
+                variant="secondary"
+                disabled={
+                  settings.goldValueChaosPer10k === GOLD_VALUATION_DEFAULT
+                }
+                onClick={handleResetGoldValue}
+                className="bg-background dark:bg-background hover:bg-accent h-6 text-xs"
+                aria-label="Reset gold valuation to default"
+              >
+                Reset
+              </Button>
+            </div>
+            <span className="inline-flex items-center justify-end gap-1">
+              <span className="leading-none">{GOLD_VALUATION_MAX}</span>
+              <ChaosOrbIcon />
             </span>
           </div>
 
