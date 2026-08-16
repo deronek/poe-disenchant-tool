@@ -279,7 +279,7 @@ const EfficiencyCell: ColumnDef<ViewItem>["cell"] =
 
     return (
       <span className="flex w-full items-center justify-end gap-1">
-        {settings.mode == "total-cost" && item.effectiveChaosCost !== null && (
+        {settings.mode === "total-cost" && item.effectiveChaosCost !== null && (
           <Tooltip>
             <TooltipTrigger
               aria-label={`Show total cost breakdown for ${item.name}`}
