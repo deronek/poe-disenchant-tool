@@ -1,3 +1,4 @@
+import type { TotalCostDetails } from "@/lib/efficiency";
 import type { ViewItem } from "@/lib/view-item";
 import * as React from "react";
 import { Row } from "@tanstack/react-table";
@@ -128,17 +129,17 @@ const GoldInfoPopover = React.memo(function GoldInfoPopover() {
 
 function TotalCostInfoPopover({
   itemName,
+  details,
   acquisitionChaosCost,
   goldCost,
   goldValueChaosPer10k,
-  effectiveChaosCost,
   shouldCatalyst,
 }: {
   itemName: string;
+  details: TotalCostDetails;
   acquisitionChaosCost: number;
   goldCost: number;
   goldValueChaosPer10k: number;
-  effectiveChaosCost: number;
   shouldCatalyst: boolean;
 }) {
   return (
@@ -160,10 +161,10 @@ function TotalCostInfoPopover({
         align="start"
       >
         <TotalCostInfo
+          details={details}
           acquisitionChaosCost={acquisitionChaosCost}
           goldCost={goldCost}
           goldValueChaosPer10k={goldValueChaosPer10k}
-          effectiveChaosCost={effectiveChaosCost}
           shouldCatalyst={shouldCatalyst}
         />
       </PopoverContent>
@@ -386,17 +387,16 @@ function EfficiencySection({ item }: { item: ViewItem }) {
             {EFFICIENCY_MODES[settings.mode].columnLabel}
           </p>
 
-          {settings.mode === "total-cost" &&
-            item.effectiveChaosCost !== null && (
-              <TotalCostInfoPopover
-                itemName={item.name}
-                acquisitionChaosCost={item.acquisitionChaosCost}
-                goldCost={item.goldCost}
-                goldValueChaosPer10k={settings.goldValueChaosPer10k}
-                effectiveChaosCost={item.effectiveChaosCost}
-                shouldCatalyst={item.shouldCatalyst}
-              />
-            )}
+          {item.totalCostDetails !== null && (
+            <TotalCostInfoPopover
+              itemName={item.name}
+              details={item.totalCostDetails}
+              acquisitionChaosCost={item.acquisitionChaosCost}
+              goldCost={item.goldCost}
+              goldValueChaosPer10k={settings.goldValueChaosPer10k}
+              shouldCatalyst={item.shouldCatalyst}
+            />
+          )}
         </div>
 
         <div className="flex items-center gap-1 text-xs">

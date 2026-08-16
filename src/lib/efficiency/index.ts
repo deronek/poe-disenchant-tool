@@ -1,4 +1,4 @@
-import type { EfficiencyMode } from "./efficiency";
+import type { EfficiencyMode, TotalCostDetails } from "./efficiency";
 import type { EfficiencySettings } from "./efficiency-settings";
 import {
   calculateDustPerGold,
@@ -27,4 +27,4 @@ export {
   GOLD_VALUATION_MIN,
   GOLD_VALUATION_MAX,
 };
-export type { EfficiencyMode, EfficiencySettings };
+export type { EfficiencyMode, EfficiencySettings, TotalCostDetails };

@@ -279,7 +279,7 @@ const EfficiencyCell: ColumnDef<ViewItem>["cell"] =
 
     return (
       <span className="flex w-full items-center justify-end gap-1">
-        {settings.mode === "total-cost" && item.effectiveChaosCost !== null && (
+        {item.totalCostDetails !== null && (
           <Tooltip>
             <TooltipTrigger
               aria-label={`Show total cost breakdown for ${item.name}`}
@@ -290,10 +290,10 @@ const EfficiencyCell: ColumnDef<ViewItem>["cell"] =
 
             <TooltipContent variant="popover" className="max-w-[340px] text-sm">
               <TotalCostInfo
+                details={item.totalCostDetails}
                 acquisitionChaosCost={item.acquisitionChaosCost}
                 goldCost={item.goldCost}
                 goldValueChaosPer10k={settings.goldValueChaosPer10k}
-                effectiveChaosCost={item.effectiveChaosCost}
                 shouldCatalyst={item.shouldCatalyst}
               />
             </TooltipContent>

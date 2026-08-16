@@ -1,3 +1,4 @@
+import type { TotalCostDetails } from "@/lib/efficiency";
 import { Orbit } from "lucide-react";
 
 import { TotalCostIcon } from "@/components/icons";
@@ -5,10 +6,10 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 
 interface TotalCostInfoProps {
+  details: TotalCostDetails;
   acquisitionChaosCost: number;
   goldCost: number;
   goldValueChaosPer10k: number;
-  effectiveChaosCost: number;
   shouldCatalyst: boolean;
 }
 
@@ -17,13 +18,12 @@ const numberFormatter = new Intl.NumberFormat("en", {
 });
 
 export function TotalCostInfo({
+  details,
   acquisitionChaosCost,
   goldCost,
   goldValueChaosPer10k,
-  effectiveChaosCost,
   shouldCatalyst,
 }: TotalCostInfoProps) {
-  const goldEquivalent = effectiveChaosCost - acquisitionChaosCost;
   return (
     <div className="flex flex-col gap-3 text-wrap">
       <div className="flex items-center gap-2">
@@ -58,7 +58,7 @@ export function TotalCostInfo({
         </div>
         <div>
           <Badge variant="blue">
-            {numberFormatter.format(goldEquivalent)} Chaos
+            {numberFormatter.format(details.goldChaosCost)} Chaos
           </Badge>
         </div>
         <div>
@@ -66,7 +66,7 @@ export function TotalCostInfo({
         </div>
         <div>
           <Badge variant="green">
-            {numberFormatter.format(effectiveChaosCost)} Chaos
+            {numberFormatter.format(details.effectiveChaosCost)} Chaos
           </Badge>
         </div>
       </div>

@@ -18,9 +18,15 @@ export type EfficiencyComputeInput = {
   goldCost: number;
 };
 
+export type TotalCostDetails = {
+  goldChaosCost: number;
+  effectiveChaosCost: number;
+};
+
 export type EfficiencyResult = {
   value: number;
-  effectiveChaosCost: number | null; // only not null for mode == 'total-cost'
+  /** Only present when settings.mode == 'total-cost'. */
+  totalCostDetails: TotalCostDetails | null;
 };
 
 /**
@@ -44,7 +50,7 @@ export const EFFICIENCY_MODES: Record<
     description: "Factors in the item's inventory size.",
     compute: (item) => ({
       value: item.dustPerChaosPerSlot,
-      effectiveChaosCost: null,
+      totalCostDetails: null,
     }),
   },
 
@@ -54,7 +60,7 @@ export const EFFICIENCY_MODES: Record<
     description: "Compares Dust Value with the estimated Gold Fee.",
     compute: (item) => ({
       value: item.dustPerGold,
-      effectiveChaosCost: null,
+      totalCostDetails: null,
     }),
   },
 
@@ -63,18 +69,18 @@ export const EFFICIENCY_MODES: Record<
     columnLabel: "Total Cost",
     description: "Adds your Gold valuation to the item cost.",
     compute: (item, settings) => {
-      const effectiveChaosCost = calculateEffectiveChaosCost(
-        item.acquisitionChaosCost,
+      const goldChaosCost = calculateGoldChaosCost(
         item.goldCost,
         settings.goldValueChaosPer10k,
       );
+      const effectiveChaosCost = item.acquisitionChaosCost + goldChaosCost;
 
       return {
         value: calculateDustPerCost(
           item.calculatedDustValue,
           effectiveChaosCost,
         ),
-        effectiveChaosCost,
+        totalCostDetails: { goldChaosCost, effectiveChaosCost },
       };
     },
   },
@@ -98,17 +104,6 @@ export function calculateGoldChaosCost(
   }
 
   return goldCost * (goldValueChaosPer10k / 10_000);
-}
-
-export function calculateEffectiveChaosCost(
-  acquisitionChaosCost: number,
-  goldCost: number,
-  goldValueChaosPer10k: number,
-): number {
-  return (
-    acquisitionChaosCost +
-    calculateGoldChaosCost(goldCost, goldValueChaosPer10k)
-  );
 }
 
 export function calculateDustPerGold(

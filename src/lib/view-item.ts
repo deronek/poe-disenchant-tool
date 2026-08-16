@@ -1,3 +1,5 @@
+import type { TotalCostDetails } from "@/lib/efficiency";
+
 import { Item } from "@/lib/item-data";
 
 /**
@@ -8,5 +10,6 @@ import { Item } from "@/lib/item-data";
  */
 export type ViewItem = Item & {
   efficiency: number;
-  effectiveChaosCost: number | null; // only not null for mode == 'total-cost'
+  /** Only present when efficiency mode === 'total-cost'. */
+  totalCostDetails: TotalCostDetails | null;
 };

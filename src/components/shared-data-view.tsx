@@ -41,7 +41,7 @@ function EfficiencyDataView({
         return {
           ...item,
           efficiency: result.value,
-          effectiveChaosCost: result.effectiveChaosCost,
+          totalCostDetails: result.totalCostDetails,
         };
       }),
     [items, settings],
