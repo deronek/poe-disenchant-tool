@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { ChaosOrbIcon, GoldIcon } from "@/components/icons";
+import { Button } from "@/components/ui/button";
 import {
   Field,
   FieldContent,
@@ -20,7 +21,7 @@ import {
 } from "@/lib/efficiency";
 import { useEfficiencySettings } from "./efficiency-settings-context";
 
-export function EfficiencySettingsPanel() {
+export function EfficiencySettingsPanel({ onClose }: { onClose: () => void }) {
   const { settings, setSettings } = useEfficiencySettings();
 
   const setMode = React.useCallback(
@@ -143,6 +144,10 @@ export function EfficiencySettingsPanel() {
           </p>
         </div>
       )}
+
+      <Button size="sm" onClick={onClose} className="w-full">
+        Close
+      </Button>
     </div>
   );
 }

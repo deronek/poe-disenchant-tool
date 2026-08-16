@@ -1,3 +1,4 @@
+import * as React from "react";
 import { ChevronDown, Gauge } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -14,8 +15,10 @@ export function EfficiencySettingsControl({
 }: {
   className?: string;
 }) {
+  const [isOpen, setIsOpen] = React.useState(false);
+
   return (
-    <Popover>
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -31,7 +34,7 @@ export function EfficiencySettingsControl({
       </PopoverTrigger>
 
       <PopoverContent className="w-80" align="end">
-        <EfficiencySettingsPanel />
+        <EfficiencySettingsPanel onClose={() => setIsOpen(false)} />
       </PopoverContent>
     </Popover>
   );
