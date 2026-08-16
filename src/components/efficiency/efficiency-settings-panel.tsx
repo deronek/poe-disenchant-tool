@@ -1,3 +1,4 @@
+import type { EfficiencySettings } from "@/lib/efficiency";
 import * as React from "react";
 
 import { ChaosOrbIcon, GoldIcon } from "@/components/icons";
@@ -25,19 +26,9 @@ import { useEfficiencySettings } from "./efficiency-settings-context";
 export function EfficiencySettingsPanel({ onClose }: { onClose: () => void }) {
   const { settings, setSettings } = useEfficiencySettings();
 
-  const setMode = React.useCallback(
-    (mode: EfficiencyMode) => {
-      setSettings((previous) => ({ ...previous, mode }));
-    },
-    [setSettings],
-  );
-
-  const setGoldValueChaosPer10k = React.useCallback(
-    (goldValueChaosPer10k: number) => {
-      setSettings((previous) => ({
-        ...previous,
-        goldValueChaosPer10k,
-      }));
+  const updateSettings = React.useCallback(
+    (patch: Partial<EfficiencySettings>) => {
+      setSettings((previous) => ({ ...previous, ...patch }));
     },
     [setSettings],
   );
@@ -52,12 +43,12 @@ export function EfficiencySettingsPanel({ onClose }: { onClose: () => void }) {
 
   const handleModeChange = (value: EfficiencyMode) => {
     // Set value with no validation - values are created directly from schema
-    setMode(value);
+    updateSettings({ mode: value });
   };
 
   const handleResetGoldValue = () => {
     setDraftGoldValue(GOLD_VALUATION_DEFAULT);
-    setGoldValueChaosPer10k(GOLD_VALUATION_DEFAULT);
+    updateSettings({ goldValueChaosPer10k: GOLD_VALUATION_DEFAULT });
   };
 
   return (
@@ -127,7 +118,7 @@ export function EfficiencySettingsPanel({ onClose }: { onClose: () => void }) {
             step={1}
             value={[draftGoldValue]}
             onValueChange={([v]) => setDraftGoldValue(v)}
-            onValueCommit={([v]) => setGoldValueChaosPer10k(v)}
+            onValueCommit={([v]) => updateSettings({ goldValueChaosPer10k: v })}
             aria-label="Chaos value per ten thousand Gold"
             aria-describedby="gold-valuation-description"
           />
