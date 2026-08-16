@@ -10,8 +10,12 @@ import {
 } from "lucide-react";
 
 import { useEfficiencySettings } from "@/components/efficiency";
-import { ChaosOrbIcon, DustIcon, GoldIcon } from "@/components/icons";
-import { TotalCostIcon } from "@/components/icons/total-cost-icon";
+import {
+  ChaosOrbIcon,
+  DustIcon,
+  GoldIcon,
+  TotalCostIcon,
+} from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
