@@ -252,7 +252,7 @@ const DustPerChaosCell: ColumnDef<ViewItem>["cell"] =
   };
 
 const EfficiencyHeader: ColumnDefTemplate<HeaderContext<ViewItem, unknown>> =
-  function SecondaryEfficiencyHeaderComponent() {
+  function EfficiencyHeaderComponent() {
     const { settings } = useEfficiencySettings();
     const { label, columnLabel } = EFFICIENCY_MODES[settings.mode];
 
