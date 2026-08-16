@@ -53,18 +53,20 @@ export function MobileToolbar<TData extends ViewItem>({
         />
       </div>
 
-      <div className="col-span-4 min-w-0 md:order-7 md:col-span-6">
-        <div className="min-w-0 md:w-3xs">
-          <NameFilter table={table} />
+      <div className="col-span-6 flex min-w-0 gap-2 md:contents">
+        <div className="min-w-0 flex-1 md:order-7 md:col-span-6">
+          <div className="min-w-0 md:w-3xs">
+            <NameFilter table={table} />
+          </div>
         </div>
-      </div>
 
-      <div className="col-span-2 min-w-0 md:order-6">
-        <ClearMarksButton
-          table={table}
-          onClearMarks={onClearMarks}
-          className="w-full"
-        />
+        <div className="max-w-1/2 shrink-0 md:order-6 md:col-span-2 md:max-w-none">
+          <ClearMarksButton
+            table={table}
+            onClearMarks={onClearMarks}
+            className="w-full whitespace-nowrap"
+          />
+        </div>
       </div>
 
       <div className="col-span-6 min-w-0 md:order-8">
