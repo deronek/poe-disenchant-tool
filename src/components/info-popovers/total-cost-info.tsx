@@ -13,7 +13,7 @@ interface TotalCostInfoProps {
 }
 
 const numberFormatter = new Intl.NumberFormat("en", {
-  maximumFractionDigits: 0,
+  maximumFractionDigits: 1,
 });
 
 export function TotalCostInfo({
