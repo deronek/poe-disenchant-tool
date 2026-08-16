@@ -103,11 +103,11 @@ export function EfficiencySettingsPanel() {
                 maximumFractionDigits: 0,
               })}
 
-              <ChaosOrbIcon size={15} alt=" Chaos" />
+              <ChaosOrbIcon />
 
               <span className="text-muted-foreground font-normal">per 10k</span>
 
-              <GoldIcon size={15} alt=" Gold" />
+              <GoldIcon />
             </span>
           </div>
 
@@ -123,9 +123,15 @@ export function EfficiencySettingsPanel() {
             aria-describedby="gold-valuation-description"
           />
           <div className="text-muted-foreground flex justify-between text-xs tabular-nums">
-            <span>0c</span>
-            <span>25c</span>
-            <span>50c</span>
+            <span>
+              0 <ChaosOrbIcon />
+            </span>
+            <span>
+              25 <ChaosOrbIcon />
+            </span>
+            <span>
+              50 <ChaosOrbIcon />
+            </span>
           </div>
 
           <p
