@@ -1,3 +1,4 @@
+import type { ViewItem } from "@/lib/view-item";
 import * as React from "react";
 import { Row } from "@tanstack/react-table";
 import { ExternalLink, Info, Orbit, PackageMinus } from "lucide-react";
@@ -24,7 +25,6 @@ import {
 import { useTradeLink } from "@/components/use-trade-link";
 import { COLUMN_IDS } from "@/lib/column-ids";
 import { EFFICIENCY_MODES } from "@/lib/efficiency";
-import { ViewItem } from "@/lib/view-item";
 
 // Compact number formatter for mobile cards
 const compactFormatterGlobal = new Intl.NumberFormat("en", {

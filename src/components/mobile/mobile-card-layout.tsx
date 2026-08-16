@@ -1,6 +1,6 @@
+import type { ViewItem } from "@/lib/view-item";
 import { Table } from "@tanstack/react-table";
 
-import { ViewItem } from "@/lib/view-item";
 import { MobileCard } from "./mobile-card";
 
 interface MobileCardLayoutProps<TData extends ViewItem> {

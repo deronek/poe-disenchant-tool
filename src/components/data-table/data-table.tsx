@@ -1,3 +1,4 @@
+import type { ViewItem } from "@/lib/view-item";
 import * as React from "react";
 import {
   ColumnDef,
@@ -21,7 +22,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ViewItem } from "@/lib/view-item";
 import { useLeagueSession } from "../league-session-context";
 import { DataTablePagination } from "./data-table-pagination";
 import { useDataTableState } from "./data-table-state-context";
