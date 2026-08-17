@@ -1,4 +1,4 @@
-import type { Item } from "@/lib/item-data";
+import type { ViewItem } from "@/lib/view-item";
 import type {
   ColumnDef,
   ColumnDefTemplate,
@@ -7,6 +7,7 @@ import type {
 import * as React from "react";
 import { ExternalLink, Info, PackageMinus } from "lucide-react";
 
+import { EfficiencyUnit, useEfficiencySettings } from "@/components/efficiency";
 import {
   CatalystIcon,
   ChaosOrbIcon,
@@ -21,6 +22,7 @@ import {
   GoldInfo,
   ItemMarkingInfo,
   LowStockInfo,
+  TotalCostInfo,
 } from "@/components/info-popovers";
 import { useLeagueSession } from "@/components/league-session-context";
 import { Badge } from "@/components/ui/badge";
@@ -33,9 +35,10 @@ import {
 } from "@/components/ui/tooltip";
 import { useTradeLink } from "@/components/use-trade-link";
 import { COLUMN_IDS } from "@/lib/column-ids";
+import { EFFICIENCY_MODES } from "@/lib/efficiency";
 import { rangeFilterFn } from "@/lib/filters";
 
-const DustValueHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
+const DustValueHeader: ColumnDefTemplate<HeaderContext<ViewItem, unknown>> =
   React.memo(
     function DustValueHeaderComponent() {
       return (
@@ -60,7 +63,7 @@ const DustValueHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
     () => true,
   );
 
-const ChaosCell: ColumnDef<Item>["cell"] = function ChaosCellComponent({
+const ChaosCell: ColumnDef<ViewItem>["cell"] = function ChaosCellComponent({
   row,
   column,
 }) {
@@ -137,7 +140,7 @@ const ChaosCell: ColumnDef<Item>["cell"] = function ChaosCellComponent({
   );
 };
 
-const GoldFeeHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
+const GoldFeeHeader: ColumnDefTemplate<HeaderContext<ViewItem, unknown>> =
   React.memo(
     function GoldFeeHeaderComponent() {
       return (
@@ -162,7 +165,9 @@ const GoldFeeHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> =
     () => true,
   );
 
-const GoldCell: ColumnDef<Item>["cell"] = function GoldCellComponent({ row }) {
+const GoldCell: ColumnDef<ViewItem>["cell"] = function GoldCellComponent({
+  row,
+}) {
   const value = row.getValue(COLUMN_IDS.GOLD_FEE) as number;
   return (
     <span className="inline-flex w-full justify-end gap-1">
@@ -176,7 +181,7 @@ const GoldCell: ColumnDef<Item>["cell"] = function GoldCellComponent({ row }) {
   );
 };
 
-const CalculatedDustValueCell: ColumnDef<Item>["cell"] =
+const CalculatedDustValueCell: ColumnDef<ViewItem>["cell"] =
   function CalculatedDustValueCellComponent({ row }) {
     const value = row.getValue(COLUMN_IDS.CALCULATED_DUST_VALUE) as number;
     const qualityType = row.original.qualityType;
@@ -227,7 +232,7 @@ const CalculatedDustValueCell: ColumnDef<Item>["cell"] =
     );
   };
 
-const DustPerChaosCell: ColumnDef<Item>["cell"] =
+const DustPerChaosCell: ColumnDef<ViewItem>["cell"] =
   function DustPerChaosCellComponent({ row }) {
     const value = row.getValue(COLUMN_IDS.DUST_PER_CHAOS) as number;
     return (
@@ -246,54 +251,90 @@ const DustPerChaosCell: ColumnDef<Item>["cell"] =
     );
   };
 
-const DustPerChaosPerSlotCell: ColumnDef<Item>["cell"] =
-  function DustPerChaosPerSlotCellComponent({ row }) {
-    const value = row.getValue(COLUMN_IDS.DUST_PER_CHAOS_PER_SLOT) as number;
-    const slots = row.original.slots;
+const EfficiencyHeader: ColumnDefTemplate<HeaderContext<ViewItem, unknown>> =
+  function EfficiencyHeaderComponent() {
+    const { settings } = useEfficiencySettings();
+    const { label, columnLabel } = EFFICIENCY_MODES[settings.mode];
 
     return (
-      <span className="block w-full">
-        <span className="float-right inline-flex items-center gap-1 align-baseline">
-          <CompactNumberTooltip
-            value={value}
-            compactFormatter={compactFormatterGlobal}
-            standardFormatter={standardFormatterGlobal}
-          />
-          <DustIcon />
-          <span className="text-muted-foreground">/</span>
-          <ChaosOrbIcon />
-          <span className="text-muted-foreground">/</span>
-          <span className="min-w-10 text-left text-xs">
-            {slots} slot{slots !== 1 ? "s" : ""}
-          </span>
+      <span
+        className="block truncate whitespace-nowrap"
+        aria-label={`Efficiency metric: ${label}`}
+      >
+        <span>Efficiency</span>
+
+        <span className="font-normal" aria-hidden="true">
+          {" · "}
+          {columnLabel}
         </span>
       </span>
     );
   };
 
-const MarkHeader: ColumnDefTemplate<HeaderContext<Item, unknown>> = React.memo(
-  function MarkHeaderComponent() {
+const EfficiencyCell: ColumnDef<ViewItem>["cell"] =
+  function EfficiencyCellComponent({ row }) {
+    const { settings } = useEfficiencySettings();
+    const item = row.original;
+    const value = row.getValue(COLUMN_IDS.EFFICIENCY) as number;
+
     return (
-      <div className="flex w-full items-center">
-        <p>Mark</p>
-        <Tooltip>
-          <TooltipTrigger
-            className="ml-auto"
-            aria-label="Learn more about item marking"
-          >
-            <Info className="size-5 text-blue-600 dark:text-blue-400" />
-          </TooltipTrigger>
-          <TooltipContent className="max-w-[280px] text-sm" variant="popover">
-            <ItemMarkingInfo />
-          </TooltipContent>
-        </Tooltip>
-      </div>
+      <span className="flex w-full items-center justify-end gap-1">
+        {item.totalCostDetails !== null && (
+          <Tooltip>
+            <TooltipTrigger
+              aria-label={`Show total cost breakdown for ${item.name}`}
+              className="mr-auto"
+            >
+              <Info className="size-4 text-blue-600 dark:text-blue-400" />
+            </TooltipTrigger>
+
+            <TooltipContent variant="popover" className="max-w-[340px] text-sm">
+              <TotalCostInfo
+                details={item.totalCostDetails}
+                acquisitionChaosCost={item.acquisitionChaosCost}
+                goldCost={item.goldCost}
+                goldValueChaosPer10k={settings.goldValueChaosPer10k}
+                shouldCatalyst={item.shouldCatalyst}
+              />
+            </TooltipContent>
+          </Tooltip>
+        )}
+
+        <CompactNumberTooltip
+          value={value}
+          compactFormatter={compactFormatterGlobal}
+          standardFormatter={standardFormatterGlobal}
+        />
+
+        <EfficiencyUnit mode={settings.mode} slots={item.slots} size="md" />
+      </span>
     );
-  },
-  // Force memoization as we don't use header context,
-  // and tooltip context is static
-  () => true,
-);
+  };
+
+const MarkHeader: ColumnDefTemplate<HeaderContext<ViewItem, unknown>> =
+  React.memo(
+    function MarkHeaderComponent() {
+      return (
+        <div className="flex w-full items-center">
+          <p>Mark</p>
+          <Tooltip>
+            <TooltipTrigger
+              className="ml-auto"
+              aria-label="Learn more about item marking"
+            >
+              <Info className="size-5 text-blue-600 dark:text-blue-400" />
+            </TooltipTrigger>
+            <TooltipContent className="max-w-[280px] text-sm" variant="popover">
+              <ItemMarkingInfo />
+            </TooltipContent>
+          </Tooltip>
+        </div>
+      );
+    },
+    // Force memoization as we don't use header context,
+    // and tooltip context is static
+    () => true,
+  );
 
 const compactFormatterGlobal = new Intl.NumberFormat("en", {
   notation: "compact",
@@ -384,71 +425,70 @@ export function renderCompactNumber(
   return { element, hasCompactSuffix };
 }
 
-const TradeLinkCell: ColumnDef<Item>["cell"] = function TradeLinkCellComponent({
-  row,
-}) {
-  const name = row.getValue(COLUMN_IDS.NAME) as string;
-  const { lowStockThreshold } = useLeagueSession();
-  const link = useTradeLink(name);
-  const listingCount = row.original.listingCount;
-  const isLowStock = listingCount < lowStockThreshold;
+const TradeLinkCell: ColumnDef<ViewItem>["cell"] =
+  function TradeLinkCellComponent({ row }) {
+    const name = row.getValue(COLUMN_IDS.NAME) as string;
+    const { lowStockThreshold } = useLeagueSession();
+    const link = useTradeLink(name);
+    const listingCount = row.original.listingCount;
+    const isLowStock = listingCount < lowStockThreshold;
 
-  const linkElement = (
-    <a
-      href={link}
-      target="_blank"
-      rel="noreferrer"
-      aria-label={`Open trade search for ${name} in new tab${isLowStock ? " (low stock warning)" : ""}`}
-      title={`Open trade search for ${name}`}
-      className="inline-flex items-center gap-2"
-    >
-      <ExternalLink className="size-5" />
-      {isLowStock && (
-        <Badge
-          variant="amber"
-          className="absolute -top-1 -right-2 size-4 border-none bg-transparent p-0"
-          aria-hidden="true"
-        >
-          <PackageMinus />
-        </Badge>
-      )}
-    </a>
-  );
+    const linkElement = (
+      <a
+        href={link}
+        target="_blank"
+        rel="noreferrer"
+        aria-label={`Open trade search for ${name} in new tab${isLowStock ? " (low stock warning)" : ""}`}
+        title={`Open trade search for ${name}`}
+        className="inline-flex items-center gap-2"
+      >
+        <ExternalLink className="size-5" />
+        {isLowStock && (
+          <Badge
+            variant="amber"
+            className="absolute -top-1 -right-2 size-4 border-none bg-transparent p-0"
+            aria-hidden="true"
+          >
+            <PackageMinus />
+          </Badge>
+        )}
+      </a>
+    );
 
-  const button = (
-    <Button
-      asChild
-      variant="default"
-      size="lg"
-      className="text-primary bg-primary/10 hover:bg-primary/20 border-input hover:border-primary relative mx-auto gap-2 border border-solid"
-    >
-      {linkElement}
-    </Button>
-  );
+    const button = (
+      <Button
+        asChild
+        variant="default"
+        size="lg"
+        className="text-primary bg-primary/10 hover:bg-primary/20 border-input hover:border-primary relative mx-auto gap-2 border border-solid"
+      >
+        {linkElement}
+      </Button>
+    );
 
-  const content = isLowStock ? (
-    <Tooltip>
-      <TooltipTrigger asChild className="cursor-pointer">
-        {button}
-      </TooltipTrigger>
-      <TooltipContent className="max-w-[280px] text-sm" variant="popover">
-        <LowStockInfo
-          name={name}
-          listingCount={listingCount}
-          lowStockThreshold={lowStockThreshold}
-        />
-      </TooltipContent>
-    </Tooltip>
-  ) : (
-    button
-  );
+    const content = isLowStock ? (
+      <Tooltip>
+        <TooltipTrigger asChild className="cursor-pointer">
+          {button}
+        </TooltipTrigger>
+        <TooltipContent className="max-w-[280px] text-sm" variant="popover">
+          <LowStockInfo
+            name={name}
+            listingCount={listingCount}
+            lowStockThreshold={lowStockThreshold}
+          />
+        </TooltipContent>
+      </Tooltip>
+    ) : (
+      button
+    );
 
-  return <div className="flex w-full flex-1 items-center">{content}</div>;
-};
+    return <div className="flex w-full flex-1 items-center">{content}</div>;
+  };
 
 export const createColumns = (
   divinePriceThreshold: number | null,
-): ColumnDef<Item>[] => {
+): ColumnDef<ViewItem>[] => {
   return [
     {
       accessorKey: COLUMN_IDS.ICON,
@@ -473,9 +513,7 @@ export const createColumns = (
         const nameVal = String(
           row.getValue(COLUMN_IDS.NAME) ?? "",
         ).toLowerCase();
-        const variantVal = String(
-          (row.original as Item).variant ?? "",
-        ).toLowerCase();
+        const variantVal = String(row.original.variant ?? "").toLowerCase();
         return nameVal.includes(query) || variantVal.includes(query);
       },
       cell: ({ row }) => {
@@ -530,15 +568,15 @@ export const createColumns = (
       cell: DustPerChaosCell,
     },
     {
-      accessorKey: COLUMN_IDS.DUST_PER_CHAOS_PER_SLOT,
-      header: () => <span>Dust / Chaos / Slot</span>,
+      accessorKey: COLUMN_IDS.EFFICIENCY,
+      header: EfficiencyHeader,
       size: 155,
       meta: {
         className:
           "text-right tabular-nums bg-gradient-to-r from-primary/6 to-transparent dark:from-primary/7 dark:to-transparent",
-        headerName: "Dust per Chaos per Slot",
+        headerName: "Efficiency",
       },
-      cell: DustPerChaosPerSlotCell,
+      cell: EfficiencyCell,
     },
     {
       accessorKey: COLUMN_IDS.GOLD_FEE,

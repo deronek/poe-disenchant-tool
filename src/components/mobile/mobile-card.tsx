@@ -1,8 +1,10 @@
-import type { Item } from "@/lib/item-data";
+import type { TotalCostDetails } from "@/lib/efficiency";
+import type { ViewItem } from "@/lib/view-item";
 import * as React from "react";
 import { Row } from "@tanstack/react-table";
 import { ExternalLink, Info, Orbit, PackageMinus } from "lucide-react";
 
+import { EfficiencyUnit, useEfficiencySettings } from "@/components/efficiency";
 import { ChaosOrbIcon, DustIcon, GoldIcon, Icon } from "@/components/icons";
 import {
   CatalystInfo,
@@ -10,6 +12,7 @@ import {
   GoldInfo,
   ItemMarkingInfo,
   LowStockInfo,
+  TotalCostInfo,
 } from "@/components/info-popovers";
 import { useLeagueSession } from "@/components/league-session-context";
 import { Badge } from "@/components/ui/badge";
@@ -22,6 +25,7 @@ import {
 } from "@/components/ui/popover";
 import { useTradeLink } from "@/components/use-trade-link";
 import { COLUMN_IDS } from "@/lib/column-ids";
+import { EFFICIENCY_MODES } from "@/lib/efficiency";
 
 // Compact number formatter for mobile cards
 const compactFormatterGlobal = new Intl.NumberFormat("en", {
@@ -122,6 +126,51 @@ const GoldInfoPopover = React.memo(function GoldInfoPopover() {
     </Popover>
   );
 });
+
+function TotalCostInfoPopover({
+  itemName,
+  details,
+  acquisitionChaosCost,
+  goldCost,
+  goldValueChaosPer10k,
+  shouldCatalyst,
+}: {
+  itemName: string;
+  details: TotalCostDetails;
+  acquisitionChaosCost: number;
+  goldCost: number;
+  goldValueChaosPer10k: number;
+  shouldCatalyst: boolean;
+}) {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="hover:text-foreground size-6 p-0 text-blue-600 dark:text-blue-400"
+          aria-label={`Show total cost breakdown for ${itemName}`}
+        >
+          <Info className="size-5" />
+        </Button>
+      </PopoverTrigger>
+
+      <PopoverContent
+        className="w-[min(var(--radix-popover-content-available-width,9999px),calc(var(--spacing)*84))] min-w-77 text-sm"
+        side="bottom"
+        align="start"
+      >
+        <TotalCostInfo
+          details={details}
+          acquisitionChaosCost={acquisitionChaosCost}
+          goldCost={goldCost}
+          goldValueChaosPer10k={goldValueChaosPer10k}
+          shouldCatalyst={shouldCatalyst}
+        />
+      </PopoverContent>
+    </Popover>
+  );
+}
 
 // Low stock badge with popover
 function LowStockBadge({
@@ -323,41 +372,46 @@ function DustPerChaosSection({
   );
 }
 
-// Secondary metric section (dust per chaos per slot) with optional low stock badge
-function DustPerChaosPerSlotSection({
-  dustPerChaosPerSlot,
-  slots,
-  name,
-  listingCount,
-}: {
-  dustPerChaosPerSlot: number;
-  slots: number;
-  name: string;
-  listingCount: number;
-}) {
+// Secondary efficiency metric
+function EfficiencySection({ item }: { item: ViewItem }) {
+  const { settings } = useEfficiencySettings();
   const { lowStockThreshold } = useLeagueSession();
+
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between gap-3">
       <div className="min-w-0 flex-1 space-y-2">
-        <p className="text-muted-foreground text-sm">Dust per Chaos per Slot</p>
-        <div className="flex items-center gap-1 text-sm">
-          <span className="font-semibold">
-            {compactFormatterGlobal.format(dustPerChaosPerSlot)}
+        <div className="flex h-6 items-center gap-1">
+          <p className="text-muted-foreground min-w-0 truncate text-xs">
+            Efficiency
+            <span aria-hidden="true"> · </span>
+            {EFFICIENCY_MODES[settings.mode].columnLabel}
+          </p>
+
+          {item.totalCostDetails !== null && (
+            <TotalCostInfoPopover
+              itemName={item.name}
+              details={item.totalCostDetails}
+              acquisitionChaosCost={item.acquisitionChaosCost}
+              goldCost={item.goldCost}
+              goldValueChaosPer10k={settings.goldValueChaosPer10k}
+              shouldCatalyst={item.shouldCatalyst}
+            />
+          )}
+        </div>
+
+        <div className="flex items-center gap-1 text-xs">
+          <span className="font-semibold tabular-nums">
+            {compactFormatterGlobal.format(item.efficiency)}
           </span>
-          <DustIcon className="h-4 w-4" />
-          <span className="text-muted-foreground">/</span>
-          <ChaosOrbIcon className="h-4 w-4" />
-          <span className="text-muted-foreground">/</span>
-          <span className="text-xs">
-            {slots} slot{slots !== 1 ? "s" : ""}
-          </span>
+
+          <EfficiencyUnit mode={settings.mode} slots={item.slots} size="sm" />
         </div>
       </div>
 
-      {listingCount < lowStockThreshold && (
+      {item.listingCount < lowStockThreshold && (
         <LowStockBadge
-          name={name}
-          listingCount={listingCount}
+          name={item.name}
+          listingCount={item.listingCount}
           lowStockThreshold={lowStockThreshold}
         />
       )}
@@ -389,12 +443,12 @@ function TradeButtonSection({ name }: { name: string }) {
   );
 }
 
-interface MobileCardProps<TData extends Item> {
+interface MobileCardProps<TData extends ViewItem> {
   row: Row<TData>;
   isSelected: boolean;
 }
 
-function MobileCardComponent<TData extends Item>({
+function MobileCardComponent<TData extends ViewItem>({
   row,
   isSelected,
 }: MobileCardProps<TData>) {
@@ -404,10 +458,6 @@ function MobileCardComponent<TData extends Item>({
   const icon = row.getValue<string>(COLUMN_IDS.ICON);
   const chaos = row.getValue<number>(COLUMN_IDS.CHAOS);
   const dustPerChaos = row.getValue<number>(COLUMN_IDS.DUST_PER_CHAOS);
-  const dustPerChaosPerSlot = row.getValue<number>(
-    COLUMN_IDS.DUST_PER_CHAOS_PER_SLOT,
-  );
-  const slots = row.original.slots;
   const calculatedDustValue = row.original.calculatedDustValue;
   const goldCost = row.original.goldCost;
 
@@ -442,12 +492,7 @@ function MobileCardComponent<TData extends Item>({
         shouldCatalyst={row.original.shouldCatalyst}
       />
 
-      <DustPerChaosPerSlotSection
-        dustPerChaosPerSlot={dustPerChaosPerSlot}
-        slots={slots}
-        name={name}
-        listingCount={row.original.listingCount}
-      />
+      <EfficiencySection item={row.original} />
 
       <TradeButtonSection name={name} />
     </div>

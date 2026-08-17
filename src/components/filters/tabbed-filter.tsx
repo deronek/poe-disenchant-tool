@@ -1,4 +1,3 @@
-import type { Item } from "@/lib/item-data";
 import type { Column } from "@tanstack/react-table";
 import { useState } from "react";
 import { ChevronDown, Filter } from "lucide-react";
@@ -17,6 +16,7 @@ import {
   hasMinFilter,
 } from "@/lib/filters";
 import { cn } from "@/lib/utils";
+import { ViewItem } from "@/lib/view-item";
 import { FilterTabIndicator } from "./filter-tab-indicator";
 import { RangeFilter } from "./range-filter";
 
@@ -33,7 +33,7 @@ interface TabbedFilterProps<TData> {
   className?: string;
 }
 
-export function TabbedFilter<TData extends Item>({
+export function TabbedFilter<TData extends ViewItem>({
   priceColumn,
   dustColumn,
   goldColumn,
@@ -109,12 +109,12 @@ export function TabbedFilter<TData extends Item>({
           )}
         >
           <span
-            className={`mr-1 rounded-full p-1 transition-colors ${isFilterActive ? "bg-primary/80" : ""}`}
+            className={`rounded-full p-1 transition-colors ${isFilterActive ? "bg-primary/80" : ""}`}
           >
             <Filter className="h-4 w-4" />
           </span>
           <span className="">Filters</span>
-          <ChevronDown className="ml-1 h-3 w-3 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+          <ChevronDown className="ml-2 h-3 w-3 transition-transform duration-200 group-data-[state=open]:rotate-180" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80" align="start">

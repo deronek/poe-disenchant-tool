@@ -1,17 +1,17 @@
-import type { Item } from "@/lib/item-data";
 import { Table } from "@tanstack/react-table";
 
 import type { RangeFilterChipProps } from "./range-filter-chip";
 import { ChaosOrbIcon, DustIcon, GoldIcon } from "@/components/icons";
 import { COLUMN_IDS } from "@/lib/column-ids";
+import { ViewItem } from "@/lib/view-item";
 import { NameFilterChip } from "./name-filter-chip";
 import { RangeFilterChip } from "./range-filter-chip";
 
-interface FilterChipsProps<TData extends Item> {
+interface FilterChipsProps<TData extends ViewItem> {
   table: Table<TData>;
 }
 
-export function FilterChips<TData extends Item>({
+export function FilterChips<TData extends ViewItem>({
   table,
 }: FilterChipsProps<TData>) {
   const chaosColumn = table.getColumn(COLUMN_IDS.CHAOS);

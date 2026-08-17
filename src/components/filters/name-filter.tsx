@@ -1,11 +1,11 @@
-import type { Item } from "@/lib/item-data";
 import { useEffect, useRef, useState } from "react";
 import { Table } from "@tanstack/react-table";
 
 import { Input } from "@/components/ui/input";
 import { XButton } from "@/components/ui/x-button";
+import { ViewItem } from "@/lib/view-item";
 
-export function NameFilter<TData extends Item>({
+export function NameFilter<TData extends ViewItem>({
   table,
 }: {
   table: Table<TData>;

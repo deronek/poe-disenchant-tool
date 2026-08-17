@@ -9,7 +9,13 @@ import {
   Type,
 } from "lucide-react";
 
-import { ChaosOrbIcon, DustIcon, GoldIcon } from "@/components/icons";
+import { useEfficiencySettings } from "@/components/efficiency";
+import {
+  ChaosOrbIcon,
+  DustIcon,
+  GoldIcon,
+  TotalCostIcon,
+} from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -17,20 +23,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { UnitSeparator } from "@/components/unit-separator";
 import { COLUMN_IDS } from "@/lib/column-ids";
-import { cn } from "@/lib/utils";
-
-const AscendingSortIcon = () => (
-  <ArrowUp className="h-4 w-4" aria-label="ascending" />
-);
-
-const DescendingSortIcon = () => (
-  <ArrowDown className="h-4 w-4" aria-label="descending" />
-);
-type MobileSortingControlsProps<TData> = {
-  table: Table<TData>;
-  className?: string;
-};
+import { EFFICIENCY_MODES, EfficiencyMode } from "@/lib/efficiency";
+import { assertNever, cn } from "@/lib/utils";
 
 type SortOption = {
   id: ColumnId;
@@ -38,87 +34,79 @@ type SortOption = {
   icons: React.ReactNode;
 };
 
-type SortState = "none" | "asc" | "desc";
+type MobileSortingControlsProps<TData> = {
+  table: Table<TData>;
+  className?: string;
+};
 
-const sortOptions: SortOption[] = [
-  {
-    id: COLUMN_IDS.DUST_PER_CHAOS,
-    label: "Dust / Chaos",
-    icons: (
-      <>
-        <DustIcon className="h-4 w-4" aria-hidden="true" alt="" />
-        /
-        <ChaosOrbIcon className="h-4 w-4" aria-hidden="true" alt="" />
-      </>
-    ),
-  },
-  {
-    id: COLUMN_IDS.DUST_PER_CHAOS_PER_SLOT,
-    label: "Dust / Chaos / Slot",
-    icons: (
-      <>
-        <DustIcon className="h-4 w-4" aria-hidden="true" alt="" />
-        /
-        <ChaosOrbIcon className="h-4 w-4" aria-hidden="true" alt="" />
-        /
-        <StretchHorizontal className="h-4 w-4" />
-      </>
-    ),
-  },
-  {
-    id: COLUMN_IDS.NAME,
-    label: "Name",
-    icons: <Type className="h-4 w-4" />,
-  },
-  {
-    id: COLUMN_IDS.CHAOS,
-    label: "Price",
-    icons: <ChaosOrbIcon className="h-4 w-4" aria-hidden="true" alt="" />,
-  },
-  {
-    id: COLUMN_IDS.CALCULATED_DUST_VALUE,
-    label: "Dust Value",
-    icons: <DustIcon className="h-4 w-4" aria-hidden="true" alt="" />,
-  },
-  {
-    id: COLUMN_IDS.GOLD_FEE,
-    label: "Gold Fee",
-    icons: <GoldIcon className="h-4 w-4" aria-hidden="true" alt="" />,
-  },
-];
+function getDirectionLabel(descending: boolean) {
+  return descending ? "descending" : "ascending";
+}
 
-function SortingMenuItem({
-  id,
-  label,
-  icons,
-  onSort,
-  sortState,
-}: SortOption & {
-  onSort: (id: ColumnId) => void;
-  sortState: SortState;
-}) {
+function getSortOptionLabel(
+  option: SortOption,
+  currentSort?: { id: string; desc: boolean },
+) {
+  if (currentSort?.id !== option.id) {
+    return `Sort by ${option.label}, descending`;
+  }
+
+  const currentDirection = getDirectionLabel(currentSort.desc);
+  const nextDirection = getDirectionLabel(!currentSort.desc);
+
+  return `${option.label}, currently ${currentDirection}. Select to sort ${nextDirection}`;
+}
+
+function SortDirectionIcon({ descending }: { descending: boolean }) {
+  const Icon = descending ? ArrowDown : ArrowUp;
+
+  return <Icon className="size-4" aria-hidden="true" />;
+}
+
+function DustPerChaosIcons() {
   return (
-    <DropdownMenuItem
-      onSelect={() => onSort(id)}
-      className="flex items-center justify-between"
-    >
-      <div className="flex flex-1 items-center gap-4">
-        <div className="text-muted-foreground flex min-w-20 items-center gap-1">
-          {icons}
-        </div>
-        <span className="min-w-32 flex-1 text-left">{label}</span>
-      </div>
-      {sortState !== "none" && (
-        <span className="text-muted-foreground flex-shrink-0">
-          {sortState === "desc" ? (
-            <DescendingSortIcon />
-          ) : (
-            <AscendingSortIcon />
-          )}
-        </span>
-      )}
-    </DropdownMenuItem>
+    <>
+      <DustIcon className="size-4" />
+      <UnitSeparator />
+      <ChaosOrbIcon className="size-4" />
+    </>
   );
+}
+
+function EfficiencyIcons({ mode }: { mode: EfficiencyMode }) {
+  switch (mode) {
+    case "per-slot":
+      return (
+        <>
+          <DustIcon className="size-4" />
+          <UnitSeparator />
+          <ChaosOrbIcon className="size-4" />
+          <UnitSeparator />
+          <StretchHorizontal className="size-4" />
+        </>
+      );
+
+    case "per-gold":
+      return (
+        <>
+          <DustIcon className="size-4" />
+          <UnitSeparator />
+          <GoldIcon className="size-4" />
+        </>
+      );
+
+    case "total-cost":
+      return (
+        <>
+          <DustIcon className="size-4" />
+          <UnitSeparator />
+          <TotalCostIcon className="size-4" />
+        </>
+      );
+
+    default:
+      return assertNever(mode);
+  }
 }
 
 export function MobileSortingControls<TData>({
@@ -126,63 +114,131 @@ export function MobileSortingControls<TData>({
   className,
 }: MobileSortingControlsProps<TData>) {
   "use memo";
+
+  const { settings } = useEfficiencySettings();
   const sorting = table.options.state?.sorting ?? [];
   const currentSort = sorting[0];
+  const sortOptions: SortOption[] = [
+    {
+      id: COLUMN_IDS.DUST_PER_CHAOS,
+      label: "Dust / Chaos",
+      icons: <DustPerChaosIcons />,
+    },
+    {
+      id: COLUMN_IDS.EFFICIENCY,
+      label: `Efficiency · ${EFFICIENCY_MODES[settings.mode].columnLabel}`,
+      icons: <EfficiencyIcons mode={settings.mode} />,
+    },
+    {
+      id: COLUMN_IDS.NAME,
+      label: "Name",
+      icons: <Type className="size-4" />,
+    },
+    {
+      id: COLUMN_IDS.CHAOS,
+      label: "Price",
+      icons: <ChaosOrbIcon className="size-4" />,
+    },
+    {
+      id: COLUMN_IDS.CALCULATED_DUST_VALUE,
+      label: "Dust Value",
+      icons: <DustIcon className="size-4" />,
+    },
+    {
+      id: COLUMN_IDS.GOLD_FEE,
+      label: "Gold Fee",
+      icons: <GoldIcon className="size-4" />,
+    },
+  ];
 
-  // Get sort state for a column
-  const getSortState = (columnId: ColumnId) => {
-    const sort = sorting.find((sort) => sort.id === columnId);
-    if (!sort) return "none";
-    return sort.desc ? "desc" : "asc";
-  };
+  const currentOption = sortOptions.find(
+    (option) => option.id === currentSort?.id,
+  );
 
-  // Single-column bi-state: new -> desc; desc -> asc; asc -> desc
+  const currentLabel = currentOption?.label ?? currentSort?.id;
+  const currentDirection = currentSort
+    ? getDirectionLabel(currentSort.desc)
+    : undefined;
+
+  const triggerLabel =
+    currentLabel && currentDirection
+      ? `Sort options. Current: ${currentLabel}, ${currentDirection}`
+      : "Sort options";
+
   const handleSort = (columnId: ColumnId) => {
-    const [prev] = table.getState().sorting;
-    if (!prev || prev.id !== columnId) {
-      table.setSorting([{ id: columnId, desc: true }]);
-      return;
-    }
-    if (prev.desc) {
-      table.setSorting([{ id: columnId, desc: false }]);
-    } else {
-      table.setSorting([{ id: columnId, desc: true }]);
-    }
+    const [previous] = table.getState().sorting;
+
+    table.setSorting([
+      {
+        id: columnId,
+        desc: !previous || previous.id !== columnId || !previous.desc,
+      },
+    ]);
   };
 
   return (
     <div className="lg:hidden">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className={cn("gap-3", className)}>
-            <ArrowUpDown className="h-4 w-4" />
-            Sort
-            {currentSort && (
-              <span className="text-muted-foreground ml-1 inline-flex items-center font-normal">
-                <span className="inline-flex gap-1">
-                  {sortOptions.find((opt) => opt.id === currentSort.id)
-                    ?.icons || currentSort.id}
+          <Button
+            variant="outline"
+            className={cn("group gap-3", className)}
+            aria-label={triggerLabel}
+          >
+            <span aria-hidden="true" className="contents">
+              <ArrowUpDown className="size-4 shrink-0" />
+
+              <span>Sort</span>
+
+              {currentSort && (
+                <span className="text-muted-foreground ml-1 inline-flex min-w-0 items-center gap-2 font-normal">
+                  <span className="inline-flex shrink-0 items-center gap-1">
+                    {currentOption?.icons}
+                  </span>
+
+                  <SortDirectionIcon descending={currentSort.desc} />
                 </span>
-                <span className="ml-2">
-                  {currentSort.desc ? (
-                    <DescendingSortIcon />
-                  ) : (
-                    <AscendingSortIcon />
-                  )}
-                </span>
-              </span>
-            )}
+              )}
+            </span>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="min-w-[207px]">
-          {sortOptions.map((option) => (
-            <SortingMenuItem
-              key={option.id}
-              {...option}
-              onSort={handleSort}
-              sortState={getSortState(option.id)}
-            />
-          ))}
+
+        <DropdownMenuContent
+          align="end"
+          className="min-w-[270px]"
+          aria-label="Sort options"
+        >
+          {sortOptions.map((option) => {
+            const active = currentSort?.id === option.id;
+
+            return (
+              <DropdownMenuItem
+                key={option.id}
+                onSelect={() => handleSort(option.id)}
+                className="flex items-center justify-between gap-3"
+                aria-label={getSortOptionLabel(option, currentSort)}
+              >
+                <span
+                  className="flex min-w-0 items-center justify-between gap-3"
+                  aria-hidden="true"
+                >
+                  <span className="flex min-w-0 items-center gap-4">
+                    <span className="text-muted-foreground flex min-w-20 shrink-0 items-center gap-1">
+                      {option.icons}
+                    </span>
+
+                    <span className="truncate">{option.label}</span>
+                  </span>
+
+                  {active && (
+                    <span className="text-muted-foreground shrink-0">
+                      <SortDirectionIcon descending={currentSort.desc} />
+                    </span>
+                  )}
+                </span>
+              </DropdownMenuItem>
+            );
+          })}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

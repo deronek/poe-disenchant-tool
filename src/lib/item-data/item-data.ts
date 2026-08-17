@@ -4,6 +4,7 @@ import { after } from "next/server";
 
 import { emitWideEvent, normalizeError } from "@/lib/axiom/server";
 import { Item as DustItem, getDustData } from "@/lib/dust";
+import { calculateDustPerCost } from "@/lib/efficiency";
 import { League } from "@/lib/leagues";
 import {
   AllowedUnique,
@@ -26,6 +27,8 @@ export type Item = {
   dustPerChaos: number;
   slots: number;
   dustPerChaosPerSlot: number;
+  acquisitionChaosCost: number;
+  dustPerGold: number;
   goldCost: number;
   type: AllowedUnique;
   icon: string;
@@ -175,6 +178,7 @@ const buildItemDataResult = (
       dustPerChaos,
       catalyst: shouldCatalyst,
       qualityType,
+      chaosCost,
     } = calculateDustEfficiency(priceItem, dustItem, catalystPrice);
 
     merged.push({
@@ -189,6 +193,8 @@ const buildItemDataResult = (
       dustPerChaos: Math.round(dustPerChaos),
       slots: dustItem.slots,
       dustPerChaosPerSlot: Math.round(dustPerChaos / dustItem.slots),
+      acquisitionChaosCost: chaosCost,
+      dustPerGold: calculateDustPerCost(calculatedDustValue, dustItem.goldCost),
       goldCost: dustItem.goldCost,
       type: priceItem.type,
       icon: priceItem.icon,
@@ -358,6 +364,7 @@ function calculateDustEfficiency(
   dustPerChaos: number;
   catalyst: boolean;
   qualityType: "q0" | "q20";
+  chaosCost: number;
 } {
   if (isNonQualityItem(priceItem)) {
     // Items that cannot have quality (quivers and specific items)
@@ -366,6 +373,7 @@ function calculateDustEfficiency(
       dustPerChaos: dustItem.dustValIlvl84 / priceItem.chaos,
       catalyst: false,
       qualityType: "q0",
+      chaosCost: priceItem.chaos,
     };
   }
 
@@ -376,6 +384,7 @@ function calculateDustEfficiency(
       dustPerChaos: dustItem.dustValIlvl84Q20 / priceItem.chaos,
       catalyst: false,
       qualityType: "q20",
+      chaosCost: priceItem.chaos,
     };
   }
 
@@ -391,6 +400,7 @@ function calculateDustEfficiency(
       dustPerChaos: catalystedDustPerChaos,
       catalyst: true,
       qualityType: "q20",
+      chaosCost: priceItem.chaos + costToAddQuality,
     };
   }
 
@@ -400,6 +410,7 @@ function calculateDustEfficiency(
     dustPerChaos: defaultDustPerChaos,
     catalyst: false,
     qualityType: "q0",
+    chaosCost: priceItem.chaos,
   };
 }
 

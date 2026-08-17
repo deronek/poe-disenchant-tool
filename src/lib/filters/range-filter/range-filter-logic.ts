@@ -1,6 +1,6 @@
-import type { Item } from "@/lib/item-data";
 import type { Column, Row } from "@tanstack/react-table";
 
+import { ViewItem } from "@/lib/view-item";
 import {
   createLowerBoundLinearValue,
   createLowerBoundSliderValue,
@@ -15,7 +15,7 @@ export type RangeFilterValue = {
 /**
  * Gets the current filter value from the table column
  */
-export const getCurrentFilterValue = <TData extends Item>(
+export const getCurrentFilterValue = <TData extends ViewItem>(
   column: Column<TData, unknown> | undefined,
 ): RangeFilterValue => {
   const value = column?.getFilterValue() as RangeFilterValue | undefined;
@@ -30,7 +30,7 @@ export const getCurrentFilterValue = <TData extends Item>(
 /**
  * Sets the filter value on the table column.
  */
-export const setFilterValue = <TData extends Item>(
+export const setFilterValue = <TData extends ViewItem>(
   column: Column<TData, unknown> | undefined,
   value: RangeFilterValue | undefined,
 ): void => {
@@ -97,7 +97,7 @@ export const updateUpperBound = (
 /**
  * Gets the effective maximum for lower bound calculations
  */
-const getEffectiveMaxForLowerBound = <TData extends Item>(
+const getEffectiveMaxForLowerBound = <TData extends ViewItem>(
   column: Column<TData, unknown> | undefined,
   defaults: { min: number; max: number },
 ): number => {
@@ -108,7 +108,7 @@ const getEffectiveMaxForLowerBound = <TData extends Item>(
 /**
  * Converts lower bound linear value to slider value
  */
-export const getLowerBoundSliderValue = <TData extends Item>(
+export const getLowerBoundSliderValue = <TData extends ViewItem>(
   column: Column<TData, unknown> | undefined,
   linearValue: number | undefined,
   defaults: { min: number; max: number },
@@ -121,7 +121,7 @@ export const getLowerBoundSliderValue = <TData extends Item>(
 /**
  * Converts slider value to lower bound linear value
  */
-export const getLowerBoundLinearValue = <TData extends Item>(
+export const getLowerBoundLinearValue = <TData extends ViewItem>(
   column: Column<TData, unknown> | undefined,
   sliderValue: number,
   defaults: { min: number; max: number },
@@ -133,7 +133,7 @@ export const getLowerBoundLinearValue = <TData extends Item>(
 /**
  * Resets the filter to default state
  */
-export const resetFilter = <TData extends Item>(
+export const resetFilter = <TData extends ViewItem>(
   column: Column<TData, unknown> | undefined,
 ): void => {
   setFilterValue(column, undefined);
@@ -158,7 +158,7 @@ export const hasMaxFilter = (
 };
 
 export const rangeFilterFn = (
-  row: Row<Item>,
+  row: Row<ViewItem>,
   columnId: string,
   filterValue: RangeFilterValue,
 ) => {

@@ -1,4 +1,4 @@
-import type { Item } from "@/lib/item-data";
+import type { ViewItem } from "@/lib/view-item";
 import * as React from "react";
 import {
   ColumnDef,
@@ -41,7 +41,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
-export function DataTable<TData extends Item, TValue>({
+export function DataTable<TData extends ViewItem, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
