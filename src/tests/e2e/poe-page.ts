@@ -1,3 +1,4 @@
+import type { EfficiencyMode } from "@/lib/efficiency";
 import type { ListingTimeFilter, OnlineStatus } from "@/lib/filters";
 import type { TradeLinkPayload } from "@/lib/trade-link";
 import type { BrowserContext, Locator, Page } from "@playwright/test";
@@ -6,17 +7,67 @@ import { expect } from "@playwright/test";
 import type { TestItem, Theme, ThemeOption } from "./types";
 import { DEFAULT_ADVANCED_SETTINGS } from "@/lib/advanced-settings";
 import {
+  EFFICIENCY_MODES,
+  GOLD_VALUATION_MAX,
+  GOLD_VALUATION_MIN,
+} from "@/lib/efficiency";
+import {
   LISTING_TIME_LABELS,
   MIN_ITEM_LEVEL_RANGE,
   ONLINE_STATUS_LABELS,
 } from "@/lib/filters";
 import { getLeagueName, League } from "@/lib/leagues";
 
+class SettingsPanel {
+  constructor(
+    private readonly trigger: Locator,
+    private readonly popover: Locator,
+    private readonly closeButton: Locator,
+    private readonly scrollTriggerIntoView = true,
+  ) {}
+
+  async open(): Promise<void> {
+    if (this.scrollTriggerIntoView) {
+      // Position the trigger at the top of viewport to show the full popover
+      await this.trigger.evaluate((el) =>
+        el.scrollIntoView({ block: "start", behavior: "instant" }),
+      );
+    }
+    await this.trigger.click();
+    await expect(this.popover).toBeVisible();
+  }
+
+  async close(): Promise<void> {
+    await this.closeButton.click();
+    await expect(this.popover).not.toBeVisible();
+  }
+}
+
 export class PoEDisenchantPage {
   readonly page: Page;
 
+  private readonly advancedSettingsPanel: SettingsPanel;
+  private readonly efficiencySettingsPanel: SettingsPanel;
+  private readonly tabbedFilterPanel: SettingsPanel;
+
   constructor(page: Page) {
     this.page = page;
+    this.advancedSettingsPanel = new SettingsPanel(
+      this.advancedSettingsTrigger,
+      this.advancedSettingsPopover,
+      this.advancedSettingsCloseButton,
+    );
+    this.efficiencySettingsPanel = new SettingsPanel(
+      this.efficiencySettingsTrigger,
+      this.efficiencySettingsPopover,
+      this.efficiencySettingsCloseButton,
+    );
+    this.tabbedFilterPanel = new SettingsPanel(
+      this.tabbedFilterButton,
+      this.tabbedFilterPopover,
+      this.tabbedFilterCloseButton,
+      false,
+    );
   }
 
   // ---------------------------
@@ -161,6 +212,15 @@ export class PoEDisenchantPage {
       });
     }
     return items;
+  }
+
+  getItemRow(itemName: string) {
+    return this.dataTableRows.filter({ hasText: itemName }).first();
+  }
+
+  async getCell(itemName: string, columnName: string) {
+    const colIndex = await this.getColumnIndex(columnName);
+    return this.getItemRow(itemName).locator("td").nth(colIndex);
   }
 
   private async extractFullValue(cell: Locator): Promise<number> {
@@ -320,7 +380,7 @@ export class PoEDisenchantPage {
   }
 
   async getTradeLink(itemName: string): Promise<string> {
-    const row = this.page.locator("tr").filter({ hasText: itemName });
+    const row = this.getItemRow(itemName);
     const link = row
       .locator("a[href*='pathofexile.com/trade/search/']")
       .first();
@@ -331,10 +391,7 @@ export class PoEDisenchantPage {
 
   // Returns the Locator for the trade link anchor in the given item row
   getTradeLinkLocator(itemName: string) {
-    const row = this.page
-      .locator("table tbody tr")
-      .filter({ hasText: itemName })
-      .first();
+    const row = this.getItemRow(itemName);
     const a = row.locator("a[href*='pathofexile.com/trade/search/']").first();
     return a;
   }
@@ -366,12 +423,7 @@ export class PoEDisenchantPage {
     name: string,
     columnName: string,
   ): Promise<{ compactValue: number; fullValue: number }> {
-    const colIndex = await this.getColumnIndex(columnName);
-    const cell = this.page
-      .locator("tr")
-      .filter({ hasText: name })
-      .locator("td")
-      .nth(colIndex);
+    const cell = await this.getCell(name, columnName);
     const text = (await cell.innerText()).trim();
     const attr = await cell
       .locator("[data-full-value]")
@@ -384,12 +436,7 @@ export class PoEDisenchantPage {
   }
 
   async getCellValue(name: string, columnName: string): Promise<number> {
-    const colIndex = await this.getColumnIndex(columnName);
-    const cell = this.page
-      .locator("tr")
-      .filter({ hasText: name })
-      .locator("td")
-      .nth(colIndex);
+    const cell = await this.getCell(name, columnName);
     const attr = await cell
       .locator("[data-full-value]")
       .first()
@@ -626,12 +673,7 @@ export class PoEDisenchantPage {
     itemName: string,
     columnName: string,
   ): Promise<{ displayed: string; full: number }> {
-    const colIndex = await this.getColumnIndex(columnName);
-    const cell = this.page
-      .locator("tr")
-      .filter({ hasText: itemName })
-      .locator("td")
-      .nth(colIndex);
+    const cell = await this.getCell(itemName, columnName);
 
     const fullValueAttr = await cell
       .locator("[data-full-value]")
@@ -1007,33 +1049,9 @@ export class PoEDisenchantPage {
     return this.page.getByTestId("gold-filter-chip").first();
   }
 
-  // All below assume tabbed filter is open and correct tab is active
-  get priceFilterLowerBoundSliderTrack() {
-    return this.page.getByLabel("Lower bound price filter", { exact: true });
-  }
-
-  get priceFilterUpperBoundSliderTrack() {
-    return this.page.getByLabel("Upper bound price filter", { exact: true });
-  }
-
-  get dustFilterLowerBoundSliderTrack() {
-    return this.page.getByLabel("Lower bound dust value filter", {
-      exact: true,
-    });
-  }
-
-  get dustFilterUpperBoundSliderTrack() {
-    return this.page.getByLabel("Upper bound dust value filter", {
-      exact: true,
-    });
-  }
-
-  get goldFilterLowerBoundSliderTrack() {
-    return this.page.getByLabel("Lower bound gold fee filter", { exact: true });
-  }
-
-  get goldFilterUpperBoundSliderTrack() {
-    return this.page.getByLabel("Upper bound gold fee filter", { exact: true });
+  // All below assume tabbed filter is open and correct tab is active.
+  private sliderTrackByName(name: string): Locator {
+    return this.page.getByLabel(name, { exact: true });
   }
 
   get tabbedFilterResetAllButton() {
@@ -1045,13 +1063,11 @@ export class PoEDisenchantPage {
   }
 
   async openTabbedFilter(): Promise<void> {
-    await this.tabbedFilterButton.click();
-    await expect(this.tabbedFilterPopover).toBeVisible();
+    await this.tabbedFilterPanel.open();
   }
 
   async closeTabbedFilter(): Promise<void> {
-    await this.tabbedFilterCloseButton.click();
-    await expect(this.tabbedFilterPopover).not.toBeVisible();
+    await this.tabbedFilterPanel.close();
   }
 
   // Assumes popover is open
@@ -1161,27 +1177,10 @@ export class PoEDisenchantPage {
     }
     await this.switchToTab(filterType);
 
-    let track: Locator;
-    switch (filterType) {
-      case "price":
-        track =
-          bound === "lower"
-            ? this.priceFilterLowerBoundSliderTrack
-            : this.priceFilterUpperBoundSliderTrack;
-        break;
-      case "dust":
-        track =
-          bound === "lower"
-            ? this.dustFilterLowerBoundSliderTrack
-            : this.dustFilterUpperBoundSliderTrack;
-        break;
-      case "gold":
-        track =
-          bound === "lower"
-            ? this.goldFilterLowerBoundSliderTrack
-            : this.goldFilterUpperBoundSliderTrack;
-        break;
-    }
+    const boundLabel = bound === "lower" ? "Lower" : "Upper";
+    const track = this.sliderTrackByName(
+      `${boundLabel} bound ${this.getFilterLabelName(filterType).toLowerCase()} filter`,
+    );
 
     const boundingBox = (await track.boundingBox())!;
 
@@ -1372,17 +1371,11 @@ export class PoEDisenchantPage {
   }
 
   async openAdvancedSettings(): Promise<void> {
-    // Position the trigger button at the top of viewport to show full popover content
-    await this.advancedSettingsTrigger.evaluate((el) =>
-      el.scrollIntoView({ block: "start", behavior: "instant" }),
-    );
-    await this.advancedSettingsTrigger.click();
-    await expect(this.advancedSettingsPopover).toBeVisible();
+    await this.advancedSettingsPanel.open();
   }
 
   async closeAdvancedSettings(): Promise<void> {
-    await this.advancedSettingsCloseButton.click();
-    await expect(this.advancedSettingsPopover).not.toBeVisible();
+    await this.advancedSettingsPanel.close();
   }
 
   // Minimum Item Level Slider
@@ -1407,14 +1400,12 @@ export class PoEDisenchantPage {
     return parseInt(valueText.trim(), 10);
   }
 
-  async setMinItemLevel(value: number): Promise<void> {
-    const min = MIN_ITEM_LEVEL_RANGE.min;
-    const max = MIN_ITEM_LEVEL_RANGE.max;
-    if (value < min || value > max) {
-      throw new Error(`Min item level must be between ${min} and ${max}`);
-    }
-
-    const slider = this.minItemLevelSlider;
+  private async setSliderValueByKeys(
+    slider: Locator,
+    value: number,
+    min: number,
+    max: number,
+  ): Promise<void> {
     const fromMin = value - min;
     const fromMax = max - value;
     const startAtMin = fromMin <= fromMax;
@@ -1424,6 +1415,16 @@ export class PoEDisenchantPage {
     for (let steps = startAtMin ? fromMin : fromMax; steps > 0; steps--) {
       await slider.press(startAtMin ? "ArrowRight" : "ArrowLeft");
     }
+  }
+
+  async setMinItemLevel(value: number): Promise<void> {
+    const min = MIN_ITEM_LEVEL_RANGE.min;
+    const max = MIN_ITEM_LEVEL_RANGE.max;
+    if (value < min || value > max) {
+      throw new Error(`Min item level must be between ${min} and ${max}`);
+    }
+
+    await this.setSliderValueByKeys(this.minItemLevelSlider, value, min, max);
   }
 
   async verifyMinItemLevel(value: number): Promise<void> {
@@ -1545,6 +1546,159 @@ export class PoEDisenchantPage {
     );
     await this.verifyOnlineStatusFilter(DEFAULT_ADVANCED_SETTINGS.onlineStatus);
     await this.verifyResetButtonDisabled(true);
+  }
+
+  // ---------------------------
+  // Efficiency Settings Panel
+  // ---------------------------
+
+  get efficiencySettingsTrigger() {
+    return this.page
+      .getByRole("button", { name: /configure the efficiency metric/i })
+      .first();
+  }
+
+  get efficiencySettingsPopover() {
+    return this.page
+      .locator('[role="dialog"]')
+      .filter({ hasText: /efficiency metric/i });
+  }
+
+  get efficiencySettingsCloseButton() {
+    return this.efficiencySettingsPopover.getByRole("button", {
+      name: "Close",
+    });
+  }
+
+  async openEfficiencySettings(): Promise<void> {
+    await this.efficiencySettingsPanel.open();
+  }
+
+  async closeEfficiencySettings(): Promise<void> {
+    await this.efficiencySettingsPanel.close();
+  }
+
+  // Efficiency Metric Radio Group
+  get efficiencyModeRadioGroup() {
+    return this.efficiencySettingsPopover.getByRole("radiogroup", {
+      name: "Efficiency metric",
+    });
+  }
+
+  getEfficiencyModeRadio(mode: EfficiencyMode) {
+    return this.efficiencySettingsPopover.getByRole("radio", {
+      name: new RegExp(`^${EFFICIENCY_MODES[mode].label}`),
+    });
+  }
+
+  async selectEfficiencyMode(mode: EfficiencyMode): Promise<void> {
+    const radio = this.getEfficiencyModeRadio(mode);
+    await radio.click();
+  }
+
+  async verifyEfficiencyMode(mode: EfficiencyMode): Promise<void> {
+    const radio = this.getEfficiencyModeRadio(mode);
+    await expect(radio).toBeChecked();
+  }
+
+  async setEfficiencyMode(mode: EfficiencyMode): Promise<void> {
+    await this.openEfficiencySettings();
+    await this.selectEfficiencyMode(mode);
+    await this.closeEfficiencySettings();
+  }
+
+  async verifyEfficiencyColumnHeader(
+    expectedColumnLabel: string,
+  ): Promise<void> {
+    const headers = await this.getColumnHeaderNames();
+    const efficiencyHeader = headers.find((h) => h.startsWith("Efficiency"));
+    expect(efficiencyHeader).toBe(`Efficiency · ${expectedColumnLabel}`);
+  }
+
+  async getEfficiencyHeaderAriaLabel(): Promise<string | null> {
+    const colIndex = await this.getColumnIndex("Efficiency");
+    const header = this.dataTableHeaders.nth(colIndex);
+    return header
+      .locator("span[aria-label]")
+      .first()
+      .getAttribute("aria-label");
+  }
+
+  // Gold Valuation Slider (visible in total-cost mode only)
+  get goldValuationSlider() {
+    return this.efficiencySettingsPopover.getByLabel(
+      "Chaos value per ten thousand Gold",
+      { exact: true },
+    );
+  }
+
+  get goldValuationThumb() {
+    return this.goldValuationSlider.getByRole("slider");
+  }
+
+  get goldValuationResetButton() {
+    return this.efficiencySettingsPopover.getByRole("button", {
+      name: "Reset gold valuation to default",
+    });
+  }
+
+  async verifyGoldValuation(value: number): Promise<void> {
+    await expect(this.goldValuationThumb).toHaveAttribute(
+      "aria-valuenow",
+      String(value),
+    );
+  }
+
+  async setGoldValuation(value: number): Promise<void> {
+    const min = GOLD_VALUATION_MIN;
+    const max = GOLD_VALUATION_MAX;
+    if (value < min || value > max) {
+      throw new Error(`Gold valuation must be between ${min} and ${max}`);
+    }
+
+    await this.setSliderValueByKeys(this.goldValuationSlider, value, min, max);
+  }
+
+  // Total Cost Breakdown Tooltip (total-cost mode only)
+  async openTotalCostBreakdown(itemName: string) {
+    const row = this.getItemRow(itemName);
+    const trigger = row.getByRole("button", {
+      name: `Show total cost breakdown for ${itemName}`,
+    });
+    await trigger.scrollIntoViewIfNeeded();
+    await trigger.hover();
+    const tooltip = this.page.locator("[data-slot='tooltip-content']").first();
+    await expect(tooltip).toBeVisible();
+    return tooltip;
+  }
+
+  async closeTotalCostBreakdown(tooltip: Locator): Promise<void> {
+    await this.pageTitle.click();
+    await expect(tooltip).not.toBeVisible({ timeout: 500 });
+  }
+
+  async parseTotalCostBreakdown(tooltip: Locator): Promise<{
+    price: number;
+    goldFee: number;
+    goldEquivalent: number;
+    totalCost: number;
+  }> {
+    const text = await tooltip.innerText();
+    const parse = (label: string, suffix: string) => {
+      const match = text.match(
+        new RegExp(`${label}\\s+([\\d,.]+)\\s+${suffix}`),
+      );
+      if (!match) {
+        throw new Error(`Missing "${label}" value in: ${text}`);
+      }
+      return parseFloat(match[1].replace(/,/g, ""));
+    };
+    return {
+      price: parse("Price", "Chaos"),
+      goldFee: parse("Gold Fee", "Gold"),
+      goldEquivalent: parse("Gold Equivalent", "Chaos"),
+      totalCost: parse("Total Cost", "Chaos"),
+    };
   }
 
   // localStorage
