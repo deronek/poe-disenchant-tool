@@ -240,8 +240,8 @@ test.describe("Keyboard Navigation", () => {
     await poePage.openEfficiencySettings();
 
     // Start from the default value (5) and increase by one
-    const slider = poePage.goldValuationSlider;
-    await slider.focus();
+    const thumb = poePage.goldValuationThumb;
+    await thumb.focus();
     await poePage.page.keyboard.press("ArrowRight");
     await poePage.verifyGoldValuation(
       DEFAULT_EFFICIENCY_SETTINGS.goldValueChaosPer10k + 1,

@@ -1410,10 +1410,12 @@ export class PoEDisenchantPage {
     const fromMax = max - value;
     const startAtMin = fromMin <= fromMax;
 
-    await slider.focus();
-    await slider.press(startAtMin ? "Home" : "End");
+    // The slider root is not focusable, so send keys to the thumb
+    const thumb = slider.getByRole("slider");
+    await thumb.focus();
+    await thumb.press(startAtMin ? "Home" : "End");
     for (let steps = startAtMin ? fromMin : fromMax; steps > 0; steps--) {
-      await slider.press(startAtMin ? "ArrowRight" : "ArrowLeft");
+      await thumb.press(startAtMin ? "ArrowRight" : "ArrowLeft");
     }
   }
 
