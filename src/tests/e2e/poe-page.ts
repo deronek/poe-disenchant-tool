@@ -224,7 +224,7 @@ export class PoEDisenchantPage {
     return this.dataTableRows
       .filter({
         has: this.page.locator("td").filter({
-          has: this.page.locator("p", {
+          has: this.page.locator("p:first-child", {
             hasText: new RegExp(`^\\s*${escapedName}\\s*$`),
           }),
         }),
