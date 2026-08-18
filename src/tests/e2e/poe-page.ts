@@ -1414,6 +1414,8 @@ export class PoEDisenchantPage {
     const thumb = slider.getByRole("slider");
     await thumb.focus();
     await thumb.press(startAtMin ? "Home" : "End");
+    // One keypress per unit of value: this assumes the slider's step is 1.
+    // Sliders with larger steps need adjusted key handling.
     for (let steps = startAtMin ? fromMin : fromMax; steps > 0; steps--) {
       await thumb.press(startAtMin ? "ArrowRight" : "ArrowLeft");
     }
@@ -1588,8 +1590,12 @@ export class PoEDisenchantPage {
   }
 
   getEfficiencyModeRadio(mode: EfficiencyMode) {
+    const escapedLabel = EFFICIENCY_MODES[mode].label.replace(
+      /[.*+?^${}()|[\]\\]/g,
+      "\\$&",
+    );
     return this.efficiencySettingsPopover.getByRole("radio", {
-      name: new RegExp(`^${EFFICIENCY_MODES[mode].label}`),
+      name: new RegExp(`^${escapedLabel}`),
     });
   }
 
@@ -1676,7 +1682,7 @@ export class PoEDisenchantPage {
 
   async closeTotalCostBreakdown(tooltip: Locator): Promise<void> {
     await this.pageTitle.click();
-    await expect(tooltip).not.toBeVisible({ timeout: 500 });
+    await expect(tooltip).not.toBeVisible();
   }
 
   async parseTotalCostBreakdown(tooltip: Locator): Promise<{

@@ -1,4 +1,5 @@
 import {
+  DEFAULT_EFFICIENCY_SETTINGS,
   EFFICIENCY_MODES,
   EfficiencyModeSchema,
   GOLD_VALUATION_DEFAULT,
@@ -9,13 +10,13 @@ test.describe("Efficiency Column Headers", () => {
   test("should display the efficiency column header for the default mode", async ({
     poePage,
   }) => {
-    // Default mode is total-cost
+    const defaultMode = DEFAULT_EFFICIENCY_SETTINGS.mode;
     await poePage.verifyEfficiencyColumnHeader(
-      EFFICIENCY_MODES["total-cost"].columnLabel,
+      EFFICIENCY_MODES[defaultMode].columnLabel,
     );
     const ariaLabel = await poePage.getEfficiencyHeaderAriaLabel();
     expect(ariaLabel).toBe(
-      `Efficiency metric: ${EFFICIENCY_MODES["total-cost"].label}`,
+      `Efficiency metric: ${EFFICIENCY_MODES[defaultMode].label}`,
     );
   });
 
@@ -202,8 +203,13 @@ test.describe("Total Cost Breakdown", () => {
     const updatedTooltip = await poePage.openTotalCostBreakdown(itemName);
     const updatedBreakdown =
       await poePage.parseTotalCostBreakdown(updatedTooltip);
-    const updatedItems = await poePage.getTestItems(1);
-    const updatedEfficiency = updatedItems[0].efficiency;
+    const updatedItems = await poePage.getTestItems(10);
+    const updatedItem = updatedItems.find((item) => item.name === itemName);
+    expect(
+      updatedItem,
+      `expected ${itemName} in the updated table`,
+    ).toBeDefined();
+    const updatedEfficiency = updatedItem!.efficiency;
 
     // Gold equivalent doubles, total cost increases
     expect(

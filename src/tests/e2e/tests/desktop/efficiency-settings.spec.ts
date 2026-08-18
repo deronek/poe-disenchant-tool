@@ -217,23 +217,26 @@ test.describe("Keyboard Navigation", () => {
   test("should switch efficiency mode with arrow keys", async ({ poePage }) => {
     await poePage.openEfficiencySettings();
 
-    // Focus the checked radio (total-cost is the last option)
-    const totalCostRadio = poePage.getEfficiencyModeRadio("total-cost");
-    await totalCostRadio.focus();
+    const options = EfficiencyModeSchema.options;
+    const lastIndex = options.length - 1;
 
-    // ArrowUp moves to the previous option (per-gold). The key needs to stay
+    // Focus the checked radio (the last option, total-cost by default)
+    const lastOptionRadio = poePage.getEfficiencyModeRadio(options[lastIndex]);
+    await lastOptionRadio.focus();
+
+    // ArrowUp moves to the previous option. The key needs to stay
     // down while roving focus moves (it is deferred via setTimeout), so use
     // keyboard.down/up with a delay instead of press.
     await poePage.page.keyboard.down("ArrowUp");
     await poePage.page.waitForTimeout(100);
     await poePage.page.keyboard.up("ArrowUp");
-    await poePage.verifyEfficiencyMode("per-gold");
+    await poePage.verifyEfficiencyMode(options[lastIndex - 1]);
 
-    // ArrowUp again moves to the first option (per-slot)
+    // ArrowUp again moves to the option before that
     await poePage.page.keyboard.down("ArrowUp");
     await poePage.page.waitForTimeout(100);
     await poePage.page.keyboard.up("ArrowUp");
-    await poePage.verifyEfficiencyMode("per-slot");
+    await poePage.verifyEfficiencyMode(options[lastIndex - 2]);
   });
 
   test("should adjust gold valuation with arrow keys", async ({ poePage }) => {
