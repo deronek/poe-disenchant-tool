@@ -18,6 +18,11 @@ import {
 } from "@/lib/filters";
 import { getLeagueName, League } from "@/lib/leagues";
 
+/** Escapes a string for safe interpolation into a RegExp constructor. */
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 class SettingsPanel {
   constructor(
     private readonly trigger: Locator,
@@ -215,7 +220,16 @@ export class PoEDisenchantPage {
   }
 
   getItemRow(itemName: string) {
-    return this.dataTableRows.filter({ hasText: itemName }).first();
+    const escapedName = escapeRegExp(itemName.trim().replace(/\s+/g, " "));
+    return this.dataTableRows
+      .filter({
+        has: this.page.locator("td").filter({
+          has: this.page.locator("p", {
+            hasText: new RegExp(`^\\s*${escapedName}\\s*$`),
+          }),
+        }),
+      })
+      .first();
   }
 
   async getCell(itemName: string, columnName: string) {
@@ -508,10 +522,7 @@ export class PoEDisenchantPage {
   // Assumes league selector is open
   async getLeagueOption(league: League) {
     // Matches exactly the league name, optionally followed by whitespace and "New"
-    const escapedName = getLeagueName(league).replace(
-      /[.*+?^${}()|[\]\\]/g,
-      "\\$&",
-    );
+    const escapedName = escapeRegExp(getLeagueName(league));
     const option = this.page.getByRole("option", {
       name: new RegExp(`^${escapedName}(?:\\s*New)?$`),
     });
@@ -1590,10 +1601,7 @@ export class PoEDisenchantPage {
   }
 
   getEfficiencyModeRadio(mode: EfficiencyMode) {
-    const escapedLabel = EFFICIENCY_MODES[mode].label.replace(
-      /[.*+?^${}()|[\]\\]/g,
-      "\\$&",
-    );
+    const escapedLabel = escapeRegExp(EFFICIENCY_MODES[mode].label);
     return this.efficiencySettingsPopover.getByRole("radio", {
       name: new RegExp(`^${escapedLabel}`),
     });
