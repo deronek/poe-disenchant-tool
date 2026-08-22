@@ -1,27 +1,30 @@
 import type { RangeFilterValue } from "@/lib/filters";
-import type { Column } from "@tanstack/react-table";
+import type { AppTable } from "@/lib/table-features";
+import type { RowData } from "@tanstack/react-table";
 import { useMemo } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
+import { ColumnId } from "@/lib/column-ids";
 import {
   createNormalizedFilterValue,
-  getCurrentFilterValue,
   getLowerBoundLinearValue,
   getLowerBoundSliderValue,
   hasMaxFilter,
   hasMinFilter,
-  setFilterValue,
+  setColumnFilter,
   updateLowerBound,
   updateUpperBound,
+  useRangeFilterValue,
 } from "@/lib/filters";
 import { cn } from "@/lib/utils";
 import { ViewItem } from "@/lib/view-item";
 
-interface RangeFilterProps<TData> {
-  column: Column<TData, unknown> | undefined;
+interface RangeFilterProps<TData extends RowData> {
+  table: AppTable<TData>;
+  columnId: ColumnId;
   min: number;
   max: number;
   step: number;
@@ -30,7 +33,7 @@ interface RangeFilterProps<TData> {
 }
 
 interface RangeFilterStatusProps {
-  range: RangeFilterValue;
+  range: Readonly<RangeFilterValue>;
   hasMin: boolean;
   hasMax: boolean;
   format: (value: number) => string;
@@ -92,7 +95,8 @@ export function RangeFilterStatus({
 }
 
 export function RangeFilter<TData extends ViewItem>({
-  column,
+  table,
+  columnId,
   min,
   max,
   step,
@@ -100,14 +104,17 @@ export function RangeFilter<TData extends ViewItem>({
   title,
 }: RangeFilterProps<TData>) {
   const defaults = useMemo(() => ({ min, max }), [min, max]);
-  const currentRange = getCurrentFilterValue(column);
+  const currentRange = useRangeFilterValue(table, columnId);
   const hasMin = hasMinFilter(currentRange);
   const hasMax = hasMaxFilter(currentRange);
   const isFilterActive = hasMin || hasMax;
 
   const commitRange = (updatedRange: RangeFilterValue) => {
-    const normalized = createNormalizedFilterValue(updatedRange, defaults);
-    setFilterValue(column, normalized);
+    setColumnFilter(
+      table,
+      columnId,
+      createNormalizedFilterValue(updatedRange, defaults),
+    );
   };
 
   const updateLowerBoundValue = (newValue: number) => {
@@ -127,7 +134,7 @@ export function RangeFilter<TData extends ViewItem>({
 
   const handleLowerBoundChange = (sliderValue: number[]) => {
     const newLinearValue = getLowerBoundLinearValue(
-      column,
+      currentRange,
       sliderValue[0],
       defaults,
     );
@@ -204,9 +211,7 @@ export function RangeFilter<TData extends ViewItem>({
             max={100}
             step={1}
             value={[
-              Math.round(
-                getLowerBoundSliderValue(column, currentRange.min, defaults),
-              ),
+              Math.round(getLowerBoundSliderValue(currentRange, defaults)),
             ]}
             onValueChange={handleLowerBoundChange}
             onKeyDown={handleLowerBoundKeyDown}

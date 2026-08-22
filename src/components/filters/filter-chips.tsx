@@ -1,53 +1,37 @@
-import { Table } from "@tanstack/react-table";
+import type { AppTable } from "@/lib/table-features";
 
-import type { RangeFilterChipProps } from "./range-filter-chip";
-import { ChaosOrbIcon, DustIcon, GoldIcon } from "@/components/icons";
-import { COLUMN_IDS } from "@/lib/column-ids";
 import { ViewItem } from "@/lib/view-item";
 import { NameFilterChip } from "./name-filter-chip";
 import { RangeFilterChip } from "./range-filter-chip";
+import {
+  RANGE_FILTER_FIELD_CONFIGS,
+  RANGE_FILTER_FIELD_LIST,
+} from "./range-filter-fields";
 
 interface FilterChipsProps<TData extends ViewItem> {
-  table: Table<TData>;
+  table: AppTable<TData>;
 }
 
 export function FilterChips<TData extends ViewItem>({
   table,
 }: FilterChipsProps<TData>) {
-  const chaosColumn = table.getColumn(COLUMN_IDS.CHAOS);
-  const dustColumn = table.getColumn(COLUMN_IDS.CALCULATED_DUST_VALUE);
-  const goldColumn = table.getColumn(COLUMN_IDS.GOLD_FEE);
-
-  const rangeFilterChips = [
-    chaosColumn && {
-      column: chaosColumn,
-      title: "Price",
-      icon: <ChaosOrbIcon />,
-      testId: "price-filter-chip",
-      ariaLabel: "Clear price filter",
-    },
-    dustColumn && {
-      column: dustColumn,
-      title: "Dust",
-      icon: <DustIcon />,
-      testId: "dust-filter-chip",
-      ariaLabel: "Clear dust filter",
-    },
-    goldColumn && {
-      column: goldColumn,
-      title: "Gold",
-      icon: <GoldIcon />,
-      testId: "gold-filter-chip",
-      ariaLabel: "Clear gold filter",
-    },
-  ].filter(Boolean) as RangeFilterChipProps<TData>[];
-
   return (
     <div className="flex flex-wrap gap-x-1">
-      <NameFilterChip column={table.getColumn(COLUMN_IDS.NAME)} />
-      {rangeFilterChips.map((chip, index) => (
-        <RangeFilterChip key={index} {...chip} />
-      ))}
+      <NameFilterChip table={table} />
+      {RANGE_FILTER_FIELD_LIST.map((field) => {
+        const config = RANGE_FILTER_FIELD_CONFIGS[field];
+        return (
+          <RangeFilterChip
+            key={field}
+            table={table}
+            columnId={config.columnId}
+            title={config.label}
+            icon={<config.icon />}
+            testId={`${field}-filter-chip`}
+            ariaLabel={`Clear ${config.label} filter`}
+          />
+        );
+      })}
     </div>
   );
 }

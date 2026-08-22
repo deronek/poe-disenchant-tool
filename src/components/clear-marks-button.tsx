@@ -1,22 +1,25 @@
-import type { Table } from "@tanstack/react-table";
+import type { AppTable } from "@/lib/table-features";
+import type { RowData } from "@tanstack/react-table";
+import { useSelector } from "@tanstack/react-store";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-type ClearMarksButtonProps<TData> = {
-  table: Table<TData>;
+type ClearMarksButtonProps<TData extends RowData> = {
+  table: AppTable<TData>;
   onClearMarks?: () => void;
   className?: string;
 };
 
-export function ClearMarksButton<TData>({
+export function ClearMarksButton<TData extends RowData>({
   table,
   onClearMarks,
   className,
 }: ClearMarksButtonProps<TData>) {
-  const numberOfSelectedRows = Object.keys(
-    table.getState().rowSelection,
-  ).length;
+  const numberOfSelectedRows = useSelector(
+    table.atoms.rowSelection,
+    (s) => Object.keys(s).length,
+  );
 
   return (
     onClearMarks && (

@@ -1,17 +1,24 @@
 import { useEffect, useRef, useState } from "react";
-import { Table } from "@tanstack/react-table";
 
 import { Input } from "@/components/ui/input";
 import { XButton } from "@/components/ui/x-button";
+import { COLUMN_IDS } from "@/lib/column-ids";
+import {
+  getFilterValue,
+  setColumnFilter,
+  useNameFilterValue,
+} from "@/lib/filters";
+import { AppTable } from "@/lib/table-features";
 import { ViewItem } from "@/lib/view-item";
 
 export function NameFilter<TData extends ViewItem>({
   table,
 }: {
-  table: Table<TData>;
+  table: AppTable<TData>;
 }) {
-  const column = table.getColumn("name");
-  const getExternal = () => (column?.getFilterValue() as string) ?? "";
+  const getExternal = () =>
+    getFilterValue<string>(table.atoms.columnFilters.get(), COLUMN_IDS.NAME) ??
+    "";
 
   // Local controlled state
   const [value, setValue] = useState<string>(getExternal());
@@ -19,22 +26,24 @@ export function NameFilter<TData extends ViewItem>({
   // Track what we last wrote into the column from this component
   const lastPushedValueRef = useRef<string>(getExternal());
 
+  // React to external column filter changes (e.g., clear from chip)
+  const nameFilterValue = useNameFilterValue(table);
+
   // Debounced filter setter
   useEffect(() => {
     const handler = setTimeout(() => {
-      if (!column) return;
       // Skip when the value already matches the table state (e.g., the initial
       // mount with an empty filter). Pushing a no-op value creates a new
       // columnFilters reference, which triggers TanStack Table's
       // _autoResetPageIndex and briefly snaps the page back mid-pagination,
       // which made some tests flaky.
       if (lastPushedValueRef.current === value) return;
-      column.setFilterValue(value);
+      setColumnFilter(table, COLUMN_IDS.NAME, value);
       lastPushedValueRef.current = value;
     }, 250);
 
     return () => clearTimeout(handler);
-  }, [value, column]);
+  }, [value, table]);
 
   // Keep local state in sync if external table state changes (e.g., clear from chip),
   // but avoid overwriting active user input with stale values.
@@ -51,7 +60,7 @@ export function NameFilter<TData extends ViewItem>({
     setValue(external);
     lastPushedValueRef.current = external;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [table.getState().columnFilters]);
+  }, [nameFilterValue]);
 
   return (
     <div className="relative">
@@ -71,7 +80,7 @@ export function NameFilter<TData extends ViewItem>({
           aria-label="Clear name filter"
           className="absolute top-1/2 right-1.5 h-8 w-8 -translate-y-1/2"
           onClick={() => {
-            column?.setFilterValue("");
+            setColumnFilter(table, COLUMN_IDS.NAME, "");
             setValue("");
             lastPushedValueRef.current = "";
           }}

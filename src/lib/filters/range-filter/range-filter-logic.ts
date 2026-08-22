@@ -1,6 +1,3 @@
-import type { Column, Row } from "@tanstack/react-table";
-
-import { ViewItem } from "@/lib/view-item";
 import {
   createLowerBoundLinearValue,
   createLowerBoundSliderValue,
@@ -12,37 +9,23 @@ export type RangeFilterValue = {
   max?: number;
 };
 
-/**
- * Gets the current filter value from the table column
- */
-export const getCurrentFilterValue = <TData extends ViewItem>(
-  column: Column<TData, unknown> | undefined,
-): RangeFilterValue => {
-  const value = column?.getFilterValue() as RangeFilterValue | undefined;
-  if (value === undefined)
-    return {
-      min: undefined,
-      max: undefined,
-    };
-  else return value;
-};
+export const EMPTY_RANGE: Readonly<RangeFilterValue> = Object.freeze({
+  min: undefined,
+  max: undefined,
+});
 
 /**
- * Sets the filter value on the table column.
+ * Minimal row surface rangeFilterFn needs from TanStack's Row.
  */
-export const setFilterValue = <TData extends ViewItem>(
-  column: Column<TData, unknown> | undefined,
-  value: RangeFilterValue | undefined,
-): void => {
-  if (!column) return;
-  column.setFilterValue(value);
-};
+interface RowWithValue {
+  getValue: (columnId: string) => unknown;
+}
 
 /**
  * Creates a normalized filter value against defaults.
  */
 export const createNormalizedFilterValue = (
-  range: RangeFilterValue,
+  range: Readonly<RangeFilterValue>,
   defaults: { min: number; max: number },
 ): RangeFilterValue | undefined => {
   const rawMin = range.min;
@@ -67,7 +50,7 @@ export const createNormalizedFilterValue = (
  */
 export const updateLowerBound = (
   newMin: number,
-  currentRange: RangeFilterValue,
+  currentRange: Readonly<RangeFilterValue>,
   defaults: { max: number },
 ): RangeFilterValue => {
   const effectiveMax = currentRange.max ?? defaults.max;
@@ -84,7 +67,7 @@ export const updateLowerBound = (
  */
 export const updateUpperBound = (
   newMax: number,
-  currentRange: RangeFilterValue,
+  currentRange: Readonly<RangeFilterValue>,
   defaults: { max: number },
 ): RangeFilterValue => {
   if (newMax >= defaults.max) {
@@ -95,56 +78,36 @@ export const updateUpperBound = (
 };
 
 /**
- * Gets the effective maximum for lower bound calculations
+ * Converts the current range's lower bound to its slider position
  */
-const getEffectiveMaxForLowerBound = <TData extends ViewItem>(
-  column: Column<TData, unknown> | undefined,
+export const getLowerBoundSliderValue = (
+  currentRange: Readonly<RangeFilterValue>,
   defaults: { min: number; max: number },
-): number => {
-  const currentRange = getCurrentFilterValue(column);
-  return currentRange.max ?? defaults.max;
-};
-
-/**
- * Converts lower bound linear value to slider value
- */
-export const getLowerBoundSliderValue = <TData extends ViewItem>(
-  column: Column<TData, unknown> | undefined,
-  linearValue: number | undefined,
-  defaults: { min: number; max: number },
-): number => {
-  const value = linearValue ?? defaults.min;
-  const effectiveMax = getEffectiveMaxForLowerBound(column, defaults);
-  return createLowerBoundSliderValue(value, defaults.min, effectiveMax);
-};
+): number =>
+  createLowerBoundSliderValue(
+    currentRange.min ?? defaults.min,
+    defaults.min,
+    currentRange.max ?? defaults.max,
+  );
 
 /**
  * Converts slider value to lower bound linear value
  */
-export const getLowerBoundLinearValue = <TData extends ViewItem>(
-  column: Column<TData, unknown> | undefined,
+export const getLowerBoundLinearValue = (
+  currentRange: Readonly<RangeFilterValue>,
   sliderValue: number,
   defaults: { min: number; max: number },
 ): number => {
-  const effectiveMax = getEffectiveMaxForLowerBound(column, defaults);
+  const effectiveMax = currentRange.max ?? defaults.max;
   return createLowerBoundLinearValue(sliderValue, defaults.min, effectiveMax);
-};
-
-/**
- * Resets the filter to default state
- */
-export const resetFilter = <TData extends ViewItem>(
-  column: Column<TData, unknown> | undefined,
-): void => {
-  setFilterValue(column, undefined);
 };
 
 /**
  * Checks if the lower bound filter is active.
  */
 export const hasMinFilter = (
-  range: RangeFilterValue,
-): range is RangeFilterValue & { min: number } => {
+  range: Readonly<RangeFilterValue>,
+): range is Readonly<RangeFilterValue> & { min: number } => {
   return range.min !== undefined;
 };
 
@@ -152,13 +115,13 @@ export const hasMinFilter = (
  * Checks if the upper bound filter is active.
  */
 export const hasMaxFilter = (
-  range: RangeFilterValue,
-): range is RangeFilterValue & { max: number } => {
+  range: Readonly<RangeFilterValue>,
+): range is Readonly<RangeFilterValue> & { max: number } => {
   return range.max !== undefined;
 };
 
 export const rangeFilterFn = (
-  row: Row<ViewItem>,
+  row: RowWithValue,
   columnId: string,
   filterValue: RangeFilterValue,
 ) => {

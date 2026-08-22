@@ -1,10 +1,10 @@
+import type { AppTable } from "@/lib/table-features";
 import type { ViewItem } from "@/lib/view-item";
-import { Table } from "@tanstack/react-table";
 
 import { MobileCard } from "./mobile-card";
 
 interface MobileCardLayoutProps<TData extends ViewItem> {
-  table: Table<TData>;
+  table: AppTable<TData>;
 }
 
 export function MobileCardLayout<TData extends ViewItem>({
@@ -16,7 +16,7 @@ export function MobileCardLayout<TData extends ViewItem>({
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {table.getRowModel().rows.map((row, index) => (
             <div key={row.id} className="relative">
-              <MobileCard row={row} isSelected={row.getIsSelected()} />
+              <MobileCard row={row} />
               {/* Subtle order indicator for tablet two-column layout */}
               <div className="text-muted-foreground/60 absolute -top-1 -right-1 hidden text-[10px] font-semibold md:block">
                 {index + 1}

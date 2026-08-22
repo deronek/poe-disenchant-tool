@@ -1,8 +1,10 @@
-import type { Column } from "@tanstack/react-table";
+import type { RangeFilterValue } from "@/lib/filters";
+import type { AppTable } from "@/lib/table-features";
+import type { RowData } from "@tanstack/react-table";
 import { useState } from "react";
 import { ChevronDown, Filter } from "lucide-react";
 
-import { ChaosOrbIcon, DustIcon, GoldIcon } from "@/components/icons";
+import type { RangeFilterField } from "./range-filter-fields";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -10,76 +12,42 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  getCurrentFilterValue,
-  hasMaxFilter,
-  hasMinFilter,
-} from "@/lib/filters";
+import { hasMaxFilter, hasMinFilter, resetRangeFilters } from "@/lib/filters";
 import { cn } from "@/lib/utils";
 import { ViewItem } from "@/lib/view-item";
 import { FilterTabIndicator } from "./filter-tab-indicator";
 import { RangeFilter } from "./range-filter";
+import {
+  RANGE_FILTER_FIELD_CONFIGS,
+  RANGE_FILTER_FIELD_LIST,
+  useRangeFilterFieldValues,
+} from "./range-filter-fields";
 
-interface TabbedFilterProps<TData> {
-  priceColumn: Column<TData, unknown> | undefined;
-  dustColumn: Column<TData, unknown> | undefined;
-  goldColumn: Column<TData, unknown> | undefined;
-  priceMin: number;
-  priceMax: number;
-  dustMin: number;
-  dustMax: number;
-  goldMin: number;
-  goldMax: number;
+interface TabbedFilterProps<TData extends RowData> {
+  table: AppTable<TData>;
   className?: string;
 }
 
+const countActiveBounds = (range: Readonly<RangeFilterValue>): number =>
+  (hasMinFilter(range) ? 1 : 0) + (hasMaxFilter(range) ? 1 : 0);
+
 export function TabbedFilter<TData extends ViewItem>({
-  priceColumn,
-  dustColumn,
-  goldColumn,
-  priceMin,
-  priceMax,
-  dustMin,
-  dustMax,
-  goldMin,
-  goldMax,
+  table,
   className,
 }: TabbedFilterProps<TData>) {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("price");
+  const [activeTab, setActiveTab] = useState<RangeFilterField>("price");
 
-  const priceRange = getCurrentFilterValue(priceColumn);
-  const dustRange = getCurrentFilterValue(dustColumn);
-  const goldRange = getCurrentFilterValue(goldColumn);
-
-  const priceHasMin = hasMinFilter(priceRange);
-  const priceHasMax = hasMaxFilter(priceRange);
-  const dustHasMin = hasMinFilter(dustRange);
-  const dustHasMax = hasMaxFilter(dustRange);
-  const goldHasMin = hasMinFilter(goldRange);
-  const goldHasMax = hasMaxFilter(goldRange);
-
-  const priceActiveCount = (priceHasMin ? 1 : 0) + (priceHasMax ? 1 : 0);
-  const dustActiveCount = (dustHasMin ? 1 : 0) + (dustHasMax ? 1 : 0);
-  const goldActiveCount = (goldHasMin ? 1 : 0) + (goldHasMax ? 1 : 0);
-  const isPriceFilterActive = priceActiveCount > 0;
-  const isDustFilterActive = dustActiveCount > 0;
-  const isGoldFilterActive = goldActiveCount > 0;
-  const isFilterActive =
-    isPriceFilterActive || isDustFilterActive || isGoldFilterActive;
-  const numberOfActiveFilters =
-    priceActiveCount + dustActiveCount + goldActiveCount;
+  // One reactive subscription per range filter field.
+  const ranges = useRangeFilterFieldValues(table);
+  const numberOfActiveFilters = RANGE_FILTER_FIELD_LIST.reduce(
+    (sum, field) => sum + countActiveBounds(ranges[field]),
+    0,
+  );
+  const isFilterActive = numberOfActiveFilters > 0;
 
   const handleReset = () => {
-    if (priceColumn) {
-      priceColumn.setFilterValue(undefined);
-    }
-    if (dustColumn) {
-      dustColumn.setFilterValue(undefined);
-    }
-    if (goldColumn) {
-      goldColumn.setFilterValue(undefined);
-    }
+    resetRangeFilters(table);
   };
 
   const handleClose = () => {
@@ -130,7 +98,7 @@ export function TabbedFilter<TData extends ViewItem>({
 
           <Tabs
             value={activeTab}
-            onValueChange={setActiveTab}
+            onValueChange={(value) => setActiveTab(value as RangeFilterField)}
             className="relative"
           >
             {/* Halftone background pattern */}
@@ -139,96 +107,53 @@ export function TabbedFilter<TData extends ViewItem>({
             />
 
             <TabsList className="z-10 w-full">
-              <TabsTrigger
-                value="price"
-                aria-label="Open price filter tab"
-                className="gap-2"
-              >
-                <ChaosOrbIcon
-                  className={isPriceFilterActive ? "" : "grayscale-80"}
-                />
+              {RANGE_FILTER_FIELD_LIST.map((field) => {
+                const config = RANGE_FILTER_FIELD_CONFIGS[field];
+                const activeCount = countActiveBounds(ranges[field]);
+                const isActive = activeCount > 0;
+                return (
+                  <TabsTrigger
+                    key={field}
+                    value={field}
+                    aria-label={`Open ${config.title.toLowerCase()} filter tab`}
+                    className="gap-2"
+                  >
+                    <config.icon className={isActive ? "" : "grayscale-80"} />
 
-                <span className="relative inline-flex items-center">
-                  <span className="text-xs leading-none">Price</span>
+                    <span className="relative inline-flex items-center">
+                      <span className="text-xs leading-none">
+                        {config.label}
+                      </span>
 
-                  {isPriceFilterActive && (
-                    <FilterTabIndicator
-                      count={priceActiveCount}
-                      label="price"
-                    />
-                  )}
-                </span>
-              </TabsTrigger>
-
-              <TabsTrigger
-                value="dust"
-                aria-label="Open dust value filter tab"
-                className="gap-2"
-              >
-                <DustIcon
-                  className={isDustFilterActive ? "" : "grayscale-80"}
-                />
-
-                <span className="relative inline-flex items-center">
-                  <span className="text-xs leading-none">Dust</span>
-
-                  {isDustFilterActive && (
-                    <FilterTabIndicator count={dustActiveCount} label="dust" />
-                  )}
-                </span>
-              </TabsTrigger>
-
-              <TabsTrigger
-                value="gold"
-                aria-label="Open gold fee filter tab"
-                className="gap-2"
-              >
-                <GoldIcon
-                  className={isGoldFilterActive ? "" : "grayscale-80"}
-                />
-
-                <span className="relative inline-flex items-center">
-                  <span className="text-xs leading-none">Gold</span>
-
-                  {isGoldFilterActive && (
-                    <FilterTabIndicator count={goldActiveCount} label="gold" />
-                  )}
-                </span>
-              </TabsTrigger>
+                      {isActive && (
+                        <FilterTabIndicator count={activeCount} label={field} />
+                      )}
+                    </span>
+                  </TabsTrigger>
+                );
+              })}
             </TabsList>
 
-            <TabsContent value="price" className="z-10 space-y-4">
-              <RangeFilter
-                column={priceColumn}
-                min={priceMin}
-                max={priceMax}
-                step={1}
-                icon={<ChaosOrbIcon />}
-                title="Price"
-              />
-            </TabsContent>
-
-            <TabsContent value="dust" className="z-10 space-y-4">
-              <RangeFilter
-                column={dustColumn}
-                min={dustMin}
-                max={dustMax}
-                step={50000}
-                icon={<DustIcon />}
-                title="Dust Value"
-              />
-            </TabsContent>
-
-            <TabsContent value="gold" className="z-10 space-y-4">
-              <RangeFilter
-                column={goldColumn}
-                min={goldMin}
-                max={goldMax}
-                step={500}
-                icon={<GoldIcon />}
-                title="Gold Fee"
-              />
-            </TabsContent>
+            {RANGE_FILTER_FIELD_LIST.map((field) => {
+              const config = RANGE_FILTER_FIELD_CONFIGS[field];
+              return (
+                <TabsContent
+                  key={field}
+                  value={field}
+                  className="z-10 space-y-4"
+                >
+                  <RangeFilter
+                    table={table}
+                    columnId={config.columnId}
+                    min={config.bounds.min}
+                    max={config.bounds.max}
+                    step={config.step}
+                    icon={<config.icon />}
+                    title={config.title}
+                  />
+                </TabsContent>
+              );
+            })}
           </Tabs>
 
           <div className="flex gap-2 pt-2">

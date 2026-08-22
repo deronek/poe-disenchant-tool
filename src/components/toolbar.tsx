@@ -1,15 +1,14 @@
+import type { AppTable } from "@/lib/table-features";
 import type { ViewItem } from "@/lib/view-item";
-import { Table } from "@tanstack/react-table";
 
 import { useAdvancedSettings } from "@/components/advanced-settings-context";
 import { AdvancedSettingsPanel } from "@/components/advanced-settings-panel";
 import { ClearMarksButton } from "@/components/clear-marks-button";
 import { EfficiencySettingsControl } from "@/components/efficiency";
 import { FilterChips, NameFilter, TabbedFilter } from "@/components/filters";
-import { COLUMN_IDS } from "@/lib/column-ids";
 
 type ToolbarProps<TData extends ViewItem> = {
-  table: Table<TData>;
+  table: AppTable<TData>;
   onClearMarks?: () => void;
 };
 
@@ -27,17 +26,7 @@ export function DataTableToolbar<TData extends ViewItem>({
           </div>
 
           <div className="w-full min-w-0 xl:w-auto xl:shrink-0">
-            <TabbedFilter
-              priceColumn={table.getColumn(COLUMN_IDS.CHAOS)}
-              dustColumn={table.getColumn(COLUMN_IDS.CALCULATED_DUST_VALUE)}
-              goldColumn={table.getColumn(COLUMN_IDS.GOLD_FEE)}
-              priceMin={0}
-              priceMax={500}
-              dustMin={2000}
-              dustMax={5000000}
-              goldMin={1500}
-              goldMax={80000}
-            />
+            <TabbedFilter table={table} />
           </div>
 
           <div className="col-span-2 xl:col-span-1">

@@ -1,9 +1,9 @@
-import type { ViewItem } from "@/lib/view-item";
 import type {
-  ColumnDef,
-  ColumnDefTemplate,
-  HeaderContext,
-} from "@tanstack/react-table";
+  AppColumnDef,
+  AppHeaderContext,
+  AppRow,
+} from "@/lib/table-features";
+import type { ColumnDefTemplate } from "@tanstack/react-table";
 import * as React from "react";
 import { ExternalLink, Info, PackageMinus } from "lucide-react";
 
@@ -37,33 +37,33 @@ import { useTradeLink } from "@/components/use-trade-link";
 import { COLUMN_IDS } from "@/lib/column-ids";
 import { EFFICIENCY_MODES } from "@/lib/efficiency";
 import { rangeFilterFn } from "@/lib/filters";
+import { useRowSelected } from "@/lib/use-row-selected";
 
-const DustValueHeader: ColumnDefTemplate<HeaderContext<ViewItem, unknown>> =
-  React.memo(
-    function DustValueHeaderComponent() {
-      return (
-        <div className="flex w-full flex-1 items-center">
-          <p>Dust Value</p>
-          <Tooltip>
-            <TooltipTrigger
-              className="ml-auto pl-1"
-              aria-label="Learn more about dust value calculation"
-            >
-              <Info className="size-5 text-blue-600 dark:text-blue-400" />
-            </TooltipTrigger>
-            <TooltipContent className="max-w-[460px] text-sm" variant="popover">
-              <DustInfo />
-            </TooltipContent>
-          </Tooltip>
-        </div>
-      );
-    },
-    // Force memoization as we don't use header context,
-    // and tooltip context is static
-    () => true,
-  );
+const DustValueHeader: ColumnDefTemplate<AppHeaderContext> = React.memo(
+  function DustValueHeaderComponent() {
+    return (
+      <div className="flex w-full flex-1 items-center">
+        <p>Dust Value</p>
+        <Tooltip>
+          <TooltipTrigger
+            className="ml-auto pl-1"
+            aria-label="Learn more about dust value calculation"
+          >
+            <Info className="size-5 text-blue-600 dark:text-blue-400" />
+          </TooltipTrigger>
+          <TooltipContent className="max-w-[460px] text-sm" variant="popover">
+            <DustInfo />
+          </TooltipContent>
+        </Tooltip>
+      </div>
+    );
+  },
+  // Force memoization as we don't use header context,
+  // and tooltip context is static
+  () => true,
+);
 
-const ChaosCell: ColumnDef<ViewItem>["cell"] = function ChaosCellComponent({
+const ChaosCell: AppColumnDef["cell"] = function ChaosCellComponent({
   row,
   column,
 }) {
@@ -140,34 +140,31 @@ const ChaosCell: ColumnDef<ViewItem>["cell"] = function ChaosCellComponent({
   );
 };
 
-const GoldFeeHeader: ColumnDefTemplate<HeaderContext<ViewItem, unknown>> =
-  React.memo(
-    function GoldFeeHeaderComponent() {
-      return (
-        <div className="flex w-full flex-1 items-center">
-          <p>Gold Fee</p>
-          <Tooltip>
-            <TooltipTrigger
-              className="ml-auto pl-1"
-              aria-label="Learn more about gold fee"
-            >
-              <Info className="size-5 text-blue-600 dark:text-blue-400" />
-            </TooltipTrigger>
-            <TooltipContent className="max-w-[460px] text-sm" variant="popover">
-              <GoldInfo />
-            </TooltipContent>
-          </Tooltip>
-        </div>
-      );
-    },
-    // Force memoization as we don't use header context,
-    // and tooltip context is static
-    () => true,
-  );
+const GoldFeeHeader: ColumnDefTemplate<AppHeaderContext> = React.memo(
+  function GoldFeeHeaderComponent() {
+    return (
+      <div className="flex w-full flex-1 items-center">
+        <p>Gold Fee</p>
+        <Tooltip>
+          <TooltipTrigger
+            className="ml-auto pl-1"
+            aria-label="Learn more about gold fee"
+          >
+            <Info className="size-5 text-blue-600 dark:text-blue-400" />
+          </TooltipTrigger>
+          <TooltipContent className="max-w-[460px] text-sm" variant="popover">
+            <GoldInfo />
+          </TooltipContent>
+        </Tooltip>
+      </div>
+    );
+  },
+  // Force memoization as we don't use header context,
+  // and tooltip context is static
+  () => true,
+);
 
-const GoldCell: ColumnDef<ViewItem>["cell"] = function GoldCellComponent({
-  row,
-}) {
+const GoldCell: AppColumnDef["cell"] = function GoldCellComponent({ row }) {
   const value = row.getValue(COLUMN_IDS.GOLD_FEE) as number;
   return (
     <span className="inline-flex w-full justify-end gap-1">
@@ -181,7 +178,7 @@ const GoldCell: ColumnDef<ViewItem>["cell"] = function GoldCellComponent({
   );
 };
 
-const CalculatedDustValueCell: ColumnDef<ViewItem>["cell"] =
+const CalculatedDustValueCell: AppColumnDef["cell"] =
   function CalculatedDustValueCellComponent({ row }) {
     const value = row.getValue(COLUMN_IDS.CALCULATED_DUST_VALUE) as number;
     const qualityType = row.original.qualityType;
@@ -232,7 +229,7 @@ const CalculatedDustValueCell: ColumnDef<ViewItem>["cell"] =
     );
   };
 
-const DustPerChaosCell: ColumnDef<ViewItem>["cell"] =
+const DustPerChaosCell: AppColumnDef["cell"] =
   function DustPerChaosCellComponent({ row }) {
     const value = row.getValue(COLUMN_IDS.DUST_PER_CHAOS) as number;
     return (
@@ -251,7 +248,7 @@ const DustPerChaosCell: ColumnDef<ViewItem>["cell"] =
     );
   };
 
-const EfficiencyHeader: ColumnDefTemplate<HeaderContext<ViewItem, unknown>> =
+const EfficiencyHeader: ColumnDefTemplate<AppHeaderContext> =
   function EfficiencyHeaderComponent() {
     const { settings } = useEfficiencySettings();
     const { label, columnLabel } = EFFICIENCY_MODES[settings.mode];
@@ -271,70 +268,70 @@ const EfficiencyHeader: ColumnDefTemplate<HeaderContext<ViewItem, unknown>> =
     );
   };
 
-const EfficiencyCell: ColumnDef<ViewItem>["cell"] =
-  function EfficiencyCellComponent({ row }) {
-    const { settings } = useEfficiencySettings();
-    const item = row.original;
-    const value = row.getValue(COLUMN_IDS.EFFICIENCY) as number;
+const EfficiencyCell: AppColumnDef["cell"] = function EfficiencyCellComponent({
+  row,
+}) {
+  const { settings } = useEfficiencySettings();
+  const item = row.original;
+  const value = row.getValue(COLUMN_IDS.EFFICIENCY) as number;
 
-    return (
-      <span className="flex w-full items-center justify-end gap-1">
-        {item.totalCostDetails !== null && (
-          <Tooltip>
-            <TooltipTrigger
-              aria-label={`Show total cost breakdown for ${item.name}`}
-              className="mr-auto"
-            >
-              <Info className="size-4 text-blue-600 dark:text-blue-400" />
-            </TooltipTrigger>
+  return (
+    <span className="flex w-full items-center justify-end gap-1">
+      {item.totalCostDetails !== null && (
+        <Tooltip>
+          <TooltipTrigger
+            aria-label={`Show total cost breakdown for ${item.name}`}
+            className="mr-auto"
+          >
+            <Info className="size-4 text-blue-600 dark:text-blue-400" />
+          </TooltipTrigger>
 
-            <TooltipContent variant="popover" className="max-w-[340px] text-sm">
-              <TotalCostInfo
-                details={item.totalCostDetails}
-                acquisitionChaosCost={item.acquisitionChaosCost}
-                goldCost={item.goldCost}
-                goldValueChaosPer10k={settings.goldValueChaosPer10k}
-                shouldCatalyst={item.shouldCatalyst}
-              />
-            </TooltipContent>
-          </Tooltip>
-        )}
+          <TooltipContent variant="popover" className="max-w-[340px] text-sm">
+            <TotalCostInfo
+              details={item.totalCostDetails}
+              acquisitionChaosCost={item.acquisitionChaosCost}
+              goldCost={item.goldCost}
+              goldValueChaosPer10k={settings.goldValueChaosPer10k}
+              shouldCatalyst={item.shouldCatalyst}
+            />
+          </TooltipContent>
+        </Tooltip>
+      )}
 
-        <CompactNumberTooltip
-          value={value}
-          compactFormatter={compactFormatterGlobal}
-          standardFormatter={standardFormatterGlobal}
-        />
+      <CompactNumberTooltip
+        value={value}
+        compactFormatter={compactFormatterGlobal}
+        standardFormatter={standardFormatterGlobal}
+      />
 
-        <EfficiencyUnit mode={settings.mode} slots={item.slots} size="md" />
-      </span>
-    );
-  };
-
-const MarkHeader: ColumnDefTemplate<HeaderContext<ViewItem, unknown>> =
-  React.memo(
-    function MarkHeaderComponent() {
-      return (
-        <div className="flex w-full items-center">
-          <p>Mark</p>
-          <Tooltip>
-            <TooltipTrigger
-              className="ml-auto"
-              aria-label="Learn more about item marking"
-            >
-              <Info className="size-5 text-blue-600 dark:text-blue-400" />
-            </TooltipTrigger>
-            <TooltipContent className="max-w-[280px] text-sm" variant="popover">
-              <ItemMarkingInfo />
-            </TooltipContent>
-          </Tooltip>
-        </div>
-      );
-    },
-    // Force memoization as we don't use header context,
-    // and tooltip context is static
-    () => true,
+      <EfficiencyUnit mode={settings.mode} slots={item.slots} size="md" />
+    </span>
   );
+};
+
+const MarkHeader: ColumnDefTemplate<AppHeaderContext> = React.memo(
+  function MarkHeaderComponent() {
+    return (
+      <div className="flex w-full items-center">
+        <p>Mark</p>
+        <Tooltip>
+          <TooltipTrigger
+            className="ml-auto"
+            aria-label="Learn more about item marking"
+          >
+            <Info className="size-5 text-blue-600 dark:text-blue-400" />
+          </TooltipTrigger>
+          <TooltipContent className="max-w-[280px] text-sm" variant="popover">
+            <ItemMarkingInfo />
+          </TooltipContent>
+        </Tooltip>
+      </div>
+    );
+  },
+  // Force memoization as we don't use header context,
+  // and tooltip context is static
+  () => true,
+);
 
 const compactFormatterGlobal = new Intl.NumberFormat("en", {
   notation: "compact",
@@ -425,70 +422,90 @@ export function renderCompactNumber(
   return { element, hasCompactSuffix };
 }
 
-const TradeLinkCell: ColumnDef<ViewItem>["cell"] =
-  function TradeLinkCellComponent({ row }) {
-    const name = row.getValue(COLUMN_IDS.NAME) as string;
-    const { lowStockThreshold } = useLeagueSession();
-    const link = useTradeLink(name);
-    const listingCount = row.original.listingCount;
-    const isLowStock = listingCount < lowStockThreshold;
+const TradeLinkCell: AppColumnDef["cell"] = function TradeLinkCellComponent({
+  row,
+}) {
+  const name = row.getValue(COLUMN_IDS.NAME) as string;
+  const { lowStockThreshold } = useLeagueSession();
+  const link = useTradeLink(name);
+  const listingCount = row.original.listingCount;
+  const isLowStock = listingCount < lowStockThreshold;
 
-    const linkElement = (
-      <a
-        href={link}
-        target="_blank"
-        rel="noreferrer"
-        aria-label={`Open trade search for ${name} in new tab${isLowStock ? " (low stock warning)" : ""}`}
-        title={`Open trade search for ${name}`}
-        className="inline-flex items-center gap-2"
-      >
-        <ExternalLink className="size-5" />
-        {isLowStock && (
-          <Badge
-            variant="amber"
-            className="absolute -top-1 -right-2 size-4 border-none bg-transparent p-0"
-            aria-hidden="true"
-          >
-            <PackageMinus />
-          </Badge>
-        )}
-      </a>
-    );
+  const linkElement = (
+    <a
+      href={link}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={`Open trade search for ${name} in new tab${isLowStock ? " (low stock warning)" : ""}`}
+      title={`Open trade search for ${name}`}
+      className="inline-flex items-center gap-2"
+    >
+      <ExternalLink className="size-5" />
+      {isLowStock && (
+        <Badge
+          variant="amber"
+          className="absolute -top-1 -right-2 size-4 border-none bg-transparent p-0"
+          aria-hidden="true"
+        >
+          <PackageMinus />
+        </Badge>
+      )}
+    </a>
+  );
 
-    const button = (
-      <Button
-        asChild
-        variant="default"
-        size="lg"
-        className="text-primary bg-primary/10 hover:bg-primary/20 border-input hover:border-primary relative mx-auto gap-2 border border-solid"
-      >
-        {linkElement}
-      </Button>
-    );
+  const button = (
+    <Button
+      asChild
+      variant="default"
+      size="lg"
+      className="text-primary bg-primary/10 hover:bg-primary/20 border-input hover:border-primary relative mx-auto gap-2 border border-solid"
+    >
+      {linkElement}
+    </Button>
+  );
 
-    const content = isLowStock ? (
-      <Tooltip>
-        <TooltipTrigger asChild className="cursor-pointer">
-          {button}
-        </TooltipTrigger>
-        <TooltipContent className="max-w-[280px] text-sm" variant="popover">
-          <LowStockInfo
-            name={name}
-            listingCount={listingCount}
-            lowStockThreshold={lowStockThreshold}
-          />
-        </TooltipContent>
-      </Tooltip>
-    ) : (
-      button
-    );
+  const content = isLowStock ? (
+    <Tooltip>
+      <TooltipTrigger asChild className="cursor-pointer">
+        {button}
+      </TooltipTrigger>
+      <TooltipContent className="max-w-[280px] text-sm" variant="popover">
+        <LowStockInfo
+          name={name}
+          listingCount={listingCount}
+          lowStockThreshold={lowStockThreshold}
+        />
+      </TooltipContent>
+    </Tooltip>
+  ) : (
+    button
+  );
 
-    return <div className="flex w-full flex-1 items-center">{content}</div>;
-  };
+  return <div className="flex w-full flex-1 items-center">{content}</div>;
+};
+
+function MarkCheckbox({ row, name }: { row: AppRow; name: string }) {
+  const selected = useRowSelected(row);
+
+  return (
+    <div className="flex items-center justify-center">
+      <Checkbox
+        className="border-primary/30 hover:border-primary/40 size-7"
+        checked={selected}
+        onCheckedChange={(v) => row.toggleSelected(v === true)}
+        aria-label={`Mark ${name} as completed`}
+      />
+    </div>
+  );
+}
+
+const MarkCell: AppColumnDef["cell"] = ({ row }) => (
+  <MarkCheckbox row={row} name={row.getValue(COLUMN_IDS.NAME) as string} />
+);
 
 export const createColumns = (
   divinePriceThreshold: number | null,
-): ColumnDef<ViewItem>[] => {
+): AppColumnDef[] => {
   return [
     {
       accessorKey: COLUMN_IDS.ICON,
@@ -599,19 +616,7 @@ export const createColumns = (
       size: 75,
       enableSorting: false,
       enableHiding: false,
-      cell: ({ row }) => {
-        const name = row.getValue(COLUMN_IDS.NAME) as string;
-        return (
-          <div className="flex items-center justify-center">
-            <Checkbox
-              className="border-primary/30 hover:border-primary/40 size-7"
-              checked={row.getIsSelected()}
-              onCheckedChange={(v) => row.toggleSelected(v === true)}
-              aria-label={`Mark ${name} as completed`}
-            />
-          </div>
-        );
-      },
+      cell: MarkCell,
     },
   ];
 };

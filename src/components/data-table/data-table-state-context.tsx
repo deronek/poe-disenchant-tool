@@ -1,142 +1,77 @@
 "use client";
 
+import type { Atom } from "@tanstack/react-store";
 import type {
   ColumnFiltersState,
   ColumnSizingState,
   SortingState,
-  Updater,
 } from "@tanstack/react-table";
-import React, { createContext, useCallback, useContext, useState } from "react";
+import React, { createContext, useContext } from "react";
+import { useCreateAtom } from "@tanstack/react-store";
 
-import { usePersistentFilters } from "@/components/filters";
-import { COLUMN_IDS } from "@/lib/column-ids";
+import {
+  mergePersistedFilters,
+  persistedFiltersFromState,
+  PersistedFiltersSchema,
+} from "@/lib/filters";
+import { usePersistedAtom } from "@/lib/use-persisted-atom";
 
 interface DataTableState {
-  sorting: SortingState;
-  columnFilters: ColumnFiltersState;
-  columnSizing: ColumnSizingState;
-  updateSorting: (updater: Updater<SortingState>) => void;
-  updateColumnFilters: (updater: Updater<ColumnFiltersState>) => void;
-  updateColumnSizing: (updater: Updater<ColumnSizingState>) => void;
+  sorting: Atom<SortingState>;
+  columnFilters: Atom<ColumnFiltersState>;
+  columnSizing: Atom<ColumnSizingState>;
 }
 
-const defaultState: DataTableState = {
-  sorting: [{ id: "dustPerChaos", desc: true }],
-  columnFilters: [],
-  columnSizing: {},
-  updateSorting: () => {},
-  updateColumnFilters: () => {},
-  updateColumnSizing: () => {},
-};
+const defaultSorting: SortingState = [{ id: "dustPerChaos", desc: true }];
 
-const DataTableStateContext = createContext<DataTableState>(defaultState);
+const DataTableStateContext = createContext<DataTableState | null>(null);
 
-const chaosColumnId = COLUMN_IDS.CHAOS;
-const goldColumnId = COLUMN_IDS.GOLD_FEE;
+/**
+ * Persists the columnFilters atom to localStorage. Hosts usePersistedAtom in
+ * this leaf child (rendering nothing) so the provider - which wraps the whole
+ * app in the root layout - isn't re-rendered on every filter change.
+ */
+function ColumnFiltersPersistence({
+  columnFilters,
+}: {
+  columnFilters: Atom<ColumnFiltersState>;
+}) {
+  usePersistedAtom(columnFilters, {
+    storageKey: "poe-udt:filters:v1",
+    initialState: {},
+    schema: PersistedFiltersSchema,
+    debounceDelay: 300,
+    toStored: persistedFiltersFromState,
+    applyStored: mergePersistedFilters,
+  });
+  return null;
+}
 
 export function DataTableStateProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [sorting, setSorting] = useState<SortingState>(defaultState.sorting);
-  const [columnSizing, setColumnSizing] = useState<ColumnSizingState>(
-    defaultState.columnSizing,
-  );
-
-  const { persistedFilters, updatePersistedFilters } =
-    usePersistentFilters("poe-udt:filters:v1");
-
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
-    defaultState.columnFilters,
-  );
-
-  // Restore persisted filters after mount
-  React.useEffect(() => {
-    // This write needs to be deferred.
-    // As the provider is used in the layout (because it needs to persist state between league pages),
-    // by the time the data table renders, filter value is already populated from localStorage,
-    // which triggers hydration warnings.
-    const timeout = window.setTimeout(() => {
-      setColumnFilters((prev) => {
-        const filtersToRestore = prev.filter(
-          (f) =>
-            f.id !== chaosColumnId &&
-            f.id !== COLUMN_IDS.CALCULATED_DUST_VALUE &&
-            f.id !== goldColumnId,
-        );
-
-        // If chaos filter needs to be applied
-        if (persistedFilters?.price != null) {
-          const chaosFilter = {
-            id: chaosColumnId,
-            value: persistedFilters.price,
-          };
-          filtersToRestore.push(chaosFilter);
-        }
-
-        // If dust filter needs to be applied
-        if (persistedFilters?.dust != null) {
-          const dustFilter = {
-            id: COLUMN_IDS.CALCULATED_DUST_VALUE,
-            value: persistedFilters.dust,
-          };
-          filtersToRestore.push(dustFilter);
-        }
-
-        // If gold filter needs to be applied
-        if (persistedFilters?.gold != null) {
-          const goldFilter = {
-            id: goldColumnId,
-            value: persistedFilters.gold,
-          };
-          filtersToRestore.push(goldFilter);
-        }
-
-        return filtersToRestore;
-      });
-    }, 0);
-    return () => window.clearTimeout(timeout);
-  }, [persistedFilters]);
-
-  const updateSorting = useCallback((updater: Updater<SortingState>) => {
-    setSorting(updater);
-  }, []);
-
-  const updateColumnFilters = useCallback(
-    (updater: Updater<ColumnFiltersState>) => {
-      setColumnFilters((prev) => {
-        const next = typeof updater === "function" ? updater(prev) : updater;
-        updatePersistedFilters(next);
-        return next;
-      });
-    },
-    [updatePersistedFilters],
-  );
-
-  const updateColumnSizing = useCallback(
-    (updater: Updater<ColumnSizingState>) => {
-      setColumnSizing(updater);
-    },
-    [],
-  );
+  const sorting = useCreateAtom(defaultSorting);
+  const columnSizing = useCreateAtom<ColumnSizingState>({});
+  const columnFilters = useCreateAtom<ColumnFiltersState>([]);
 
   return (
     <DataTableStateContext.Provider
-      value={{
-        sorting,
-        columnFilters,
-        columnSizing,
-        updateSorting,
-        updateColumnFilters,
-        updateColumnSizing,
-      }}
+      value={{ sorting, columnFilters, columnSizing }}
     >
+      <ColumnFiltersPersistence columnFilters={columnFilters} />
       {children}
     </DataTableStateContext.Provider>
   );
 }
 
 export function useDataTableState() {
-  return useContext(DataTableStateContext);
+  const ctx = useContext(DataTableStateContext);
+  if (!ctx) {
+    throw new Error(
+      "useDataTableState must be used within DataTableStateProvider",
+    );
+  }
+  return ctx;
 }

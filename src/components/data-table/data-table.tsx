@@ -1,14 +1,12 @@
+import type { AppColumnDef, AppRow } from "@/lib/table-features";
 import type { ViewItem } from "@/lib/view-item";
 import * as React from "react";
+import { useCreateAtom } from "@tanstack/react-store";
 import {
-  ColumnDef,
   flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  RowData,
-  useReactTable,
+  PaginationState,
+  RowSelectionState,
+  useTable,
 } from "@tanstack/react-table";
 import { ChevronDown } from "lucide-react";
 
@@ -22,84 +20,109 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useLeagueSession } from "../league-session-context";
+import { features } from "@/lib/table-features";
+import { useRowSelected } from "@/lib/use-row-selected";
 import { DataTablePagination } from "./data-table-pagination";
 import { useDataTableState } from "./data-table-state-context";
-import { usePersistentRowSelection } from "./use-persistent-row-selection";
+import {
+  DEFAULT_PAGE_SIZE,
+  PaginationPersistence,
+} from "./pagination-persistence";
+import { SelectionPersistence } from "./selection-persistence";
 
-declare module "@tanstack/react-table" {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  interface ColumnMeta<TData extends RowData, TValue> {
-    className?: string;
-    divinePriceThreshold?: number | null;
-    headerName?: string;
-  }
-}
-
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+interface DataTableProps<TData extends ViewItem> {
+  columns: AppColumnDef<TData>[];
   data: TData[];
 }
 
-export function DataTable<TData extends ViewItem, TValue>({
+function DataTableRow<TData extends ViewItem>({ row }: { row: AppRow<TData> }) {
+  const isSelected = useRowSelected(row);
+
+  return (
+    <TableRow
+      data-state={isSelected && "selected"}
+      className={
+        "data-[state=selected]:bg-muted/40 even:bg-background bg-background-200 h-11 transition-none data-[state=selected]:opacity-95"
+      }
+    >
+      {row.getVisibleCells().map((cell) => {
+        const width = cell.column.getSize();
+        return (
+          <TableCell
+            key={cell.id}
+            className={cell.column.columnDef.meta?.className}
+            style={{ width }}
+          >
+            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+          </TableCell>
+        );
+      })}
+    </TableRow>
+  );
+}
+
+export function DataTable<TData extends ViewItem>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
-  "use no memo"; // TanStack Table not yet compatible with React Compiler
-  const {
-    sorting,
-    columnFilters,
-    columnSizing,
-    updateSorting,
-    updateColumnFilters,
-    updateColumnSizing,
-  } = useDataTableState();
+}: DataTableProps<TData>) {
+  const { sorting, columnFilters, columnSizing } = useDataTableState();
 
-  const { league } = useLeagueSession();
-  const selectionStorageKey = `poe-udt:selected:${league}:v2`;
+  // External rowSelection atom - single source of truth
+  const rowSelection = useCreateAtom<RowSelectionState>({});
+  const clearSelection = React.useCallback(() => {
+    rowSelection.set({});
+  }, [rowSelection]);
 
-  // Persistent row selection
-  const { rowSelection, setRowSelection, clearSelection } =
-    usePersistentRowSelection(selectionStorageKey);
-
-  // eslint-disable-next-line react-hooks/incompatible-library
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    onSortingChange: updateSorting,
-    getSortedRowModel: getSortedRowModel(),
-    onColumnFiltersChange: updateColumnFilters,
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnSizingChange: updateColumnSizing,
-    columnResizeMode: "onChange",
-    enableColumnResizing: true,
-    enableMultiSort: false,
-    enableSortingRemoval: false,
-    getRowId: (row, _index) =>
-      // Fall back to array index string if uniqueId not present
-      row.uniqueId ?? String(_index ?? 0),
-    onRowSelectionChange: setRowSelection,
-    state: {
-      sorting,
-      columnFilters,
-      columnSizing,
-      rowSelection,
-    },
-    // Provide sensible defaults in case columns do not specify size
-    defaultColumn: {
-      minSize: 60,
-      size: 150,
-      maxSize: 500,
-    },
+  // External pagination atom - single source of truth
+  const pagination = useCreateAtom<PaginationState>({
+    pageIndex: 0,
+    pageSize: DEFAULT_PAGE_SIZE,
   });
+
+  const table = useTable(
+    {
+      features,
+      data,
+      columns,
+      columnResizeMode: "onChange",
+      enableColumnResizing: true,
+      enableMultiSort: false,
+      enableSortingRemoval: false,
+      getRowId: (row, _index) =>
+        // Fall back to array index string if uniqueId not present
+        row.uniqueId ?? String(_index ?? 0),
+      atoms: {
+        sorting,
+        columnFilters,
+        columnSizing,
+        rowSelection,
+        pagination,
+      },
+      // Provide sensible defaults in case columns do not specify size
+      defaultColumn: {
+        minSize: 60,
+        size: 150,
+        maxSize: 500,
+      },
+    },
+    // Only re-render on slices the rendered row/header models depend on.
+    (state) => ({
+      sorting: state.sorting,
+      columnFilters: state.columnFilters,
+      columnSizing: state.columnSizing,
+      pagination: state.pagination,
+      columnVisibility: state.columnVisibility,
+    }),
+  );
 
   return (
     <div
       className="mx-auto w-full max-w-md rounded-md border md:max-w-4xl lg:max-w-screen-xl"
       data-testid="league-table"
     >
+      <SelectionPersistence rowSelection={rowSelection} />
+      {/* Page size is a global, league-independent setting */}
+      <PaginationPersistence pagination={pagination} />
       {/* Desktop Toolbar */}
       <div className="bg-background-200 hidden lg:block">
         <DataTableToolbar table={table} onClearMarks={clearSelection} />
@@ -195,31 +218,9 @@ export function DataTable<TData extends ViewItem, TValue>({
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                  className={
-                    "data-[state=selected]:bg-muted/40 even:bg-background bg-background-200 h-11 transition-none data-[state=selected]:opacity-95"
-                  }
-                >
-                  {row.getVisibleCells().map((cell) => {
-                    const width = cell.column.getSize();
-                    return (
-                      <TableCell
-                        key={cell.id}
-                        className={cell.column.columnDef.meta?.className}
-                        style={{ width }}
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              ))
+              table
+                .getRowModel()
+                .rows.map((row) => <DataTableRow key={row.id} row={row} />)
             ) : (
               <TableRow>
                 <TableCell
