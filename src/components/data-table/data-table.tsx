@@ -88,9 +88,7 @@ export function DataTable<TData extends ViewItem>({
       enableColumnResizing: true,
       enableMultiSort: false,
       enableSortingRemoval: false,
-      getRowId: (row, _index) =>
-        // Fall back to array index string if uniqueId not present
-        row.uniqueId ?? String(_index ?? 0),
+      getRowId: (row) => row.uniqueId,
       atoms: {
         sorting,
         columnFilters,
