@@ -1,6 +1,6 @@
 # poe-disenchant-tool
 
-![Vercel Deploy](https://deploy-badge.vercel.app/vercel/poe-disenchant-tool)
+[![Vercel Deploy](data/readme/vercel-deployed.svg)](https://poe-disenchant-tool.vercel.app)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
 Path of Exile tool for calculating unique item disenchanting efficiency across multiple leagues. It compares market prices against Thaumaturgic Dust values to find which uniques are worth buying and disenchanting.
