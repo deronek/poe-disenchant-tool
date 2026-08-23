@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   e2e:
-    name: E2E Tests (${{ matrix.suite }} / ${{ matrix.project }})
+    name: ${{ matrix.suite }} (${{ matrix.project }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
