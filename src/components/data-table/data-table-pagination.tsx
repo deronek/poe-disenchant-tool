@@ -1,5 +1,7 @@
+import type { AppTable } from "@/lib/table-features";
 import * as React from "react";
-import { Table } from "@tanstack/react-table";
+import { useSelector } from "@tanstack/react-store";
+import { RowData } from "@tanstack/react-table";
 import {
   ChevronLeft,
   ChevronRight,
@@ -15,7 +17,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { usePersistentPageSize } from "./use-persistent-page-size";
 
 // Rows per page select as memo
 const RowsPerPageSelect = React.memo(function RowsPerPageSelect({
@@ -49,38 +50,18 @@ const RowsPerPageSelect = React.memo(function RowsPerPageSelect({
   );
 });
 
-interface DataTablePaginationProps<TData> {
-  table: Table<TData>;
+interface DataTablePaginationProps<TData extends RowData> {
+  table: AppTable<TData>;
 }
 
-export function DataTablePagination<TData>({
+export function DataTablePagination<TData extends RowData>({
   table,
 }: DataTablePaginationProps<TData>) {
-  // Persistent page size storage
-  const { pageSize: persistedPageSize, setPageSize } = usePersistentPageSize(
-    "poe-udt:page-size:v1",
-  );
-
   // Compute start–end of total using the filtered row model
   const total = table.getFilteredRowModel().rows.length;
-  const pageIndex = table.getState().pagination.pageIndex;
-  const pageSize = table.getState().pagination.pageSize;
-
-  // Sync persisted page size with table state on mount
-  React.useEffect(() => {
-    if (pageSize !== persistedPageSize) {
-      table.setPageSize(persistedPageSize);
-    }
-  }, [pageSize, persistedPageSize, table]);
-
-  // Handle page size changes with persistence
-  const handlePageSizeChange = React.useCallback(
-    (value: number) => {
-      setPageSize(value);
-      table.setPageSize(value);
-    },
-    [setPageSize, table],
-  );
+  const pagination = useSelector(table.atoms.pagination);
+  const pageIndex = pagination.pageIndex;
+  const pageSize = pagination.pageSize;
 
   const start = total === 0 ? 0 : pageIndex * pageSize + 1;
   const end = total === 0 ? 0 : Math.min(total, start + pageSize - 1);
@@ -106,9 +87,11 @@ export function DataTablePagination<TData>({
         {/* Rows per page */}
         <div className="hidden items-center gap-2 lg:flex">
           <p className="flex-none text-sm font-semibold">Rows per page</p>
+          {/* Writes go through the external pagination atom, whose page size
+              PaginationPersistence (rendered by DataTable) persists. */}
           <RowsPerPageSelect
             pageSize={pageSize}
-            onPageSizeChange={handlePageSizeChange}
+            onPageSizeChange={table.setPageSize}
           />
         </div>
 

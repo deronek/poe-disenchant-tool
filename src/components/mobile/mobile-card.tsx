@@ -1,7 +1,7 @@
 import type { TotalCostDetails } from "@/lib/efficiency";
+import type { AppRow } from "@/lib/table-features";
 import type { ViewItem } from "@/lib/view-item";
 import * as React from "react";
-import { Row } from "@tanstack/react-table";
 import { ExternalLink, Info, Orbit, PackageMinus } from "lucide-react";
 
 import { EfficiencyUnit, useEfficiencySettings } from "@/components/efficiency";
@@ -26,6 +26,7 @@ import {
 import { useTradeLink } from "@/components/use-trade-link";
 import { COLUMN_IDS } from "@/lib/column-ids";
 import { EFFICIENCY_MODES } from "@/lib/efficiency";
+import { useRowSelected } from "@/lib/use-row-selected";
 
 // Compact number formatter for mobile cards
 const compactFormatterGlobal = new Intl.NumberFormat("en", {
@@ -444,15 +445,14 @@ function TradeButtonSection({ name }: { name: string }) {
 }
 
 interface MobileCardProps<TData extends ViewItem> {
-  row: Row<TData>;
-  isSelected: boolean;
+  row: AppRow<TData>;
 }
 
 function MobileCardComponent<TData extends ViewItem>({
   row,
-  isSelected,
 }: MobileCardProps<TData>) {
   "use memo";
+  const isSelected = useRowSelected(row);
   const name = row.getValue<string>(COLUMN_IDS.NAME);
   const variant = row.original.variant;
   const icon = row.getValue<string>(COLUMN_IDS.ICON);

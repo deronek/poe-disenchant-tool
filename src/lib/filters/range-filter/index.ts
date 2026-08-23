@@ -3,14 +3,12 @@ export type { RangeFilterValue } from "./range-filter-logic";
 
 // Export all business logic functions
 export {
-  getCurrentFilterValue,
-  setFilterValue,
+  EMPTY_RANGE,
   createNormalizedFilterValue,
   updateLowerBound,
   updateUpperBound,
   getLowerBoundSliderValue,
   getLowerBoundLinearValue,
-  resetFilter,
   hasMinFilter,
   hasMaxFilter,
   rangeFilterFn,

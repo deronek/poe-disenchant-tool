@@ -33,7 +33,8 @@ export function useLocalStorage<T>(
   const valueRef = React.useRef<T>(value);
   const debounceRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
   const schemaRef = React.useRef<typeof schema>(schema);
-  const lastWrittenRef = React.useRef<string | null>(null);
+  const lastPersistedRef = React.useRef<string | null>(null);
+  const mountedRef = React.useRef(false);
 
   const readFromStorage = React.useCallback((): T | undefined => {
     try {
@@ -60,9 +61,9 @@ export function useLocalStorage<T>(
     (val: T) => {
       try {
         const json = JSON.stringify(val);
-        if (lastWrittenRef.current === json) return;
+        if (lastPersistedRef.current === json) return;
         window.localStorage.setItem(key, json);
-        lastWrittenRef.current = json;
+        lastPersistedRef.current = json;
       } catch (err) {
         console.error(`Error writing localStorage key "${key}":`, err);
       }
@@ -83,9 +84,9 @@ export function useLocalStorage<T>(
     schemaRef.current = schema;
   }, [value, schema]);
 
-  // Clean-up last written value on key change
+  // Clean-up last persisted value on key change
   React.useEffect(() => {
-    lastWrittenRef.current = null;
+    lastPersistedRef.current = null;
   }, [key]);
 
   // On mount and when key changes, read from localStorage
@@ -98,6 +99,10 @@ export function useLocalStorage<T>(
     // even if we unmount before the next render cycle
     valueRef.current = storedValue;
 
+    // The loaded bytes are already on disk; record them so writeToStorage
+    // skips restating them until real content changes.
+    lastPersistedRef.current = JSON.stringify(storedValue);
+
     // On unmount, write the final value to localStorage
     return () => {
       // Cancel any existing debounce/flush
@@ -106,8 +111,15 @@ export function useLocalStorage<T>(
     };
   }, [readFromStorage, writeToStorage, clearDebounce]);
 
-  // On value change, write to localStorage (debounced if debounceDelay > 0)
+  // On value change, write to localStorage (debounced if debounceDelay > 0).
+  // Skip on mount. Value is still the seed there, and writing it would
+  // overwrite what the read effect above loaded.
   React.useEffect(() => {
+    if (!mountedRef.current) {
+      mountedRef.current = true;
+      return;
+    }
+
     if (debounceDelay) {
       clearDebounce();
       debounceRef.current = setTimeout(() => {

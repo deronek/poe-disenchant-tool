@@ -1,6 +1,8 @@
 import type { ColumnId } from "@/lib/column-ids";
+import type { AppTable } from "@/lib/table-features";
 import React from "react";
-import { Table } from "@tanstack/react-table";
+import { useSelector } from "@tanstack/react-store";
+import { RowData } from "@tanstack/react-table";
 import {
   ArrowDown,
   ArrowUp,
@@ -34,8 +36,8 @@ type SortOption = {
   icons: React.ReactNode;
 };
 
-type MobileSortingControlsProps<TData> = {
-  table: Table<TData>;
+type MobileSortingControlsProps<TData extends RowData> = {
+  table: AppTable<TData>;
   className?: string;
 };
 
@@ -109,14 +111,14 @@ function EfficiencyIcons({ mode }: { mode: EfficiencyMode }) {
   }
 }
 
-export function MobileSortingControls<TData>({
+export function MobileSortingControls<TData extends RowData>({
   table,
   className,
 }: MobileSortingControlsProps<TData>) {
   "use memo";
 
   const { settings } = useEfficiencySettings();
-  const sorting = table.options.state?.sorting ?? [];
+  const sorting = useSelector(table.atoms.sorting);
   const currentSort = sorting[0];
   const sortOptions: SortOption[] = [
     {
@@ -166,7 +168,7 @@ export function MobileSortingControls<TData>({
       : "Sort options";
 
   const handleSort = (columnId: ColumnId) => {
-    const [previous] = table.getState().sorting;
+    const [previous] = table.atoms.sorting.get();
 
     table.setSorting([
       {

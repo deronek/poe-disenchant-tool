@@ -7,4 +7,3 @@ export {
   type RangeFilterChipProps,
 } from "./range-filter-chip";
 export { TabbedFilter } from "./tabbed-filter";
-export { usePersistentFilters } from "./use-persistent-filters";

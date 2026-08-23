@@ -1,15 +1,20 @@
-import type { Column } from "@tanstack/react-table";
+import type { AppTable } from "@/lib/table-features";
+import type { RowData } from "@tanstack/react-table";
 
 import { Badge } from "@/components/ui/badge";
 import { XButton } from "@/components/ui/x-button";
+import { COLUMN_IDS } from "@/lib/column-ids";
+import { setColumnFilter, useNameFilterValue } from "@/lib/filters";
 import { useFilterStatus } from "./use-filter-status";
 
-interface NameFilterChipProps<TData> {
-  column: Column<TData, unknown> | undefined;
+interface NameFilterChipProps<TData extends RowData> {
+  table: AppTable<TData>;
 }
 
-export function NameFilterChip<TData>({ column }: NameFilterChipProps<TData>) {
-  const value = column?.getFilterValue() as string | undefined;
+export function NameFilterChip<TData extends RowData>({
+  table,
+}: NameFilterChipProps<TData>) {
+  const value = useNameFilterValue(table);
   const hasValue = value && value.trim() !== "";
 
   const statusRef = useFilterStatus(
@@ -39,7 +44,7 @@ export function NameFilterChip<TData>({ column }: NameFilterChipProps<TData>) {
               Name: {value}
             </span>
             <XButton
-              onClick={() => column?.setFilterValue("")}
+              onClick={() => setColumnFilter(table, COLUMN_IDS.NAME, "")}
               aria-label="Clear name filter"
               className="text-foreground/90"
             />
