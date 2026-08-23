@@ -128,7 +128,10 @@ test.describe("League Selector Functionality", () => {
 
     // Move up one league
     await poePage.page.keyboard.press("ArrowUp");
-    await poePage.page.waitForTimeout(100); // wait for input
+    await expect(defaultLeagueOption).not.toHaveAttribute(
+      "data-highlighted",
+      "",
+    );
     const highlightedLeagueLocator = poePage.page.locator(
       "[role='option'][data-highlighted]",
     );
@@ -141,25 +144,14 @@ test.describe("League Selector Functionality", () => {
     await poePage.verifyLeagueSelected(highlightedLeague as League);
   });
 
-  test("should display new leagues badge when there are new leagues", async ({
+  test("should display the new leagues badge exactly when there are new leagues", async ({
     poePage,
   }) => {
-    test.skip(!hasNewLeagues(), "No new leagues to display badge for");
-
-    // Verify the badge is visible
-    await expect(poePage.newLeaguesBadge).toBeVisible();
-  });
-
-  test("should not display new leagues badge when there are no new leagues", async ({
-    poePage,
-  }) => {
-    test.skip(
-      hasNewLeagues(),
-      "New leagues are available, badge should be visible",
-    );
-
-    // Verify the badge is not visible
-    await expect(poePage.newLeaguesBadge).not.toBeVisible();
+    if (hasNewLeagues()) {
+      await expect(poePage.newLeaguesBadge).toBeVisible();
+    } else {
+      await expect(poePage.newLeaguesBadge).not.toBeVisible();
+    }
   });
 
   test("should always display new leagues badge when localStorage flag is set", async ({

@@ -57,11 +57,10 @@ test.describe("Name Filter Functionality", () => {
       const specialCharItems = initialItems.filter(
         (item) => /[^\w\s]/.test(item.name) || /\s/.test(item.name),
       );
-
-      test.skip(
-        specialCharItems.length === 0,
-        "No items with special characters found",
-      );
+      expect(
+        specialCharItems.length,
+        "No items with special characters",
+      ).toBeGreaterThan(0);
 
       const targetItem = specialCharItems[0];
       await poePage.setNameFilter(targetItem.name);
@@ -384,15 +383,15 @@ test.describe("Tabbed Filter Functionality", () => {
   }) => {
     await poePage.openTabbedFilter();
     // Set price filter
-    await poePage.setPriceFilterValuePercent("lower", 50);
+    await poePage.setFilterValuePercent("price", "lower", 50);
     await poePage.verifyFilterChipVisible("price", true);
 
     // Set dust filter
-    await poePage.setDustFilterValuePercent("lower", 30);
+    await poePage.setFilterValuePercent("dust", "lower", 30);
     await poePage.verifyFilterChipVisible("dust", true);
 
     // Set gold fee filter
-    await poePage.setGoldFilterValuePercent("lower", 25);
+    await poePage.setFilterValuePercent("gold", "lower", 25);
     await poePage.verifyFilterChipVisible("gold", true);
 
     // Reset all
@@ -408,7 +407,7 @@ test.describe("Price Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("price", false);
 
     await poePage.openTabbedFilter();
-    await poePage.setPriceFilterValuePercent("lower", 50);
+    await poePage.setFilterValuePercent("price", "lower", 50);
     await poePage.verifyFilterChipVisible("price", true);
   });
 
@@ -416,7 +415,7 @@ test.describe("Price Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("price", false);
 
     await poePage.openTabbedFilter();
-    await poePage.setPriceFilterValuePercent("upper", 50);
+    await poePage.setFilterValuePercent("price", "upper", 50);
     await poePage.verifyFilterChipVisible("price", true);
   });
 
@@ -425,18 +424,18 @@ test.describe("Price Filter Functionality", () => {
     await poePage.openTabbedFilter();
 
     // 1) Set only lower bound (upper bound should be disabled / no max)
-    await poePage.setPriceFilterValuePercent("lower", 50);
+    await poePage.setFilterValuePercent("price", "lower", 50);
     await poePage.verifyFilterChipVisible("price", true);
 
-    const lowerOnly = await poePage.getPriceFilterRange();
+    const lowerOnly = await poePage.getFilterRange("price");
     expect(lowerOnly.min).toBeGreaterThan(0);
     expect(lowerOnly.max).toBeUndefined();
 
     // 2) Now set upper bound as well, creating a bounded range
-    await poePage.setPriceFilterValuePercent("upper", 50);
+    await poePage.setFilterValuePercent("price", "upper", 50);
     await poePage.verifyFilterChipVisible("price", true);
 
-    const rangeBoth = await poePage.getPriceFilterRange();
+    const rangeBoth = await poePage.getFilterRange("price");
     expect(rangeBoth.min).toBe(lowerOnly.min);
     expect(rangeBoth.max).toBeDefined();
     expect(rangeBoth.max).toBeLessThan(500);
@@ -448,7 +447,7 @@ test.describe("Price Filter Functionality", () => {
     await poePage.openTabbedFilter();
 
     // Set price filter first
-    await poePage.setPriceFilterValuePercent("lower", 50);
+    await poePage.setFilterValuePercent("price", "lower", 50);
     await poePage.verifyFilterChipVisible("price", true);
 
     // Apply name filter
@@ -466,11 +465,11 @@ test.describe("Price Filter Functionality", () => {
     await poePage.openTabbedFilter();
 
     // Set price filter first
-    await poePage.setPriceFilterValuePercent("lower", 50);
+    await poePage.setFilterValuePercent("price", "lower", 50);
     await poePage.verifyFilterChipVisible("price", true);
 
     // Apply dust value filter
-    await poePage.setDustFilterValuePercent("lower", 30);
+    await poePage.setFilterValuePercent("dust", "lower", 30);
     await poePage.verifyFilterChipVisible("dust", true);
 
     // Verify price filter is still active
@@ -482,11 +481,11 @@ test.describe("Price Filter Functionality", () => {
   }) => {
     // Set a price filter
     await poePage.openTabbedFilter();
-    await poePage.setPriceFilterValuePercent("lower", 50);
+    await poePage.setFilterValuePercent("price", "lower", 50);
     await poePage.verifyFilterChipVisible("price", true);
 
     // Get the filter range before refresh
-    const filterRangeBefore = await poePage.getPriceFilterRange();
+    const filterRangeBefore = await poePage.getFilterRange("price");
     expect(filterRangeBefore.min).toBeDefined();
     expect(filterRangeBefore.min).toBeGreaterThan(0);
 
@@ -497,7 +496,7 @@ test.describe("Price Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("price", true);
 
     // Verify the filter range is the same as before refresh
-    const filterRangeAfter = await poePage.getPriceFilterRange();
+    const filterRangeAfter = await poePage.getFilterRange("price");
     expect(filterRangeAfter.min).toBe(filterRangeBefore.min);
     expect(filterRangeAfter.max).toBe(filterRangeBefore.max);
   });
@@ -508,10 +507,10 @@ test.describe("Price Filter Functionality", () => {
     await poePage.openTabbedFilter(); // Open tabbed filter
 
     // Set only lower bound
-    await poePage.setPriceFilterValuePercent("lower", 75);
+    await poePage.setFilterValuePercent("price", "lower", 75);
     await poePage.verifyFilterChipVisible("price", true);
 
-    const rangeBefore = await poePage.getPriceFilterRange();
+    const rangeBefore = await poePage.getFilterRange("price");
     expect(rangeBefore.min).toBeGreaterThan(0);
 
     // Reset lower bound using individual reset button
@@ -531,10 +530,10 @@ test.describe("Price Filter Functionality", () => {
     await poePage.openTabbedFilter(); // Open tabbed filter
 
     // Set only upper bound
-    await poePage.setPriceFilterValuePercent("upper", 75);
+    await poePage.setFilterValuePercent("price", "upper", 75);
     await poePage.verifyFilterChipVisible("price", true);
 
-    const rangeBefore = await poePage.getPriceFilterRange();
+    const rangeBefore = await poePage.getFilterRange("price");
     expect(rangeBefore.max).toBeGreaterThan(0);
 
     // Reset upper bound using individual reset button
@@ -555,11 +554,11 @@ test.describe("Price Filter Functionality", () => {
     await poePage.switchToTab("price");
 
     // Set both bounds to create a range
-    await poePage.setPriceFilterValuePercent("lower", 25);
-    await poePage.setPriceFilterValuePercent("upper", 75);
+    await poePage.setFilterValuePercent("price", "lower", 25);
+    await poePage.setFilterValuePercent("price", "upper", 75);
     await poePage.verifyFilterChipVisible("price", true);
 
-    const rangeBefore = await poePage.getPriceFilterRange();
+    const rangeBefore = await poePage.getFilterRange("price");
     expect(rangeBefore.min).toBeGreaterThan(0);
 
     // Reset lower bound using individual reset button
@@ -570,7 +569,7 @@ test.describe("Price Filter Functionality", () => {
     await lowerBoundResetButton.click();
 
     // Verify lower bound is reset (should be undefined now)
-    const rangeAfter = await poePage.getPriceFilterRange();
+    const rangeAfter = await poePage.getFilterRange("price");
     expect(rangeAfter.min).toBeUndefined();
     expect(rangeAfter.max).toBe(rangeBefore.max); // Upper bound should remain unchanged
 
@@ -585,11 +584,11 @@ test.describe("Price Filter Functionality", () => {
     await poePage.switchToTab("price");
 
     // Set both bounds to create a range
-    await poePage.setPriceFilterValuePercent("lower", 25);
-    await poePage.setPriceFilterValuePercent("upper", 75);
+    await poePage.setFilterValuePercent("price", "lower", 25);
+    await poePage.setFilterValuePercent("price", "upper", 75);
     await poePage.verifyFilterChipVisible("price", true);
 
-    const rangeBefore = await poePage.getPriceFilterRange();
+    const rangeBefore = await poePage.getFilterRange("price");
     expect(rangeBefore.min).toBeGreaterThan(0);
     expect(rangeBefore.max).toBeDefined();
 
@@ -601,7 +600,7 @@ test.describe("Price Filter Functionality", () => {
     await upperBoundResetButton.click();
 
     // Verify upper bound is reset (should be undefined now)
-    const rangeAfter = await poePage.getPriceFilterRange();
+    const rangeAfter = await poePage.getFilterRange("price");
     expect(rangeAfter.min).toBe(rangeBefore.min); // Lower bound should remain unchanged
     expect(rangeAfter.max).toBeUndefined();
 
@@ -613,8 +612,8 @@ test.describe("Price Filter Functionality", () => {
     poePage,
   }) => {
     await poePage.openTabbedFilter();
-    await poePage.setPriceFilterValuePercent("lower", 50);
-    await poePage.setPriceFilterValuePercent("upper", 50);
+    await poePage.setFilterValuePercent("price", "lower", 50);
+    await poePage.setFilterValuePercent("price", "upper", 50);
     await poePage.closeTabbedFilter();
     await poePage.verifyFilterChipVisible("price", true);
 
@@ -636,7 +635,7 @@ test.describe("Price Filter Functionality", () => {
     await lowerBoundResetButton.click();
 
     // Verify lower bound is reset
-    const rangeAfter = await poePage.getPriceFilterRange();
+    const rangeAfter = await poePage.getFilterRange("price");
     expect(rangeAfter.min).toBeUndefined();
 
     // Verify all other filters are still active
@@ -664,7 +663,7 @@ test.describe("Price Filter Functionality", () => {
     await poePage.switchToTab("price");
 
     // Set only upper bound (lower bound should not be active)
-    await poePage.setPriceFilterValuePercent("upper", 50);
+    await poePage.setFilterValuePercent("price", "upper", 50);
     await poePage.verifyFilterChipVisible("price", true);
 
     // Lower bound reset button should be disabled
@@ -681,7 +680,7 @@ test.describe("Price Filter Functionality", () => {
     await poePage.switchToTab("price");
 
     // Set only lower bound (upper bound should not be active)
-    await poePage.setPriceFilterValuePercent("lower", 50);
+    await poePage.setFilterValuePercent("price", "lower", 50);
     await poePage.verifyFilterChipVisible("price", true);
 
     // Upper bound reset button should be disabled
@@ -699,7 +698,7 @@ test.describe("Dust Value Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("dust", false);
     await poePage.openTabbedFilter();
 
-    await poePage.setDustFilterValuePercent("lower", 25);
+    await poePage.setFilterValuePercent("dust", "lower", 25);
     await poePage.verifyFilterChipVisible("dust", true);
   });
 
@@ -709,7 +708,7 @@ test.describe("Dust Value Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("dust", false);
     await poePage.openTabbedFilter();
 
-    await poePage.setDustFilterValuePercent("upper", 75);
+    await poePage.setFilterValuePercent("dust", "upper", 75);
     await poePage.verifyFilterChipVisible("dust", true);
   });
 
@@ -720,18 +719,18 @@ test.describe("Dust Value Filter Functionality", () => {
     await poePage.openTabbedFilter();
 
     // 1) Set only lower bound
-    await poePage.setDustFilterValuePercent("lower", 25);
+    await poePage.setFilterValuePercent("dust", "lower", 25);
     await poePage.verifyFilterChipVisible("dust", true);
 
-    const lowerOnly = await poePage.getDustFilterRange();
+    const lowerOnly = await poePage.getFilterRange("dust");
     expect(lowerOnly.min).toBeGreaterThan(2000); // Min dust value
     expect(lowerOnly.max).toBeUndefined();
 
     // 2) Now set upper bound as well, creating a bounded range
-    await poePage.setDustFilterValuePercent("upper", 75);
+    await poePage.setFilterValuePercent("dust", "upper", 75);
     await poePage.verifyFilterChipVisible("dust", true);
 
-    const rangeBoth = await poePage.getDustFilterRange();
+    const rangeBoth = await poePage.getFilterRange("dust");
     expect(rangeBoth.min).toBe(lowerOnly.min);
     expect(rangeBoth.max).toBeDefined();
     expect(rangeBoth.max).toBeLessThan(5000000); // Max dust value
@@ -743,7 +742,7 @@ test.describe("Dust Value Filter Functionality", () => {
     await poePage.openTabbedFilter();
 
     // Set dust value filter first
-    await poePage.setDustFilterValuePercent("lower", 25);
+    await poePage.setFilterValuePercent("dust", "lower", 25);
     await poePage.verifyFilterChipVisible("dust", true);
 
     // Apply name filter
@@ -761,11 +760,11 @@ test.describe("Dust Value Filter Functionality", () => {
     await poePage.openTabbedFilter();
 
     // Set dust value filter first
-    await poePage.setDustFilterValuePercent("lower", 25);
+    await poePage.setFilterValuePercent("dust", "lower", 25);
     await poePage.verifyFilterChipVisible("dust", true);
 
     // Apply price filter
-    await poePage.setPriceFilterValuePercent("lower", 50);
+    await poePage.setFilterValuePercent("price", "lower", 50);
     await poePage.verifyFilterChipVisible("price", true);
 
     // Verify dust value filter is still active
@@ -777,11 +776,11 @@ test.describe("Dust Value Filter Functionality", () => {
   }) => {
     // Set a dust value filter
     await poePage.openTabbedFilter();
-    await poePage.setDustFilterValuePercent("lower", 25);
+    await poePage.setFilterValuePercent("dust", "lower", 25);
     await poePage.verifyFilterChipVisible("dust", true);
 
     // Get the filter range before refresh
-    const filterRangeBefore = await poePage.getDustFilterRange();
+    const filterRangeBefore = await poePage.getFilterRange("dust");
     expect(filterRangeBefore.min).toBeDefined();
     expect(filterRangeBefore.min).toBeGreaterThan(2000);
 
@@ -792,7 +791,7 @@ test.describe("Dust Value Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("dust", true);
 
     // Verify the filter range is the same as before refresh
-    const filterRangeAfter = await poePage.getDustFilterRange();
+    const filterRangeAfter = await poePage.getFilterRange("dust");
     expect(filterRangeAfter.min).toBe(filterRangeBefore.min);
     expect(filterRangeAfter.max).toBe(filterRangeBefore.max);
   });
@@ -803,10 +802,10 @@ test.describe("Dust Value Filter Functionality", () => {
     await poePage.openTabbedFilter(); // Open tabbed filter
 
     // Set only lower bound
-    await poePage.setDustFilterValuePercent("lower", 75);
+    await poePage.setFilterValuePercent("dust", "lower", 75);
     await poePage.verifyFilterChipVisible("dust", true);
 
-    const rangeBefore = await poePage.getDustFilterRange();
+    const rangeBefore = await poePage.getFilterRange("dust");
     expect(rangeBefore.min).toBeGreaterThan(0);
 
     // Reset lower bound using individual reset button
@@ -826,10 +825,10 @@ test.describe("Dust Value Filter Functionality", () => {
     await poePage.openTabbedFilter(); // Open tabbed filter
 
     // Set only upper bound
-    await poePage.setDustFilterValuePercent("upper", 75);
+    await poePage.setFilterValuePercent("dust", "upper", 75);
     await poePage.verifyFilterChipVisible("dust", true);
 
-    const rangeBefore = await poePage.getDustFilterRange();
+    const rangeBefore = await poePage.getFilterRange("dust");
     expect(rangeBefore.max).toBeGreaterThan(0);
 
     // Reset upper bound using individual reset button
@@ -850,11 +849,11 @@ test.describe("Dust Value Filter Functionality", () => {
     await poePage.switchToTab("dust");
 
     // Set both bounds to create a range
-    await poePage.setDustFilterValuePercent("lower", 25);
-    await poePage.setDustFilterValuePercent("upper", 75);
+    await poePage.setFilterValuePercent("dust", "lower", 25);
+    await poePage.setFilterValuePercent("dust", "upper", 75);
     await poePage.verifyFilterChipVisible("dust", true);
 
-    const rangeBefore = await poePage.getDustFilterRange();
+    const rangeBefore = await poePage.getFilterRange("dust");
     expect(rangeBefore.min).toBeGreaterThan(0);
 
     // Reset lower bound using individual reset button
@@ -865,7 +864,7 @@ test.describe("Dust Value Filter Functionality", () => {
     await lowerBoundResetButton.click();
 
     // Verify lower bound is reset (should be undefined now)
-    const rangeAfter = await poePage.getDustFilterRange();
+    const rangeAfter = await poePage.getFilterRange("dust");
     expect(rangeAfter.min).toBeUndefined();
     expect(rangeAfter.max).toBe(rangeBefore.max); // Upper bound should remain unchanged
 
@@ -880,11 +879,11 @@ test.describe("Dust Value Filter Functionality", () => {
     await poePage.switchToTab("dust");
 
     // Set both bounds to create a range
-    await poePage.setDustFilterValuePercent("lower", 25);
-    await poePage.setDustFilterValuePercent("upper", 75);
+    await poePage.setFilterValuePercent("dust", "lower", 25);
+    await poePage.setFilterValuePercent("dust", "upper", 75);
     await poePage.verifyFilterChipVisible("dust", true);
 
-    const rangeBefore = await poePage.getDustFilterRange();
+    const rangeBefore = await poePage.getFilterRange("dust");
     expect(rangeBefore.min).toBeGreaterThan(0);
     expect(rangeBefore.max).toBeDefined();
 
@@ -896,7 +895,7 @@ test.describe("Dust Value Filter Functionality", () => {
     await upperBoundResetButton.click();
 
     // Verify upper bound is reset (should be undefined now)
-    const rangeAfter = await poePage.getDustFilterRange();
+    const rangeAfter = await poePage.getFilterRange("dust");
     expect(rangeAfter.min).toBe(rangeBefore.min); // Lower bound should remain unchanged
     expect(rangeAfter.max).toBeUndefined();
 
@@ -908,8 +907,8 @@ test.describe("Dust Value Filter Functionality", () => {
     poePage,
   }) => {
     await poePage.openTabbedFilter();
-    await poePage.setDustFilterValuePercent("lower", 30);
-    await poePage.setDustFilterValuePercent("upper", 70);
+    await poePage.setFilterValuePercent("dust", "lower", 30);
+    await poePage.setFilterValuePercent("dust", "upper", 70);
     await poePage.closeTabbedFilter();
     await poePage.verifyFilterChipVisible("dust", true);
 
@@ -931,7 +930,7 @@ test.describe("Dust Value Filter Functionality", () => {
     await lowerBoundResetButton.click();
 
     // Verify lower bound is reset
-    const rangeAfter = await poePage.getDustFilterRange();
+    const rangeAfter = await poePage.getFilterRange("dust");
     expect(rangeAfter.min).toBeUndefined();
 
     // Verify all other filters are still active
@@ -959,7 +958,7 @@ test.describe("Dust Value Filter Functionality", () => {
     await poePage.switchToTab("dust");
 
     // Set only upper bound (lower bound should not be active)
-    await poePage.setDustFilterValuePercent("upper", 50);
+    await poePage.setFilterValuePercent("dust", "upper", 50);
     await poePage.verifyFilterChipVisible("dust", true);
 
     // Lower bound reset button should be disabled
@@ -976,7 +975,7 @@ test.describe("Dust Value Filter Functionality", () => {
     await poePage.switchToTab("dust");
 
     // Set only lower bound (upper bound should not be active)
-    await poePage.setDustFilterValuePercent("lower", 50);
+    await poePage.setFilterValuePercent("dust", "lower", 50);
     await poePage.verifyFilterChipVisible("dust", true);
 
     // Upper bound reset button should be disabled
@@ -992,7 +991,7 @@ test.describe("Gold Fee Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("gold", false);
     await poePage.openTabbedFilter();
 
-    await poePage.setGoldFilterValuePercent("lower", 25);
+    await poePage.setFilterValuePercent("gold", "lower", 25);
     await poePage.verifyFilterChipVisible("gold", true);
   });
 
@@ -1000,7 +999,7 @@ test.describe("Gold Fee Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("gold", false);
     await poePage.openTabbedFilter();
 
-    await poePage.setGoldFilterValuePercent("upper", 75);
+    await poePage.setFilterValuePercent("gold", "upper", 75);
     await poePage.verifyFilterChipVisible("gold", true);
   });
 
@@ -1009,18 +1008,18 @@ test.describe("Gold Fee Filter Functionality", () => {
     await poePage.openTabbedFilter();
 
     // 1) Set only lower bound
-    await poePage.setGoldFilterValuePercent("lower", 25);
+    await poePage.setFilterValuePercent("gold", "lower", 25);
     await poePage.verifyFilterChipVisible("gold", true);
 
-    const lowerOnly = await poePage.getGoldFilterRange();
+    const lowerOnly = await poePage.getFilterRange("gold");
     expect(lowerOnly.min).toBeGreaterThan(1500); // Min gold fee value
     expect(lowerOnly.max).toBeUndefined();
 
     // 2) Now set upper bound as well, creating a bounded range
-    await poePage.setGoldFilterValuePercent("upper", 75);
+    await poePage.setFilterValuePercent("gold", "upper", 75);
     await poePage.verifyFilterChipVisible("gold", true);
 
-    const rangeBoth = await poePage.getGoldFilterRange();
+    const rangeBoth = await poePage.getFilterRange("gold");
     expect(rangeBoth.min).toBe(lowerOnly.min);
     expect(rangeBoth.max).toBeDefined();
     expect(rangeBoth.max).toBeLessThan(80000); // Max gold fee value
@@ -1032,7 +1031,7 @@ test.describe("Gold Fee Filter Functionality", () => {
     await poePage.openTabbedFilter();
 
     // Set gold fee filter first
-    await poePage.setGoldFilterValuePercent("lower", 25);
+    await poePage.setFilterValuePercent("gold", "lower", 25);
     await poePage.verifyFilterChipVisible("gold", true);
 
     // Apply name filter
@@ -1050,11 +1049,11 @@ test.describe("Gold Fee Filter Functionality", () => {
     await poePage.openTabbedFilter();
 
     // Set gold fee filter first
-    await poePage.setGoldFilterValuePercent("lower", 25);
+    await poePage.setFilterValuePercent("gold", "lower", 25);
     await poePage.verifyFilterChipVisible("gold", true);
 
     // Apply price filter
-    await poePage.setPriceFilterValuePercent("lower", 50);
+    await poePage.setFilterValuePercent("price", "lower", 50);
     await poePage.verifyFilterChipVisible("price", true);
 
     // Verify gold fee filter is still active
@@ -1067,11 +1066,11 @@ test.describe("Gold Fee Filter Functionality", () => {
     await poePage.openTabbedFilter();
 
     // Set gold fee filter first
-    await poePage.setGoldFilterValuePercent("lower", 25);
+    await poePage.setFilterValuePercent("gold", "lower", 25);
     await poePage.verifyFilterChipVisible("gold", true);
 
     // Apply dust value filter
-    await poePage.setDustFilterValuePercent("lower", 30);
+    await poePage.setFilterValuePercent("dust", "lower", 30);
     await poePage.verifyFilterChipVisible("dust", true);
 
     // Verify gold fee filter is still active
@@ -1083,11 +1082,11 @@ test.describe("Gold Fee Filter Functionality", () => {
   }) => {
     // Set a gold fee filter
     await poePage.openTabbedFilter();
-    await poePage.setGoldFilterValuePercent("lower", 25);
+    await poePage.setFilterValuePercent("gold", "lower", 25);
     await poePage.verifyFilterChipVisible("gold", true);
 
     // Get the filter range before refresh
-    const filterRangeBefore = await poePage.getGoldFilterRange();
+    const filterRangeBefore = await poePage.getFilterRange("gold");
     expect(filterRangeBefore.min).toBeDefined();
     expect(filterRangeBefore.min).toBeGreaterThan(1500);
 
@@ -1098,7 +1097,7 @@ test.describe("Gold Fee Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("gold", true);
 
     // Verify the filter range is the same as before refresh
-    const filterRangeAfter = await poePage.getGoldFilterRange();
+    const filterRangeAfter = await poePage.getFilterRange("gold");
     expect(filterRangeAfter.min).toBe(filterRangeBefore.min);
     expect(filterRangeAfter.max).toBe(filterRangeBefore.max);
   });
@@ -1109,10 +1108,10 @@ test.describe("Gold Fee Filter Functionality", () => {
     await poePage.openTabbedFilter(); // Open tabbed filter
 
     // Set only lower bound
-    await poePage.setGoldFilterValuePercent("lower", 75);
+    await poePage.setFilterValuePercent("gold", "lower", 75);
     await poePage.verifyFilterChipVisible("gold", true);
 
-    const rangeBefore = await poePage.getGoldFilterRange();
+    const rangeBefore = await poePage.getFilterRange("gold");
     expect(rangeBefore.min).toBeGreaterThan(0);
 
     // Reset lower bound using individual reset button
@@ -1132,10 +1131,10 @@ test.describe("Gold Fee Filter Functionality", () => {
     await poePage.openTabbedFilter(); // Open tabbed filter
 
     // Set only upper bound
-    await poePage.setGoldFilterValuePercent("upper", 75);
+    await poePage.setFilterValuePercent("gold", "upper", 75);
     await poePage.verifyFilterChipVisible("gold", true);
 
-    const rangeBefore = await poePage.getGoldFilterRange();
+    const rangeBefore = await poePage.getFilterRange("gold");
     expect(rangeBefore.max).toBeGreaterThan(0);
 
     // Reset upper bound using individual reset button
@@ -1156,11 +1155,11 @@ test.describe("Gold Fee Filter Functionality", () => {
     await poePage.switchToTab("gold");
 
     // Set both bounds to create a range
-    await poePage.setGoldFilterValuePercent("lower", 25);
-    await poePage.setGoldFilterValuePercent("upper", 75);
+    await poePage.setFilterValuePercent("gold", "lower", 25);
+    await poePage.setFilterValuePercent("gold", "upper", 75);
     await poePage.verifyFilterChipVisible("gold", true);
 
-    const rangeBefore = await poePage.getGoldFilterRange();
+    const rangeBefore = await poePage.getFilterRange("gold");
     expect(rangeBefore.min).toBeGreaterThan(0);
 
     // Reset lower bound using individual reset button
@@ -1171,7 +1170,7 @@ test.describe("Gold Fee Filter Functionality", () => {
     await lowerBoundResetButton.click();
 
     // Verify lower bound is reset (should be undefined now)
-    const rangeAfter = await poePage.getGoldFilterRange();
+    const rangeAfter = await poePage.getFilterRange("gold");
     expect(rangeAfter.min).toBeUndefined();
     expect(rangeAfter.max).toBe(rangeBefore.max); // Upper bound should remain unchanged
 
@@ -1186,11 +1185,11 @@ test.describe("Gold Fee Filter Functionality", () => {
     await poePage.switchToTab("gold");
 
     // Set both bounds to create a range
-    await poePage.setGoldFilterValuePercent("lower", 25);
-    await poePage.setGoldFilterValuePercent("upper", 75);
+    await poePage.setFilterValuePercent("gold", "lower", 25);
+    await poePage.setFilterValuePercent("gold", "upper", 75);
     await poePage.verifyFilterChipVisible("gold", true);
 
-    const rangeBefore = await poePage.getGoldFilterRange();
+    const rangeBefore = await poePage.getFilterRange("gold");
     expect(rangeBefore.min).toBeGreaterThan(0);
     expect(rangeBefore.max).toBeDefined();
 
@@ -1202,7 +1201,7 @@ test.describe("Gold Fee Filter Functionality", () => {
     await upperBoundResetButton.click();
 
     // Verify upper bound is reset (should be undefined now)
-    const rangeAfter = await poePage.getGoldFilterRange();
+    const rangeAfter = await poePage.getFilterRange("gold");
     expect(rangeAfter.min).toBe(rangeBefore.min); // Lower bound should remain unchanged
     expect(rangeAfter.max).toBeUndefined();
 
@@ -1214,8 +1213,8 @@ test.describe("Gold Fee Filter Functionality", () => {
     poePage,
   }) => {
     await poePage.openTabbedFilter();
-    await poePage.setGoldFilterValuePercent("lower", 25);
-    await poePage.setGoldFilterValuePercent("upper", 75);
+    await poePage.setFilterValuePercent("gold", "lower", 25);
+    await poePage.setFilterValuePercent("gold", "upper", 75);
     await poePage.closeTabbedFilter();
     await poePage.verifyFilterChipVisible("gold", true);
 
@@ -1237,7 +1236,7 @@ test.describe("Gold Fee Filter Functionality", () => {
     await lowerBoundResetButton.click();
 
     // Verify lower bound is reset
-    const rangeAfter = await poePage.getGoldFilterRange();
+    const rangeAfter = await poePage.getFilterRange("gold");
     expect(rangeAfter.min).toBeUndefined();
 
     // Verify all other filters are still active
@@ -1265,7 +1264,7 @@ test.describe("Gold Fee Filter Functionality", () => {
     await poePage.switchToTab("gold");
 
     // Set only upper bound (lower bound should not be active)
-    await poePage.setGoldFilterValuePercent("upper", 50);
+    await poePage.setFilterValuePercent("gold", "upper", 50);
     await poePage.verifyFilterChipVisible("gold", true);
 
     // Lower bound reset button should be disabled
@@ -1282,7 +1281,7 @@ test.describe("Gold Fee Filter Functionality", () => {
     await poePage.switchToTab("gold");
 
     // Set only lower bound (upper bound should not be active)
-    await poePage.setGoldFilterValuePercent("lower", 50);
+    await poePage.setFilterValuePercent("gold", "lower", 50);
     await poePage.verifyFilterChipVisible("gold", true);
 
     // Upper bound reset button should be disabled

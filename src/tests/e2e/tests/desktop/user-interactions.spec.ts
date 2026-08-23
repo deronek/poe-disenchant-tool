@@ -17,7 +17,7 @@ test.describe("Row Selection & Marking", () => {
     await poePage.selectItem(first.name); // toggle off
     await poePage.verifyItemSelected(first.name, false);
 
-    await poePage.expectRowSelectedStyle(second.name, true);
+    await poePage.verifyItemSelectedState(second.name, true);
   });
 
   test("should support checkbox selection with keyboard", async ({

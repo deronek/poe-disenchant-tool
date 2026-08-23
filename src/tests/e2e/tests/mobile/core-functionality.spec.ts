@@ -1,0 +1,37 @@
+// Shared chrome (page metadata, league/theme dropdown internals, keyboard
+// handling) repeats tests/desktop/core-functionality.spec.ts; this file keeps
+// only what behaves differently at card-layout sizes.
+import { DEFAULT_LEAGUE, LEAGUE_SLUGS } from "@/lib/leagues";
+import { expect, testMobile as test } from "../../fixtures";
+
+test.describe("League Selector Functionality", () => {
+  test("should re-render cards when the league changes", async ({
+    poePage,
+  }) => {
+    const leagueToSelect = LEAGUE_SLUGS.find((key) => key !== DEFAULT_LEAGUE)!;
+    expect(leagueToSelect).toBeDefined();
+
+    await poePage.selectLeague(leagueToSelect);
+    await poePage.waitForDataLoad();
+    await poePage.verifyLeagueSelected(leagueToSelect);
+    expect(await poePage.mobileCards.count()).toBeGreaterThan(0);
+  });
+});
+
+test.describe("Last Updated Functionality", () => {
+  test("should show absolute time in a tap popover instead of a hover tooltip", async ({
+    poePage,
+  }) => {
+    const popover = await poePage.getLastUpdatedPopover();
+
+    await expect(popover).toHaveText(/absolute time/i);
+    const absoluteTime = popover.locator("time").first();
+    const displayedText = await absoluteTime.innerText();
+    expect(displayedText.trim().length).toBeGreaterThan(0);
+    expect(displayedText).toMatch(/\d/);
+    expect(displayedText).not.toMatch(/Invalid Date|NaN/);
+    await poePage.verifyDateTimeAttribute(absoluteTime);
+
+    await poePage.closeLastUpdatedPopover();
+  });
+});

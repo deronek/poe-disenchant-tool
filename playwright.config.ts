@@ -22,8 +22,18 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
+      // Scoped so the desktop project never picks up mobile specs
+      testDir: "./src/tests/e2e/tests/desktop",
       use: {
         ...devices["Desktop Chrome"],
+      },
+    },
+    {
+      name: "mobile-chromium",
+      // Scoped so the mobile project never picks up desktop specs
+      testDir: "./src/tests/e2e/tests/mobile",
+      use: {
+        ...devices["Pixel 5"],
       },
     },
     // Visual Regression Test - light and dark themes
@@ -53,8 +63,6 @@ export default defineConfig({
     },
     // { name: "firefox", use: { ...devices["Desktop Firefox"] } },
     // { name: "webkit", use: { ...devices["Desktop Safari"] } },
-    // { name: "Mobile Chrome", use: { ...devices["Pixel 5"] } },
-    // { name: "Mobile Safari", use: { ...devices["iPhone 12"] } },
   ],
   webServer: {
     command: "pnpm dev",

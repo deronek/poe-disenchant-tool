@@ -40,7 +40,7 @@ function DataTableRow<TData extends ViewItem>({ row }: { row: AppRow<TData> }) {
 
   return (
     <TableRow
-      data-state={isSelected && "selected"}
+      data-state={isSelected ? "selected" : undefined}
       className={
         "data-[state=selected]:bg-muted/40 even:bg-background bg-background-200 h-11 transition-none data-[state=selected]:opacity-95"
       }

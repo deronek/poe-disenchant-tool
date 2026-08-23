@@ -13,13 +13,19 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  desktop:
-    name: Desktop Tests (${{ matrix.project }})
+  e2e:
+    name: E2E Tests (${{ matrix.suite }} / ${{ matrix.project }})
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        project: [chromium]
-        # project: [chromium, firefox, webkit]
+        include:
+          - suite: desktop
+            project: chromium
+            script: test:desktop
+          - suite: mobile
+            project: mobile-chromium
+            script: test:mobile
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -41,24 +47,16 @@ jobs:
         run: pnpm install
 
       - name: Install Playwright Browsers
-        run: |
-          if [[ "${{ matrix.project }}" == "chromium" || "${{ matrix.project }}" == "Mobile Chrome" ]]; then
-            npx playwright install chromium --with-deps
-          elif [[ "${{ matrix.project }}" == "firefox" ]]; then
-            npx playwright install firefox --with-deps
-          elif [[ "${{ matrix.project }}" == "webkit" || "${{ matrix.project }}" == "Mobile Safari" ]]; then
-            npx playwright install webkit --with-deps
-          fi
+        run: npx playwright install chromium --with-deps
 
-      - name: Run Desktop Tests (incl. common)
+      - name: Run E2E Tests
         run: |
-          pnpm test:desktop -- --project="${{ matrix.project }}"
-        #   npx playwright test tests/common --project="${{ matrix.project }}"
+          pnpm ${{ matrix.script }} -- --project="${{ matrix.project }}"
 
-      - name: Upload Desktop Report Artifacts
+      - name: Upload Report Artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: report-desktop-${{ matrix.project }}
+          name: report-${{ matrix.suite }}-${{ matrix.project }}
           path: playwright-report/
           retention-days: 7

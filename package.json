@@ -14,7 +14,7 @@
     "test:unit:ui": "vitest --config vitest.jsdom.config.mts",
     "test:ui": "playwright test --ui",
     "test:desktop": "playwright test tests/desktop",
-    "test:mobile": "playwright test tests/desktop",
+    "test:mobile": "playwright test tests/mobile",
     "test:headed": "playwright test --headed",
     "test:report": "playwright show-report",
     "test:update": "playwright test --update-snapshots",
