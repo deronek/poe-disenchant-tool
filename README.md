@@ -1,75 +1,69 @@
 # poe-disenchant-tool
 
-![Vercel Deploy](https://deploy-badge.vercel.app/vercel/poe-disenchant-tool)
+[![Vercel Deploy](data/readme/vercel-deployed.svg)](https://poe-disenchant-tool.vercel.app)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
-Path of Exile tool for calculating unique item disenchanting efficiency across multiple leagues. Compares item market prices with Thaumaturgic Dust values and calculates gold fees for async trades.
+Path of Exile tool for calculating unique item disenchanting efficiency across multiple leagues. It compares market prices against Thaumaturgic Dust values to find which uniques are worth buying and disenchanting.
 
 ## Usage
 
-1. **Sort by Dust per Chaos** (default) to find the most efficient trades.
-2. **Apply filters** to skip low dust value or high gold fee items.
-3. **Use the trade link** on each item and purchase any available at a good price.
-4. **Mark items as traded** afterwards.
-5. **Stop** when Dust per Chaos drops below your target efficiency.
-   - Community often uses **5,000+ Dust per Chaos** as a cut-off point.
-6. Over time, the market will naturally refresh with new listings - **clear all marks** and repeat the process.
-7. **Refresh the page** to see the latest data.
+1. Sort by Dust per Chaos to find the most efficient trades.
+   - If you buy through async trades and pay the Gold Fee each time, use the Efficiency column in Dust / Total Cost mode instead so the fee is included.
+2. Apply filters to skip items with low Dust Value or a high Gold Fee.
+3. Open the trade link on an item and buy any listing at a good price.
+4. Mark purchased items to track progress across sessions.
+5. Stop once your sort metric drops below your target. A common cut-off for Dust per Chaos is 5,000.
+6. Prices refresh hourly. When fresh listings appear, clear your marks and repeat.
 
 ## Features
 
-- Real-time price data from poe.ninja API (refreshed every 1 hour)
+- Market prices from the poe.ninja API, refreshed hourly
 - Multi-league support
-- Dust value calculations based on item type, level, and quality
-- Smart catalyst recommendations for jewellery
-- Filtering options:
-  - Name
-  - Price
-  - Dust value
-  - Gold fee
-- Sorting options:
-  - Dust per Chaos
-  - Configurable efficiency metric: Dust per Chaos per slot, Dust per Gold, or Dust per Total Cost
-  - Price
-  - Dust value
-  - Gold fee
-- Persistent item marking with local storage
-- Direct trade search integration with adjustable filter settings
-- Low stock warnings for items with limited availability
-- Responsive design with mobile card layout
-- Dark/light theme support
+- Dust Value based on item level, quality and influences
+- Gold Fee estimates for async trades
+- Catalyst recommendations for jewellery based on catalyst market prices
+- Configurable Efficiency metric (see [Efficiency](#efficiency))
+- Trade search links that honor adjustable settings (see [Advanced trade settings](#advanced-trade-settings))
+- Marks, filters, and user settings persist between sessions
 
 ### Dust Value
 
-- **Weapons/Armors**: Use ilvl 84, q20 values
-  - _Exception_: Quivers (cannot have quality) use ilvl 84, q0 values
-- **Accessories**: Smart calculation based on catalyst cost vs benefit
-  - If catalysted dust per chaos > non-catalyzed: use ilvl 84, q20 values
-  - Otherwise: use ilvl 84, q0 values
-  - Catalyst suggestions shown in the UI
+Dust values come from community-sourced mappings based on ilvl 84 data.
 
-### Key Metrics
+- Weapons and armor use q20 values.
+  - Items that cannot have quality use q0 values instead.
+- Jewellery uses whichever of two values yields more Dust per Chaos:
+  - Catalyzed, meaning q20 values after buying 20 of the cheapest catalyst on the market.
+  - Uncatalyzed, meaning q0 values as-is.
+- Items worth catalyzing are highlighted in the table.
 
-- **Dust per Chaos**: `dustValue / chaosPrice`: Higher = more efficient
-- **Dust per Chaos per Slot**: `dustPerChaos / itemSlots`: For comparing items with different slot counts
-- **Gold Cost**: calculated fee for async trades
-- **Dust per Gold**: `dustValue / goldFee`; higher is more Gold-efficient
-- **Dust per Total Cost**: dust divided by price including user-defined Chaos value of Gold
+### Key metrics
 
-### Advanced Trade Settings
+- **Dust per Chaos.** `dustValue / chaosPrice`. Higher is more efficient.
+- **Gold Fee.** The estimated gold cost charged by the trade site for async trades.
+- **Dust per Gold.** `dustValue / goldFee`. Higher means more dust per gold spent.
+- **Dust per Total Cost.** Dust divided by the item's total cost, which is its price plus your Gold valuation of the Gold Fee (see [Efficiency](#efficiency)).
 
-- Minimum Item Level
-- Include Corrupted
-- Online Status:
-  - Instant Buyout & In-Person
-  - Instant Buyout Only
-  - In-Person Only
-  - Any (Possibly Offline)
-- Listing Time
-  - Any time, Up to an hour, Up to 3 hours
-  - Up to 12 hours, Up to a day, Up to 3 days, Up to a week
+### Efficiency
 
-## Tech Stack
+The Efficiency column ranks items using one of three selectable modes:
+
+- **Dust / Total Cost.** The default mode. Adds the Gold Fee to the item price at your Gold valuation.
+- **Dust / Chaos / Slot.** Divides Dust per Chaos by the item's inventory slot count, so small items compete with large ones.
+- **Dust / Gold.** Ignores price and compares Dust Value against the Gold Fee.
+
+In Total Cost mode each row shows a breakdown of the effective cost, including the catalyst purchase for jewellery worth catalyzing.
+
+### Advanced trade settings
+
+Trade search links honor these settings:
+
+- Minimum Item Level, from 65 to 84. Defaults to 84 because dust values assume level 84 items, anything lower yields less dust than the listed value
+- Include Corrupted Items, enabled by default
+- Online Status, matching the options available on the trade site
+- Listing Time, from Up to an hour ago to Up to a week ago
+
+## Tech stack
 
 - Next.js 16, React 19, TypeScript
 - Tailwind CSS 4, shadcn/ui
@@ -87,17 +81,54 @@ pnpm dev
 
 Open http://localhost:3000
 
-## Data Sources
+Dev mode serves local price data from `data/prices/dev-data`, not live poe.ninja data. Catalyst and divine rates are hardcoded. Run `pnpm populate-devdata` to refresh that data from poe.ninja.
 
-- **Prices**: poe.ninja API for real-time market data
-- **Dust Values**: Community-sourced mappings, based on [PoEDB.tw](https://poedb.tw)
-- **Items**: Merges price and dust data to calculate efficiency metrics
+Other commands:
+
+```bash
+pnpm lint  # prettier check, eslint, typecheck
+pnpm build # production build, fetches live prices from poe.ninja
+```
+
+Two files hold the dust data in `data/dust/`:
+
+- `poe-dust-original.js`: the source dataset, with a raw dust value and inventory footprint per unique
+- `poe-dust.js`: what the app reads, generated from the source by `pnpm dust:process`
+
+The prebuild hook validates the generated file before every `pnpm build`. To validate or regenerate manually:
+
+```bash
+pnpm dust:validate # validate the current dataset
+pnpm dust:process  # regenerate from source data, then validate
+```
+
+## Testing
+
+All suites run on pull requests in CI. To run them locally:
+
+### Unit tests
+
+These cover implementations that needed verification rather than the whole codebase. `pnpm test:unit` runs logic tests in Node, and `pnpm test:unit:ui` renders components in jsdom.
+
+### E2E tests
+
+A large Playwright suite that drives the app in a real browser, currently desktop Chromium only. It runs slower than the other suites.
+
+```bash
+pnpm test:install # one-time setup: download browser binaries
+pnpm test:desktop # headless run of the full suite
+pnpm test:ui      # interactive mode
+```
+
+### Visual regression tests
+
+CI only. Compare rendered pages against committed screenshots in light and dark themes to catch unintended visible changes. Intended visual changes get new snapshots through the Update VRT Snapshots workflow.
 
 ## Credits
 
-- @rasmuskl for [poe.ninja](https://poe.ninja) API providing real-time market data
+- @rasmuskl for [poe.ninja](https://poe.ninja) and its API providing the price data
 - @alserom for creating [this list](https://gist.github.com/alserom/22bdd4106806cbd4f85a5cb8c4345c08#file-poe-dust-csv), used as the basis for dust value calculations
-- [PoEDB.tw](https://poedb.tw) for comprehensive unique item data
+- [PoEDB.tw](https://poedb.tw) for unique item and dust value data
 
 ## License
 
