@@ -94,6 +94,7 @@ test.describe("Advanced Settings Panel", () => {
     expect(box!.x).toBeGreaterThanOrEqual(0);
     expect(box!.y).toBeGreaterThanOrEqual(0);
     expect(box!.x + box!.width).toBeLessThanOrEqual(viewport.width);
+    expect(box!.y + box!.height).toBeLessThanOrEqual(viewport.height);
     await poePage.closeAdvancedSettings();
   });
 });

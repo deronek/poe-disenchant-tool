@@ -1,3 +1,4 @@
+import { DEFAULT_PAGE_SIZE } from "@/components/data-table/pagination-persistence";
 import { expect, testMobile as test } from "../../fixtures";
 
 test.describe("Name Filter Functionality", () => {
@@ -23,8 +24,7 @@ test.describe("Name Filter Functionality", () => {
     await poePage.waitForFilterDebounce();
 
     await poePage.verifyNoNameFilterActive();
-    const { rowsPerPage } = await poePage.getPaginationInfo();
-    expect(await poePage.mobileCardHeadings.count()).toBe(rowsPerPage);
+    expect(await poePage.mobileCardHeadings.count()).toBe(DEFAULT_PAGE_SIZE);
   });
 
   test("should clear the name filter via the filter chip", async ({
@@ -128,8 +128,7 @@ test.describe("Range Filter Functionality", () => {
     await poePage.verifyFilterChipVisible("dust", false);
     await poePage.closeTabbedFilter();
 
-    const { rowsPerPage } = await poePage.getPaginationInfo();
-    expect(await poePage.mobileCardHeadings.count()).toBe(rowsPerPage);
+    expect(await poePage.mobileCardHeadings.count()).toBe(DEFAULT_PAGE_SIZE);
   });
 
   test("should persist applied range filters across page reloads", async ({
