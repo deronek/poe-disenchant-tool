@@ -4,7 +4,7 @@ test.describe("Responsive Layout Switching", () => {
   test("should render the card layout and hide the desktop table", async ({
     poePage,
   }) => {
-    expect(await poePage.mobileCards.count()).toBeGreaterThan(0);
+    expect(await poePage.mobileCardHeadings.count()).toBeGreaterThan(0);
 
     await expect(poePage.dataTable).toBeHidden();
     await expect(poePage.rowsPerPageSelectTrigger).toBeHidden();

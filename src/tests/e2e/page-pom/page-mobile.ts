@@ -29,7 +29,9 @@ export class PoEDisenchantMobilePage extends PoEDisenchantPageBase {
   // ---------------------------
 
   override async waitForDataLoad(timeout = 15000) {
-    await this.mobileCards.first().waitFor({ state: "visible", timeout });
+    await this.mobileCardHeadings
+      .first()
+      .waitFor({ state: "visible", timeout });
   }
 
   override async selectItem(name: string) {
@@ -58,7 +60,7 @@ export class PoEDisenchantMobilePage extends PoEDisenchantPageBase {
   // Mobile Card Layout
   // ---------------------------
 
-  get mobileCards() {
+  get mobileCardHeadings() {
     return this.leagueTable.getByRole("heading", { level: 3 });
   }
 
@@ -99,7 +101,7 @@ export class PoEDisenchantMobilePage extends PoEDisenchantPageBase {
   }
 
   async getCardNames(limit = Number.POSITIVE_INFINITY): Promise<string[]> {
-    const cards = this.mobileCards;
+    const cards = this.mobileCardHeadings;
     const count = Math.min(await cards.count(), limit);
     const names: string[] = [];
     for (let i = 0; i < count; i++) {
@@ -211,8 +213,8 @@ export class PoEDisenchantMobilePage extends PoEDisenchantPageBase {
   // Pagination (mobile-adapted)
   // ---------------------------
 
-  // The rows-per-page select is hidden below lg; derive the page size from
-  // the summary instead of reading the hidden control.
+  // Rows-per-page select hides below lg; rowsPerPage counts items on the
+  // current page and shrinks on the last page
   override async getPaginationInfo(): Promise<PaginationInfo> {
     const parsed = await this.parsePaginationText();
 

@@ -55,6 +55,7 @@ test.describe("Data Rendering and Formatting", () => {
           // Parse compact value and compare to full value with tolerance
           expect(
             poePage.compareCompactAndFullValues(data.displayed, data.full),
+            `displayed=${JSON.stringify(data.displayed)} full=${data.full}`,
           ).toBeTruthy();
         }
       });

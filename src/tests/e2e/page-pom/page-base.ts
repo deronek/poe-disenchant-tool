@@ -22,6 +22,12 @@ export function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+const COMPACT_SUFFIX_MULTIPLIERS: Record<string, number> = {
+  K: 1_000,
+  M: 1_000_000,
+  B: 1_000_000_000,
+};
+
 export class SettingsPanel {
   constructor(
     private readonly trigger: Locator,
@@ -321,7 +327,10 @@ export abstract class PoEDisenchantPageBase {
   // Compact Number Helpers
   // ---------------------------
 
-  parseCompactValue(compactValue: string): number {
+  private parseCompactParts(compactValue: string): {
+    value: number;
+    suffix: string;
+  } {
     // Formatters emit grouping separators ("152,180"); drop them first
     const cleanValue = compactValue.replace(/,/g, "").trim().toUpperCase();
 
@@ -330,19 +339,12 @@ export abstract class PoEDisenchantPageBase {
       throw new Error(`Invalid compact value format: ${compactValue}`);
     }
 
-    const numericPart = parseFloat(match[1]);
-    const suffix = match[2];
+    return { value: parseFloat(match[1]), suffix: match[2] };
+  }
 
-    switch (suffix) {
-      case "K":
-        return numericPart * 1_000;
-      case "M":
-        return numericPart * 1_000_000;
-      case "B":
-        return numericPart * 1_000_000_000;
-      default:
-        return numericPart;
-    }
+  parseCompactValue(compactValue: string): number {
+    const { value, suffix } = this.parseCompactParts(compactValue);
+    return value * (COMPACT_SUFFIX_MULTIPLIERS[suffix] ?? 1);
   }
 
   /** True when the compact string matches the full value within rounding loss. */
@@ -350,29 +352,12 @@ export abstract class PoEDisenchantPageBase {
     compactValue: string,
     fullValue: number,
   ): boolean {
-    const parsedCompact = this.parseCompactValue(compactValue);
-    const cleanValue = compactValue.trim().toUpperCase();
-    const match = cleanValue.match(/([0-9]+(?:\.[0-9]+)?)\s*([KMB]?)\b/);
-    const suffix = match?.[2] || "";
+    const { value, suffix } = this.parseCompactParts(compactValue);
+    const multiplier = COMPACT_SUFFIX_MULTIPLIERS[suffix] ?? 1;
 
-    // Half of the smallest unit at 1 decimal place, per suffix magnitude
-    let tolerance: number;
-    switch (suffix) {
-      case "K":
-        tolerance = 50;
-        break;
-      case "M":
-        tolerance = 50_000;
-        break;
-      case "B":
-        tolerance = 50_000_000;
-        break;
-      default:
-        tolerance = 0.5;
-    }
-
-    const difference = Math.abs(parsedCompact - fullValue);
-    return difference <= tolerance;
+    const difference = Math.abs(value * multiplier - fullValue);
+    // Half the smallest unit at 1 decimal place
+    return difference <= multiplier * 0.05;
   }
 
   // ---------------------------

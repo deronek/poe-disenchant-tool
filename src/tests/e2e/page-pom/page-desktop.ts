@@ -22,24 +22,19 @@ export class PoEDisenchantDesktopPage extends PoEDisenchantPageBase {
   }
 
   override async selectItem(name: string) {
-    const row = this.page.locator("tr").filter({ hasText: name });
-    const checkbox = row.getByRole("checkbox");
+    const checkbox = this.getItemRow(name).getByRole("checkbox");
     await checkbox.scrollIntoViewIfNeeded();
     await checkbox.click();
   }
 
   override async verifyItemSelected(name: string, selected: boolean) {
-    const checkbox = this.page
-      .locator("tr")
-      .filter({ hasText: name })
-      .getByRole("checkbox");
-
+    const checkbox = this.getItemRow(name).getByRole("checkbox");
     if (selected) await expect(checkbox).toBeChecked();
     else await expect(checkbox).not.toBeChecked();
   }
 
   override async verifyItemDisplayed(name: string, shouldExist = true) {
-    const row = this.page.locator("tr").filter({ hasText: name });
+    const row = this.rowsByName(name);
     if (shouldExist) await expect(row).toBeVisible();
     else await expect(row).toHaveCount(0);
   }
@@ -47,7 +42,7 @@ export class PoEDisenchantDesktopPage extends PoEDisenchantPageBase {
   override async verifyNoItemsDisplayed(): Promise<void> {
     const visibleRows = await this.dataTableRows.count();
     expect(visibleRows).toBe(1);
-    expect(this.dataTableRows).toHaveText(/No results/);
+    await expect(this.dataTableRows).toHaveText(/No results/);
   }
 
   override getTradeLinkLocator(itemName: string) {
@@ -147,17 +142,19 @@ export class PoEDisenchantDesktopPage extends PoEDisenchantPageBase {
     return items.map((item) => item.name);
   }
 
-  getItemRow(itemName: string) {
+  private rowsByName(itemName: string) {
     const escapedName = escapeRegExp(itemName.trim().replace(/\s+/g, " "));
-    return this.dataTableRows
-      .filter({
-        has: this.page.locator("td").filter({
-          has: this.page.locator("p:first-child", {
-            hasText: new RegExp(`^\\s*${escapedName}\\s*$`),
-          }),
+    return this.dataTableRows.filter({
+      has: this.page.locator("td").filter({
+        has: this.page.locator("p:first-child", {
+          hasText: new RegExp(`^\\s*${escapedName}\\s*$`),
         }),
-      })
-      .first();
+      }),
+    });
+  }
+
+  getItemRow(itemName: string) {
+    return this.rowsByName(itemName).first();
   }
 
   async getCell(itemName: string, columnName: string) {
@@ -287,12 +284,19 @@ export class PoEDisenchantDesktopPage extends PoEDisenchantPageBase {
     await header.click();
 
     if (direction) {
-      let currentDirection = await this.getColumnSortState(columnName);
-      while (currentDirection !== direction) {
+      // Sorting removal is off, so sorts toggle asc/desc; at most one
+      // extra click reaches the target
+      await expect(header).toHaveAttribute(
+        "aria-sort",
+        /^(ascending|descending)$/,
+      );
+      if ((await this.getColumnSortState(columnName)) !== direction) {
         await header.click();
-        currentDirection = await this.getColumnSortState(columnName);
-        await this.page.waitForTimeout(100);
       }
+      await expect(header).toHaveAttribute(
+        "aria-sort",
+        direction === "asc" ? "ascending" : "descending",
+      );
     }
 
     await this.page.waitForTimeout(300); // Wait for sort animation

@@ -70,6 +70,9 @@ test.describe("Mobile Sorting Dropdown", () => {
     });
   }
 
+  // Name sorts via TanStack's basic comparator: case-sensitive code-unit order
+  const byName = (a: string, b: string) => (a === b ? 0 : a > b ? 1 : -1);
+
   test("should sort by name descending then toggle to ascending", async ({
     poePage,
   }) => {
@@ -78,19 +81,15 @@ test.describe("Mobile Sorting Dropdown", () => {
 
     let names = await poePage.getCardNames();
     expect(names.length).toBeGreaterThanOrEqual(2);
-    const descending = [...names]
-      .map((n) => n.toLowerCase())
-      .sort((a, b) => b.localeCompare(a));
-    expect(names.map((n) => n.toLowerCase())).toEqual(descending);
+    const descending = [...names].sort((a, b) => byName(b, a));
+    expect(names).toEqual(descending);
 
     await poePage.sortByOption("Name");
     await poePage.verifySortTriggerState("Name", "ascending");
 
     names = await poePage.getCardNames();
-    const ascending = [...names]
-      .map((n) => n.toLowerCase())
-      .sort((a, b) => a.localeCompare(b));
-    expect(names.map((n) => n.toLowerCase())).toEqual(ascending);
+    const ascending = [...names].sort(byName);
+    expect(names).toEqual(ascending);
   });
 
   test("should sort by price descending with numeric ordering", async ({

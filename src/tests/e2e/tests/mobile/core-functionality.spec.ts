@@ -1,7 +1,7 @@
 // Shared chrome (page metadata, league/theme dropdown internals, keyboard
 // handling) repeats tests/desktop/core-functionality.spec.ts; this file keeps
 // only what behaves differently at card-layout sizes.
-import { DEFAULT_LEAGUE, LEAGUE_SLUGS } from "@/lib/leagues";
+import { DEFAULT_LEAGUE, getLeagueName, LEAGUE_SLUGS } from "@/lib/leagues";
 import { expect, testMobile as test } from "../../fixtures";
 
 test.describe("League Selector Functionality", () => {
@@ -12,9 +12,12 @@ test.describe("League Selector Functionality", () => {
     expect(leagueToSelect).toBeDefined();
 
     await poePage.selectLeague(leagueToSelect);
+    // Dev data is league-independent; the title proves the new league rendered
+    await expect(poePage.page).toHaveTitle(
+      new RegExp(`^${getLeagueName(leagueToSelect)}\\b`),
+    );
     await poePage.waitForDataLoad();
     await poePage.verifyLeagueSelected(leagueToSelect);
-    expect(await poePage.mobileCards.count()).toBeGreaterThan(0);
   });
 });
 

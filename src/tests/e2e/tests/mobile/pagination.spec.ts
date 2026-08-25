@@ -1,3 +1,4 @@
+import { DEFAULT_PAGE_SIZE } from "@/components/data-table/pagination-persistence";
 import { MIN_ITEM_LEVEL_RANGE } from "@/lib/filters";
 import { expect, testMobile as test } from "../../fixtures";
 
@@ -12,7 +13,7 @@ test.describe("Pagination Functionality", () => {
     const info = await poePage.getPaginationInfo();
     expect(info.start).toBe(1);
     expect(info.currentPage).toBe(1);
-    expect(info.rowsPerPage).toBe(10); // default page size
+    expect(info.rowsPerPage).toBe(DEFAULT_PAGE_SIZE);
     expect(info.total).toBeGreaterThanOrEqual(1);
     expect(info.totalPages).toBeGreaterThanOrEqual(1);
   });
@@ -40,7 +41,10 @@ test.describe("Pagination Functionality", () => {
     const before = await poePage.getPaginationInfo();
 
     const after = await poePage.goToNextPage();
-    expect(after.end).toBe(before.end + before.rowsPerPage);
+    // Page two may be a partial last page
+    expect(after.end).toBe(
+      Math.min(before.end + before.rowsPerPage, before.total),
+    );
     expect(after.total).toBe(before.total);
   });
 
@@ -91,9 +95,12 @@ test.describe("Pagination Functionality", () => {
       "Dataset no longer fills two pages",
     ).toBeGreaterThanOrEqual(2);
 
-    expect(await poePage.mobileCards.count()).toBe(info.rowsPerPage);
+    expect(await poePage.mobileCardHeadings.count()).toBe(info.rowsPerPage);
 
     await poePage.goToNextPage();
-    expect(await poePage.mobileCards.count()).toBe(info.rowsPerPage);
+    const remainingOnPage2 = info.total - info.rowsPerPage;
+    expect(await poePage.mobileCardHeadings.count()).toBe(
+      Math.min(info.rowsPerPage, remainingOnPage2),
+    );
   });
 });

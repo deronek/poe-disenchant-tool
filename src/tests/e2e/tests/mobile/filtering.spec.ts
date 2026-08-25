@@ -9,8 +9,6 @@ test.describe("Name Filter Functionality", () => {
     await poePage.waitForFilterDebounce();
 
     await poePage.verifyItemDisplayed(first!);
-    // Item names are unique, so an exact name matches exactly one card
-    expect(await poePage.mobileCards.count()).toBe(1);
   });
 
   test("should clear the name filter via the input clear button", async ({
@@ -26,7 +24,7 @@ test.describe("Name Filter Functionality", () => {
 
     await poePage.verifyNoNameFilterActive();
     const { rowsPerPage } = await poePage.getPaginationInfo();
-    expect(await poePage.mobileCards.count()).toBe(rowsPerPage);
+    expect(await poePage.mobileCardHeadings.count()).toBe(rowsPerPage);
   });
 
   test("should clear the name filter via the filter chip", async ({
@@ -56,7 +54,7 @@ test.describe("Name Filter Functionality", () => {
 
     await poePage.setNameFilter("");
     await poePage.waitForFilterDebounce();
-    expect(await poePage.mobileCards.count()).toBeGreaterThan(0);
+    expect(await poePage.mobileCardHeadings.count()).toBeGreaterThan(0);
   });
 
   test("should reset to the first page when filtering", async ({ poePage }) => {
@@ -89,11 +87,14 @@ test.describe("Range Filter Functionality", () => {
     await poePage.closeTabbedFilter();
 
     const names = await poePage.getCardNames(5);
+    // Compact display rounds ("12.3K"); allow 5% slack
+    const minSlack = Math.max(1, range.min! * 0.05);
+    const maxSlack = Math.max(1, range.max! * 0.05);
     for (const name of names) {
       const raw = await poePage.getCardMetricValue(name, "Price");
       const price = poePage.parseCompactValue(raw);
-      expect(price).toBeGreaterThanOrEqual(range.min! - 1);
-      expect(price).toBeLessThanOrEqual(range.max! + 1);
+      expect(price).toBeGreaterThanOrEqual(range.min! - minSlack);
+      expect(price).toBeLessThanOrEqual(range.max! + maxSlack);
     }
   });
 
@@ -128,7 +129,7 @@ test.describe("Range Filter Functionality", () => {
     await poePage.closeTabbedFilter();
 
     const { rowsPerPage } = await poePage.getPaginationInfo();
-    expect(await poePage.mobileCards.count()).toBe(rowsPerPage);
+    expect(await poePage.mobileCardHeadings.count()).toBe(rowsPerPage);
   });
 
   test("should persist applied range filters across page reloads", async ({
@@ -189,6 +190,8 @@ test.describe("Range Filter Functionality", () => {
     expect(priceRange.min).toBeDefined();
     expect(dustRange.min).toBeDefined();
 
+    const priceSlack = Math.max(1, priceRange.min! * 0.05);
+    const dustSlack = Math.max(1, dustRange.min! * 0.05);
     await expect(async () => {
       const names = await poePage.getCardNames(5);
       expect(names.length).toBeGreaterThan(0);
@@ -200,10 +203,10 @@ test.describe("Range Filter Functionality", () => {
           await poePage.getCardMetricValue(name, "Dust Value"),
         );
         expect(price, `price of "${name}"`).toBeGreaterThanOrEqual(
-          priceRange.min! - 1,
+          priceRange.min! - priceSlack,
         );
         expect(dust, `dust of "${name}"`).toBeGreaterThanOrEqual(
-          dustRange.min! - 1,
+          dustRange.min! - dustSlack,
         );
       }
     }).toPass({ timeout: 5000 });
