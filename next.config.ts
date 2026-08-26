@@ -35,7 +35,7 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   reactCompiler: {
-    compilationMode: "annotation",
+    compilationMode: "infer",
   },
   env: {
     PDT_APP_VERSION: packageJson.version,
