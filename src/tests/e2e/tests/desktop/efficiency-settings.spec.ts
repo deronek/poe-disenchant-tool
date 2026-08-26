@@ -8,7 +8,7 @@ import {
   GOLD_VALUATION_MIN,
 } from "@/lib/efficiency";
 import { expect, test } from "../../fixtures";
-import { PoEDisenchantPage } from "../../poe-page";
+import { PoEDisenchantDesktopPage } from "../../page-pom/page-desktop";
 
 test.describe("Panel Open/Close", () => {
   test("should display efficiency settings trigger button", async ({
@@ -300,7 +300,7 @@ test.describe("Settings Persistence", () => {
   }) => {
     // Open page manually
     const newPage = await context.newPage();
-    const newPoePage = new PoEDisenchantPage(newPage);
+    const newPoePage = new PoEDisenchantDesktopPage(newPage);
 
     // Set invalid localStorage data
     await newPage.addInitScript((key) => {
@@ -321,7 +321,7 @@ test.describe("Settings Persistence", () => {
   }) => {
     // Open page manually
     const newPage = await context.newPage();
-    const newPoePage = new PoEDisenchantPage(newPage);
+    const newPoePage = new PoEDisenchantDesktopPage(newPage);
 
     // Set partial localStorage data (missing mode)
     await newPage.addInitScript((key) => {
@@ -350,7 +350,7 @@ test.describe("Settings Persistence", () => {
 
     // Open new page
     const newPage = await context.newPage();
-    const newPoePage = new PoEDisenchantPage(newPage);
+    const newPoePage = new PoEDisenchantDesktopPage(newPage);
     await newPoePage.setup();
 
     // Verify settings persisted

@@ -12,7 +12,7 @@ import {
   OnlineStatusSchema,
 } from "@/lib/filters";
 import { expect, test } from "../../fixtures";
-import { PoEDisenchantPage } from "../../poe-page";
+import { PoEDisenchantDesktopPage } from "../../page-pom/page-desktop";
 
 test.describe("Panel Open/Close", () => {
   test("should display advanced settings trigger button", async ({
@@ -456,7 +456,7 @@ test.describe("Settings Persistence", () => {
   }) => {
     // Open page manually
     const newPage = await context.newPage();
-    const newPoePage = new PoEDisenchantPage(newPage);
+    const newPoePage = new PoEDisenchantDesktopPage(newPage);
 
     // Set invalid localStorage data
     await newPage.addInitScript((key) => {
@@ -477,7 +477,7 @@ test.describe("Settings Persistence", () => {
   }) => {
     // Open page manually
     const newPage = await context.newPage();
-    const newPoePage = new PoEDisenchantPage(newPage);
+    const newPoePage = new PoEDisenchantDesktopPage(newPage);
 
     // Set partial localStorage data (missing some fields)
     await newPage.addInitScript((key) => {
@@ -497,7 +497,7 @@ test.describe("Settings Persistence", () => {
   test("should migrate legacy v1 settings on load", async ({ context }) => {
     // Open page manually
     const newPage = await context.newPage();
-    const newPoePage = new PoEDisenchantPage(newPage);
+    const newPoePage = new PoEDisenchantDesktopPage(newPage);
 
     // Set legacy settings (minItemLevel at the old default) alongside custom values
     await newPage.addInitScript(
@@ -539,7 +539,7 @@ test.describe("Settings Persistence", () => {
   }) => {
     // Open page manually
     const newPage = await context.newPage();
-    const newPoePage = new PoEDisenchantPage(newPage);
+    const newPoePage = new PoEDisenchantDesktopPage(newPage);
 
     // Set legacy settings with a custom minItemLevel
     await newPage.addInitScript(
@@ -588,7 +588,7 @@ test.describe("Settings Persistence", () => {
 
     // Open new page
     const newPage = await context.newPage();
-    const newPoePage = new PoEDisenchantPage(newPage);
+    const newPoePage = new PoEDisenchantDesktopPage(newPage);
     await newPoePage.setup();
 
     // Verify settings persisted

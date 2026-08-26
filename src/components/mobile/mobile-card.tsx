@@ -303,7 +303,10 @@ function PriceAndDustSection({
         <div className="flex h-6 items-center">
           <p className="text-muted-foreground text-xs">Price</p>
         </div>
-        <div className="flex items-center gap-1 text-xs font-semibold">
+        <div
+          className="flex items-center gap-1 text-xs font-semibold"
+          data-testid="card-metric-price"
+        >
           <span>{compactFormatterPrice.format(chaos)}</span>
           <ChaosOrbIcon className="h-3 w-3" />
         </div>
@@ -313,7 +316,10 @@ function PriceAndDustSection({
           <div className="flex h-6 items-center">
             <p className="text-muted-foreground text-xs">Dust Value</p>
           </div>
-          <div className="flex items-center gap-1 text-xs font-semibold">
+          <div
+            className="flex items-center gap-1 text-xs font-semibold"
+            data-testid="card-metric-dust-value"
+          >
             <span>{compactFormatterGlobal.format(calculatedDustValue)}</span>
             <DustIcon className="h-3 w-3" />
           </div>
@@ -332,7 +338,10 @@ function PriceAndDustSection({
               Gold Fee
             </p>
           </div>
-          <div className="flex items-center gap-1 text-xs font-semibold">
+          <div
+            className="flex items-center gap-1 text-xs font-semibold"
+            data-testid="card-metric-gold-fee"
+          >
             <span>{compactFormatterGlobal.format(goldCost)}</span>
             <GoldIcon className="h-3 w-3" />
           </div>
@@ -358,7 +367,10 @@ function DustPerChaosSection({
       <div className="min-w-0 flex-1 space-y-2">
         <p className="text-muted-foreground text-sm">Dust per Chaos</p>
 
-        <div className="text-primary flex items-center gap-1 text-lg font-bold">
+        <div
+          className="text-primary flex items-center gap-1 text-lg font-bold"
+          data-testid="card-metric-dust-per-chaos"
+        >
           <span className="truncate">
             {compactFormatterGlobal.format(dustPerChaos)}
           </span>
@@ -400,7 +412,10 @@ function EfficiencySection({ item }: { item: ViewItem }) {
           )}
         </div>
 
-        <div className="flex items-center gap-1 text-xs">
+        <div
+          className="flex items-center gap-1 text-xs"
+          data-testid="card-metric-efficiency"
+        >
           <span className="font-semibold tabular-nums">
             {compactFormatterGlobal.format(item.efficiency)}
           </span>
@@ -468,6 +483,8 @@ function MobileCardComponent<TData extends ViewItem>({
 
   return (
     <div
+      data-testid="mobile-card"
+      data-state={isSelected ? "selected" : undefined}
       className={`flex min-w-78 flex-col gap-4 rounded-lg border p-5 ${
         isSelected ? "bg-muted/60 border-primary/30 opacity-95" : "bg-card"
       } transition-all`}

@@ -8,8 +8,8 @@ test.describe("Filters - Desktop", () => {
       "price-filter-open.png",
     );
 
-    await poePage.setPriceFilterValuePercent("lower", 50);
-    await poePage.setPriceFilterValuePercent("upper", 50);
+    await poePage.setFilterValuePercent("price", "lower", 50);
+    await poePage.setFilterValuePercent("price", "upper", 50);
     await expect(poePage.tabbedFilterPopover).toHaveScreenshot(
       "price-filter-active.png",
     );
@@ -22,8 +22,8 @@ test.describe("Filters - Desktop", () => {
       "dust-filter-open.png",
     );
 
-    await poePage.setDustFilterValuePercent("lower", 50);
-    await poePage.setDustFilterValuePercent("upper", 50);
+    await poePage.setFilterValuePercent("dust", "lower", 50);
+    await poePage.setFilterValuePercent("dust", "upper", 50);
     await expect(poePage.tabbedFilterPopover).toHaveScreenshot(
       "dust-filter-active.png",
     );
@@ -36,8 +36,8 @@ test.describe("Filters - Desktop", () => {
       "gold-filter-open.png",
     );
 
-    await poePage.setGoldFilterValuePercent("lower", 50);
-    await poePage.setGoldFilterValuePercent("upper", 50);
+    await poePage.setFilterValuePercent("gold", "lower", 50);
+    await poePage.setFilterValuePercent("gold", "upper", 50);
     await expect(poePage.tabbedFilterPopover).toHaveScreenshot(
       "gold-filter-active.png",
     );

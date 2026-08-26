@@ -112,11 +112,12 @@ These cover implementations that needed verification rather than the whole codeb
 
 ### E2E tests
 
-A large Playwright suite that drives the app in a real browser, currently desktop Chromium only. It runs slower than the other suites.
+A large Playwright suite that drives the app in real browsers: desktop Chromium and mobile Chromium. It runs slower than the other suites.
 
 ```bash
 pnpm test:install # one-time setup: download browser binaries
-pnpm test:desktop # headless run of the full suite
+pnpm test:desktop # headless run of the desktop suite
+pnpm test:mobile  # headless run of the mobile suite
 pnpm test:ui      # interactive mode
 ```
 

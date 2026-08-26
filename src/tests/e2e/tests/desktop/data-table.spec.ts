@@ -55,6 +55,7 @@ test.describe("Data Rendering and Formatting", () => {
           // Parse compact value and compare to full value with tolerance
           expect(
             poePage.compareCompactAndFullValues(data.displayed, data.full),
+            `displayed=${JSON.stringify(data.displayed)} full=${data.full}`,
           ).toBeTruthy();
         }
       });
@@ -151,12 +152,19 @@ test.describe("Data Rendering and Formatting", () => {
             await expect(tooltip).not.toBeVisible({ timeout: 500 });
           }
 
-          // If we didn't test any compact numbers, mark test as skipped
-          // e.g. Dust Value column doesn't have such small values
+          // Dust Value and Gold Fee never render small values; other
+          // columns must fail loud instead
+          const mayLackCompactValues =
+            column === "Dust Value" || column === "Gold Fee";
+          const noCompactMessage = `No non-compact numbers found for ${column} column`;
           test.skip(
-            !nonCompactTested,
-            `No non-compact numbers found for ${column} column`,
+            !nonCompactTested && mayLackCompactValues,
+            noCompactMessage,
           );
+          expect(
+            nonCompactTested || mayLackCompactValues,
+            noCompactMessage,
+          ).toBe(true);
         });
       });
   });
