@@ -102,7 +102,6 @@ export function AdvancedSettingsPanel({
   onSettingsChange,
   className,
 }: AdvancedSettingsPanelProps) {
-  "use memo";
   const [isOpen, setIsOpen] = React.useState(false);
 
   const handleMinItemLevelChange = React.useCallback(

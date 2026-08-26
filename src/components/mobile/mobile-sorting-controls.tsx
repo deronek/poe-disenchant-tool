@@ -115,8 +115,6 @@ export function MobileSortingControls<TData extends RowData>({
   table,
   className,
 }: MobileSortingControlsProps<TData>) {
-  "use memo";
-
   const { settings } = useEfficiencySettings();
   const sorting = useSelector(table.atoms.sorting);
   const currentSort = sorting[0];

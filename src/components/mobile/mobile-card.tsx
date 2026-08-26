@@ -466,7 +466,6 @@ interface MobileCardProps<TData extends ViewItem> {
 function MobileCardComponent<TData extends ViewItem>({
   row,
 }: MobileCardProps<TData>) {
-  "use memo";
   const isSelected = useRowSelected(row);
   const name = row.getValue<string>(COLUMN_IDS.NAME);
   const variant = row.original.variant;
