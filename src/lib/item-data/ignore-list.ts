@@ -27,6 +27,7 @@ export const ITEMS_TO_IGNORE = [
   // These items are legacy and extremely expensive
   "Deshret's Vise", // Now Meginord's Vise
   "Titucus Span", // Now Titucius' Span
+  "Hellbringer", // Now Voidbringer
 ];
 
 // These items cannot have quality
