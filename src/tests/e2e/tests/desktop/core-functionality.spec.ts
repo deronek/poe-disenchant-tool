@@ -292,10 +292,10 @@ test.describe("Last Updated Functionality", () => {
 });
 
 test("should handle archived league redirects", async ({ poePage }) => {
-  // Go to archived league
-  await poePage.goto("/mercenaries");
-  await poePage.waitForDataLoad();
+  for (const archivedLeague of ["allflame", "hardcore-allflame"]) {
+    await poePage.goto(`/${archivedLeague}`);
+    await poePage.waitForDataLoad();
 
-  // Should be redirected to default league
-  await poePage.verifyLeagueSelected(DEFAULT_LEAGUE);
+    await poePage.verifyLeagueSelected(DEFAULT_LEAGUE);
+  }
 });
