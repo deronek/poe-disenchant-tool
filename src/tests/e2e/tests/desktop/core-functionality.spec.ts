@@ -126,8 +126,9 @@ test.describe("League Selector Functionality", () => {
     await expect(defaultLeagueOption).toHaveAttribute("data-state", "checked");
     await expect(defaultLeagueOption).toHaveAttribute("data-highlighted", "");
 
-    // Move to the next league
-    await poePage.page.keyboard.press("ArrowDown");
+    const defaultLeagueIndex = LEAGUE_SLUGS.indexOf(DEFAULT_LEAGUE);
+    const direction = defaultLeagueIndex === 0 ? "ArrowDown" : "ArrowUp";
+    await poePage.page.keyboard.press(direction);
     await expect(defaultLeagueOption).not.toHaveAttribute(
       "data-highlighted",
       "",
