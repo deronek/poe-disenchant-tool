@@ -43,7 +43,7 @@ export const ARCHIVED_LEAGUES = {
 
 export type League = keyof typeof LEAGUES;
 export const LEAGUE_SLUGS = Object.keys(LEAGUES) as League[];
-export const DEFAULT_LEAGUE: League = "standard";
+export const DEFAULT_LEAGUE: League = "covens";
 
 export type ArchivedLeague = keyof typeof ARCHIVED_LEAGUES;
 export const ARCHIVED_LEAGUE_SLUGS = Object.keys(
