@@ -1,6 +1,11 @@
 export const LEAGUES = {
   standard: { name: "Standard", apiName: "Standard" },
   hardcore: { name: "Hardcore", apiName: "Hardcore" },
+  covens: { name: "Covens", apiName: "Covens" },
+  "hardcore-covens": {
+    name: "Hardcore Covens",
+    apiName: "Hardcore Covens",
+  },
 } as const;
 
 export const ARCHIVED_LEAGUES = {
@@ -38,7 +43,7 @@ export const ARCHIVED_LEAGUES = {
 
 export type League = keyof typeof LEAGUES;
 export const LEAGUE_SLUGS = Object.keys(LEAGUES) as League[];
-export const DEFAULT_LEAGUE: League = "standard";
+export const DEFAULT_LEAGUE: League = "covens";
 
 export type ArchivedLeague = keyof typeof ARCHIVED_LEAGUES;
 export const ARCHIVED_LEAGUE_SLUGS = Object.keys(
@@ -48,6 +53,8 @@ export const ARCHIVED_LEAGUE_SLUGS = Object.keys(
 export const DATE_PUBLISHED_LEAGUES: Record<League, Date> = {
   standard: new Date("2025-06-01"),
   hardcore: new Date("2025-06-01"),
+  covens: new Date("2026-11-13"),
+  "hardcore-covens": new Date("2026-11-13"),
 };
 
 export function isValidLeague(slug: string): slug is League {
