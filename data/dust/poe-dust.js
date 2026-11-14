@@ -8879,5 +8879,21 @@ const data = [
     goldCost: 5120,
     slots: 4,
   },
+  {
+    name: "Bane of the Apostate",
+    baseType: "Judgement Staff",
+    dustValIlvl84: 22650,
+    dustValIlvl84Q20: 31710,
+    goldCost: 5400,
+    slots: 8,
+  },
+  {
+    name: "Veil of Flesh",
+    baseType: "Callous Mask",
+    dustValIlvl84: 16975,
+    dustValIlvl84Q20: 23765,
+    goldCost: 4740,
+    slots: 4,
+  },
 ];
 export default data;

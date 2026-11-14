@@ -10178,5 +10178,23 @@ const data = [
     slots: 4,
     link: "https://poedb.tw/us/The_Covetous_Dark",
   },
+  {
+    name: "Bane of the Apostate",
+    baseType: "Judgement Staff",
+    dustVal: 9.06,
+    w: 2,
+    h: 4,
+    slots: 8,
+    link: "https://poedb.tw/us/Bane_of_the_Apostate",
+  },
+  {
+    name: "Veil of Flesh",
+    baseType: "Callous Mask",
+    dustVal: 6.79,
+    w: 2,
+    h: 2,
+    slots: 4,
+    link: "https://poedb.tw/us/Veil_of_Flesh",
+  },
 ];
 export default data;
