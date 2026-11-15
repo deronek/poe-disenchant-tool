@@ -5,6 +5,8 @@ export type { RangeFilterValue } from "./range-filter-logic";
 export {
   EMPTY_RANGE,
   createNormalizedFilterValue,
+  getEffectiveMax,
+  getEffectiveMin,
   updateLowerBound,
   updateUpperBound,
   getLowerBoundSliderValue,
@@ -16,8 +18,8 @@ export {
 
 // Export transformation utilities
 export {
-  linearToLog,
-  logToLinear,
-  createLowerBoundSliderValue,
-  createLowerBoundLinearValue,
+  fractionalSliderToLinear,
+  getRangeStep,
+  linearToFractionalSlider,
+  roundRangeValue,
 } from "./range-transforms";

@@ -1,6 +1,6 @@
 import {
-  createLowerBoundLinearValue,
-  createLowerBoundSliderValue,
+  fractionalSliderToLinear,
+  linearToFractionalSlider,
 } from "./range-transforms";
 
 // undefined means filter is disabled
@@ -45,7 +45,7 @@ export const createNormalizedFilterValue = (
 };
 
 /**
- * Updates the lower bound of the price range.
+ * Updates the lower bound of the range.
  * Ensures min does not exceed the effective max.
  */
 export const updateLowerBound = (
@@ -60,7 +60,7 @@ export const updateLowerBound = (
 };
 
 /**
- * Updates the upper bound of the price range.
+ * Updates the upper bound of the range.
  *
  * - newMax >= defaults.max -> no upper bound (max: undefined)
  * - otherwise              -> max = newMax
@@ -78,17 +78,37 @@ export const updateUpperBound = (
 };
 
 /**
- * Converts the current range's lower bound to its slider position
+ * Active lower bound, clamped to the configured minimum so persisted values
+ * below the slider range still produce a usable control.
+ */
+export const getEffectiveMin = (
+  currentRange: Readonly<RangeFilterValue>,
+  defaults: { min: number },
+): number => Math.max(currentRange.min ?? defaults.min, defaults.min);
+
+/**
+ * Active upper bound, clamped to the configured minimum so persisted values
+ * below the slider range still produce a usable control.
+ */
+export const getEffectiveMax = (
+  currentRange: Readonly<RangeFilterValue>,
+  defaults: { min: number; max: number },
+): number => Math.max(currentRange.max ?? defaults.max, defaults.min);
+
+/**
+ * Converts the current range's lower bound to its slider position. The
+ * fractional scale falls back to a plain log scale when the range doesn't
+ * span 1, so it serves every filter config.
  */
 export const getLowerBoundSliderValue = (
   currentRange: Readonly<RangeFilterValue>,
   defaults: { min: number; max: number },
-): number =>
-  createLowerBoundSliderValue(
-    currentRange.min ?? defaults.min,
-    defaults.min,
-    currentRange.max ?? defaults.max,
-  );
+): number => {
+  const value = currentRange.min ?? defaults.min;
+  const max = getEffectiveMax(currentRange, defaults);
+
+  return linearToFractionalSlider(value, defaults.min, max);
+};
 
 /**
  * Converts slider value to lower bound linear value
@@ -98,8 +118,9 @@ export const getLowerBoundLinearValue = (
   sliderValue: number,
   defaults: { min: number; max: number },
 ): number => {
-  const effectiveMax = currentRange.max ?? defaults.max;
-  return createLowerBoundLinearValue(sliderValue, defaults.min, effectiveMax);
+  const max = getEffectiveMax(currentRange, defaults);
+
+  return fractionalSliderToLinear(sliderValue, defaults.min, max);
 };
 
 /**
