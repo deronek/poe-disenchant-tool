@@ -28,16 +28,18 @@ export {
 export type { RangeFilterValue } from "./range-filter";
 export {
   EMPTY_RANGE,
-  createLowerBoundLinearValue,
-  createLowerBoundSliderValue,
   createNormalizedFilterValue,
+  getEffectiveMax,
+  getEffectiveMin,
   getLowerBoundLinearValue,
   getLowerBoundSliderValue,
+  getRangeStep,
   hasMaxFilter,
   hasMinFilter,
-  linearToLog,
-  logToLinear,
+  fractionalSliderToLinear,
+  linearToFractionalSlider,
   rangeFilterFn,
+  roundRangeValue,
   updateLowerBound,
   updateUpperBound,
 } from "./range-filter";

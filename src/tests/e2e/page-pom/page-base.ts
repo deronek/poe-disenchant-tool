@@ -664,7 +664,7 @@ export abstract class PoEDisenchantPageBase {
     max?: number;
   } {
     const chipText = rawChipText.trim();
-    const normalize = (v: string) => parseInt(v.replace(/,/g, ""), 10);
+    const normalize = (v: string) => parseFloat(v.replace(/,/g, ""));
 
     // Pattern 1: Between (min–max)
     const betweenMatch = chipText.match(/([\d,.]+)\s*[–-]\s*([\d,.]+)/);

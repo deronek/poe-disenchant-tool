@@ -148,6 +148,7 @@ export function TabbedFilter<TData extends ViewItem>({
                     min={config.bounds.min}
                     max={config.bounds.max}
                     step={config.step}
+                    precision={config.precision}
                     icon={<config.icon />}
                     title={config.title}
                   />
