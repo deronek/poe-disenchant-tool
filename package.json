@@ -2,6 +2,7 @@
   "name": "poe-disenchant-tool",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@10.34.9",
   "scripts": {
     "dev": "next dev --webpack",
     "scan": "pnpx react-scan@latest localhost:3000",
