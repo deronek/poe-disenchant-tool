@@ -625,7 +625,10 @@ export abstract class PoEDisenchantPageBase {
 
   // All below assume tabbed filter is open and correct tab is active.
   private sliderTrackByName(name: string): Locator {
-    return this.page.getByLabel(name, { exact: true });
+    // The label sits on the slider root and its thumb; the root holds the track.
+    return this.page.getByLabel(name, { exact: true }).filter({
+      has: this.page.locator('[data-slot="slider-thumb"]'),
+    });
   }
 
   get tabbedFilterResetAllButton() {

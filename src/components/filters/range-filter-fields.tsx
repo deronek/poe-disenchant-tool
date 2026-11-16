@@ -17,7 +17,7 @@ interface RangeFilterFieldConfig {
   /** Slider bounds and step size. */
   bounds: { min: number; max: number };
   step: number;
-  /** Fraction digits kept for filter values. */
+  /** Decimal places below 0.1; the scale is coarser above that. */
   precision: number;
   /**
    * Full name used in the tab panel header and derived aria strings

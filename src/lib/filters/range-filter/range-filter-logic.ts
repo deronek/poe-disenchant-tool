@@ -45,16 +45,14 @@ export const createNormalizedFilterValue = (
 };
 
 /**
- * Updates the lower bound of the range.
- * Ensures min does not exceed the effective max.
+ * Updates the lower bound of the range, clamped to limits.max.
  */
 export const updateLowerBound = (
   newMin: number,
   currentRange: Readonly<RangeFilterValue>,
-  defaults: { max: number },
+  limits: { max: number },
 ): RangeFilterValue => {
-  const effectiveMax = currentRange.max ?? defaults.max;
-  const min = Math.min(newMin, effectiveMax);
+  const min = Math.min(newMin, limits.max);
 
   return { ...currentRange, min };
 };
@@ -78,22 +76,30 @@ export const updateUpperBound = (
 };
 
 /**
- * Active lower bound, clamped to the configured minimum so persisted values
- * below the slider range still produce a usable control.
+ * Active lower bound, clamped into the configured range so persisted values
+ * outside it still produce a usable control.
  */
 export const getEffectiveMin = (
   currentRange: Readonly<RangeFilterValue>,
-  defaults: { min: number },
-): number => Math.max(currentRange.min ?? defaults.min, defaults.min);
+  defaults: { min: number; max: number },
+): number =>
+  Math.min(
+    Math.max(currentRange.min ?? defaults.min, defaults.min),
+    defaults.max,
+  );
 
 /**
- * Active upper bound, clamped to the configured minimum so persisted values
- * below the slider range still produce a usable control.
+ * Active upper bound, clamped into the configured range so persisted values
+ * outside it still produce a usable control.
  */
 export const getEffectiveMax = (
   currentRange: Readonly<RangeFilterValue>,
   defaults: { min: number; max: number },
-): number => Math.max(currentRange.max ?? defaults.max, defaults.min);
+): number =>
+  Math.min(
+    Math.max(currentRange.max ?? defaults.max, defaults.min),
+    defaults.max,
+  );
 
 /**
  * Converts the current range's lower bound to its slider position. The
@@ -104,7 +110,7 @@ export const getLowerBoundSliderValue = (
   currentRange: Readonly<RangeFilterValue>,
   defaults: { min: number; max: number },
 ): number => {
-  const value = currentRange.min ?? defaults.min;
+  const value = getEffectiveMin(currentRange, defaults);
   const max = getEffectiveMax(currentRange, defaults);
 
   return linearToFractionalSlider(value, defaults.min, max);
