@@ -121,8 +121,13 @@ export function RangeFilter<TData extends ViewItem>({
   const effectiveMax = getEffectiveMax(currentRange, defaults);
   // Ranges spanning 1 reserve part of the slider track for sub-1 values.
   const hasSubUnitRange = min < 1 && max > 1;
+  // Tenths of a position keep every sub-1 value reachable without giving the
+  // slice more track.
+  const subUnitSliderStep = 0.1;
 
   const roundValue = (value: number) => roundRangeValue(value, precision);
+  const roundSliderPosition = (position: number) =>
+    hasSubUnitRange ? Math.round(position * 10) / 10 : Math.round(position);
 
   const commitRange = (updatedRange: RangeFilterValue) => {
     setColumnFilter(
@@ -136,7 +141,7 @@ export function RangeFilter<TData extends ViewItem>({
     const clamped = Math.min(Math.max(newValue, min), effectiveMax);
 
     const updatedRange = updateLowerBound(roundValue(clamped), currentRange, {
-      max,
+      max: effectiveMax,
     });
     commitRange(updatedRange);
   };
@@ -183,6 +188,12 @@ export function RangeFilter<TData extends ViewItem>({
 
     const smallStep = getRangeStep(currentValue, precision, step);
     const largeStep = smallStep * 10;
+    const smallStepDown = getRangeStep(
+      currentValue - 10 ** -precision,
+      precision,
+      step,
+    );
+    const largeStepDown = smallStepDown * 10;
 
     let delta = 0;
     switch (e.key) {
@@ -192,13 +203,13 @@ export function RangeFilter<TData extends ViewItem>({
         break;
       case "ArrowLeft":
       case "ArrowDown":
-        delta = e.shiftKey ? -largeStep : -smallStep;
+        delta = e.shiftKey ? -largeStepDown : -smallStepDown;
         break;
       case "PageUp":
         delta = largeStep;
         break;
       case "PageDown":
-        delta = -largeStep;
+        delta = -largeStepDown;
         break;
       default:
         return; // let all other keys pass through
@@ -208,11 +219,11 @@ export function RangeFilter<TData extends ViewItem>({
     update(currentValue + delta);
   };
 
-  const upperSliderValue = hasSubUnitRange
-    ? Math.round(
-        linearToFractionalSlider(currentRange.max ?? max, effectiveMin, max),
-      )
-    : (currentRange.max ?? max);
+  const upperSliderValue = roundSliderPosition(
+    hasSubUnitRange
+      ? linearToFractionalSlider(currentRange.max ?? max, effectiveMin, max)
+      : (currentRange.max ?? max),
+  );
 
   const format = (value: number) => value.toLocaleString();
 
@@ -238,9 +249,11 @@ export function RangeFilter<TData extends ViewItem>({
             id="lower-bound"
             min={0}
             max={100}
-            step={1}
+            step={hasSubUnitRange ? subUnitSliderStep : 1}
             value={[
-              Math.round(getLowerBoundSliderValue(currentRange, defaults)),
+              roundSliderPosition(
+                getLowerBoundSliderValue(currentRange, defaults),
+              ),
             ]}
             onValueChange={handleLowerBoundChange}
             onKeyDown={(e) =>
@@ -252,7 +265,7 @@ export function RangeFilter<TData extends ViewItem>({
             }
             className="w-full py-1.5"
             aria-label={`Lower bound ${title.toLowerCase()} filter`}
-            aria-valuetext={format(currentRange.min ?? min)}
+            aria-valuetext={hasMin ? format(currentRange.min!) : "No limit"}
           />
         </div>
         <div className="text-muted-foreground grid grid-cols-3 text-xs">
@@ -290,7 +303,7 @@ export function RangeFilter<TData extends ViewItem>({
             id="upper-bound"
             min={hasSubUnitRange ? 0 : effectiveMin}
             max={hasSubUnitRange ? 100 : max}
-            step={hasSubUnitRange ? 1 : step}
+            step={hasSubUnitRange ? subUnitSliderStep : step}
             value={[upperSliderValue]}
             onValueChange={handleUpperBoundChange}
             onKeyDown={(e) =>
@@ -302,7 +315,7 @@ export function RangeFilter<TData extends ViewItem>({
             }
             className={cn("w-full py-1.5", !hasMax && "opacity-60")}
             aria-label={`Upper bound ${title.toLowerCase()} filter`}
-            aria-valuetext={format(currentRange.max ?? max)}
+            aria-valuetext={hasMax ? format(currentRange.max!) : "No limit"}
           />
         </div>
         <div className="text-muted-foreground grid grid-cols-3 text-xs">

@@ -1,6 +1,7 @@
 /**
  * Utility functions for range value transformations and scaling.
- * Slider positions run from 0 to 100.
+ * Slider positions run from 0 to 100. A non-positive minimum has no log
+ * scale, so it collapses to the track start.
  */
 
 /** Share of the slider track reserved for values below 1. */
@@ -16,7 +17,9 @@ export const linearToFractionalSlider = (
   min: number,
   max: number,
 ): number => {
-  if (linearValue <= min || max <= min) return 0;
+  if (min <= 0 || max <= min) return 0;
+  if (linearValue <= min) return 0;
+  if (linearValue >= max) return 100;
 
   const hasSubUnitRange = min < 1 && max > 1;
   if (hasSubUnitRange && linearValue <= 1) {
@@ -40,8 +43,9 @@ export const fractionalSliderToLinear = (
   min: number,
   max: number,
 ): number => {
-  if (max <= min) return min;
+  if (min <= 0 || max <= min) return min;
   if (sliderValue <= 0) return min;
+  if (sliderValue >= 100) return max;
 
   const hasSubUnitRange = min < 1 && max > 1;
   if (hasSubUnitRange && sliderValue <= SUB_UNIT_SLIDER_SHARE) {

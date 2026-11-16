@@ -29,6 +29,7 @@ export type { RangeFilterValue } from "./range-filter";
 export {
   EMPTY_RANGE,
   createNormalizedFilterValue,
+  fractionalSliderToLinear,
   getEffectiveMax,
   getEffectiveMin,
   getLowerBoundLinearValue,
@@ -36,7 +37,6 @@ export {
   getRangeStep,
   hasMaxFilter,
   hasMinFilter,
-  fractionalSliderToLinear,
   linearToFractionalSlider,
   rangeFilterFn,
   roundRangeValue,
