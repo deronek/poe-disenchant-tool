@@ -13,12 +13,7 @@ import {
 } from "vitest";
 
 import { RangeFilter } from "@/components/filters/range-filter";
-import { COLUMN_IDS } from "@/lib/column-ids";
-
-const PRICE_PRECISION = [
-  { below: 0.1, decimals: 2 },
-  { below: 1, decimals: 1 },
-];
+import { RANGE_FILTER_FIELD_CONFIGS } from "@/components/filters/range-filter-fields";
 
 class ResizeObserverMock {
   observe() {}
@@ -34,9 +29,13 @@ afterAll(() => {
   vi.unstubAllGlobals();
 });
 
-function renderRangeFilter(range: { min?: number; max?: number }) {
+function renderRangeFilter(
+  range: { min?: number; max?: number },
+  field: keyof typeof RANGE_FILTER_FIELD_CONFIGS = "price",
+) {
+  const config = RANGE_FILTER_FIELD_CONFIGS[field];
   const columnFilters = new Store<ColumnFiltersState>([
-    { id: COLUMN_IDS.CHAOS, value: range },
+    { id: config.columnId, value: range },
   ]);
   const setFilterValue = vi.fn();
 
@@ -48,12 +47,12 @@ function renderRangeFilter(range: { min?: number; max?: number }) {
   render(
     <RangeFilter
       table={table}
-      columnId={COLUMN_IDS.CHAOS}
-      min={0.01}
-      max={500}
-      step={1}
-      precision={PRICE_PRECISION}
-      title="Price"
+      columnId={config.columnId}
+      min={config.bounds.min}
+      max={config.bounds.max}
+      step={config.step}
+      precision={config.precision}
+      title={config.title}
     />,
   );
 
@@ -144,6 +143,49 @@ describe("RangeFilter keyboard handling", () => {
 
     expect(setFilterValue).toHaveBeenLastCalledWith({ max: 153 });
   });
+});
+
+describe("RangeFilter whole-number keyboard handling", () => {
+  afterEach(cleanup);
+
+  it.each([
+    {
+      field: "dust" as const,
+      range: { min: 2_000 },
+      label: "Lower bound dust value filter",
+      expected: { min: 2_163 },
+    },
+    {
+      field: "gold" as const,
+      range: { min: 1_500 },
+      label: "Lower bound gold fee filter",
+      expected: { min: 1_561 },
+    },
+    {
+      field: "dust" as const,
+      range: { max: 5_000_000 },
+      label: "Upper bound dust value filter",
+      expected: { max: 4_952_000 },
+    },
+    {
+      field: "gold" as const,
+      range: { max: 80_000 },
+      label: "Upper bound gold fee filter",
+      expected: { max: 79_500 },
+    },
+  ])(
+    "uses the pointer scale for $label",
+    ({ field, range, label, expected }) => {
+      const { setFilterValue } = renderRangeFilter(range, field);
+
+      fireEvent.keyDown(screen.getByRole("slider", { name: label }), {
+        key: label.startsWith("Lower") ? "ArrowRight" : "ArrowLeft",
+      });
+
+      expect(setFilterValue).toHaveBeenCalledTimes(1);
+      expect(setFilterValue).toHaveBeenLastCalledWith(expected);
+    },
+  );
 });
 
 describe("RangeFilter lower bound reset", () => {

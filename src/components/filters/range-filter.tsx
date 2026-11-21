@@ -250,12 +250,15 @@ export function RangeFilter<TData extends ViewItem>({
               ),
             ]}
             onValueChange={handleLowerBoundChange}
-            onKeyDown={(e) =>
-              handleBoundKeyDown(
-                e,
-                currentRange.min ?? min,
-                updateLowerBoundValue,
-              )
+            onKeyDown={
+              subUnitRange
+                ? (e) =>
+                    handleBoundKeyDown(
+                      e,
+                      currentRange.min ?? min,
+                      updateLowerBoundValue,
+                    )
+                : undefined
             }
             className="w-full py-1.5"
             aria-label={`Lower bound ${title.toLowerCase()} filter`}
@@ -300,12 +303,15 @@ export function RangeFilter<TData extends ViewItem>({
             step={subUnitRange ? subUnitSliderStep : step}
             value={[upperSliderValue]}
             onValueChange={handleUpperBoundChange}
-            onKeyDown={(e) =>
-              handleBoundKeyDown(
-                e,
-                currentRange.max ?? max,
-                updateUpperBoundValue,
-              )
+            onKeyDown={
+              subUnitRange
+                ? (e) =>
+                    handleBoundKeyDown(
+                      e,
+                      currentRange.max ?? max,
+                      updateUpperBoundValue,
+                    )
+                : undefined
             }
             className={cn("w-full py-1.5", !hasMax && "opacity-60")}
             aria-label={`Upper bound ${title.toLowerCase()} filter`}
