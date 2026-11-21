@@ -1,4 +1,4 @@
-import type { RangeFilterValue } from "@/lib/filters";
+import type { PrecisionBand, RangeFilterValue } from "@/lib/filters";
 import type { AppTable } from "@/lib/table-features";
 import type { RowData } from "@tanstack/react-table";
 import { useMemo } from "react";
@@ -10,10 +10,17 @@ import { Slider } from "@/components/ui/slider";
 import { ColumnId } from "@/lib/column-ids";
 import {
   createNormalizedFilterValue,
+  fractionalSliderToLinear,
+  getEffectiveMax,
+  getEffectiveMin,
   getLowerBoundLinearValue,
   getLowerBoundSliderValue,
+  getRangeStep,
   hasMaxFilter,
   hasMinFilter,
+  hasSubUnitRange,
+  linearToFractionalSlider,
+  roundRangeValue,
   setColumnFilter,
   updateLowerBound,
   updateUpperBound,
@@ -28,6 +35,7 @@ interface RangeFilterProps<TData extends RowData> {
   min: number;
   max: number;
   step: number;
+  precision?: readonly PrecisionBand[];
   icon?: React.ReactNode;
   title: string;
 }
@@ -100,6 +108,7 @@ export function RangeFilter<TData extends ViewItem>({
   min,
   max,
   step,
+  precision = [],
   icon,
   title,
 }: RangeFilterProps<TData>) {
@@ -108,6 +117,17 @@ export function RangeFilter<TData extends ViewItem>({
   const hasMin = hasMinFilter(currentRange);
   const hasMax = hasMaxFilter(currentRange);
   const isFilterActive = hasMin || hasMax;
+
+  const effectiveMin = getEffectiveMin(currentRange, defaults);
+  const effectiveMax = getEffectiveMax(currentRange, defaults);
+  const subUnitRange = hasSubUnitRange(min, max);
+  // Tenths of a position give sub-unit prices usable drag resolution without
+  // taking more track from the rest of the scale.
+  const subUnitSliderStep = 0.1;
+
+  const roundValue = (value: number) => roundRangeValue(value, precision);
+  const roundSliderPosition = (position: number) =>
+    subUnitRange ? Math.round(position * 10) / 10 : Math.round(position);
 
   const commitRange = (updatedRange: RangeFilterValue) => {
     setColumnFilter(
@@ -118,15 +138,16 @@ export function RangeFilter<TData extends ViewItem>({
   };
 
   const updateLowerBoundValue = (newValue: number) => {
-    const effectiveMax = currentRange.max ?? max;
-    const clamped = Math.round(Math.min(Math.max(newValue, min), effectiveMax));
+    const clamped = Math.min(Math.max(roundValue(newValue), min), effectiveMax);
 
-    const updatedRange = updateLowerBound(clamped, currentRange, { max });
+    const updatedRange = updateLowerBound(clamped, currentRange);
     commitRange(updatedRange);
   };
 
   const updateUpperBoundValue = (newValue: number) => {
-    const updatedRange = updateUpperBound(newValue, currentRange, {
+    const clamped = Math.min(Math.max(roundValue(newValue), effectiveMin), max);
+
+    const updatedRange = updateUpperBound(clamped, currentRange, {
       max,
     });
     commitRange(updatedRange);
@@ -142,7 +163,10 @@ export function RangeFilter<TData extends ViewItem>({
   };
 
   const handleUpperBoundChange = (sliderValue: number[]) => {
-    updateUpperBoundValue(sliderValue[0]);
+    const newValue = subUnitRange
+      ? fractionalSliderToLinear(sliderValue[0], effectiveMin, max)
+      : sliderValue[0];
+    updateUpperBoundValue(newValue);
   };
 
   const handleResetLowerBound = () => {
@@ -152,38 +176,48 @@ export function RangeFilter<TData extends ViewItem>({
     updateUpperBoundValue(max);
   };
 
-  const handleLowerBoundKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleBoundKeyDown = (
+    e: React.KeyboardEvent<HTMLDivElement>,
+    currentValue: number,
+    update: (value: number) => void,
+  ) => {
     // Home and End keys handled by Radix correctly
     if (e.key === "Home" || e.key === "End") return;
 
-    const SMALL_STEP = 1;
-    const LARGE_STEP = 10;
+    const smallStep = getRangeStep(currentValue, precision, step);
+    const largeStep = smallStep * 10;
+    const smallStepDown = getRangeStep(currentValue, precision, step, "down");
+    const largeStepDown = smallStepDown * 10;
 
     let delta = 0;
     switch (e.key) {
       case "ArrowRight":
       case "ArrowUp":
-        delta = e.shiftKey ? LARGE_STEP : SMALL_STEP;
+        delta = e.shiftKey ? largeStep : smallStep;
         break;
       case "ArrowLeft":
       case "ArrowDown":
-        delta = e.shiftKey ? -LARGE_STEP : -SMALL_STEP;
+        delta = e.shiftKey ? -largeStepDown : -smallStepDown;
         break;
       case "PageUp":
-        delta = LARGE_STEP;
+        delta = largeStep;
         break;
       case "PageDown":
-        delta = -LARGE_STEP;
+        delta = -largeStepDown;
         break;
       default:
         return; // let all other keys pass through
     }
 
     e.preventDefault();
-    const effectiveMin = currentRange.min ?? min;
-    const newValue = effectiveMin + delta;
-    updateLowerBoundValue(newValue);
+    update(currentValue + delta);
   };
+
+  const upperSliderValue = roundSliderPosition(
+    subUnitRange
+      ? linearToFractionalSlider(currentRange.max ?? max, effectiveMin, max)
+      : (currentRange.max ?? max),
+  );
 
   const format = (value: number) => value.toLocaleString();
 
@@ -209,14 +243,23 @@ export function RangeFilter<TData extends ViewItem>({
             id="lower-bound"
             min={0}
             max={100}
-            step={1}
+            step={subUnitRange ? subUnitSliderStep : 1}
             value={[
-              Math.round(getLowerBoundSliderValue(currentRange, defaults)),
+              roundSliderPosition(
+                getLowerBoundSliderValue(currentRange, defaults),
+              ),
             ]}
             onValueChange={handleLowerBoundChange}
-            onKeyDown={handleLowerBoundKeyDown}
+            onKeyDown={(e) =>
+              handleBoundKeyDown(
+                e,
+                currentRange.min ?? min,
+                updateLowerBoundValue,
+              )
+            }
             className="w-full py-1.5"
             aria-label={`Lower bound ${title.toLowerCase()} filter`}
+            aria-valuetext={hasMin ? format(currentRange.min!) : "No limit"}
           />
         </div>
         <div className="text-muted-foreground grid grid-cols-3 text-xs">
@@ -252,13 +295,21 @@ export function RangeFilter<TData extends ViewItem>({
         <div className="px-2">
           <Slider
             id="upper-bound"
-            min={currentRange.min ?? min}
-            max={max}
-            step={step}
-            value={[hasMax ? (currentRange.max as number) : max]}
+            min={subUnitRange ? 0 : effectiveMin}
+            max={subUnitRange ? 100 : max}
+            step={subUnitRange ? subUnitSliderStep : step}
+            value={[upperSliderValue]}
             onValueChange={handleUpperBoundChange}
+            onKeyDown={(e) =>
+              handleBoundKeyDown(
+                e,
+                currentRange.max ?? max,
+                updateUpperBoundValue,
+              )
+            }
             className={cn("w-full py-1.5", !hasMax && "opacity-60")}
             aria-label={`Upper bound ${title.toLowerCase()} filter`}
+            aria-valuetext={hasMax ? format(currentRange.max!) : "No limit"}
           />
         </div>
         <div className="text-muted-foreground grid grid-cols-3 text-xs">

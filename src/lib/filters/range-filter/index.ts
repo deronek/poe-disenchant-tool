@@ -1,10 +1,13 @@
 // Export all types
+export type { PrecisionBand } from "./range-transforms";
 export type { RangeFilterValue } from "./range-filter-logic";
 
 // Export all business logic functions
 export {
   EMPTY_RANGE,
   createNormalizedFilterValue,
+  getEffectiveMax,
+  getEffectiveMin,
   updateLowerBound,
   updateUpperBound,
   getLowerBoundSliderValue,
@@ -16,8 +19,9 @@ export {
 
 // Export transformation utilities
 export {
-  linearToLog,
-  logToLinear,
-  createLowerBoundSliderValue,
-  createLowerBoundLinearValue,
+  fractionalSliderToLinear,
+  getRangeStep,
+  hasSubUnitRange,
+  linearToFractionalSlider,
+  roundRangeValue,
 } from "./range-transforms";
