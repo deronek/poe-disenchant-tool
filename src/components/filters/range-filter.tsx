@@ -121,13 +121,13 @@ export function RangeFilter<TData extends ViewItem>({
   const effectiveMin = getEffectiveMin(currentRange, defaults);
   const effectiveMax = getEffectiveMax(currentRange, defaults);
   const subUnitRange = hasSubUnitRange(min, max);
-  // Tenths of a position give sub-unit prices usable drag resolution without
+  // Hundredths of a position keep every integer price reachable without
   // taking more track from the rest of the scale.
-  const subUnitSliderStep = 0.1;
+  const subUnitSliderStep = 0.01;
 
   const roundValue = (value: number) => roundRangeValue(value, precision);
   const roundSliderPosition = (position: number) =>
-    subUnitRange ? Math.round(position * 10) / 10 : Math.round(position);
+    subUnitRange ? Math.round(position * 100) / 100 : Math.round(position);
 
   const commitRange = (updatedRange: RangeFilterValue) => {
     setColumnFilter(

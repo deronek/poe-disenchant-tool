@@ -121,8 +121,28 @@ describe("RangeFilter keyboard handling", () => {
       name: "Upper bound price filter",
     });
 
-    expect(thumb.getAttribute("aria-valuenow")).toBe("8.5");
+    expect(thumb.getAttribute("aria-valuenow")).toBe("8.49");
     expect(thumb.getAttribute("aria-valuetext")).toBe("0.5");
+  });
+
+  it("commits an integer maximum between tenth-position steps", () => {
+    const { setFilterValue } = renderRangeFilter({ max: 200 });
+    const thumb = screen.getByRole("slider", {
+      name: "Upper bound price filter",
+    });
+    const slider = thumb.closest('[data-slot="slider"]')!;
+    vi.spyOn(slider, "getBoundingClientRect").mockReturnValue({
+      left: 0,
+      width: 100,
+    } as DOMRect);
+    slider.setPointerCapture = vi.fn();
+
+    fireEvent(
+      slider,
+      new MouseEvent("pointerdown", { bubbles: true, clientX: 82.85 }),
+    );
+
+    expect(setFilterValue).toHaveBeenLastCalledWith({ max: 153 });
   });
 });
 
