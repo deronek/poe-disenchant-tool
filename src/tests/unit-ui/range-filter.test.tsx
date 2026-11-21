@@ -14,6 +14,8 @@ import {
 
 import { RangeFilter } from "@/components/filters/range-filter";
 import { RANGE_FILTER_FIELD_CONFIGS } from "@/components/filters/range-filter-fields";
+import { TabbedFilter } from "@/components/filters/tabbed-filter";
+import { Slider } from "@/components/ui/slider";
 
 class ResizeObserverMock {
   observe() {}
@@ -29,20 +31,28 @@ afterAll(() => {
   vi.unstubAllGlobals();
 });
 
-function renderRangeFilter(
-  range: { min?: number; max?: number },
-  field: keyof typeof RANGE_FILTER_FIELD_CONFIGS = "price",
-) {
-  const config = RANGE_FILTER_FIELD_CONFIGS[field];
-  const columnFilters = new Store<ColumnFiltersState>([
-    { id: config.columnId, value: range },
-  ]);
+afterEach(cleanup);
+
+function createFilterTable(filters: ColumnFiltersState) {
+  const columnFilters = new Store<ColumnFiltersState>(filters);
   const setFilterValue = vi.fn();
 
   const table = {
     atoms: { columnFilters },
     getColumn: () => ({ setFilterValue }),
   } as unknown as AppTable;
+
+  return { table, setFilterValue };
+}
+
+function renderRangeFilter(
+  range: { min?: number; max?: number },
+  field: keyof typeof RANGE_FILTER_FIELD_CONFIGS = "price",
+) {
+  const config = RANGE_FILTER_FIELD_CONFIGS[field];
+  const { table, setFilterValue } = createFilterTable([
+    { id: config.columnId, value: range },
+  ]);
 
   render(
     <RangeFilter
@@ -60,8 +70,6 @@ function renderRangeFilter(
 }
 
 describe("RangeFilter keyboard handling", () => {
-  afterEach(cleanup);
-
   it.each([
     { start: 1, expected: 0.9 },
     { start: 0.1, expected: 0.09 },
@@ -114,6 +122,62 @@ describe("RangeFilter keyboard handling", () => {
     expect(setFilterValue).toHaveBeenLastCalledWith({ max: 6 });
   });
 
+  it.each([
+    { key: "PageUp", shiftKey: false, start: 2, expected: 12 },
+    { key: "PageDown", shiftKey: false, start: 1, expected: 0.01 },
+    { key: "ArrowUp", shiftKey: true, start: 0.03, expected: 0.1 },
+    { key: "ArrowDown", shiftKey: true, start: 0.09, expected: 0.01 },
+  ])(
+    "applies $key (shift: $shiftKey) from $start",
+    ({ key, shiftKey, start, expected }) => {
+      const { setFilterValue } = renderRangeFilter({ max: start });
+
+      fireEvent.keyDown(
+        screen.getByRole("slider", { name: "Upper bound price filter" }),
+        { key, shiftKey },
+      );
+
+      expect(setFilterValue).toHaveBeenCalledExactlyOnceWith({ max: expected });
+    },
+  );
+
+  it("clears the maximum with End while preserving the fractional minimum", () => {
+    const { setFilterValue } = renderRangeFilter({ min: 0.04, max: 0.5 });
+
+    fireEvent.keyDown(
+      screen.getByRole("slider", { name: "Upper bound price filter" }),
+      { key: "End" },
+    );
+
+    expect(setFilterValue).toHaveBeenCalledExactlyOnceWith({ min: 0.04 });
+  });
+
+  it("sets the minimum to the active fractional maximum with End", () => {
+    const { setFilterValue } = renderRangeFilter({ min: 0.04, max: 0.25 });
+
+    fireEvent.keyDown(
+      screen.getByRole("slider", { name: "Lower bound price filter" }),
+      { key: "End" },
+    );
+
+    expect(setFilterValue).toHaveBeenCalledExactlyOnceWith({
+      min: 0.25,
+      max: 0.25,
+    });
+  });
+
+  it("lets the user increase a persisted zero maximum to the price floor", () => {
+    const { setFilterValue } = renderRangeFilter({ max: 0 });
+    const upperThumb = screen.getByRole("slider", {
+      name: "Upper bound price filter",
+    });
+
+    expect(upperThumb.getAttribute("aria-valuenow")).toBe("0");
+    fireEvent.keyDown(upperThumb, { key: "ArrowUp" });
+
+    expect(setFilterValue).toHaveBeenCalledExactlyOnceWith({ max: 0.01 });
+  });
+
   it("maps a fractional maximum onto the slider scale", () => {
     renderRangeFilter({ max: 0.5 });
     const thumb = screen.getByRole("slider", {
@@ -146,8 +210,6 @@ describe("RangeFilter keyboard handling", () => {
 });
 
 describe("RangeFilter whole-number keyboard handling", () => {
-  afterEach(cleanup);
-
   it.each([
     {
       field: "dust" as const,
@@ -189,8 +251,6 @@ describe("RangeFilter whole-number keyboard handling", () => {
 });
 
 describe("RangeFilter lower bound reset", () => {
-  afterEach(cleanup);
-
   it("keeps a persisted zero maximum when clearing the lower bound", () => {
     const { setFilterValue } = renderRangeFilter({ min: 0.5, max: 0 });
 
@@ -200,5 +260,49 @@ describe("RangeFilter lower bound reset", () => {
 
     expect(setFilterValue).toHaveBeenCalledTimes(1);
     expect(setFilterValue).toHaveBeenLastCalledWith({ max: 0 });
+  });
+});
+
+describe("TabbedFilter price controls", () => {
+  it("announces unset bounds and starts the minimum at hundredth-chaos steps", () => {
+    const { table, setFilterValue } = createFilterTable([]);
+    render(<TabbedFilter table={table} />);
+    fireEvent.click(screen.getByRole("button", { name: "Filters" }));
+
+    const lowerThumb = screen.getByRole("slider", {
+      name: "Lower bound price filter",
+    });
+    const upperThumb = screen.getByRole("slider", {
+      name: "Upper bound price filter",
+    });
+    expect(lowerThumb.getAttribute("aria-valuetext")).toBe("No limit");
+    expect(upperThumb.getAttribute("aria-valuetext")).toBe("No limit");
+
+    fireEvent.keyDown(lowerThumb, { key: "ArrowRight" });
+
+    expect(setFilterValue).toHaveBeenCalledExactlyOnceWith({ min: 0.02 });
+  });
+});
+
+describe("Slider accessibility", () => {
+  it("makes the referenced label and description available on the slider thumb", () => {
+    render(
+      <>
+        <span id="slider-label">Budget</span>
+        <span id="slider-description">Choose a maximum price.</span>
+        <Slider
+          defaultValue={[25]}
+          aria-labelledby="slider-label"
+          aria-describedby="slider-description"
+        />
+      </>,
+    );
+
+    expect(
+      screen.getByRole("slider", {
+        name: "Budget",
+        description: "Choose a maximum price.",
+      }),
+    ).toBeDefined();
   });
 });
