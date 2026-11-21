@@ -1,4 +1,4 @@
-import type { RangeFilterValue } from "@/lib/filters";
+import type { PrecisionBand, RangeFilterValue } from "@/lib/filters";
 import type { AppTable } from "@/lib/table-features";
 import type { RowData } from "@tanstack/react-table";
 import { useMemo } from "react";
@@ -18,6 +18,7 @@ import {
   getRangeStep,
   hasMaxFilter,
   hasMinFilter,
+  hasSubUnitRange,
   linearToFractionalSlider,
   roundRangeValue,
   setColumnFilter,
@@ -34,7 +35,7 @@ interface RangeFilterProps<TData extends RowData> {
   min: number;
   max: number;
   step: number;
-  precision: number;
+  precision?: readonly PrecisionBand[];
   icon?: React.ReactNode;
   title: string;
 }
@@ -107,7 +108,7 @@ export function RangeFilter<TData extends ViewItem>({
   min,
   max,
   step,
-  precision,
+  precision = [],
   icon,
   title,
 }: RangeFilterProps<TData>) {
@@ -119,15 +120,14 @@ export function RangeFilter<TData extends ViewItem>({
 
   const effectiveMin = getEffectiveMin(currentRange, defaults);
   const effectiveMax = getEffectiveMax(currentRange, defaults);
-  // Ranges spanning 1 reserve part of the slider track for sub-1 values.
-  const hasSubUnitRange = min < 1 && max > 1;
-  // Tenths of a position keep every sub-1 value reachable without giving the
-  // slice more track.
+  const subUnitRange = hasSubUnitRange(min, max);
+  // Tenths of a position give sub-unit prices usable drag resolution without
+  // taking more track from the rest of the scale.
   const subUnitSliderStep = 0.1;
 
   const roundValue = (value: number) => roundRangeValue(value, precision);
   const roundSliderPosition = (position: number) =>
-    hasSubUnitRange ? Math.round(position * 10) / 10 : Math.round(position);
+    subUnitRange ? Math.round(position * 10) / 10 : Math.round(position);
 
   const commitRange = (updatedRange: RangeFilterValue) => {
     setColumnFilter(
@@ -138,18 +138,16 @@ export function RangeFilter<TData extends ViewItem>({
   };
 
   const updateLowerBoundValue = (newValue: number) => {
-    const clamped = Math.min(Math.max(newValue, min), effectiveMax);
+    const clamped = Math.min(Math.max(roundValue(newValue), min), effectiveMax);
 
-    const updatedRange = updateLowerBound(roundValue(clamped), currentRange, {
-      max: effectiveMax,
-    });
+    const updatedRange = updateLowerBound(clamped, currentRange);
     commitRange(updatedRange);
   };
 
   const updateUpperBoundValue = (newValue: number) => {
-    const clamped = Math.min(Math.max(newValue, effectiveMin), max);
+    const clamped = Math.min(Math.max(roundValue(newValue), effectiveMin), max);
 
-    const updatedRange = updateUpperBound(roundValue(clamped), currentRange, {
+    const updatedRange = updateUpperBound(clamped, currentRange, {
       max,
     });
     commitRange(updatedRange);
@@ -165,7 +163,7 @@ export function RangeFilter<TData extends ViewItem>({
   };
 
   const handleUpperBoundChange = (sliderValue: number[]) => {
-    const newValue = hasSubUnitRange
+    const newValue = subUnitRange
       ? fractionalSliderToLinear(sliderValue[0], effectiveMin, max)
       : sliderValue[0];
     updateUpperBoundValue(newValue);
@@ -188,11 +186,7 @@ export function RangeFilter<TData extends ViewItem>({
 
     const smallStep = getRangeStep(currentValue, precision, step);
     const largeStep = smallStep * 10;
-    const smallStepDown = getRangeStep(
-      currentValue - 10 ** -precision,
-      precision,
-      step,
-    );
+    const smallStepDown = getRangeStep(currentValue, precision, step, "down");
     const largeStepDown = smallStepDown * 10;
 
     let delta = 0;
@@ -220,7 +214,7 @@ export function RangeFilter<TData extends ViewItem>({
   };
 
   const upperSliderValue = roundSliderPosition(
-    hasSubUnitRange
+    subUnitRange
       ? linearToFractionalSlider(currentRange.max ?? max, effectiveMin, max)
       : (currentRange.max ?? max),
   );
@@ -249,7 +243,7 @@ export function RangeFilter<TData extends ViewItem>({
             id="lower-bound"
             min={0}
             max={100}
-            step={hasSubUnitRange ? subUnitSliderStep : 1}
+            step={subUnitRange ? subUnitSliderStep : 1}
             value={[
               roundSliderPosition(
                 getLowerBoundSliderValue(currentRange, defaults),
@@ -301,9 +295,9 @@ export function RangeFilter<TData extends ViewItem>({
         <div className="px-2">
           <Slider
             id="upper-bound"
-            min={hasSubUnitRange ? 0 : effectiveMin}
-            max={hasSubUnitRange ? 100 : max}
-            step={hasSubUnitRange ? subUnitSliderStep : step}
+            min={subUnitRange ? 0 : effectiveMin}
+            max={subUnitRange ? 100 : max}
+            step={subUnitRange ? subUnitSliderStep : step}
             value={[upperSliderValue]}
             onValueChange={handleUpperBoundChange}
             onKeyDown={(e) =>

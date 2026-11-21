@@ -45,17 +45,13 @@ export const createNormalizedFilterValue = (
 };
 
 /**
- * Updates the lower bound of the range, clamped to limits.max.
+ * Updates the lower bound of the range. Callers clamp it against the active
+ * bounds before committing.
  */
 export const updateLowerBound = (
   newMin: number,
   currentRange: Readonly<RangeFilterValue>,
-  limits: { max: number },
-): RangeFilterValue => {
-  const min = Math.min(newMin, limits.max);
-
-  return { ...currentRange, min };
-};
+): RangeFilterValue => ({ ...currentRange, min: newMin });
 
 /**
  * Updates the upper bound of the range.

@@ -2,6 +2,7 @@ import type { ColumnId } from "@/lib/column-ids";
 import type {
   FilterColumnTable,
   PersistedFilters,
+  PrecisionBand,
   RangeFilterValue,
 } from "@/lib/filters";
 import type { ComponentType } from "react";
@@ -17,8 +18,11 @@ interface RangeFilterFieldConfig {
   /** Slider bounds and step size. */
   bounds: { min: number; max: number };
   step: number;
-  /** Decimal places below 0.1; the scale is coarser above that. */
-  precision: number;
+  /**
+   * Decimal places by value, checked in order. Values above every band round
+   * to whole numbers.
+   */
+  precision?: readonly PrecisionBand[];
   /**
    * Full name used in the tab panel header and derived aria strings
    * (e.g. "Dust Value").
@@ -37,7 +41,10 @@ export const RANGE_FILTER_FIELD_CONFIGS: Record<
     icon: ChaosOrbIcon,
     bounds: { min: 0.01, max: 500 },
     step: 1,
-    precision: 2,
+    precision: [
+      { below: 0.1, decimals: 2 },
+      { below: 1, decimals: 1 },
+    ],
     title: "Price",
     label: "Price",
   },
@@ -46,7 +53,6 @@ export const RANGE_FILTER_FIELD_CONFIGS: Record<
     icon: DustIcon,
     bounds: { min: 2000, max: 5_000_000 },
     step: 50000,
-    precision: 0,
     title: "Dust Value",
     label: "Dust",
   },
@@ -55,7 +61,6 @@ export const RANGE_FILTER_FIELD_CONFIGS: Record<
     icon: GoldIcon,
     bounds: { min: 1500, max: 80_000 },
     step: 500,
-    precision: 0,
     title: "Gold Fee",
     label: "Gold",
   },
