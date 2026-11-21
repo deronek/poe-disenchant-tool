@@ -7,6 +7,15 @@
 /** Share of the slider track reserved for values below 1. */
 const SUB_UNIT_SLIDER_SHARE = 10;
 
+const RANGE_KEY_DIRECTIONS: Record<string, "up" | "down"> = {
+  ArrowRight: "up",
+  ArrowUp: "up",
+  PageUp: "up",
+  ArrowLeft: "down",
+  ArrowDown: "down",
+  PageDown: "down",
+};
+
 /** True when a range spans 1, so the scale reserves a slice for sub-1 values. */
 export const hasSubUnitRange = (min: number, max: number): boolean =>
   min < 1 && max > 1;
@@ -94,11 +103,11 @@ const finestStep = (
  * Step size for keyboard changes at a given value. Stepping down probes just
  * below the value so a bound on a band edge uses the finer step.
  */
-export const getRangeStep = (
+const getRangeStep = (
   value: number,
   precision: readonly PrecisionBand[],
   step: number,
-  direction: "up" | "down" = "up",
+  direction: "up" | "down",
 ): number => {
   const decimals = decimalsForValue(
     direction === "down" ? value - finestStep(precision, step) : value,
@@ -106,4 +115,22 @@ export const getRangeStep = (
   );
 
   return decimals === 0 ? step : 10 ** -decimals;
+};
+
+/** Value delta for a keyboard key, or undefined when Radix should handle it. */
+export const getRangeKeyboardDelta = (
+  key: string,
+  value: number,
+  precision: readonly PrecisionBand[],
+  step: number,
+  shiftKey: boolean,
+): number | undefined => {
+  const direction = RANGE_KEY_DIRECTIONS[key];
+  if (!direction) return undefined;
+
+  const multiplier =
+    shiftKey || key === "PageUp" || key === "PageDown" ? 10 : 1;
+  const rangeStep = getRangeStep(value, precision, step, direction);
+
+  return rangeStep * multiplier * (direction === "up" ? 1 : -1);
 };

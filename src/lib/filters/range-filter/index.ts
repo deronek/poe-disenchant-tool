@@ -8,10 +8,10 @@ export {
   createNormalizedFilterValue,
   getEffectiveMax,
   getEffectiveMin,
-  updateLowerBound,
-  updateUpperBound,
   getLowerBoundSliderValue,
   getLowerBoundLinearValue,
+  getUpperBoundSliderValue,
+  getUpperBoundLinearValue,
   hasMinFilter,
   hasMaxFilter,
   rangeFilterFn,
@@ -20,7 +20,7 @@ export {
 // Export transformation utilities
 export {
   fractionalSliderToLinear,
-  getRangeStep,
+  getRangeKeyboardDelta,
   hasSubUnitRange,
   linearToFractionalSlider,
   roundRangeValue,

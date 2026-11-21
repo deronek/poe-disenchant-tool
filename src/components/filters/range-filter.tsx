@@ -10,20 +10,18 @@ import { Slider } from "@/components/ui/slider";
 import { ColumnId } from "@/lib/column-ids";
 import {
   createNormalizedFilterValue,
-  fractionalSliderToLinear,
   getEffectiveMax,
   getEffectiveMin,
   getLowerBoundLinearValue,
   getLowerBoundSliderValue,
-  getRangeStep,
+  getRangeKeyboardDelta,
+  getUpperBoundLinearValue,
+  getUpperBoundSliderValue,
   hasMaxFilter,
   hasMinFilter,
   hasSubUnitRange,
-  linearToFractionalSlider,
   roundRangeValue,
   setColumnFilter,
-  updateLowerBound,
-  updateUpperBound,
   useRangeFilterValue,
 } from "@/lib/filters";
 import { cn } from "@/lib/utils";
@@ -125,7 +123,6 @@ export function RangeFilter<TData extends ViewItem>({
   // taking more track from the rest of the scale.
   const subUnitSliderStep = 0.01;
 
-  const roundValue = (value: number) => roundRangeValue(value, precision);
   const roundSliderPosition = (position: number) =>
     subUnitRange ? Math.round(position * 100) / 100 : Math.round(position);
 
@@ -138,19 +135,21 @@ export function RangeFilter<TData extends ViewItem>({
   };
 
   const updateLowerBoundValue = (newValue: number) => {
-    const clamped = Math.min(Math.max(roundValue(newValue), min), effectiveMax);
+    const clamped = Math.min(
+      Math.max(roundRangeValue(newValue, precision), min),
+      effectiveMax,
+    );
 
-    const updatedRange = updateLowerBound(clamped, currentRange);
-    commitRange(updatedRange);
+    commitRange({ ...currentRange, min: clamped });
   };
 
   const updateUpperBoundValue = (newValue: number) => {
-    const clamped = Math.min(Math.max(roundValue(newValue), effectiveMin), max);
-
-    const updatedRange = updateUpperBound(clamped, currentRange, {
+    const clamped = Math.min(
+      Math.max(roundRangeValue(newValue, precision), effectiveMin),
       max,
-    });
-    commitRange(updatedRange);
+    );
+
+    commitRange({ ...currentRange, max: clamped });
   };
 
   const handleLowerBoundChange = (sliderValue: number[]) => {
@@ -163,9 +162,11 @@ export function RangeFilter<TData extends ViewItem>({
   };
 
   const handleUpperBoundChange = (sliderValue: number[]) => {
-    const newValue = subUnitRange
-      ? fractionalSliderToLinear(sliderValue[0], effectiveMin, max)
-      : sliderValue[0];
+    const newValue = getUpperBoundLinearValue(
+      currentRange,
+      sliderValue[0],
+      defaults,
+    );
     updateUpperBoundValue(newValue);
   };
 
@@ -181,42 +182,21 @@ export function RangeFilter<TData extends ViewItem>({
     currentValue: number,
     update: (value: number) => void,
   ) => {
-    // Home and End keys handled by Radix correctly
-    if (e.key === "Home" || e.key === "End") return;
-
-    const smallStep = getRangeStep(currentValue, precision, step);
-    const largeStep = smallStep * 10;
-    const smallStepDown = getRangeStep(currentValue, precision, step, "down");
-    const largeStepDown = smallStepDown * 10;
-
-    let delta = 0;
-    switch (e.key) {
-      case "ArrowRight":
-      case "ArrowUp":
-        delta = e.shiftKey ? largeStep : smallStep;
-        break;
-      case "ArrowLeft":
-      case "ArrowDown":
-        delta = e.shiftKey ? -largeStepDown : -smallStepDown;
-        break;
-      case "PageUp":
-        delta = largeStep;
-        break;
-      case "PageDown":
-        delta = -largeStepDown;
-        break;
-      default:
-        return; // let all other keys pass through
-    }
+    const delta = getRangeKeyboardDelta(
+      e.key,
+      currentValue,
+      precision,
+      step,
+      e.shiftKey,
+    );
+    if (delta === undefined) return;
 
     e.preventDefault();
     update(currentValue + delta);
   };
 
   const upperSliderValue = roundSliderPosition(
-    subUnitRange
-      ? linearToFractionalSlider(currentRange.max ?? max, effectiveMin, max)
-      : (currentRange.max ?? max),
+    getUpperBoundSliderValue(currentRange, defaults),
   );
 
   const format = (value: number) => value.toLocaleString();

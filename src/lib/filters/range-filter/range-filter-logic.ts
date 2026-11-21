@@ -1,5 +1,6 @@
 import {
   fractionalSliderToLinear,
+  hasSubUnitRange,
   linearToFractionalSlider,
 } from "./range-transforms";
 
@@ -42,33 +43,6 @@ export const createNormalizedFilterValue = (
   }
 
   return { min, max };
-};
-
-/**
- * Updates the lower bound of the range. Callers clamp it against the active
- * bounds before committing.
- */
-export const updateLowerBound = (
-  newMin: number,
-  currentRange: Readonly<RangeFilterValue>,
-): RangeFilterValue => ({ ...currentRange, min: newMin });
-
-/**
- * Updates the upper bound of the range.
- *
- * - newMax >= defaults.max -> no upper bound (max: undefined)
- * - otherwise              -> max = newMax
- */
-export const updateUpperBound = (
-  newMax: number,
-  currentRange: Readonly<RangeFilterValue>,
-  defaults: { max: number },
-): RangeFilterValue => {
-  if (newMax >= defaults.max) {
-    return { ...currentRange, max: undefined };
-  }
-
-  return { ...currentRange, max: newMax };
 };
 
 /**
@@ -123,6 +97,32 @@ export const getLowerBoundLinearValue = (
   const max = getEffectiveMax(currentRange, defaults);
 
   return fractionalSliderToLinear(sliderValue, defaults.min, max);
+};
+
+/** Converts the current upper bound to its slider position. */
+export const getUpperBoundSliderValue = (
+  currentRange: Readonly<RangeFilterValue>,
+  defaults: { min: number; max: number },
+): number => {
+  const min = getEffectiveMin(currentRange, defaults);
+  const value = getEffectiveMax(currentRange, defaults);
+
+  return hasSubUnitRange(defaults.min, defaults.max)
+    ? linearToFractionalSlider(value, min, defaults.max)
+    : value;
+};
+
+/** Converts an upper-bound slider position back to a linear value. */
+export const getUpperBoundLinearValue = (
+  currentRange: Readonly<RangeFilterValue>,
+  sliderValue: number,
+  defaults: { min: number; max: number },
+): number => {
+  const min = getEffectiveMin(currentRange, defaults);
+
+  return hasSubUnitRange(defaults.min, defaults.max)
+    ? fractionalSliderToLinear(sliderValue, min, defaults.max)
+    : sliderValue;
 };
 
 /**

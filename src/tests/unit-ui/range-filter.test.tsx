@@ -59,6 +59,18 @@ function renderRangeFilter(
   return { setFilterValue };
 }
 
+function pointAtSlider(name: string, clientX: number) {
+  const thumb = screen.getByRole("slider", { name });
+  const slider = thumb.closest('[data-slot="slider"]')!;
+  vi.spyOn(slider, "getBoundingClientRect").mockReturnValue({
+    left: 0,
+    width: 100,
+  } as DOMRect);
+  slider.setPointerCapture = vi.fn();
+
+  fireEvent(slider, new MouseEvent("pointerdown", { bubbles: true, clientX }));
+}
+
 describe("RangeFilter keyboard handling", () => {
   afterEach(cleanup);
 
@@ -123,23 +135,48 @@ describe("RangeFilter keyboard handling", () => {
     expect(thumb.getAttribute("aria-valuenow")).toBe("8.49");
     expect(thumb.getAttribute("aria-valuetext")).toBe("0.5");
   });
+});
+
+describe("RangeFilter pointer handling", () => {
+  afterEach(cleanup);
+
+  it.each([
+    {
+      bound: "Lower",
+      clientX: 3.5,
+      value: 0.05,
+      expected: { min: 0.05, max: undefined },
+    },
+    {
+      bound: "Lower",
+      clientX: 8.5,
+      value: 0.5,
+      expected: { min: 0.5, max: undefined },
+    },
+    {
+      bound: "Upper",
+      clientX: 3.5,
+      value: 0.05,
+      expected: { min: undefined, max: 0.05 },
+    },
+    {
+      bound: "Upper",
+      clientX: 8.5,
+      value: 0.5,
+      expected: { min: undefined, max: 0.5 },
+    },
+  ])("commits $value for the $bound bound", ({ bound, clientX, expected }) => {
+    const { setFilterValue } = renderRangeFilter({});
+
+    pointAtSlider(`${bound} bound price filter`, clientX);
+
+    expect(setFilterValue).toHaveBeenLastCalledWith(expected);
+  });
 
   it("commits an integer maximum between tenth-position steps", () => {
     const { setFilterValue } = renderRangeFilter({ max: 200 });
-    const thumb = screen.getByRole("slider", {
-      name: "Upper bound price filter",
-    });
-    const slider = thumb.closest('[data-slot="slider"]')!;
-    vi.spyOn(slider, "getBoundingClientRect").mockReturnValue({
-      left: 0,
-      width: 100,
-    } as DOMRect);
-    slider.setPointerCapture = vi.fn();
 
-    fireEvent(
-      slider,
-      new MouseEvent("pointerdown", { bubbles: true, clientX: 82.85 }),
-    );
+    pointAtSlider("Upper bound price filter", 82.85);
 
     expect(setFilterValue).toHaveBeenLastCalledWith({ max: 153 });
   });
@@ -188,8 +225,18 @@ describe("RangeFilter whole-number keyboard handling", () => {
   );
 });
 
-describe("RangeFilter lower bound reset", () => {
+describe("RangeFilter persisted ranges", () => {
   afterEach(cleanup);
+
+  it("clamps a whole-number upper slider to its effective maximum", () => {
+    renderRangeFilter({ max: 0 }, "dust");
+    const thumb = screen.getByRole("slider", {
+      name: "Upper bound dust value filter",
+    });
+
+    expect(thumb.getAttribute("aria-valuenow")).toBe("2000");
+    expect(thumb.getAttribute("aria-valuetext")).toBe("0");
+  });
 
   it("keeps a persisted zero maximum when clearing the lower bound", () => {
     const { setFilterValue } = renderRangeFilter({ min: 0.5, max: 0 });

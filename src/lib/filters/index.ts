@@ -34,15 +34,15 @@ export {
   getEffectiveMin,
   getLowerBoundLinearValue,
   getLowerBoundSliderValue,
-  getRangeStep,
+  getRangeKeyboardDelta,
+  getUpperBoundLinearValue,
+  getUpperBoundSliderValue,
   hasMaxFilter,
   hasMinFilter,
   hasSubUnitRange,
   linearToFractionalSlider,
   rangeFilterFn,
   roundRangeValue,
-  updateLowerBound,
-  updateUpperBound,
 } from "./range-filter";
 export {
   type FilterColumnTable,

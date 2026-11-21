@@ -5,7 +5,8 @@ import {
   fractionalSliderToLinear,
   getEffectiveMax,
   getEffectiveMin,
-  getRangeStep,
+  getRangeKeyboardDelta,
+  getUpperBoundSliderValue,
   linearToFractionalSlider,
   rangeFilterFn,
   roundRangeValue,
@@ -82,15 +83,39 @@ describe("range filter scales", () => {
   });
 
   it("steps keyboard changes by the precision of the matching band", () => {
-    expect(getRangeStep(0.05, PRICE_PRECISION, 1)).toBe(0.01);
-    expect(getRangeStep(0.5, PRICE_PRECISION, 1)).toBe(0.1);
-    expect(getRangeStep(5, PRICE_PRECISION, 1)).toBe(1);
-    expect(getRangeStep(2_000, [], 50_000)).toBe(50_000);
+    expect(
+      getRangeKeyboardDelta("ArrowRight", 0.05, PRICE_PRECISION, 1, false),
+    ).toBe(0.01);
+    expect(
+      getRangeKeyboardDelta("ArrowRight", 0.5, PRICE_PRECISION, 1, false),
+    ).toBe(0.1);
+    expect(
+      getRangeKeyboardDelta("ArrowRight", 5, PRICE_PRECISION, 1, false),
+    ).toBe(1);
+    expect(getRangeKeyboardDelta("ArrowRight", 2_000, [], 50_000, false)).toBe(
+      50_000,
+    );
   });
 
   it("steps down from a band edge by the finer step", () => {
-    expect(getRangeStep(1, PRICE_PRECISION, 1, "down")).toBe(0.1);
-    expect(getRangeStep(0.1, PRICE_PRECISION, 1, "down")).toBe(0.01);
+    expect(
+      getRangeKeyboardDelta("ArrowLeft", 1, PRICE_PRECISION, 1, false),
+    ).toBe(-0.1);
+    expect(
+      getRangeKeyboardDelta("ArrowLeft", 0.1, PRICE_PRECISION, 1, false),
+    ).toBe(-0.01);
+  });
+
+  it("handles large keyboard steps and leaves other keys to Radix", () => {
+    expect(
+      getRangeKeyboardDelta("ArrowRight", 0.5, PRICE_PRECISION, 1, true),
+    ).toBe(1);
+    expect(
+      getRangeKeyboardDelta("PageDown", 0.5, PRICE_PRECISION, 1, false),
+    ).toBe(-1);
+    expect(
+      getRangeKeyboardDelta("Home", 0.5, PRICE_PRECISION, 1, false),
+    ).toBeUndefined();
   });
 
   it("keeps stored sub-1 filters active", () => {
@@ -114,6 +139,10 @@ describe("range filter scales", () => {
     expect(getEffectiveMin({ min: 900 }, FRACTIONAL_BOUNDS)).toBe(500);
     expect(getEffectiveMax({ max: 0 }, FRACTIONAL_BOUNDS)).toBe(0.01);
     expect(getEffectiveMax({ max: 900 }, FRACTIONAL_BOUNDS)).toBe(500);
+    expect(getUpperBoundSliderValue({ max: 900 }, FRACTIONAL_BOUNDS)).toBe(100);
+    expect(
+      getUpperBoundSliderValue({ max: 0 }, { min: 2_000, max: 5_000_000 }),
+    ).toBe(2_000);
   });
 
   it("filters fractional values", () => {
