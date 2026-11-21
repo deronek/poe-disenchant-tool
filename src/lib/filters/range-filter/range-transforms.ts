@@ -7,6 +7,10 @@
 /** Share of the slider track reserved for values below 1. */
 const SUB_UNIT_SLIDER_SHARE = 10;
 
+/** True when a range spans 1, so the scale reserves a slice for sub-1 values. */
+export const hasSubUnitRange = (min: number, max: number): boolean =>
+  min < 1 && max > 1;
+
 /**
  * Fractional scale: the first SUB_UNIT_SLIDER_SHARE percent of the track
  * covers min..1, the rest covers 1..max logarithmically. Ranges entirely
@@ -21,15 +25,15 @@ export const linearToFractionalSlider = (
   if (linearValue <= min) return 0;
   if (linearValue >= max) return 100;
 
-  const hasSubUnitRange = min < 1 && max > 1;
-  if (hasSubUnitRange && linearValue <= 1) {
+  const subUnitRange = hasSubUnitRange(min, max);
+  if (subUnitRange && linearValue <= 1) {
     return (
       (SUB_UNIT_SLIDER_SHARE * Math.log(linearValue / min)) / Math.log(1 / min)
     );
   }
 
-  const base = hasSubUnitRange ? 1 : min;
-  const start = hasSubUnitRange ? SUB_UNIT_SLIDER_SHARE : 0;
+  const base = subUnitRange ? 1 : min;
+  const start = subUnitRange ? SUB_UNIT_SLIDER_SHARE : 0;
 
   return (
     start +
@@ -47,38 +51,59 @@ export const fractionalSliderToLinear = (
   if (sliderValue <= 0) return min;
   if (sliderValue >= 100) return max;
 
-  const hasSubUnitRange = min < 1 && max > 1;
-  if (hasSubUnitRange && sliderValue <= SUB_UNIT_SLIDER_SHARE) {
+  const subUnitRange = hasSubUnitRange(min, max);
+  if (subUnitRange && sliderValue <= SUB_UNIT_SLIDER_SHARE) {
     return min * (1 / min) ** (sliderValue / SUB_UNIT_SLIDER_SHARE);
   }
 
-  const base = hasSubUnitRange ? 1 : min;
-  const start = hasSubUnitRange ? SUB_UNIT_SLIDER_SHARE : 0;
+  const base = subUnitRange ? 1 : min;
+  const start = subUnitRange ? SUB_UNIT_SLIDER_SHARE : 0;
 
   return base * (max / base) ** ((sliderValue - start) / (100 - start));
 };
 
-/** Decimal places the scale offers at a given value. */
-const decimalsForValue = (value: number, precision: number): number => {
-  if (value >= 1) return 0;
+/** Decimal places to apply below an exclusive threshold; checked in order. */
+export interface PrecisionBand {
+  below: number;
+  decimals: number;
+}
 
-  return value >= 0.1 ? Math.min(1, precision) : precision;
-};
+/** Decimal places the scale offers at a given value. */
+const decimalsForValue = (
+  value: number,
+  precision: readonly PrecisionBand[],
+): number => precision.find((band) => value < band.below)?.decimals ?? 0;
+
+/** Rounds a bound to its band's precision, or to whole numbers without one. */
+export const roundRangeValue = (
+  value: number,
+  precision: readonly PrecisionBand[],
+): number => Number(value.toFixed(decimalsForValue(value, precision)));
+
+/** Finest step the bands or the configured step offer. */
+const finestStep = (
+  precision: readonly PrecisionBand[],
+  step: number,
+): number =>
+  precision.reduce(
+    (finest, band) => Math.min(finest, 10 ** -band.decimals),
+    step,
+  );
 
 /**
- * Rounds a bound to the precision the scale offers at that magnitude: whole
- * units at 1 and above, one decimal from 0.1, full precision below that.
+ * Step size for keyboard changes at a given value. Stepping down probes just
+ * below the value so a bound on a band edge uses the finer step.
  */
-export const roundRangeValue = (value: number, precision: number): number =>
-  Number(value.toFixed(decimalsForValue(value, precision)));
-
-/** Step size for keyboard changes at a given value. */
 export const getRangeStep = (
   value: number,
-  precision: number,
+  precision: readonly PrecisionBand[],
   step: number,
+  direction: "up" | "down" = "up",
 ): number => {
-  const decimals = decimalsForValue(value, precision);
+  const decimals = decimalsForValue(
+    direction === "down" ? value - finestStep(precision, step) : value,
+    precision,
+  );
 
   return decimals === 0 ? step : 10 ** -decimals;
 };

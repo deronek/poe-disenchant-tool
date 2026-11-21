@@ -1,4 +1,5 @@
 // Export all types
+export type { PrecisionBand } from "./range-transforms";
 export type { RangeFilterValue } from "./range-filter-logic";
 
 // Export all business logic functions
@@ -20,6 +21,7 @@ export {
 export {
   fractionalSliderToLinear,
   getRangeStep,
+  hasSubUnitRange,
   linearToFractionalSlider,
   roundRangeValue,
 } from "./range-transforms";
