@@ -31,7 +31,7 @@ jobs:
           github.event.comment.author_association == 'COLLABORATOR'
         )
       )
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       # Resolve PR head branch details when trigger is an issue_comment
       # This is necessary because github.head_ref and github.base_ref are not available
