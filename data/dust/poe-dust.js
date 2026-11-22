@@ -2322,9 +2322,9 @@ const data = [
   {
     name: "Atziri's Acuity",
     baseType: "Vaal Gauntlets",
-    dustValIlvl84: 31250,
-    dustValIlvl84Q20: 43750,
-    goldCost: 6240,
+    dustValIlvl84: 1609475,
+    dustValIlvl84Q20: 2253265,
+    goldCost: 36720,
     slots: 4,
   },
   {
@@ -5434,9 +5434,9 @@ const data = [
   {
     name: "Doedre's Tongue",
     baseType: "Lapis Amulet",
-    dustValIlvl84: 9875,
-    dustValIlvl84Q20: 13825,
-    goldCost: 3720,
+    dustValIlvl84: 34875,
+    dustValIlvl84Q20: 48825,
+    goldCost: 6540,
     slots: 1,
   },
   {
