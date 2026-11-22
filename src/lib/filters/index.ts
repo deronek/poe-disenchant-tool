@@ -25,24 +25,21 @@ export {
   RANGE_FILTER_COLUMN_IDS,
   RANGE_FILTER_COLUMNS,
 } from "./range-filter-columns";
-export type { PrecisionBand, RangeFilterValue } from "./range-filter";
+export type {
+  PrecisionBand,
+  RangeFilterConfig,
+  RangeFilterValue,
+  RangeSliderModel,
+} from "./range-filter";
 export {
   EMPTY_RANGE,
   createNormalizedFilterValue,
-  fractionalSliderToLinear,
-  getEffectiveMax,
-  getEffectiveMin,
-  getLowerBoundLinearValue,
-  getLowerBoundSliderValue,
-  getRangeKeyboardDelta,
-  getUpperBoundLinearValue,
-  getUpperBoundSliderValue,
+  getRangeSliders,
   hasMaxFilter,
   hasMinFilter,
-  hasSubUnitRange,
-  linearToFractionalSlider,
   rangeFilterFn,
-  roundRangeValue,
+  updateLowerBound,
+  updateUpperBound,
 } from "./range-filter";
 export {
   type FilterColumnTable,

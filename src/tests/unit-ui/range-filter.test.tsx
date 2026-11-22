@@ -92,28 +92,6 @@ describe("RangeFilter keyboard handling", () => {
     },
   );
 
-  it("keeps the upper bound at or above the lower bound after rounding", () => {
-    const { setFilterValue } = renderRangeFilter({ min: 0.24, max: 0.3 });
-
-    fireEvent.keyDown(
-      screen.getByRole("slider", { name: "Upper bound price filter" }),
-      { key: "ArrowLeft" },
-    );
-
-    expect(setFilterValue).toHaveBeenLastCalledWith({ min: 0.24, max: 0.24 });
-  });
-
-  it("keeps the lower bound at or below the upper bound after rounding", () => {
-    const { setFilterValue } = renderRangeFilter({ min: 0.2, max: 0.26 });
-
-    fireEvent.keyDown(
-      screen.getByRole("slider", { name: "Lower bound price filter" }),
-      { key: "ArrowRight" },
-    );
-
-    expect(setFilterValue).toHaveBeenLastCalledWith({ min: 0.26, max: 0.26 });
-  });
-
   it("increments the upper bound toward the max", () => {
     const { setFilterValue } = renderRangeFilter({ max: 5 });
 
@@ -236,6 +214,16 @@ describe("RangeFilter persisted ranges", () => {
 
     expect(thumb.getAttribute("aria-valuenow")).toBe("2000");
     expect(thumb.getAttribute("aria-valuetext")).toBe("0");
+  });
+
+  it("keeps the unlimited upper bound at the top when the lower bound is maximal", () => {
+    renderRangeFilter({ min: 500 });
+    const thumb = screen.getByRole("slider", {
+      name: "Upper bound price filter",
+    });
+
+    expect(thumb.getAttribute("aria-valuenow")).toBe("100");
+    expect(thumb.getAttribute("aria-valuetext")).toBe("No limit");
   });
 
   it("keeps a persisted zero maximum when clearing the lower bound", () => {

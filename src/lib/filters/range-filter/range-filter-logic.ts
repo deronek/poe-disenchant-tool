@@ -1,14 +1,18 @@
-import {
-  fractionalSliderToLinear,
-  hasSubUnitRange,
-  linearToFractionalSlider,
-} from "./range-transforms";
+import type { PrecisionBand } from "./range-transforms";
+import { roundRangeValue } from "./range-transforms";
 
 // undefined means filter is disabled
 export type RangeFilterValue = {
   min?: number;
   max?: number;
 };
+
+export interface RangeFilterConfig {
+  min: number;
+  max: number;
+  step: number;
+  precision: readonly PrecisionBand[];
+}
 
 export const EMPTY_RANGE: Readonly<RangeFilterValue> = Object.freeze({
   min: undefined,
@@ -71,59 +75,32 @@ export const getEffectiveMax = (
     defaults.max,
   );
 
-/**
- * Converts the current range's lower bound to its slider position. The
- * fractional scale falls back to a plain log scale when the range doesn't
- * span 1, so it serves every filter config.
- */
-export const getLowerBoundSliderValue = (
+export const updateLowerBound = (
+  newMin: number,
   currentRange: Readonly<RangeFilterValue>,
-  defaults: { min: number; max: number },
-): number => {
-  const value = getEffectiveMin(currentRange, defaults);
-  const max = getEffectiveMax(currentRange, defaults);
+  config: RangeFilterConfig,
+): RangeFilterValue => ({
+  ...currentRange,
+  min: Math.min(
+    Math.max(roundRangeValue(newMin, config.precision), config.min),
+    getEffectiveMax(currentRange, config),
+  ),
+});
 
-  return linearToFractionalSlider(value, defaults.min, max);
-};
-
-/**
- * Converts slider value to lower bound linear value
- */
-export const getLowerBoundLinearValue = (
+export const updateUpperBound = (
+  newMax: number,
   currentRange: Readonly<RangeFilterValue>,
-  sliderValue: number,
-  defaults: { min: number; max: number },
-): number => {
-  const max = getEffectiveMax(currentRange, defaults);
-
-  return fractionalSliderToLinear(sliderValue, defaults.min, max);
-};
-
-/** Converts the current upper bound to its slider position. */
-export const getUpperBoundSliderValue = (
-  currentRange: Readonly<RangeFilterValue>,
-  defaults: { min: number; max: number },
-): number => {
-  const min = getEffectiveMin(currentRange, defaults);
-  const value = getEffectiveMax(currentRange, defaults);
-
-  return hasSubUnitRange(defaults.min, defaults.max)
-    ? linearToFractionalSlider(value, min, defaults.max)
-    : value;
-};
-
-/** Converts an upper-bound slider position back to a linear value. */
-export const getUpperBoundLinearValue = (
-  currentRange: Readonly<RangeFilterValue>,
-  sliderValue: number,
-  defaults: { min: number; max: number },
-): number => {
-  const min = getEffectiveMin(currentRange, defaults);
-
-  return hasSubUnitRange(defaults.min, defaults.max)
-    ? fractionalSliderToLinear(sliderValue, min, defaults.max)
-    : sliderValue;
-};
+  config: RangeFilterConfig,
+): RangeFilterValue => ({
+  ...currentRange,
+  max: Math.min(
+    Math.max(
+      roundRangeValue(newMax, config.precision),
+      getEffectiveMin(currentRange, config),
+    ),
+    config.max,
+  ),
+});
 
 /**
  * Checks if the lower bound filter is active.
