@@ -1,13 +1,18 @@
-import {
-  createLowerBoundLinearValue,
-  createLowerBoundSliderValue,
-} from "./range-transforms";
+import type { PrecisionBand } from "./range-transforms";
+import { roundRangeValue } from "./range-transforms";
 
 // undefined means filter is disabled
 export type RangeFilterValue = {
   min?: number;
   max?: number;
 };
+
+export interface RangeFilterConfig {
+  min: number;
+  max: number;
+  step: number;
+  precision: readonly PrecisionBand[];
+}
 
 export const EMPTY_RANGE: Readonly<RangeFilterValue> = Object.freeze({
   min: undefined,
@@ -45,62 +50,57 @@ export const createNormalizedFilterValue = (
 };
 
 /**
- * Updates the lower bound of the price range.
- * Ensures min does not exceed the effective max.
+ * Active lower bound, clamped into the configured range so persisted values
+ * outside it still produce a usable control.
  */
-export const updateLowerBound = (
-  newMin: number,
-  currentRange: Readonly<RangeFilterValue>,
-  defaults: { max: number },
-): RangeFilterValue => {
-  const effectiveMax = currentRange.max ?? defaults.max;
-  const min = Math.min(newMin, effectiveMax);
-
-  return { ...currentRange, min };
-};
-
-/**
- * Updates the upper bound of the price range.
- *
- * - newMax >= defaults.max -> no upper bound (max: undefined)
- * - otherwise              -> max = newMax
- */
-export const updateUpperBound = (
-  newMax: number,
-  currentRange: Readonly<RangeFilterValue>,
-  defaults: { max: number },
-): RangeFilterValue => {
-  if (newMax >= defaults.max) {
-    return { ...currentRange, max: undefined };
-  }
-
-  return { ...currentRange, max: newMax };
-};
-
-/**
- * Converts the current range's lower bound to its slider position
- */
-export const getLowerBoundSliderValue = (
+export const getEffectiveMin = (
   currentRange: Readonly<RangeFilterValue>,
   defaults: { min: number; max: number },
 ): number =>
-  createLowerBoundSliderValue(
-    currentRange.min ?? defaults.min,
-    defaults.min,
-    currentRange.max ?? defaults.max,
+  Math.min(
+    Math.max(currentRange.min ?? defaults.min, defaults.min),
+    defaults.max,
   );
 
 /**
- * Converts slider value to lower bound linear value
+ * Active upper bound, clamped into the configured range so persisted values
+ * outside it still produce a usable control.
  */
-export const getLowerBoundLinearValue = (
+export const getEffectiveMax = (
   currentRange: Readonly<RangeFilterValue>,
-  sliderValue: number,
   defaults: { min: number; max: number },
-): number => {
-  const effectiveMax = currentRange.max ?? defaults.max;
-  return createLowerBoundLinearValue(sliderValue, defaults.min, effectiveMax);
-};
+): number =>
+  Math.min(
+    Math.max(currentRange.max ?? defaults.max, defaults.min),
+    defaults.max,
+  );
+
+export const updateLowerBound = (
+  newMin: number,
+  currentRange: Readonly<RangeFilterValue>,
+  config: RangeFilterConfig,
+): RangeFilterValue => ({
+  ...currentRange,
+  min: Math.min(
+    Math.max(roundRangeValue(newMin, config.precision), config.min),
+    getEffectiveMax(currentRange, config),
+  ),
+});
+
+export const updateUpperBound = (
+  newMax: number,
+  currentRange: Readonly<RangeFilterValue>,
+  config: RangeFilterConfig,
+): RangeFilterValue => ({
+  ...currentRange,
+  max: Math.min(
+    Math.max(
+      roundRangeValue(newMax, config.precision),
+      getEffectiveMin(currentRange, config),
+    ),
+    config.max,
+  ),
+});
 
 /**
  * Checks if the lower bound filter is active.

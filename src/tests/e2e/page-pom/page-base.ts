@@ -624,8 +624,11 @@ export abstract class PoEDisenchantPageBase {
   }
 
   // All below assume tabbed filter is open and correct tab is active.
-  private sliderTrackByName(name: string): Locator {
-    return this.page.getByLabel(name, { exact: true });
+  // Slider names live on the thumb; the root holds the track.
+  private sliderRootNamed(name: string): Locator {
+    return this.page.locator('[data-slot="slider"]').filter({
+      has: this.page.getByRole("slider", { name, exact: true }),
+    });
   }
 
   get tabbedFilterResetAllButton() {
@@ -664,7 +667,7 @@ export abstract class PoEDisenchantPageBase {
     max?: number;
   } {
     const chipText = rawChipText.trim();
-    const normalize = (v: string) => parseInt(v.replace(/,/g, ""), 10);
+    const normalize = (v: string) => parseFloat(v.replace(/,/g, ""));
 
     // Pattern 1: Between (min–max)
     const betweenMatch = chipText.match(/([\d,.]+)\s*[–-]\s*([\d,.]+)/);
@@ -718,7 +721,7 @@ export abstract class PoEDisenchantPageBase {
     await this.switchToTab(filterType);
 
     const boundLabel = bound === "lower" ? "Lower" : "Upper";
-    const track = this.sliderTrackByName(
+    const track = this.sliderRootNamed(
       `${boundLabel} bound ${this.rangeParts(filterType).label.toLowerCase()} filter`,
     );
 
@@ -791,7 +794,7 @@ export abstract class PoEDisenchantPageBase {
 
   // Minimum Item Level Slider
   get minItemLevelSlider() {
-    return this.page.getByLabel("Minimum Item Level", { exact: true });
+    return this.sliderRootNamed("Minimum Item Level");
   }
 
   get minItemLevelValue() {
@@ -1019,10 +1022,7 @@ export abstract class PoEDisenchantPageBase {
 
   // Gold Valuation Slider (visible in total-cost mode only)
   get goldValuationSlider() {
-    return this.efficiencySettingsPopover.getByLabel(
-      "Chaos value per ten thousand Gold",
-      { exact: true },
-    );
+    return this.sliderRootNamed("Chaos value per ten thousand Gold");
   }
 
   get goldValuationThumb() {

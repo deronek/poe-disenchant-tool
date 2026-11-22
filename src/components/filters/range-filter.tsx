@@ -1,7 +1,10 @@
-import type { RangeFilterValue } from "@/lib/filters";
+import type {
+  PrecisionBand,
+  RangeFilterValue,
+  RangeSliderModel,
+} from "@/lib/filters";
 import type { AppTable } from "@/lib/table-features";
 import type { RowData } from "@tanstack/react-table";
-import { useMemo } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -10,8 +13,7 @@ import { Slider } from "@/components/ui/slider";
 import { ColumnId } from "@/lib/column-ids";
 import {
   createNormalizedFilterValue,
-  getLowerBoundLinearValue,
-  getLowerBoundSliderValue,
+  getRangeSliders,
   hasMaxFilter,
   hasMinFilter,
   setColumnFilter,
@@ -28,6 +30,7 @@ interface RangeFilterProps<TData extends RowData> {
   min: number;
   max: number;
   step: number;
+  precision?: readonly PrecisionBand[];
   icon?: React.ReactNode;
   title: string;
 }
@@ -100,49 +103,31 @@ export function RangeFilter<TData extends ViewItem>({
   min,
   max,
   step,
+  precision = [],
   icon,
   title,
 }: RangeFilterProps<TData>) {
-  const defaults = useMemo(() => ({ min, max }), [min, max]);
+  const config = { min, max, step, precision };
   const currentRange = useRangeFilterValue(table, columnId);
   const hasMin = hasMinFilter(currentRange);
   const hasMax = hasMaxFilter(currentRange);
   const isFilterActive = hasMin || hasMax;
+  const sliders = getRangeSliders(currentRange, config);
 
   const commitRange = (updatedRange: RangeFilterValue) => {
     setColumnFilter(
       table,
       columnId,
-      createNormalizedFilterValue(updatedRange, defaults),
+      createNormalizedFilterValue(updatedRange, config),
     );
   };
 
   const updateLowerBoundValue = (newValue: number) => {
-    const effectiveMax = currentRange.max ?? max;
-    const clamped = Math.round(Math.min(Math.max(newValue, min), effectiveMax));
-
-    const updatedRange = updateLowerBound(clamped, currentRange, { max });
-    commitRange(updatedRange);
+    commitRange(updateLowerBound(newValue, currentRange, config));
   };
 
   const updateUpperBoundValue = (newValue: number) => {
-    const updatedRange = updateUpperBound(newValue, currentRange, {
-      max,
-    });
-    commitRange(updatedRange);
-  };
-
-  const handleLowerBoundChange = (sliderValue: number[]) => {
-    const newLinearValue = getLowerBoundLinearValue(
-      currentRange,
-      sliderValue[0],
-      defaults,
-    );
-    updateLowerBoundValue(newLinearValue);
-  };
-
-  const handleUpperBoundChange = (sliderValue: number[]) => {
-    updateUpperBoundValue(sliderValue[0]);
+    commitRange(updateUpperBound(newValue, currentRange, config));
   };
 
   const handleResetLowerBound = () => {
@@ -152,37 +137,16 @@ export function RangeFilter<TData extends ViewItem>({
     updateUpperBoundValue(max);
   };
 
-  const handleLowerBoundKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    // Home and End keys handled by Radix correctly
-    if (e.key === "Home" || e.key === "End") return;
-
-    const SMALL_STEP = 1;
-    const LARGE_STEP = 10;
-
-    let delta = 0;
-    switch (e.key) {
-      case "ArrowRight":
-      case "ArrowUp":
-        delta = e.shiftKey ? LARGE_STEP : SMALL_STEP;
-        break;
-      case "ArrowLeft":
-      case "ArrowDown":
-        delta = e.shiftKey ? -LARGE_STEP : -SMALL_STEP;
-        break;
-      case "PageUp":
-        delta = LARGE_STEP;
-        break;
-      case "PageDown":
-        delta = -LARGE_STEP;
-        break;
-      default:
-        return; // let all other keys pass through
-    }
+  const handleBoundKeyDown = (
+    e: React.KeyboardEvent<HTMLDivElement>,
+    slider: RangeSliderModel,
+    update: (value: number) => void,
+  ) => {
+    const newValue = slider.getKeyboardValue(e.key, e.shiftKey);
+    if (newValue === undefined) return;
 
     e.preventDefault();
-    const effectiveMin = currentRange.min ?? min;
-    const newValue = effectiveMin + delta;
-    updateLowerBoundValue(newValue);
+    update(newValue);
   };
 
   const format = (value: number) => value.toLocaleString();
@@ -207,16 +171,19 @@ export function RangeFilter<TData extends ViewItem>({
         <div className="px-2">
           <Slider
             id="lower-bound"
-            min={0}
-            max={100}
-            step={1}
-            value={[
-              Math.round(getLowerBoundSliderValue(currentRange, defaults)),
-            ]}
-            onValueChange={handleLowerBoundChange}
-            onKeyDown={handleLowerBoundKeyDown}
+            min={sliders.lower.min}
+            max={sliders.lower.max}
+            step={sliders.lower.step}
+            value={[sliders.lower.value]}
+            onValueChange={([value]) =>
+              updateLowerBoundValue(sliders.lower.fromSlider(value))
+            }
+            onKeyDown={(e) =>
+              handleBoundKeyDown(e, sliders.lower, updateLowerBoundValue)
+            }
             className="w-full py-1.5"
             aria-label={`Lower bound ${title.toLowerCase()} filter`}
+            aria-valuetext={hasMin ? format(currentRange.min!) : "No limit"}
           />
         </div>
         <div className="text-muted-foreground grid grid-cols-3 text-xs">
@@ -252,13 +219,19 @@ export function RangeFilter<TData extends ViewItem>({
         <div className="px-2">
           <Slider
             id="upper-bound"
-            min={currentRange.min ?? min}
-            max={max}
-            step={step}
-            value={[hasMax ? (currentRange.max as number) : max]}
-            onValueChange={handleUpperBoundChange}
+            min={sliders.upper.min}
+            max={sliders.upper.max}
+            step={sliders.upper.step}
+            value={[sliders.upper.value]}
+            onValueChange={([value]) =>
+              updateUpperBoundValue(sliders.upper.fromSlider(value))
+            }
+            onKeyDown={(e) =>
+              handleBoundKeyDown(e, sliders.upper, updateUpperBoundValue)
+            }
             className={cn("w-full py-1.5", !hasMax && "opacity-60")}
             aria-label={`Upper bound ${title.toLowerCase()} filter`}
+            aria-valuetext={hasMax ? format(currentRange.max!) : "No limit"}
           />
         </div>
         <div className="text-muted-foreground grid grid-cols-3 text-xs">

@@ -1,73 +1,136 @@
 /**
- * Utility functions for range value transformations and scaling
- * Used by range filter components to handle different scaling requirements.
+ * Utility functions for range value transformations and scaling.
+ * Slider positions run from 0 to 100. A non-positive minimum has no log
+ * scale, so it collapses to the track start.
  */
 
+/** Share of the slider track reserved for values below 1. */
+const SUB_UNIT_SLIDER_SHARE = 10;
+
+const RANGE_KEY_DIRECTIONS: Record<string, "up" | "down"> = {
+  ArrowRight: "up",
+  ArrowUp: "up",
+  PageUp: "up",
+  ArrowLeft: "down",
+  ArrowDown: "down",
+  PageDown: "down",
+};
+
+/** True when a range spans 1, so the scale reserves a slice for sub-1 values. */
+export const hasSubUnitRange = (min: number, max: number): boolean =>
+  min < 1 && max > 1;
+
 /**
- * Converts a linear value to logarithmic scale for better precision at low values
- * @param linearValue - The linear value to convert
- * @param min - Minimum value of the range
- * @param max - Maximum value of the range
- * @returns The logarithmic scale value (0-100)
+ * Fractional scale: the first SUB_UNIT_SLIDER_SHARE percent of the track
+ * covers min..1, the rest covers 1..max logarithmically. Ranges entirely
+ * above or below 1 fall back to a plain log scale.
  */
-export const linearToLog = (
+export const linearToFractionalSlider = (
   linearValue: number,
   min: number,
   max: number,
 ): number => {
+  if (min <= 0 || max <= min) return 0;
   if (linearValue <= min) return 0;
-  // Use log scale that gives more precision to low values
-  const logMin = Math.log(min + 1);
-  const logMax = Math.log(max + 1);
-  const logValue = Math.log(linearValue + 1);
-  return ((logValue - logMin) / (logMax - logMin)) * 100;
+  if (linearValue >= max) return 100;
+
+  const subUnitRange = hasSubUnitRange(min, max);
+  if (subUnitRange && linearValue <= 1) {
+    return (
+      (SUB_UNIT_SLIDER_SHARE * Math.log(linearValue / min)) / Math.log(1 / min)
+    );
+  }
+
+  const base = subUnitRange ? 1 : min;
+  const start = subUnitRange ? SUB_UNIT_SLIDER_SHARE : 0;
+
+  return (
+    start +
+    ((100 - start) * Math.log(linearValue / base)) / Math.log(max / base)
+  );
 };
 
-/**
- * Converts a logarithmic scale value back to linear scale
- * @param logValue - The logarithmic scale value (0-100)
- * @param min - Minimum value of the range
- * @param max - Maximum value of the range
- * @returns The linear value
- */
-export const logToLinear = (
-  logValue: number,
-  min: number,
-  max: number,
-): number => {
-  const logMin = Math.log(min + 1);
-  const logMax = Math.log(max + 1);
-  const linearValue =
-    Math.exp(logMin + (logValue / 100) * (logMax - logMin)) - 1;
-  return Math.round(linearValue);
-};
-
-/**
- * Creates slider value for lower bound using logarithmic scaling
- * @param linearValue - The current linear value
- * @param min - Minimum value of the range
- * @param max - Maximum value of the range
- * @returns The slider value (0-100)
- */
-export const createLowerBoundSliderValue = (
-  linearValue: number,
-  min: number,
-  max: number,
-): number => {
-  return linearToLog(linearValue, min, max);
-};
-
-/**
- * Creates linear value from slider value for lower bound
- * @param sliderValue - The slider value (0-100)
- * @param min - Minimum value of the range
- * @param max - Maximum value of the range
- * @returns The linear value
- */
-export const createLowerBoundLinearValue = (
+/** Converts a fractional slider position back to a linear value. */
+export const fractionalSliderToLinear = (
   sliderValue: number,
   min: number,
   max: number,
 ): number => {
-  return logToLinear(sliderValue, min, max);
+  if (min <= 0 || max <= min) return min;
+  if (sliderValue <= 0) return min;
+  if (sliderValue >= 100) return max;
+
+  const subUnitRange = hasSubUnitRange(min, max);
+  if (subUnitRange && sliderValue <= SUB_UNIT_SLIDER_SHARE) {
+    return min * (1 / min) ** (sliderValue / SUB_UNIT_SLIDER_SHARE);
+  }
+
+  const base = subUnitRange ? 1 : min;
+  const start = subUnitRange ? SUB_UNIT_SLIDER_SHARE : 0;
+
+  return base * (max / base) ** ((sliderValue - start) / (100 - start));
+};
+
+/** Decimal places to apply below an exclusive threshold; checked in order. */
+export interface PrecisionBand {
+  below: number;
+  decimals: number;
+}
+
+/** Decimal places the scale offers at a given value. */
+const decimalsForValue = (
+  value: number,
+  precision: readonly PrecisionBand[],
+): number => precision.find((band) => value < band.below)?.decimals ?? 0;
+
+/** Rounds a bound to its band's precision, or to whole numbers without one. */
+export const roundRangeValue = (
+  value: number,
+  precision: readonly PrecisionBand[],
+): number => Number(value.toFixed(decimalsForValue(value, precision)));
+
+/** Finest step the bands or the configured step offer. */
+const finestStep = (
+  precision: readonly PrecisionBand[],
+  step: number,
+): number =>
+  precision.reduce(
+    (finest, band) => Math.min(finest, 10 ** -band.decimals),
+    step,
+  );
+
+/**
+ * Step size for keyboard changes at a given value. Stepping down probes just
+ * below the value so a bound on a band edge uses the finer step.
+ */
+const getRangeStep = (
+  value: number,
+  precision: readonly PrecisionBand[],
+  step: number,
+  direction: "up" | "down",
+): number => {
+  const decimals = decimalsForValue(
+    direction === "down" ? value - finestStep(precision, step) : value,
+    precision,
+  );
+
+  return decimals === 0 ? step : 10 ** -decimals;
+};
+
+/** Value delta for a keyboard key, or undefined when Radix should handle it. */
+export const getRangeKeyboardDelta = (
+  key: string,
+  value: number,
+  precision: readonly PrecisionBand[],
+  step: number,
+  shiftKey: boolean,
+): number | undefined => {
+  const direction = RANGE_KEY_DIRECTIONS[key];
+  if (!direction) return undefined;
+
+  const multiplier =
+    shiftKey || key === "PageUp" || key === "PageDown" ? 10 : 1;
+  const rangeStep = getRangeStep(value, precision, step, direction);
+
+  return rangeStep * multiplier * (direction === "up" ? 1 : -1);
 };

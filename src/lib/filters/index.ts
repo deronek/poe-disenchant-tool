@@ -25,18 +25,18 @@ export {
   RANGE_FILTER_COLUMN_IDS,
   RANGE_FILTER_COLUMNS,
 } from "./range-filter-columns";
-export type { RangeFilterValue } from "./range-filter";
+export type {
+  PrecisionBand,
+  RangeFilterConfig,
+  RangeFilterValue,
+  RangeSliderModel,
+} from "./range-filter";
 export {
   EMPTY_RANGE,
-  createLowerBoundLinearValue,
-  createLowerBoundSliderValue,
   createNormalizedFilterValue,
-  getLowerBoundLinearValue,
-  getLowerBoundSliderValue,
+  getRangeSliders,
   hasMaxFilter,
   hasMinFilter,
-  linearToLog,
-  logToLinear,
   rangeFilterFn,
   updateLowerBound,
   updateUpperBound,

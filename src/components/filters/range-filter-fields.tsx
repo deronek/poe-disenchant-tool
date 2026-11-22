@@ -2,6 +2,7 @@ import type { ColumnId } from "@/lib/column-ids";
 import type {
   FilterColumnTable,
   PersistedFilters,
+  PrecisionBand,
   RangeFilterValue,
 } from "@/lib/filters";
 import type { ComponentType } from "react";
@@ -18,6 +19,11 @@ interface RangeFilterFieldConfig {
   bounds: { min: number; max: number };
   step: number;
   /**
+   * Decimal places by value, checked in order. Values above every band round
+   * to whole numbers.
+   */
+  precision?: readonly PrecisionBand[];
+  /**
    * Full name used in the tab panel header and derived aria strings
    * (e.g. "Dust Value").
    */
@@ -33,8 +39,12 @@ export const RANGE_FILTER_FIELD_CONFIGS: Record<
   price: {
     columnId: RANGE_FILTER_COLUMNS.price,
     icon: ChaosOrbIcon,
-    bounds: { min: 0, max: 500 },
+    bounds: { min: 0.01, max: 500 },
     step: 1,
+    precision: [
+      { below: 0.1, decimals: 2 },
+      { below: 1, decimals: 1 },
+    ],
     title: "Price",
     label: "Price",
   },
