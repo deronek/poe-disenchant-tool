@@ -2634,7 +2634,7 @@ const data = [
   {
     name: "Atziri's Acuity",
     baseType: "Vaal Gauntlets",
-    dustVal: 12.5,
+    dustVal: 643.79,
     w: 2,
     h: 2,
     slots: 4,
@@ -6253,7 +6253,7 @@ const data = [
   {
     name: "Doedre's Tongue",
     baseType: "Lapis Amulet",
-    dustVal: 3.95,
+    dustVal: 13.95,
     w: 1,
     h: 1,
     slots: 1,
