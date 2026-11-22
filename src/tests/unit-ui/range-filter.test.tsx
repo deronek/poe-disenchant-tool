@@ -168,19 +168,19 @@ describe("RangeFilter whole-number keyboard handling", () => {
       field: "dust" as const,
       range: { min: 2_000 },
       label: "Lower bound dust value filter",
-      expected: { min: 2_163 },
+      expected: { min: 52_000 },
     },
     {
       field: "gold" as const,
       range: { min: 1_500 },
       label: "Lower bound gold fee filter",
-      expected: { min: 1_561 },
+      expected: { min: 2_000 },
     },
     {
       field: "dust" as const,
       range: { max: 5_000_000 },
       label: "Upper bound dust value filter",
-      expected: { max: 4_952_000 },
+      expected: { max: 4_950_000 },
     },
     {
       field: "gold" as const,
@@ -189,7 +189,7 @@ describe("RangeFilter whole-number keyboard handling", () => {
       expected: { max: 79_500 },
     },
   ])(
-    "uses the pointer scale for $label",
+    "uses the configured value step for $label",
     ({ field, range, label, expected }) => {
       const { setFilterValue } = renderRangeFilter(range, field);
 
@@ -205,6 +205,34 @@ describe("RangeFilter whole-number keyboard handling", () => {
 
 describe("RangeFilter persisted ranges", () => {
   afterEach(cleanup);
+
+  it.each([
+    {
+      range: { max: 900 },
+      bound: "Upper",
+      key: "ArrowLeft",
+      expected: { max: 499 },
+    },
+    {
+      range: { min: 0 },
+      bound: "Lower",
+      key: "ArrowRight",
+      expected: { min: 0.02 },
+    },
+  ])(
+    "starts keyboard steps from the effective $bound bound",
+    ({ range, bound, key, expected }) => {
+      const { setFilterValue } = renderRangeFilter(range);
+
+      fireEvent.keyDown(
+        screen.getByRole("slider", { name: `${bound} bound price filter` }),
+        { key },
+      );
+
+      expect(setFilterValue).toHaveBeenCalledTimes(1);
+      expect(setFilterValue).toHaveBeenLastCalledWith(expected);
+    },
+  );
 
   it("clamps a whole-number upper slider to its effective maximum", () => {
     renderRangeFilter({ max: 0 }, "dust");

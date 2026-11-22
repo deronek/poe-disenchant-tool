@@ -38,8 +38,6 @@ export const getRangeSliders = (
     key: string,
     shiftKey: boolean,
   ): number | undefined => {
-    if (!subUnitRange) return undefined;
-
     const delta = getRangeKeyboardDelta(
       key,
       currentValue,
@@ -72,7 +70,7 @@ export const getRangeSliders = (
       fromSlider: (sliderValue: number) =>
         fractionalSliderToLinear(sliderValue, config.min, effectiveMax),
       getKeyboardValue: (key: string, shiftKey: boolean) =>
-        getKeyboardValue(currentRange.min ?? config.min, key, shiftKey),
+        getKeyboardValue(effectiveMin, key, shiftKey),
     },
     upper: {
       min: subUnitRange ? 0 : effectiveMin,
@@ -84,7 +82,7 @@ export const getRangeSliders = (
           ? fractionalSliderToLinear(sliderValue, effectiveMin, config.max)
           : sliderValue,
       getKeyboardValue: (key: string, shiftKey: boolean) =>
-        getKeyboardValue(currentRange.max ?? config.max, key, shiftKey),
+        getKeyboardValue(effectiveMax, key, shiftKey),
     },
   } satisfies { lower: RangeSliderModel; upper: RangeSliderModel };
 };
