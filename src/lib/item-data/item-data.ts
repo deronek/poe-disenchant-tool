@@ -247,13 +247,19 @@ const emitItemDataFetchEventSafely = async ({
   stats?: ItemDataBuildStats;
   error?: unknown;
 }): Promise<void> => {
-  const outcome = error === undefined ? "success" : "error";
+  const hasDegradedFetch =
+    Object.keys(fetchContext.prices.errors_by_resource ?? {}).length > 0 ||
+    fetchContext.currency.fetch_failed === true;
+  const outcome =
+    error !== undefined ? "error" : hasDegradedFetch ? "degraded" : "success";
   const event: LogRecord = {
     event_name: "item_data_fetch",
     message:
-      outcome === "success"
-        ? "Item data fetch completed"
-        : "Item data fetch failed",
+      outcome === "error"
+        ? "Item data fetch failed"
+        : outcome === "degraded"
+          ? "Item data fetch completed with errors"
+          : "Item data fetch completed",
     operation: "getItems",
     league,
     outcome,

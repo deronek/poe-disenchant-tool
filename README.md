@@ -90,6 +90,8 @@ pnpm lint  # prettier check, eslint, typecheck
 pnpm build # production build, fetches live prices from poe.ninja
 ```
 
+See [Emergency deployments](docs/emergency-deployments.md) when a code change must ship during a poe.ninja outage.
+
 Two files hold the dust data in `data/dust/`:
 
 - `poe-dust-original.js`: the source dataset, with a raw dust value and inventory footprint per unique

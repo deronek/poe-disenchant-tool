@@ -89,7 +89,10 @@ export const emitWideEvent = async (event: WideEvent) => {
     ...event,
   };
 
-  const level = payload.outcome === "error" ? LogLevel.error : LogLevel.info;
+  const level =
+    payload.outcome === "error" || payload.outcome === "degraded"
+      ? LogLevel.error
+      : LogLevel.info;
   logger.log(
     level,
     String(payload.message ?? payload.event_name ?? "event"),

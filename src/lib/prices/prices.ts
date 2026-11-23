@@ -5,9 +5,8 @@ import path from "path";
 import { z } from "zod";
 
 import type { AllowedUnique } from "./allowed-types";
-import type { ApiResult } from "./external-api";
 import { getLeagueApiName, League } from "../leagues";
-import { isBuildTime, isDevelopment } from "../utils-server";
+import { isDevelopment } from "../utils-server";
 import { allowedUniqueTypes } from "./allowed-types";
 import {
   createExternalApiError,
@@ -37,13 +36,26 @@ const LineSchema = z.object({
 
 type PriceLine = z.infer<typeof LineSchema> & { itemType: string };
 
+const createPriceLinesSchema = (parseErrors: z.ZodError[]) =>
+  z.array(
+    LineSchema.nullable().catch((context) => {
+      if (parseErrors.length < 10) {
+        parseErrors.push(
+          new z.ZodError(
+            context.issues.map((issue) => ({
+              ...issue,
+              path: issue.path ?? [],
+              message: issue.message ?? "Invalid input",
+            })),
+          ),
+        );
+      }
+      return null;
+    }),
+  );
+
 const ItemOverviewResponseSchema = z.object({
-  lines: z.optional(
-    z.array(LineSchema).transform((items): PriceLine[] =>
-      // Filter out items with no itemType
-      items.filter((item): item is PriceLine => item.itemType !== undefined),
-    ),
-  ),
+  lines: z.optional(z.array(z.unknown())),
 });
 
 type ItemOverviewResponse = z.infer<typeof ItemOverviewResponseSchema>;
@@ -83,12 +95,13 @@ export type PriceFetchContext = {
   types_completed: AllowedUnique[];
   resources_failed: AllowedUnique[];
   line_counts_by_resource: Partial<Record<AllowedUnique, number>>;
+  invalid_line_counts_by_resource: Partial<Record<AllowedUnique, number>>;
+  missing_item_type_counts_by_resource: Partial<Record<AllowedUnique, number>>;
   status_codes_by_resource: Partial<Record<AllowedUnique, number>>;
   errors_by_resource: Partial<
     Record<AllowedUnique, ReturnType<typeof toExternalApiErrorContext>>
   >;
   item_count: number;
-  used_build_fallback: boolean;
 };
 
 export type PriceDataResult = {
@@ -96,17 +109,33 @@ export type PriceDataResult = {
   context: PriceFetchContext;
 };
 
+type PriceTypeData = {
+  items: InternalItem[];
+  invalidLineCount: number;
+  missingItemTypeCount: number;
+  parseError?: ExternalApiError;
+};
+
+type PriceTypeResult =
+  | { ok: true; data: PriceTypeData; statusCode: number }
+  | { ok: false; error: ExternalApiError; data?: PriceTypeData };
+
 type PriceFetchOutcome =
   | {
       type: AllowedUnique;
       ok: true;
       lineCount: number;
+      invalidLineCount: number;
+      missingItemTypeCount: number;
+      parseError?: ExternalApiError;
       statusCode?: number;
     }
   | {
       type: AllowedUnique;
       ok: false;
       error: ExternalApiError;
+      invalidLineCount: number;
+      missingItemTypeCount: number;
       statusCode?: number;
     };
 
@@ -173,11 +202,61 @@ const createPriceFetchError = ({
   });
 };
 
+const parsePriceLines = ({
+  type,
+  league,
+  lines,
+  status,
+}: {
+  type: AllowedUnique;
+  league: League;
+  lines: unknown[];
+  status?: number;
+}): PriceTypeData => {
+  const parseErrors: z.ZodError[] = [];
+  let invalidLineCount = 0;
+  const parsedLines = createPriceLinesSchema(parseErrors).parse(lines);
+
+  const items: InternalItem[] = [];
+  let missingItemTypeCount = 0;
+
+  for (const line of parsedLines) {
+    if (line === null) {
+      invalidLineCount += 1;
+      continue;
+    }
+
+    if (line.itemType === undefined) {
+      missingItemTypeCount += 1;
+      continue;
+    }
+
+    items.push(toInternalItem(type, { ...line, itemType: line.itemType }));
+  }
+
+  const parseError =
+    invalidLineCount > 0
+      ? createPriceFetchError({
+          league,
+          resource: type,
+          kind: "schema",
+          status,
+          message: `Skipped ${invalidLineCount} invalid ${type} price lines for ${getLeagueApiName(league)}`,
+          cause:
+            parseErrors.length === 1
+              ? parseErrors[0]
+              : new AggregateError(parseErrors, `Invalid ${type} price lines`),
+        })
+      : undefined;
+
+  return { items, invalidLineCount, missingItemTypeCount, parseError };
+};
+
 const getProductionDataForType = async (
   type: AllowedUnique,
   league: League,
   leagueApiName: string,
-): Promise<ApiResult<InternalItem[]>> => {
+): Promise<PriceTypeResult> => {
   const url = `https://poe.ninja/poe1/api/economy/stash/current/item/overview?type=${encodeURIComponent(type)}&league=${encodeURIComponent(leagueApiName)}`;
   try {
     const response = await fetch(url, {
@@ -244,13 +323,20 @@ const getProductionDataForType = async (
       };
     }
 
-    const items: InternalItem[] = data.data.lines.map((line) =>
-      toInternalItem(type, line),
-    );
+    const parsedData = parsePriceLines({
+      type,
+      league,
+      lines: data.data.lines,
+      status: response.status,
+    });
+
+    if (parsedData.items.length === 0 && parsedData.parseError) {
+      return { ok: false, error: parsedData.parseError, data: parsedData };
+    }
 
     return {
       ok: true,
-      data: items,
+      data: parsedData,
       statusCode: response.status,
     };
   } catch (error) {
@@ -269,44 +355,59 @@ const getProductionDataForType = async (
 
 const getDevDataForType = async (
   type: AllowedUnique,
-): Promise<InternalItem[]> => {
+  league: League,
+): Promise<PriceTypeData> => {
   const data = await getDevData(type);
   if (!data.lines) {
     console.warn(`No dev data returned for ${type}`);
-    return [];
+    return { items: [], invalidLineCount: 0, missingItemTypeCount: 0 };
   }
 
-  return data.lines.map((line) => toInternalItem(type, line));
+  return parsePriceLines({ type, league, lines: data.lines });
 };
 
 const toPriceFetchOutcome = (
-  result: ApiResult<InternalItem[]>,
+  result: PriceTypeResult,
   type: AllowedUnique,
 ): PriceFetchOutcome => {
   const statusCode = getApiResultStatusCode(result);
 
   if (!result.ok) {
-    // Per-type failures always resolve as { ok: false } so the aggregate
-    // caller is the only place that decides whether to continue (build) or
-    // throw (runtime). We still preserve every failure in the final context.
-    return { type, ok: false, error: result.error, statusCode };
+    return {
+      type,
+      ok: false,
+      error: result.error,
+      invalidLineCount: result.data?.invalidLineCount ?? 0,
+      missingItemTypeCount: result.data?.missingItemTypeCount ?? 0,
+      statusCode,
+    };
   }
 
-  return { type, ok: true, lineCount: result.data.length, statusCode };
+  return {
+    type,
+    ok: true,
+    lineCount: result.data.items.length,
+    invalidLineCount: result.data.invalidLineCount,
+    missingItemTypeCount: result.data.missingItemTypeCount,
+    parseError: result.data.parseError,
+    statusCode,
+  };
 };
 
 const buildPriceFetchContext = ({
   outcomes,
   itemCount,
-  usedBuildFallback = false,
 }: {
   outcomes: readonly PriceFetchOutcome[];
   itemCount: number;
-  usedBuildFallback?: boolean;
 }): PriceFetchContext => {
   const typesCompleted: AllowedUnique[] = [];
   const resourcesFailed: AllowedUnique[] = [];
   const lineCountsByResource: PriceFetchContext["line_counts_by_resource"] = {};
+  const invalidLineCountsByResource: PriceFetchContext["invalid_line_counts_by_resource"] =
+    {};
+  const missingItemTypeCountsByResource: PriceFetchContext["missing_item_type_counts_by_resource"] =
+    {};
   const statusCodesByResource: PriceFetchContext["status_codes_by_resource"] =
     {};
   const errorsByResource: PriceFetchContext["errors_by_resource"] = {};
@@ -315,12 +416,24 @@ const buildPriceFetchContext = ({
     if (outcome.ok) {
       typesCompleted.push(outcome.type);
       lineCountsByResource[outcome.type] = outcome.lineCount;
+      if (outcome.parseError) {
+        errorsByResource[outcome.type] = toExternalApiErrorContext(
+          outcome.parseError,
+        );
+      }
     } else {
       resourcesFailed.push(outcome.type);
       lineCountsByResource[outcome.type] = 0;
       errorsByResource[outcome.type] = toExternalApiErrorContext(outcome.error);
     }
 
+    if (outcome.invalidLineCount > 0) {
+      invalidLineCountsByResource[outcome.type] = outcome.invalidLineCount;
+    }
+    if (outcome.missingItemTypeCount > 0) {
+      missingItemTypeCountsByResource[outcome.type] =
+        outcome.missingItemTypeCount;
+    }
     if (outcome.statusCode != null) {
       statusCodesByResource[outcome.type] = outcome.statusCode;
     }
@@ -332,10 +445,11 @@ const buildPriceFetchContext = ({
     types_completed: typesCompleted,
     resources_failed: resourcesFailed,
     line_counts_by_resource: lineCountsByResource,
+    invalid_line_counts_by_resource: invalidLineCountsByResource,
+    missing_item_type_counts_by_resource: missingItemTypeCountsByResource,
     status_codes_by_resource: statusCodesByResource,
     errors_by_resource: errorsByResource,
     item_count: itemCount,
-    used_build_fallback: usedBuildFallback,
   };
 };
 
@@ -374,19 +488,24 @@ const toPublicItems = (items: InternalItem[]): Item[] => {
   );
 };
 
-const getDevelopmentPriceData = async (): Promise<PriceDataResult> => {
+const getDevelopmentPriceData = async (
+  league: League,
+): Promise<PriceDataResult> => {
   const allTypes = allowedUniqueTypes as readonly AllowedUnique[];
   const allItems = await Promise.all(
-    allTypes.map((type) => getDevDataForType(type)),
+    allTypes.map((type) => getDevDataForType(type, league)),
   );
 
-  const combinedItems = allItems.flat();
+  const combinedItems = allItems.flatMap((result) => result.items);
   const publicItems = toPublicItems(combinedItems);
   const context = buildPriceFetchContext({
     outcomes: allTypes.map((type, index) => ({
       type,
       ok: true,
-      lineCount: allItems[index].length,
+      lineCount: allItems[index].items.length,
+      invalidLineCount: allItems[index].invalidLineCount,
+      missingItemTypeCount: allItems[index].missingItemTypeCount,
+      parseError: allItems[index].parseError,
     })),
     itemCount: publicItems.length,
   });
@@ -555,7 +674,7 @@ const uncached__getPriceData = async (
   league: League,
 ): Promise<PriceDataResult> => {
   if (isDevelopment) {
-    return getDevelopmentPriceData();
+    return getDevelopmentPriceData(league);
   }
 
   const leagueApiName = getLeagueApiName(league);
@@ -567,12 +686,11 @@ const uncached__getPriceData = async (
   );
 
   const failures = allItems.filter(
-    (result): result is Extract<ApiResult<InternalItem[]>, { ok: false }> =>
-      !result.ok,
+    (result): result is Extract<PriceTypeResult, { ok: false }> => !result.ok,
   );
 
   const combinedItems = allItems.flatMap((result) =>
-    result.ok ? result.data : [],
+    result.ok ? result.data.items : [],
   );
 
   const publicItems = toPublicItems(combinedItems);
@@ -581,38 +699,18 @@ const uncached__getPriceData = async (
       toPriceFetchOutcome(result, allTypes[index]),
     ),
     itemCount: publicItems.length,
-    // `used_build_fallback` marks the fully empty build-time fallback case.
-    // Partial build-time degradation is still intentional and is represented by
-    // `resources_failed` plus the per-resource status/error maps in `context`.
-    usedBuildFallback: isBuildTime && combinedItems.length === 0,
   });
 
-  if (!isBuildTime && failures.length > 0) {
-    // Build-time prerendering intentionally keeps any successful upstream
-    // resources so page generation is never blocked on partial poe.ninja
-    // availability.
-    //
-    // Runtime refreshes are stricter: any missing price resource fails the
-    // refresh so Next keeps serving the last good cached/prerendered page
-    // instead of overwriting it with partial data. We still attach the full
-    // aggregate failure context for logging and inspection.
-    throw withAggregatePriceContext(failures[0].error, context);
-  }
-
-  // The fully empty build-time fallback is also intentional so deployment and
-  // prerender can complete even when the third-party API is completely down.
-  // Runtime refreshes must fail closed here for the same reason as partial
-  // failures above: never replace an existing cached page with no data.
-  if (!isBuildTime && combinedItems.length === 0) {
-    throw withAggregatePriceContext(
+  if (publicItems.length === 0) {
+    const error =
+      failures[0]?.error ??
       createPriceFetchError({
         league,
         resource: "all-types",
         kind: "empty-data",
         message: `Price fetch completed with zero items for ${leagueApiName}`,
-      }),
-      context,
-    );
+      });
+    throw withAggregatePriceContext(error, context);
   }
 
   return {
