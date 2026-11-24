@@ -104,7 +104,7 @@ pnpm dust:process  # regenerate from source data, then validate
 
 ## Testing
 
-All suites run on pull requests in CI. To run them locally:
+The unit, E2E, and visual regression suites run on pull requests in CI. To run them locally:
 
 ### Unit tests
 
@@ -120,6 +120,20 @@ pnpm test:desktop # headless run of the desktop suite
 pnpm test:mobile  # headless run of the mobile suite
 pnpm test:ui      # interactive mode
 ```
+
+### Production smoke test
+
+The Production smoke test workflow runs every six hours, on manual dispatch, and after Vercel reports a successful automatic production deployment. It uses Chromium to check the deployed page, rendered rows, numeric values, and timestamp format. It does not enforce timestamp freshness because stale pages revalidate only when requested.
+
+Create a dedicated Vercel Protection Bypass for Automation secret and add it to GitHub Actions as `VERCEL_AUTOMATION_BYPASS_SECRET`. Playwright sends the secret only to the production origin. To run it locally:
+
+```bash
+PRODUCTION_BASE_URL=https://poe-disenchant-tool.vercel.app \
+VERCEL_AUTOMATION_BYPASS_SECRET=your-secret \
+pnpm test:production
+```
+
+Deployment-triggered runs check out the deployed commit. Scheduled and manual runs use the current workflow revision. All runs target the fixed production URL, and deployment events for preview environments are ignored.
 
 ### Visual regression tests
 
