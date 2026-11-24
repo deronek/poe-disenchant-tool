@@ -13,10 +13,16 @@ vi.mock("@/components/last-updated", () => ({
   default: () => <div data-testid="last-updated" />,
 }));
 vi.mock("@/components/currency-data-status", () => ({
-  CurrencyDataStatus: () => null,
+  CurrencyDataStatus: ({
+    priceDataUnavailable,
+  }: {
+    priceDataUnavailable?: boolean;
+  }) => (priceDataUnavailable ? <div>Price data unavailable</div> : null),
 }));
 vi.mock("@/components/shared-data-view", () => ({
-  SharedDataView: () => <div data-testid="item-table" />,
+  SharedDataView: ({ items }: { items: unknown[] }) => (
+    <div data-testid="item-table" data-item-count={items.length} />
+  ),
 }));
 
 const loadLeagueContentServer = async () =>
@@ -46,7 +52,7 @@ describe("LeagueContentServer emergency prerender", () => {
     vi.unstubAllEnvs();
   });
 
-  it("renders the outage page for an allowed build-time price failure", async () => {
+  it("keeps the table during an allowed build-time price failure", async () => {
     vi.stubEnv("NEXT_PHASE", "phase-production-build");
     vi.stubEnv("ALLOW_UNAVAILABLE_PRERENDER", "1");
     getItemsMock.mockRejectedValue(await createExternalApiError("prices"));
@@ -57,7 +63,9 @@ describe("LeagueContentServer emergency prerender", () => {
     );
 
     expect(screen.getByText("Price data unavailable")).toBeTruthy();
-    expect(screen.queryByTestId("item-table")).toBeNull();
+    expect(
+      screen.getByTestId("item-table").getAttribute("data-item-count"),
+    ).toBe("0");
     expect(screen.queryByTestId("last-updated")).toBeNull();
     expect(
       container.querySelector('script[type="application/ld+json"]'),

@@ -41,7 +41,7 @@ export default async function LeagueContentServer({
       process.env.ALLOW_UNAVAILABLE_PRERENDER === "1" &&
       isPriceDataUnavailableError(error)
     ) {
-      return <PriceDataUnavailable />;
+      return <PriceDataUnavailable league={league} />;
     }
 
     throw error;

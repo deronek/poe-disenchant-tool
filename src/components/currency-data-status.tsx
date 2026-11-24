@@ -15,6 +15,7 @@ import {
 
 type CurrencyDataStatusProps = {
   status: ItemDataStatus["currency"];
+  priceDataUnavailable?: boolean;
 };
 
 type PillDefinition = {
@@ -69,6 +70,19 @@ function StatusPill({ children, content }: PillProps) {
   );
 }
 
+const priceContent = (
+  <div className="flex flex-col gap-3">
+    <div className="flex items-center gap-2">
+      <AlertTriangle className="size-4 text-amber-600 dark:text-amber-400" />
+      <h4 className="text-sm font-semibold">Price Data Unavailable</h4>
+    </div>
+    <p className="leading-relaxed">
+      No usable prices are available. The page will update automatically after
+      prices recover.
+    </p>
+  </div>
+);
+
 const currencyContent = (
   <div className="flex flex-col gap-3">
     <div className="flex items-center gap-2">
@@ -104,9 +118,23 @@ const catalystContent = (
   </div>
 );
 
-export function CurrencyDataStatus({ status }: CurrencyDataStatusProps) {
+export function CurrencyDataStatus({
+  status,
+  priceDataUnavailable = false,
+}: CurrencyDataStatusProps) {
   const catalystDegraded = status.usedDefaultCatalystPrice;
   const currencyDegraded = status.usedDefaultDivineRate;
+
+  if (priceDataUnavailable) {
+    return (
+      <StatusPill content={priceContent}>
+        <AlertTriangle className="size-3.5 shrink-0 text-amber-600 dark:text-amber-500" />
+        <span className="text-sm text-amber-600 dark:text-amber-500">
+          Price data unavailable
+        </span>
+      </StatusPill>
+    );
+  }
 
   if (!catalystDegraded && !currencyDegraded) {
     return null;

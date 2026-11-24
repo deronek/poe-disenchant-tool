@@ -1,24 +1,28 @@
-import { AlertTriangle } from "lucide-react";
+import type { League } from "@/lib/leagues";
 
-export function PriceDataUnavailable() {
+import { CurrencyDataStatus } from "@/components/currency-data-status";
+import { SharedDataView } from "@/components/shared-data-view";
+
+export function PriceDataUnavailable({ league }: { league: League }) {
   return (
-    <section
-      aria-labelledby="price-data-unavailable-title"
-      className="border-border bg-muted/30 mt-4 flex gap-3 rounded-lg border p-4"
-    >
-      <AlertTriangle
-        aria-hidden="true"
-        className="mt-0.5 size-5 shrink-0 text-amber-600 dark:text-amber-500"
-      />
-      <div className="space-y-1">
-        <h2 id="price-data-unavailable-title" className="font-semibold">
-          Price data unavailable
-        </h2>
-        <p className="text-muted-foreground text-sm">
-          poe.ninja returned no usable prices when this page was generated. The
-          page will update automatically after the service recovers.
-        </p>
+    <div className="flex min-h-0 flex-1 flex-col">
+      <div className="font-italic text-muted-foreground inline-flex flex-wrap items-center gap-x-2 text-sm">
+        <CurrencyDataStatus
+          status={{
+            usedDefaultCatalystPrice: false,
+            usedDefaultDivineRate: false,
+          }}
+          priceDataUnavailable
+        />
       </div>
-    </section>
+      <section className="py-1">
+        <SharedDataView
+          items={[]}
+          league={league}
+          lowStockThreshold={1}
+          divinePriceThreshold={null}
+        />
+      </section>
+    </div>
   );
 }

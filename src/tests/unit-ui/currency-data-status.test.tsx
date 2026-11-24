@@ -3,19 +3,23 @@ import { afterEach, describe, expect, it } from "vitest";
 
 import { CurrencyDataStatus } from "@/components/currency-data-status";
 
+const PRICE_MESSAGE = "Price data unavailable";
 const CURRENCY_MESSAGE = "Currency rates unavailable";
 const CATALYST_MESSAGE = "Catalyst price unavailable";
 
 function renderStatus({
   usedDefaultCatalystPrice = false,
   usedDefaultDivineRate = false,
+  priceDataUnavailable = false,
 }: {
   usedDefaultCatalystPrice?: boolean;
   usedDefaultDivineRate?: boolean;
+  priceDataUnavailable?: boolean;
 }) {
   return render(
     <CurrencyDataStatus
       status={{ usedDefaultCatalystPrice, usedDefaultDivineRate }}
+      priceDataUnavailable={priceDataUnavailable}
     />,
   );
 }
@@ -50,6 +54,17 @@ describe("CurrencyDataStatus", () => {
     const { container } = renderStatus({});
 
     expect(container.firstChild).toBeNull();
+  });
+
+  it("replaces currency warnings when all price data is unavailable", () => {
+    renderStatus({
+      usedDefaultCatalystPrice: true,
+      usedDefaultDivineRate: true,
+      priceDataUnavailable: true,
+    });
+
+    expect(screen.queryAllByText(PRICE_MESSAGE).length).toBeGreaterThan(0);
+    expectStatusVisibility({ currencyVisible: false, catalystVisible: false });
   });
 
   it.each([

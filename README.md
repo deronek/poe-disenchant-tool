@@ -17,7 +17,7 @@ Path of Exile tool for calculating unique item disenchanting efficiency across m
 
 ## Features
 
-- Market prices from the poe.ninja API, refreshed hourly
+- Market prices refreshed hourly
 - Multi-league support
 - Dust Value based on item level, quality and influences
 - Gold Fee estimates for async trades
@@ -81,16 +81,16 @@ pnpm dev
 
 Open http://localhost:3000
 
-Dev mode serves local price data from `data/prices/dev-data`, not live poe.ninja data. Catalyst and divine rates are hardcoded. Run `pnpm populate-devdata` to refresh that data from poe.ninja.
+Dev mode serves local price data from `data/prices/dev-data`, not live market data. Catalyst and divine rates are hardcoded. Run `pnpm populate-devdata` to refresh that data from the price API.
 
 Other commands:
 
 ```bash
 pnpm lint  # prettier check, eslint, typecheck
-pnpm build # production build, fetches live prices from poe.ninja
+pnpm build # production build, fetches live market prices
 ```
 
-See [Emergency deployments](docs/emergency-deployments.md) when a code change must ship during a poe.ninja outage.
+See [Emergency deployments](docs/emergency-deployments.md) when a code change must ship during a third-party API outage.
 
 Two files hold the dust data in `data/dust/`:
 
