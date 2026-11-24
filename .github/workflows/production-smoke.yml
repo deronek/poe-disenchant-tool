@@ -50,11 +50,3 @@ jobs:
 
       - name: Run production smoke test
         run: pnpm test:production
-
-      - name: Upload failure diagnostics
-        if: failure()
-        uses: actions/upload-artifact@v7.0.1
-        with:
-          name: production-smoke-${{ github.run_id }}
-          path: test-results/**/*.png
-          retention-days: 7
