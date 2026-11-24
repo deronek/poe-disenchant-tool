@@ -123,7 +123,7 @@ pnpm test:ui      # interactive mode
 
 ### Production smoke test
 
-The Production smoke test workflow runs every six hours, on manual dispatch, and after Vercel reports a successful automatic production deployment. It uses Chromium to check the deployed page, rendered rows, numeric values, and timestamp format. It does not enforce timestamp freshness because stale pages revalidate only when requested.
+The Production smoke test workflow runs every six hours, on manual dispatch, and after Vercel reports a successful automatic production deployment. It uses Chromium to check the deployed page, rendered rows, numeric values, and timestamp format. Timestamp freshness is not enforced, because stale pages only revalidate in the background after being requested.
 
 Create a dedicated Vercel Protection Bypass for Automation secret and add it to GitHub Actions as `VERCEL_AUTOMATION_BYPASS_SECRET`. Playwright sends the secret only to the production origin. To run it locally:
 
