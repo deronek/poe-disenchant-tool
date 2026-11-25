@@ -42,16 +42,30 @@ test.beforeEach(async ({ context }) => {
 
 test("production renders plausible item data", async ({ page }) => {
   const poePage = new PoEDisenchantDesktopPage(page);
-  const response = await page.goto("/", { waitUntil: "domcontentloaded" });
 
-  expect(response).not.toBeNull();
-  expect(response!.ok()).toBe(true);
   if (expectedCommitSha) {
-    await expect(page.locator("html")).toHaveAttribute(
-      "data-commit-sha",
-      expectedCommitSha,
-    );
+    await expect
+      .poll(
+        async () => {
+          try {
+            const response = await page.goto("/", {
+              waitUntil: "domcontentloaded",
+            });
+            if (!response?.ok()) return null;
+            return page.locator("html").getAttribute("data-commit-sha");
+          } catch {
+            return null;
+          }
+        },
+        { intervals: [30_000], timeout: 5 * 60 * 1000 },
+      )
+      .toBe(expectedCommitSha);
+  } else {
+    const response = await page.goto("/", { waitUntil: "domcontentloaded" });
+    expect(response).not.toBeNull();
+    expect(response!.ok()).toBe(true);
   }
+
   await poePage.waitForDataLoad();
   await poePage.waitForHydration();
   await expect(poePage.pageTitle).toHaveText(TITLE);

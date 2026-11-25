@@ -40,6 +40,7 @@ const nextConfig: NextConfig = {
   env: {
     PDT_APP_VERSION: packageJson.version,
     PDT_APP_NAME: packageJson.name,
+    PDT_GIT_COMMIT_SHA: process.env.VERCEL_GIT_COMMIT_SHA ?? "",
   },
   devIndicators: process.env.PLAYWRIGHT ? false : undefined, // Disable dev tools in Playwright for VRT
   // Static redirects - handled at CDN/edge level

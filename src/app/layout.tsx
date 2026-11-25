@@ -75,7 +75,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-commit-sha={process.env.VERCEL_GIT_COMMIT_SHA}
+      data-commit-sha={process.env.PDT_GIT_COMMIT_SHA || undefined}
       suppressHydrationWarning
     >
       <body className="antialiased">

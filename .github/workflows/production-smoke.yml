@@ -11,8 +11,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: production-smoke
-  cancel-in-progress: false
+  group: production-smoke-${{ github.event_name == 'repository_dispatch' && 'deployment' || 'other' }}
+  cancel-in-progress: ${{ github.event_name == 'repository_dispatch' }}
 
 jobs:
   smoke:

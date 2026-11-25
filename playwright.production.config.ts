@@ -8,10 +8,10 @@ if (!process.env.VERCEL_AUTOMATION_BYPASS_SECRET) {
   throw new Error("VERCEL_AUTOMATION_BYPASS_SECRET is required");
 }
 
-if (
-  process.env.GITHUB_EVENT_NAME === "repository_dispatch" &&
-  !process.env.PRODUCTION_EXPECTED_COMMIT_SHA
-) {
+const isDeploymentCheck =
+  process.env.GITHUB_EVENT_NAME === "repository_dispatch";
+
+if (isDeploymentCheck && !process.env.PRODUCTION_EXPECTED_COMMIT_SHA) {
   throw new Error("PRODUCTION_EXPECTED_COMMIT_SHA is required for deployments");
 }
 
@@ -20,8 +20,8 @@ export default defineConfig({
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   workers: 1,
-  retries: process.env.CI ? 1 : 0,
-  timeout: 60 * 1000,
+  retries: process.env.CI && !isDeploymentCheck ? 1 : 0,
+  timeout: isDeploymentCheck ? 6 * 60 * 1000 : 60 * 1000,
   reporter: [["list"], ["html", { open: "never" }]],
   use: {
     baseURL: process.env.PRODUCTION_BASE_URL,
