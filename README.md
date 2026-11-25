@@ -135,6 +135,8 @@ pnpm test:production
 
 Deployment-triggered runs check out the deployed commit. Scheduled and manual runs use the current workflow revision. All runs target the fixed production URL, and deployment events for preview environments are ignored.
 
+Scheduled runs require the GitHub Actions repository variable `PRODUCTION_SMOKE_SCHEDULE_ENABLED` to be `1`. Set it to `0` under **Settings → Secrets and variables → Actions → Variables** to pause only the schedule. Manual and deployment-triggered runs remain enabled.
+
 ### Visual regression tests
 
 CI only. Compare rendered pages against committed screenshots in light and dark themes to catch unintended visible changes. Intended visual changes get new snapshots through the Update VRT Snapshots workflow.
