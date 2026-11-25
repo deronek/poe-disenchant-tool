@@ -8,6 +8,13 @@ if (!process.env.VERCEL_AUTOMATION_BYPASS_SECRET) {
   throw new Error("VERCEL_AUTOMATION_BYPASS_SECRET is required");
 }
 
+if (
+  process.env.GITHUB_EVENT_NAME === "repository_dispatch" &&
+  !process.env.PRODUCTION_EXPECTED_COMMIT_SHA
+) {
+  throw new Error("PRODUCTION_EXPECTED_COMMIT_SHA is required for deployments");
+}
+
 export default defineConfig({
   testDir: "./src/tests/production",
   fullyParallel: false,

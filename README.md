@@ -133,7 +133,7 @@ VERCEL_AUTOMATION_BYPASS_SECRET=your-secret \
 pnpm test:production
 ```
 
-Deployment-triggered runs check out the deployed commit. Scheduled and manual runs use the current workflow revision. All runs target the fixed production URL, and deployment events for preview environments are ignored.
+Deployment-triggered runs check out the deployed commit and require the page's commit SHA to match the deployment event. This prevents a queued event from validating a different production deployment. Vercel's System Environment Variables must be enabled to expose the SHA. Scheduled and manual runs use the current workflow revision and skip this check. All runs target the fixed production URL, and deployment events for preview environments are ignored.
 
 Scheduled runs require the GitHub Actions repository variable `PRODUCTION_SMOKE_SCHEDULE_ENABLED` to be `1`. Set it to `0` under **Settings → Secrets and variables → Actions → Variables** to pause only the schedule. Manual and deployment-triggered runs remain enabled.
 

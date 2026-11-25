@@ -27,6 +27,7 @@ jobs:
     timeout-minutes: 10
     env:
       PRODUCTION_BASE_URL: https://poe-disenchant-tool.vercel.app
+      PRODUCTION_EXPECTED_COMMIT_SHA: ${{ github.event.client_payload.git.sha || '' }}
       VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
 
     steps:

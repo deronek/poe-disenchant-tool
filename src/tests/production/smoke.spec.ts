@@ -5,6 +5,7 @@ import { TITLE } from "@/lib/constants";
 import { PoEDisenchantDesktopPage } from "../e2e/page-pom/page-desktop";
 
 const productionURL = new URL(process.env.PRODUCTION_BASE_URL!);
+const expectedCommitSha = process.env.PRODUCTION_EXPECTED_COMMIT_SHA;
 const bypassHeaders = {
   "x-vercel-protection-bypass": process.env.VERCEL_AUTOMATION_BYPASS_SECRET!,
   "x-vercel-set-bypass-cookie": "true",
@@ -45,6 +46,12 @@ test("production renders plausible item data", async ({ page }) => {
 
   expect(response).not.toBeNull();
   expect(response!.ok()).toBe(true);
+  if (expectedCommitSha) {
+    await expect(page.locator("html")).toHaveAttribute(
+      "data-commit-sha",
+      expectedCommitSha,
+    );
+  }
   await poePage.waitForDataLoad();
   await poePage.waitForHydration();
   await expect(poePage.pageTitle).toHaveText(TITLE);
