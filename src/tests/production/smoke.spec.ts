@@ -37,10 +37,10 @@ async function setBypassCookie(context: BrowserContext) {
 }
 
 test.beforeEach(async ({ context }) => {
-  await setBypassCookie(context);
+  if (!expectedCommitSha) await setBypassCookie(context);
 });
 
-test("production renders plausible item data", async ({ page }) => {
+test("production renders plausible item data", async ({ page, context }) => {
   const poePage = new PoEDisenchantDesktopPage(page);
 
   if (expectedCommitSha) {
@@ -48,13 +48,24 @@ test("production renders plausible item data", async ({ page }) => {
       .poll(
         async () => {
           try {
+            await setBypassCookie(context);
+          } catch {
+            return "Authentication failed";
+          }
+
+          try {
             const response = await page.goto("/", {
               waitUntil: "domcontentloaded",
             });
-            if (!response?.ok()) return null;
-            return page.locator("html").getAttribute("data-commit-sha");
+            if (!response?.ok()) {
+              return `Production returned ${response?.status() ?? "no response"}`;
+            }
+            return (
+              (await page.locator("html").getAttribute("data-commit-sha")) ??
+              "Missing data-commit-sha"
+            );
           } catch {
-            return null;
+            return "Page load failed";
           }
         },
         { intervals: [30_000], timeout: 5 * 60 * 1000 },
