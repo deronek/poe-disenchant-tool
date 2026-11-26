@@ -17,6 +17,7 @@ jobs:
     # Manual runs require repository write access. Comment runs are restricted
     # to trusted maintainers and collaborators, who must review the PR code
     # first because it will execute with access to the repository PAT.
+    # Usage: /update-snapshots <full-reviewed-commit-sha>
     if: |
       github.event_name == 'workflow_dispatch' ||
       (
@@ -39,25 +40,43 @@ jobs:
         uses: actions/github-script@v9.0.0
         with:
           script: |
+            const match = context.payload.comment.body.match(
+              /^\/update-snapshots[ \t]+([0-9a-fA-F]{40})[ \t]*\r?$/im
+            );
+            if (!match) {
+              core.setFailed('Usage: /update-snapshots <full-reviewed-commit-sha>');
+              return;
+            }
+
+            const reviewedSha = match[1].toLowerCase();
             const prNumber = context.payload.issue.number;
             const { data: pr } = await github.rest.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: prNumber
             });
-            core.setOutput('repo', pr.head.repo.full_name);
-            core.setOutput('ref', pr.head.ref);
+            if (pr.head.sha.toLowerCase() !== reviewedSha) {
+              core.setFailed(
+                `Reviewed SHA ${reviewedSha} does not match current PR head ${pr.head.sha}. Review the latest commit and try again.`
+              );
+              return;
+            }
 
-      # Checkout the appropriate repository and branch:
+            core.setOutput('repo', pr.head.repo.full_name);
+            core.setOutput('branch', pr.head.ref);
+            core.setOutput('sha', reviewedSha);
+
+      # Checkout the appropriate repository and ref:
       # - For manual trigger: Use specified branch or default branch
-      # - For PR comment trigger: Use the PR's head branch from the resolved details
+      # - For PR comment trigger: Use the immutable reviewed commit
       - name: Checkout repository
         uses: actions/checkout@v7.0.1
         with:
           lfs: true
           repository: ${{ steps.pr_head.outputs.repo || github.repository }}
-          ref: ${{ github.event.inputs.branch || steps.pr_head.outputs.ref || github.ref_name }}
+          ref: ${{ steps.pr_head.outputs.sha || github.event.inputs.branch || github.ref_name }}
           token: ${{ secrets.GH_PAT }}
+          persist-credentials: false
 
       - name: Install pnpm
         uses: pnpm/action-setup@v6.1.0
@@ -77,8 +96,30 @@ jobs:
       - name: Update snapshots
         run: pnpm test:vrt:update
 
-      - name: Commit updated snapshots
-        uses: stefanzweifel/git-auto-commit-action@v7.2.0
-        with:
-          commit_message: "Update snapshots for VRT"
-          file_pattern: "src/tests/vrt/__snapshots__/**/*.png"
+      - name: Commit and push updated snapshots
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          HEAD_REPOSITORY: ${{ steps.pr_head.outputs.repo || github.repository }}
+          HEAD_BRANCH: ${{ steps.pr_head.outputs.branch || github.event.inputs.branch || github.ref_name }}
+          REVIEWED_SHA: ${{ steps.pr_head.outputs.sha }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "src/tests/vrt/__snapshots__/**/*.png"
+          if git diff --cached --quiet; then
+            echo "No snapshot changes detected."
+            exit 0
+          fi
+
+          git -c core.hooksPath=/dev/null commit --no-verify -m "Update snapshots for VRT"
+          remote_url="https://x-access-token:${GH_PAT}@github.com/${HEAD_REPOSITORY}.git"
+          if [[ "$GITHUB_EVENT_NAME" == "issue_comment" ]]; then
+            current_sha="$(git ls-remote "$remote_url" "refs/heads/${HEAD_BRANCH}" | cut -f1)"
+            if [[ "$current_sha" != "$REVIEWED_SHA" ]]; then
+              echo "::error::PR branch moved from reviewed SHA ${REVIEWED_SHA} to ${current_sha}. Review the new commit and rerun."
+              exit 1
+            fi
+          fi
+
+          # A normal push also rejects any branch update that races the check above.
+          git push "$remote_url" "HEAD:refs/heads/${HEAD_BRANCH}"
