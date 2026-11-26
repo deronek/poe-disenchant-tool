@@ -14,12 +14,9 @@ on:
 
 jobs:
   update:
-    # Complex conditional to determine when the job should run:
-    # 1. Allow manual trigger (workflow_dispatch)
-    # 2. For issue_comment events:
-    #    - Only trigger on PRs (not regular issues)
-    #    - Only if comment contains "/update-snapshots" command
-    #    - Only if author has trusted association (OWNER, MEMBER, COLLABORATOR)
+    # Manual runs require repository write access. Comment runs are restricted
+    # to trusted maintainers and collaborators, who must review the PR code
+    # first because it will execute with access to the repository PAT.
     if: |
       github.event_name == 'workflow_dispatch' ||
       (
