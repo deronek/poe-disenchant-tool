@@ -113,13 +113,10 @@ jobs:
 
           git -c core.hooksPath=/dev/null commit --no-verify -m "Update snapshots for VRT"
           remote_url="https://x-access-token:${GH_PAT}@github.com/${HEAD_REPOSITORY}.git"
+          lease_args=()
           if [[ "$GITHUB_EVENT_NAME" == "issue_comment" ]]; then
-            current_sha="$(git ls-remote "$remote_url" "refs/heads/${HEAD_BRANCH}" | cut -f1)"
-            if [[ "$current_sha" != "$REVIEWED_SHA" ]]; then
-              echo "::error::PR branch moved from reviewed SHA ${REVIEWED_SHA} to ${current_sha}. Review the new commit and rerun."
-              exit 1
-            fi
+            lease_args+=("--force-with-lease=refs/heads/${HEAD_BRANCH}:${REVIEWED_SHA}")
           fi
 
-          # A normal push also rejects any branch update that races the check above.
-          git push "$remote_url" "HEAD:refs/heads/${HEAD_BRANCH}"
+          # Atomically reject the push if the reviewed branch has moved.
+          git push "${lease_args[@]}" "$remote_url" "HEAD:refs/heads/${HEAD_BRANCH}"
