@@ -13,7 +13,7 @@ import {
 } from "./external-api";
 import { USER_AGENT } from "./utils";
 
-// TypeScript interfaces for the currency API response
+// TypeScript interfaces for poe.ninja API response
 const CurrencyLineSchema = z.object({
   id: z.string(),
   primaryValue: z.number().nonnegative().nullable().optional(),
@@ -85,7 +85,7 @@ const createCurrencyFetchError = ({
   });
 };
 
-// Fetch currency data from the currency API
+// Fetch currency data from poe.ninja API
 const fetchCurrencyData = async (
   league: League,
 ): Promise<ApiResult<CurrencyOverviewResponse>> => {
