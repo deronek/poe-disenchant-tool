@@ -104,7 +104,7 @@ pnpm dust:process  # regenerate from source data, then validate
 
 ## Testing
 
-All suites run on pull requests in CI. To run them locally:
+The unit, E2E, and visual regression suites run on pull requests in CI. To run them locally:
 
 ### Unit tests
 
@@ -120,6 +120,22 @@ pnpm test:desktop # headless run of the desktop suite
 pnpm test:mobile  # headless run of the mobile suite
 pnpm test:ui      # interactive mode
 ```
+
+### Production smoke test
+
+The Production smoke test workflow runs every six hours, on manual dispatch, and after Vercel reports a successful automatic production deployment. It uses Chromium to check the deployed page, rendered rows, numeric values, and timestamp format. Timestamp freshness is not enforced, because stale pages only revalidate in the background after being requested.
+
+Create a dedicated Vercel Protection Bypass for Automation secret and add it to GitHub Actions as `VERCEL_AUTOMATION_BYPASS_SECRET`. Playwright sends the secret only to the production origin. To run it locally:
+
+```bash
+PRODUCTION_BASE_URL=https://poe-disenchant-tool.vercel.app \
+VERCEL_AUTOMATION_BYPASS_SECRET=your-secret \
+pnpm test:production
+```
+
+Deployment-triggered runs check out the deployed commit and require the page's commit SHA to match the deployment event. They retry authentication and check the SHA every 30 seconds for up to five minutes while Vercel shifts production traffic. A newer production deployment event supersedes older deployment checks. Scheduled and manual runs use a separate concurrency group and cannot delay them. Vercel's System Environment Variables must be enabled to expose the SHA. Scheduled and manual runs use the current workflow revision and skip this check. All runs target the fixed production URL, and deployment events for preview environments are ignored.
+
+Scheduled runs require the GitHub Actions repository variable `PRODUCTION_SMOKE_SCHEDULE_ENABLED` to be `1`. Set it to `0` under **Settings → Secrets and variables → Actions → Variables** to pause only the schedule. Manual and deployment-triggered runs remain enabled.
 
 ### Visual regression tests
 

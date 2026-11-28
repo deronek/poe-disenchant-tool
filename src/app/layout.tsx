@@ -73,7 +73,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      data-commit-sha={process.env.PDT_GIT_COMMIT_SHA || undefined}
+      suppressHydrationWarning
+    >
       <body className="antialiased">
         <div className="flex min-h-screen flex-col">
           <TooltipProvider>

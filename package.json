@@ -23,6 +23,7 @@
     "test:vrt": "playwright test --project=vrt-light --project=vrt-dark",
     "test:vrt:ui": "playwright test --ui --project=vrt-light --project=vrt-dark",
     "test:vrt:update": "playwright test --project=vrt-light --project=vrt-dark --update-snapshots",
+    "test:production": "playwright test --config=playwright.production.config.ts",
     "dust:process": "tsx scripts/process-dust-data.ts && tsx scripts/validate-dust-data.ts",
     "dust:validate": "tsx scripts/validate-dust-data.ts",
     "populate-devdata": "tsx scripts/populate-devdata.ts"
