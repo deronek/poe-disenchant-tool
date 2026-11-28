@@ -76,7 +76,6 @@ describe("item data wide event logging", () => {
           line_counts_by_resource: { UniqueWeapon: 1 },
           status_codes_by_resource: { UniqueWeapon: 200 },
           item_count: 1,
-          used_build_fallback: false,
         },
       }),
       getCurrencyData: vi.fn().mockResolvedValue({
@@ -144,7 +143,6 @@ describe("item data wide event logging", () => {
           line_counts_by_resource: { UniqueWeapon: 2 },
           status_codes_by_resource: { UniqueWeapon: 200 },
           item_count: 2,
-          used_build_fallback: false,
         },
       }),
       getCurrencyData: vi.fn().mockResolvedValue({
@@ -189,6 +187,72 @@ describe("item data wide event logging", () => {
     );
   });
 
+  it("returns partial item data and emits a degraded event with resource errors", async () => {
+    vi.doMock("@/lib/prices", () => ({
+      getPriceData: vi.fn().mockResolvedValue({
+        items: [
+          {
+            type: "UniqueWeapon",
+            name: "Known Item",
+            chaos: 10,
+            divine: 0.05,
+            baseType: "Base",
+            icon: "https://example.com/item.png",
+            listingCount: 5,
+            itemType: "Weapon",
+          },
+        ],
+        context: {
+          source: "poe.ninja",
+          types_completed: ["UniqueWeapon", "UniqueAccessory"],
+          resources_failed: ["UniqueArmour"],
+          errors_by_resource: {
+            UniqueArmour: {
+              source: "prices",
+              league: "standard",
+              resource: "UniqueArmour",
+              kind: "http",
+              status_code: 503,
+              message: "armour prices down",
+            },
+          },
+          item_count: 1,
+        },
+      }),
+      getCurrencyData: vi.fn().mockResolvedValue({
+        data: {
+          catalyst: { id: "abrasive-catalyst", primaryValue: 2 },
+          divineRate: 0.005,
+        },
+        context: {
+          source: "poe.ninja",
+          fetch_failed: false,
+          has_catalyst: true,
+          has_divine_rate: true,
+        },
+      }),
+    }));
+
+    const { getItems } = await import("@/lib/item-data/item-data");
+
+    await expect(getItems("standard")).resolves.toMatchObject({
+      items: [expect.objectContaining({ name: "Known Item" })],
+    });
+    expect(emitWideEvent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        event_name: "item_data_fetch",
+        outcome: "degraded",
+        message: "Item data fetch completed with errors",
+        prices: expect.objectContaining({
+          resources_failed: ["UniqueArmour"],
+          errors_by_resource: expect.objectContaining({
+            UniqueArmour: expect.objectContaining({ kind: "http" }),
+          }),
+        }),
+      }),
+    );
+  });
+
   it("emits one canonical event with price error context and degraded currency context", async () => {
     emitWideEvent.mockRejectedValueOnce(new Error("telemetry down"));
     const consoleError = vi
@@ -224,7 +288,6 @@ describe("item data wide event logging", () => {
                 },
               },
               item_count: 0,
-              used_build_fallback: false,
             },
           },
         }),
@@ -300,7 +363,6 @@ describe("item data wide event logging", () => {
           line_counts_by_resource: { UniqueWeapon: 1 },
           status_codes_by_resource: { UniqueWeapon: 200 },
           item_count: 1,
-          used_build_fallback: false,
         },
       }),
       getCurrencyData: vi.fn().mockRejectedValue(new Error("currency down")),
@@ -356,7 +418,6 @@ describe("item data wide event logging", () => {
                 },
               },
               item_count: 0,
-              used_build_fallback: false,
             },
           },
         }),
