@@ -12,12 +12,7 @@ const packageJson = JSON.parse(
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "web.poecdn.com",
-      },
-    ],
+    unoptimized: true,
   },
   webpack: (config) => {
     // Force conservative chunking to optimize for edge requests
